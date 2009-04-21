@@ -1,0 +1,349 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: Zerosum::ValidationExtensions::IsbnValidation</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module Zerosum_ValidationExtensions_IsbnValidation">
+  <h1 class="title">Module: Zerosum::ValidationExtensions::IsbnValidation</h1>
+  <div class="section constants">
+  <div class="thisclass">
+  <h1>Constants</h1>
+  <dl>
+    
+      <dt id="ISBN10_REGEX-constant">ISBN10_REGEX</dt>
+      <dd>/^(?:\d[\ |-]?){9}[\d|X]$/</dd>
+    
+      <dt id="ISBN13_REGEX-constant">ISBN13_REGEX</dt>
+      <dd>/^(?:\d[\ |-]?){13}$/</dd>
+    
+  </dl>
+</div>
+
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#validate_with_isbn10-instance_method' title='#validate_with_isbn10'>#validate_with_isbn10</a></span><span class='args'>(isbn)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#validate_with_isbn13-instance_method' title='#validate_with_isbn13'>#validate_with_isbn13</a></span><span class='args'>(isbn)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#validates_isbn-instance_method' title='#validates_isbn'>#validates_isbn</a></span><span class='args'>(*attr_names)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Validates whether the value of the specified attribute is a proper ISBN
+number.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>validate_with_isbn10</h3>
+</div><div id="validate_with_isbn10-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>validate_with_isbn10</span><span class='args'>(isbn)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/isbn_validation.rb', line 48</span>
+
+<span class='def def kw'>def</span> <span class='validate_with_isbn10 identifier id'>validate_with_isbn10</span><span class='lparen token'>(</span><span class='isbn identifier id'>isbn</span><span class='rparen token'>)</span> <span class='comment val'>#:nodoc:</span>
+  <span class='if if kw'>if</span> <span class='lparen token'>(</span><span class='isbn identifier id'>isbn</span> <span class='orop op'>||</span> <span class='string val'>''</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='match identifier id'>match</span><span class='lparen token'>(</span><span class='ISBN10_REGEX constant id'>ISBN10_REGEX</span><span class='rparen token'>)</span>
+    <span class='isbn_values identifier id'>isbn_values</span> <span class='assign token'>=</span> <span class='isbn identifier id'>isbn</span><span class='dot token'>.</span><span class='upcase identifier id'>upcase</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='regexp val'>/\ |-/</span><span class='comma token'>,</span> <span class='string val'>''</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='string val'>''</span><span class='rparen token'>)</span>
+    <span class='check_digit identifier id'>check_digit</span> <span class='assign token'>=</span> <span class='isbn_values identifier id'>isbn_values</span><span class='dot token'>.</span><span class='pop identifier id'>pop</span> <span class='comment val'># last digit is check digit</span>
+    <span class='check_digit identifier id'>check_digit</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='check_digit identifier id'>check_digit</span> <span class='eq op'>==</span> <span class='string val'>'X'</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='integer val'>10</span> <span class='colon op'>:</span> <span class='check_digit identifier id'>check_digit</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span>
+
+    <span class='sum identifier id'>sum</span> <span class='assign token'>=</span> <span class='integer val'>0</span>
+    <span class='isbn_values identifier id'>isbn_values</span><span class='dot token'>.</span><span class='each_with_index identifier id'>each_with_index</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='value identifier id'>value</span><span class='comma token'>,</span> <span class='index identifier id'>index</span><span class='bitor op'>|</span>
+      <span class='sum identifier id'>sum</span> <span class='opasgn op'>+=</span> <span class='lparen token'>(</span><span class='index identifier id'>index</span> <span class='plus op'>+</span> <span class='integer val'>1</span><span class='rparen token'>)</span> <span class='mult op'>*</span> <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span>
+    <span class='end end kw'>end</span>
+
+    <span class='lparen token'>(</span><span class='sum identifier id'>sum</span> <span class='mod op'>%</span> <span class='integer val'>11</span><span class='rparen token'>)</span> <span class='eq op'>==</span> <span class='check_digit identifier id'>check_digit</span>
+  <span class='else else kw'>else</span>
+    <span class='false false kw'>false</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>validate_with_isbn13</h3>
+</div><div id="validate_with_isbn13-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>validate_with_isbn13</span><span class='args'>(isbn)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/isbn_validation.rb', line 65</span>
+
+<span class='def def kw'>def</span> <span class='validate_with_isbn13 identifier id'>validate_with_isbn13</span><span class='lparen token'>(</span><span class='isbn identifier id'>isbn</span><span class='rparen token'>)</span> <span class='comment val'>#:nodoc:</span>
+  <span class='if if kw'>if</span> <span class='lparen token'>(</span><span class='isbn identifier id'>isbn</span> <span class='orop op'>||</span> <span class='string val'>''</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='match identifier id'>match</span><span class='lparen token'>(</span><span class='ISBN13_REGEX constant id'>ISBN13_REGEX</span><span class='rparen token'>)</span>
+    <span class='isbn_values identifier id'>isbn_values</span> <span class='assign token'>=</span> <span class='isbn identifier id'>isbn</span><span class='dot token'>.</span><span class='upcase identifier id'>upcase</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='regexp val'>/\ |-/</span><span class='comma token'>,</span> <span class='string val'>''</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='string val'>''</span><span class='rparen token'>)</span>
+    <span class='check_digit identifier id'>check_digit</span> <span class='assign token'>=</span> <span class='isbn_values identifier id'>isbn_values</span><span class='dot token'>.</span><span class='pop identifier id'>pop</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span> <span class='comment val'># last digit is check digit</span>
+
+    <span class='sum identifier id'>sum</span> <span class='assign token'>=</span> <span class='integer val'>0</span>
+    <span class='isbn_values identifier id'>isbn_values</span><span class='dot token'>.</span><span class='each_with_index identifier id'>each_with_index</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='value identifier id'>value</span><span class='comma token'>,</span> <span class='index identifier id'>index</span><span class='bitor op'>|</span>
+      <span class='multiplier identifier id'>multiplier</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='index identifier id'>index</span> <span class='mod op'>%</span> <span class='integer val'>2</span> <span class='eq op'>==</span> <span class='integer val'>0</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='integer val'>1</span> <span class='colon op'>:</span> <span class='integer val'>3</span>
+      <span class='sum identifier id'>sum</span> <span class='opasgn op'>+=</span> <span class='multiplier identifier id'>multiplier</span> <span class='mult op'>*</span> <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span>
+    <span class='end end kw'>end</span>
+
+    <span class='lparen token'>(</span><span class='integer val'>10</span> <span class='minus op'>-</span> <span class='lparen token'>(</span><span class='sum identifier id'>sum</span> <span class='mod op'>%</span> <span class='integer val'>10</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='eq op'>==</span> <span class='check_digit identifier id'>check_digit</span>
+  <span class='else else kw'>else</span>
+    <span class='false false kw'>false</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>validates_isbn</h3>
+</div><div id="validates_isbn-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>validates_isbn</span><span class='args'>(*attr_names)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Validates whether the value of the specified attribute is a proper ISBN
+number. Defaults to verifying that the value is either a valid ISBN-10 or
+ISBN-13 number but this behavior can be modified using configuration
+options (as shown below).
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='Book constant id'>Book</span> <span class='lt op'>&lt;</span> <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
+    <span class='validates_isbn identifier id'>validates_isbn</span> <span class='symbol val'>:isbn</span>
+    <span class='comment val'>#validates_isbn :isbn10, :with =&gt; :isbn10</span>
+    <span class='comment val'>#validates_isbn :isbn13, :with =&gt; :isbn13</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+Configuration options:
+</p>
+<ul>
+<li><tt>:message</tt> - A custom error message (default is: &quot;is not a
+valid ISBN&quot;)
+
+</li>
+<li><tt>:with</tt> - A symbol referencing the type of ISBN to validate (:isbn10
+or :isbn13)
+
+</li>
+<li><tt>:allow_nil</tt> - If set to true, skips this validation if the
+attribute is <tt>nil</tt> (default is <tt>false</tt>).
+
+</li>
+<li><tt>:allow_blank</tt> - If set to true, skips this validation if the
+attribute is blank (default is <tt>false</tt>).
+
+</li>
+<li><tt>:on</tt> - Specifies when this validation is active (default is
+<tt>:save</tt>, other options <tt>:create</tt>, <tt>:update</tt>).
+
+</li>
+<li><tt>:if</tt> - Specifies a method, proc or string to call to determine if
+the validation should occur (e.g. <tt>:if =&gt; :allow_validation</tt>, or
+<tt>:if =&gt; Proc.new { |user| user.signup_step &gt; 2 }</tt>). The
+method, proc or string should return or evaluate to a true or false value.
+
+</li>
+<li><tt>:unless</tt> - Specifies a method, proc or string to call to determine
+if the validation should not occur (e.g. <tt>:unless =&gt;
+:skip_validation</tt>, or <tt>:unless =&gt; Proc.new { |user|
+user.signup_step &lt;= 2 }</tt>). The method, proc or string should return
+or evaluate to a true or false value.
+
+</li>
+</ul>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/isbn_validation.rb', line 29</span>
+
+<span class='def def kw'>def</span> <span class='validates_isbn identifier id'>validates_isbn</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='attr_names identifier id'>attr_names</span><span class='rparen token'>)</span>
+  <span class='configuration identifier id'>configuration</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span> 
+    <span class='symbol val'>:message</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;is not a valid ISBN code&quot;</span>
+  <span class='rbrace token'>}</span>
+
+  <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='update identifier id'>update</span><span class='lparen token'>(</span><span class='attr_names identifier id'>attr_names</span><span class='dot token'>.</span><span class='extract_options! fid id'>extract_options!</span><span class='rparen token'>)</span>
+  <span class='validates_each identifier id'>validates_each</span><span class='lparen token'>(</span><span class='attr_names identifier id'>attr_names</span><span class='comma token'>,</span> <span class='configuration identifier id'>configuration</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='record identifier id'>record</span><span class='comma token'>,</span> <span class='attr_name identifier id'>attr_name</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='bitor op'>|</span>
+    <span class='valid identifier id'>valid</span> <span class='assign token'>=</span> <span class='case case kw'>case</span> <span class='configuration identifier id'>configuration</span><span class='lbrack token'>[</span><span class='symbol val'>:with</span><span class='rbrack token'>]</span>
+    <span class='when when kw'>when</span> <span class='symbol val'>:isbn10</span>
+      <span class='validate_with_isbn10 identifier id'>validate_with_isbn10</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+    <span class='when when kw'>when</span> <span class='symbol val'>:isbn13</span>
+      <span class='validate_with_isbn13 identifier id'>validate_with_isbn13</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+    <span class='else else kw'>else</span>
+      <span class='validate_with_isbn10 identifier id'>validate_with_isbn10</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='validate_with_isbn13 identifier id'>validate_with_isbn13</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+    <span class='record identifier id'>record</span><span class='dot token'>.</span><span class='errors identifier id'>errors</span><span class='dot token'>.</span><span class='add identifier id'>add</span><span class='lparen token'>(</span><span class='attr_name identifier id'>attr_name</span><span class='comma token'>,</span> <span class='configuration identifier id'>configuration</span><span class='lbrack token'>[</span><span class='symbol val'>:message</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='unless unless_mod kw'>unless</span> <span class='valid identifier id'>valid</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

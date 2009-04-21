@@ -1,0 +1,257 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <title>README</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section docstring readme">
+        <p>
+# Jeweler: Craft the perfect RubyGem
+</p>
+<p>
+Jeweler provides two things:
+</p>
+<pre class="code">
+ <span class='mult op'>*</span> <span class='Rake constant id'>Rake</span> <span class='tasks identifier id'>tasks</span> <span class='for for kw'>for</span> <span class='managing identifier id'>managing</span> <span class='gems identifier id'>gems</span> <span class='and and kw'>and</span> <span class='versioning identifier id'>versioning</span> <span class='of identifier id'>of</span> <span class='a identifier id'>a</span> <span class='lt op'>&lt;</span><span class='a identifier id'>a</span> <span class='href identifier id'>href</span><span class='assign token'>=</span><span class='string val'>&quot;http://github.com&quot;</span><span class='gt op'>&gt;</span><span class='GitHub constant id'>GitHub</span><span class='lt op'>&lt;</span><span class='regexp val'>/a&gt; project
+ * A generator for creating kickstarting a new project
+</span></pre>
+<p>
+## Installing
+</p>
+<pre class="code">
+    <span class='comment val'># Install the gem:</span>
+    <span class='sudo identifier id'>sudo</span> <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='jeweler identifier id'>jeweler</span>
+</pre>
+<p>
+## Using in an existing project
+</p>
+<p>
+It&#8217;s easy to get up and running. Update your Rakefile to instantiate
+a `Jeweler::Tasks`, and give it a block with details about your project.
+</p>
+<pre class="code">
+    <span class='begin begin kw'>begin</span>
+      <span class='require identifier id'>require</span> <span class='string val'>'jeweler'</span>
+      <span class='Jeweler constant id'>Jeweler</span><span class='colon2 op'>::</span><span class='Tasks constant id'>Tasks</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='gemspec identifier id'>gemspec</span><span class='bitor op'>|</span>
+        <span class='gemspec identifier id'>gemspec</span><span class='dot token'>.</span><span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='string val'>&quot;the-perfect-gem&quot;</span>
+        <span class='gemspec identifier id'>gemspec</span><span class='dot token'>.</span><span class='summary identifier id'>summary</span> <span class='assign token'>=</span> <span class='string val'>&quot;TODO&quot;</span>
+        <span class='gemspec identifier id'>gemspec</span><span class='dot token'>.</span><span class='email identifier id'>email</span> <span class='assign token'>=</span> <span class='string val'>&quot;josh@technicalpickles.com&quot;</span>
+        <span class='gemspec identifier id'>gemspec</span><span class='dot token'>.</span><span class='homepage identifier id'>homepage</span> <span class='assign token'>=</span> <span class='string val'>&quot;http://github.com/technicalpickles/the-perfect-gem&quot;</span>
+        <span class='gemspec identifier id'>gemspec</span><span class='dot token'>.</span><span class='description identifier id'>description</span> <span class='assign token'>=</span> <span class='string val'>&quot;TODO&quot;</span>
+        <span class='gemspec identifier id'>gemspec</span><span class='dot token'>.</span><span class='authors identifier id'>authors</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='string val'>&quot;Josh Nichols&quot;</span><span class='rbrack token'>]</span>
+      <span class='end end kw'>end</span>
+    <span class='rescue rescue kw'>rescue</span> <span class='LoadError constant id'>LoadError</span>
+      <span class='puts identifier id'>puts</span> <span class='string val'>&quot;Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com&quot;</span>
+    <span class='end end kw'>end</span>
+</pre>
+<p>
+The yield object here, `gemspec`, is a `Gem::Specification` object. See the
+[Customizing your project&#8217;s gem
+specification](http://wiki.github.com/technicalpickles/jeweler/customizing-your-projects-gem-specification)
+for more details about how you can customize your gemspec.
+</p>
+<p>
+## Using to start a new project
+</p>
+<p>
+Jeweler provides a generator. It requires you to [setup your name and email
+for
+git](http://github.com/guides/tell-git-your-user-name-and-email-address)
+and [your username and token for
+GitHub](http://github.com/guides/local-github-config).
+</p>
+<pre class="code">
+    <span class='jeweler identifier id'>jeweler</span> <span class='the identifier id'>the</span><span class='minus op'>-</span><span class='perfect identifier id'>perfect</span><span class='minus op'>-</span><span class='gem identifier id'>gem</span>
+</pre>
+<p>
+This will prepare a project in the &#8216;the-perfect-gem&#8217; directory,
+setup to use Jeweler.
+</p>
+<p>
+It supports a number of options:
+</p>
+<pre class="code">
+ <span class='mult op'>*</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='create identifier id'>create</span><span class='minus op'>-</span><span class='repo identifier id'>repo</span><span class='colon op'>:</span> <span class='in in kw'>in</span> <span class='addition identifier id'>addition</span> <span class='to identifier id'>to</span> <span class='preparing identifier id'>preparing</span> <span class='a identifier id'>a</span> <span class='project identifier id'>project</span><span class='comma token'>,</span> <span class='it identifier id'>it</span> <span class='create identifier id'>create</span> <span class='an identifier id'>an</span> <span class='repo identifier id'>repo</span> <span class='up identifier id'>up</span> <span class='on identifier id'>on</span> <span class='GitHub constant id'>GitHub</span> <span class='and and kw'>and</span> <span class='enable identifier id'>enable</span> <span class='RubyGem constant id'>RubyGem</span> <span class='generation identifier id'>generation</span>
+ <span class='mult op'>*</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='testunit identifier id'>testunit</span><span class='colon op'>:</span> <span class='generate identifier id'>generate</span> <span class='test_helper identifier id'>test_helper</span><span class='dot token'>.</span><span class='rb identifier id'>rb</span> <span class='and and kw'>and</span> <span class='test identifier id'>test</span> <span class='ready identifier id'>ready</span> <span class='for for kw'>for</span> <span class='test identifier id'>test</span><span class='div op'>/</span><span class='unit identifier id'>unit</span>
+ <span class='mult op'>*</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='minitest identifier id'>minitest</span><span class='colon op'>:</span> <span class='generate identifier id'>generate</span> <span class='test_helper identifier id'>test_helper</span><span class='dot token'>.</span><span class='rb identifier id'>rb</span> <span class='and and kw'>and</span> <span class='test identifier id'>test</span> <span class='ready identifier id'>ready</span> <span class='for for kw'>for</span> <span class='minitest identifier id'>minitest</span>
+ <span class='mult op'>*</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='shoulda identifier id'>shoulda</span><span class='colon op'>:</span> <span class='generate identifier id'>generate</span> <span class='test_helper identifier id'>test_helper</span><span class='dot token'>.</span><span class='rb identifier id'>rb</span> <span class='and and kw'>and</span> <span class='test identifier id'>test</span> <span class='ready identifier id'>ready</span> <span class='for for kw'>for</span> <span class='shoulda identifier id'>shoulda</span> <span class='lparen token'>(</span><span class='this identifier id'>this</span> <span class='is identifier id'>is</span> <span class='the identifier id'>the</span> <span class='default identifier id'>default</span><span class='rparen token'>)</span>
+ <span class='mult op'>*</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='rspec identifier id'>rspec</span><span class='colon op'>:</span> <span class='generate identifier id'>generate</span> <span class='spec_helper identifier id'>spec_helper</span><span class='dot token'>.</span><span class='rb identifier id'>rb</span> <span class='and and kw'>and</span> <span class='spec identifier id'>spec</span> <span class='ready identifier id'>ready</span> <span class='for for kw'>for</span> <span class='rspec identifier id'>rspec</span>
+ <span class='mult op'>*</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='bacon identifier id'>bacon</span><span class='colon op'>:</span> <span class='generate identifier id'>generate</span> <span class='spec_helper identifier id'>spec_helper</span><span class='dot token'>.</span><span class='rb identifier id'>rb</span> <span class='and and kw'>and</span> <span class='spec identifier id'>spec</span> <span class='ready identifier id'>ready</span> <span class='for for kw'>for</span> <span class='bacon identifier id'>bacon</span>
+ <span class='mult op'>*</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='rubyforge identifier id'>rubyforge</span><span class='colon op'>:</span> <span class='setup identifier id'>setup</span> <span class='releasing identifier id'>releasing</span> <span class='to identifier id'>to</span> <span class='rubyforge identifier id'>rubyforge</span>
+</pre>
+<p>
+### Default options
+</p>
+<p>
+Jeweler respects the JEWELER_OPTS environment variable. Want to always use
+RSpec, and you&#8217;re using bash? Add this to ~/.bashrc:
+</p>
+<pre class="code">
+    <span class='export identifier id'>export</span> <span class='JEWELER_OPTS constant id'>JEWELER_OPTS</span><span class='assign token'>=</span><span class='string val'>&quot;--rspec&quot;</span>
+</pre>
+<p>
+## Gemspec
+</p>
+<p>
+Jeweler handles generating a gemspec file for your project:
+</p>
+<pre class="code">
+    <span class='rake identifier id'>rake</span> <span class='gemspec identifier id'>gemspec</span>
+</pre>
+<p>
+This creates a gemspec for your project. It&#8217;s based on the info you
+give `Jeweler::Tasks`, the current version of your project, and some
+defaults that Jeweler provides.
+</p>
+<p>
+## Gem
+</p>
+<p>
+Jeweler gives you tasks for building and installing your gem:
+</p>
+<pre class="code">
+    <span class='rake identifier id'>rake</span> <span class='build identifier id'>build</span>
+    <span class='rake identifier id'>rake</span> <span class='install identifier id'>install</span>
+</pre>
+<p>
+## Versioning
+</p>
+<p>
+Jeweler tracks the version of your project. It assumes you will be using a
+version in the format `x.y.z`. `x` is the &#8216;major&#8217; version, `y`
+is the &#8216;minor&#8217; version, and `z` is the patch version.
+</p>
+<p>
+Initially, your project starts out at 0.0.0. Jeweler provides Rake tasks
+for bumping the version:
+</p>
+<pre class="code">
+    <span class='rake identifier id'>rake</span> <span class='version identifier id'>version</span><span class='symbol val'>:bump</span><span class='symbol val'>:major</span>
+    <span class='rake identifier id'>rake</span> <span class='version identifier id'>version</span><span class='symbol val'>:bump</span><span class='symbol val'>:minor</span>
+    <span class='rake identifier id'>rake</span> <span class='version identifier id'>version</span><span class='symbol val'>:bump</span><span class='symbol val'>:patch</span>
+</pre>
+<p>
+## Releasing to GitHub
+</p>
+<p>
+Jeweler handles releasing your gem into the wild:
+</p>
+<pre class="code">
+    <span class='rake identifier id'>rake</span> <span class='release identifier id'>release</span>
+</pre>
+<p>
+It does the following for you:
+</p>
+<pre class="code">
+ <span class='mult op'>*</span> <span class='Regenerate constant id'>Regenerate</span> <span class='the identifier id'>the</span> <span class='gemspec identifier id'>gemspec</span> <span class='to identifier id'>to</span> <span class='the identifier id'>the</span> <span class='latest identifier id'>latest</span> <span class='version identifier id'>version</span> <span class='of identifier id'>of</span> <span class='your identifier id'>your</span> <span class='project identifier id'>project</span>
+ <span class='mult op'>*</span> <span class='Push constant id'>Push</span> <span class='to identifier id'>to</span> <span class='GitHub constant id'>GitHub</span> <span class='lparen token'>(</span><span class='which identifier id'>which</span> <span class='results identifier id'>results</span> <span class='in in kw'>in</span> <span class='a identifier id'>a</span> <span class='gem identifier id'>gem</span> <span class='being identifier id'>being</span> <span class='build identifier id'>build</span><span class='rparen token'>)</span>
+ <span class='mult op'>*</span> <span class='Tag constant id'>Tag</span> <span class='the identifier id'>the</span> <span class='version identifier id'>version</span> <span class='and and kw'>and</span> <span class='push identifier id'>push</span> <span class='to identifier id'>to</span> <span class='GitHub constant id'>GitHub</span>
+</pre>
+<p>
+## Releasing to RubyForge
+</p>
+<p>
+Jeweler can also handle releasing to [RubyForge](http://rubyforge.org).
+There are a few steps you need to do before doing any RubyForge releases
+with Jeweler:
+</p>
+<pre class="code">
+ <span class='mult op'>*</span> <span class='lbrack token'>[</span><span class='Create constant id'>Create</span> <span class='an identifier id'>an</span> <span class='account identifier id'>account</span> <span class='on identifier id'>on</span> <span class='RubyForge constant id'>RubyForge</span><span class='rbrack token'>]</span><span class='lparen token'>(</span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/rubyforge.org/</span><span class='account identifier id'>account</span><span class='div op'>/</span><span class='register identifier id'>register</span><span class='dot token'>.</span><span class='php identifier id'>php</span><span class='rparen token'>)</span>
+ <span class='mult op'>*</span> <span class='Request constant id'>Request</span> <span class='a identifier id'>a</span> <span class='project identifier id'>project</span> <span class='on identifier id'>on</span> <span class='RubyForge constant id'>RubyForge</span><span class='dot token'>.</span> <span class='This constant id'>This</span> <span class='involves identifier id'>involves</span> <span class='waiting identifier id'>waiting</span> <span class='for for kw'>for</span> <span class='a identifier id'>a</span> <span class='project identifier id'>project</span> <span class='approval identifier id'>approval</span><span class='comma token'>,</span> <span class='which identifier id'>which</span> <span class='can identifier id'>can</span> <span class='take identifier id'>take</span> <span class='any identifier id'>any</span> <span class='amount identifier id'>amount</span> <span class='of identifier id'>of</span> <span class='time identifier id'>time</span> <span class='from identifier id'>from</span> <span class='a identifier id'>a</span> <span class='few identifier id'>few</span> <span class='hours identifier id'>hours</span> <span class='to identifier id'>to</span> <span class='a identifier id'>a</span> <span class='week identifier id'>week</span>
+   <span class='mult op'>*</span> <span class='You constant id'>You</span> <span class='might identifier id'>might</span> <span class='want identifier id'>want</span> <span class='to identifier id'>to</span> <span class='create identifier id'>create</span> <span class='an identifier id'>an</span> <span class='umbrella identifier id'>umbrella</span> <span class='project identifier id'>project</span> <span class='where identifier id'>where</span> <span class='you identifier id'>you</span> <span class='can identifier id'>can</span> <span class='publish identifier id'>publish</span> <span class='your identifier id'>your</span> <span class='gems identifier id'>gems</span><span class='comma token'>,</span> <span class='instead identifier id'>instead</span> <span class='of identifier id'>of</span> <span class='one identifier id'>one</span> <span class='project identifier id'>project</span> <span class='per identifier id'>per</span> <span class='gem identifier id'>gem</span>
+ <span class='mult op'>*</span> <span class='Install constant id'>Install</span> <span class='the identifier id'>the</span> <span class='RubyForge constant id'>RubyForge</span> <span class='gem identifier id'>gem</span><span class='colon op'>:</span> <span class='sudo identifier id'>sudo</span> <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='rubyforge identifier id'>rubyforge</span>
+ <span class='mult op'>*</span> <span class='Run constant id'>Run</span> <span class='string val'>'rubyforge setup'</span> <span class='and and kw'>and</span> <span class='fill identifier id'>fill</span> <span class='in in kw'>in</span> <span class='your identifier id'>your</span> <span class='username identifier id'>username</span> <span class='and and kw'>and</span> <span class='password identifier id'>password</span> <span class='for for kw'>for</span> <span class='RubyForge constant id'>RubyForge</span>
+ <span class='mult op'>*</span> <span class='Run constant id'>Run</span> <span class='string val'>'rubyforge config'</span> <span class='to identifier id'>to</span> <span class='pull identifier id'>pull</span> <span class='down identifier id'>down</span> <span class='information identifier id'>information</span> <span class='about identifier id'>about</span> <span class='your identifier id'>your</span> <span class='projects identifier id'>projects</span>
+ <span class='mult op'>*</span> <span class='Run constant id'>Run</span> <span class='string val'>'rubyforge login'</span> <span class='to identifier id'>to</span> <span class='make identifier id'>make</span> <span class='sure identifier id'>sure</span> <span class='you identifier id'>you</span> <span class='are identifier id'>are</span> <span class='able identifier id'>able</span> <span class='to identifier id'>to</span> <span class='login identifier id'>login</span>
+</pre>
+<p>
+With this in place, you now update your Jeweler::Tasks to setup
+`rubyforge_project` with the RubyForge project you&#8217;ve just created.
+(Note, using `jeweler &#8212;rubyforge` when generating the project does
+this for you automatically.)
+</p>
+<pre class="code">
+    <span class='begin begin kw'>begin</span>
+      <span class='require identifier id'>require</span> <span class='string val'>'jeweler'</span>
+      <span class='Jeweler constant id'>Jeweler</span><span class='colon2 op'>::</span><span class='Tasks constant id'>Tasks</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='s identifier id'>s</span><span class='bitor op'>|</span>
+        <span class='s identifier id'>s</span><span class='dot token'>.</span><span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='string val'>&quot;the-perfect-gem&quot;</span>
+        <span class='s identifier id'>s</span><span class='dot token'>.</span><span class='summary identifier id'>summary</span> <span class='assign token'>=</span> <span class='string val'>&quot;TODO&quot;</span>
+        <span class='s identifier id'>s</span><span class='dot token'>.</span><span class='email identifier id'>email</span> <span class='assign token'>=</span> <span class='string val'>&quot;josh@technicalpickles.com&quot;</span>
+        <span class='s identifier id'>s</span><span class='dot token'>.</span><span class='homepage identifier id'>homepage</span> <span class='assign token'>=</span> <span class='string val'>&quot;http://github.com/technicalpickles/the-perfect-gem&quot;</span>
+        <span class='s identifier id'>s</span><span class='dot token'>.</span><span class='description identifier id'>description</span> <span class='assign token'>=</span> <span class='string val'>&quot;TODO&quot;</span>
+        <span class='s identifier id'>s</span><span class='dot token'>.</span><span class='authors identifier id'>authors</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='string val'>&quot;Josh Nichols&quot;</span><span class='rbrack token'>]</span>
+        <span class='s identifier id'>s</span><span class='dot token'>.</span><span class='rubyforge_project identifier id'>rubyforge_project</span> <span class='assign token'>=</span> <span class='string val'>'the-perfect-gem'</span> <span class='comment val'># This line would be new</span>
+      <span class='end end kw'>end</span>
+    <span class='rescue rescue kw'>rescue</span> <span class='LoadError constant id'>LoadError</span>
+      <span class='puts identifier id'>puts</span> <span class='string val'>&quot;Jeweler not available. Install it with: sudo gem install jeweler&quot;</span>
+    <span class='end end kw'>end</span>
+
+    <span class='comment val'># These are new tasks</span>
+    <span class='begin begin kw'>begin</span>
+      <span class='require identifier id'>require</span> <span class='string val'>'rake/contrib/sshpublisher'</span>
+      <span class='namespace identifier id'>namespace</span> <span class='symbol val'>:rubyforge</span> <span class='do do kw'>do</span>
+
+        <span class='desc identifier id'>desc</span> <span class='string val'>&quot;Release gem and RDoc documentation to RubyForge&quot;</span>
+        <span class='task identifier id'>task</span> <span class='symbol val'>:release</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='string val'>&quot;rubyforge:release:gem&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;rubyforge:release:docs&quot;</span><span class='rbrack token'>]</span>
+
+        <span class='namespace identifier id'>namespace</span> <span class='symbol val'>:release</span> <span class='do do kw'>do</span>
+          <span class='desc identifier id'>desc</span> <span class='string val'>&quot;Publish RDoc to RubyForge.&quot;</span>
+          <span class='task identifier id'>task</span> <span class='symbol val'>:docs</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='symbol val'>:rdoc</span><span class='rbrack token'>]</span> <span class='do do kw'>do</span>
+            <span class='config identifier id'>config</span> <span class='assign token'>=</span> <span class='YAML constant id'>YAML</span><span class='dot token'>.</span><span class='load identifier id'>load</span><span class='lparen token'>(</span>
+                <span class='File constant id'>File</span><span class='dot token'>.</span><span class='read identifier id'>read</span><span class='lparen token'>(</span><span class='File constant id'>File</span><span class='dot token'>.</span><span class='expand_path identifier id'>expand_path</span><span class='lparen token'>(</span><span class='string val'>'~/.rubyforge/user-config.yml'</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+            <span class='rparen token'>)</span>
+
+            <span class='host identifier id'>host</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;#{config['username']}@rubyforge.org&quot;</span>
+            <span class='remote_dir identifier id'>remote_dir</span> <span class='assign token'>=</span> <span class='string val'>&quot;/var/www/gforge-projects/the-perfect-gem/&quot;</span>
+            <span class='local_dir identifier id'>local_dir</span> <span class='assign token'>=</span> <span class='string val'>'rdoc'</span>
+
+            <span class='Rake constant id'>Rake</span><span class='colon2 op'>::</span><span class='SshDirPublisher constant id'>SshDirPublisher</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='host identifier id'>host</span><span class='comma token'>,</span> <span class='remote_dir identifier id'>remote_dir</span><span class='comma token'>,</span> <span class='local_dir identifier id'>local_dir</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='upload identifier id'>upload</span>
+          <span class='end end kw'>end</span>
+        <span class='end end kw'>end</span>
+      <span class='end end kw'>end</span>
+    <span class='rescue rescue kw'>rescue</span> <span class='LoadError constant id'>LoadError</span>
+      <span class='puts identifier id'>puts</span> <span class='string val'>&quot;Rake SshDirPublisher is unavailable or your rubyforge environment is not configured.&quot;</span>
+    <span class='end end kw'>end</span>
+</pre>
+<p>
+Now you must initially create a &#8216;package&#8217; for your gem in your
+&#8216;project&#8217;:
+</p>
+<pre class="code">
+    $ <span class='rake identifier id'>rake</span> <span class='rubyforge identifier id'>rubyforge</span><span class='symbol val'>:setup</span>
+</pre>
+<p>
+With all that setup out of the way, you can now release to RubyForge with
+impunity. This would release the current version of your gem, and upload
+the rdoc as your project&#8217;s webpage.
+</p>
+<pre class="code">
+    $ <span class='rake identifier id'>rake</span> <span class='rubyforge identifier id'>rubyforge</span><span class='symbol val'>:release</span>
+</pre>
+<p>
+## Workflow
+</p>
+<pre class="code">
+ <span class='mult op'>*</span> <span class='Hack constant id'>Hack</span><span class='comma token'>,</span> <span class='commit identifier id'>commit</span><span class='comma token'>,</span> <span class='hack identifier id'>hack</span><span class='comma token'>,</span> <span class='commit identifier id'>commit</span><span class='comma token'>,</span> <span class='etc identifier id'>etc</span><span class='comma token'>,</span> <span class='etc identifier id'>etc</span>
+ <span class='mult op'>*</span> <span class='xstring val'>`rake version:bump:patch release`</span> <span class='to identifier id'>to</span> <span class='do do kw'>do</span> <span class='the identifier id'>the</span> <span class='actual identifier id'>actual</span> <span class='version identifier id'>version</span> <span class='bump identifier id'>bump</span> <span class='and and kw'>and</span> <span class='release identifier id'>release</span>
+ <span class='mult op'>*</span> <span class='Have constant id'>Have</span> <span class='a identifier id'>a</span> <span class='delicious identifier id'>delicious</span> <span class='scotch identifier id'>scotch</span>
+ <span class='mult op'>*</span> <span class='Install constant id'>Install</span> <span class='lbrack token'>[</span><span class='gemstalker identifier id'>gemstalker</span><span class='rbrack token'>]</span><span class='lparen token'>(</span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/github.com/</span><span class='technicalpickles identifier id'>technicalpickles</span><span class='div op'>/</span><span class='gemstalker identifier id'>gemstalker</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='and and kw'>and</span> <span class='use identifier id'>use</span> <span class='it identifier id'>it</span> <span class='to identifier id'>to</span> <span class='know identifier id'>know</span> <span class='when when kw'>when</span> <span class='gem identifier id'>gem</span> <span class='is identifier id'>is</span> <span class='built identifier id'>built</span><span class='dot token'>.</span> <span class='It constant id'>It</span> <span class='typically identifier id'>typically</span> <span class='builds identifier id'>builds</span> <span class='in in kw'>in</span> <span class='a identifier id'>a</span> <span class='few identifier id'>few</span> <span class='minutes identifier id'>minutes</span><span class='comma token'>,</span> <span class='but identifier id'>but</span> <span class='won identifier id'>won</span><span class='string val'>'t be installable for another 15 minutes.
+</span></pre>
+<p>
+## Links
+</p>
+<pre class="code">
+ <span class='mult op'>*</span> <span class='lbrack token'>[</span><span class='Bugs constant id'>Bugs</span><span class='rbrack token'>]</span><span class='lparen token'>(</span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/technicalpickles.lighthouseapp.com/</span><span class='projects identifier id'>projects</span><span class='div op'>/</span><span class='integer val'>23560</span><span class='minus op'>-</span><span class='jeweler identifier id'>jeweler</span><span class='div op'>/</span><span class='overview identifier id'>overview</span><span class='rparen token'>)</span>
+ <span class='mult op'>*</span> <span class='lbrack token'>[</span><span class='Donate constant id'>Donate</span><span class='rbrack token'>]</span><span class='lparen token'>(</span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/pledgie.org/</span><span class='campaigns identifier id'>campaigns</span><span class='div op'>/</span><span class='integer val'>2604</span><span class='rparen token'>)</span>
+</pre>
+
+      </div>
+    </div>
+  </body>
+</html>
