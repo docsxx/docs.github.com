@@ -1,0 +1,367 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: FateSearch::FulltextWriter</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class FateSearch_FulltextWriter">
+  <h1 class="title">Class: FateSearch::FulltextWriter</h1>
+  <div class="section mixins">
+  <h1>Included Modules</h1>
+  <p><a href='FulltextWriter/InMemoryWriter.html' title='FateSearch::InMemoryWriter'>FateSearch::InMemoryWriter</a></p>
+</div><div class="section docstring">
+  <p>
+FulltextWriter allows you to store field information and data in an
+input/output stream, that can be referenced in a suffix array reader and
+suffix array writer.
+</p>
+
+</div><div class="section attributes">
+  <h1>Attributes</h1>
+
+  
+    <div class="instance">
+      <h2>Instance Attributes</h2>
+      <table>
+      
+        <tr>
+          <th class="name">path</td>
+          <td class="readwrite">
+            [<span id='path-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Read-only path.
+</p>
+
+            
+          </td>
+        </tr>
+      
+      </table>
+    </div>
+  
+</div><div class="section constants">
+  
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Create a new <tt>FulltextWriter</tt>. You can pass the path option to write
+the full text field information to a file, otherwise the path will be nil
+and the <tt>FulltextWriter</tt> will use an in memory buffer. In
+windows/dos, the file will be written to in binary mode.
+</p>
+<p>
+Valid options:
+</p>
+<dl>
+<dt><tt>:path</tt></dt><dd>The file that the full text field information will be written to.
+
+</dd>
+</dl>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+23
+24
+25
+26
+27
+28
+29
+30
+31</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/fulltext_writer.rb', line 23</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='@path ivar id'>@path</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:path</span><span class='rbrack token'>]</span>
+  <span class='if if kw'>if</span> <span class='@path ivar id'>@path</span>
+    <span class='@io ivar id'>@io</span> <span class='assign token'>=</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='open identifier id'>open</span><span class='lparen token'>(</span><span class='@path ivar id'>@path</span><span class='comma token'>,</span> <span class='string val'>&quot;wb&quot;</span><span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+    <span class='initialize_in_memory_buffer identifier id'>initialize_in_memory_buffer</span>
+    <span class='@io ivar id'>@io</span> <span class='assign token'>=</span> <span class='@memory_io ivar id'>@memory_io</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#add-instance_method' title='#add'>#add</a></span><span class='args'>(primary_key, fields, analyzers, suffix_array_writer)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Add the field information for an entry to the fulltext data file.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#finish%21-instance_method' title='#finish!'>#finish!</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Write a trailing null character and close the file.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#merge-instance_method' title='#merge'>#merge</a></span><span class='args'>(fulltext_reader)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Use a full text reader to initialize the data in this writer.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table><div class="included">
+  
+  <div>
+    <h1>Public Instance Methods Included from <a href='FulltextWriter/InMemoryWriter.html' title='FateSearch::InMemoryWriter'>FateSearch::InMemoryWriter</a></h1>
+    <p><span class='name'><a href='InMemoryWriter.html#data-instance_method' title='data'>data</a></span>, <span class='name'><a href='InMemoryWriter.html#initialize_in_memory_buffer-instance_method' title='initialize_in_memory_buffer'>initialize_in_memory_buffer</a></span>, <span class='name'><a href='InMemoryWriter.html#io-instance_method' title='io'>io</a></span>, <span class='name'><a href='InMemoryWriter.html#memory%3F-instance_method' title='memory?'>memory?</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>add</h3>
+</div><div id="add-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>add</span><span class='args'>(primary_key, fields, analyzers, suffix_array_writer)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Add the field information for an entry to the fulltext data file. The
+<tt>id</tt> uniquely identifies this entry and correlates the to identifier
+used in the fragment, suffix and map writers. The <tt>field_hash</tt>
+contains a hash of the fields and values that will be stored for the
+record. The key for each field in the hash should match the key used when
+creating fields in the field_infos.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/fulltext_writer.rb', line 48</span>
+
+<span class='def def kw'>def</span> <span class='add identifier id'>add</span><span class='lparen token'>(</span><span class='primary_key identifier id'>primary_key</span><span class='comma token'>,</span> <span class='fields identifier id'>fields</span><span class='comma token'>,</span> <span class='analyzers identifier id'>analyzers</span><span class='comma token'>,</span> <span class='suffix_array_writer identifier id'>suffix_array_writer</span><span class='rparen token'>)</span>
+  <span class='base_offset identifier id'>base_offset</span> <span class='assign token'>=</span> <span class='@io ivar id'>@io</span><span class='dot token'>.</span><span class='pos identifier id'>pos</span>
+  <span class='write_header identifier id'>write_header</span><span class='lparen token'>(</span><span class='primary_key identifier id'>primary_key</span><span class='comma token'>,</span> <span class='fields identifier id'>fields</span><span class='rparen token'>)</span>
+  <span class='fields identifier id'>fields</span><span class='dot token'>.</span><span class='each_with_index identifier id'>each_with_index</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='field identifier id'>field</span><span class='comma token'>,</span><span class='index identifier id'>index</span><span class='bitor op'>|</span>
+    <span class='data identifier id'>data</span> <span class='assign token'>=</span> <span class='field identifier id'>field</span> <span class='orop op'>||</span> <span class='string val'>''</span>
+    <span class='suffix_offset identifier id'>suffix_offset</span> <span class='assign token'>=</span> <span class='store_field identifier id'>store_field</span><span class='lparen token'>(</span><span class='data identifier id'>data</span><span class='rparen token'>)</span>
+    <span class='suffix_array_writer identifier id'>suffix_array_writer</span><span class='dot token'>.</span><span class='append_suffixes identifier id'>append_suffixes</span><span class='lparen token'>(</span><span class='analyzers identifier id'>analyzers</span><span class='lbrack token'>[</span><span class='index identifier id'>index</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='data identifier id'>data</span><span class='comma token'>,</span> <span class='suffix_offset identifier id'>suffix_offset</span><span class='comma token'>,</span> <span class='base_offset identifier id'>base_offset</span><span class='comma token'>,</span> <span class='index identifier id'>index</span><span class='rparen token'>)</span>
+  <span class='rbrace token'>}</span>  
+  <span class='write_footer identifier id'>write_footer</span><span class='lparen token'>(</span><span class='lparen token'>(</span><span class='@io ivar id'>@io</span><span class='dot token'>.</span><span class='pos identifier id'>pos</span><span class='minus op'>-</span><span class='base_offset identifier id'>base_offset</span><span class='rparen token'>)</span><span class='plus op'>+</span><span class='integer val'>5</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>finish!</h3>
+</div><div id="finish%21-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>finish!</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Write a trailing null character and close the file.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+60
+61
+62
+63
+64
+65
+66</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/fulltext_writer.rb', line 60</span>
+
+<span class='def def kw'>def</span> <span class='finish! fid id'>finish!</span>
+  <span class='@io ivar id'>@io</span><span class='dot token'>.</span><span class='write identifier id'>write</span> <span class='string val'>&quot;\0&quot;</span>
+  <span class='if if kw'>if</span> <span class='lparen token'>(</span><span class='@path ivar id'>@path</span><span class='rparen token'>)</span>
+    <span class='@io ivar id'>@io</span><span class='dot token'>.</span><span class='fsync identifier id'>fsync</span>
+    <span class='@io ivar id'>@io</span><span class='dot token'>.</span><span class='close identifier id'>close</span>
+  <span class='end end kw'>end</span>  
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>merge</h3>
+</div><div id="merge-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>merge</span><span class='args'>(fulltext_reader)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Use a full text reader to initialize the data in this writer. This
+operation can happen before or after records have been added to the writer.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+36
+37
+38
+39
+40</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/fulltext_writer.rb', line 36</span>
+
+<span class='def def kw'>def</span> <span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='fulltext_reader identifier id'>fulltext_reader</span><span class='rparen token'>)</span>
+  <span class='fulltext_reader identifier id'>fulltext_reader</span><span class='dot token'>.</span><span class='dump_data identifier id'>dump_data</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='data identifier id'>data</span><span class='bitor op'>|</span>
+    <span class='@io ivar id'>@io</span><span class='dot token'>.</span><span class='write identifier id'>write</span> <span class='data identifier id'>data</span>  
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

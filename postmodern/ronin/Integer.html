@@ -1,0 +1,297 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: Integer</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class Integer">
+  <h1 class="title">Class: Integer</h1>
+  <div class="section inheritance">
+  <ul>
+  <li><a href='Object.html' title='Object'>Object</a></li><ul><li>Integer</li>
+  </ul></ul>
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#bytes-instance_method' title='#bytes'>#bytes</a></span><span class='args'>(address_length,endian=:little)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns an Array of bytes which represent the integer, using the specified
+<em>address_length</em> and given <em>endian</em>.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#hex_escape-instance_method' title='#hex_escape'>#hex_escape</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns the hex escaped form of the integer.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#pack-instance_method' title='#pack'>#pack</a></span><span class='args'>(arch,address_length=arch.address_length)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Packs the integer using the specified <em>arch</em> and the given
+<em>address_length</em>.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table><div class="inherited">
+  
+  <div>
+    <h1>Public Instance Methods Inherited from <a href='Object.html' title='Object'>Object</a></h1>
+    <p><span class='name'><a href='Object.html#class_def-instance_method' title='class_def'>class_def</a></span>, <span class='name'><a href='Object.html#meta_def-instance_method' title='meta_def'>meta_def</a></span>, <span class='name'><a href='Object.html#meta_eval-instance_method' title='meta_eval'>meta_eval</a></span>, <span class='name'><a href='Object.html#metaclass-instance_method' title='metaclass'>metaclass</a></span>, <span class='name'><a href='Object.html#metaclass_def-instance_method' title='metaclass_def'>metaclass_def</a></span>, <span class='name'><a href='Object.html#metaclass_eval-instance_method' title='metaclass_eval'>metaclass_eval</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>bytes</h3>
+</div><div id="bytes-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>bytes</span><span class='args'>(address_length,endian=:little)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns an Array of bytes which represent the integer, using the specified
+<em>address_length</em> and given <em>endian</em>.
+</p>
+<p>
+<em>endian</em> must be either <tt>:little</tt>, <tt>:big</tt> or
+<tt>:net</tt>.
+</p>
+<pre class="code">
+  <span class='integer val'>0xff41</span><span class='dot token'>.</span><span class='bytes identifier id'>bytes</span><span class='lparen token'>(</span><span class='integer val'>2</span><span class='rparen token'>)</span>
+  <span class='comment val'># =&gt; [65, 255]</span>
+
+  <span class='integer val'>0xff41</span><span class='dot token'>.</span><span class='bytes identifier id'>bytes</span><span class='lparen token'>(</span><span class='integer val'>4</span><span class='comma token'>,</span> <span class='symbol val'>:big</span><span class='rparen token'>)</span>
+  <span class='comment val'># =&gt; [0, 0, 255, 65]</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/ronin/formatting/extensions/binary/integer.rb', line 41</span>
+
+<span class='def def kw'>def</span> <span class='bytes identifier id'>bytes</span><span class='lparen token'>(</span><span class='address_length identifier id'>address_length</span><span class='comma token'>,</span><span class='endian identifier id'>endian</span><span class='assign token'>=</span><span class='symbol val'>:little</span><span class='rparen token'>)</span>
+  <span class='endian identifier id'>endian</span> <span class='assign token'>=</span> <span class='endian identifier id'>endian</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+  <span class='buffer identifier id'>buffer</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+
+  <span class='if if kw'>if</span> <span class='lparen token'>(</span><span class='endian identifier id'>endian</span> <span class='eq op'>==</span> <span class='string val'>'little'</span> <span class='orop op'>||</span> <span class='endian identifier id'>endian</span> <span class='eq op'>==</span> <span class='string val'>'net'</span><span class='rparen token'>)</span>
+    <span class='mask identifier id'>mask</span> <span class='assign token'>=</span> <span class='integer val'>0xff</span>
+
+    <span class='address_length identifier id'>address_length</span><span class='dot token'>.</span><span class='times identifier id'>times</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='i identifier id'>i</span><span class='bitor op'>|</span>
+      <span class='buffer identifier id'>buffer</span> <span class='lshft op'>&lt;&lt;</span> <span class='lparen token'>(</span><span class='lparen token'>(</span><span class='self self kw'>self</span> <span class='bitand op'>&amp;</span> <span class='mask identifier id'>mask</span><span class='rparen token'>)</span> <span class='rshft op'>&gt;&gt;</span> <span class='lparen token'>(</span><span class='i identifier id'>i</span><span class='mult op'>*</span><span class='integer val'>8</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+      <span class='mask identifier id'>mask</span> <span class='opasgn op'>&lt;&lt;=</span> <span class='integer val'>8</span>
+    <span class='end end kw'>end</span>
+  <span class='elsif elsif kw'>elsif</span> <span class='endian identifier id'>endian</span> <span class='eq op'>==</span> <span class='string val'>'big'</span>
+    <span class='mask identifier id'>mask</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='integer val'>0xff</span> <span class='lshft op'>&lt;&lt;</span> <span class='lparen token'>(</span><span class='lparen token'>(</span><span class='address_length identifier id'>address_length</span><span class='minus op'>-</span><span class='integer val'>1</span><span class='rparen token'>)</span><span class='mult op'>*</span><span class='integer val'>8</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+
+    <span class='address_length identifier id'>address_length</span><span class='dot token'>.</span><span class='times identifier id'>times</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='i identifier id'>i</span><span class='bitor op'>|</span>
+      <span class='buffer identifier id'>buffer</span> <span class='lshft op'>&lt;&lt;</span> <span class='lparen token'>(</span><span class='lparen token'>(</span><span class='self self kw'>self</span> <span class='bitand op'>&amp;</span> <span class='mask identifier id'>mask</span><span class='rparen token'>)</span> <span class='rshft op'>&gt;&gt;</span> <span class='lparen token'>(</span><span class='lparen token'>(</span><span class='address_length identifier id'>address_length</span><span class='minus op'>-</span><span class='i identifier id'>i</span><span class='minus op'>-</span><span class='integer val'>1</span><span class='rparen token'>)</span><span class='mult op'>*</span><span class='integer val'>8</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+      <span class='mask identifier id'>mask</span> <span class='opasgn op'>&gt;&gt;=</span> <span class='integer val'>8</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+
+  <span class='return return kw'>return</span> <span class='buffer identifier id'>buffer</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>hex_escape</h3>
+</div><div id="hex_escape-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>hex_escape</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns the hex escaped form of the integer.
+</p>
+<pre class="code">
+  <span class='float val'>42</span><span class='dot token'>.</span><span class='hex_escape identifier id'>hex_escape</span>
+  <span class='comment val'># =&gt; &quot;\\x2a&quot;</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+83
+84
+85</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/ronin/formatting/extensions/binary/integer.rb', line 83</span>
+
+<span class='def def kw'>def</span> <span class='hex_escape identifier id'>hex_escape</span>
+  <span class='string val'>&quot;\\x%.2x&quot;</span> <span class='mod op'>%</span> <span class='self self kw'>self</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>pack</h3>
+</div><div id="pack-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>pack</span><span class='args'>(arch,address_length=arch.address_length)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Packs the integer using the specified <em>arch</em> and the given
+<em>address_length</em>. The <em>address_length</em> will default to the
+address length of the <em>arch</em>.
+</p>
+<pre class="code">
+  <span class='integer val'>0x41</span><span class='dot token'>.</span><span class='pack identifier id'>pack</span><span class='lparen token'>(</span><span class='Arch constant id'>Arch</span><span class='dot token'>.</span><span class='i686 identifier id'>i686</span><span class='rparen token'>)</span> <span class='comment val'># =&gt; &quot;A\000\000\000&quot;</span>
+
+  <span class='integer val'>0x41</span><span class='dot token'>.</span><span class='pack identifier id'>pack</span><span class='lparen token'>(</span><span class='Arch constant id'>Arch</span><span class='dot token'>.</span><span class='ppc identifier id'>ppc</span><span class='comma token'>,</span><span class='integer val'>2</span><span class='rparen token'>)</span> <span class='comment val'># =&gt; &quot;\000A&quot;</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+73
+74
+75</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/ronin/formatting/extensions/binary/integer.rb', line 73</span>
+
+<span class='def def kw'>def</span> <span class='pack identifier id'>pack</span><span class='lparen token'>(</span><span class='arch identifier id'>arch</span><span class='comma token'>,</span><span class='address_length identifier id'>address_length</span><span class='assign token'>=</span><span class='arch identifier id'>arch</span><span class='dot token'>.</span><span class='address_length identifier id'>address_length</span><span class='rparen token'>)</span>
+  <span class='bytes identifier id'>bytes</span><span class='lparen token'>(</span><span class='address_length identifier id'>address_length</span><span class='comma token'>,</span><span class='arch identifier id'>arch</span><span class='dot token'>.</span><span class='endian identifier id'>endian</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='b identifier id'>b</span><span class='bitor op'>|</span> <span class='b identifier id'>b</span><span class='dot token'>.</span><span class='chr identifier id'>chr</span> <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='join identifier id'>join</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

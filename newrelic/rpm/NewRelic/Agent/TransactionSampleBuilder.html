@@ -1,0 +1,649 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: NewRelic::Agent::TransactionSampleBuilder</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class NewRelic_Agent_TransactionSampleBuilder">
+  <h1 class="title">Class: NewRelic::Agent::TransactionSampleBuilder</h1>
+  <div class="section inheritance">
+  <ul>
+  <li><a href='../../Object.html' title='Object'>Object</a></li><ul><li>NewRelic::Agent::TransactionSampleBuilder</li>
+  </ul></ul>
+</div><div class="section mixins">
+  <h1>Included Modules</h1>
+  <p><a href='TransactionSampleBuilder/CollectionHelper.html' title='NewRelic::Agent::CollectionHelper'>NewRelic::Agent::CollectionHelper</a></p>
+</div><div class="section docstring">
+  <p>
+a builder is created with every sampled transaction, to dynamically
+generate the sampled data. It is a thread-local object, and is not accessed
+by any other thread so no need for synchronization.
+</p>
+
+</div><div class="section attributes">
+  <h1>Attributes</h1>
+
+  
+    <div class="instance">
+      <h2>Instance Attributes</h2>
+      <table>
+      
+        <tr>
+          <th class="name">current_segment</td>
+          <td class="readwrite">
+            [<span id='current_segment-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>current_segment</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+      </table>
+    </div>
+  
+</div><div class="section constants">
+  
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(time=Time.now.to_f)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+193
+194
+195
+196
+197</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/new_relic/agent/transaction_sampler.rb', line 193</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='time identifier id'>time</span><span class='assign token'>=</span><span class='Time constant id'>Time</span><span class='dot token'>.</span><span class='now identifier id'>now</span><span class='dot token'>.</span><span class='to_f identifier id'>to_f</span><span class='rparen token'>)</span>
+  <span class='@sample ivar id'>@sample</span> <span class='assign token'>=</span> <span class='NewRelic constant id'>NewRelic</span><span class='colon2 op'>::</span><span class='TransactionSample constant id'>TransactionSample</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='time identifier id'>time</span><span class='rparen token'>)</span>
+  <span class='@sample_start ivar id'>@sample_start</span> <span class='assign token'>=</span> <span class='time identifier id'>time</span>
+  <span class='@current_segment ivar id'>@current_segment</span> <span class='assign token'>=</span> <span class='@sample ivar id'>@sample</span><span class='dot token'>.</span><span class='root_segment identifier id'>root_segment</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#finish_trace-instance_method' title='#finish_trace'>#finish_trace</a></span><span class='args'>(time)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#freeze-instance_method' title='#freeze'>#freeze</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#sample-instance_method' title='#sample'>#sample</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#scope_depth-instance_method' title='#scope_depth'>#scope_depth</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#set_transaction_cpu_time-instance_method' title='#set_transaction_cpu_time'>#set_transaction_cpu_time</a></span><span class='args'>(cpu_time)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#set_transaction_info-instance_method' title='#set_transaction_info'>#set_transaction_info</a></span><span class='args'>(path, request, params)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#trace_entry-instance_method' title='#trace_entry'>#trace_entry</a></span><span class='args'>(metric_name, time)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#trace_exit-instance_method' title='#trace_exit'>#trace_exit</a></span><span class='args'>(metric_name, time)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table><div class="inherited">
+  
+  <div>
+    <h1>Public Instance Methods Inherited from <a href='../../Object.html' title='Object'>Object</a></h1>
+    <p><span class='name'><a href='../../Object.html#new_relic_load-instance_method' title='new_relic_load'>new_relic_load</a></span>, <span class='name'><a href='../../Object.html#new_relic_require-instance_method' title='new_relic_require'>new_relic_require</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div><div class="included">
+  
+  <div>
+    <h1>Public Instance Methods Included from <a href='TransactionSampleBuilder/CollectionHelper.html' title='NewRelic::Agent::CollectionHelper'>NewRelic::Agent::CollectionHelper</a></h1>
+    <p><span class='name'><a href='CollectionHelper.html#normalize_params-instance_method' title='normalize_params'>normalize_params</a></span>, <span class='name'><a href='CollectionHelper.html#strip_nr_from_backtrace-instance_method' title='strip_nr_from_backtrace'>strip_nr_from_backtrace</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>finish_trace</h3>
+</div><div id="finish_trace-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>finish_trace</span><span class='args'>(time)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/new_relic/agent/transaction_sampler.rb', line 214</span>
+
+<span class='def def kw'>def</span> <span class='finish_trace identifier id'>finish_trace</span><span class='lparen token'>(</span><span class='time identifier id'>time</span><span class='rparen token'>)</span>
+  <span class='comment val'># This should never get called twice, but in a rare case that we can't reproduce in house it does.</span>
+  <span class='comment val'># log forensics and return gracefully</span>
+  <span class='if if kw'>if</span> <span class='@sample ivar id'>@sample</span><span class='dot token'>.</span><span class='frozen? fid id'>frozen?</span>
+    <span class='log identifier id'>log</span> <span class='assign token'>=</span> <span class='NewRelic constant id'>NewRelic</span><span class='colon2 op'>::</span><span class='Config constant id'>Config</span><span class='dot token'>.</span><span class='instance identifier id'>instance</span><span class='dot token'>.</span><span class='log identifier id'>log</span>
+    
+    <span class='log identifier id'>log</span><span class='dot token'>.</span><span class='warn identifier id'>warn</span> <span class='string val'>&quot;Unexpected double-freeze of Transaction Trace Object.&quot;</span>
+    <span class='log identifier id'>log</span><span class='dot token'>.</span><span class='info identifier id'>info</span> <span class='string val'>&quot;Please send this diagnostic data to New Relic&quot;</span>
+    <span class='log identifier id'>log</span><span class='dot token'>.</span><span class='info identifier id'>info</span> <span class='@sample ivar id'>@sample</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+    <span class='return return kw'>return</span>
+  <span class='end end kw'>end</span>
+  
+  <span class='@sample ivar id'>@sample</span><span class='dot token'>.</span><span class='root_segment identifier id'>root_segment</span><span class='dot token'>.</span><span class='end_trace identifier id'>end_trace</span><span class='lparen token'>(</span><span class='time identifier id'>time</span> <span class='minus op'>-</span> <span class='@sample_start ivar id'>@sample_start</span><span class='rparen token'>)</span>
+  <span class='@sample ivar id'>@sample</span><span class='dot token'>.</span><span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:custom_params</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='normalize_params identifier id'>normalize_params</span><span class='lparen token'>(</span><span class='NewRelic constant id'>NewRelic</span><span class='colon2 op'>::</span><span class='Agent constant id'>Agent</span><span class='dot token'>.</span><span class='instance identifier id'>instance</span><span class='dot token'>.</span><span class='custom_params identifier id'>custom_params</span><span class='rparen token'>)</span> 
+  <span class='@sample ivar id'>@sample</span><span class='dot token'>.</span><span class='freeze identifier id'>freeze</span>
+  <span class='@current_segment ivar id'>@current_segment</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>freeze</h3>
+</div><div id="freeze-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>freeze</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+244
+245
+246</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/new_relic/agent/transaction_sampler.rb', line 244</span>
+
+<span class='def def kw'>def</span> <span class='freeze identifier id'>freeze</span>
+  <span class='@sample ivar id'>@sample</span><span class='dot token'>.</span><span class='freeze identifier id'>freeze</span> <span class='unless unless_mod kw'>unless</span> <span class='sample identifier id'>sample</span><span class='dot token'>.</span><span class='frozen? fid id'>frozen?</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>sample</h3>
+</div><div id="sample-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>sample</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+268
+269
+270
+271</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/new_relic/agent/transaction_sampler.rb', line 268</span>
+
+<span class='def def kw'>def</span> <span class='sample identifier id'>sample</span>
+  <span class='fail identifier id'>fail</span> <span class='string val'>&quot;Not finished building&quot;</span> <span class='unless unless_mod kw'>unless</span> <span class='@sample ivar id'>@sample</span><span class='dot token'>.</span><span class='frozen? fid id'>frozen?</span>
+  <span class='@sample ivar id'>@sample</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>scope_depth</h3>
+</div><div id="scope_depth-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>scope_depth</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/new_relic/agent/transaction_sampler.rb', line 232</span>
+
+<span class='def def kw'>def</span> <span class='scope_depth identifier id'>scope_depth</span>
+  <span class='depth identifier id'>depth</span> <span class='assign token'>=</span> <span class='integer val'>-1</span>        <span class='comment val'># have to account for the root</span>
+  <span class='current identifier id'>current</span> <span class='assign token'>=</span> <span class='@current_segment ivar id'>@current_segment</span>
+  
+  <span class='while while kw'>while</span><span class='lparen token'>(</span><span class='current identifier id'>current</span><span class='rparen token'>)</span>
+    <span class='depth identifier id'>depth</span> <span class='opasgn op'>+=</span> <span class='integer val'>1</span>
+    <span class='current identifier id'>current</span> <span class='assign token'>=</span> <span class='current identifier id'>current</span><span class='dot token'>.</span><span class='parent_segment identifier id'>parent_segment</span>
+  <span class='end end kw'>end</span>
+  
+  <span class='depth identifier id'>depth</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>set_transaction_cpu_time</h3>
+</div><div id="set_transaction_cpu_time-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>set_transaction_cpu_time</span><span class='args'>(cpu_time)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+263
+264
+265</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/new_relic/agent/transaction_sampler.rb', line 263</span>
+
+<span class='def def kw'>def</span> <span class='set_transaction_cpu_time identifier id'>set_transaction_cpu_time</span><span class='lparen token'>(</span><span class='cpu_time identifier id'>cpu_time</span><span class='rparen token'>)</span>
+  <span class='@sample ivar id'>@sample</span><span class='dot token'>.</span><span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:cpu_time</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='cpu_time identifier id'>cpu_time</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>set_transaction_info</h3>
+</div><div id="set_transaction_info-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>set_transaction_info</span><span class='args'>(path, request, params)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/new_relic/agent/transaction_sampler.rb', line 249</span>
+
+<span class='def def kw'>def</span> <span class='set_transaction_info identifier id'>set_transaction_info</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='comma token'>,</span> <span class='request identifier id'>request</span><span class='comma token'>,</span> <span class='params identifier id'>params</span><span class='rparen token'>)</span>
+  <span class='@sample ivar id'>@sample</span><span class='dot token'>.</span><span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:path</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='path identifier id'>path</span>
+  
+  <span class='if if kw'>if</span> <span class='TransactionSampler constant id'>TransactionSampler</span><span class='dot token'>.</span><span class='capture_params identifier id'>capture_params</span>
+    <span class='params identifier id'>params</span> <span class='assign token'>=</span> <span class='normalize_params identifier id'>normalize_params</span> <span class='params identifier id'>params</span>
+    
+    <span class='@sample ivar id'>@sample</span><span class='dot token'>.</span><span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:request_params</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='merge! fid id'>merge!</span><span class='lparen token'>(</span><span class='params identifier id'>params</span><span class='rparen token'>)</span>
+    <span class='@sample ivar id'>@sample</span><span class='dot token'>.</span><span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:request_params</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span> <span class='symbol val'>:controller</span>
+    <span class='@sample ivar id'>@sample</span><span class='dot token'>.</span><span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:request_params</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span> <span class='symbol val'>:action</span>
+  <span class='end end kw'>end</span>
+  
+  <span class='@sample ivar id'>@sample</span><span class='dot token'>.</span><span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:uri</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='request identifier id'>request</span><span class='dot token'>.</span><span class='path identifier id'>path</span> <span class='if if_mod kw'>if</span> <span class='request identifier id'>request</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>trace_entry</h3>
+</div><div id="trace_entry-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>trace_entry</span><span class='args'>(metric_name, time)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+199
+200
+201
+202
+203</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/new_relic/agent/transaction_sampler.rb', line 199</span>
+
+<span class='def def kw'>def</span> <span class='trace_entry identifier id'>trace_entry</span><span class='lparen token'>(</span><span class='metric_name identifier id'>metric_name</span><span class='comma token'>,</span> <span class='time identifier id'>time</span><span class='rparen token'>)</span>
+  <span class='segment identifier id'>segment</span> <span class='assign token'>=</span> <span class='@sample ivar id'>@sample</span><span class='dot token'>.</span><span class='create_segment identifier id'>create_segment</span><span class='lparen token'>(</span><span class='time identifier id'>time</span> <span class='minus op'>-</span> <span class='@sample_start ivar id'>@sample_start</span><span class='comma token'>,</span> <span class='metric_name identifier id'>metric_name</span><span class='rparen token'>)</span>
+  <span class='@current_segment ivar id'>@current_segment</span><span class='dot token'>.</span><span class='add_called_segment identifier id'>add_called_segment</span><span class='lparen token'>(</span><span class='segment identifier id'>segment</span><span class='rparen token'>)</span>
+  <span class='@current_segment ivar id'>@current_segment</span> <span class='assign token'>=</span> <span class='segment identifier id'>segment</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>trace_exit</h3>
+</div><div id="trace_exit-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>trace_exit</span><span class='args'>(metric_name, time)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+205
+206
+207
+208
+209
+210
+211
+212</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/new_relic/agent/transaction_sampler.rb', line 205</span>
+
+<span class='def def kw'>def</span> <span class='trace_exit identifier id'>trace_exit</span><span class='lparen token'>(</span><span class='metric_name identifier id'>metric_name</span><span class='comma token'>,</span> <span class='time identifier id'>time</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='metric_name identifier id'>metric_name</span> <span class='neq op'>!=</span> <span class='@current_segment ivar id'>@current_segment</span><span class='dot token'>.</span><span class='metric_name identifier id'>metric_name</span>
+    <span class='fail identifier id'>fail</span> <span class='dstring node'>&quot;unbalanced entry/exit: #{metric_name} != #{@current_segment.metric_name}&quot;</span>
+  <span class='end end kw'>end</span>
+  
+  <span class='@current_segment ivar id'>@current_segment</span><span class='dot token'>.</span><span class='end_trace identifier id'>end_trace</span><span class='lparen token'>(</span><span class='time identifier id'>time</span> <span class='minus op'>-</span> <span class='@sample_start ivar id'>@sample_start</span><span class='rparen token'>)</span>
+  <span class='@current_segment ivar id'>@current_segment</span> <span class='assign token'>=</span> <span class='@current_segment ivar id'>@current_segment</span><span class='dot token'>.</span><span class='parent_segment identifier id'>parent_segment</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

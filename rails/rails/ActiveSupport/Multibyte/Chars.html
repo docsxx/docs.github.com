@@ -1,0 +1,2325 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: ActiveSupport::Multibyte::Chars</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class ActiveSupport_Multibyte_Chars">
+  <h1 class="title">Class: ActiveSupport::Multibyte::Chars</h1>
+  <div class="section inheritance">
+  <ul>
+  <li><a href='../../Object.html' title='Object'>Object</a></li><ul><li>ActiveSupport::Multibyte::Chars</li>
+  </ul></ul>
+</div><div class="section mixins">
+  <h1>Included Modules</h1>
+  <p>Comparable</p>
+</div><div class="section docstring">
+  <p>
+Chars enables you to work transparently with UTF-8 encoding in the Ruby
+String class without having extensive knowledge about the encoding. A Chars
+object accepts a string upon initialization and proxies String methods in
+an encoding safe manner. All the normal String methods are also implemented
+on the proxy.
+</p>
+<p>
+String methods are proxied through the Chars object, and can be accessed
+through the <tt>mb_chars</tt> method. Methods which would normally return a
+String object now return a Chars object so methods can be chained.
+</p>
+<pre class="code">
+  <span class='string val'>&quot;The Perfect String  &quot;</span><span class='dot token'>.</span><span class='mb_chars identifier id'>mb_chars</span><span class='dot token'>.</span><span class='downcase identifier id'>downcase</span><span class='dot token'>.</span><span class='strip identifier id'>strip</span><span class='dot token'>.</span><span class='normalize identifier id'>normalize</span> <span class='comment val'>#=&gt; &quot;the perfect string&quot;</span>
+</pre>
+<p>
+Chars objects are perfectly interchangeable with String objects as long as
+no explicit class checks are made. If certain methods do explicitly check
+the class, call <tt>to_s</tt> before you pass chars objects to them.
+</p>
+<pre class="code">
+  <span class='bad identifier id'>bad</span><span class='dot token'>.</span><span class='explicit_checking_method identifier id'>explicit_checking_method</span> <span class='string val'>&quot;T&quot;</span><span class='dot token'>.</span><span class='mb_chars identifier id'>mb_chars</span><span class='dot token'>.</span><span class='downcase identifier id'>downcase</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+</pre>
+<p>
+The default Chars implementation assumes that the encoding of the string is
+UTF-8, if you want to handle different encodings you can write your own
+multibyte string handler and configure it through
+ActiveSupport::Multibyte.proxy_class.
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='CharsForUTF32 constant id'>CharsForUTF32</span>
+    <span class='def def kw'>def</span> <span class='size identifier id'>size</span>
+      <span class='@wrapped_string ivar id'>@wrapped_string</span><span class='dot token'>.</span><span class='size identifier id'>size</span> <span class='div op'>/</span> <span class='integer val'>4</span>
+    <span class='end end kw'>end</span>
+
+    <span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='accepts? fid id'>accepts?</span><span class='lparen token'>(</span><span class='string identifier id'>string</span><span class='rparen token'>)</span>
+      <span class='string identifier id'>string</span><span class='dot token'>.</span><span class='length identifier id'>length</span> <span class='mod op'>%</span> <span class='integer val'>4</span> <span class='eq op'>==</span> <span class='integer val'>0</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+
+  <span class='ActiveSupport constant id'>ActiveSupport</span><span class='colon2 op'>::</span><span class='Multibyte constant id'>Multibyte</span><span class='dot token'>.</span><span class='proxy_class identifier id'>proxy_class</span> <span class='assign token'>=</span> <span class='CharsForUTF32 constant id'>CharsForUTF32</span>
+</pre>
+
+</div><div class="section attributes">
+  <h1>Attributes</h1>
+
+  
+    <div class="instance">
+      <h2>Instance Attributes</h2>
+      <table>
+      
+        <tr>
+          <th class="name">wrapped_string</td>
+          <td class="readwrite">
+            [<span id='wrapped_string-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>wrapped_string</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+      </table>
+    </div>
+  
+</div><div class="section constants">
+  <div class="thisclass">
+  <h1>Constants</h1>
+  <dl>
+    
+      <dt id="HANGUL_JAMO_FIRST-constant">HANGUL_JAMO_FIRST</dt>
+      <dd>0x1100</dd>
+    
+      <dt id="HANGUL_JAMO_LAST-constant">HANGUL_JAMO_LAST</dt>
+      <dd>0x11FF</dd>
+    
+      <dt id="HANGUL_LBASE-constant">HANGUL_LBASE</dt>
+      <dd>0x1100</dd>
+    
+      <dt id="HANGUL_LCOUNT-constant">HANGUL_LCOUNT</dt>
+      <dd>19</dd>
+    
+      <dt id="HANGUL_NCOUNT-constant">HANGUL_NCOUNT</dt>
+      <dd>HANGUL_VCOUNT * HANGUL_TCOUNT</dd>
+    
+      <dt id="HANGUL_SBASE-constant">HANGUL_SBASE</dt>
+      <dd>0xAC00</dd>
+    
+      <dt id="HANGUL_SCOUNT-constant">HANGUL_SCOUNT</dt>
+      <dd>11172</dd>
+    
+      <dt id="HANGUL_SLAST-constant">HANGUL_SLAST</dt>
+      <dd>HANGUL_SBASE + HANGUL_SCOUNT</dd>
+    
+      <dt id="HANGUL_TBASE-constant">HANGUL_TBASE</dt>
+      <dd>0x11A7</dd>
+    
+      <dt id="HANGUL_TCOUNT-constant">HANGUL_TCOUNT</dt>
+      <dd>28</dd>
+    
+      <dt id="HANGUL_VBASE-constant">HANGUL_VBASE</dt>
+      <dd>0x1161</dd>
+    
+      <dt id="HANGUL_VCOUNT-constant">HANGUL_VCOUNT</dt>
+      <dd>21</dd>
+    
+      <dt id="UNICODE_LEADERS_AND_TRAILERS-constant">UNICODE_LEADERS_AND_TRAILERS</dt>
+      <dd>UNICODE_WHITESPACE + [65279] </dd>
+    
+      <dt id="UNICODE_WHITESPACE-constant">UNICODE_WHITESPACE</dt>
+      <dd>[        (0x0009..0x000D).to_a,         0x0020,                        0x0085,                        0x00A0,                        0x1680,                        0x180E,                        (0x2000..0x200A).to_a,         0x2028,                        0x2029,                        0x202F,                        0x205F,                        0x3000,                      ].flatten.freeze</dd>
+    
+  </dl>
+</div>
+
+</div><div class="section methodmissing">
+  <h1>Dynamic Method Handling</h1>
+
+  <p class="note">
+    This class handles dynamic methods through the <tt>method_missing</tt> method
+    
+  </p>
+
+  <div id="method_missing-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>method_missing</span><span class='args'>(method, *args, &amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Forward all undefined methods to the wrapped string.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+104
+105
+106
+107
+108
+109
+110
+111
+112</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activesupport/lib/active_support/multibyte/chars.rb', line 104</span>
+
+<span class='def def kw'>def</span> <span class='method_missing identifier id'>method_missing</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='method identifier id'>method</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='match op'>=~</span> <span class='regexp val'>/!$/</span>
+    <span class='@wrapped_string ivar id'>@wrapped_string</span><span class='dot token'>.</span><span class='__send__ identifier id'>__send__</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+    <span class='self self kw'>self</span>
+  <span class='else else kw'>else</span>
+    <span class='result identifier id'>result</span> <span class='assign token'>=</span> <span class='@wrapped_string ivar id'>@wrapped_string</span><span class='dot token'>.</span><span class='__send__ identifier id'>__send__</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+    <span class='result identifier id'>result</span><span class='dot token'>.</span><span class='kind_of? fid id'>kind_of?</span><span class='lparen token'>(</span><span class='String constant id'>String</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='chars identifier id'>chars</span><span class='lparen token'>(</span><span class='result identifier id'>result</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='result identifier id'>result</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <h1>Public Class Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#codepoints_to_pattern-class_method' title='codepoints_to_pattern'>codepoints_to_pattern</a></span><span class='args'>(array_of_codepoints)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns a regular expression pattern that matches the passed Unicode
+codepoints.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#consumes%3F-class_method' title='consumes?'>consumes?</a></span><span class='args'>(string)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns <tt>true</tt> when the proxy class can handle the string.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#wants%3F-class_method' title='wants?'>wants?</a></span><span class='args'>(string)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns <tt>true</tt> if the Chars class can and should act as a proxy for
+the string <em>string</em>.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+  <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#%2B-instance_method' title='#+'>#+</a></span><span class='args'>(other)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns a new Chars object containing the <em>other</em> object
+concatenated to the string.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#%3C%3D-instance_method' title='#&lt;='>#&lt;=</a></span><span class='args'>&gt;(other)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns <tt>-1</tt>, <tt>0</tt> or <tt>+1</tt> depending on whether the
+Chars object is to be sorted before, equal or after the object on the right
+side of the operation.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#%3D%7E-instance_method' title='#=~'>#=~</a></span><span class='args'>(other)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Like <tt>String#=~</tt> only it returns the character offset (in
+codepoints) instead of the byte offset.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#%5B%5D%3D-instance_method' title='#[]='>#[]=</a></span><span class='args'>(*args)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Like <tt>String#[]=</tt>, except instead of byte offsets you specify
+character offsets.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#acts_like_string%3F-instance_method' title='#acts_like_string?'>#acts_like_string?</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Enable more predictable duck-typing on String-like classes.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#capitalize-instance_method' title='#capitalize'>#capitalize</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Converts the first character to uppercase and the remainder to lowercase.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#center-instance_method' title='#center'>#center</a></span><span class='args'>(integer, padstr=' ')</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Works just like <tt>String#center</tt>, only integer specifies characters
+instead of bytes.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#downcase-instance_method' title='#downcase'>#downcase</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Convert characters in the string to lowercase.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#include%3F-instance_method' title='#include?'>#include?</a></span><span class='args'>(other)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns <tt>true</tt> if contained string contains <em>other</em>.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#index-instance_method' title='#index'>#index</a></span><span class='args'>(needle, offset=0)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns the position <em>needle</em> in the string, counting in codepoints.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#insert-instance_method' title='#insert'>#insert</a></span><span class='args'>(offset, fragment)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Inserts the passed string at specified codepoint offsets.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#ljust-instance_method' title='#ljust'>#ljust</a></span><span class='args'>(integer, padstr=' ')</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Works just like <tt>String#ljust</tt>, only integer specifies characters
+instead of bytes.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#lstrip-instance_method' title='#lstrip'>#lstrip</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Strips entire range of Unicode whitespace from the left of the string.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#normalize-instance_method' title='#normalize'>#normalize</a></span><span class='args'>(form=ActiveSupport::Multibyte.default_normalization_form)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns the KC normalization of the string by default.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#ord-instance_method' title='#ord'>#ord</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns the codepoint of the first character in the string.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#respond_to%3F-instance_method' title='#respond_to?'>#respond_to?</a></span><span class='args'>(method, include_private=false)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns <tt>true</tt> if <em>obj</em> responds to the given method.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#reverse-instance_method' title='#reverse'>#reverse</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Reverses all characters in the string.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#rjust-instance_method' title='#rjust'>#rjust</a></span><span class='args'>(integer, padstr=' ')</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Works just like <tt>String#rjust</tt>, only integer specifies characters
+instead of bytes.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#rstrip-instance_method' title='#rstrip'>#rstrip</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Strips entire range of Unicode whitespace from the right of the string.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#size-instance_method' title='#size'>#size</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+          <span class='alias'>#length</span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns the number of codepoints in the string.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#slice-instance_method' title='#slice'>#slice</a></span><span class='args'>(*args)</span>
+        <span class='block'></span>
+        
+          <span class='alias'>#[]</span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Implements Unicode-aware slice with codepoints.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#slice%21-instance_method' title='#slice!'>#slice!</a></span><span class='args'>(*args)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Like <tt>String#slice!</tt>, except instead of byte offsets you specify
+character offsets.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#split-instance_method' title='#split'>#split</a></span><span class='args'>(*args)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Works just like <tt>String#split</tt>, with the exception that the items in
+the resulting list are Chars instances instead of String.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#strip-instance_method' title='#strip'>#strip</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Strips entire range of Unicode whitespace from the right and left of the
+string.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#upcase-instance_method' title='#upcase'>#upcase</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Convert characters in the string to uppercase.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table><div class="inherited">
+  
+  <div>
+    <h1>Public Instance Methods Inherited from <a href='../../Object.html' title='Object'>Object</a></h1>
+    <p><span class='name'><a href='../../Object.html#blank%3F-instance_method' title='blank?'>blank?</a></span>, <span class='name'><a href='../../Object.html#duplicable%3F-instance_method' title='duplicable?'>duplicable?</a></span>, <span class='name'><a href='../../Object.html#present%3F-instance_method' title='present?'>present?</a></span>, <span class='name'><a href='../../Object.html#to_param-instance_method' title='to_param'>to_param</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails class public">
+  <h1>Public Class Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>codepoints_to_pattern</h3>
+</div><div id="codepoints_to_pattern-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>codepoints_to_pattern</span><span class='args'>(array_of_codepoints)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns a regular expression pattern that matches the passed Unicode
+codepoints
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+70
+71
+72</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activesupport/lib/active_support/multibyte/chars.rb', line 70</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='codepoints_to_pattern identifier id'>codepoints_to_pattern</span><span class='lparen token'>(</span><span class='array_of_codepoints identifier id'>array_of_codepoints</span><span class='rparen token'>)</span> <span class='comment val'>#:nodoc:</span>
+  <span class='array_of_codepoints identifier id'>array_of_codepoints</span><span class='dot token'>.</span><span class='collect identifier id'>collect</span><span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='e identifier id'>e</span><span class='bitor op'>|</span> <span class='lbrack token'>[</span><span class='e identifier id'>e</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='pack identifier id'>pack</span> <span class='string val'>'U*'</span> <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='string val'>'|'</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>consumes?</h3>
+</div><div id="consumes%3F-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>consumes?</span><span class='args'>(string)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns <tt>true</tt> when the proxy class can handle the string. Returns
+<tt>false</tt> otherwise.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+132
+133
+134
+135
+136
+137
+138</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activesupport/lib/active_support/multibyte/chars.rb', line 132</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='consumes? fid id'>consumes?</span><span class='lparen token'>(</span><span class='string identifier id'>string</span><span class='rparen token'>)</span>
+  <span class='comment val'># Unpack is a little bit faster than regular expressions.</span>
+  <span class='string identifier id'>string</span><span class='dot token'>.</span><span class='unpack identifier id'>unpack</span><span class='lparen token'>(</span><span class='string val'>'U*'</span><span class='rparen token'>)</span>
+  <span class='true true kw'>true</span>
+<span class='rescue rescue kw'>rescue</span> <span class='ArgumentError constant id'>ArgumentError</span>
+  <span class='false false kw'>false</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>wants?</h3>
+</div><div id="wants%3F-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>wants?</span><span class='args'>(string)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns <tt>true</tt> if the Chars class can and should act as a proxy for
+the string <em>string</em>. Returns <tt>false</tt> otherwise.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+127
+128
+129</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activesupport/lib/active_support/multibyte/chars.rb', line 127</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='wants? fid id'>wants?</span><span class='lparen token'>(</span><span class='string identifier id'>string</span><span class='rparen token'>)</span>
+  <span class='$KCODE gvar id'>$KCODE</span> <span class='eq op'>==</span> <span class='string val'>'UTF8'</span> <span class='andop op'>&amp;&amp;</span> <span class='consumes? fid id'>consumes?</span><span class='lparen token'>(</span><span class='string identifier id'>string</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div><div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>+</h3>
+</div><div id="%2B-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>+</span><span class='args'>(other)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns a new Chars object containing the <em>other</em> object
+concatenated to the string.
+</p>
+<p>
+Example:
+</p>
+<pre class="code">
+  <span class='lparen token'>(</span><span class='string val'>'Café'</span><span class='dot token'>.</span><span class='mb_chars identifier id'>mb_chars</span> <span class='plus op'>+</span> <span class='string val'>' périferôl'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='comment val'>#=&gt; &quot;Café périferôl&quot;</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+156
+157
+158</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activesupport/lib/active_support/multibyte/chars.rb', line 156</span>
+
+<span class='def def kw'>def</span> <span class='plus op'>+</span><span class='lparen token'>(</span><span class='other identifier id'>other</span><span class='rparen token'>)</span>
+  <span class='self self kw'>self</span> <span class='lshft op'>&lt;&lt;</span> <span class='other identifier id'>other</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>&lt;=</h3>
+</div><div id="%3C%3D-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'><=</span><span class='args'>&gt;(other)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns <tt>-1</tt>, <tt>0</tt> or <tt>+1</tt> depending on whether the
+Chars object is to be sorted before, equal or after the object on the right
+side of the operation. It accepts any object that implements <tt>to_s</tt>.
+See <tt>String#&lt;=&gt;</tt> for more details.
+</p>
+<p>
+Example:
+</p>
+<pre class="code">
+  <span class='string val'>'é'</span><span class='dot token'>.</span><span class='mb_chars identifier id'>mb_chars</span> <span class='cmp op'>&lt;=&gt;</span> <span class='string val'>'ü'</span><span class='dot token'>.</span><span class='mb_chars identifier id'>mb_chars</span> <span class='comment val'>#=&gt; -1</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+148
+149
+150</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activesupport/lib/active_support/multibyte/chars.rb', line 148</span>
+
+<span class='def def kw'>def</span> <span class='cmp op'>&lt;=&gt;</span><span class='lparen token'>(</span><span class='other identifier id'>other</span><span class='rparen token'>)</span>
+  <span class='@wrapped_string ivar id'>@wrapped_string</span> <span class='cmp op'>&lt;=&gt;</span> <span class='other identifier id'>other</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>=~</h3>
+</div><div id="%3D%7E-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>=~</span><span class='args'>(other)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Like <tt>String#=~</tt> only it returns the character offset (in
+codepoints) instead of the byte offset.
+</p>
+<p>
+Example:
+</p>
+<pre class="code">
+  <span class='string val'>'Café périferôl'</span><span class='dot token'>.</span><span class='mb_chars identifier id'>mb_chars</span> <span class='match op'>=~</span> <span class='regexp val'>/ô/</span> <span class='comment val'>#=&gt; 12</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+164
+165
+166</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activesupport/lib/active_support/multibyte/chars.rb', line 164</span>
+
+<span class='def def kw'>def</span> <span class='match op'>=~</span><span class='lparen token'>(</span><span class='other identifier id'>other</span><span class='rparen token'>)</span>
+  <span class='translate_offset identifier id'>translate_offset</span><span class='lparen token'>(</span><span class='@wrapped_string ivar id'>@wrapped_string</span> <span class='match op'>=~</span> <span class='other identifier id'>other</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>[]=</h3>
+</div><div id="%5B%5D%3D-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>[]=</span><span class='args'>(*args)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Like <tt>String#[]=</tt>, except instead of byte offsets you specify
+character offsets.
+</p>
+<p>
+Example:
+</p>
+<pre class="code">
+  <span class='s identifier id'>s</span> <span class='assign token'>=</span> <span class='string val'>&quot;Müller&quot;</span>
+  <span class='s identifier id'>s</span><span class='dot token'>.</span><span class='mb_chars identifier id'>mb_chars</span><span class='lbrack token'>[</span><span class='integer val'>2</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='string val'>&quot;e&quot;</span> <span class='comment val'># Replace character with offset 2</span>
+  <span class='s identifier id'>s</span>
+  <span class='comment val'>#=&gt; &quot;Müeler&quot;</span>
+
+  <span class='s identifier id'>s</span> <span class='assign token'>=</span> <span class='string val'>&quot;Müller&quot;</span>
+  <span class='s identifier id'>s</span><span class='dot token'>.</span><span class='mb_chars identifier id'>mb_chars</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='comma token'>,</span> <span class='integer val'>2</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='string val'>&quot;ö&quot;</span> <span class='comment val'># Replace 2 characters at character offset 1</span>
+  <span class='s identifier id'>s</span>
+  <span class='comment val'>#=&gt; &quot;Möler&quot;</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activesupport/lib/active_support/multibyte/chars.rb', line 225</span>
+
+<span class='def def kw'>def</span> <span class='aset op'>[]=</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='replace_by identifier id'>replace_by</span> <span class='assign token'>=</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='pop identifier id'>pop</span>
+  <span class='comment val'># Indexed replace with regular expressions already works</span>
+  <span class='if if kw'>if</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Regexp constant id'>Regexp</span><span class='rparen token'>)</span>
+    <span class='@wrapped_string ivar id'>@wrapped_string</span><span class='lbrack token'>[</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='replace_by identifier id'>replace_by</span>
+  <span class='else else kw'>else</span>
+    <span class='result identifier id'>result</span> <span class='assign token'>=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='u_unpack identifier id'>u_unpack</span><span class='lparen token'>(</span><span class='@wrapped_string ivar id'>@wrapped_string</span><span class='rparen token'>)</span>
+    <span class='if if kw'>if</span> <span class='args identifier id'>args</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Fixnum constant id'>Fixnum</span><span class='rparen token'>)</span>
+      <span class='raise identifier id'>raise</span> <span class='IndexError constant id'>IndexError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;index #{args[0]} out of string&quot;</span> <span class='if if_mod kw'>if</span> <span class='args identifier id'>args</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span> <span class='geq op'>&gt;=</span> <span class='result identifier id'>result</span><span class='dot token'>.</span><span class='length identifier id'>length</span>
+      <span class='min identifier id'>min</span> <span class='assign token'>=</span> <span class='args identifier id'>args</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span>
+      <span class='max identifier id'>max</span> <span class='assign token'>=</span> <span class='args identifier id'>args</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span> <span class='integer val'>? </span><span class='min identifier id'>min</span> <span class='colon op'>:</span> <span class='lparen token'>(</span><span class='min identifier id'>min</span> <span class='plus op'>+</span> <span class='args identifier id'>args</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span> <span class='minus op'>-</span> <span class='integer val'>1</span><span class='rparen token'>)</span>
+      <span class='range identifier id'>range</span> <span class='assign token'>=</span> <span class='Range constant id'>Range</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='min identifier id'>min</span><span class='comma token'>,</span> <span class='max identifier id'>max</span><span class='rparen token'>)</span>
+      <span class='replace_by identifier id'>replace_by</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='replace_by identifier id'>replace_by</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='pack identifier id'>pack</span><span class='lparen token'>(</span><span class='string val'>'U'</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='replace_by identifier id'>replace_by</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Fixnum constant id'>Fixnum</span><span class='rparen token'>)</span>
+    <span class='elsif elsif kw'>elsif</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Range constant id'>Range</span><span class='rparen token'>)</span>
+      <span class='raise identifier id'>raise</span> <span class='RangeError constant id'>RangeError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{args[0]} out of range&quot;</span> <span class='if if_mod kw'>if</span> <span class='args identifier id'>args</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='min identifier id'>min</span> <span class='geq op'>&gt;=</span> <span class='result identifier id'>result</span><span class='dot token'>.</span><span class='length identifier id'>length</span>
+      <span class='range identifier id'>range</span> <span class='assign token'>=</span> <span class='args identifier id'>args</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span>
+    <span class='else else kw'>else</span>
+      <span class='needle identifier id'>needle</span> <span class='assign token'>=</span> <span class='args identifier id'>args</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+      <span class='min identifier id'>min</span> <span class='assign token'>=</span> <span class='index identifier id'>index</span><span class='lparen token'>(</span><span class='needle identifier id'>needle</span><span class='rparen token'>)</span>
+      <span class='max identifier id'>max</span> <span class='assign token'>=</span> <span class='min identifier id'>min</span> <span class='plus op'>+</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='u_unpack identifier id'>u_unpack</span><span class='lparen token'>(</span><span class='needle identifier id'>needle</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='length identifier id'>length</span> <span class='minus op'>-</span> <span class='integer val'>1</span>
+      <span class='range identifier id'>range</span> <span class='assign token'>=</span> <span class='Range constant id'>Range</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='min identifier id'>min</span><span class='comma token'>,</span> <span class='max identifier id'>max</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+    <span class='result identifier id'>result</span><span class='lbrack token'>[</span><span class='range identifier id'>range</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='u_unpack identifier id'>u_unpack</span><span class='lparen token'>(</span><span class='replace_by identifier id'>replace_by</span><span class='rparen token'>)</span>
+    <span class='@wrapped_string ivar id'>@wrapped_string</span><span class='dot token'>.</span><span class='replace identifier id'>replace</span><span class='lparen token'>(</span><span class='result identifier id'>result</span><span class='dot token'>.</span><span class='pack identifier id'>pack</span><span class='lparen token'>(</span><span class='string val'>'U*'</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>acts_like_string?</h3>
+</div><div id="acts_like_string%3F-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>acts_like_string?</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Enable more predictable duck-typing on String-like classes. See
+Object#acts_like?.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+121
+122
+123</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activesupport/lib/active_support/multibyte/chars.rb', line 121</span>
+
+<span class='def def kw'>def</span> <span class='acts_like_string? fid id'>acts_like_string?</span>
+  <span class='true true kw'>true</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>capitalize</h3>
+</div><div id="capitalize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>capitalize</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Converts the first character to uppercase and the remainder to lowercase.
+</p>
+<p>
+Example:
+</p>
+<pre class="code">
+ <span class='string val'>'über'</span><span class='dot token'>.</span><span class='mb_chars identifier id'>mb_chars</span><span class='dot token'>.</span><span class='capitalize identifier id'>capitalize</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='comment val'>#=&gt; &quot;Über&quot;</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+387
+388
+389</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activesupport/lib/active_support/multibyte/chars.rb', line 387</span>
+
+<span class='def def kw'>def</span> <span class='capitalize identifier id'>capitalize</span>
+  <span class='lparen token'>(</span><span class='slice identifier id'>slice</span><span class='lparen token'>(</span><span class='integer val'>0</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='chars identifier id'>chars</span><span class='lparen token'>(</span><span class='string val'>''</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='upcase identifier id'>upcase</span> <span class='plus op'>+</span> <span class='lparen token'>(</span><span class='slice identifier id'>slice</span><span class='lparen token'>(</span><span class='float val'>1</span><span class='dot2 op'>..</span><span class='integer val'>-1</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='chars identifier id'>chars</span><span class='lparen token'>(</span><span class='string val'>''</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='downcase identifier id'>downcase</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>center</h3>
+</div><div id="center-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>center</span><span class='args'>(integer, padstr=' ')</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Works just like <tt>String#center</tt>, only integer specifies characters
+instead of bytes.
+</p>
+<p>
+Example:
+</p>
+<pre class="code">
+  <span class='string val'>&quot;¾ cup&quot;</span><span class='dot token'>.</span><span class='mb_chars identifier id'>mb_chars</span><span class='dot token'>.</span><span class='center identifier id'>center</span><span class='lparen token'>(</span><span class='integer val'>8</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+  <span class='comment val'>#=&gt; &quot; ¾ cup  &quot;</span>
+
+  <span class='string val'>&quot;¾ cup&quot;</span><span class='dot token'>.</span><span class='mb_chars identifier id'>mb_chars</span><span class='dot token'>.</span><span class='center identifier id'>center</span><span class='lparen token'>(</span><span class='integer val'>8</span><span class='comma token'>,</span> <span class='string val'>&quot; &quot;</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='comment val'># Use non-breaking whitespace</span>
+  <span class='comment val'>#=&gt; &quot; ¾ cup  &quot;</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+287
+288
+289</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activesupport/lib/active_support/multibyte/chars.rb', line 287</span>
+
+<span class='def def kw'>def</span> <span class='center identifier id'>center</span><span class='lparen token'>(</span><span class='integer identifier id'>integer</span><span class='comma token'>,</span> <span class='padstr identifier id'>padstr</span><span class='assign token'>=</span><span class='string val'>' '</span><span class='rparen token'>)</span>
+  <span class='justify identifier id'>justify</span><span class='lparen token'>(</span><span class='integer identifier id'>integer</span><span class='comma token'>,</span> <span class='symbol val'>:center</span><span class='comma token'>,</span> <span class='padstr identifier id'>padstr</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>downcase</h3>
+</div><div id="downcase-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>downcase</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Convert characters in the string to lowercase.
+</p>
+<p>
+Example:
+</p>
+<pre class="code">
+  <span class='string val'>'VĚDA A VÝZKUM'</span><span class='dot token'>.</span><span class='mb_chars identifier id'>mb_chars</span><span class='dot token'>.</span><span class='downcase identifier id'>downcase</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='comment val'>#=&gt; &quot;věda a výzkum&quot;</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+379
+380
+381</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activesupport/lib/active_support/multibyte/chars.rb', line 379</span>
+
+<span class='def def kw'>def</span> <span class='downcase identifier id'>downcase</span>
+  <span class='apply_mapping identifier id'>apply_mapping</span> <span class='symbol val'>:lowercase_mapping</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>include?</h3>
+</div><div id="include%3F-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>include?</span><span class='args'>(other)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns <tt>true</tt> if contained string contains <em>other</em>. Returns
+<tt>false</tt> otherwise.
+</p>
+<p>
+Example:
+</p>
+<pre class="code">
+  <span class='string val'>'Café'</span><span class='dot token'>.</span><span class='mb_chars identifier id'>mb_chars</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='string val'>'é'</span><span class='rparen token'>)</span> <span class='comment val'>#=&gt; true</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+197
+198
+199
+200</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activesupport/lib/active_support/multibyte/chars.rb', line 197</span>
+
+<span class='def def kw'>def</span> <span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='other identifier id'>other</span><span class='rparen token'>)</span>
+  <span class='comment val'># We have to redefine this method because Enumerable defines it.</span>
+  <span class='@wrapped_string ivar id'>@wrapped_string</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='other identifier id'>other</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>index</h3>
+</div><div id="index-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>index</span><span class='args'>(needle, offset=0)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns the position <em>needle</em> in the string, counting in codepoints.
+Returns <tt>nil</tt> if <em>needle</em> isn&#8217;t found.
+</p>
+<p>
+Example:
+</p>
+<pre class="code">
+  <span class='string val'>'Café périferôl'</span><span class='dot token'>.</span><span class='mb_chars identifier id'>mb_chars</span><span class='dot token'>.</span><span class='index identifier id'>index</span><span class='lparen token'>(</span><span class='string val'>'ô'</span><span class='rparen token'>)</span> <span class='comment val'>#=&gt; 12</span>
+  <span class='string val'>'Café périferôl'</span><span class='dot token'>.</span><span class='mb_chars identifier id'>mb_chars</span><span class='dot token'>.</span><span class='index identifier id'>index</span><span class='lparen token'>(</span><span class='regexp val'>/\w/</span><span class='u identifier id'>u</span><span class='rparen token'>)</span> <span class='comment val'>#=&gt; 0</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+207
+208
+209
+210</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activesupport/lib/active_support/multibyte/chars.rb', line 207</span>
+
+<span class='def def kw'>def</span> <span class='index identifier id'>index</span><span class='lparen token'>(</span><span class='needle identifier id'>needle</span><span class='comma token'>,</span> <span class='offset identifier id'>offset</span><span class='assign token'>=</span><span class='integer val'>0</span><span class='rparen token'>)</span>
+  <span class='index identifier id'>index</span> <span class='assign token'>=</span> <span class='@wrapped_string ivar id'>@wrapped_string</span><span class='dot token'>.</span><span class='index identifier id'>index</span><span class='lparen token'>(</span><span class='needle identifier id'>needle</span><span class='comma token'>,</span> <span class='offset identifier id'>offset</span><span class='rparen token'>)</span>
+  <span class='index identifier id'>index</span> <span class='integer val'>? </span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='u_unpack identifier id'>u_unpack</span><span class='lparen token'>(</span><span class='@wrapped_string ivar id'>@wrapped_string</span><span class='dot token'>.</span><span class='slice identifier id'>slice</span><span class='lparen token'>(</span><span class='integer val'>0</span><span class='dot3 op'>...</span><span class='index identifier id'>index</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='size identifier id'>size</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='nil nil kw'>nil</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>insert</h3>
+</div><div id="insert-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>insert</span><span class='args'>(offset, fragment)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Inserts the passed string at specified codepoint offsets.
+</p>
+<p>
+Example:
+</p>
+<pre class="code">
+  <span class='string val'>'Café'</span><span class='dot token'>.</span><span class='mb_chars identifier id'>mb_chars</span><span class='dot token'>.</span><span class='insert identifier id'>insert</span><span class='lparen token'>(</span><span class='integer val'>4</span><span class='comma token'>,</span> <span class='string val'>' périferôl'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='comment val'>#=&gt; &quot;Café périferôl&quot;</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activesupport/lib/active_support/multibyte/chars.rb', line 181</span>
+
+<span class='def def kw'>def</span> <span class='insert identifier id'>insert</span><span class='lparen token'>(</span><span class='offset identifier id'>offset</span><span class='comma token'>,</span> <span class='fragment identifier id'>fragment</span><span class='rparen token'>)</span>
+  <span class='unpacked identifier id'>unpacked</span> <span class='assign token'>=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='u_unpack identifier id'>u_unpack</span><span class='lparen token'>(</span><span class='@wrapped_string ivar id'>@wrapped_string</span><span class='rparen token'>)</span>
+  <span class='unless unless kw'>unless</span> <span class='offset identifier id'>offset</span> <span class='gt op'>&gt;</span> <span class='unpacked identifier id'>unpacked</span><span class='dot token'>.</span><span class='length identifier id'>length</span>
+    <span class='@wrapped_string ivar id'>@wrapped_string</span><span class='dot token'>.</span><span class='replace identifier id'>replace</span><span class='lparen token'>(</span>
+      <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='u_unpack identifier id'>u_unpack</span><span class='lparen token'>(</span><span class='@wrapped_string ivar id'>@wrapped_string</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='insert identifier id'>insert</span><span class='lparen token'>(</span><span class='offset identifier id'>offset</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='u_unpack identifier id'>u_unpack</span><span class='lparen token'>(</span><span class='fragment identifier id'>fragment</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='pack identifier id'>pack</span><span class='lparen token'>(</span><span class='string val'>'U*'</span><span class='rparen token'>)</span>
+    <span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+    <span class='raise identifier id'>raise</span> <span class='IndexError constant id'>IndexError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;index #{offset} out of string&quot;</span>
+  <span class='end end kw'>end</span>
+  <span class='self self kw'>self</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>ljust</h3>
+</div><div id="ljust-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>ljust</span><span class='args'>(integer, padstr=' ')</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Works just like <tt>String#ljust</tt>, only integer specifies characters
+instead of bytes.
+</p>
+<p>
+Example:
+</p>
+<pre class="code">
+  <span class='string val'>&quot;¾ cup&quot;</span><span class='dot token'>.</span><span class='mb_chars identifier id'>mb_chars</span><span class='dot token'>.</span><span class='rjust identifier id'>rjust</span><span class='lparen token'>(</span><span class='integer val'>8</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+  <span class='comment val'>#=&gt; &quot;¾ cup   &quot;</span>
+
+  <span class='string val'>&quot;¾ cup&quot;</span><span class='dot token'>.</span><span class='mb_chars identifier id'>mb_chars</span><span class='dot token'>.</span><span class='rjust identifier id'>rjust</span><span class='lparen token'>(</span><span class='integer val'>8</span><span class='comma token'>,</span> <span class='string val'>&quot; &quot;</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='comment val'># Use non-breaking whitespace</span>
+  <span class='comment val'>#=&gt; &quot;¾ cup   &quot;</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+274
+275
+276</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activesupport/lib/active_support/multibyte/chars.rb', line 274</span>
+
+<span class='def def kw'>def</span> <span class='ljust identifier id'>ljust</span><span class='lparen token'>(</span><span class='integer identifier id'>integer</span><span class='comma token'>,</span> <span class='padstr identifier id'>padstr</span><span class='assign token'>=</span><span class='string val'>' '</span><span class='rparen token'>)</span>
+  <span class='justify identifier id'>justify</span><span class='lparen token'>(</span><span class='integer identifier id'>integer</span><span class='comma token'>,</span> <span class='symbol val'>:left</span><span class='comma token'>,</span> <span class='padstr identifier id'>padstr</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>lstrip</h3>
+</div><div id="lstrip-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>lstrip</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Strips entire range of Unicode whitespace from the left of the string.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+297
+298
+299</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activesupport/lib/active_support/multibyte/chars.rb', line 297</span>
+
+<span class='def def kw'>def</span> <span class='lstrip identifier id'>lstrip</span>
+  <span class='chars identifier id'>chars</span><span class='lparen token'>(</span><span class='@wrapped_string ivar id'>@wrapped_string</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='UNICODE_LEADERS_PAT constant id'>UNICODE_LEADERS_PAT</span><span class='comma token'>,</span> <span class='string val'>''</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>normalize</h3>
+</div><div id="normalize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>normalize</span><span class='args'>(form=ActiveSupport::Multibyte.default_normalization_form)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns the KC normalization of the string by default. NFKC is considered
+the best normalization form for passing strings to databases and
+validations.
+</p>
+<ul>
+<li><tt>str</tt> - The string to perform normalization on.
+
+</li>
+<li><tt>form</tt> - The form you want to normalize in. Should be one of the
+following: <tt>:c</tt>, <tt>:kc</tt>, <tt>:d</tt>, or <tt>:kd</tt>. Default
+is ActiveSupport::Multibyte.default_normalization_form
+
+</li>
+</ul>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="raise">
+  <h3>Raises:</h3>
+  <dl>
+  
+    <dt>
+      
+        <span class='type'>[<tt>ArgumentError</tt>]</span>
+      
+      
+    </dt>
+    <dd>
+      <span class='desc'></span>
+    </dd>
+  
+  </dl>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activesupport/lib/active_support/multibyte/chars.rb', line 398</span>
+
+<span class='def def kw'>def</span> <span class='normalize identifier id'>normalize</span><span class='lparen token'>(</span><span class='form identifier id'>form</span><span class='assign token'>=</span><span class='ActiveSupport constant id'>ActiveSupport</span><span class='colon2 op'>::</span><span class='Multibyte constant id'>Multibyte</span><span class='dot token'>.</span><span class='default_normalization_form identifier id'>default_normalization_form</span><span class='rparen token'>)</span>
+<span class='comment val'># See http://www.unicode.org/reports/tr15, Table 1</span>
+<span class='codepoints identifier id'>codepoints</span> <span class='assign token'>=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='u_unpack identifier id'>u_unpack</span><span class='lparen token'>(</span><span class='@wrapped_string ivar id'>@wrapped_string</span><span class='rparen token'>)</span>
+<span class='chars identifier id'>chars</span><span class='lparen token'>(</span><span class='case case kw'>case</span> <span class='form identifier id'>form</span>
+  <span class='when when kw'>when</span> <span class='symbol val'>:d</span>
+    <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='reorder_characters identifier id'>reorder_characters</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='decompose_codepoints identifier id'>decompose_codepoints</span><span class='lparen token'>(</span><span class='symbol val'>:canonical</span><span class='comma token'>,</span> <span class='codepoints identifier id'>codepoints</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='when when kw'>when</span> <span class='symbol val'>:c</span>
+    <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='compose_codepoints identifier id'>compose_codepoints</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='reorder_characters identifier id'>reorder_characters</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='decompose_codepoints identifier id'>decompose_codepoints</span><span class='lparen token'>(</span><span class='symbol val'>:canonical</span><span class='comma token'>,</span> <span class='codepoints identifier id'>codepoints</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='when when kw'>when</span> <span class='symbol val'>:kd</span>
+    <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='reorder_characters identifier id'>reorder_characters</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='decompose_codepoints identifier id'>decompose_codepoints</span><span class='lparen token'>(</span><span class='symbol val'>:compatability</span><span class='comma token'>,</span> <span class='codepoints identifier id'>codepoints</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='when when kw'>when</span> <span class='symbol val'>:kc</span>
+    <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='compose_codepoints identifier id'>compose_codepoints</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='reorder_characters identifier id'>reorder_characters</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='decompose_codepoints identifier id'>decompose_codepoints</span><span class='lparen token'>(</span><span class='symbol val'>:compatability</span><span class='comma token'>,</span> <span class='codepoints identifier id'>codepoints</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+    <span class='raise identifier id'>raise</span> <span class='ArgumentError constant id'>ArgumentError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{form} is not a valid normalization variant&quot;</span><span class='comma token'>,</span> <span class='caller identifier id'>caller</span>
+<span class='end end kw'>end</span><span class='dot token'>.</span><span class='pack identifier id'>pack</span><span class='lparen token'>(</span><span class='string val'>'U*'</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>ord</h3>
+</div><div id="ord-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>ord</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns the codepoint of the first character in the string.
+</p>
+<p>
+Example:
+</p>
+<pre class="code">
+  <span class='string val'>'こんにちは'</span><span class='dot token'>.</span><span class='mb_chars identifier id'>mb_chars</span><span class='dot token'>.</span><span class='ord identifier id'>ord</span> <span class='comment val'>#=&gt; 12371</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+363
+364
+365</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activesupport/lib/active_support/multibyte/chars.rb', line 363</span>
+
+<span class='def def kw'>def</span> <span class='ord identifier id'>ord</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='u_unpack identifier id'>u_unpack</span><span class='lparen token'>(</span><span class='@wrapped_string ivar id'>@wrapped_string</span><span class='rparen token'>)</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>respond_to?</h3>
+</div><div id="respond_to%3F-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>respond_to?</span><span class='args'>(method, include_private=false)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns <tt>true</tt> if <em>obj</em> responds to the given method. Private
+methods are included in the search only if the optional second parameter
+evaluates to <tt>true</tt>.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+116
+117
+118</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activesupport/lib/active_support/multibyte/chars.rb', line 116</span>
+
+<span class='def def kw'>def</span> <span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='comma token'>,</span> <span class='include_private identifier id'>include_private</span><span class='assign token'>=</span><span class='false false kw'>false</span><span class='rparen token'>)</span>
+  <span class='super super kw'>super</span> <span class='orop op'>||</span> <span class='@wrapped_string ivar id'>@wrapped_string</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='comma token'>,</span> <span class='include_private identifier id'>include_private</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='false false kw'>false</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>reverse</h3>
+</div><div id="reverse-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>reverse</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Reverses all characters in the string.
+</p>
+<p>
+Example:
+</p>
+<pre class="code">
+  <span class='string val'>'Café'</span><span class='dot token'>.</span><span class='mb_chars identifier id'>mb_chars</span><span class='dot token'>.</span><span class='reverse identifier id'>reverse</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='comment val'>#=&gt; 'éfaC'</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+316
+317
+318</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activesupport/lib/active_support/multibyte/chars.rb', line 316</span>
+
+<span class='def def kw'>def</span> <span class='reverse identifier id'>reverse</span>
+  <span class='chars identifier id'>chars</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='u_unpack identifier id'>u_unpack</span><span class='lparen token'>(</span><span class='@wrapped_string ivar id'>@wrapped_string</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='reverse identifier id'>reverse</span><span class='dot token'>.</span><span class='pack identifier id'>pack</span><span class='lparen token'>(</span><span class='string val'>'U*'</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>rjust</h3>
+</div><div id="rjust-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>rjust</span><span class='args'>(integer, padstr=' ')</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Works just like <tt>String#rjust</tt>, only integer specifies characters
+instead of bytes.
+</p>
+<p>
+Example:
+</p>
+<pre class="code">
+  <span class='string val'>&quot;¾ cup&quot;</span><span class='dot token'>.</span><span class='mb_chars identifier id'>mb_chars</span><span class='dot token'>.</span><span class='rjust identifier id'>rjust</span><span class='lparen token'>(</span><span class='integer val'>8</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+  <span class='comment val'>#=&gt; &quot;   ¾ cup&quot;</span>
+
+  <span class='string val'>&quot;¾ cup&quot;</span><span class='dot token'>.</span><span class='mb_chars identifier id'>mb_chars</span><span class='dot token'>.</span><span class='rjust identifier id'>rjust</span><span class='lparen token'>(</span><span class='integer val'>8</span><span class='comma token'>,</span> <span class='string val'>&quot; &quot;</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='comment val'># Use non-breaking whitespace</span>
+  <span class='comment val'>#=&gt; &quot;   ¾ cup&quot;</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+261
+262
+263</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activesupport/lib/active_support/multibyte/chars.rb', line 261</span>
+
+<span class='def def kw'>def</span> <span class='rjust identifier id'>rjust</span><span class='lparen token'>(</span><span class='integer identifier id'>integer</span><span class='comma token'>,</span> <span class='padstr identifier id'>padstr</span><span class='assign token'>=</span><span class='string val'>' '</span><span class='rparen token'>)</span>
+  <span class='justify identifier id'>justify</span><span class='lparen token'>(</span><span class='integer identifier id'>integer</span><span class='comma token'>,</span> <span class='symbol val'>:right</span><span class='comma token'>,</span> <span class='padstr identifier id'>padstr</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>rstrip</h3>
+</div><div id="rstrip-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>rstrip</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Strips entire range of Unicode whitespace from the right of the string.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+292
+293
+294</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activesupport/lib/active_support/multibyte/chars.rb', line 292</span>
+
+<span class='def def kw'>def</span> <span class='rstrip identifier id'>rstrip</span>
+  <span class='chars identifier id'>chars</span><span class='lparen token'>(</span><span class='@wrapped_string ivar id'>@wrapped_string</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='UNICODE_TRAILERS_PAT constant id'>UNICODE_TRAILERS_PAT</span><span class='comma token'>,</span> <span class='string val'>''</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>size</h3>
+</div><div id="size-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>size</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+<p class="aliases">
+  <span class="aka">Also known as:</span>
+  
+    <tt id="length-instance_method">length</tt>
+  
+</p>
+</div><div class="section docstring">
+  <p>
+Returns the number of codepoints in the string
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+307
+308
+309</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activesupport/lib/active_support/multibyte/chars.rb', line 307</span>
+
+<span class='def def kw'>def</span> <span class='size identifier id'>size</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='u_unpack identifier id'>u_unpack</span><span class='lparen token'>(</span><span class='@wrapped_string ivar id'>@wrapped_string</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='size identifier id'>size</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>slice</h3>
+</div><div id="slice-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>slice</span><span class='args'>(*args)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+<p class="aliases">
+  <span class="aka">Also known as:</span>
+  
+    <tt id="%5B%5D-instance_method">[]</tt>
+  
+</p>
+</div><div class="section docstring">
+  <p>
+Implements Unicode-aware slice with codepoints. Slicing on one point
+returns the codepoints for that character.
+</p>
+<p>
+Example:
+</p>
+<pre class="code">
+  <span class='string val'>'こんにちは'</span><span class='dot token'>.</span><span class='mb_chars identifier id'>mb_chars</span><span class='dot token'>.</span><span class='slice identifier id'>slice</span><span class='lparen token'>(</span><span class='float val'>2</span><span class='dot2 op'>..</span><span class='integer val'>3</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='comment val'>#=&gt; &quot;にち&quot;</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activesupport/lib/active_support/multibyte/chars.rb', line 325</span>
+
+<span class='def def kw'>def</span> <span class='slice identifier id'>slice</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='size identifier id'>size</span> <span class='gt op'>&gt;</span> <span class='integer val'>2</span>
+    <span class='raise identifier id'>raise</span> <span class='ArgumentError constant id'>ArgumentError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;wrong number of arguments (#{args.size} for 1)&quot;</span> <span class='comment val'># Do as if we were native</span>
+  <span class='elsif elsif kw'>elsif</span> <span class='lparen token'>(</span><span class='args identifier id'>args</span><span class='dot token'>.</span><span class='size identifier id'>size</span> <span class='eq op'>==</span> <span class='integer val'>2</span> <span class='andop op'>&amp;&amp;</span> <span class='notop op'>!</span><span class='lparen token'>(</span><span class='args identifier id'>args</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Numeric constant id'>Numeric</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Regexp constant id'>Regexp</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+    <span class='raise identifier id'>raise</span> <span class='TypeError constant id'>TypeError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;cannot convert #{args.first.class} into Integer&quot;</span> <span class='comment val'># Do as if we were native</span>
+  <span class='elsif elsif kw'>elsif</span> <span class='lparen token'>(</span><span class='args identifier id'>args</span><span class='dot token'>.</span><span class='size identifier id'>size</span> <span class='eq op'>==</span> <span class='integer val'>2</span> <span class='andop op'>&amp;&amp;</span> <span class='notop op'>!</span><span class='args identifier id'>args</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Numeric constant id'>Numeric</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+    <span class='raise identifier id'>raise</span> <span class='TypeError constant id'>TypeError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;cannot convert #{args[1].class} into Integer&quot;</span> <span class='comment val'># Do as if we were native</span>
+  <span class='elsif elsif kw'>elsif</span> <span class='args identifier id'>args</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='kind_of? fid id'>kind_of?</span> <span class='Range constant id'>Range</span>
+    <span class='cps identifier id'>cps</span> <span class='assign token'>=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='u_unpack identifier id'>u_unpack</span><span class='lparen token'>(</span><span class='@wrapped_string ivar id'>@wrapped_string</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='slice identifier id'>slice</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+    <span class='result identifier id'>result</span> <span class='assign token'>=</span> <span class='cps identifier id'>cps</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span> <span class='integer val'>? </span><span class='nil nil kw'>nil</span> <span class='colon op'>:</span> <span class='cps identifier id'>cps</span><span class='dot token'>.</span><span class='pack identifier id'>pack</span><span class='lparen token'>(</span><span class='string val'>'U*'</span><span class='rparen token'>)</span>
+  <span class='elsif elsif kw'>elsif</span> <span class='args identifier id'>args</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='kind_of? fid id'>kind_of?</span> <span class='Regexp constant id'>Regexp</span>
+    <span class='result identifier id'>result</span> <span class='assign token'>=</span> <span class='@wrapped_string ivar id'>@wrapped_string</span><span class='dot token'>.</span><span class='slice identifier id'>slice</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='elsif elsif kw'>elsif</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='size identifier id'>size</span> <span class='eq op'>==</span> <span class='integer val'>1</span> <span class='andop op'>&amp;&amp;</span> <span class='args identifier id'>args</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='kind_of? fid id'>kind_of?</span><span class='lparen token'>(</span><span class='Numeric constant id'>Numeric</span><span class='rparen token'>)</span>
+    <span class='character identifier id'>character</span> <span class='assign token'>=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='u_unpack identifier id'>u_unpack</span><span class='lparen token'>(</span><span class='@wrapped_string ivar id'>@wrapped_string</span><span class='rparen token'>)</span><span class='lbrack token'>[</span><span class='args identifier id'>args</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span>
+    <span class='result identifier id'>result</span> <span class='assign token'>=</span> <span class='character identifier id'>character</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span> <span class='integer val'>? </span><span class='nil nil kw'>nil</span> <span class='colon op'>:</span> <span class='lbrack token'>[</span><span class='character identifier id'>character</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='pack identifier id'>pack</span><span class='lparen token'>(</span><span class='string val'>'U'</span><span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+    <span class='result identifier id'>result</span> <span class='assign token'>=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='u_unpack identifier id'>u_unpack</span><span class='lparen token'>(</span><span class='@wrapped_string ivar id'>@wrapped_string</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='slice identifier id'>slice</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='pack identifier id'>pack</span><span class='lparen token'>(</span><span class='string val'>'U*'</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+  <span class='result identifier id'>result</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span> <span class='integer val'>? </span><span class='nil nil kw'>nil</span> <span class='colon op'>:</span> <span class='chars identifier id'>chars</span><span class='lparen token'>(</span><span class='result identifier id'>result</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>slice!</h3>
+</div><div id="slice%21-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>slice!</span><span class='args'>(*args)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Like <tt>String#slice!</tt>, except instead of byte offsets you specify
+character offsets.
+</p>
+<p>
+Example:
+</p>
+<pre class="code">
+  <span class='s identifier id'>s</span> <span class='assign token'>=</span> <span class='string val'>'こんにちは'</span>
+  <span class='s identifier id'>s</span><span class='dot token'>.</span><span class='mb_chars identifier id'>mb_chars</span><span class='dot token'>.</span><span class='slice! fid id'>slice!</span><span class='lparen token'>(</span><span class='float val'>2</span><span class='dot2 op'>..</span><span class='integer val'>3</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='comment val'>#=&gt; &quot;にち&quot;</span>
+  <span class='s identifier id'>s</span> <span class='comment val'>#=&gt; &quot;こんは&quot;</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+353
+354
+355
+356
+357</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activesupport/lib/active_support/multibyte/chars.rb', line 353</span>
+
+<span class='def def kw'>def</span> <span class='slice! fid id'>slice!</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='slice identifier id'>slice</span> <span class='assign token'>=</span> <span class='self self kw'>self</span><span class='lbrack token'>[</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rbrack token'>]</span>
+  <span class='self self kw'>self</span><span class='lbrack token'>[</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='string val'>''</span>
+  <span class='slice identifier id'>slice</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>split</h3>
+</div><div id="split-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>split</span><span class='args'>(*args)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Works just like <tt>String#split</tt>, with the exception that the items in
+the resulting list are Chars instances instead of String. This makes
+chaining methods easier.
+</p>
+<p>
+Example:
+</p>
+<pre class="code">
+  <span class='string val'>'Café périferôl'</span><span class='dot token'>.</span><span class='mb_chars identifier id'>mb_chars</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='regexp val'>/é/</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='part identifier id'>part</span><span class='bitor op'>|</span> <span class='part identifier id'>part</span><span class='dot token'>.</span><span class='upcase identifier id'>upcase</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='rbrace token'>}</span> <span class='comment val'>#=&gt; [&quot;CAF&quot;, &quot; P&quot;, &quot;RIFERÔL&quot;]</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+173
+174
+175</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activesupport/lib/active_support/multibyte/chars.rb', line 173</span>
+
+<span class='def def kw'>def</span> <span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='@wrapped_string ivar id'>@wrapped_string</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='i identifier id'>i</span><span class='bitor op'>|</span> <span class='i identifier id'>i</span><span class='dot token'>.</span><span class='mb_chars identifier id'>mb_chars</span> <span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>strip</h3>
+</div><div id="strip-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>strip</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Strips entire range of Unicode whitespace from the right and left of the
+string.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+302
+303
+304</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activesupport/lib/active_support/multibyte/chars.rb', line 302</span>
+
+<span class='def def kw'>def</span> <span class='strip identifier id'>strip</span>
+  <span class='rstrip identifier id'>rstrip</span><span class='dot token'>.</span><span class='lstrip identifier id'>lstrip</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>upcase</h3>
+</div><div id="upcase-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>upcase</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Convert characters in the string to uppercase.
+</p>
+<p>
+Example:
+</p>
+<pre class="code">
+  <span class='string val'>'Laurent, òu sont les tests?'</span><span class='dot token'>.</span><span class='mb_chars identifier id'>mb_chars</span><span class='dot token'>.</span><span class='upcase identifier id'>upcase</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='comment val'>#=&gt; &quot;LAURENT, ÒU SONT LES TESTS?&quot;</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+371
+372
+373</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activesupport/lib/active_support/multibyte/chars.rb', line 371</span>
+
+<span class='def def kw'>def</span> <span class='upcase identifier id'>upcase</span>
+  <span class='apply_mapping identifier id'>apply_mapping</span> <span class='symbol val'>:uppercase_mapping</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

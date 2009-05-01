@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <title>README</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section docstring readme">
+        <h1>EM-HTTP-Client</h1>
+<p>
+EventMachine based HTTP Request interface. Supports streaming response
+processing, uses Ragel HTTP parser.
+</p>
+<ul>
+<li>Simple interface for single &amp; parallel requests via deferred callbacks
+
+</li>
+<li>Automatic gzip &amp; deflate decoding
+
+</li>
+<li>Basic-Auth support
+
+</li>
+<li>Custom timeouts
+
+</li>
+</ul>
+<h2>Simple client example</h2>
+<pre class="code">
+  <span class='EventMachine constant id'>EventMachine</span><span class='dot token'>.</span><span class='run identifier id'>run</span> <span class='lbrace token'>{</span>
+    <span class='http identifier id'>http</span> <span class='assign token'>=</span> <span class='EventMachine constant id'>EventMachine</span><span class='colon2 op'>::</span><span class='HttpRequest constant id'>HttpRequest</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'http://127.0.0.1/'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='get identifier id'>get</span> <span class='symbol val'>:query</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='string val'>'keyname'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'value'</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='symbol val'>:timeout</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>10</span>
+
+    <span class='http identifier id'>http</span><span class='dot token'>.</span><span class='callback identifier id'>callback</span> <span class='lbrace token'>{</span>
+      <span class='p identifier id'>p</span> <span class='http identifier id'>http</span><span class='dot token'>.</span><span class='response_header identifier id'>response_header</span><span class='dot token'>.</span><span class='status identifier id'>status</span>
+      <span class='p identifier id'>p</span> <span class='http identifier id'>http</span><span class='dot token'>.</span><span class='response_header identifier id'>response_header</span>
+      <span class='p identifier id'>p</span> <span class='http identifier id'>http</span><span class='dot token'>.</span><span class='response identifier id'>response</span>
+
+      <span class='EventMachine constant id'>EventMachine</span><span class='dot token'>.</span><span class='stop identifier id'>stop</span>
+    <span class='rbrace token'>}</span>
+  <span class='rbrace token'>}</span>
+</pre>
+<h2>Multi request example</h2>
+<pre class="code">
+  <span class='EventMachine constant id'>EventMachine</span><span class='dot token'>.</span><span class='run identifier id'>run</span> <span class='lbrace token'>{</span>
+    <span class='multi identifier id'>multi</span> <span class='assign token'>=</span> <span class='EventMachine constant id'>EventMachine</span><span class='colon2 op'>::</span><span class='MultiRequest constant id'>MultiRequest</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+
+    <span class='comment val'># add multiple requests to the multi-handler</span>
+    <span class='multi identifier id'>multi</span><span class='dot token'>.</span><span class='add identifier id'>add</span><span class='lparen token'>(</span><span class='EventMachine constant id'>EventMachine</span><span class='colon2 op'>::</span><span class='HttpRequest constant id'>HttpRequest</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'http://www.google.com/'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='get identifier id'>get</span><span class='rparen token'>)</span>
+    <span class='multi identifier id'>multi</span><span class='dot token'>.</span><span class='add identifier id'>add</span><span class='lparen token'>(</span><span class='EventMachine constant id'>EventMachine</span><span class='colon2 op'>::</span><span class='HttpRequest constant id'>HttpRequest</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'http://www.yahoo.com/'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='get identifier id'>get</span><span class='rparen token'>)</span>
+
+    <span class='multi identifier id'>multi</span><span class='dot token'>.</span><span class='callback identifier id'>callback</span>  <span class='lbrace token'>{</span>
+      <span class='p identifier id'>p</span> <span class='multi identifier id'>multi</span><span class='dot token'>.</span><span class='responses identifier id'>responses</span><span class='lbrack token'>[</span><span class='symbol val'>:succeeded</span><span class='rbrack token'>]</span>
+      <span class='p identifier id'>p</span> <span class='multi identifier id'>multi</span><span class='dot token'>.</span><span class='responses identifier id'>responses</span><span class='lbrack token'>[</span><span class='symbol val'>:failed</span><span class='rbrack token'>]</span>
+
+      <span class='EventMachine constant id'>EventMachine</span><span class='dot token'>.</span><span class='stop identifier id'>stop</span>
+    <span class='rbrace token'>}</span>
+  <span class='rbrace token'>}</span>
+</pre>
+<h2>Basic-Auth example</h2>
+<pre class="code">
+  <span class='EventMachine constant id'>EventMachine</span><span class='dot token'>.</span><span class='run identifier id'>run</span> <span class='lbrace token'>{</span>
+    <span class='http identifier id'>http</span> <span class='assign token'>=</span> <span class='EventMachine constant id'>EventMachine</span><span class='colon2 op'>::</span><span class='HttpRequest constant id'>HttpRequest</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'http://www.website.com/'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='get identifier id'>get</span> <span class='symbol val'>:head</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='string val'>'authorization'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='string val'>'user'</span><span class='comma token'>,</span> <span class='string val'>'pass'</span><span class='rbrack token'>]</span><span class='rbrace token'>}</span>
+
+    <span class='http identifier id'>http</span><span class='dot token'>.</span><span class='errback identifier id'>errback</span> <span class='lbrace token'>{</span> <span class='failed identifier id'>failed</span> <span class='rbrace token'>}</span>
+    <span class='http identifier id'>http</span><span class='dot token'>.</span><span class='callback identifier id'>callback</span> <span class='lbrace token'>{</span>
+      <span class='p identifier id'>p</span> <span class='http identifier id'>http</span><span class='dot token'>.</span><span class='response_header identifier id'>response_header</span>
+
+      <span class='EventMachine constant id'>EventMachine</span><span class='dot token'>.</span><span class='stop identifier id'>stop</span>
+    <span class='rbrace token'>}</span>
+  <span class='rbrace token'>}</span>
+</pre>
+<h2>POST example</h2>
+<pre class="code">
+  <span class='EventMachine constant id'>EventMachine</span><span class='dot token'>.</span><span class='run identifier id'>run</span> <span class='lbrace token'>{</span>
+    <span class='http1 identifier id'>http1</span> <span class='assign token'>=</span> <span class='EventMachine constant id'>EventMachine</span><span class='colon2 op'>::</span><span class='HttpRequest constant id'>HttpRequest</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'http://www.website.com/'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='post identifier id'>post</span> <span class='symbol val'>:body</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='string val'>&quot;key1&quot;</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>1</span><span class='comma token'>,</span> <span class='string val'>&quot;key2&quot;</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='integer val'>2</span><span class='comma token'>,</span><span class='integer val'>3</span><span class='rbrack token'>]</span><span class='rbrace token'>}</span>
+    <span class='http2 identifier id'>http2</span> <span class='assign token'>=</span> <span class='EventMachine constant id'>EventMachine</span><span class='colon2 op'>::</span><span class='HttpRequest constant id'>HttpRequest</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'http://www.website.com/'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='post identifier id'>post</span> <span class='symbol val'>:body</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;some data&quot;</span>
+
+    <span class='comment val'># ...</span>
+  <span class='rbrace token'>}</span>
+</pre>
+<h2>Streaming body processing</h2>
+<pre class="code">
+  <span class='EventMachine constant id'>EventMachine</span><span class='dot token'>.</span><span class='run identifier id'>run</span> <span class='lbrace token'>{</span>
+    <span class='body identifier id'>body</span> <span class='assign token'>=</span> <span class='string val'>''</span>
+    <span class='on_body identifier id'>on_body</span> <span class='assign token'>=</span> <span class='lambda identifier id'>lambda</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='chunk identifier id'>chunk</span><span class='bitor op'>|</span> <span class='body identifier id'>body</span> <span class='opasgn op'>+=</span> <span class='chunk identifier id'>chunk</span> <span class='rbrace token'>}</span>
+    <span class='http identifier id'>http</span> <span class='assign token'>=</span> <span class='EventMachine constant id'>EventMachine</span><span class='colon2 op'>::</span><span class='HttpRequest constant id'>HttpRequest</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'http://www.website.com/'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='get identifier id'>get</span> <span class='symbol val'>:on_response</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='on_body identifier id'>on_body</span>
+
+    <span class='comment val'># ...</span>
+  <span class='rbrace token'>}</span>
+</pre>
+
+      </div>
+    </div>
+  </body>
+</html>

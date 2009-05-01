@@ -1,0 +1,779 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: ActiveScaffold::Constraints</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module ActiveScaffold_Constraints">
+  <h1 class="title">Module: ActiveScaffold::Constraints</h1>
+  <div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <h1>Public Class Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#included-class_method' title='included'>included</a></span><span class='args'>(base)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+  <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#active_scaffold_constraints-instance_method' title='#active_scaffold_constraints'>#active_scaffold_constraints</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns the current constraints.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#apply_constraints_to_record-instance_method' title='#apply_constraints_to_record'>#apply_constraints_to_record</a></span><span class='args'>(record, options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Applies constraints to the given record.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#condition_from_association_constraint-instance_method' title='#condition_from_association_constraint'>#condition_from_association_constraint</a></span><span class='args'>(association, value)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+We do NOT want to use .
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#conditions_from_constraints-instance_method' title='#conditions_from_constraints'>#conditions_from_constraints</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns search conditions based on the current scaffold constraints.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#constraint_condition_for-instance_method' title='#constraint_condition_for'>#constraint_condition_for</a></span><span class='args'>(sql, value)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#constraint_error-instance_method' title='#constraint_error'>#constraint_error</a></span><span class='args'>(klass, column_name)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#register_constraints_with_action_columns-instance_method' title='#register_constraints_with_action_columns'>#register_constraints_with_action_columns</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+For each enabled action, adds the constrained columns to the ActionColumns
+object (if it exists).
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails class public">
+  <h1>Public Class Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>included</h3>
+</div><div id="included-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>included</span><span class='args'>(base)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+3
+4
+5
+6
+7</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_scaffold/constraints.rb', line 3</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='included identifier id'>included</span><span class='lparen token'>(</span><span class='base identifier id'>base</span><span class='rparen token'>)</span>
+  <span class='base identifier id'>base</span><span class='dot token'>.</span><span class='module_eval identifier id'>module_eval</span> <span class='do do kw'>do</span>
+    <span class='before_filter identifier id'>before_filter</span> <span class='symbol val'>:register_constraints_with_action_columns</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div><div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>active_scaffold_constraints</h3>
+</div><div id="active_scaffold_constraints-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>active_scaffold_constraints</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns the current constraints
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+12
+13
+14</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_scaffold/constraints.rb', line 12</span>
+
+<span class='def def kw'>def</span> <span class='active_scaffold_constraints identifier id'>active_scaffold_constraints</span>
+  <span class='return return kw'>return</span> <span class='active_scaffold_session_storage identifier id'>active_scaffold_session_storage</span><span class='lbrack token'>[</span><span class='symbol val'>:constraints</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>apply_constraints_to_record</h3>
+</div><div id="apply_constraints_to_record-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>apply_constraints_to_record</span><span class='args'>(record, options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Applies constraints to the given record.
+</p>
+<p>
+Searches through the known columns for association columns. If the given
+constraint is an association, it assumes that the constraint value is an
+id. It then does a association.klass.find with the value and adds the
+associated object to the record.
+</p>
+<p>
+For some operations ActiveRecord will automatically update the database.
+That&#8217;s not always ok. If it <b>is</b> ok (e.g. you&#8217;re in a
+transaction), then set :allow_autosave to true.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_scaffold/constraints.rb', line 135</span>
+
+<span class='def def kw'>def</span> <span class='apply_constraints_to_record identifier id'>apply_constraints_to_record</span><span class='lparen token'>(</span><span class='record identifier id'>record</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:allow_autosave</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='false false kw'>false</span> <span class='if if_mod kw'>if</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:allow_autosave</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+
+  <span class='active_scaffold_constraints identifier id'>active_scaffold_constraints</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='k identifier id'>k</span><span class='comma token'>,</span> <span class='v identifier id'>v</span><span class='bitor op'>|</span>
+    <span class='column identifier id'>column</span> <span class='assign token'>=</span> <span class='active_scaffold_config identifier id'>active_scaffold_config</span><span class='dot token'>.</span><span class='columns identifier id'>columns</span><span class='lbrack token'>[</span><span class='k identifier id'>k</span><span class='rbrack token'>]</span>
+    <span class='if if kw'>if</span> <span class='column identifier id'>column</span> <span class='and and kw'>and</span> <span class='column identifier id'>column</span><span class='dot token'>.</span><span class='association identifier id'>association</span>
+      <span class='if if kw'>if</span> <span class='v identifier id'>v</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span> <span class='Hash constant id'>Hash</span> <span class='comment val'># reverse of a through association ... we need to set the far association</span>
+        <span class='comment val'># example</span>
+        <span class='comment val'>#   data model: Park -&gt; Den -&gt; Bear</span>
+        <span class='comment val'>#   constraint: :den =&gt; {:park =&gt; 5}</span>
+        <span class='comment val'>#   remote_klass: Park</span>
+        <span class='remote_klass identifier id'>remote_klass</span> <span class='assign token'>=</span> <span class='column identifier id'>column</span><span class='dot token'>.</span><span class='association identifier id'>association</span><span class='dot token'>.</span><span class='klass identifier id'>klass</span><span class='dot token'>.</span><span class='reflect_on_association identifier id'>reflect_on_association</span><span class='lparen token'>(</span><span class='v identifier id'>v</span><span class='dot token'>.</span><span class='keys identifier id'>keys</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='klass identifier id'>klass</span>
+        <span class='first_associated identifier id'>first_associated</span> <span class='assign token'>=</span> <span class='record identifier id'>record</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{k}&quot;</span><span class='rparen token'>)</span>
+        <span class='first_associated identifier id'>first_associated</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{v.keys.first}=&quot;</span><span class='comma token'>,</span> <span class='remote_klass identifier id'>remote_klass</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='v identifier id'>v</span><span class='dot token'>.</span><span class='values identifier id'>values</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='first_associated identifier id'>first_associated</span>
+      <span class='elsif elsif kw'>elsif</span> <span class='column identifier id'>column</span><span class='dot token'>.</span><span class='plural_association? fid id'>plural_association?</span>
+        <span class='record identifier id'>record</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{k}&quot;</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='symbol val'>:&lt;&lt;</span><span class='comma token'>,</span> <span class='column identifier id'>column</span><span class='dot token'>.</span><span class='association identifier id'>association</span><span class='dot token'>.</span><span class='klass identifier id'>klass</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='v identifier id'>v</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+      <span class='elsif elsif kw'>elsif</span> <span class='column identifier id'>column</span><span class='dot token'>.</span><span class='association identifier id'>association</span><span class='dot token'>.</span><span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:polymorphic</span><span class='rbrack token'>]</span>
+        <span class='record identifier id'>record</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{k}=&quot;</span><span class='comma token'>,</span> <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:parent_model</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='constantize identifier id'>constantize</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='v identifier id'>v</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+      <span class='else else kw'>else</span> <span class='comment val'># regular singular association</span>
+        <span class='record identifier id'>record</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{k}=&quot;</span><span class='comma token'>,</span> <span class='column identifier id'>column</span><span class='dot token'>.</span><span class='association identifier id'>association</span><span class='dot token'>.</span><span class='klass identifier id'>klass</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='v identifier id'>v</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+
+        <span class='comment val'># setting the belongs_to side of a has_one isn't safe. if the has_one was already</span>
+        <span class='comment val'># specified, rails won't automatically clear out the previous associated record.</span>
+        <span class='comment val'>#</span>
+        <span class='comment val'># note that we can't take the extra step to correct this unless we're permitted to</span>
+        <span class='comment val'># run operations where activerecord auto-saves the object.</span>
+        <span class='reverse identifier id'>reverse</span> <span class='assign token'>=</span> <span class='column identifier id'>column</span><span class='dot token'>.</span><span class='association identifier id'>association</span><span class='dot token'>.</span><span class='klass identifier id'>klass</span><span class='dot token'>.</span><span class='reflect_on_association identifier id'>reflect_on_association</span><span class='lparen token'>(</span><span class='column identifier id'>column</span><span class='dot token'>.</span><span class='association identifier id'>association</span><span class='dot token'>.</span><span class='reverse identifier id'>reverse</span><span class='rparen token'>)</span>
+        <span class='if if kw'>if</span> <span class='reverse identifier id'>reverse</span><span class='dot token'>.</span><span class='macro identifier id'>macro</span> <span class='eq op'>==</span> <span class='colon op'>:</span><span class='has_one identifier id'>has_one</span> <span class='and and kw'>and</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='colon op'>:</span><span class='allow_autosave identifier id'>allow_autosave</span><span class='rbrack token'>]</span>
+          <span class='record identifier id'>record</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='k identifier id'>k</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{column.association.reverse}=&quot;</span><span class='comma token'>,</span> <span class='record identifier id'>record</span><span class='rparen token'>)</span>
+        <span class='end end kw'>end</span>
+      <span class='end end kw'>end</span>
+    <span class='else else kw'>else</span>
+      <span class='record identifier id'>record</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{k}=&quot;</span><span class='comma token'>,</span> <span class='v identifier id'>v</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>condition_from_association_constraint</h3>
+</div><div id="condition_from_association_constraint-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>condition_from_association_constraint</span><span class='args'>(association, value)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+We do NOT want to use .search_sql. If anything, search_sql will refer to a
+human-searchable value on the associated record.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_scaffold/constraints.rb', line 86</span>
+
+<span class='def def kw'>def</span> <span class='condition_from_association_constraint identifier id'>condition_from_association_constraint</span><span class='lparen token'>(</span><span class='association identifier id'>association</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='rparen token'>)</span>
+  <span class='comment val'># when the reverse association is a :belongs_to, the id for the associated object only exists as</span>
+  <span class='comment val'># the primary_key on the other table. so for :has_one and :has_many (when the reverse is :belongs_to),</span>
+  <span class='comment val'># we have to use the other model's primary_key.</span>
+  <span class='comment val'>#</span>
+  <span class='comment val'># please see the relevant tests for concrete examples.</span>
+  <span class='field identifier id'>field</span> <span class='assign token'>=</span> <span class='if if kw'>if</span> <span class='lbrack token'>[</span><span class='colon op'>:</span><span class='has_one identifier id'>has_one</span><span class='comma token'>,</span> <span class='symbol val'>:has_many</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='association identifier id'>association</span><span class='dot token'>.</span><span class='macro identifier id'>macro</span><span class='rparen token'>)</span>
+    <span class='association identifier id'>association</span><span class='dot token'>.</span><span class='klass identifier id'>klass</span><span class='dot token'>.</span><span class='primary_key identifier id'>primary_key</span>
+  <span class='else else kw'>else</span>
+    <span class='association identifier id'>association</span><span class='dot token'>.</span><span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:association_foreign_key</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='association identifier id'>association</span><span class='dot token'>.</span><span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:foreign_key</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='association identifier id'>association</span><span class='dot token'>.</span><span class='association_foreign_key identifier id'>association_foreign_key</span>
+  <span class='end end kw'>end</span>
+
+  <span class='table identifier id'>table</span> <span class='assign token'>=</span> <span class='case case kw'>case</span> <span class='association identifier id'>association</span><span class='dot token'>.</span><span class='macro identifier id'>macro</span>
+    <span class='when when kw'>when</span> <span class='symbol val'>:has_and_belongs_to_many</span>
+    <span class='association identifier id'>association</span><span class='dot token'>.</span><span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:join_table</span><span class='rbrack token'>]</span>
+
+    <span class='when when kw'>when</span> <span class='symbol val'>:belongs_to</span>
+    <span class='active_scaffold_config identifier id'>active_scaffold_config</span><span class='dot token'>.</span><span class='model identifier id'>model</span><span class='dot token'>.</span><span class='table_name identifier id'>table_name</span>
+
+    <span class='when when kw'>when</span> <span class='symbol val'>:has_many</span>
+    <span class='association identifier id'>association</span><span class='dot token'>.</span><span class='table_name identifier id'>table_name</span>
+
+    <span class='else else kw'>else</span>
+    <span class='association identifier id'>association</span><span class='dot token'>.</span><span class='table_name identifier id'>table_name</span>
+  <span class='end end kw'>end</span>
+
+  <span class='condition identifier id'>condition</span> <span class='assign token'>=</span> <span class='constraint_condition_for identifier id'>constraint_condition_for</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{table}.#{field}&quot;</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='association identifier id'>association</span><span class='dot token'>.</span><span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='colon op'>:</span><span class='polymorphic identifier id'>polymorphic</span><span class='rbrack token'>]</span>
+    <span class='condition identifier id'>condition</span> <span class='assign token'>=</span> <span class='merge_conditions identifier id'>merge_conditions</span><span class='lparen token'>(</span>
+      <span class='condition identifier id'>condition</span><span class='comma token'>,</span>
+      <span class='constraint_condition_for identifier id'>constraint_condition_for</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{table}.#{association.name}_type&quot;</span><span class='comma token'>,</span> <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:parent_model</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rparen token'>)</span>
+    <span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+
+  <span class='condition identifier id'>condition</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>conditions_from_constraints</h3>
+</div><div id="conditions_from_constraints-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>conditions_from_constraints</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns search conditions based on the current scaffold constraints.
+</p>
+<p>
+Supports constraints based on either a column name (in which case it checks
+for an association or just uses the search_sql) or a database field name.
+</p>
+<p>
+All of this work is primarily to support nested scaffolds in a manner
+generally useful for other embedded scaffolds.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_scaffold/constraints.rb', line 40</span>
+
+<span class='def def kw'>def</span> <span class='conditions_from_constraints identifier id'>conditions_from_constraints</span>
+  <span class='conditions identifier id'>conditions</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+  <span class='active_scaffold_constraints identifier id'>active_scaffold_constraints</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='k identifier id'>k</span><span class='comma token'>,</span> <span class='v identifier id'>v</span><span class='bitor op'>|</span>
+    <span class='column identifier id'>column</span> <span class='assign token'>=</span> <span class='active_scaffold_config identifier id'>active_scaffold_config</span><span class='dot token'>.</span><span class='columns identifier id'>columns</span><span class='lbrack token'>[</span><span class='k identifier id'>k</span><span class='rbrack token'>]</span>
+    <span class='constraint_condition identifier id'>constraint_condition</span> <span class='assign token'>=</span> <span class='if if kw'>if</span> <span class='column identifier id'>column</span>
+      <span class='comment val'># Assume this is a multi-level association constraint.</span>
+      <span class='comment val'># example:</span>
+      <span class='comment val'>#   data model: Park -&gt; Den -&gt; Bear</span>
+      <span class='comment val'>#   constraint: :den =&gt; {:park =&gt; 5}</span>
+      <span class='if if kw'>if</span> <span class='v identifier id'>v</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span> <span class='Hash constant id'>Hash</span>
+        <span class='far_association identifier id'>far_association</span> <span class='assign token'>=</span> <span class='column identifier id'>column</span><span class='dot token'>.</span><span class='association identifier id'>association</span><span class='dot token'>.</span><span class='klass identifier id'>klass</span><span class='dot token'>.</span><span class='reflect_on_association identifier id'>reflect_on_association</span><span class='lparen token'>(</span><span class='v identifier id'>v</span><span class='dot token'>.</span><span class='keys identifier id'>keys</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='rparen token'>)</span>
+        <span class='field identifier id'>field</span> <span class='assign token'>=</span> <span class='far_association identifier id'>far_association</span><span class='dot token'>.</span><span class='klass identifier id'>klass</span><span class='dot token'>.</span><span class='primary_key identifier id'>primary_key</span>
+        <span class='table identifier id'>table</span> <span class='assign token'>=</span> <span class='far_association identifier id'>far_association</span><span class='dot token'>.</span><span class='table_name identifier id'>table_name</span>
+
+        <span class='active_scaffold_joins identifier id'>active_scaffold_joins</span><span class='dot token'>.</span><span class='concat identifier id'>concat</span><span class='lparen token'>(</span><span class='lbrack token'>[</span><span class='lbrace token'>{</span><span class='k identifier id'>k</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='v identifier id'>v</span><span class='dot token'>.</span><span class='keys identifier id'>keys</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='rbrace token'>}</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='comment val'># e.g. {:den =&gt; :park}</span>
+        <span class='constraint_condition_for identifier id'>constraint_condition_for</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{table}.#{field}&quot;</span><span class='comma token'>,</span> <span class='v identifier id'>v</span><span class='dot token'>.</span><span class='values identifier id'>values</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='rparen token'>)</span>
+
+      <span class='comment val'># association column constraint</span>
+      <span class='elsif elsif kw'>elsif</span> <span class='column identifier id'>column</span><span class='dot token'>.</span><span class='association identifier id'>association</span>
+        <span class='if if kw'>if</span> <span class='column identifier id'>column</span><span class='dot token'>.</span><span class='association identifier id'>association</span><span class='dot token'>.</span><span class='macro identifier id'>macro</span> <span class='eq op'>==</span> <span class='colon op'>:</span><span class='has_and_belongs_to_many identifier id'>has_and_belongs_to_many</span>
+          <span class='active_scaffold_habtm_joins identifier id'>active_scaffold_habtm_joins</span><span class='dot token'>.</span><span class='concat identifier id'>concat</span> <span class='column identifier id'>column</span><span class='dot token'>.</span><span class='includes identifier id'>includes</span>
+        <span class='else else kw'>else</span>
+          <span class='active_scaffold_joins identifier id'>active_scaffold_joins</span><span class='dot token'>.</span><span class='concat identifier id'>concat</span> <span class='column identifier id'>column</span><span class='dot token'>.</span><span class='includes identifier id'>includes</span>
+        <span class='end end kw'>end</span>
+        <span class='condition_from_association_constraint identifier id'>condition_from_association_constraint</span><span class='lparen token'>(</span><span class='column identifier id'>column</span><span class='dot token'>.</span><span class='association identifier id'>association</span><span class='comma token'>,</span> <span class='v identifier id'>v</span><span class='rparen token'>)</span>
+
+      <span class='comment val'># regular column constraints</span>
+      <span class='elsif elsif kw'>elsif</span> <span class='column identifier id'>column</span><span class='dot token'>.</span><span class='searchable? fid id'>searchable?</span>
+        <span class='active_scaffold_joins identifier id'>active_scaffold_joins</span><span class='dot token'>.</span><span class='concat identifier id'>concat</span> <span class='column identifier id'>column</span><span class='dot token'>.</span><span class='includes identifier id'>includes</span>
+        <span class='constraint_condition_for identifier id'>constraint_condition_for</span><span class='lparen token'>(</span><span class='column identifier id'>column</span><span class='dot token'>.</span><span class='search_sql identifier id'>search_sql</span><span class='comma token'>,</span> <span class='v identifier id'>v</span><span class='rparen token'>)</span>
+      <span class='end end kw'>end</span>
+    <span class='comment val'># unknown-to-activescaffold-but-real-database-column constraint</span>
+    <span class='elsif elsif kw'>elsif</span> <span class='active_scaffold_config identifier id'>active_scaffold_config</span><span class='dot token'>.</span><span class='model identifier id'>model</span><span class='dot token'>.</span><span class='column_names identifier id'>column_names</span><span class='dot token'>.</span><span class='include? fid id'>include?</span> <span class='k identifier id'>k</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+      <span class='constraint_condition_for identifier id'>constraint_condition_for</span><span class='lparen token'>(</span><span class='k identifier id'>k</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='comma token'>,</span> <span class='v identifier id'>v</span><span class='rparen token'>)</span>
+    <span class='else else kw'>else</span>
+      <span class='raise identifier id'>raise</span> <span class='ActiveScaffold constant id'>ActiveScaffold</span><span class='colon2 op'>::</span><span class='MalformedConstraint constant id'>MalformedConstraint</span><span class='comma token'>,</span> <span class='constraint_error identifier id'>constraint_error</span><span class='lparen token'>(</span><span class='active_scaffold_config identifier id'>active_scaffold_config</span><span class='dot token'>.</span><span class='model identifier id'>model</span><span class='comma token'>,</span> <span class='k identifier id'>k</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='caller identifier id'>caller</span>
+    <span class='end end kw'>end</span>
+
+    <span class='conditions identifier id'>conditions</span> <span class='assign token'>=</span> <span class='merge_conditions identifier id'>merge_conditions</span><span class='lparen token'>(</span><span class='conditions identifier id'>conditions</span><span class='comma token'>,</span> <span class='constraint_condition identifier id'>constraint_condition</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+
+  <span class='conditions identifier id'>conditions</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>constraint_condition_for</h3>
+</div><div id="constraint_condition_for-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>constraint_condition_for</span><span class='args'>(sql, value)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+174
+175
+176</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_scaffold/constraints.rb', line 174</span>
+
+<span class='def def kw'>def</span> <span class='constraint_condition_for identifier id'>constraint_condition_for</span><span class='lparen token'>(</span><span class='sql identifier id'>sql</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='rparen token'>)</span>
+  <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span> <span class='integer val'>? </span><span class='dstring node'>&quot;#{sql} IS NULL&quot;</span> <span class='colon op'>:</span> <span class='lbrack token'>[</span><span class='dstring node'>&quot;#{sql} = ?&quot;</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>constraint_error</h3>
+</div><div id="constraint_error-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>constraint_error</span><span class='args'>(klass, column_name)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+123
+124
+125</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_scaffold/constraints.rb', line 123</span>
+
+<span class='def def kw'>def</span> <span class='constraint_error identifier id'>constraint_error</span><span class='lparen token'>(</span><span class='klass identifier id'>klass</span><span class='comma token'>,</span> <span class='column_name identifier id'>column_name</span><span class='rparen token'>)</span>
+  <span class='dstring node'>&quot;Malformed constraint `#{klass}##{column_name}'. If it's a legitimate column, and you are using a nested scaffold, please specify or double-check the reverse association name.&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>register_constraints_with_action_columns</h3>
+</div><div id="register_constraints_with_action_columns-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>register_constraints_with_action_columns</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+For each enabled action, adds the constrained columns to the ActionColumns
+object (if it exists). This lets the ActionColumns object skip constrained
+columns.
+</p>
+<p>
+If the constraint value is a Hash, then we assume the constraint is a
+multi-level association constraint (the reverse of a has_many :through) and
+we do NOT register the constraint column.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_scaffold/constraints.rb', line 20</span>
+
+<span class='def def kw'>def</span> <span class='register_constraints_with_action_columns identifier id'>register_constraints_with_action_columns</span>
+  <span class='constrained_fields identifier id'>constrained_fields</span> <span class='assign token'>=</span> <span class='active_scaffold_constraints identifier id'>active_scaffold_constraints</span><span class='dot token'>.</span><span class='reject identifier id'>reject</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='k identifier id'>k</span><span class='comma token'>,</span> <span class='v identifier id'>v</span><span class='bitor op'>|</span> <span class='v identifier id'>v</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span> <span class='Hash constant id'>Hash</span><span class='rbrace token'>}</span><span class='dot token'>.</span><span class='keys identifier id'>keys</span><span class='dot token'>.</span><span class='collect identifier id'>collect</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='k identifier id'>k</span><span class='bitor op'>|</span> <span class='k identifier id'>k</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span><span class='rbrace token'>}</span>
+
+  <span class='if if kw'>if</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='uses_active_scaffold? fid id'>uses_active_scaffold?</span>
+    <span class='comment val'># we actually want to do this whether constrained_fields exist or not, so that we can reset the array when they don't</span>
+    <span class='active_scaffold_config identifier id'>active_scaffold_config</span><span class='dot token'>.</span><span class='actions identifier id'>actions</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='action_name identifier id'>action_name</span><span class='bitor op'>|</span>
+      <span class='action identifier id'>action</span> <span class='assign token'>=</span> <span class='active_scaffold_config identifier id'>active_scaffold_config</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='action_name identifier id'>action_name</span><span class='rparen token'>)</span>
+      <span class='next next kw'>next</span> <span class='unless unless_mod kw'>unless</span> <span class='action identifier id'>action</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span> <span class='symbol val'>:columns</span>
+      <span class='action identifier id'>action</span><span class='dot token'>.</span><span class='columns identifier id'>columns</span><span class='dot token'>.</span><span class='constraint_columns identifier id'>constraint_columns</span> <span class='assign token'>=</span> <span class='constrained_fields identifier id'>constrained_fields</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: YARD::Handlers::ClassVariableHandler</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class YARD_Handlers_ClassVariableHandler">
+  <h1 class="title">Class: YARD::Handlers::ClassVariableHandler</h1>
+  <div class="section inheritance">
+  <ul>
+  <li><a href='Base.html' title='YARD::Handlers::Base'>YARD::Handlers::Base</a></li><ul><li>YARD::Handlers::ClassVariableHandler</li>
+  </ul></ul>
+</div><div class="section constants">
+  <div class="thisclass">
+  <h1>Constants</h1>
+  <dl>
+    
+      <dt id="HANDLER_MATCH-constant">HANDLER_MATCH</dt>
+      <dd>/\A@@\S*\s*=\s*/m</dd>
+    
+  </dl>
+</div>
+<div class="inherited">
+  
+</div>
+<div class="clear"></div>
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <p class="inherited_msg">
+    This class inherits a constructor from <a href='Base.html#initialize-instance_method' title='YARD::Handlers::Base'>YARD::Handlers::Base</a>.
+  </p>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <div class="inherited">
+  
+  <div>
+    <h1>Public Class Methods Inherited from <a href='Base.html' title='YARD::Handlers::Base'>YARD::Handlers::Base</a></h1>
+    <p><span class='name'><a href='Base.html#clear_subclasses-class_method' title='clear_subclasses'>clear_subclasses</a></span>, <span class='name'><a href='Base.html#handles-class_method' title='handles'>handles</a></span>, <span class='name'><a href='Base.html#handles%3F-class_method' title='handles?'>handles?</a></span>, <span class='name'><a href='Base.html#inherited-class_method' title='inherited'>inherited</a></span>, <span class='name'><a href='Base.html#subclasses-class_method' title='subclasses'>subclasses</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+  <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#process-instance_method' title='#process'>#process</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table><div class="inherited">
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>process</h3>
+</div><div id="process-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>process</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+5
+6
+7
+8
+9
+10
+11
+12</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/yard/handlers/class_variable_handler.rb', line 5</span>
+
+<span class='def def kw'>def</span> <span class='process identifier id'>process</span>
+  <span class='comment val'># Don't document @@cvars if they're set in second class objects (methods) because</span>
+  <span class='comment val'># they're not &quot;static&quot; when executed from a method</span>
+  <span class='return return kw'>return</span> <span class='unless unless_mod kw'>unless</span> <span class='owner identifier id'>owner</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span> <span class='NamespaceObject constant id'>NamespaceObject</span>
+  
+  <span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='value identifier id'>value</span> <span class='assign token'>=</span> <span class='mult op'>*</span><span class='statement identifier id'>statement</span><span class='dot token'>.</span><span class='tokens identifier id'>tokens</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='regexp val'>/\r?\n/</span><span class='comma token'>,</span> <span class='string val'>''</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='regexp val'>/\s*=\s*/</span><span class='comma token'>,</span> <span class='integer val'>2</span><span class='rparen token'>)</span>
+  <span class='register identifier id'>register</span> <span class='ClassVariableObject constant id'>ClassVariableObject</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='namespace identifier id'>namespace</span><span class='comma token'>,</span> <span class='name identifier id'>name</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='o identifier id'>o</span><span class='bitor op'>|</span> <span class='o identifier id'>o</span><span class='dot token'>.</span><span class='source identifier id'>source</span> <span class='assign token'>=</span> <span class='statement identifier id'>statement</span> <span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

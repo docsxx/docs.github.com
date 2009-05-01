@@ -1,0 +1,509 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: Module</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class Module">
+  <h1 class="title">Class: Module</h1>
+  <div class="section inheritance">
+  <ul>
+  <li><a href='Object.html' title='Object'>Object</a></li><ul><li>Module</li>
+  </ul></ul>
+</div><div class="section mixins">
+  <h1>Included Modules</h1>
+  <p><a href='ClassLoadingWatcher/SanityCheck.html' title='ClassLoadingWatcher::SanityCheck'>ClassLoadingWatcher::SanityCheck</a></p>
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#add_method_tracer-instance_method' title='#add_method_tracer'>#add_method_tracer</a></span><span class='args'>(*args)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Add a method tracer to the specified method.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#new_relic_const_missing-instance_method' title='#new_relic_const_missing'>#new_relic_const_missing</a></span><span class='args'>(*args)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#remove_method_tracer-instance_method' title='#remove_method_tracer'>#remove_method_tracer</a></span><span class='args'>(*args)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Not recommended for production use, because tracers must be removed in
+reverse-order from when they were added, or else other tracers that were
+added to the same method may get removed as well.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#trace_method_execution-instance_method' title='#trace_method_execution'>#trace_method_execution</a></span><span class='args'>(*args)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Original method preserved for API backward compatibility.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#trace_method_execution_no_scope-instance_method' title='#trace_method_execution_no_scope'>#trace_method_execution_no_scope</a></span><span class='args'>(metric_name)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+This is duplicated inline in add_method_tracer.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#trace_method_execution_with_scope-instance_method' title='#trace_method_execution_with_scope'>#trace_method_execution_with_scope</a></span><span class='args'>(metric_name, produce_metric, deduct_call_time_from_parent)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table><div class="inherited">
+  
+  <div>
+    <h1>Public Instance Methods Inherited from <a href='Object.html' title='Object'>Object</a></h1>
+    <p><span class='name'><a href='Object.html#new_relic_load-instance_method' title='new_relic_load'>new_relic_load</a></span>, <span class='name'><a href='Object.html#new_relic_require-instance_method' title='new_relic_require'>new_relic_require</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div><div class="included">
+  
+  <div>
+    <h1>Public Instance Methods Included from <a href='ClassLoadingWatcher/SanityCheck.html' title='ClassLoadingWatcher::SanityCheck'>ClassLoadingWatcher::SanityCheck</a></h1>
+    <p><span class='name'><a href='ClassLoadingWatcher/SanityCheck.html#new_relic_check_for_badness-instance_method' title='new_relic_check_for_badness'>new_relic_check_for_badness</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>add_method_tracer</h3>
+</div><div id="add_method_tracer-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>add_method_tracer</span><span class='args'>(*args)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Add a method tracer to the specified method. metric_name_code is ruby code
+that determines the name of the metric to be collected during tracing. As
+such, the code should be provided in &#8216;single quote&#8217; strings
+rather than &quot;double quote&quot; strings, so that #{} evaluation
+happens at traced method execution time. Example: tracing a method :foo,
+where the metric name is the first argument converted to a string
+</p>
+<pre class="code">
+    <span class='add_method_tracer identifier id'>add_method_tracer</span> <span class='symbol val'>:foo</span><span class='comma token'>,</span> <span class='string val'>'#{args.first.to_s}'</span>
+</pre>
+<p>
+statically defined metric names can be specified as regular strings
+push_scope specifies whether this method tracer should push the metric name
+onto the scope stack.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+16
+17</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/new_relic/shim_agent.rb', line 16</span>
+
+<span class='def def kw'>def</span> <span class='add_method_tracer identifier id'>add_method_tracer</span> <span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>new_relic_const_missing</h3>
+</div><div id="new_relic_const_missing-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>new_relic_const_missing</span><span class='args'>(*args)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+101
+102
+103
+104</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/new_relic/agent/patch_const_missing.rb', line 101</span>
+
+<span class='def def kw'>def</span> <span class='new_relic_const_missing identifier id'>new_relic_const_missing</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='new_relic_check_for_badness identifier id'>new_relic_check_for_badness</span><span class='lparen token'>(</span><span class='dstring node'>&quot;Module #{self.name} const_missing&quot;</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='non_new_relic_const_missing identifier id'>non_new_relic_const_missing</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>remove_method_tracer</h3>
+</div><div id="remove_method_tracer-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>remove_method_tracer</span><span class='args'>(*args)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Not recommended for production use, because tracers must be removed in
+reverse-order from when they were added, or else other tracers that were
+added to the same method may get removed as well.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+19
+20</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/new_relic/shim_agent.rb', line 19</span>
+
+<span class='def def kw'>def</span> <span class='remove_method_tracer identifier id'>remove_method_tracer</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>trace_method_execution</h3>
+</div><div id="trace_method_execution-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>trace_method_execution</span><span class='args'>(*args)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Original method preserved for API backward compatibility
+</p>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+12
+13
+14</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/new_relic/shim_agent.rb', line 12</span>
+
+<span class='def def kw'>def</span> <span class='trace_method_execution identifier id'>trace_method_execution</span> <span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='yield yield kw'>yield</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>trace_method_execution_no_scope</h3>
+</div><div id="trace_method_execution_no_scope-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>trace_method_execution_no_scope</span><span class='args'>(metric_name)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+This is duplicated inline in add_method_tracer
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+14
+15
+16
+17
+18
+19
+20
+21
+22</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/new_relic/agent/method_tracer.rb', line 14</span>
+
+<span class='def def kw'>def</span> <span class='trace_method_execution_no_scope identifier id'>trace_method_execution_no_scope</span><span class='lparen token'>(</span><span class='metric_name identifier id'>metric_name</span><span class='rparen token'>)</span>
+  <span class='t0 identifier id'>t0</span> <span class='assign token'>=</span> <span class='Time constant id'>Time</span><span class='dot token'>.</span><span class='now identifier id'>now</span><span class='dot token'>.</span><span class='to_f identifier id'>to_f</span>
+  <span class='stats identifier id'>stats</span> <span class='assign token'>=</span> <span class='@@newrelic_stats_engine ivar id'>@@newrelic_stats_engine</span><span class='dot token'>.</span><span class='get_stats_no_scope identifier id'>get_stats_no_scope</span> <span class='metric_name identifier id'>metric_name</span>
+
+  <span class='result identifier id'>result</span> <span class='assign token'>=</span> <span class='yield yield kw'>yield</span>
+  <span class='duration identifier id'>duration</span> <span class='assign token'>=</span> <span class='Time constant id'>Time</span><span class='dot token'>.</span><span class='now identifier id'>now</span><span class='dot token'>.</span><span class='to_f identifier id'>to_f</span> <span class='minus op'>-</span> <span class='t0 identifier id'>t0</span>              <span class='comment val'># for some reason this is 3 usec faster than Time - Time</span>
+  <span class='stats identifier id'>stats</span><span class='dot token'>.</span><span class='trace_call identifier id'>trace_call</span><span class='lparen token'>(</span><span class='duration identifier id'>duration</span><span class='comma token'>,</span> <span class='duration identifier id'>duration</span><span class='rparen token'>)</span>    
+  <span class='result identifier id'>result</span> 
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>trace_method_execution_with_scope</h3>
+</div><div id="trace_method_execution_with_scope-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>trace_method_execution_with_scope</span><span class='args'>(metric_name, produce_metric, deduct_call_time_from_parent)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/new_relic/agent/method_tracer.rb', line 24</span>
+
+<span class='def def kw'>def</span> <span class='trace_method_execution_with_scope identifier id'>trace_method_execution_with_scope</span><span class='lparen token'>(</span><span class='metric_name identifier id'>metric_name</span><span class='comma token'>,</span> <span class='produce_metric identifier id'>produce_metric</span><span class='comma token'>,</span> <span class='deduct_call_time_from_parent identifier id'>deduct_call_time_from_parent</span><span class='rparen token'>)</span>
+
+  <span class='t0 identifier id'>t0</span> <span class='assign token'>=</span> <span class='Time constant id'>Time</span><span class='dot token'>.</span><span class='now identifier id'>now</span><span class='dot token'>.</span><span class='to_f identifier id'>to_f</span>
+  <span class='stats identifier id'>stats</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+  
+  <span class='begin begin kw'>begin</span>
+    <span class='comment val'># Keep a reference to the scope we are pushing so we can do a sanity check making</span>
+    <span class='comment val'># sure when we pop we get the one we 'expected'</span>
+    <span class='expected_scope identifier id'>expected_scope</span> <span class='assign token'>=</span> <span class='@@newrelic_stats_engine ivar id'>@@newrelic_stats_engine</span><span class='dot token'>.</span><span class='push_scope identifier id'>push_scope</span><span class='lparen token'>(</span><span class='metric_name identifier id'>metric_name</span><span class='comma token'>,</span> <span class='t0 identifier id'>t0</span><span class='comma token'>,</span> <span class='deduct_call_time_from_parent identifier id'>deduct_call_time_from_parent</span><span class='rparen token'>)</span>
+    
+    <span class='stats identifier id'>stats</span> <span class='assign token'>=</span> <span class='@@newrelic_stats_engine ivar id'>@@newrelic_stats_engine</span><span class='dot token'>.</span><span class='get_stats identifier id'>get_stats</span> <span class='metric_name identifier id'>metric_name</span><span class='comma token'>,</span> <span class='true true kw'>true</span> <span class='if if_mod kw'>if</span> <span class='produce_metric identifier id'>produce_metric</span>
+  <span class='rescue rescue kw'>rescue</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
+    <span class='NewRelic constant id'>NewRelic</span><span class='colon2 op'>::</span><span class='Config constant id'>Config</span><span class='dot token'>.</span><span class='instance identifier id'>instance</span><span class='dot token'>.</span><span class='log identifier id'>log</span><span class='dot token'>.</span><span class='error identifier id'>error</span><span class='lparen token'>(</span><span class='dstring node'>&quot;Caught exception in trace_method_execution header. Metric name = #{metric_name}, exception = #{e}&quot;</span><span class='rparen token'>)</span>
+    <span class='NewRelic constant id'>NewRelic</span><span class='colon2 op'>::</span><span class='Config constant id'>Config</span><span class='dot token'>.</span><span class='instance identifier id'>instance</span><span class='dot token'>.</span><span class='log identifier id'>log</span><span class='dot token'>.</span><span class='error identifier id'>error</span><span class='lparen token'>(</span><span class='e identifier id'>e</span><span class='dot token'>.</span><span class='backtrace identifier id'>backtrace</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='string val'>&quot;\n&quot;</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+
+  <span class='begin begin kw'>begin</span>
+    <span class='yield yield kw'>yield</span>
+  <span class='ensure ensure kw'>ensure</span>
+    <span class='t1 identifier id'>t1</span> <span class='assign token'>=</span> <span class='Time constant id'>Time</span><span class='dot token'>.</span><span class='now identifier id'>now</span><span class='dot token'>.</span><span class='to_f identifier id'>to_f</span>
+    <span class='duration identifier id'>duration</span> <span class='assign token'>=</span> <span class='t1 identifier id'>t1</span> <span class='minus op'>-</span> <span class='t0 identifier id'>t0</span>
+    
+    <span class='begin begin kw'>begin</span>
+      <span class='if if kw'>if</span> <span class='expected_scope identifier id'>expected_scope</span>
+        <span class='scope identifier id'>scope</span> <span class='assign token'>=</span> <span class='@@newrelic_stats_engine ivar id'>@@newrelic_stats_engine</span><span class='dot token'>.</span><span class='pop_scope identifier id'>pop_scope</span> <span class='expected_scope identifier id'>expected_scope</span><span class='comma token'>,</span> <span class='duration identifier id'>duration</span><span class='comma token'>,</span> <span class='t1 identifier id'>t1</span>
+        
+        <span class='exclusive identifier id'>exclusive</span> <span class='assign token'>=</span> <span class='duration identifier id'>duration</span> <span class='minus op'>-</span> <span class='scope identifier id'>scope</span><span class='dot token'>.</span><span class='children_time identifier id'>children_time</span>
+        <span class='stats identifier id'>stats</span><span class='dot token'>.</span><span class='trace_call identifier id'>trace_call</span><span class='lparen token'>(</span><span class='duration identifier id'>duration</span><span class='comma token'>,</span> <span class='exclusive identifier id'>exclusive</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='stats identifier id'>stats</span>
+      <span class='end end kw'>end</span>
+    <span class='rescue rescue kw'>rescue</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
+      <span class='NewRelic constant id'>NewRelic</span><span class='colon2 op'>::</span><span class='Config constant id'>Config</span><span class='dot token'>.</span><span class='instance identifier id'>instance</span><span class='dot token'>.</span><span class='log identifier id'>log</span><span class='dot token'>.</span><span class='error identifier id'>error</span><span class='lparen token'>(</span><span class='dstring node'>&quot;Caught exception in trace_method_execution footer. Metric name = #{metric_name}, exception = #{e}&quot;</span><span class='rparen token'>)</span>
+      <span class='NewRelic constant id'>NewRelic</span><span class='colon2 op'>::</span><span class='Config constant id'>Config</span><span class='dot token'>.</span><span class='instance identifier id'>instance</span><span class='dot token'>.</span><span class='log identifier id'>log</span><span class='dot token'>.</span><span class='error identifier id'>error</span><span class='lparen token'>(</span><span class='e identifier id'>e</span><span class='dot token'>.</span><span class='backtrace identifier id'>backtrace</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='string val'>&quot;\n&quot;</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

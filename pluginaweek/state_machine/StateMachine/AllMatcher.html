@@ -1,0 +1,308 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: StateMachine::AllMatcher</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class StateMachine_AllMatcher">
+  <h1 class="title">Class: StateMachine::AllMatcher</h1>
+  <div class="section inheritance">
+  <ul>
+  <li><a href='Matcher.html' title='StateMachine::Matcher'>StateMachine::Matcher</a></li><ul><li>StateMachine::AllMatcher</li>
+  </ul></ul>
+</div><div class="section mixins">
+  <h1>Included Modules</h1>
+  <p>Singleton</p>
+</div><div class="section docstring">
+  <p>
+Matches any given value. Since there is no configuration for this type of
+matcher, it must be used as a singleton.
+</p>
+
+</div><div class="section constants">
+  
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <p class="inherited_msg">
+    This class inherits a constructor from <a href='Matcher.html#initialize-instance_method' title='StateMachine::Matcher'>StateMachine::Matcher</a>.
+  </p>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#--instance_method' title='#-'>#-</a></span><span class='args'>(blacklist)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Generates a blacklist matcher based on the given set of values.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#description-instance_method' title='#description'>#description</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+A human-readable description of this matcher.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#filter-instance_method' title='#filter'>#filter</a></span><span class='args'>(values)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Always returns the given set of values.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#matches%3F-instance_method' title='#matches?'>#matches?</a></span><span class='args'>(value, context = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Always returns true.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>-</h3>
+</div><div id="--instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>-</span><span class='args'>(blacklist)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Generates a blacklist matcher based on the given set of values
+</p>
+<h2>Examples</h2>
+<pre class="code">
+  <span class='matcher identifier id'>matcher</span> <span class='assign token'>=</span> <span class='StateMachine constant id'>StateMachine</span><span class='colon2 op'>::</span><span class='AllMatcher constant id'>AllMatcher</span><span class='dot token'>.</span><span class='instance identifier id'>instance</span> <span class='minus op'>-</span> <span class='lbrack token'>[</span><span class='symbol val'>:parked</span><span class='comma token'>,</span> <span class='symbol val'>:idling</span><span class='rbrack token'>]</span>
+  <span class='matcher identifier id'>matcher</span><span class='dot token'>.</span><span class='matches? fid id'>matches?</span><span class='lparen token'>(</span><span class='symbol val'>:parked</span><span class='rparen token'>)</span>       <span class='comment val'># =&gt; false</span>
+  <span class='matcher identifier id'>matcher</span><span class='dot token'>.</span><span class='matches? fid id'>matches?</span><span class='lparen token'>(</span><span class='symbol val'>:first_gear</span><span class='rparen token'>)</span>   <span class='comment val'># =&gt; true</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+35
+36
+37</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/state_machine/matcher.rb', line 35</span>
+
+<span class='def def kw'>def</span> <span class='minus op'>-</span><span class='lparen token'>(</span><span class='blacklist identifier id'>blacklist</span><span class='rparen token'>)</span>
+  <span class='BlacklistMatcher constant id'>BlacklistMatcher</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='blacklist identifier id'>blacklist</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>description</h3>
+</div><div id="description-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>description</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+A human-readable description of this matcher. Always &quot;all&quot;.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+50
+51
+52</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/state_machine/matcher.rb', line 50</span>
+
+<span class='def def kw'>def</span> <span class='description identifier id'>description</span>
+  <span class='string val'>'all'</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>filter</h3>
+</div><div id="filter-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>filter</span><span class='args'>(values)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Always returns the given set of values
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+45
+46
+47</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/state_machine/matcher.rb', line 45</span>
+
+<span class='def def kw'>def</span> <span class='filter identifier id'>filter</span><span class='lparen token'>(</span><span class='values identifier id'>values</span><span class='rparen token'>)</span>
+  <span class='values identifier id'>values</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>matches?</h3>
+</div><div id="matches%3F-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>matches?</span><span class='args'>(value, context = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Always returns true
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+40
+41
+42</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/state_machine/matcher.rb', line 40</span>
+
+<span class='def def kw'>def</span> <span class='matches? fid id'>matches?</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='comma token'>,</span> <span class='context identifier id'>context</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='true true kw'>true</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

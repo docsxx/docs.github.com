@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: ActionController::Caching::Actions</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module ActionController_Caching_Actions">
+  <h1 class="title">Module: ActionController::Caching::Actions</h1>
+  <div class="section docstring">
+  <p>
+Action caching is similar to page caching by the fact that the entire
+output of the response is cached, but unlike page caching, every request
+still goes through the Action Pack. The key benefit of this is that filters
+are run before the cache is served, which allows for authentication and
+other restrictions on whether someone is allowed to see the cache. Example:
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='ListsController constant id'>ListsController</span> <span class='lt op'>&lt;</span> <span class='ApplicationController constant id'>ApplicationController</span>
+    <span class='before_filter identifier id'>before_filter</span> <span class='symbol val'>:authenticate</span><span class='comma token'>,</span> <span class='symbol val'>:except</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:public</span>
+    <span class='caches_page identifier id'>caches_page</span>   <span class='symbol val'>:public</span>
+    <span class='caches_action identifier id'>caches_action</span> <span class='symbol val'>:index</span><span class='comma token'>,</span> <span class='symbol val'>:show</span><span class='comma token'>,</span> <span class='symbol val'>:feed</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+In this example, the public action doesn&#8217;t require authentication, so
+it&#8217;s possible to use the faster page caching method. But both the
+show and feed action are to be shielded behind the authenticate filter, so
+we need to implement those as action caches.
+</p>
+<p>
+Action caching internally uses the fragment caching and an around filter to
+do the job. The fragment cache is named according to both the current host
+and the path. So a page that is accessed at
+http://david.somewhere.com/lists/show/1 will result in a fragment named
+&quot;david.somewhere.com/lists/show/1&quot;. This allows the cacher to
+differentiate between &quot;david.somewhere.com/lists/&quot; and
+&quot;jamis.somewhere.com/lists/&quot; &#8212; which is a helpful way of
+assisting the subdomain-as-account-key pattern.
+</p>
+<p>
+Different representations of the same resource, e.g.
+<tt>http://david.somewhere.com/lists</tt> and
+<tt>http://david.somewhere.com/lists.xml</tt> are treated like separate
+requests and so are cached separately. Keep in mind when expiring an action
+cache that <tt>:action =&gt; &#8216;lists&#8217;</tt> is not the same as
+<tt>:action =&gt; &#8216;list&#8217;, :format =&gt; :xml</tt>.
+</p>
+<p>
+You can set modify the default action cache path by passing a :cache_path
+option. This will be passed directly to ActionCachePath.path_for. This is
+handy for actions with multiple possible routes that should be cached
+differently. If a block is given, it is called with the current controller
+instance.
+</p>
+<p>
+And you can also use :if (or :unless) to pass a Proc that specifies when
+the action should be cached.
+</p>
+<p>
+Finally, if you are using memcached, you can also pass :expires_in.
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='ListsController constant id'>ListsController</span> <span class='lt op'>&lt;</span> <span class='ApplicationController constant id'>ApplicationController</span>
+    <span class='before_filter identifier id'>before_filter</span> <span class='symbol val'>:authenticate</span><span class='comma token'>,</span> <span class='symbol val'>:except</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:public</span>
+    <span class='caches_page identifier id'>caches_page</span>   <span class='symbol val'>:public</span>
+    <span class='caches_action identifier id'>caches_action</span> <span class='symbol val'>:index</span><span class='comma token'>,</span> <span class='symbol val'>:if</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='Proc constant id'>Proc</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span> <span class='notop op'>!</span><span class='c identifier id'>c</span><span class='dot token'>.</span><span class='request identifier id'>request</span><span class='dot token'>.</span><span class='format identifier id'>format</span><span class='dot token'>.</span><span class='json? fid id'>json?</span> <span class='rbrace token'>}</span> <span class='comment val'># cache if is not a JSON request</span>
+    <span class='caches_action identifier id'>caches_action</span> <span class='symbol val'>:show</span><span class='comma token'>,</span> <span class='symbol val'>:cache_path</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span> <span class='symbol val'>:project</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>1</span> <span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='symbol val'>:expires_in</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='float val'>1</span><span class='dot token'>.</span><span class='hour identifier id'>hour</span>
+    <span class='caches_action identifier id'>caches_action</span> <span class='symbol val'>:feed</span><span class='comma token'>,</span> <span class='symbol val'>:cache_path</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='Proc constant id'>Proc</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='controller identifier id'>controller</span><span class='bitor op'>|</span>
+      <span class='controller identifier id'>controller</span><span class='dot token'>.</span><span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:user_id</span><span class='rbrack token'>]</span> <span class='question op'>?</span>
+        <span class='controller identifier id'>controller</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='symbol val'>:user_list_url</span><span class='comma token'>,</span> <span class='controller identifier id'>controller</span><span class='dot token'>.</span><span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:user_id</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='controller identifier id'>controller</span><span class='dot token'>.</span><span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:id</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='colon op'>:</span>
+        <span class='controller identifier id'>controller</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='symbol val'>:list_url</span><span class='comma token'>,</span> <span class='controller identifier id'>controller</span><span class='dot token'>.</span><span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:id</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+If you pass :layout =&gt; false, it will only cache your action content. It
+is useful when your layout has dynamic information.
+</p>
+
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <h1>Public Class Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#included-class_method' title='included'>included</a></span><span class='args'>(base)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails class public">
+  <h1>Public Class Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>included</h3>
+</div><div id="included-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>included</span><span class='args'>(base)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+48
+49
+50
+51
+52
+53</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'actionpack/lib/action_controller/caching/actions.rb', line 48</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='included identifier id'>included</span><span class='lparen token'>(</span><span class='base identifier id'>base</span><span class='rparen token'>)</span> <span class='comment val'>#:nodoc:</span>
+  <span class='base identifier id'>base</span><span class='dot token'>.</span><span class='extend identifier id'>extend</span><span class='lparen token'>(</span><span class='ClassMethods constant id'>ClassMethods</span><span class='rparen token'>)</span>
+    <span class='base identifier id'>base</span><span class='dot token'>.</span><span class='class_eval identifier id'>class_eval</span> <span class='do do kw'>do</span>
+      <span class='attr_accessor identifier id'>attr_accessor</span> <span class='symbol val'>:rendered_action_cache</span><span class='comma token'>,</span> <span class='symbol val'>:action_cache_path</span>
+    <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

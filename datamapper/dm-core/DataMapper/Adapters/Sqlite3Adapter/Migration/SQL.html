@@ -1,0 +1,314 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: DataMapper::Adapters::Sqlite3Adapter::Migration::SQL</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module DataMapper_Adapters_Sqlite3Adapter_Migration_SQL">
+  <h1 class="title">Module: DataMapper::Adapters::Sqlite3Adapter::Migration::SQL</h1>
+  <div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#create_table_statement-instance_method' title='#create_table_statement'>#create_table_statement</a></span><span class='args'>(repository, model)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+TODO: move to dm-more/dm-migrations.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#property_schema_statement-instance_method' title='#property_schema_statement'>#property_schema_statement</a></span><span class='args'>(schema)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+TODO: move to dm-more/dm-migrations.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#sqlite_version-instance_method' title='#sqlite_version'>#sqlite_version</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+TODO: move to dm-more/dm-migrations.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#supports_serial%3F-instance_method' title='#supports_serial?'>#supports_serial?</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+private ## This cannot be private for current migrations TODO: move to
+dm-more/dm-migrations.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>create_table_statement</h3>
+</div><div id="create_table_statement-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>create_table_statement</span><span class='args'>(repository, model)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+TODO: move to dm-more/dm-migrations
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/adapters/sqlite3_adapter.rb', line 52</span>
+
+<span class='def def kw'>def</span> <span class='create_table_statement identifier id'>create_table_statement</span><span class='lparen token'>(</span><span class='repository identifier id'>repository</span><span class='comma token'>,</span> <span class='model identifier id'>model</span><span class='rparen token'>)</span>
+  <span class='statement identifier id'>statement</span> <span class='assign token'>=</span> <span class='string val'>&quot;CREATE TABLE \#{quote_table_name(model.storage_name(repository.name))}\n(\#{model.properties_with_subclasses(repository.name).map { |p| property_schema_statement(property_schema_hash(repository, p)) } * ', '}\n&quot;</span><span class='dot token'>.</span><span class='compress_lines identifier id'>compress_lines</span>
+
+  <span class='comment val'># skip adding the primary key if one of the columns is serial.  In</span>
+  <span class='comment val'># SQLite the serial column must be the primary key, so it has already</span>
+  <span class='comment val'># been defined</span>
+  <span class='unless unless kw'>unless</span> <span class='model identifier id'>model</span><span class='dot token'>.</span><span class='properties identifier id'>properties</span><span class='lparen token'>(</span><span class='repository identifier id'>repository</span><span class='dot token'>.</span><span class='name identifier id'>name</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='any? fid id'>any?</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='p identifier id'>p</span><span class='bitor op'>|</span> <span class='p identifier id'>p</span><span class='dot token'>.</span><span class='serial? fid id'>serial?</span> <span class='rbrace token'>}</span>
+    <span class='if if kw'>if</span> <span class='lparen token'>(</span><span class='key identifier id'>key</span> <span class='assign token'>=</span> <span class='model identifier id'>model</span><span class='dot token'>.</span><span class='properties identifier id'>properties</span><span class='lparen token'>(</span><span class='repository identifier id'>repository</span><span class='dot token'>.</span><span class='name identifier id'>name</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='key identifier id'>key</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='any? fid id'>any?</span>
+      <span class='statement identifier id'>statement</span> <span class='lshft op'>&lt;&lt;</span> <span class='dstring node'>&quot;, PRIMARY KEY(#{key.map { |p| quote_column_name(p.field(repository.name)) } * ', '})&quot;</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+
+  <span class='statement identifier id'>statement</span> <span class='lshft op'>&lt;&lt;</span> <span class='string val'>')'</span>
+  <span class='statement identifier id'>statement</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>property_schema_statement</h3>
+</div><div id="property_schema_statement-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>property_schema_statement</span><span class='args'>(schema)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+TODO: move to dm-more/dm-migrations
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+73
+74
+75
+76
+77</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/adapters/sqlite3_adapter.rb', line 73</span>
+
+<span class='def def kw'>def</span> <span class='property_schema_statement identifier id'>property_schema_statement</span><span class='lparen token'>(</span><span class='schema identifier id'>schema</span><span class='rparen token'>)</span>
+  <span class='statement identifier id'>statement</span> <span class='assign token'>=</span> <span class='super super kw'>super</span>
+  <span class='statement identifier id'>statement</span> <span class='lshft op'>&lt;&lt;</span> <span class='string val'>' PRIMARY KEY AUTOINCREMENT'</span> <span class='if if_mod kw'>if</span> <span class='supports_serial? fid id'>supports_serial?</span> <span class='andop op'>&amp;&amp;</span> <span class='schema identifier id'>schema</span><span class='lbrack token'>[</span><span class='symbol val'>:serial?</span><span class='rbrack token'>]</span>
+  <span class='statement identifier id'>statement</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>sqlite_version</h3>
+</div><div id="sqlite_version-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>sqlite_version</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+TODO: move to dm-more/dm-migrations
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+80
+81
+82</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/adapters/sqlite3_adapter.rb', line 80</span>
+
+<span class='def def kw'>def</span> <span class='sqlite_version identifier id'>sqlite_version</span>
+  <span class='@sqlite_version ivar id'>@sqlite_version</span> <span class='opasgn op'>||=</span> <span class='query identifier id'>query</span><span class='lparen token'>(</span><span class='string val'>'SELECT sqlite_version(*)'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='first identifier id'>first</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>supports_serial?</h3>
+</div><div id="supports_serial%3F-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>supports_serial?</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+private ## This cannot be private for current migrations TODO: move to
+dm-more/dm-migrations
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+47
+48
+49</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/adapters/sqlite3_adapter.rb', line 47</span>
+
+<span class='def def kw'>def</span> <span class='supports_serial? fid id'>supports_serial?</span>
+  <span class='sqlite_version identifier id'>sqlite_version</span> <span class='geq op'>&gt;=</span> <span class='string val'>'3.1.0'</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

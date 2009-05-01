@@ -1,0 +1,532 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: ActiveMerchant::Billing::NetRegistryGateway</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class ActiveMerchant_Billing_NetRegistryGateway">
+  <h1 class="title">Class: ActiveMerchant::Billing::NetRegistryGateway</h1>
+  <div class="section inheritance">
+  <ul>
+  <li><a href='Gateway.html' title='ActiveMerchant::Billing::Gateway'>ActiveMerchant::Billing::Gateway</a></li><ul><li>ActiveMerchant::Billing::NetRegistryGateway</li>
+  </ul></ul>
+</div><div class="section docstring">
+  <p>
+Gateway for netregistry.com.au.
+</p>
+<p>
+Note that NetRegistry itself uses gateway service providers. At the time of
+this writing, there are at least two (Quest and Ingenico). This module has
+only been tested with Quest.
+</p>
+<p>
+Also note that NetRegistry does not offer a test mode, nor does it have
+support for the authorize/capture/void functionality by default (you may
+arrange for this as described in &quot;Programming for NetRegistry&#8217;s
+E-commerce Gateway.&quot; [http://rubyurl.com/hNG]), and no #void
+functionality is documented. As a result, the #authorize and #capture have
+not yet been tested through a live gateway, and #void will raise an error.
+</p>
+<p>
+If you have this functionality enabled, please consider contributing to
+ActiveMerchant by writing tests/code for these methods, and submitting a
+patch.
+</p>
+<p>
+In addition to the standard ActiveMerchant functionality, the response will
+contain a &#8216;receipt&#8217; parameter
+(response.params[&#8216;receipt&#8217;]) if a receipt was issued by the
+gateway.
+</p>
+
+</div><div class="section constants">
+  <div class="thisclass">
+  <h1>Constants</h1>
+  <dl>
+    
+      <dt id="FILTERED_PARAMS-constant">FILTERED_PARAMS</dt>
+      <dd>[ 'card_no', 'card_expiry', 'receipt_array' ]</dd>
+    
+      <dt id="TRANSACTIONS-constant">TRANSACTIONS</dt>
+      <dd>{        :authorization =&gt; 'preauth',        :purchase =&gt; 'purchase',        :capture =&gt; 'completion',        :status =&gt; 'status',        :credit =&gt; 'refund'      }</dd>
+    
+      <dt id="URL-constant">URL</dt>
+      <dd>'https://4tknox.au.com/cgi-bin/themerchant.au.com/ecom/external2.pl'</dd>
+    
+  </dl>
+</div>
+<div class="inherited">
+  
+  <div>
+    <h1>Constants Inherited from <a href='Gateway.html' title='ActiveMerchant::Billing::Gateway'>ActiveMerchant::Billing::Gateway</a></h1>
+    <p><span class='name'><a href='Gateway.html#DEBIT_CARDS-constant' title='DEBIT_CARDS'>DEBIT_CARDS</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Create a new NetRegistry gateway.
+</p>
+<p>
+Options :login and :password must be given.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+50
+51
+52
+53
+54</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/net_registry.rb', line 50</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='requires! fid id'>requires!</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='comma token'>,</span> <span class='symbol val'>:login</span><span class='comma token'>,</span> <span class='symbol val'>:password</span><span class='rparen token'>)</span>
+  <span class='@options ivar id'>@options</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span>
+  <span class='super super kw'>super</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <div class="inherited">
+  
+  <div>
+    <h1>Public Class Methods Inherited from <a href='Gateway.html' title='ActiveMerchant::Billing::Gateway'>ActiveMerchant::Billing::Gateway</a></h1>
+    <p><span class='name'><a href='Gateway.html#card_brand-class_method' title='card_brand'>card_brand</a></span>, <span class='name'><a href='Gateway.html#inherited-class_method' title='inherited'>inherited</a></span>, <span class='name'><a href='Gateway.html#supports%3F-class_method' title='supports?'>supports?</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+  <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#authorize-instance_method' title='#authorize'>#authorize</a></span><span class='args'>(money, credit_card, options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Note that #authorize and #capture only work if your account vendor is St
+George, and if your account has been setup as described in
+&quot;Programming for NetRegistry&#8217;s E-commerce Gateway.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#capture-instance_method' title='#capture'>#capture</a></span><span class='args'>(money, authorization, options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Note that #authorize and #capture only work if your account vendor is St
+George, and if your account has been setup as described in
+&quot;Programming for NetRegistry&#8217;s E-commerce Gateway.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#credit-instance_method' title='#credit'>#credit</a></span><span class='args'>(money, identification, options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#purchase-instance_method' title='#purchase'>#purchase</a></span><span class='args'>(money, credit_card, options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#status-instance_method' title='#status'>#status</a></span><span class='args'>(identification)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Specific to NetRegistry.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table><div class="inherited">
+  
+  <div>
+    <h1>Public Instance Methods Inherited from <a href='Gateway.html' title='ActiveMerchant::Billing::Gateway'>ActiveMerchant::Billing::Gateway</a></h1>
+    <p><span class='name'><a href='Gateway.html#amount-instance_method' title='amount'>amount</a></span>, <span class='name'><a href='Gateway.html#card_brand-instance_method' title='card_brand'>card_brand</a></span>, <span class='name'><a href='Gateway.html#currency-instance_method' title='currency'>currency</a></span>, <span class='name'><a href='Gateway.html#name-instance_method' title='name'>name</a></span>, <span class='name'><a href='Gateway.html#requires_start_date_or_issue_number%3F-instance_method' title='requires_start_date_or_issue_number?'>requires_start_date_or_issue_number?</a></span>, <span class='name'><a href='Gateway.html#test%3F-instance_method' title='test?'>test?</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>authorize</h3>
+</div><div id="authorize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>authorize</span><span class='args'>(money, credit_card, options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Note that #authorize and #capture only work if your account vendor is St
+George, and if your account has been setup as described in
+&quot;Programming for NetRegistry&#8217;s E-commerce Gateway.&quot;
+[http://rubyurl.com/hNG]
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+60
+61
+62
+63
+64
+65
+66
+67
+68</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/net_registry.rb', line 60</span>
+
+<span class='def def kw'>def</span> <span class='authorize identifier id'>authorize</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='comma token'>,</span> <span class='credit_card identifier id'>credit_card</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='params identifier id'>params</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span>
+    <span class='string val'>'AMOUNT'</span>  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='amount identifier id'>amount</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='rparen token'>)</span><span class='comma token'>,</span>
+    <span class='string val'>'CCNUM'</span>   <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='credit_card identifier id'>credit_card</span><span class='dot token'>.</span><span class='number identifier id'>number</span><span class='comma token'>,</span>
+    <span class='string val'>'CCEXP'</span>   <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='expiry identifier id'>expiry</span><span class='lparen token'>(</span><span class='credit_card identifier id'>credit_card</span><span class='rparen token'>)</span>
+  <span class='rbrace token'>}</span>
+  <span class='add_request_details identifier id'>add_request_details</span><span class='lparen token'>(</span><span class='params identifier id'>params</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='commit identifier id'>commit</span><span class='lparen token'>(</span><span class='symbol val'>:authorization</span><span class='comma token'>,</span> <span class='params identifier id'>params</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>capture</h3>
+</div><div id="capture-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>capture</span><span class='args'>(money, authorization, options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Note that #authorize and #capture only work if your account vendor is St
+George, and if your account has been setup as described in
+&quot;Programming for NetRegistry&#8217;s E-commerce Gateway.&quot;
+[http://rubyurl.com/hNG]
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/net_registry.rb', line 74</span>
+
+<span class='def def kw'>def</span> <span class='capture identifier id'>capture</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='comma token'>,</span> <span class='authorization identifier id'>authorization</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='requires! fid id'>requires!</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='comma token'>,</span> <span class='symbol val'>:credit_card</span><span class='rparen token'>)</span>
+  <span class='credit_card identifier id'>credit_card</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:credit_card</span><span class='rbrack token'>]</span>
+
+  <span class='params identifier id'>params</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span>
+    <span class='string val'>'PREAUTHNUM'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='authorization identifier id'>authorization</span><span class='comma token'>,</span>
+    <span class='string val'>'AMOUNT'</span>     <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='amount identifier id'>amount</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='rparen token'>)</span><span class='comma token'>,</span>
+    <span class='string val'>'CCNUM'</span>      <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='credit_card identifier id'>credit_card</span><span class='dot token'>.</span><span class='number identifier id'>number</span><span class='comma token'>,</span>
+    <span class='string val'>'CCEXP'</span>      <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='expiry identifier id'>expiry</span><span class='lparen token'>(</span><span class='credit_card identifier id'>credit_card</span><span class='rparen token'>)</span>
+  <span class='rbrace token'>}</span>
+  <span class='add_request_details identifier id'>add_request_details</span><span class='lparen token'>(</span><span class='params identifier id'>params</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='commit identifier id'>commit</span><span class='lparen token'>(</span><span class='symbol val'>:capture</span><span class='comma token'>,</span> <span class='params identifier id'>params</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>credit</h3>
+</div><div id="credit-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>credit</span><span class='args'>(money, identification, options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+98
+99
+100
+101
+102
+103
+104
+105</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/net_registry.rb', line 98</span>
+
+<span class='def def kw'>def</span> <span class='credit identifier id'>credit</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='comma token'>,</span> <span class='identification identifier id'>identification</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='params identifier id'>params</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span>
+    <span class='string val'>'AMOUNT'</span>  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='amount identifier id'>amount</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='rparen token'>)</span><span class='comma token'>,</span>
+    <span class='string val'>'TXNREF'</span>  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='identification identifier id'>identification</span>
+  <span class='rbrace token'>}</span>
+  <span class='add_request_details identifier id'>add_request_details</span><span class='lparen token'>(</span><span class='params identifier id'>params</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='commit identifier id'>commit</span><span class='lparen token'>(</span><span class='symbol val'>:credit</span><span class='comma token'>,</span> <span class='params identifier id'>params</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>purchase</h3>
+</div><div id="purchase-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>purchase</span><span class='args'>(money, credit_card, options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+88
+89
+90
+91
+92
+93
+94
+95
+96</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/net_registry.rb', line 88</span>
+
+<span class='def def kw'>def</span> <span class='purchase identifier id'>purchase</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='comma token'>,</span> <span class='credit_card identifier id'>credit_card</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='params identifier id'>params</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span>
+    <span class='string val'>'AMOUNT'</span>  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='amount identifier id'>amount</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='rparen token'>)</span><span class='comma token'>,</span>
+    <span class='string val'>'CCNUM'</span>   <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='credit_card identifier id'>credit_card</span><span class='dot token'>.</span><span class='number identifier id'>number</span><span class='comma token'>,</span>
+    <span class='string val'>'CCEXP'</span>   <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='expiry identifier id'>expiry</span><span class='lparen token'>(</span><span class='credit_card identifier id'>credit_card</span><span class='rparen token'>)</span>
+  <span class='rbrace token'>}</span>
+  <span class='add_request_details identifier id'>add_request_details</span><span class='lparen token'>(</span><span class='params identifier id'>params</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='commit identifier id'>commit</span><span class='lparen token'>(</span><span class='symbol val'>:purchase</span><span class='comma token'>,</span> <span class='params identifier id'>params</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>status</h3>
+</div><div id="status-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>status</span><span class='args'>(identification)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Specific to NetRegistry.
+</p>
+<p>
+Run a &#8216;status&#8217; command. This lets you view the status of a
+completed transaction.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+112
+113
+114
+115
+116
+117
+118</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/net_registry.rb', line 112</span>
+
+<span class='def def kw'>def</span> <span class='status identifier id'>status</span><span class='lparen token'>(</span><span class='identification identifier id'>identification</span><span class='rparen token'>)</span>
+  <span class='params identifier id'>params</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span>
+    <span class='string val'>'TXNREF'</span>  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='identification identifier id'>identification</span>
+  <span class='rbrace token'>}</span>
+  
+  <span class='commit identifier id'>commit</span><span class='lparen token'>(</span><span class='symbol val'>:status</span><span class='comma token'>,</span> <span class='params identifier id'>params</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

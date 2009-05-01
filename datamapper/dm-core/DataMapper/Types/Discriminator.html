@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: DataMapper::Types::Discriminator</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class DataMapper_Types_Discriminator">
+  <h1 class="title">Class: DataMapper::Types::Discriminator</h1>
+  <div class="section inheritance">
+  <ul>
+  <li><a href='../Type.html' title='DataMapper::Type'>DataMapper::Type</a></li><ul><li>DataMapper::Types::Discriminator</li>
+  </ul></ul>
+</div><div class="section constants">
+  <div class="inherited">
+  
+  <div>
+    <h1>Constants Inherited from <a href='../Type.html' title='DataMapper::Type'>DataMapper::Type</a></h1>
+    <p><span class='name'><a href='../Type.html#PROPERTY_OPTION_ALIASES-constant' title='PROPERTY_OPTION_ALIASES'>PROPERTY_OPTION_ALIASES</a></span>, <span class='name'><a href='../Type.html#PROPERTY_OPTIONS-constant' title='PROPERTY_OPTIONS'>PROPERTY_OPTIONS</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <h1>Public Class Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#bind-class_method' title='bind'>bind</a></span><span class='args'>(property)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table><div class="inherited">
+  
+  <div>
+    <h1>Public Class Methods Inherited from <a href='../Type.html' title='DataMapper::Type'>DataMapper::Type</a></h1>
+    <p><span class='name'><a href='../Type.html#configure-class_method' title='configure'>configure</a></span>, <span class='name'><a href='../Type.html#dump-class_method' title='dump'>dump</a></span>, <span class='name'><a href='../Type.html#inherited-class_method' title='inherited'>inherited</a></span>, <span class='name'><a href='../Type.html#load-class_method' title='load'>load</a></span>, <span class='name'><a href='../Type.html#options-class_method' title='options'>options</a></span>, <span class='name'><a href='../Type.html#primitive-class_method' title='primitive'>primitive</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails class public">
+  <h1>Public Class Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>bind</h3>
+</div><div id="bind-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>bind</span><span class='args'>(property)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+9
+10
+11
+12
+13</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/types/discriminator.rb', line 9</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='bind identifier id'>bind</span><span class='lparen token'>(</span><span class='property identifier id'>property</span><span class='rparen token'>)</span>
+  <span class='model identifier id'>model</span> <span class='assign token'>=</span> <span class='property identifier id'>property</span><span class='dot token'>.</span><span class='model identifier id'>model</span>
+
+  <span class='model identifier id'>model</span><span class='dot token'>.</span><span class='class_eval identifier id'>class_eval</span> <span class='string val'>&quot;def self.descendants\n(@descendants ||= []).uniq!\n@descendants\nend\n\nafter_class_method :inherited, :add_scope_for_discriminator\n\ndef self.add_scope_for_discriminator(retval, target)\ntarget.descendants &lt;&lt; target\ntarget.default_scope.update(\#{property.name.inspect} =&gt; target.descendants)\npropagate_descendants(target)\nend\n\ndef self.propagate_descendants(target)\ndescendants &lt;&lt; target\nsuperclass.propagate_descendants(target) if superclass.respond_to?(:propagate_descendants)\nend\n&quot;</span><span class='comma token'>,</span> <span class='__FILE__ __file__ kw'>__FILE__</span><span class='comma token'>,</span> <span class='__LINE__ __line__ kw'>__LINE__</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <title>README</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section docstring readme">
+        <h1>ROpenLaszlo: Interface to the OpenLaszlo compiler</h1>
+<p>
+ROpenLaszo is a Ruby interface to the OpenLaszlo[openlaszlo.org] compiler.
+It allows you to compile OpenLaszlo programs from within Ruby, in order to
+integrate OpenLaszlo development into Rake files or Rails applications.
+</p>
+<p>
+If you are using OpenLaszlo with Ruby on Rails, you want the {OpenLaszlo
+Rails plugin}[laszlo-plugin.rubyforge.org] too. That page contains
+instructions for installing both the gem and the plugin; you can read those
+instructions instead of these.
+</p>
+<h2>Overview</h2>
+<p>
+OpenLaszlo programs are written in XML with embedded JavaScript, and
+compiled into either Flash (swf) binary files, or DHTML. The APIs in this
+library make it easy for Ruby code to invoke the OpenLaszlo compiler. For
+example, if hello.lzx contains the following text:
+</p>
+<pre class="code">
+  <span class='lt op'>&lt;</span><span class='canvas identifier id'>canvas</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='window identifier id'>window</span><span class='gt op'>&gt;</span>
+      <span class='lt op'>&lt;</span><span class='button identifier id'>button</span><span class='gt op'>&gt;</span><span class='Hello constant id'>Hello</span><span class='comma token'>,</span> <span class='World! constant id'>World!</span><span class='lt op'>&lt;</span><span class='regexp val'>/button&gt;
+    &lt;/</span><span class='window identifier id'>window</span><span class='gt op'>&gt;</span>
+  <span class='lt op'>&lt;</span><span class='regexp val'>/canvas&gt;
+</span></pre>
+<p>
+then the following Ruby code can be used to create a file
+&#8216;hello.swf&#8217; which can be executed in a browser or placed on a
+web site:
+</p>
+<pre class="code">
+  <span class='require identifier id'>require</span> <span class='string val'>'rubygems'</span>
+  <span class='require identifier id'>require</span> <span class='string val'>'openlaszlo'</span>
+  <span class='OpenLaszlo constant id'>OpenLaszlo</span><span class='colon2 op'>::</span><span class='compile identifier id'>compile</span> <span class='string val'>'hello.lzx'</span> <span class='comment val'># creates hello.swf</span>
+</pre>
+<p>
+You can turn this snippet into a Rake task that will compile any OpenLaszlo
+source file:
+</p>
+<pre class="code">
+  <span class='rule identifier id'>rule</span> <span class='string val'>'.swf'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'.lzx'</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='t identifier id'>t</span><span class='bitor op'>|</span>
+    <span class='puts identifier id'>puts</span> <span class='dstring node'>&quot;Compiling #{t.source} =&gt; #{t.name}&quot;</span> <span class='if if_mod kw'>if</span> <span class='verbose identifier id'>verbose</span>
+    <span class='OpenLaszlo constant id'>OpenLaszlo</span><span class='colon2 op'>::</span><span class='compile identifier id'>compile</span> <span class='t identifier id'>t</span><span class='dot token'>.</span><span class='source identifier id'>source</span><span class='comma token'>,</span> <span class='symbol val'>:output</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='t identifier id'>t</span><span class='dot token'>.</span><span class='name identifier id'>name</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+The following includes such a task:
+</p>
+<pre class="code">
+  <span class='require identifier id'>require</span> <span class='string val'>'openlaszlo'</span>
+  <span class='load identifier id'>load</span> <span class='string val'>'tasks/openlaszlo.rake'</span>
+  <span class='comment val'># defines a pattern *.lzx -&gt; *.swf</span>
+</pre>
+<h2>Requirements</h2>
+<ul>
+<li>{OpenLaszlo 3.1 or later}[openlaszlo.org]
+
+</li>
+<li>Ruby -v 1.8.2 or later (untested in earlier versions)
+
+</li>
+<li>RubyGems[rubygems.rubyforge.org]
+
+</li>
+</ul>
+<h2>Installation</h2>
+<table>
+<tr><td valign="top">0:</td><td>Download and install the {OpenLaszlo SDK}[openlaszlo.org]
+
+</td></tr>
+</table>
+<p>
+1: Install this gem
+</p>
+<pre class="code">
+  $ <span class='sudo identifier id'>sudo</span> <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='ropenlaszlo identifier id'>ropenlaszlo</span>
+</pre>
+<table>
+<tr><td valign="top">2:</td><td>Set your <tt>OPENLASZLO_HOME</tt> environment variable to the directory
+that contains the {OpenLaszlo SDK}[openlaszlo.org]. If the following prints
+something, you&#8217;ve got it right:
+
+</td></tr>
+</table>
+<pre class="code">
+  $ <span class='grep identifier id'>grep</span> <span class='Laszlo constant id'>Laszlo</span> <span class='string val'>&quot;$OPENLASZLO_HOME/README.txt&quot;</span>
+</pre>
+<table>
+<tr><td valign="top">3:</td><td>(Optional) Set your <tt>OPENLASZLO_URL</tt> environment variable to the web
+location of the OpenLaszlo server; for example,
+<tt>http://localhost:8080/lps-3.1</tt>. If you omit this step, the module
+will use the command line compiler, which is slower but is not limited to
+compiling files inside of <tt>OPENLASZLO_HOME</tt>.
+
+</td></tr>
+</table>
+<p>
+<b>Note:</b> The command-line compiler is broken in the Windows version of
+OpenLaszlo 3.1.1. If you are running Windows, step (3) is required.
+({OpenLaszlo bug 1428}[http://www.openlaszlo.org/jira/browse/LPP-1428])
+</p>
+<h2>Tips</h2>
+<p>
+The Ruby front end to the compiler uses two compilation methods. If
+OPENLASZLO_URL is set, and the source file is in a subdirectory of the
+OpenLaszlo servlet directory, then the compiler will request the URL that
+corresponds to the source location. Otherwise, the OpenLaszlo command-line
+compiler is used.
+</p>
+<p>
+If the compiler is going to be invoked more than once (because several
+files are being compiled, or because the compiler is being used in an
+edit/compile/run cycle), the compile server is faster.
+</p>
+<p>
+You can place a symbolic link to a source directory in the OpenLaszlo
+servlet directory thus:
+</p>
+<pre class="code">
+  <span class='require identifier id'>require</span> <span class='string val'>'openlaszlo/utils'</span>
+  <span class='OpenLaszlo constant id'>OpenLaszlo</span><span class='colon2 op'>::</span><span class='symlink_to identifier id'>symlink_to</span> <span class='string val'>'.'</span>
+</pre>
+<h2>Additional Resources</h2>
+<ul>
+<li>The {OpenLaszlo Rails plugin}[laszlo-plugin.rubyforge.org] provides
+generators, view tasks, and rake tasks for using OpenLaszlo with Ruby on
+Rails.
+
+</li>
+<li>The {OpenLaszlo web site}[openlaszlo.org] is a rich source of information
+about the OpenLaszlo platform. It includes links to the wiki, mailing
+lists, and forums.
+
+</li>
+<li>{This OpenLaszlo Blog
+entry}[weblog.openlaszlo.org/archives/2006/01/deploying-openlaszlo-applications-with-rake/]
+has additional information and some examples of using ROpenLaszlo in a
+Rakefile.
+
+</li>
+<li>{ROpenLaszlo RubyForge project
+page}[http://rubyforge.org/projects/ropenlaszlo/]
+
+</li>
+<li>{ROpenLaszlo git repository}[http://github.com/osteele/ropenlaszlo]
+
+</li>
+</ul>
+<h2>Author</h2>
+<p>
+Oliver Steele &lt;steele@osteele.com&gt;
+</p>
+<h2>License</h2>
+<p>
+ROpenLaszlo is copyright (C) 2006 - 2009 by Oliver Steele. It is
+open-source software, and may be redistributed under the terms of the MIT
+license. The text of this license is included in the ROpenLaszlo
+distribution.
+</p>
+
+      </div>
+    </div>
+  </body>
+</html>

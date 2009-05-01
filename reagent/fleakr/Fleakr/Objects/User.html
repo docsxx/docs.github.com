@@ -1,0 +1,376 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: Fleakr::Objects::User</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class Fleakr_Objects_User">
+  <h1 class="title">Class: Fleakr::Objects::User</h1>
+  <div class="section mixins">
+  <h1>Included Modules</h1>
+  <p><a href='../Support/Object.html' title='Fleakr::Support::Object'>Fleakr::Support::Object</a></p>
+</div><div class="section docstring">
+  <h1>User</h1>
+<h2>Accessors</h2>
+<p>
+This class maps directly onto the flickr.people.* API methods and provides
+the following attributes for a user:
+</p>
+<dl>
+<dt>id</dt><dd>The ID for this user (also referred to as the NSID in the API docs)
+
+</dd>
+<dt>username</dt><dd>This user&#8217;s username
+
+</dd>
+<dt>name</dt><dd>This user&#8217;s full name (if entered)
+
+</dd>
+<dt>location</dt><dd>This user&#8217;s location (if entered)
+
+</dd>
+<dt>photos_url</dt><dd>The direct URL to this user&#8217;s photostream
+
+</dd>
+<dt>profile_url</dt><dd>The direct URL to this user&#8217;s profile
+
+</dd>
+<dt>photos_count</dt><dd>The number of photos that this user has uploaded
+
+</dd>
+<dt>icon_url</dt><dd>This user&#8217;s buddy icon (or a default one if an icon wasn&#8217;t
+uploaded)
+
+</dd>
+<dt>pro?</dt><dd>Does this user have a pro account?
+
+</dd>
+<dt>admin?</dt><dd>Is this user an admin?
+
+</dd>
+</dl>
+<h2>Associations</h2>
+<p>
+The User class is pretty central to many of the other data available across
+the system, so there are a few associations available to a user:
+</p>
+<dl>
+<dt>sets</dt><dd>A list of this user&#8217;s public sets (newest first). See
+Fleakr::Objects::Set for more information.
+
+</dd>
+<dt>groups</dt><dd>A list of this user&#8217;s public groups. See Fleakr::Objects::Group.
+
+</dd>
+<dt>photos</dt><dd>A list of this user&#8217;s public photos (newest first). See
+Fleakr::Objects::Photo.
+
+</dd>
+<dt>contacts</dt><dd>A list of this user&#8217;s contacts - these are simply User objects
+
+</dd>
+<dt>tags</dt><dd>The tags associated with this user
+
+</dd>
+</dl>
+<h2>Examples</h2>
+<p>
+Access to a specific user is typically done through the Fleakr.user method:
+</p>
+<pre class="code">
+ <span class='user identifier id'>user</span> <span class='assign token'>=</span> <span class='Fleakr constant id'>Fleakr</span><span class='dot token'>.</span><span class='user identifier id'>user</span><span class='lparen token'>(</span><span class='string val'>'brownout'</span><span class='rparen token'>)</span>
+ <span class='user identifier id'>user</span><span class='dot token'>.</span><span class='id identifier id'>id</span>
+ <span class='user identifier id'>user</span><span class='dot token'>.</span><span class='username identifier id'>username</span>
+ <span class='user identifier id'>user</span><span class='dot token'>.</span><span class='sets identifier id'>sets</span>
+ <span class='user identifier id'>user</span><span class='dot token'>.</span><span class='contacts identifier id'>contacts</span>
+</pre>
+
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <div class="included">
+  
+  <div>
+    <h1>Public Class Methods Included from <a href='../Support/Object.html' title='Fleakr::Support::Object'>Fleakr::Support::Object</a></h1>
+    <p><span class='name'><a href='../Support/Object.html#included-class_method' title='included'>included</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+  <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#admin%3F-instance_method' title='#admin?'>#admin?</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Is this user an admin?.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#icon_url-instance_method' title='#icon_url'>#icon_url</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+This user&#8217;s buddy icon.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#load_info-instance_method' title='#load_info'>#load_info</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#pro%3F-instance_method' title='#pro?'>#pro?</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Is this a pro account?.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>admin?</h3>
+</div><div id="admin%3F-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>admin?</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Is this user an admin?
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+75
+76
+77</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/fleakr/objects/user.rb', line 75</span>
+
+<span class='def def kw'>def</span> <span class='admin? fid id'>admin?</span>
+  <span class='lparen token'>(</span><span class='self self kw'>self</span><span class='dot token'>.</span><span class='admin identifier id'>admin</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span> <span class='eq op'>==</span> <span class='integer val'>0</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='false false kw'>false</span> <span class='colon op'>:</span> <span class='true true kw'>true</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>icon_url</h3>
+</div><div id="icon_url-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>icon_url</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+This user&#8217;s buddy icon
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+80
+81
+82
+83
+84
+85
+86</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/fleakr/objects/user.rb', line 80</span>
+
+<span class='def def kw'>def</span> <span class='icon_url identifier id'>icon_url</span>
+  <span class='if if kw'>if</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='icon_server identifier id'>icon_server</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span> <span class='gt op'>&gt;</span> <span class='integer val'>0</span>
+    <span class='dstring node'>&quot;http://farm#{self.icon_farm}.static.flickr.com/#{self.icon_server}/buddyicons/#{self.id}.jpg&quot;</span>
+  <span class='else else kw'>else</span>
+    <span class='string val'>'http://www.flickr.com/images/buddyicon.jpg'</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>load_info</h3>
+</div><div id="load_info-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>load_info</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+88
+89
+90
+91</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/fleakr/objects/user.rb', line 88</span>
+
+<span class='def def kw'>def</span> <span class='load_info identifier id'>load_info</span> 
+  <span class='response identifier id'>response</span> <span class='assign token'>=</span> <span class='Fleakr constant id'>Fleakr</span><span class='colon2 op'>::</span><span class='Api constant id'>Api</span><span class='colon2 op'>::</span><span class='MethodRequest constant id'>MethodRequest</span><span class='dot token'>.</span><span class='with_response! fid id'>with_response!</span><span class='lparen token'>(</span><span class='string val'>'people.getInfo'</span><span class='comma token'>,</span> <span class='symbol val'>:user_id</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='id identifier id'>id</span><span class='rparen token'>)</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='populate_from identifier id'>populate_from</span><span class='lparen token'>(</span><span class='response identifier id'>response</span><span class='dot token'>.</span><span class='body identifier id'>body</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>pro?</h3>
+</div><div id="pro%3F-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>pro?</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Is this a pro account?
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+70
+71
+72</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/fleakr/objects/user.rb', line 70</span>
+
+<span class='def def kw'>def</span> <span class='pro? fid id'>pro?</span>
+  <span class='lparen token'>(</span><span class='self self kw'>self</span><span class='dot token'>.</span><span class='pro identifier id'>pro</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span> <span class='eq op'>==</span> <span class='integer val'>0</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='false false kw'>false</span> <span class='colon op'>:</span> <span class='true true kw'>true</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

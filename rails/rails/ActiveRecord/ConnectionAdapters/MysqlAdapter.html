@@ -1,0 +1,3147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: ActiveRecord::ConnectionAdapters::MysqlAdapter</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class ActiveRecord_ConnectionAdapters_MysqlAdapter">
+  <h1 class="title">Class: ActiveRecord::ConnectionAdapters::MysqlAdapter</h1>
+  <div class="section inheritance">
+  <ul>
+  <li><a href='../../Object.html' title='Object'>Object</a></li><ul><li><a href='AbstractAdapter.html' title='ActiveRecord::ConnectionAdapters::AbstractAdapter'>ActiveRecord::ConnectionAdapters::AbstractAdapter</a></li><ul><li>ActiveRecord::ConnectionAdapters::MysqlAdapter</li>
+  </ul></ul></ul>
+</div><div class="section docstring">
+  <p>
+The MySQL adapter will work with both Ruby/MySQL, which is a Ruby-based
+MySQL adapter that comes bundled with Active Record, and with the faster
+C-based MySQL/Ruby adapter (available both as a gem and from
+http://www.tmtm.org/en/mysql/ruby/).
+</p>
+<p>
+Options:
+</p>
+<ul>
+<li><tt>:host</tt> - Defaults to &quot;localhost&quot;.
+
+</li>
+<li><tt>:port</tt> - Defaults to 3306.
+
+</li>
+<li><tt>:socket</tt> - Defaults to &quot;/tmp/mysql.sock&quot;.
+
+</li>
+<li><tt>:username</tt> - Defaults to &quot;root&quot;
+
+</li>
+<li><tt>:password</tt> - Defaults to nothing.
+
+</li>
+<li><tt>:database</tt> - The name of the database. No default, must be
+provided.
+
+</li>
+<li><tt>:encoding</tt> - (Optional) Sets the client encoding by executing
+&quot;SET NAMES &lt;encoding&gt;&quot; after connection.
+
+</li>
+<li><tt>:reconnect</tt> - Defaults to false (See MySQL documentation:
+http://dev.mysql.com/doc/refman/5.0/en/auto-reconnect.html).
+
+</li>
+<li><tt>:sslca</tt> - Necessary to use MySQL with an SSL connection.
+
+</li>
+<li><tt>:sslkey</tt> - Necessary to use MySQL with an SSL connection.
+
+</li>
+<li><tt>:sslcert</tt> - Necessary to use MySQL with an SSL connection.
+
+</li>
+<li><tt>:sslcapath</tt> - Necessary to use MySQL with an SSL connection.
+
+</li>
+<li><tt>:sslcipher</tt> - Necessary to use MySQL with an SSL connection.
+
+</li>
+</ul>
+
+</div><div class="section constants">
+  <div class="thisclass">
+  <h1>Constants</h1>
+  <dl>
+    
+      <dt id="ADAPTER_NAME-constant">ADAPTER_NAME</dt>
+      <dd>'MySQL'.freeze</dd>
+    
+      <dt id="LOST_CONNECTION_ERROR_MESSAGES-constant">LOST_CONNECTION_ERROR_MESSAGES</dt>
+      <dd>[        &quot;Server shutdown in progress&quot;,        &quot;Broken pipe&quot;,        &quot;Lost connection to MySQL server during query&quot;,        &quot;MySQL server has gone away&quot; ]</dd>
+    
+      <dt id="NATIVE_DATABASE_TYPES-constant">NATIVE_DATABASE_TYPES</dt>
+      <dd>{        :primary_key =&gt; &quot;int(11) DEFAULT NULL auto_increment PRIMARY KEY&quot;.freeze,        :string      =&gt; { :name =&gt; &quot;varchar&quot;, :limit =&gt; 255 },        :text        =&gt; { :name =&gt; &quot;text&quot; },        :integer     =&gt; { :name =&gt; &quot;int&quot;, :limit =&gt; 4 },        :float       =&gt; { :name =&gt; &quot;float&quot; },        :decimal     =&gt; { :name =&gt; &quot;decimal&quot; },        :datetime    =&gt; { :name =&gt; &quot;datetime&quot; },        :timestamp   =&gt; { :name =&gt; &quot;datetime&quot; },        :time        =&gt; { :name =&gt; &quot;time&quot; },        :date        =&gt; { :name =&gt; &quot;date&quot; },        :binary      =&gt; { :name =&gt; &quot;blob&quot; },        :boolean     =&gt; { :name =&gt; &quot;tinyint&quot;, :limit =&gt; 1 }      }</dd>
+    
+  </dl>
+</div>
+
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(connection, logger, connection_options, config)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+202
+203
+204
+205
+206
+207</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 202</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='connection identifier id'>connection</span><span class='comma token'>,</span> <span class='logger identifier id'>logger</span><span class='comma token'>,</span> <span class='connection_options identifier id'>connection_options</span><span class='comma token'>,</span> <span class='config identifier id'>config</span><span class='rparen token'>)</span>
+  <span class='super super kw'>super</span><span class='lparen token'>(</span><span class='connection identifier id'>connection</span><span class='comma token'>,</span> <span class='logger identifier id'>logger</span><span class='rparen token'>)</span>
+  <span class='@connection_options ivar id'>@connection_options</span><span class='comma token'>,</span> <span class='@config ivar id'>@config</span> <span class='assign token'>=</span> <span class='connection_options identifier id'>connection_options</span><span class='comma token'>,</span> <span class='config identifier id'>config</span>
+  <span class='@quoted_column_names ivar id'>@quoted_column_names</span><span class='comma token'>,</span> <span class='@quoted_table_names ivar id'>@quoted_table_names</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='connect identifier id'>connect</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#active%3F-instance_method' title='#active?'>#active?</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+CONNECTION MANAGEMENT ====================================.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#adapter_name-instance_method' title='#adapter_name'>#adapter_name</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#add_limit_offset%21-instance_method' title='#add_limit_offset!'>#add_limit_offset!</a></span><span class='args'>(sql, options)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#begin_db_transaction-instance_method' title='#begin_db_transaction'>#begin_db_transaction</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#case_sensitive_equality_operator-instance_method' title='#case_sensitive_equality_operator'>#case_sensitive_equality_operator</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#change_column-instance_method' title='#change_column'>#change_column</a></span><span class='args'>(table_name, column_name, type, options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#change_column_default-instance_method' title='#change_column_default'>#change_column_default</a></span><span class='args'>(table_name, column_name, default)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#change_column_null-instance_method' title='#change_column_null'>#change_column_null</a></span><span class='args'>(table_name, column_name, null, default = nil)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#charset-instance_method' title='#charset'>#charset</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns the database character set.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#collation-instance_method' title='#collation'>#collation</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns the database collation strategy.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#columns-instance_method' title='#columns'>#columns</a></span><span class='args'>(table_name, name = nil)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#commit_db_transaction-instance_method' title='#commit_db_transaction'>#commit_db_transaction</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#create_database-instance_method' title='#create_database'>#create_database</a></span><span class='args'>(name, options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Create a new MySQL database with optional <tt>:charset</tt> and
+<tt>:collation</tt>.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#create_savepoint-instance_method' title='#create_savepoint'>#create_savepoint</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#create_table-instance_method' title='#create_table'>#create_table</a></span><span class='args'>(table_name, options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#current_database-instance_method' title='#current_database'>#current_database</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#disable_referential_integrity-instance_method' title='#disable_referential_integrity'>#disable_referential_integrity</a></span><span class='args'>(&amp;block)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+REFERENTIAL INTEGRITY ====================================.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#disconnect%21-instance_method' title='#disconnect!'>#disconnect!</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#drop_database-instance_method' title='#drop_database'>#drop_database</a></span><span class='args'>(name)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#drop_table-instance_method' title='#drop_table'>#drop_table</a></span><span class='args'>(table_name, options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#execute-instance_method' title='#execute'>#execute</a></span><span class='args'>(sql, name = nil)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Executes a SQL query and returns a MySQL::Result object.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#indexes-instance_method' title='#indexes'>#indexes</a></span><span class='args'>(table_name, name = nil)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#insert_sql-instance_method' title='#insert_sql'>#insert_sql</a></span><span class='args'>(sql, name = nil, pk = nil, id_value = nil, sequence_name = nil)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#limited_update_conditions-instance_method' title='#limited_update_conditions'>#limited_update_conditions</a></span><span class='args'>(where_sql, quoted_table_name, quoted_primary_key)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#native_database_types-instance_method' title='#native_database_types'>#native_database_types</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#pk_and_sequence_for-instance_method' title='#pk_and_sequence_for'>#pk_and_sequence_for</a></span><span class='args'>(table)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns a table&#8217;s primary key and belonging sequence.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#quote-instance_method' title='#quote'>#quote</a></span><span class='args'>(value, column = nil)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+QUOTING ==================================================.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#quote_column_name-instance_method' title='#quote_column_name'>#quote_column_name</a></span><span class='args'>(name)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#quote_string-instance_method' title='#quote_string'>#quote_string</a></span><span class='args'>(string)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#quote_table_name-instance_method' title='#quote_table_name'>#quote_table_name</a></span><span class='args'>(name)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#quoted_false-instance_method' title='#quoted_false'>#quoted_false</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#quoted_true-instance_method' title='#quoted_true'>#quoted_true</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#reconnect%21-instance_method' title='#reconnect!'>#reconnect!</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#recreate_database-instance_method' title='#recreate_database'>#recreate_database</a></span><span class='args'>(name, options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#release_savepoint-instance_method' title='#release_savepoint'>#release_savepoint</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#rename_column-instance_method' title='#rename_column'>#rename_column</a></span><span class='args'>(table_name, column_name, new_column_name)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#rename_table-instance_method' title='#rename_table'>#rename_table</a></span><span class='args'>(table_name, new_name)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#reset%21-instance_method' title='#reset!'>#reset!</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#rollback_db_transaction-instance_method' title='#rollback_db_transaction'>#rollback_db_transaction</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#rollback_to_savepoint-instance_method' title='#rollback_to_savepoint'>#rollback_to_savepoint</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#select_rows-instance_method' title='#select_rows'>#select_rows</a></span><span class='args'>(sql, name = nil)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+DATABASE STATEMENTS ======================================.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#show_variable-instance_method' title='#show_variable'>#show_variable</a></span><span class='args'>(name)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+SHOW VARIABLES LIKE &#8216;name&#8217;.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#structure_dump-instance_method' title='#structure_dump'>#structure_dump</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+SCHEMA STATEMENTS ========================================.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#supports_migrations%3F-instance_method' title='#supports_migrations?'>#supports_migrations?</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#supports_savepoints%3F-instance_method' title='#supports_savepoints?'>#supports_savepoints?</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#tables-instance_method' title='#tables'>#tables</a></span><span class='args'>(name = nil)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#type_to_sql-instance_method' title='#type_to_sql'>#type_to_sql</a></span><span class='args'>(type, limit = nil, precision = nil, scale = nil)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Maps logical Rails types to MySQL-specific data types.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#update_sql-instance_method' title='#update_sql'>#update_sql</a></span><span class='args'>(sql, name = nil)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table><div class="inherited">
+  
+  <div>
+    <h1>Public Instance Methods Inherited from <a href='AbstractAdapter.html' title='ActiveRecord::ConnectionAdapters::AbstractAdapter'>ActiveRecord::ConnectionAdapters::AbstractAdapter</a></h1>
+    <p><span class='name'><a href='AbstractAdapter.html#current_savepoint_name-instance_method' title='current_savepoint_name'>current_savepoint_name</a></span>, <span class='name'><a href='AbstractAdapter.html#decrement_open_transactions-instance_method' title='decrement_open_transactions'>decrement_open_transactions</a></span>, <span class='name'><a href='AbstractAdapter.html#increment_open_transactions-instance_method' title='increment_open_transactions'>increment_open_transactions</a></span>, <span class='name'><a href='AbstractAdapter.html#log_info-instance_method' title='log_info'>log_info</a></span>, <span class='name'><a href='AbstractAdapter.html#open_transactions-instance_method' title='open_transactions'>open_transactions</a></span>, <span class='name'><a href='AbstractAdapter.html#prefetch_primary_key%3F-instance_method' title='prefetch_primary_key?'>prefetch_primary_key?</a></span>, <span class='name'><a href='AbstractAdapter.html#raw_connection-instance_method' title='raw_connection'>raw_connection</a></span>, <span class='name'><a href='AbstractAdapter.html#requires_reloading%3F-instance_method' title='requires_reloading?'>requires_reloading?</a></span>, <span class='name'><a href='AbstractAdapter.html#reset_runtime-instance_method' title='reset_runtime'>reset_runtime</a></span>, <span class='name'><a href='AbstractAdapter.html#supports_count_distinct%3F-instance_method' title='supports_count_distinct?'>supports_count_distinct?</a></span>, <span class='name'><a href='AbstractAdapter.html#supports_ddl_transactions%3F-instance_method' title='supports_ddl_transactions?'>supports_ddl_transactions?</a></span>, <span class='name'><a href='AbstractAdapter.html#transaction_joinable-instance_method' title='transaction_joinable'>transaction_joinable</a></span>, <span class='name'><a href='AbstractAdapter.html#verify%21-instance_method' title='verify!'>verify!</a></span></p>
+  </div>
+  
+  <div>
+    <h1>Public Instance Methods Inherited from <a href='../../Object.html' title='Object'>Object</a></h1>
+    <p><span class='name'><a href='../../Object.html#blank%3F-instance_method' title='blank?'>blank?</a></span>, <span class='name'><a href='../../Object.html#duplicable%3F-instance_method' title='duplicable?'>duplicable?</a></span>, <span class='name'><a href='../../Object.html#present%3F-instance_method' title='present?'>present?</a></span>, <span class='name'><a href='../../Object.html#to_param-instance_method' title='to_param'>to_param</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>active?</h3>
+</div><div id="active%3F-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>active?</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+CONNECTION MANAGEMENT ====================================
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 274</span>
+
+<span class='def def kw'>def</span> <span class='active? fid id'>active?</span>
+  <span class='if if kw'>if</span> <span class='@connection ivar id'>@connection</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='colon op'>:</span><span class='stat identifier id'>stat</span><span class='rparen token'>)</span>
+    <span class='@connection ivar id'>@connection</span><span class='dot token'>.</span><span class='stat identifier id'>stat</span>
+  <span class='else else kw'>else</span>
+    <span class='@connection ivar id'>@connection</span><span class='dot token'>.</span><span class='query identifier id'>query</span> <span class='string val'>'select 1'</span>
+  <span class='end end kw'>end</span>
+
+  <span class='comment val'># mysql-ruby doesn't raise an exception when stat fails.</span>
+  <span class='if if kw'>if</span> <span class='@connection ivar id'>@connection</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='colon op'>:</span><span class='errno identifier id'>errno</span><span class='rparen token'>)</span>
+    <span class='@connection ivar id'>@connection</span><span class='dot token'>.</span><span class='errno identifier id'>errno</span><span class='dot token'>.</span><span class='zero? fid id'>zero?</span>
+  <span class='else else kw'>else</span>
+    <span class='true true kw'>true</span>
+  <span class='end end kw'>end</span>
+<span class='rescue rescue kw'>rescue</span> <span class='Mysql constant id'>Mysql</span><span class='colon2 op'>::</span><span class='Error constant id'>Error</span>
+  <span class='false false kw'>false</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>adapter_name</h3>
+</div><div id="adapter_name-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>adapter_name</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+209
+210
+211</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 209</span>
+
+<span class='def def kw'>def</span> <span class='adapter_name identifier id'>adapter_name</span> 
+  <span class='ADAPTER_NAME constant id'>ADAPTER_NAME</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>add_limit_offset!</h3>
+</div><div id="add_limit_offset%21-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>add_limit_offset!</span><span class='args'>(sql, options)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 371</span>
+
+<span class='def def kw'>def</span> <span class='add_limit_offset! fid id'>add_limit_offset!</span><span class='lparen token'>(</span><span class='sql identifier id'>sql</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span> <span class='comment val'>#:nodoc:</span>
+  <span class='if if kw'>if</span> <span class='limit identifier id'>limit</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='colon op'>:</span><span class='limit identifier id'>limit</span><span class='rbrack token'>]</span>
+    <span class='limit identifier id'>limit</span> <span class='assign token'>=</span> <span class='sanitize_limit identifier id'>sanitize_limit</span><span class='lparen token'>(</span><span class='limit identifier id'>limit</span><span class='rparen token'>)</span>
+    <span class='unless unless kw'>unless</span> <span class='offset identifier id'>offset</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='colon op'>:</span><span class='offset identifier id'>offset</span><span class='rbrack token'>]</span>
+      <span class='sql identifier id'>sql</span> <span class='lshft op'>&lt;&lt;</span> <span class='dstring node'>&quot; LIMIT #{limit}&quot;</span>
+    <span class='else else kw'>else</span>
+      <span class='sql identifier id'>sql</span> <span class='lshft op'>&lt;&lt;</span> <span class='dstring node'>&quot; LIMIT #{offset.to_i}, #{limit}&quot;</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>begin_db_transaction</h3>
+</div><div id="begin_db_transaction-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>begin_db_transaction</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+341
+342
+343
+344
+345</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 341</span>
+
+<span class='def def kw'>def</span> <span class='begin_db_transaction identifier id'>begin_db_transaction</span> 
+  <span class='execute identifier id'>execute</span> <span class='string val'>&quot;BEGIN&quot;</span>
+<span class='rescue rescue kw'>rescue</span> <span class='Exception constant id'>Exception</span>
+  <span class='comment val'># Transactions aren't supported</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>case_sensitive_equality_operator</h3>
+</div><div id="case_sensitive_equality_operator-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>case_sensitive_equality_operator</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+559
+560
+561</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 559</span>
+
+<span class='def def kw'>def</span> <span class='case_sensitive_equality_operator identifier id'>case_sensitive_equality_operator</span>
+  <span class='string val'>&quot;= BINARY&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>change_column</h3>
+</div><div id="change_column-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>change_column</span><span class='args'>(table_name, column_name, type, options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+497
+498
+499
+500
+501
+502
+503
+504
+505
+506
+507
+508
+509
+510
+511</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 497</span>
+
+<span class='def def kw'>def</span> <span class='change_column identifier id'>change_column</span><span class='lparen token'>(</span><span class='table_name identifier id'>table_name</span><span class='comma token'>,</span> <span class='column_name identifier id'>column_name</span><span class='comma token'>,</span> <span class='type identifier id'>type</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span> <span class='comment val'>#:nodoc:</span>
+  <span class='column identifier id'>column</span> <span class='assign token'>=</span> <span class='column_for identifier id'>column_for</span><span class='lparen token'>(</span><span class='table_name identifier id'>table_name</span><span class='comma token'>,</span> <span class='column_name identifier id'>column_name</span><span class='rparen token'>)</span>
+
+  <span class='unless unless kw'>unless</span> <span class='options_include_default? fid id'>options_include_default?</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='rparen token'>)</span>
+    <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:default</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='column identifier id'>column</span><span class='dot token'>.</span><span class='default identifier id'>default</span>
+  <span class='end end kw'>end</span>
+
+  <span class='unless unless kw'>unless</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='has_key? fid id'>has_key?</span><span class='lparen token'>(</span><span class='colon op'>:</span><span class='null identifier id'>null</span><span class='rparen token'>)</span>
+    <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:null</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='column identifier id'>column</span><span class='dot token'>.</span><span class='null identifier id'>null</span>
+  <span class='end end kw'>end</span>
+
+  <span class='change_column_sql identifier id'>change_column_sql</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;ALTER TABLE #{quote_table_name(table_name)} CHANGE #{quote_column_name(column_name)} #{quote_column_name(column_name)} #{type_to_sql(type, options[:limit], options[:precision], options[:scale])}&quot;</span>
+  <span class='add_column_options! fid id'>add_column_options!</span><span class='lparen token'>(</span><span class='change_column_sql identifier id'>change_column_sql</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='execute identifier id'>execute</span><span class='lparen token'>(</span><span class='change_column_sql identifier id'>change_column_sql</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>change_column_default</h3>
+</div><div id="change_column_default-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>change_column_default</span><span class='args'>(table_name, column_name, default)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+482
+483
+484
+485</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 482</span>
+
+<span class='def def kw'>def</span> <span class='change_column_default identifier id'>change_column_default</span><span class='lparen token'>(</span><span class='table_name identifier id'>table_name</span><span class='comma token'>,</span> <span class='column_name identifier id'>column_name</span><span class='comma token'>,</span> <span class='default identifier id'>default</span><span class='rparen token'>)</span> <span class='comment val'>#:nodoc:</span>
+  <span class='column identifier id'>column</span> <span class='assign token'>=</span> <span class='column_for identifier id'>column_for</span><span class='lparen token'>(</span><span class='table_name identifier id'>table_name</span><span class='comma token'>,</span> <span class='column_name identifier id'>column_name</span><span class='rparen token'>)</span>
+  <span class='change_column identifier id'>change_column</span> <span class='table_name identifier id'>table_name</span><span class='comma token'>,</span> <span class='column_name identifier id'>column_name</span><span class='comma token'>,</span> <span class='column identifier id'>column</span><span class='dot token'>.</span><span class='sql_type identifier id'>sql_type</span><span class='comma token'>,</span> <span class='symbol val'>:default</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='default identifier id'>default</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>change_column_null</h3>
+</div><div id="change_column_null-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>change_column_null</span><span class='args'>(table_name, column_name, null, default = nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+487
+488
+489
+490
+491
+492
+493
+494
+495</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 487</span>
+
+<span class='def def kw'>def</span> <span class='change_column_null identifier id'>change_column_null</span><span class='lparen token'>(</span><span class='table_name identifier id'>table_name</span><span class='comma token'>,</span> <span class='column_name identifier id'>column_name</span><span class='comma token'>,</span> <span class='null identifier id'>null</span><span class='comma token'>,</span> <span class='default identifier id'>default</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='column identifier id'>column</span> <span class='assign token'>=</span> <span class='column_for identifier id'>column_for</span><span class='lparen token'>(</span><span class='table_name identifier id'>table_name</span><span class='comma token'>,</span> <span class='column_name identifier id'>column_name</span><span class='rparen token'>)</span>
+
+  <span class='unless unless kw'>unless</span> <span class='null identifier id'>null</span> <span class='orop op'>||</span> <span class='default identifier id'>default</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+    <span class='execute identifier id'>execute</span><span class='lparen token'>(</span><span class='dstring node'>&quot;UPDATE #{quote_table_name(table_name)} SET #{quote_column_name(column_name)}=#{quote(default)} WHERE #{quote_column_name(column_name)} IS NULL&quot;</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+
+  <span class='change_column identifier id'>change_column</span> <span class='table_name identifier id'>table_name</span><span class='comma token'>,</span> <span class='column_name identifier id'>column_name</span><span class='comma token'>,</span> <span class='column identifier id'>column</span><span class='dot token'>.</span><span class='sql_type identifier id'>sql_type</span><span class='comma token'>,</span> <span class='symbol val'>:null</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='null identifier id'>null</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>charset</h3>
+</div><div id="charset-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>charset</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns the database character set.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+427
+428
+429</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 427</span>
+
+<span class='def def kw'>def</span> <span class='charset identifier id'>charset</span>
+  <span class='show_variable identifier id'>show_variable</span> <span class='string val'>'character_set_database'</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>collation</h3>
+</div><div id="collation-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>collation</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns the database collation strategy.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+432
+433
+434</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 432</span>
+
+<span class='def def kw'>def</span> <span class='collation identifier id'>collation</span>
+  <span class='show_variable identifier id'>show_variable</span> <span class='string val'>'collation_database'</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>columns</h3>
+</div><div id="columns-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>columns</span><span class='args'>(table_name, name = nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+465
+466
+467
+468
+469
+470
+471
+472</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 465</span>
+
+<span class='def def kw'>def</span> <span class='columns identifier id'>columns</span><span class='lparen token'>(</span><span class='table_name identifier id'>table_name</span><span class='comma token'>,</span> <span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span><span class='comment val'>#:nodoc:</span>
+  <span class='sql identifier id'>sql</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;SHOW FIELDS FROM #{quote_table_name(table_name)}&quot;</span>
+  <span class='columns identifier id'>columns</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+  <span class='result identifier id'>result</span> <span class='assign token'>=</span> <span class='execute identifier id'>execute</span><span class='lparen token'>(</span><span class='sql identifier id'>sql</span><span class='comma token'>,</span> <span class='name identifier id'>name</span><span class='rparen token'>)</span>
+  <span class='result identifier id'>result</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='field identifier id'>field</span><span class='bitor op'>|</span> <span class='columns identifier id'>columns</span> <span class='lshft op'>&lt;&lt;</span> <span class='MysqlColumn constant id'>MysqlColumn</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='field identifier id'>field</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='field identifier id'>field</span><span class='lbrack token'>[</span><span class='integer val'>4</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='field identifier id'>field</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='field identifier id'>field</span><span class='lbrack token'>[</span><span class='integer val'>2</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='string val'>&quot;YES&quot;</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  <span class='result identifier id'>result</span><span class='dot token'>.</span><span class='free identifier id'>free</span>
+  <span class='columns identifier id'>columns</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>commit_db_transaction</h3>
+</div><div id="commit_db_transaction-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>commit_db_transaction</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+347
+348
+349
+350
+351</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 347</span>
+
+<span class='def def kw'>def</span> <span class='commit_db_transaction identifier id'>commit_db_transaction</span> 
+  <span class='execute identifier id'>execute</span> <span class='string val'>&quot;COMMIT&quot;</span>
+<span class='rescue rescue kw'>rescue</span> <span class='Exception constant id'>Exception</span>
+  <span class='comment val'># Transactions aren't supported</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>create_database</h3>
+</div><div id="create_database-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>create_database</span><span class='args'>(name, options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Create a new MySQL database with optional <tt>:charset</tt> and
+<tt>:collation</tt>. Charset defaults to utf8.
+</p>
+<p>
+Example:
+</p>
+<pre class="code">
+  <span class='create_database identifier id'>create_database</span> <span class='string val'>'charset_test'</span><span class='comma token'>,</span> <span class='symbol val'>:charset</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'latin1'</span><span class='comma token'>,</span> <span class='symbol val'>:collation</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'latin1_bin'</span>
+  <span class='create_database identifier id'>create_database</span> <span class='string val'>'matt_development'</span>
+  <span class='create_database identifier id'>create_database</span> <span class='string val'>'matt_development'</span><span class='comma token'>,</span> <span class='symbol val'>:charset</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:big5</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+410
+411
+412
+413
+414
+415
+416</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 410</span>
+
+<span class='def def kw'>def</span> <span class='create_database identifier id'>create_database</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='colon op'>:</span><span class='collation identifier id'>collation</span><span class='rbrack token'>]</span>
+    <span class='execute identifier id'>execute</span> <span class='dstring node'>&quot;CREATE DATABASE `#{name}` DEFAULT CHARACTER SET `#{options[:charset] || 'utf8'}` COLLATE `#{options[:collation]}`&quot;</span>
+  <span class='else else kw'>else</span>
+    <span class='execute identifier id'>execute</span> <span class='dstring node'>&quot;CREATE DATABASE `#{name}` DEFAULT CHARACTER SET `#{options[:charset] || 'utf8'}`&quot;</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>create_savepoint</h3>
+</div><div id="create_savepoint-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>create_savepoint</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+359
+360
+361</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 359</span>
+
+<span class='def def kw'>def</span> <span class='create_savepoint identifier id'>create_savepoint</span>
+  <span class='execute identifier id'>execute</span><span class='lparen token'>(</span><span class='dstring node'>&quot;SAVEPOINT #{current_savepoint_name}&quot;</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>create_table</h3>
+</div><div id="create_table-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>create_table</span><span class='args'>(table_name, options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+474
+475
+476</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 474</span>
+
+<span class='def def kw'>def</span> <span class='create_table identifier id'>create_table</span><span class='lparen token'>(</span><span class='table_name identifier id'>table_name</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span> <span class='comment val'>#:nodoc:</span>
+  <span class='super super kw'>super</span><span class='lparen token'>(</span><span class='table_name identifier id'>table_name</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='reverse_merge identifier id'>reverse_merge</span><span class='lparen token'>(</span><span class='symbol val'>:options</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;ENGINE=InnoDB&quot;</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>current_database</h3>
+</div><div id="current_database-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>current_database</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+422
+423
+424</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 422</span>
+
+<span class='def def kw'>def</span> <span class='current_database identifier id'>current_database</span>
+  <span class='select_value identifier id'>select_value</span> <span class='string val'>'SELECT DATABASE() as db'</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>disable_referential_integrity</h3>
+</div><div id="disable_referential_integrity-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>disable_referential_integrity</span><span class='args'>(&amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+REFERENTIAL INTEGRITY ====================================
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 261</span>
+
+<span class='def def kw'>def</span> <span class='disable_referential_integrity identifier id'>disable_referential_integrity</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span> <span class='comment val'>#:nodoc:</span>
+  <span class='old identifier id'>old</span> <span class='assign token'>=</span> <span class='select_value identifier id'>select_value</span><span class='lparen token'>(</span><span class='string val'>&quot;SELECT @@FOREIGN_KEY_CHECKS&quot;</span><span class='rparen token'>)</span>
+
+  <span class='begin begin kw'>begin</span>
+    <span class='update identifier id'>update</span><span class='lparen token'>(</span><span class='string val'>&quot;SET FOREIGN_KEY_CHECKS = 0&quot;</span><span class='rparen token'>)</span>
+    <span class='yield yield kw'>yield</span>
+  <span class='ensure ensure kw'>ensure</span>
+    <span class='update identifier id'>update</span><span class='lparen token'>(</span><span class='dstring node'>&quot;SET FOREIGN_KEY_CHECKS = #{old}&quot;</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>disconnect!</h3>
+</div><div id="disconnect%21-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>disconnect!</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+296
+297
+298</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 296</span>
+
+<span class='def def kw'>def</span> <span class='disconnect! fid id'>disconnect!</span>
+  <span class='@connection ivar id'>@connection</span><span class='dot token'>.</span><span class='close identifier id'>close</span> <span class='rescue rescue kw'>rescue</span> <span class='nil nil kw'>nil</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>drop_database</h3>
+</div><div id="drop_database-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>drop_database</span><span class='args'>(name)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+418
+419
+420</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 418</span>
+
+<span class='def def kw'>def</span> <span class='drop_database identifier id'>drop_database</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='rparen token'>)</span> <span class='comment val'>#:nodoc:</span>
+  <span class='execute identifier id'>execute</span> <span class='dstring node'>&quot;DROP DATABASE IF EXISTS `#{name}`&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>drop_table</h3>
+</div><div id="drop_table-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>drop_table</span><span class='args'>(table_name, options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+444
+445
+446</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 444</span>
+
+<span class='def def kw'>def</span> <span class='drop_table identifier id'>drop_table</span><span class='lparen token'>(</span><span class='table_name identifier id'>table_name</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='super super kw'>super</span><span class='lparen token'>(</span><span class='table_name identifier id'>table_name</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>execute</h3>
+</div><div id="execute-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>execute</span><span class='args'>(sql, name = nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Executes a SQL query and returns a MySQL::Result object. Note that you have
+to free the Result object after you&#8217;re done using it.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+321
+322
+323
+324
+325
+326
+327
+328
+329</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 321</span>
+
+<span class='def def kw'>def</span> <span class='execute identifier id'>execute</span><span class='lparen token'>(</span><span class='sql identifier id'>sql</span><span class='comma token'>,</span> <span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span> <span class='comment val'>#:nodoc:</span>
+  <span class='log identifier id'>log</span><span class='lparen token'>(</span><span class='sql identifier id'>sql</span><span class='comma token'>,</span> <span class='name identifier id'>name</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='@connection ivar id'>@connection</span><span class='dot token'>.</span><span class='query identifier id'>query</span><span class='lparen token'>(</span><span class='sql identifier id'>sql</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+<span class='rescue rescue kw'>rescue</span> <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='StatementInvalid constant id'>StatementInvalid</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='exception identifier id'>exception</span>
+  <span class='if if kw'>if</span> <span class='exception identifier id'>exception</span><span class='dot token'>.</span><span class='message identifier id'>message</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='string val'>&quot;:&quot;</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='first identifier id'>first</span> <span class='match op'>=~</span> <span class='regexp val'>/Packets out of order/</span>
+    <span class='raise identifier id'>raise</span> <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='StatementInvalid constant id'>StatementInvalid</span><span class='comma token'>,</span> <span class='string val'>&quot;'Packets out of order' error was received from the database. Please update your mysql bindings (gem install mysql) and read http://dev.mysql.com/doc/mysql/en/password-hashing.html for more information.  If you're on Windows, use the Instant Rails installer to get the updated mysql bindings.&quot;</span>
+  <span class='else else kw'>else</span>
+    <span class='raise identifier id'>raise</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>indexes</h3>
+</div><div id="indexes-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>indexes</span><span class='args'>(table_name, name = nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458
+459
+460
+461
+462
+463</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 448</span>
+
+<span class='def def kw'>def</span> <span class='indexes identifier id'>indexes</span><span class='lparen token'>(</span><span class='table_name identifier id'>table_name</span><span class='comma token'>,</span> <span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span><span class='comment val'>#:nodoc:</span>
+  <span class='indexes identifier id'>indexes</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+  <span class='current_index identifier id'>current_index</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+  <span class='result identifier id'>result</span> <span class='assign token'>=</span> <span class='execute identifier id'>execute</span><span class='lparen token'>(</span><span class='dstring node'>&quot;SHOW KEYS FROM #{quote_table_name(table_name)}&quot;</span><span class='comma token'>,</span> <span class='name identifier id'>name</span><span class='rparen token'>)</span>
+  <span class='result identifier id'>result</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='row identifier id'>row</span><span class='bitor op'>|</span>
+    <span class='if if kw'>if</span> <span class='current_index identifier id'>current_index</span> <span class='neq op'>!=</span> <span class='row identifier id'>row</span><span class='lbrack token'>[</span><span class='integer val'>2</span><span class='rbrack token'>]</span>
+      <span class='next next kw'>next</span> <span class='if if_mod kw'>if</span> <span class='row identifier id'>row</span><span class='lbrack token'>[</span><span class='integer val'>2</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='string val'>&quot;PRIMARY&quot;</span> <span class='comment val'># skip the primary key</span>
+      <span class='current_index identifier id'>current_index</span> <span class='assign token'>=</span> <span class='row identifier id'>row</span><span class='lbrack token'>[</span><span class='integer val'>2</span><span class='rbrack token'>]</span>
+      <span class='indexes identifier id'>indexes</span> <span class='lshft op'>&lt;&lt;</span> <span class='IndexDefinition constant id'>IndexDefinition</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='row identifier id'>row</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='row identifier id'>row</span><span class='lbrack token'>[</span><span class='integer val'>2</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='row identifier id'>row</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='string val'>&quot;0&quot;</span><span class='comma token'>,</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+
+    <span class='indexes identifier id'>indexes</span><span class='dot token'>.</span><span class='last identifier id'>last</span><span class='dot token'>.</span><span class='columns identifier id'>columns</span> <span class='lshft op'>&lt;&lt;</span> <span class='row identifier id'>row</span><span class='lbrack token'>[</span><span class='integer val'>4</span><span class='rbrack token'>]</span>
+  <span class='end end kw'>end</span>
+  <span class='result identifier id'>result</span><span class='dot token'>.</span><span class='free identifier id'>free</span>
+  <span class='indexes identifier id'>indexes</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>insert_sql</h3>
+</div><div id="insert_sql-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>insert_sql</span><span class='args'>(sql, name = nil, pk = nil, id_value = nil, sequence_name = nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+331
+332
+333
+334</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 331</span>
+
+<span class='def def kw'>def</span> <span class='insert_sql identifier id'>insert_sql</span><span class='lparen token'>(</span><span class='sql identifier id'>sql</span><span class='comma token'>,</span> <span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='pk identifier id'>pk</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='id_value identifier id'>id_value</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='sequence_name identifier id'>sequence_name</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span> <span class='comment val'>#:nodoc:</span>
+  <span class='super super kw'>super</span> <span class='sql identifier id'>sql</span><span class='comma token'>,</span> <span class='name identifier id'>name</span>
+  <span class='id_value identifier id'>id_value</span> <span class='orop op'>||</span> <span class='@connection ivar id'>@connection</span><span class='dot token'>.</span><span class='insert_id identifier id'>insert_id</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>limited_update_conditions</h3>
+</div><div id="limited_update_conditions-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>limited_update_conditions</span><span class='args'>(where_sql, quoted_table_name, quoted_primary_key)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+563
+564
+565</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 563</span>
+
+<span class='def def kw'>def</span> <span class='limited_update_conditions identifier id'>limited_update_conditions</span><span class='lparen token'>(</span><span class='where_sql identifier id'>where_sql</span><span class='comma token'>,</span> <span class='quoted_table_name identifier id'>quoted_table_name</span><span class='comma token'>,</span> <span class='quoted_primary_key identifier id'>quoted_primary_key</span><span class='rparen token'>)</span>
+  <span class='where_sql identifier id'>where_sql</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>native_database_types</h3>
+</div><div id="native_database_types-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>native_database_types</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+221
+222
+223</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 221</span>
+
+<span class='def def kw'>def</span> <span class='native_database_types identifier id'>native_database_types</span> 
+  <span class='NATIVE_DATABASE_TYPES constant id'>NATIVE_DATABASE_TYPES</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>pk_and_sequence_for</h3>
+</div><div id="pk_and_sequence_for-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>pk_and_sequence_for</span><span class='args'>(table)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns a table&#8217;s primary key and belonging sequence.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+549
+550
+551
+552
+553
+554
+555
+556
+557</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 549</span>
+
+<span class='def def kw'>def</span> <span class='pk_and_sequence_for identifier id'>pk_and_sequence_for</span><span class='lparen token'>(</span><span class='table identifier id'>table</span><span class='rparen token'>)</span> <span class='comment val'>#:nodoc:</span>
+  <span class='keys identifier id'>keys</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+  <span class='result identifier id'>result</span> <span class='assign token'>=</span> <span class='execute identifier id'>execute</span><span class='lparen token'>(</span><span class='dstring node'>&quot;describe #{quote_table_name(table)}&quot;</span><span class='rparen token'>)</span>
+  <span class='result identifier id'>result</span><span class='dot token'>.</span><span class='each_hash identifier id'>each_hash</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='h identifier id'>h</span><span class='bitor op'>|</span>
+    <span class='keys identifier id'>keys</span> <span class='lshft op'>&lt;&lt;</span> <span class='h identifier id'>h</span><span class='lbrack token'>[</span><span class='string val'>&quot;Field&quot;</span><span class='rbrack token'>]</span><span class='if if_mod kw'>if</span> <span class='h identifier id'>h</span><span class='lbrack token'>[</span><span class='string val'>&quot;Key&quot;</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='string val'>&quot;PRI&quot;</span>
+  <span class='end end kw'>end</span>
+  <span class='result identifier id'>result</span><span class='dot token'>.</span><span class='free identifier id'>free</span>
+  <span class='keys identifier id'>keys</span><span class='dot token'>.</span><span class='length identifier id'>length</span> <span class='eq op'>==</span> <span class='integer val'>1</span> <span class='question op'>?</span> <span class='lbrack token'>[</span><span class='keys identifier id'>keys</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='comma token'>,</span> <span class='nil nil kw'>nil</span><span class='rbrack token'>]</span> <span class='colon op'>:</span> <span class='nil nil kw'>nil</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>quote</h3>
+</div><div id="quote-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>quote</span><span class='args'>(value, column = nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+QUOTING ==================================================
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 228</span>
+
+<span class='def def kw'>def</span> <span class='quote identifier id'>quote</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='comma token'>,</span> <span class='column identifier id'>column</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='kind_of? fid id'>kind_of?</span><span class='lparen token'>(</span><span class='String constant id'>String</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='column identifier id'>column</span> <span class='andop op'>&amp;&amp;</span> <span class='column identifier id'>column</span><span class='dot token'>.</span><span class='type identifier id'>type</span> <span class='eq op'>==</span> <span class='colon op'>:</span><span class='binary identifier id'>binary</span> <span class='andop op'>&amp;&amp;</span> <span class='column identifier id'>column</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='colon op'>:</span><span class='string_to_binary identifier id'>string_to_binary</span><span class='rparen token'>)</span>
+    <span class='s identifier id'>s</span> <span class='assign token'>=</span> <span class='column identifier id'>column</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='string_to_binary identifier id'>string_to_binary</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='unpack identifier id'>unpack</span><span class='lparen token'>(</span><span class='string val'>&quot;H*&quot;</span><span class='rparen token'>)</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span>
+    <span class='dstring node'>&quot;x'#{s}'&quot;</span>
+  <span class='elsif elsif kw'>elsif</span> <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='kind_of? fid id'>kind_of?</span><span class='lparen token'>(</span><span class='BigDecimal constant id'>BigDecimal</span><span class='rparen token'>)</span>
+    <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='lparen token'>(</span><span class='string val'>&quot;F&quot;</span><span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+    <span class='super super kw'>super</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>quote_column_name</h3>
+</div><div id="quote_column_name-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>quote_column_name</span><span class='args'>(name)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+239
+240
+241</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 239</span>
+
+<span class='def def kw'>def</span> <span class='quote_column_name identifier id'>quote_column_name</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='rparen token'>)</span> <span class='comment val'>#:nodoc:</span>
+  <span class='@quoted_column_names ivar id'>@quoted_column_names</span><span class='lbrack token'>[</span><span class='name identifier id'>name</span><span class='rbrack token'>]</span> <span class='opasgn op'>||=</span> <span class='dstring node'>&quot;`#{name}`&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>quote_string</h3>
+</div><div id="quote_string-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>quote_string</span><span class='args'>(string)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+247
+248
+249</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 247</span>
+
+<span class='def def kw'>def</span> <span class='quote_string identifier id'>quote_string</span><span class='lparen token'>(</span><span class='string identifier id'>string</span><span class='rparen token'>)</span> <span class='comment val'>#:nodoc:</span>
+  <span class='@connection ivar id'>@connection</span><span class='dot token'>.</span><span class='quote identifier id'>quote</span><span class='lparen token'>(</span><span class='string identifier id'>string</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>quote_table_name</h3>
+</div><div id="quote_table_name-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>quote_table_name</span><span class='args'>(name)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+243
+244
+245</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 243</span>
+
+<span class='def def kw'>def</span> <span class='quote_table_name identifier id'>quote_table_name</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='rparen token'>)</span> <span class='comment val'>#:nodoc:</span>
+  <span class='@quoted_table_names ivar id'>@quoted_table_names</span><span class='lbrack token'>[</span><span class='name identifier id'>name</span><span class='rbrack token'>]</span> <span class='opasgn op'>||=</span> <span class='quote_column_name identifier id'>quote_column_name</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='string val'>'.'</span><span class='comma token'>,</span> <span class='string val'>'`.`'</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>quoted_false</h3>
+</div><div id="quoted_false-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>quoted_false</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+255
+256
+257</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 255</span>
+
+<span class='def def kw'>def</span> <span class='quoted_false identifier id'>quoted_false</span>
+  <span class='QUOTED_FALSE constant id'>QUOTED_FALSE</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>quoted_true</h3>
+</div><div id="quoted_true-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>quoted_true</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+251
+252
+253</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 251</span>
+
+<span class='def def kw'>def</span> <span class='quoted_true identifier id'>quoted_true</span>
+  <span class='QUOTED_TRUE constant id'>QUOTED_TRUE</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>reconnect!</h3>
+</div><div id="reconnect%21-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>reconnect!</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+291
+292
+293
+294</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 291</span>
+
+<span class='def def kw'>def</span> <span class='reconnect! fid id'>reconnect!</span>
+  <span class='disconnect! fid id'>disconnect!</span>
+  <span class='connect identifier id'>connect</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>recreate_database</h3>
+</div><div id="recreate_database-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>recreate_database</span><span class='args'>(name, options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+398
+399
+400
+401</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 398</span>
+
+<span class='def def kw'>def</span> <span class='recreate_database identifier id'>recreate_database</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span> <span class='comment val'>#:nodoc:</span>
+  <span class='drop_database identifier id'>drop_database</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='rparen token'>)</span>
+  <span class='create_database identifier id'>create_database</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>release_savepoint</h3>
+</div><div id="release_savepoint-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>release_savepoint</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+367
+368
+369</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 367</span>
+
+<span class='def def kw'>def</span> <span class='release_savepoint identifier id'>release_savepoint</span>
+  <span class='execute identifier id'>execute</span><span class='lparen token'>(</span><span class='dstring node'>&quot;RELEASE SAVEPOINT #{current_savepoint_name}&quot;</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>rename_column</h3>
+</div><div id="rename_column-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>rename_column</span><span class='args'>(table_name, column_name, new_column_name)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+513
+514
+515
+516
+517
+518
+519
+520
+521
+522
+523
+524
+525</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 513</span>
+
+<span class='def def kw'>def</span> <span class='rename_column identifier id'>rename_column</span><span class='lparen token'>(</span><span class='table_name identifier id'>table_name</span><span class='comma token'>,</span> <span class='column_name identifier id'>column_name</span><span class='comma token'>,</span> <span class='new_column_name identifier id'>new_column_name</span><span class='rparen token'>)</span> <span class='comment val'>#:nodoc:</span>
+  <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='if if kw'>if</span> <span class='column identifier id'>column</span> <span class='assign token'>=</span> <span class='columns identifier id'>columns</span><span class='lparen token'>(</span><span class='table_name identifier id'>table_name</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='find identifier id'>find</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span> <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='name identifier id'>name</span> <span class='eq op'>==</span> <span class='column_name identifier id'>column_name</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='rbrace token'>}</span>
+    <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:default</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='column identifier id'>column</span><span class='dot token'>.</span><span class='default identifier id'>default</span>
+    <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:null</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='column identifier id'>column</span><span class='dot token'>.</span><span class='null identifier id'>null</span>
+  <span class='else else kw'>else</span>
+    <span class='raise identifier id'>raise</span> <span class='ActiveRecordError constant id'>ActiveRecordError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;No such column: #{table_name}.#{column_name}&quot;</span>
+  <span class='end end kw'>end</span>
+  <span class='current_type identifier id'>current_type</span> <span class='assign token'>=</span> <span class='select_one identifier id'>select_one</span><span class='lparen token'>(</span><span class='dstring node'>&quot;SHOW COLUMNS FROM #{quote_table_name(table_name)} LIKE '#{column_name}'&quot;</span><span class='rparen token'>)</span><span class='lbrack token'>[</span><span class='string val'>&quot;Type&quot;</span><span class='rbrack token'>]</span>
+  <span class='rename_column_sql identifier id'>rename_column_sql</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;ALTER TABLE #{quote_table_name(table_name)} CHANGE #{quote_column_name(column_name)} #{quote_column_name(new_column_name)} #{current_type}&quot;</span>
+  <span class='add_column_options! fid id'>add_column_options!</span><span class='lparen token'>(</span><span class='rename_column_sql identifier id'>rename_column_sql</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='execute identifier id'>execute</span><span class='lparen token'>(</span><span class='rename_column_sql identifier id'>rename_column_sql</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>rename_table</h3>
+</div><div id="rename_table-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>rename_table</span><span class='args'>(table_name, new_name)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+478
+479
+480</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 478</span>
+
+<span class='def def kw'>def</span> <span class='rename_table identifier id'>rename_table</span><span class='lparen token'>(</span><span class='table_name identifier id'>table_name</span><span class='comma token'>,</span> <span class='new_name identifier id'>new_name</span><span class='rparen token'>)</span>
+  <span class='execute identifier id'>execute</span> <span class='dstring node'>&quot;RENAME TABLE #{quote_table_name(table_name)} TO #{quote_table_name(new_name)}&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>reset!</h3>
+</div><div id="reset%21-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>reset!</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+300
+301
+302
+303
+304
+305
+306
+307</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 300</span>
+
+<span class='def def kw'>def</span> <span class='reset! fid id'>reset!</span>
+  <span class='if if kw'>if</span> <span class='@connection ivar id'>@connection</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='colon op'>:</span><span class='change_user identifier id'>change_user</span><span class='rparen token'>)</span>
+    <span class='comment val'># See http://bugs.mysql.com/bug.php?id=33540 -- the workaround way to</span>
+    <span class='comment val'># reset the connection is to change the user to the same user.</span>
+    <span class='@connection ivar id'>@connection</span><span class='dot token'>.</span><span class='change_user identifier id'>change_user</span><span class='lparen token'>(</span><span class='@config ivar id'>@config</span><span class='lbrack token'>[</span><span class='symbol val'>:username</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='@config ivar id'>@config</span><span class='lbrack token'>[</span><span class='symbol val'>:password</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='@config ivar id'>@config</span><span class='lbrack token'>[</span><span class='symbol val'>:database</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+    <span class='configure_connection identifier id'>configure_connection</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>rollback_db_transaction</h3>
+</div><div id="rollback_db_transaction-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>rollback_db_transaction</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+353
+354
+355
+356
+357</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 353</span>
+
+<span class='def def kw'>def</span> <span class='rollback_db_transaction identifier id'>rollback_db_transaction</span> 
+  <span class='execute identifier id'>execute</span> <span class='string val'>&quot;ROLLBACK&quot;</span>
+<span class='rescue rescue kw'>rescue</span> <span class='Exception constant id'>Exception</span>
+  <span class='comment val'># Transactions aren't supported</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>rollback_to_savepoint</h3>
+</div><div id="rollback_to_savepoint-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>rollback_to_savepoint</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+363
+364
+365</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 363</span>
+
+<span class='def def kw'>def</span> <span class='rollback_to_savepoint identifier id'>rollback_to_savepoint</span>
+  <span class='execute identifier id'>execute</span><span class='lparen token'>(</span><span class='dstring node'>&quot;ROLLBACK TO SAVEPOINT #{current_savepoint_name}&quot;</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>select_rows</h3>
+</div><div id="select_rows-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>select_rows</span><span class='args'>(sql, name = nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+DATABASE STATEMENTS ======================================
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+311
+312
+313
+314
+315
+316
+317
+318</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 311</span>
+
+<span class='def def kw'>def</span> <span class='select_rows identifier id'>select_rows</span><span class='lparen token'>(</span><span class='sql identifier id'>sql</span><span class='comma token'>,</span> <span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='@connection ivar id'>@connection</span><span class='dot token'>.</span><span class='query_with_result identifier id'>query_with_result</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+  <span class='result identifier id'>result</span> <span class='assign token'>=</span> <span class='execute identifier id'>execute</span><span class='lparen token'>(</span><span class='sql identifier id'>sql</span><span class='comma token'>,</span> <span class='name identifier id'>name</span><span class='rparen token'>)</span>
+  <span class='rows identifier id'>rows</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+  <span class='result identifier id'>result</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='row identifier id'>row</span><span class='bitor op'>|</span> <span class='rows identifier id'>rows</span> <span class='lshft op'>&lt;&lt;</span> <span class='row identifier id'>row</span> <span class='rbrace token'>}</span>
+  <span class='result identifier id'>result</span><span class='dot token'>.</span><span class='free identifier id'>free</span>
+  <span class='rows identifier id'>rows</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>show_variable</h3>
+</div><div id="show_variable-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>show_variable</span><span class='args'>(name)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+SHOW VARIABLES LIKE &#8216;name&#8217;
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+543
+544
+545
+546</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 543</span>
+
+<span class='def def kw'>def</span> <span class='show_variable identifier id'>show_variable</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='rparen token'>)</span>
+  <span class='variables identifier id'>variables</span> <span class='assign token'>=</span> <span class='select_all identifier id'>select_all</span><span class='lparen token'>(</span><span class='dstring node'>&quot;SHOW VARIABLES LIKE '#{name}'&quot;</span><span class='rparen token'>)</span>
+  <span class='variables identifier id'>variables</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='lbrack token'>[</span><span class='string val'>'Value'</span><span class='rbrack token'>]</span> <span class='unless unless_mod kw'>unless</span> <span class='variables identifier id'>variables</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>structure_dump</h3>
+</div><div id="structure_dump-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>structure_dump</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+SCHEMA STATEMENTS ========================================
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 385</span>
+
+<span class='def def kw'>def</span> <span class='structure_dump identifier id'>structure_dump</span> 
+  <span class='if if kw'>if</span> <span class='supports_views? fid id'>supports_views?</span>
+    <span class='sql identifier id'>sql</span> <span class='assign token'>=</span> <span class='string val'>&quot;SHOW FULL TABLES WHERE Table_type = 'BASE TABLE'&quot;</span>
+  <span class='else else kw'>else</span>
+    <span class='sql identifier id'>sql</span> <span class='assign token'>=</span> <span class='string val'>&quot;SHOW TABLES&quot;</span>
+  <span class='end end kw'>end</span>
+
+  <span class='select_all identifier id'>select_all</span><span class='lparen token'>(</span><span class='sql identifier id'>sql</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='inject identifier id'>inject</span><span class='lparen token'>(</span><span class='string val'>&quot;&quot;</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='structure identifier id'>structure</span><span class='comma token'>,</span> <span class='table identifier id'>table</span><span class='bitor op'>|</span>
+    <span class='table identifier id'>table</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='string val'>'Table_type'</span><span class='rparen token'>)</span>
+    <span class='structure identifier id'>structure</span> <span class='opasgn op'>+=</span> <span class='select_one identifier id'>select_one</span><span class='lparen token'>(</span><span class='dstring node'>&quot;SHOW CREATE TABLE #{quote_table_name(table.to_a.first.last)}&quot;</span><span class='rparen token'>)</span><span class='lbrack token'>[</span><span class='string val'>&quot;Create Table&quot;</span><span class='rbrack token'>]</span> <span class='plus op'>+</span> <span class='string val'>&quot;;\n\n&quot;</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>supports_migrations?</h3>
+</div><div id="supports_migrations%3F-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>supports_migrations?</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+213
+214
+215</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 213</span>
+
+<span class='def def kw'>def</span> <span class='supports_migrations? fid id'>supports_migrations?</span> 
+  <span class='true true kw'>true</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>supports_savepoints?</h3>
+</div><div id="supports_savepoints%3F-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>supports_savepoints?</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+217
+218
+219</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 217</span>
+
+<span class='def def kw'>def</span> <span class='supports_savepoints? fid id'>supports_savepoints?</span> 
+  <span class='true true kw'>true</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>tables</h3>
+</div><div id="tables-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>tables</span><span class='args'>(name = nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+436
+437
+438
+439
+440
+441
+442</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 436</span>
+
+<span class='def def kw'>def</span> <span class='tables identifier id'>tables</span><span class='lparen token'>(</span><span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span> <span class='comment val'>#:nodoc:</span>
+  <span class='tables identifier id'>tables</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+  <span class='result identifier id'>result</span> <span class='assign token'>=</span> <span class='execute identifier id'>execute</span><span class='lparen token'>(</span><span class='string val'>&quot;SHOW TABLES&quot;</span><span class='comma token'>,</span> <span class='name identifier id'>name</span><span class='rparen token'>)</span>
+  <span class='result identifier id'>result</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='field identifier id'>field</span><span class='bitor op'>|</span> <span class='tables identifier id'>tables</span> <span class='lshft op'>&lt;&lt;</span> <span class='field identifier id'>field</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span> <span class='rbrace token'>}</span>
+  <span class='result identifier id'>result</span><span class='dot token'>.</span><span class='free identifier id'>free</span>
+  <span class='tables identifier id'>tables</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>type_to_sql</h3>
+</div><div id="type_to_sql-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>type_to_sql</span><span class='args'>(type, limit = nil, precision = nil, scale = nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Maps logical Rails types to MySQL-specific data types.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+528
+529
+530
+531
+532
+533
+534
+535
+536
+537
+538
+539</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 528</span>
+
+<span class='def def kw'>def</span> <span class='type_to_sql identifier id'>type_to_sql</span><span class='lparen token'>(</span><span class='type identifier id'>type</span><span class='comma token'>,</span> <span class='limit identifier id'>limit</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='precision identifier id'>precision</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='scale identifier id'>scale</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='return return kw'>return</span> <span class='super super kw'>super</span> <span class='unless unless_mod kw'>unless</span> <span class='type identifier id'>type</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='eq op'>==</span> <span class='string val'>'integer'</span>
+
+  <span class='case case kw'>case</span> <span class='limit identifier id'>limit</span>
+  <span class='when when kw'>when</span> <span class='integer val'>1</span><span class='semicolon token'>;</span> <span class='string val'>'tinyint'</span>
+  <span class='when when kw'>when</span> <span class='integer val'>2</span><span class='semicolon token'>;</span> <span class='string val'>'smallint'</span>
+  <span class='when when kw'>when</span> <span class='integer val'>3</span><span class='semicolon token'>;</span> <span class='string val'>'mediumint'</span>
+  <span class='when when kw'>when</span> <span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='integer val'>4</span><span class='comma token'>,</span> <span class='integer val'>11</span><span class='semicolon token'>;</span> <span class='string val'>'int(11)'</span>  <span class='comment val'># compatibility with MySQL default</span>
+  <span class='when when kw'>when</span> <span class='float val'>5</span><span class='dot2 op'>..</span><span class='integer val'>8</span><span class='semicolon token'>;</span> <span class='string val'>'bigint'</span>
+  <span class='else else kw'>else</span> <span class='raise identifier id'>raise</span><span class='lparen token'>(</span><span class='ActiveRecordError constant id'>ActiveRecordError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;No integer type has byte size #{limit}&quot;</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>update_sql</h3>
+</div><div id="update_sql-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>update_sql</span><span class='args'>(sql, name = nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+336
+337
+338
+339</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/connection_adapters/mysql_adapter.rb', line 336</span>
+
+<span class='def def kw'>def</span> <span class='update_sql identifier id'>update_sql</span><span class='lparen token'>(</span><span class='sql identifier id'>sql</span><span class='comma token'>,</span> <span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span> <span class='comment val'>#:nodoc:</span>
+  <span class='super super kw'>super</span>
+  <span class='@connection ivar id'>@connection</span><span class='dot token'>.</span><span class='affected_rows identifier id'>affected_rows</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: ActionController::TestUploadedFile</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class ActionController_TestUploadedFile">
+  <h1 class="title">Class: ActionController::TestUploadedFile</h1>
+  <div class="section inheritance">
+  <ul>
+  <li><a href='../Object.html' title='Object'>Object</a></li><ul><li>ActionController::TestUploadedFile</li>
+  </ul></ul>
+</div><div class="section attributes">
+  <h1>Attributes</h1>
+
+  
+    <div class="instance">
+      <h2>Instance Attributes</h2>
+      <table>
+      
+        <tr>
+          <th class="name">content_type</td>
+          <td class="readwrite">
+            [<span id='content_type-instance_method'>R</span><span id='content_type%3D-instance_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+The content type of the &quot;uploaded&quot; file.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">original_filename</td>
+          <td class="readwrite">
+            [<span id='original_filename-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+The filename, <b>not</b> including the path, of the &quot;uploaded&quot;
+file.
+</p>
+
+            
+          </td>
+        </tr>
+      
+      </table>
+    </div>
+  
+</div><div class="section constants">
+  
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(path, content_type = Mime::TEXT, binary = false)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+373
+374
+375
+376
+377
+378
+379
+380
+381</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'actionpack/lib/action_controller/testing/process.rb', line 373</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='comma token'>,</span> <span class='content_type identifier id'>content_type</span> <span class='assign token'>=</span> <span class='Mime constant id'>Mime</span><span class='colon2 op'>::</span><span class='TEXT constant id'>TEXT</span><span class='comma token'>,</span> <span class='binary identifier id'>binary</span> <span class='assign token'>=</span> <span class='false false kw'>false</span><span class='rparen token'>)</span>
+  <span class='raise identifier id'>raise</span> <span class='dstring node'>&quot;#{path} file does not exist&quot;</span> <span class='unless unless_mod kw'>unless</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='exist? fid id'>exist?</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='rparen token'>)</span>
+  <span class='@content_type ivar id'>@content_type</span> <span class='assign token'>=</span> <span class='content_type identifier id'>content_type</span>
+  <span class='@original_filename ivar id'>@original_filename</span> <span class='assign token'>=</span> <span class='path identifier id'>path</span><span class='dot token'>.</span><span class='sub identifier id'>sub</span><span class='lparen token'>(</span><span class='dregexp node'>/^.*#{File::SEPARATOR}([^#{File::SEPARATOR}]+)$/</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='$1 nth_ref id'>$1</span> <span class='rbrace token'>}</span>
+  <span class='@tempfile ivar id'>@tempfile</span> <span class='assign token'>=</span> <span class='Tempfile constant id'>Tempfile</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='@original_filename ivar id'>@original_filename</span><span class='rparen token'>)</span>
+  <span class='@tempfile ivar id'>@tempfile</span><span class='dot token'>.</span><span class='set_encoding identifier id'>set_encoding</span><span class='lparen token'>(</span><span class='Encoding constant id'>Encoding</span><span class='colon2 op'>::</span><span class='BINARY constant id'>BINARY</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='@tempfile ivar id'>@tempfile</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:set_encoding</span><span class='rparen token'>)</span>
+  <span class='@tempfile ivar id'>@tempfile</span><span class='dot token'>.</span><span class='binmode identifier id'>binmode</span> <span class='if if_mod kw'>if</span> <span class='binary identifier id'>binary</span>
+  <span class='FileUtils constant id'>FileUtils</span><span class='dot token'>.</span><span class='copy_file identifier id'>copy_file</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='comma token'>,</span> <span class='@tempfile ivar id'>@tempfile</span><span class='dot token'>.</span><span class='path identifier id'>path</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div><div class="section methodmissing">
+  <h1>Dynamic Method Handling</h1>
+
+  <p class="note">
+    This class handles dynamic methods through the <tt>method_missing</tt> method
+    
+  </p>
+
+  <div id="method_missing-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>method_missing</span><span class='args'>(method_name, *args, &amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+389
+390
+391</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'actionpack/lib/action_controller/testing/process.rb', line 389</span>
+
+<span class='def def kw'>def</span> <span class='method_missing identifier id'>method_missing</span><span class='lparen token'>(</span><span class='method_name identifier id'>method_name</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span> <span class='comment val'>#:nodoc:</span>
+  <span class='@tempfile ivar id'>@tempfile</span><span class='dot token'>.</span><span class='__send__ identifier id'>__send__</span><span class='lparen token'>(</span><span class='method_name identifier id'>method_name</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#path-instance_method' title='#path'>#path</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+          <span class='alias'>#local_path</span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table><div class="inherited">
+  
+  <div>
+    <h1>Public Instance Methods Inherited from <a href='../Object.html' title='Object'>Object</a></h1>
+    <p><span class='name'><a href='../Object.html#blank%3F-instance_method' title='blank?'>blank?</a></span>, <span class='name'><a href='../Object.html#duplicable%3F-instance_method' title='duplicable?'>duplicable?</a></span>, <span class='name'><a href='../Object.html#present%3F-instance_method' title='present?'>present?</a></span>, <span class='name'><a href='../Object.html#to_param-instance_method' title='to_param'>to_param</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>path</h3>
+</div><div id="path-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>path</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+<p class="aliases">
+  <span class="aka">Also known as:</span>
+  
+    <tt id="local_path-instance_method">local_path</tt>
+  
+</p>
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+383
+384
+385</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'actionpack/lib/action_controller/testing/process.rb', line 383</span>
+
+<span class='def def kw'>def</span> <span class='path identifier id'>path</span> 
+  <span class='@tempfile ivar id'>@tempfile</span><span class='dot token'>.</span><span class='path identifier id'>path</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

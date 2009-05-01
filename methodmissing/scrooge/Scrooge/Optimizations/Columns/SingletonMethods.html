@@ -1,0 +1,372 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: Scrooge::Optimizations::Columns::SingletonMethods</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module Scrooge_Optimizations_Columns_SingletonMethods">
+  <h1 class="title">Module: Scrooge::Optimizations::Columns::SingletonMethods</h1>
+  <div class="section constants">
+  <div class="thisclass">
+  <h1>Constants</h1>
+  <dl>
+    
+      <dt id="ScroogeBlankString-constant">ScroogeBlankString</dt>
+      <dd>&quot;&quot;.freeze</dd>
+    
+      <dt id="ScroogeComma-constant">ScroogeComma</dt>
+      <dd>&quot;,&quot;.freeze </dd>
+    
+      <dt id="ScroogeRegexJoin-constant">ScroogeRegexJoin</dt>
+      <dd>/(?:left|inner|outer|cross)*\s*(?:straight_join|join)/i</dd>
+    
+      <dt id="ScroogeRegexSanitize-constant">ScroogeRegexSanitize</dt>
+      <dd>/(?:LIMIT|WHERE|FROM|GROUP\s*BY|HAVING|ORDER\s*BY|PROCEDURE|FOR\s*UPDATE|INTO\s*OUTFILE).*/i</dd>
+    
+  </dl>
+</div>
+
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#_load-instance_method' title='#_load'>#_load</a></span><span class='args'>(str)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Marshal.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#scope_with_scrooge%3F-instance_method' title='#scope_with_scrooge?'>#scope_with_scrooge?</a></span><span class='args'>( sql )</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Only scope n-1 rows by default.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#scrooge_reload-instance_method' title='#scrooge_reload'>#scrooge_reload</a></span><span class='args'>( p_keys, missing_columns )</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Efficient reloading - get the hash with missing attributes directly from
+the underlying connection.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#scrooge_seen_column%21-instance_method' title='#scrooge_seen_column!'>#scrooge_seen_column!</a></span><span class='args'>( callsite_signature, attr_name )</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Augment a given callsite signature with a column / attribute.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#scrooge_select_sql-instance_method' title='#scrooge_select_sql'>#scrooge_select_sql</a></span><span class='args'>( set )</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Generates a SELECT snippet for this Model from a given Set of columns.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>_load</h3>
+</div><div id="_load-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>_load</span><span class='args'>(str)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Marshal.load
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+50
+51
+52</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/optimizations/columns/macro.rb', line 50</span>
+
+<span class='def def kw'>def</span> <span class='_load identifier id'>_load</span><span class='lparen token'>(</span><span class='str identifier id'>str</span><span class='rparen token'>)</span>
+  <span class='Marshal constant id'>Marshal</span><span class='dot token'>.</span><span class='load identifier id'>load</span><span class='lparen token'>(</span><span class='str identifier id'>str</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>scope_with_scrooge?</h3>
+</div><div id="scope_with_scrooge%3F-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>scope_with_scrooge?</span><span class='args'>( sql )</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Only scope n-1 rows by default.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+64
+65
+66
+67
+68</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/optimizations/columns/macro.rb', line 64</span>
+
+<span class='def def kw'>def</span> <span class='scope_with_scrooge? fid id'>scope_with_scrooge?</span><span class='lparen token'>(</span> <span class='sql identifier id'>sql</span> <span class='rparen token'>)</span>
+  <span class='sql identifier id'>sql</span> <span class='match op'>=~</span> <span class='scrooge_select_regex identifier id'>scrooge_select_regex</span> <span class='andop op'>&amp;&amp;</span> 
+  <span class='column_names identifier id'>column_names</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='dot token'>.</span><span class='primary_key identifier id'>primary_key</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span>
+  <span class='sql identifier id'>sql</span> <span class='nmatch op'>!~</span> <span class='ScroogeRegexJoin constant id'>ScroogeRegexJoin</span>
+<span class='end end kw'>end</span>        
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>scrooge_reload</h3>
+</div><div id="scrooge_reload-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>scrooge_reload</span><span class='args'>( p_keys, missing_columns )</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Efficient reloading - get the hash with missing attributes directly from
+the underlying connection.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+57
+58
+59
+60</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/optimizations/columns/macro.rb', line 57</span>
+
+<span class='def def kw'>def</span> <span class='scrooge_reload identifier id'>scrooge_reload</span><span class='lparen token'>(</span> <span class='p_keys identifier id'>p_keys</span><span class='comma token'>,</span> <span class='missing_columns identifier id'>missing_columns</span> <span class='rparen token'>)</span>
+  <span class='sql_keys identifier id'>sql_keys</span> <span class='assign token'>=</span> <span class='p_keys identifier id'>p_keys</span><span class='dot token'>.</span><span class='collect identifier id'>collect</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='pk identifier id'>pk</span><span class='bitor op'>|</span> <span class='dstring node'>&quot;'#{pk}'&quot;</span><span class='rbrace token'>}</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='ScroogeComma constant id'>ScroogeComma</span><span class='rparen token'>)</span>
+  <span class='connection identifier id'>connection</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span> <span class='symbol val'>:select</span><span class='comma token'>,</span> <span class='dstring node'>&quot;SELECT #{scrooge_select_sql(missing_columns)} FROM #{quoted_table_name} WHERE #{quoted_table_name}.#{primary_key} IN (#{sql_keys})&quot;</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{name} Scrooge Reload&quot;</span> <span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>scrooge_seen_column!</h3>
+</div><div id="scrooge_seen_column%21-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>scrooge_seen_column!</span><span class='args'>( callsite_signature, attr_name )</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Augment a given callsite signature with a column / attribute.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+38
+39
+40</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/optimizations/columns/macro.rb', line 38</span>
+
+<span class='def def kw'>def</span> <span class='scrooge_seen_column! fid id'>scrooge_seen_column!</span><span class='lparen token'>(</span> <span class='callsite_signature identifier id'>callsite_signature</span><span class='comma token'>,</span> <span class='attr_name identifier id'>attr_name</span> <span class='rparen token'>)</span>
+  <span class='scrooge_callsite identifier id'>scrooge_callsite</span><span class='lparen token'>(</span> <span class='callsite_signature identifier id'>callsite_signature</span> <span class='rparen token'>)</span><span class='dot token'>.</span><span class='column! fid id'>column!</span><span class='lparen token'>(</span> <span class='attr_name identifier id'>attr_name</span> <span class='rparen token'>)</span>
+<span class='end end kw'>end</span>        
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>scrooge_select_sql</h3>
+</div><div id="scrooge_select_sql-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>scrooge_select_sql</span><span class='args'>( set )</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Generates a SELECT snippet for this Model from a given Set of columns
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+44
+45
+46</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/optimizations/columns/macro.rb', line 44</span>
+
+<span class='def def kw'>def</span> <span class='scrooge_select_sql identifier id'>scrooge_select_sql</span><span class='lparen token'>(</span> <span class='set identifier id'>set</span> <span class='rparen token'>)</span>
+  <span class='set identifier id'>set</span><span class='dot token'>.</span><span class='map identifier id'>map</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='a identifier id'>a</span><span class='bitor op'>|</span> <span class='attribute_with_table identifier id'>attribute_with_table</span><span class='lparen token'>(</span> <span class='a identifier id'>a</span> <span class='rparen token'>)</span> <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span> <span class='ScroogeComma constant id'>ScroogeComma</span> <span class='rparen token'>)</span>
+<span class='end end kw'>end</span>        
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

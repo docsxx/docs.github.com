@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: Globalize::Model::ActiveRecord::Translated::ActMethods</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module Globalize_Model_ActiveRecord_Translated_ActMethods">
+  <h1 class="title">Module: Globalize::Model::ActiveRecord::Translated::ActMethods</h1>
+  <div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#locale-instance_method' title='#locale'>#locale</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#translates-instance_method' title='#translates'>#translates</a></span><span class='args'>(*attr_names)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>locale</h3>
+</div><div id="locale-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>locale</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+47
+48
+49</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/globalize/model/active_record/translated.rb', line 47</span>
+
+<span class='def def kw'>def</span> <span class='locale identifier id'>locale</span>
+  <span class='lparen token'>(</span><span class='defined? defined kw'>defined?</span><span class='lparen token'>(</span><span class='@@locale ivar id'>@@locale</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='@@locale ivar id'>@@locale</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='I18n constant id'>I18n</span><span class='dot token'>.</span><span class='locale identifier id'>locale</span>
+<span class='end end kw'>end</span>          
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>translates</h3>
+</div><div id="translates-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>translates</span><span class='args'>(*attr_names)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/globalize/model/active_record/translated.rb', line 16</span>
+
+<span class='def def kw'>def</span> <span class='translates identifier id'>translates</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='attr_names identifier id'>attr_names</span><span class='rparen token'>)</span>
+  <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='attr_names identifier id'>attr_names</span><span class='dot token'>.</span><span class='extract_options! fid id'>extract_options!</span>
+  <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:translated_attributes</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='attr_names identifier id'>attr_names</span>
+
+  <span class='comment val'># Only set up once per class</span>
+  <span class='unless unless kw'>unless</span> <span class='included_modules identifier id'>included_modules</span><span class='dot token'>.</span><span class='include? fid id'>include?</span> <span class='InstanceMethods constant id'>InstanceMethods</span>
+    <span class='class_inheritable_accessor identifier id'>class_inheritable_accessor</span> <span class='symbol val'>:globalize_options</span><span class='comma token'>,</span> <span class='symbol val'>:globalize_proxy</span>
+    
+    <span class='include identifier id'>include</span> <span class='InstanceMethods constant id'>InstanceMethods</span>
+    <span class='extend identifier id'>extend</span>  <span class='ClassMethods constant id'>ClassMethods</span>
+    <span class='alias_method_chain identifier id'>alias_method_chain</span> <span class='symbol val'>:reload</span><span class='comma token'>,</span> <span class='symbol val'>:globalize</span>
+    
+    <span class='self self kw'>self</span><span class='dot token'>.</span><span class='globalize_proxy identifier id'>globalize_proxy</span> <span class='assign token'>=</span> <span class='Globalize constant id'>Globalize</span><span class='colon2 op'>::</span><span class='Model constant id'>Model</span><span class='colon2 op'>::</span><span class='ActiveRecord constant id'>ActiveRecord</span><span class='dot token'>.</span><span class='create_proxy_class identifier id'>create_proxy_class</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='rparen token'>)</span>
+    <span class='has_many identifier id'>has_many</span> <span class='symbol val'>:globalize_translations</span><span class='comma token'>,</span> <span class='symbol val'>:class_name</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='globalize_proxy identifier id'>globalize_proxy</span><span class='dot token'>.</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='symbol val'>:extend</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='Extensions constant id'>Extensions</span>
+
+    <span class='after_save identifier id'>after_save</span> <span class='symbol val'>:update_globalize_record</span>              
+  <span class='end end kw'>end</span>
+
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='globalize_options identifier id'>globalize_options</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span>
+  <span class='Globalize constant id'>Globalize</span><span class='colon2 op'>::</span><span class='Model constant id'>Model</span><span class='colon2 op'>::</span><span class='ActiveRecord constant id'>ActiveRecord</span><span class='dot token'>.</span><span class='define_accessors identifier id'>define_accessors</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='attr_names identifier id'>attr_names</span><span class='rparen token'>)</span>
+  
+  <span class='comment val'># Import any callbacks that have been defined by extensions to Globalize2</span>
+  <span class='comment val'># and run them.</span>
+  <span class='extend identifier id'>extend</span> <span class='Callbacks constant id'>Callbacks</span>
+  <span class='Callbacks constant id'>Callbacks</span><span class='dot token'>.</span><span class='instance_methods identifier id'>instance_methods</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='cb identifier id'>cb</span><span class='bitor op'>|</span> <span class='send identifier id'>send</span> <span class='cb identifier id'>cb</span> <span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,943 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: NewRelic::LocalEnvironment</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class NewRelic_LocalEnvironment">
+  <h1 class="title">Class: NewRelic::LocalEnvironment</h1>
+  <div class="section inheritance">
+  <ul>
+  <li><a href='../Object.html' title='Object'>Object</a></li><ul><li>NewRelic::LocalEnvironment</li>
+  </ul></ul>
+</div><div class="section attributes">
+  <h1>Attributes</h1>
+
+  
+    <div class="instance">
+      <h2>Instance Attributes</h2>
+      <table>
+      
+        <tr>
+          <th class="name">environment</td>
+          <td class="readwrite">
+            [<span id='environment-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>environment</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">identifier</td>
+          <td class="readwrite">
+            [<span id='identifier-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>identifier</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+      </table>
+    </div>
+  
+</div><div class="section constants">
+  
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+determine the environment we are running in (one of :webrick, :mongrel,
+:thin, or :unknown) and if the process is listening on a port, use the port
+# that we are listening on.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+13
+14
+15
+16
+17
+18
+19
+20
+21</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/new_relic/local_environment.rb', line 13</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span>
+  <span class='comment val'># Note: log won't be available yet.</span>
+  <span class='@identifier ivar id'>@identifier</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+  <span class='@environment ivar id'>@environment</span> <span class='assign token'>=</span> <span class='symbol val'>:unknown</span>
+  <span class='environments identifier id'>environments</span> <span class='assign token'>=</span> <span class='dstring node'>%w[merb jruby webrick thin mongrel litespeed passenger fastcgi daemon]</span>
+  <span class='while while kw'>while</span> <span class='environments identifier id'>environments</span><span class='dot token'>.</span><span class='any? fid id'>any?</span> <span class='andop op'>&amp;&amp;</span> <span class='@identifier ivar id'>@identifier</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+    <span class='send identifier id'>send</span> <span class='string val'>'check_for_'</span><span class='plus op'>+</span><span class='lparen token'>(</span><span class='environments identifier id'>environments</span><span class='dot token'>.</span><span class='shift identifier id'>shift</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#check_for_daemon-instance_method' title='#check_for_daemon'>#check_for_daemon</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#check_for_fastcgi-instance_method' title='#check_for_fastcgi'>#check_for_fastcgi</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#check_for_jruby-instance_method' title='#check_for_jruby'>#check_for_jruby</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#check_for_litespeed-instance_method' title='#check_for_litespeed'>#check_for_litespeed</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#check_for_merb-instance_method' title='#check_for_merb'>#check_for_merb</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#check_for_mongrel-instance_method' title='#check_for_mongrel'>#check_for_mongrel</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+this case covers starting by mongrel_rails.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#check_for_passenger-instance_method' title='#check_for_passenger'>#check_for_passenger</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#check_for_thin-instance_method' title='#check_for_thin'>#check_for_thin</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#check_for_webrick-instance_method' title='#check_for_webrick'>#check_for_webrick</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#config-instance_method' title='#config'>#config</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#default_port-instance_method' title='#default_port'>#default_port</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#to_s-instance_method' title='#to_s'>#to_s</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table><div class="inherited">
+  
+  <div>
+    <h1>Public Instance Methods Inherited from <a href='../Object.html' title='Object'>Object</a></h1>
+    <p><span class='name'><a href='../Object.html#new_relic_load-instance_method' title='new_relic_load'>new_relic_load</a></span>, <span class='name'><a href='../Object.html#new_relic_require-instance_method' title='new_relic_require'>new_relic_require</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>check_for_daemon</h3>
+</div><div id="check_for_daemon-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>check_for_daemon</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+112
+113
+114
+115
+116
+117
+118</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/new_relic/local_environment.rb', line 112</span>
+
+<span class='def def kw'>def</span> <span class='check_for_daemon identifier id'>check_for_daemon</span>
+  <span class='if if kw'>if</span> <span class='config identifier id'>config</span><span class='lbrack token'>[</span><span class='string val'>'monitor_daemons'</span><span class='rbrack token'>]</span>
+    <span class='@environment ivar id'>@environment</span> <span class='assign token'>=</span> <span class='symbol val'>:daemon</span>
+    <span class='comment val'># return the base part of the file name</span>
+    <span class='@identifier ivar id'>@identifier</span> <span class='assign token'>=</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='basename identifier id'>basename</span><span class='lparen token'>(</span><span class='$0 gvar id'>$0</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='string val'>&quot;.&quot;</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='first identifier id'>first</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>check_for_fastcgi</h3>
+</div><div id="check_for_fastcgi-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>check_for_fastcgi</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+25
+26
+27
+28
+29</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/new_relic/local_environment.rb', line 25</span>
+
+<span class='def def kw'>def</span> <span class='check_for_fastcgi identifier id'>check_for_fastcgi</span>
+  <span class='return return kw'>return</span> <span class='unless unless_mod kw'>unless</span> <span class='defined? defined kw'>defined?</span> <span class='FCGI constant id'>FCGI</span>
+  <span class='@environment ivar id'>@environment</span> <span class='assign token'>=</span> <span class='symbol val'>:fastcgi</span>
+  <span class='@identifier ivar id'>@identifier</span> <span class='assign token'>=</span> <span class='string val'>'fastcgi'</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>check_for_jruby</h3>
+</div><div id="check_for_jruby-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>check_for_jruby</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/new_relic/local_environment.rb', line 85</span>
+
+<span class='def def kw'>def</span> <span class='check_for_jruby identifier id'>check_for_jruby</span>
+  <span class='if if kw'>if</span> <span class='RUBY_PLATFORM constant id'>RUBY_PLATFORM</span> <span class='match op'>=~</span> <span class='regexp val'>/java/</span>
+    <span class='comment val'># Check for JRuby environment.  Not sure how this works in different appservers</span>
+    <span class='require identifier id'>require</span> <span class='string val'>'java'</span>
+    <span class='require identifier id'>require</span> <span class='string val'>'jruby'</span>
+    <span class='@environment ivar id'>@environment</span> <span class='assign token'>=</span> <span class='symbol val'>:jruby</span>
+    <span class='@identifier ivar id'>@identifier</span> <span class='assign token'>=</span> <span class='string val'>'jruby'</span>
+    <span class='@identifier ivar id'>@identifier</span> <span class='opasgn op'>+=</span> <span class='dstring node'>&quot;:#{config['app_name']}&quot;</span> <span class='if if_mod kw'>if</span> <span class='config identifier id'>config</span><span class='lbrack token'>[</span><span class='string val'>'app_name'</span><span class='rbrack token'>]</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>check_for_litespeed</h3>
+</div><div id="check_for_litespeed-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>check_for_litespeed</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+96
+97
+98
+99
+100
+101
+102</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/new_relic/local_environment.rb', line 96</span>
+
+<span class='def def kw'>def</span> <span class='check_for_litespeed identifier id'>check_for_litespeed</span>
+  <span class='if if kw'>if</span> <span class='caller identifier id'>caller</span><span class='dot token'>.</span><span class='pop identifier id'>pop</span> <span class='match op'>=~</span> <span class='regexp val'>/fcgi-bin\/RailsRunner\.rb/</span>
+    <span class='@environment ivar id'>@environment</span> <span class='assign token'>=</span> <span class='symbol val'>:litespeed</span>
+    <span class='@identifier ivar id'>@identifier</span> <span class='assign token'>=</span> <span class='string val'>'litespeed'</span>
+    <span class='@identifier ivar id'>@identifier</span> <span class='opasgn op'>+=</span> <span class='dstring node'>&quot;:#{config['app_name']}&quot;</span> <span class='if if_mod kw'>if</span> <span class='config identifier id'>config</span><span class='lbrack token'>[</span><span class='string val'>'app_name'</span><span class='rbrack token'>]</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>check_for_merb</h3>
+</div><div id="check_for_merb-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>check_for_merb</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+30
+31
+32
+33
+34</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/new_relic/local_environment.rb', line 30</span>
+
+<span class='def def kw'>def</span> <span class='check_for_merb identifier id'>check_for_merb</span>
+  <span class='if if kw'>if</span> <span class='config identifier id'>config</span><span class='dot token'>.</span><span class='app identifier id'>app</span> <span class='eq op'>==</span> <span class='colon op'>:</span><span class='merb identifier id'>merb</span>
+    <span class='@identifier ivar id'>@identifier</span> <span class='assign token'>=</span> <span class='string val'>'merb'</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>check_for_mongrel</h3>
+</div><div id="check_for_mongrel-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>check_for_mongrel</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+this case covers starting by mongrel_rails
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/new_relic/local_environment.rb', line 44</span>
+
+<span class='def def kw'>def</span> <span class='check_for_mongrel identifier id'>check_for_mongrel</span>
+  <span class='return return kw'>return</span> <span class='unless unless_mod kw'>unless</span> <span class='defined? defined kw'>defined?</span><span class='lparen token'>(</span><span class='Mongrel constant id'>Mongrel</span><span class='colon2 op'>::</span><span class='HttpServer constant id'>HttpServer</span><span class='rparen token'>)</span> 
+  <span class='@environment ivar id'>@environment</span> <span class='assign token'>=</span> <span class='symbol val'>:mongrel</span>
+  
+  <span class='comment val'># Get the port from the server if it's started</span>
+  <span class='ObjectSpace constant id'>ObjectSpace</span><span class='dot token'>.</span><span class='each_object identifier id'>each_object</span><span class='lparen token'>(</span><span class='Mongrel constant id'>Mongrel</span><span class='colon2 op'>::</span><span class='HttpServer constant id'>HttpServer</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='mongrel identifier id'>mongrel</span><span class='bitor op'>|</span>
+    <span class='next next kw'>next</span> <span class='if if_mod kw'>if</span> <span class='not not kw'>not</span> <span class='mongrel identifier id'>mongrel</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span> <span class='symbol val'>:port</span>
+    <span class='@identifier ivar id'>@identifier</span> <span class='assign token'>=</span> <span class='mongrel identifier id'>mongrel</span><span class='dot token'>.</span><span class='port identifier id'>port</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+  <span class='end end kw'>end</span>
+  
+  <span class='comment val'># Get the port from the configurator if one was created</span>
+  <span class='if if kw'>if</span> <span class='@identifier ivar id'>@identifier</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span> <span class='andop op'>&amp;&amp;</span> <span class='defined? defined kw'>defined?</span><span class='lparen token'>(</span><span class='Mongrel constant id'>Mongrel</span><span class='colon2 op'>::</span><span class='Configurator constant id'>Configurator</span><span class='rparen token'>)</span>
+    <span class='ObjectSpace constant id'>ObjectSpace</span><span class='dot token'>.</span><span class='each_object identifier id'>each_object</span><span class='lparen token'>(</span><span class='Mongrel constant id'>Mongrel</span><span class='colon2 op'>::</span><span class='Configurator constant id'>Configurator</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='mongrel identifier id'>mongrel</span><span class='bitor op'>|</span>
+      <span class='@identifier ivar id'>@identifier</span> <span class='assign token'>=</span> <span class='mongrel identifier id'>mongrel</span><span class='dot token'>.</span><span class='defaults identifier id'>defaults</span><span class='lbrack token'>[</span><span class='symbol val'>:port</span><span class='rbrack token'>]</span> <span class='andop op'>&amp;&amp;</span> <span class='mongrel identifier id'>mongrel</span><span class='dot token'>.</span><span class='defaults identifier id'>defaults</span><span class='lbrack token'>[</span><span class='symbol val'>:port</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+  
+  <span class='comment val'># Still can't find the port.  Let's look at ARGV to fall back</span>
+  <span class='@identifier ivar id'>@identifier</span> <span class='assign token'>=</span> <span class='default_port identifier id'>default_port</span> <span class='if if_mod kw'>if</span> <span class='@identifier ivar id'>@identifier</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>check_for_passenger</h3>
+</div><div id="check_for_passenger-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>check_for_passenger</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+104
+105
+106
+107
+108
+109
+110</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/new_relic/local_environment.rb', line 104</span>
+
+<span class='def def kw'>def</span> <span class='check_for_passenger identifier id'>check_for_passenger</span>
+  <span class='if if kw'>if</span> <span class='defined? defined kw'>defined?</span><span class='lparen token'>(</span><span class='Passenger constant id'>Passenger</span><span class='colon2 op'>::</span><span class='AbstractServer constant id'>AbstractServer</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='defined? defined kw'>defined?</span><span class='lparen token'>(</span><span class='IN_PHUSION_PASSENGER constant id'>IN_PHUSION_PASSENGER</span><span class='rparen token'>)</span> 
+    <span class='@environment ivar id'>@environment</span> <span class='assign token'>=</span> <span class='symbol val'>:passenger</span>
+    <span class='@identifier ivar id'>@identifier</span> <span class='assign token'>=</span> <span class='string val'>'passenger'</span>
+    <span class='@identifier ivar id'>@identifier</span> <span class='opasgn op'>+=</span> <span class='dstring node'>&quot;:#{config['app_name']}&quot;</span> <span class='if if_mod kw'>if</span> <span class='config identifier id'>config</span><span class='lbrack token'>[</span><span class='string val'>'app_name'</span><span class='rbrack token'>]</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>check_for_thin</h3>
+</div><div id="check_for_thin-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>check_for_thin</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/new_relic/local_environment.rb', line 65</span>
+
+<span class='def def kw'>def</span> <span class='check_for_thin identifier id'>check_for_thin</span>
+  <span class='if if kw'>if</span> <span class='defined? defined kw'>defined?</span> <span class='Thin constant id'>Thin</span><span class='colon2 op'>::</span><span class='Server constant id'>Server</span>
+    <span class='comment val'># This case covers the thin web server</span>
+    <span class='comment val'># Same issue as above- we assume only one instance per process</span>
+    <span class='ObjectSpace constant id'>ObjectSpace</span><span class='dot token'>.</span><span class='each_object identifier id'>each_object</span><span class='lparen token'>(</span><span class='Thin constant id'>Thin</span><span class='colon2 op'>::</span><span class='Server constant id'>Server</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='thin_server identifier id'>thin_server</span><span class='bitor op'>|</span>
+      <span class='@environment ivar id'>@environment</span> <span class='assign token'>=</span> <span class='symbol val'>:thin</span>
+      <span class='backend identifier id'>backend</span> <span class='assign token'>=</span> <span class='thin_server identifier id'>thin_server</span><span class='dot token'>.</span><span class='backend identifier id'>backend</span>
+      <span class='comment val'># We need a way to uniquely identify and distinguish agents.  The port</span>
+      <span class='comment val'># works for this.  When using sockets, use the socket file name.</span>
+      <span class='if if kw'>if</span> <span class='backend identifier id'>backend</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span> <span class='colon op'>:</span><span class='port identifier id'>port</span>
+        <span class='@identifier ivar id'>@identifier</span> <span class='assign token'>=</span> <span class='backend identifier id'>backend</span><span class='dot token'>.</span><span class='port identifier id'>port</span>
+      <span class='elsif elsif kw'>elsif</span> <span class='backend identifier id'>backend</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span> <span class='symbol val'>:socket</span>
+        <span class='@identifier ivar id'>@identifier</span> <span class='assign token'>=</span> <span class='backend identifier id'>backend</span><span class='dot token'>.</span><span class='socket identifier id'>socket</span>
+      <span class='else else kw'>else</span>
+        <span class='raise identifier id'>raise</span> <span class='dstring node'>&quot;Unknown thin backend: #{backend}&quot;</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span> <span class='comment val'># each thin instance</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>check_for_webrick</h3>
+</div><div id="check_for_webrick-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>check_for_webrick</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+35
+36
+37
+38
+39
+40
+41
+42</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/new_relic/local_environment.rb', line 35</span>
+
+<span class='def def kw'>def</span> <span class='check_for_webrick identifier id'>check_for_webrick</span>
+  <span class='comment val'># This will not succeed on rails 2.2 and later</span>
+  <span class='if if kw'>if</span> <span class='defined? defined kw'>defined?</span><span class='lparen token'>(</span><span class='WEBrick constant id'>WEBrick</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='defined? defined kw'>defined?</span><span class='lparen token'>(</span><span class='OPTIONS constant id'>OPTIONS</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='colon3 op'>::</span><span class='OPTIONS constant id'>OPTIONS</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='colon op'>:</span><span class='fetch identifier id'>fetch</span><span class='rparen token'>)</span> 
+    <span class='comment val'># OPTIONS is set by script/server </span>
+    <span class='@identifier ivar id'>@identifier</span> <span class='assign token'>=</span> <span class='default_port identifier id'>default_port</span> <span class='unless unless_mod kw'>unless</span> <span class='@identifier ivar id'>@identifier</span>
+    <span class='@identifier ivar id'>@identifier</span> <span class='assign token'>=</span> <span class='OPTIONS constant id'>OPTIONS</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='symbol val'>:port</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>config</h3>
+</div><div id="config-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>config</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+120
+121
+122</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/new_relic/local_environment.rb', line 120</span>
+
+<span class='def def kw'>def</span> <span class='config identifier id'>config</span>
+  <span class='NewRelic constant id'>NewRelic</span><span class='colon2 op'>::</span><span class='Config constant id'>Config</span><span class='dot token'>.</span><span class='instance identifier id'>instance</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>default_port</h3>
+</div><div id="default_port-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>default_port</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/new_relic/local_environment.rb', line 124</span>
+
+<span class='def def kw'>def</span> <span class='default_port identifier id'>default_port</span>
+  <span class='require identifier id'>require</span> <span class='string val'>'optparse'</span>
+  <span class='comment val'># If nothing else is found, use the 3000 default</span>
+  <span class='default_port identifier id'>default_port</span> <span class='assign token'>=</span> <span class='integer val'>3000</span>
+  <span class='OptionParser constant id'>OptionParser</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='opts identifier id'>opts</span><span class='bitor op'>|</span>
+    <span class='opts identifier id'>opts</span><span class='dot token'>.</span><span class='on identifier id'>on</span><span class='lparen token'>(</span><span class='string val'>&quot;-p&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;--port=port&quot;</span><span class='comma token'>,</span> <span class='String constant id'>String</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span> <span class='default_port identifier id'>default_port</span> <span class='bitor op'>|</span> <span class='rbrace token'>}</span>
+    <span class='opts identifier id'>opts</span><span class='dot token'>.</span><span class='parse! fid id'>parse!</span><span class='lparen token'>(</span><span class='ARGV constant id'>ARGV</span><span class='dot token'>.</span><span class='clone identifier id'>clone</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+  <span class='default_port identifier id'>default_port</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>to_s</h3>
+</div><div id="to_s-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>to_s</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+22
+23
+24</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/new_relic/local_environment.rb', line 22</span>
+
+<span class='def def kw'>def</span> <span class='to_s identifier id'>to_s</span>
+  <span class='dstring node'>&quot;LocalEnvironment[#{environment}:#{identifier}]&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

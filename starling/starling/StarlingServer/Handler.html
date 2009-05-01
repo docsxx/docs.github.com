@@ -1,0 +1,506 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: StarlingServer::Handler</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class StarlingServer_Handler">
+  <h1 class="title">Class: StarlingServer::Handler</h1>
+  <div class="section inheritance">
+  <ul>
+  <li>EventMachine::Connection</li><ul><li>StarlingServer::Handler</li>
+  </ul></ul>
+</div><div class="section docstring">
+  <p>
+This is an internal class that&#8217;s used by Starling::Server to handle
+the MemCache protocol and act as an interface between the Server and the
+QueueCollection.
+</p>
+
+</div><div class="section constants">
+  <div class="thisclass">
+  <h1>Constants</h1>
+  <dl>
+    
+      <dt id="DATA_PACK_FMT-constant">DATA_PACK_FMT</dt>
+      <dd>&quot;Ia*&quot;.freeze</dd>
+    
+      <dt id="DELETE_COMMAND-constant">DELETE_COMMAND</dt>
+      <dd>/\Adelete (.{1,250}) ([0-9]+)\r\n/m</dd>
+    
+      <dt id="DELETE_RESPONSE-constant">DELETE_RESPONSE</dt>
+      <dd>&quot;END\r\n&quot;.freeze</dd>
+    
+      <dt id="ERR_UNKNOWN_COMMAND-constant">ERR_UNKNOWN_COMMAND</dt>
+      <dd>&quot;CLIENT_ERROR bad command line format\r\n&quot;.freeze</dd>
+    
+      <dt id="GET_COMMAND-constant">GET_COMMAND</dt>
+      <dd>/\Aget (.{1,250})\s*\r\n/m</dd>
+    
+      <dt id="GET_RESPONSE-constant">GET_RESPONSE</dt>
+      <dd>&quot;VALUE %s %s %s\r\n%s\r\nEND\r\n&quot;.freeze</dd>
+    
+      <dt id="GET_RESPONSE_EMPTY-constant">GET_RESPONSE_EMPTY</dt>
+      <dd>&quot;END\r\n&quot;.freeze</dd>
+    
+      <dt id="QUEUE_STATS_RESPONSE-constant">QUEUE_STATS_RESPONSE</dt>
+      <dd>&quot;STAT queue_%s_items %d\r
+STAT queue_%s_total_items %d\r
+STAT queue_%s_logsize %d\r
+STAT queue_%s_expired_items %d\r
+STAT queue_%s_age %d\r\n&quot;.freeze</dd>
+    
+      <dt id="QUIT_COMMAND-constant">QUIT_COMMAND</dt>
+      <dd>/\Aquit\r\n/m</dd>
+    
+      <dt id="SET_CLIENT_DATA_ERROR-constant">SET_CLIENT_DATA_ERROR</dt>
+      <dd>&quot;CLIENT_ERROR bad data chunk\r\nERROR\r\n&quot;.freeze</dd>
+    
+      <dt id="SET_COMMAND-constant">SET_COMMAND</dt>
+      <dd>/\Aset (.{1,250}) ([0-9]+) ([0-9]+) ([0-9]+)\r\n/m</dd>
+    
+      <dt id="SET_RESPONSE_FAILURE-constant">SET_RESPONSE_FAILURE</dt>
+      <dd>&quot;NOT STORED\r\n&quot;.freeze</dd>
+    
+      <dt id="SET_RESPONSE_SUCCESS-constant">SET_RESPONSE_SUCCESS</dt>
+      <dd>&quot;STORED\r\n&quot;.freeze</dd>
+    
+      <dt id="SHUTDOWN_COMMAND-constant">SHUTDOWN_COMMAND</dt>
+      <dd>/\Ashutdown\r\n/m</dd>
+    
+      <dt id="STATS_COMMAND-constant">STATS_COMMAND</dt>
+      <dd>/\Astats\r\n/m</dd>
+    
+      <dt id="STATS_RESPONSE-constant">STATS_RESPONSE</dt>
+      <dd>&quot;STAT pid %d\r
+STAT uptime %d\r
+STAT time %d\r
+STAT version %s\r
+STAT rusage_user %0.6f\r
+STAT rusage_system %0.6f\r
+STAT curr_items %d\r
+STAT total_items %d\r
+STAT bytes %d\r
+STAT curr_connections %d\r
+STAT total_connections %d\r
+STAT cmd_get %d\r
+STAT cmd_set %d\r
+STAT get_hits %d\r
+STAT get_misses %d\r
+STAT bytes_read %d\r
+STAT bytes_written %d\r
+STAT limit_maxbytes %d\r
+%sEND\r\n&quot;.freeze</dd>
+    
+  </dl>
+</div>
+
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Creates a new handler for the MemCache protocol that communicates with a
+given client.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+67
+68
+69</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/starling/handler.rb', line 67</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='@opts ivar id'>@opts</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#post_init-instance_method' title='#post_init'>#post_init</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Process incoming commands from the attached client.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#process-instance_method' title='#process'>#process</a></span><span class='args'>(data)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#receive_data-instance_method' title='#receive_data'>#receive_data</a></span><span class='args'>(incoming)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#unbind-instance_method' title='#unbind'>#unbind</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>post_init</h3>
+</div><div id="post_init-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>post_init</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Process incoming commands from the attached client.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/starling/handler.rb', line 74</span>
+
+<span class='def def kw'>def</span> <span class='post_init identifier id'>post_init</span>
+  <span class='@stash ivar id'>@stash</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+  <span class='@data ivar id'>@data</span> <span class='assign token'>=</span> <span class='string val'>&quot;&quot;</span>
+  <span class='@data_buf ivar id'>@data_buf</span> <span class='assign token'>=</span> <span class='string val'>&quot;&quot;</span>
+  <span class='@server ivar id'>@server</span> <span class='assign token'>=</span> <span class='@opts ivar id'>@opts</span><span class='lbrack token'>[</span><span class='symbol val'>:server</span><span class='rbrack token'>]</span>
+  <span class='@logger ivar id'>@logger</span> <span class='assign token'>=</span> <span class='StarlingServer constant id'>StarlingServer</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='dot token'>.</span><span class='logger identifier id'>logger</span>
+  <span class='@expiry_stats ivar id'>@expiry_stats</span> <span class='assign token'>=</span> <span class='Hash constant id'>Hash</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='integer val'>0</span><span class='rparen token'>)</span>
+  <span class='@expected_length ivar id'>@expected_length</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+  <span class='@server ivar id'>@server</span><span class='dot token'>.</span><span class='stats identifier id'>stats</span><span class='lbrack token'>[</span><span class='symbol val'>:total_connections</span><span class='rbrack token'>]</span> <span class='opasgn op'>+=</span> <span class='integer val'>1</span>
+  <span class='set_comm_inactivity_timeout identifier id'>set_comm_inactivity_timeout</span> <span class='@opts ivar id'>@opts</span><span class='lbrack token'>[</span><span class='symbol val'>:timeout</span><span class='rbrack token'>]</span>
+  <span class='@queue_collection ivar id'>@queue_collection</span> <span class='assign token'>=</span> <span class='@opts ivar id'>@opts</span><span class='lbrack token'>[</span><span class='symbol val'>:queue</span><span class='rbrack token'>]</span>
+
+  <span class='@session_id ivar id'>@session_id</span> <span class='assign token'>=</span> <span class='@@next_session_id ivar id'>@@next_session_id</span>
+  <span class='@@next_session_id ivar id'>@@next_session_id</span> <span class='opasgn op'>+=</span> <span class='integer val'>1</span>
+
+  <span class='peer identifier id'>peer</span> <span class='assign token'>=</span> <span class='Socket constant id'>Socket</span><span class='dot token'>.</span><span class='unpack_sockaddr_in identifier id'>unpack_sockaddr_in</span><span class='lparen token'>(</span><span class='get_peername identifier id'>get_peername</span><span class='rparen token'>)</span>
+  <span class='comment val'>#@logger.debug &quot;(#{@session_id}) New session from #{peer[1]}:#{peer[0]}&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>process</h3>
+</div><div id="process-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>process</span><span class='args'>(data)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/starling/handler.rb', line 104</span>
+
+<span class='def def kw'>def</span> <span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='data identifier id'>data</span><span class='rparen token'>)</span>
+  <span class='data identifier id'>data</span> <span class='assign token'>=</span> <span class='@data_buf ivar id'>@data_buf</span> <span class='plus op'>+</span> <span class='data identifier id'>data</span> <span class='if if_mod kw'>if</span> <span class='@data_buf ivar id'>@data_buf</span><span class='dot token'>.</span><span class='size identifier id'>size</span> <span class='gt op'>&gt;</span> <span class='integer val'>0</span>
+  <span class='comment val'># our only non-normal state is consuming an object's data</span>
+  <span class='comment val'># when @expected_length is present</span>
+  <span class='if if kw'>if</span> <span class='@expected_length ivar id'>@expected_length</span> <span class='andop op'>&amp;&amp;</span> <span class='data identifier id'>data</span><span class='dot token'>.</span><span class='size identifier id'>size</span> <span class='eq op'>==</span> <span class='@expected_length ivar id'>@expected_length</span>
+    <span class='response identifier id'>response</span> <span class='assign token'>=</span> <span class='set_data identifier id'>set_data</span><span class='lparen token'>(</span><span class='data identifier id'>data</span><span class='rparen token'>)</span>
+    <span class='@data_buf ivar id'>@data_buf</span> <span class='assign token'>=</span> <span class='string val'>&quot;&quot;</span>
+    <span class='return return kw'>return</span> <span class='response identifier id'>response</span>
+  <span class='elsif elsif kw'>elsif</span> <span class='@expected_length ivar id'>@expected_length</span>
+    <span class='@data_buf ivar id'>@data_buf</span> <span class='assign token'>=</span> <span class='data identifier id'>data</span>
+    <span class='return return kw'>return</span>
+  <span class='end end kw'>end</span>
+  <span class='case case kw'>case</span> <span class='data identifier id'>data</span>
+  <span class='when when kw'>when</span> <span class='SET_COMMAND constant id'>SET_COMMAND</span>
+    <span class='@server ivar id'>@server</span><span class='dot token'>.</span><span class='stats identifier id'>stats</span><span class='lbrack token'>[</span><span class='symbol val'>:set_requests</span><span class='rbrack token'>]</span> <span class='opasgn op'>+=</span> <span class='integer val'>1</span>
+    <span class='set identifier id'>set</span><span class='lparen token'>(</span><span class='$1 nth_ref id'>$1</span><span class='comma token'>,</span> <span class='$2 nth_ref id'>$2</span><span class='comma token'>,</span> <span class='$3 nth_ref id'>$3</span><span class='comma token'>,</span> <span class='$4 nth_ref id'>$4</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span><span class='rparen token'>)</span>
+  <span class='when when kw'>when</span> <span class='GET_COMMAND constant id'>GET_COMMAND</span>
+    <span class='@server ivar id'>@server</span><span class='dot token'>.</span><span class='stats identifier id'>stats</span><span class='lbrack token'>[</span><span class='symbol val'>:get_requests</span><span class='rbrack token'>]</span> <span class='opasgn op'>+=</span> <span class='integer val'>1</span>
+    <span class='get identifier id'>get</span><span class='lparen token'>(</span><span class='$1 nth_ref id'>$1</span><span class='rparen token'>)</span>
+  <span class='when when kw'>when</span> <span class='STATS_COMMAND constant id'>STATS_COMMAND</span>
+    <span class='stats identifier id'>stats</span>
+  <span class='when when kw'>when</span> <span class='SHUTDOWN_COMMAND constant id'>SHUTDOWN_COMMAND</span>
+    <span class='comment val'># no point in responding, they'll never get it.</span>
+    <span class='Runner constant id'>Runner</span><span class='colon2 op'>::</span><span class='shutdown identifier id'>shutdown</span>
+  <span class='when when kw'>when</span> <span class='DELETE_COMMAND constant id'>DELETE_COMMAND</span>
+    <span class='delete identifier id'>delete</span> <span class='$1 nth_ref id'>$1</span>
+  <span class='when when kw'>when</span> <span class='QUIT_COMMAND constant id'>QUIT_COMMAND</span>
+    <span class='comment val'># ignore the command, client is closing connection.</span>
+    <span class='return return kw'>return</span> <span class='nil nil kw'>nil</span>
+  <span class='else else kw'>else</span>
+    <span class='logger identifier id'>logger</span><span class='dot token'>.</span><span class='warn identifier id'>warn</span> <span class='dstring node'>&quot;Unknown command: #{data}.&quot;</span>
+    <span class='respond identifier id'>respond</span> <span class='ERR_UNKNOWN_COMMAND constant id'>ERR_UNKNOWN_COMMAND</span>
+  <span class='end end kw'>end</span>
+<span class='rescue rescue kw'>rescue</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
+  <span class='logger identifier id'>logger</span><span class='dot token'>.</span><span class='error identifier id'>error</span> <span class='dstring node'>&quot;Error handling request: #{e}.&quot;</span>
+  <span class='logger identifier id'>logger</span><span class='dot token'>.</span><span class='debug identifier id'>debug</span> <span class='e identifier id'>e</span><span class='dot token'>.</span><span class='backtrace identifier id'>backtrace</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='string val'>&quot;\n&quot;</span><span class='rparen token'>)</span>
+  <span class='respond identifier id'>respond</span> <span class='GET_RESPONSE_EMPTY constant id'>GET_RESPONSE_EMPTY</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>receive_data</h3>
+</div><div id="receive_data-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>receive_data</span><span class='args'>(incoming)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/starling/handler.rb', line 93</span>
+
+<span class='def def kw'>def</span> <span class='receive_data identifier id'>receive_data</span><span class='lparen token'>(</span><span class='incoming identifier id'>incoming</span><span class='rparen token'>)</span>
+  <span class='@server ivar id'>@server</span><span class='dot token'>.</span><span class='stats identifier id'>stats</span><span class='lbrack token'>[</span><span class='symbol val'>:bytes_read</span><span class='rbrack token'>]</span> <span class='opasgn op'>+=</span> <span class='incoming identifier id'>incoming</span><span class='dot token'>.</span><span class='size identifier id'>size</span>
+  <span class='@data ivar id'>@data</span> <span class='lshft op'>&lt;&lt;</span> <span class='incoming identifier id'>incoming</span>
+
+  <span class='while while kw'>while</span> <span class='data identifier id'>data</span> <span class='assign token'>=</span> <span class='@data ivar id'>@data</span><span class='dot token'>.</span><span class='slice! fid id'>slice!</span><span class='lparen token'>(</span><span class='regexp val'>/.*?\r\n/</span><span class='m identifier id'>m</span><span class='rparen token'>)</span>
+    <span class='response identifier id'>response</span> <span class='assign token'>=</span> <span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='data identifier id'>data</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+
+  <span class='send_data identifier id'>send_data</span> <span class='response identifier id'>response</span> <span class='if if_mod kw'>if</span> <span class='response identifier id'>response</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>unbind</h3>
+</div><div id="unbind-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>unbind</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+143
+144
+145</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/starling/handler.rb', line 143</span>
+
+<span class='def def kw'>def</span> <span class='unbind identifier id'>unbind</span>
+  <span class='comment val'>#@logger.debug &quot;(#{@session_id}) connection ends&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

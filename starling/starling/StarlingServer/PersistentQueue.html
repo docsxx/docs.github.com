@@ -1,0 +1,514 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: StarlingServer::PersistentQueue</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class StarlingServer_PersistentQueue">
+  <h1 class="title">Class: StarlingServer::PersistentQueue</h1>
+  <div class="section inheritance">
+  <ul>
+  <li>Queue</li><ul><li>StarlingServer::PersistentQueue</li>
+  </ul></ul>
+</div><div class="section docstring">
+  <p>
+PersistentQueue is a subclass of Ruby&#8217;s thread-safe Queue class. It
+adds a transactional log to the in-memory Queue, which enables quickly
+rebuilding the Queue in the event of a sever outage.
+</p>
+
+</div><div class="section attributes">
+  <h1>Attributes</h1>
+
+  
+    <div class="instance">
+      <h2>Instance Attributes</h2>
+      <table>
+      
+        <tr>
+          <th class="name">current_age</td>
+          <td class="readwrite">
+            [<span id='current_age-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>current_age</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">initial_bytes</td>
+          <td class="readwrite">
+            [<span id='initial_bytes-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>initial_bytes</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">logsize</td>
+          <td class="readwrite">
+            [<span id='logsize-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>logsize</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">total_items</td>
+          <td class="readwrite">
+            [<span id='total_items-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>total_items</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+      </table>
+    </div>
+  
+</div><div class="section constants">
+  <div class="thisclass">
+  <h1>Constants</h1>
+  <dl>
+    
+      <dt id="SOFT_LOG_MAX_SIZE-constant">SOFT_LOG_MAX_SIZE</dt>
+      <dd>16 * (1024**2) </dd>
+    
+      <dt id="TRX_CMD_POP-constant">TRX_CMD_POP</dt>
+      <dd>&quot;\001&quot;.freeze</dd>
+    
+      <dt id="TRX_CMD_PUSH-constant">TRX_CMD_PUSH</dt>
+      <dd>&quot;\000&quot;.freeze</dd>
+    
+      <dt id="TRX_POP-constant">TRX_POP</dt>
+      <dd>&quot;\001&quot;.freeze</dd>
+    
+      <dt id="TRX_PUSH-constant">TRX_PUSH</dt>
+      <dd>&quot;\000%s%s&quot;.freeze</dd>
+    
+  </dl>
+</div>
+
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(persistence_path, queue_name, debug = false)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Create a new PersistentQueue at
+<tt>persistence_path</tt>/<tt>queue_name</tt>. If a queue log exists at
+that path, the Queue will be loaded from disk before being available for
+use.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+32
+33
+34
+35
+36
+37
+38
+39</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/starling/persistent_queue.rb', line 32</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='persistence_path identifier id'>persistence_path</span><span class='comma token'>,</span> <span class='queue_name identifier id'>queue_name</span><span class='comma token'>,</span> <span class='debug identifier id'>debug</span> <span class='assign token'>=</span> <span class='false false kw'>false</span><span class='rparen token'>)</span>
+  <span class='@persistence_path ivar id'>@persistence_path</span> <span class='assign token'>=</span> <span class='persistence_path identifier id'>persistence_path</span>
+  <span class='@queue_name ivar id'>@queue_name</span> <span class='assign token'>=</span> <span class='queue_name identifier id'>queue_name</span>
+  <span class='@total_items ivar id'>@total_items</span> <span class='assign token'>=</span> <span class='integer val'>0</span>
+  <span class='super super kw'>super</span><span class='lparen token'>(</span><span class='rparen token'>)</span>
+  <span class='@initial_bytes ivar id'>@initial_bytes</span> <span class='assign token'>=</span> <span class='replay_transaction_log identifier id'>replay_transaction_log</span><span class='lparen token'>(</span><span class='debug identifier id'>debug</span><span class='rparen token'>)</span>
+  <span class='@current_age ivar id'>@current_age</span> <span class='assign token'>=</span> <span class='integer val'>0</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#close-instance_method' title='#close'>#close</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Safely closes the transactional queue.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#pop-instance_method' title='#pop'>#pop</a></span><span class='args'>(log_trx = true)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Retrieves data from the queue.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#purge-instance_method' title='#purge'>#purge</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#push-instance_method' title='#push'>#push</a></span><span class='args'>(value, log_trx = true)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Pushes <tt>value</tt> to the queue.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>close</h3>
+</div><div id="close-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>close</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Safely closes the transactional queue.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/starling/persistent_queue.rb', line 76</span>
+
+<span class='def def kw'>def</span> <span class='close identifier id'>close</span>
+  <span class='comment val'># Ok, yeah, this is lame, and is *technically* a race condition. HOWEVER,</span>
+  <span class='comment val'># the QueueCollection *should* have stopped processing requests, and I don't</span>
+  <span class='comment val'># want to add yet another Mutex around all the push and pop methods. So we</span>
+  <span class='comment val'># do the next simplest thing, and minimize the time we'll stick around before</span>
+  <span class='comment val'># @trx is nil.</span>
+  <span class='@not_trx ivar id'>@not_trx</span> <span class='assign token'>=</span> <span class='@trx ivar id'>@trx</span>
+  <span class='@trx ivar id'>@trx</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+  <span class='@not_trx ivar id'>@not_trx</span><span class='dot token'>.</span><span class='close identifier id'>close</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>pop</h3>
+</div><div id="pop-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>pop</span><span class='args'>(log_trx = true)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Retrieves data from the queue.
+</p>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="raise">
+  <h3>Raises:</h3>
+  <dl>
+  
+    <dt>
+      
+        <span class='type'>[<tt>NoTransactionLog</tt>]</span>
+      
+      
+    </dt>
+    <dd>
+      <span class='desc'></span>
+    </dd>
+  
+  </dl>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/starling/persistent_queue.rb', line 59</span>
+
+<span class='def def kw'>def</span> <span class='pop identifier id'>pop</span><span class='lparen token'>(</span><span class='log_trx identifier id'>log_trx</span> <span class='assign token'>=</span> <span class='true true kw'>true</span><span class='rparen token'>)</span>
+  <span class='raise identifier id'>raise</span> <span class='NoTransactionLog constant id'>NoTransactionLog</span> <span class='if if_mod kw'>if</span> <span class='log_trx identifier id'>log_trx</span> <span class='andop op'>&amp;&amp;</span> <span class='notop op'>!</span><span class='@trx ivar id'>@trx</span>
+
+  <span class='begin begin kw'>begin</span>
+    <span class='rv identifier id'>rv</span> <span class='assign token'>=</span> <span class='super super kw'>super</span><span class='lparen token'>(</span><span class='notop op'>!</span><span class='log_trx identifier id'>log_trx</span><span class='rparen token'>)</span>
+  <span class='rescue rescue kw'>rescue</span> <span class='ThreadError constant id'>ThreadError</span>
+    <span class='puts identifier id'>puts</span> <span class='string val'>&quot;WARNING: The queue was empty when trying to pop(). Technically this shouldn't ever happen. Probably a bug in the transactional underpinnings. Or maybe shutdown didn't happen cleanly at some point. Ignoring.&quot;</span>
+    <span class='rv identifier id'>rv</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='now_usec identifier id'>now_usec</span><span class='comma token'>,</span> <span class='string val'>''</span><span class='rbrack token'>]</span>
+  <span class='end end kw'>end</span>
+  <span class='transaction identifier id'>transaction</span> <span class='string val'>&quot;\001&quot;</span> <span class='if if_mod kw'>if</span> <span class='log_trx identifier id'>log_trx</span>
+  <span class='@current_age ivar id'>@current_age</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='now_usec identifier id'>now_usec</span> <span class='minus op'>-</span> <span class='rv identifier id'>rv</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='div op'>/</span> <span class='integer val'>1000</span>
+  <span class='rv identifier id'>rv</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>purge</h3>
+</div><div id="purge-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>purge</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+87
+88
+89
+90</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/starling/persistent_queue.rb', line 87</span>
+
+<span class='def def kw'>def</span> <span class='purge identifier id'>purge</span>
+  <span class='close identifier id'>close</span>
+  <span class='File constant id'>File</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='log_path identifier id'>log_path</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>push</h3>
+</div><div id="push-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>push</span><span class='args'>(value, log_trx = true)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Pushes <tt>value</tt> to the queue. By default, <tt>push</tt> will write to
+the transactional log. Set +log_trx=false+ to override this behaviour.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/starling/persistent_queue.rb', line 45</span>
+
+<span class='def def kw'>def</span> <span class='push identifier id'>push</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='comma token'>,</span> <span class='log_trx identifier id'>log_trx</span> <span class='assign token'>=</span> <span class='true true kw'>true</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='log_trx identifier id'>log_trx</span>
+    <span class='raise identifier id'>raise</span> <span class='NoTransactionLog constant id'>NoTransactionLog</span> <span class='unless unless_mod kw'>unless</span> <span class='@trx ivar id'>@trx</span>
+    <span class='size identifier id'>size</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='value identifier id'>value</span><span class='dot token'>.</span><span class='size identifier id'>size</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='pack identifier id'>pack</span><span class='lparen token'>(</span><span class='string val'>&quot;I&quot;</span><span class='rparen token'>)</span>
+    <span class='transaction identifier id'>transaction</span> <span class='sprintf identifier id'>sprintf</span><span class='lparen token'>(</span><span class='TRX_PUSH constant id'>TRX_PUSH</span><span class='comma token'>,</span> <span class='size identifier id'>size</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+
+  <span class='@total_items ivar id'>@total_items</span> <span class='opasgn op'>+=</span> <span class='integer val'>1</span>
+  <span class='super super kw'>super</span><span class='lparen token'>(</span><span class='lbrack token'>[</span><span class='now_usec identifier id'>now_usec</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

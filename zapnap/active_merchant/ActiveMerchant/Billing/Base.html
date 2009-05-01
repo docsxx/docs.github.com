@@ -1,0 +1,343 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: ActiveMerchant::Billing::Base</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module ActiveMerchant_Billing_Base">
+  <h1 class="title">Module: ActiveMerchant::Billing::Base</h1>
+  <div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <h1>Public Class Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#gateway-class_method' title='gateway'>gateway</a></span><span class='args'>(name)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Return the matching gateway for the provider
+</p>
+<ul>
+<li><tt>bogus</tt>: BogusGateway - Does nothing (for testing)
+
+</li>
+<li><tt>moneris</tt>: MonerisGateway
+
+</li>
+<li><tt>authorize_net</tt>: AuthorizeNetGateway
+
+</li>
+<li><tt>trust_commerce</tt>: TrustCommerceGateway.
+
+</li>
+</ul>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#integration-class_method' title='integration'>integration</a></span><span class='args'>(name)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Return the matching integration module You can then get the notification
+from the module
+</p>
+<ul>
+<li><tt>bogus</tt>: Bogus - Does nothing (for testing)
+
+</li>
+<li><tt>chronopay</tt>: Chronopay - Does nothing (for testing)
+
+</li>
+<li><tt>paypal</tt>: Chronopay - Does nothing (for testing)
+
+<p>
+chronopay = ActiveMerchant::Billing::Base.
+</p>
+</li>
+</ul>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#mode-class_method' title='mode'>mode</a></span><span class='args'>=(mode)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#test%3F-class_method' title='test?'>test?</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+A check to see if we&#8217;re in test mode.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails class public">
+  <h1>Public Class Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>gateway</h3>
+</div><div id="gateway-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>gateway</span><span class='args'>(name)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Return the matching gateway for the provider
+</p>
+<ul>
+<li><tt>bogus</tt>: BogusGateway - Does nothing (for testing)
+
+</li>
+<li><tt>moneris</tt>: MonerisGateway
+
+</li>
+<li><tt>authorize_net</tt>: AuthorizeNetGateway
+
+</li>
+<li><tt>trust_commerce</tt>: TrustCommerceGateway
+
+<p>
+ActiveMerchant::Billing::Base.gateway(&#8216;moneris&#8217;).new
+</p>
+</li>
+</ul>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+33
+34
+35</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/base.rb', line 33</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='gateway identifier id'>gateway</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='rparen token'>)</span>
+  <span class='Billing constant id'>Billing</span><span class='dot token'>.</span><span class='const_get identifier id'>const_get</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{name.to_s.downcase}_gateway&quot;</span><span class='dot token'>.</span><span class='camelize identifier id'>camelize</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>integration</h3>
+</div><div id="integration-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>integration</span><span class='args'>(name)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Return the matching integration module You can then get the notification
+from the module
+</p>
+<ul>
+<li><tt>bogus</tt>: Bogus - Does nothing (for testing)
+
+</li>
+<li><tt>chronopay</tt>: Chronopay - Does nothing (for testing)
+
+</li>
+<li><tt>paypal</tt>: Chronopay - Does nothing (for testing)
+
+<p>
+chronopay =
+ActiveMerchant::Billing::Base.integration(&#8216;chronopay&#8217;)
+notification = chronopay.notification(raw_post)
+</p>
+</li>
+</ul>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+47
+48
+49</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/base.rb', line 47</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='integration identifier id'>integration</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='rparen token'>)</span>
+  <span class='Billing constant id'>Billing</span><span class='colon2 op'>::</span><span class='Integrations constant id'>Integrations</span><span class='dot token'>.</span><span class='const_get identifier id'>const_get</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{name.to_s.downcase}&quot;</span><span class='dot token'>.</span><span class='camelize identifier id'>camelize</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>mode</h3>
+</div><div id="mode-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>mode</span><span class='args'>=(mode)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+18
+19
+20
+21
+22</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/base.rb', line 18</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='mode identifier id'>mode</span><span class='assign token'>=</span><span class='lparen token'>(</span><span class='mode identifier id'>mode</span><span class='rparen token'>)</span>
+  <span class='@@mode ivar id'>@@mode</span> <span class='assign token'>=</span> <span class='mode identifier id'>mode</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='gateway_mode identifier id'>gateway_mode</span> <span class='assign token'>=</span> <span class='mode identifier id'>mode</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='integration_mode identifier id'>integration_mode</span> <span class='assign token'>=</span> <span class='mode identifier id'>mode</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>test?</h3>
+</div><div id="test%3F-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>test?</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+A check to see if we&#8217;re in test mode
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+52
+53
+54</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/base.rb', line 52</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='test? fid id'>test?</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='gateway_mode identifier id'>gateway_mode</span> <span class='eq op'>==</span> <span class='symbol val'>:test</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

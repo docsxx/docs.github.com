@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <title>README</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section docstring readme">
+        <h2>Knight Foundation RSS And News on Cell Phones (RANC) by DataDyne</h2>
+<p>
+Gateway and outbox handler for management of incoming and outgoing outboxs
+to proxy to the server. This will also act as the cache for user sessions.
+</p>
+<p>
+There are more than 3 Billion mobile phone subscribers in the world (2008)
+and many, if not all have access to a simple stateless prototol called SMS.
+Only 1.5 Billion people have used the Internet (2008) meaning that there is
+a large population which is connected but cannot use the Internet. Bridging
+the gap with SMS will make available vast functionality and services that
+were previously not usable.
+</p>
+<p>
+This project is composed of a simple gateway (proxy) that feeds commands to
+a remote server for translation and management.
+</p>
+<h2>Dependencies</h2>
+<p>
+By default the gateway assumes you are using an attached GSM modem. To
+facilitate this, you need the following gems:
+</p>
+<pre class="code">
+  <span class='toholio identifier id'>toholio</span><span class='minus op'>-</span><span class='serialport identifier id'>serialport</span>
+  <span class='jeffrafter identifier id'>jeffrafter</span><span class='minus op'>-</span><span class='rubygsm identifier id'>rubygsm</span>
+  <span class='jeffrafter identifier id'>jeffrafter</span><span class='minus op'>-</span><span class='lokii identifier id'>lokii</span>
+  <span class='daemons identifier id'>daemons</span>
+</pre>
+<p>
+To communicate with the server you will need some communications gems:
+</p>
+<pre class="code">
+  <span class='jnunemaker identifier id'>jnunemaker</span><span class='minus op'>-</span><span class='httparty identifier id'>httparty</span>
+  <span class='jeffrafter identifier id'>jeffrafter</span><span class='minus op'>-</span><span class='resource_party identifier id'>resource_party</span>
+</pre>
+<p>
+For testing you will need:
+</p>
+<pre class="code">
+  <span class='thoughtbot identifier id'>thoughtbot</span><span class='minus op'>-</span><span class='factory_girl identifier id'>factory_girl</span>
+  <span class='thoughtbot identifier id'>thoughtbot</span><span class='minus op'>-</span><span class='shoulda identifier id'>shoulda</span>
+  <span class='chrisk identifier id'>chrisk</span><span class='minus op'>-</span><span class='fakeweb identifier id'>fakeweb</span>
+  <span class='mocha identifier id'>mocha</span>
+</pre>
+<h2>Remote server assumptions</h2>
+<p>
+(1) Accepts an api_key parameter for all requests
+</p>
+<p>
+(2) accepts POST commands to /inbox.xml to create new entries in an inbox
+(or handle the requests approriately, including authentication). The
+parameters in the body should include:
+</p>
+<pre class="code">
+  <span class='outbox identifier id'>outbox</span><span class='lbrack token'>[</span><span class='text identifier id'>text</span><span class='rbrack token'>]</span> <span class='comment val'># The actual incoming content</span>
+  <span class='outbox identifier id'>outbox</span><span class='lbrack token'>[</span><span class='number identifier id'>number</span><span class='rbrack token'>]</span> <span class='comment val'># The sender</span>
+  <span class='outbox identifier id'>outbox</span><span class='lbrack token'>[</span><span class='sent_at identifier id'>sent_at</span><span class='rbrack token'>]</span> <span class='comment val'># When the sender sent the outbox</span>
+  <span class='outbox identifier id'>outbox</span><span class='lbrack token'>[</span><span class='processed_at identifier id'>processed_at</span><span class='rbrack token'>]</span> <span class='comment val'># When the gateway received the outbox</span>
+  <span class='outbox identifier id'>outbox</span><span class='lbrack token'>[</span><span class='receiver identifier id'>receiver</span><span class='rbrack token'>]</span> <span class='comment val'># The actual number that received the outbox</span>
+</pre>
+<p>
+(3) accepts GET requests to /outbox.xml to retrieve waiting outboxs from an
+outbox. The response should be an XML container in the following format:
+</p>
+<pre class="code">
+  <span class='lt op'>&lt;</span><span class='integer val'>?x</span><span class='ml identifier id'>ml</span> <span class='version identifier id'>version</span><span class='assign token'>=</span><span class='string val'>&quot;1.0&quot;</span> <span class='encoding identifier id'>encoding</span><span class='assign token'>=</span><span class='string val'>&quot;UTF-8&quot;</span><span class='question op'>?</span><span class='gt op'>&gt;</span>
+  <span class='lt op'>&lt;</span><span class='outboxes identifier id'>outboxes</span> <span class='type identifier id'>type</span><span class='assign token'>=</span><span class='string val'>&quot;array&quot;</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='outbox identifier id'>outbox</span><span class='gt op'>&gt;</span>
+      <span class='lt op'>&lt;</span><span class='id identifier id'>id</span> <span class='type identifier id'>type</span><span class='assign token'>=</span><span class='string val'>&quot;integer&quot;</span><span class='gt op'>&gt;</span><span class='integer val'>14</span><span class='lt op'>&lt;</span><span class='regexp val'>/id&gt;
+      &lt;outbox&gt;Invite your friends by sending 'invite +19995551212'&lt;/o</span><span class='utbox identifier id'>utbox</span><span class='gt op'>&gt;</span>
+      <span class='lt op'>&lt;</span><span class='number identifier id'>number</span><span class='gt op'>&gt;</span><span class='integer val'>+17775551212</span><span class='lt op'>&lt;</span><span class='regexp val'>/number&gt;
+      &lt;created-at type=&quot;datetime&quot;&gt;2009-02-11T19:58:26Z&lt;/</span><span class='created identifier id'>created</span><span class='minus op'>-</span><span class='at identifier id'>at</span><span class='gt op'>&gt;</span>
+      <span class='lt op'>&lt;</span><span class='updated identifier id'>updated</span><span class='minus op'>-</span><span class='at identifier id'>at</span> <span class='type identifier id'>type</span><span class='assign token'>=</span><span class='string val'>&quot;datetime&quot;</span><span class='gt op'>&gt;</span><span class='integer val'>2009</span><span class='minus op'>-</span><span class='integer val'>02</span><span class='minus op'>-</span><span class='integer val'>11</span><span class='T19 constant id'>T19</span><span class='symbol val'>:58</span><span class='symbol val'>:26</span><span class='Z constant id'>Z</span><span class='lt op'>&lt;</span><span class='regexp val'>/updated-at&gt;
+    &lt;/o</span><span class='utbox identifier id'>utbox</span><span class='gt op'>&gt;</span>
+  <span class='lt op'>&lt;</span><span class='regexp val'>/outboxs&gt;
+</span></pre>
+<p>
+Where the internal order of elements is not significant. (This kind of XML
+can be produced easily with Outbox.all.to_xml using active record). The
+server should accept a since parameter and only return messages that have
+been updated since the specified date (if specified)
+</p>
+
+      </div>
+    </div>
+  </body>
+</html>

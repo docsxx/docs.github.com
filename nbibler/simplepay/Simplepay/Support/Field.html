@@ -1,0 +1,813 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: Simplepay::Support::Field</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class Simplepay_Support_Field">
+  <h1 class="title">Class: Simplepay::Support::Field</h1>
+  <div class="section mixins">
+  <h1>Included Modules</h1>
+  <p>Comparable</p>
+</div><div class="section docstring">
+  <p>
+Represents a data field which will ultimately populate a Simple Pay form.
+These fields are often unique to their service.
+</p>
+
+</div><div class="section attributes">
+  <h1>Attributes</h1>
+
+  
+    <div class="instance">
+      <h2>Instance Attributes</h2>
+      <table>
+      
+        <tr>
+          <th class="name">name</td>
+          <td class="readwrite">
+            [<span id='name-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+The name of the field used in your local program (may be different than the
+service name).
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">service</td>
+          <td class="readwrite">
+            [<span id='service-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+The parent service of the field.
+</p>
+
+            
+          </td>
+        </tr>
+      
+      </table>
+    </div>
+  
+</div><div class="section constants">
+  <div class="thisclass">
+  <h1>Constants</h1>
+  <dl>
+    
+      <dt id="ALLOWED_OPTIONS-constant">ALLOWED_OPTIONS</dt>
+      <dd>[:as, :class, :required, :value]</dd>
+    
+  </dl>
+</div>
+
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(service, name, options)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <table>
+<tr><td valign="top">name:</td><td>Name which is used when referring to this field in the code.
+
+</td></tr>
+<tr><td valign="top">options:</td><td>An optional hash of field options.
+
+</td></tr>
+</table>
+<h3>Options</h3>
+<table>
+<tr><td valign="top">as:</td><td>Overrides the <tt>name</tt> when used by the service to the exact string or
+symbol (camelized) given.
+
+</td></tr>
+<tr><td valign="top">class:</td><td>Delegate the value mechanics to a separate class.
+
+</td></tr>
+<tr><td valign="top">required:</td><td>Tells whether or not this field is required for its service.
+
+</td></tr>
+<tr><td valign="top">value:</td><td>Set the value of the field at initialization.
+
+</td></tr>
+</table>
+<h3>Example</h3>
+<pre class="code">
+    <span class='Field constant id'>Field</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='symbol val'>:example</span><span class='comma token'>,</span> <span class='symbol val'>:required</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span><span class='comma token'>,</span> <span class='symbol val'>:as</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'ExAmplE'</span><span class='rparen token'>)</span>
+    <span class='Field constant id'>Field</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='symbol val'>:delegated</span><span class='comma token'>,</span> <span class='symbol val'>:class</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='Simplepay constant id'>Simplepay</span><span class='colon2 op'>::</span><span class='Support constant id'>Support</span><span class='colon2 op'>::</span><span class='Boolean constant id'>Boolean</span><span class='comma token'>,</span> <span class='symbol val'>:value</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span><span class='rparen token'>)</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+37
+38
+39
+40
+41
+42</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/simplepay/support/field.rb', line 37</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='service identifier id'>service</span><span class='comma token'>,</span> <span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='@service ivar id'>@service</span><span class='comma token'>,</span> <span class='@name ivar id'>@name</span><span class='comma token'>,</span> <span class='@options ivar id'>@options</span> <span class='assign token'>=</span> <span class='service identifier id'>service</span><span class='comma token'>,</span> <span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='normalize_options! fid id'>normalize_options!</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='@delegate ivar id'>@delegate</span>   <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:class</span><span class='rbrack token'>]</span>
+  <span class='@value ivar id'>@value</span>      <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='value identifier id'>value</span>  <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:value</span><span class='rbrack token'>]</span> <span class='if if_mod kw'>if</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:value</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#%3C%3D-instance_method' title='#&lt;='>#&lt;=</a></span><span class='args'>&gt;(o)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Sorting is based solely by <tt>service_name</tt>.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#%3D%3D-instance_method' title='#=='>#==</a></span><span class='args'>(o)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#clone_for-instance_method' title='#clone_for'>#clone_for</a></span><span class='args'>(o)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#delegate-instance_method' title='#delegate'>#delegate</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#delegated%3F-instance_method' title='#delegated?'>#delegated?</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#inspect-instance_method' title='#inspect'>#inspect</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#required%3F-instance_method' title='#required?'>#required?</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns <tt>true</tt> if the field is required for the service.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#service_name-instance_method' title='#service_name'>#service_name</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+          <span class='alias'>#to_s</span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns the name of the field used by the service.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#to_input-instance_method' title='#to_input'>#to_input</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Converts a Field into an HTML HIDDEN INPUT element as a string.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#value-instance_method' title='#value'>#value</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>&lt;=</h3>
+</div><div id="%3C%3D-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'><=</span><span class='args'>&gt;(o)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Sorting is based solely by <tt>service_name</tt>.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+101
+102
+103</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/simplepay/support/field.rb', line 101</span>
+
+<span class='def def kw'>def</span> <span class='cmp op'>&lt;=&gt;</span><span class='lparen token'>(</span><span class='o identifier id'>o</span><span class='rparen token'>)</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='service_name identifier id'>service_name</span> <span class='cmp op'>&lt;=&gt;</span> <span class='o identifier id'>o</span><span class='dot token'>.</span><span class='service_name identifier id'>service_name</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>==</h3>
+</div><div id="%3D%3D-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>==</span><span class='args'>(o)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+105
+106
+107
+108</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/simplepay/support/field.rb', line 105</span>
+
+<span class='def def kw'>def</span> <span class='eq op'>==</span><span class='lparen token'>(</span><span class='o identifier id'>o</span><span class='rparen token'>)</span> <span class='comment val'>#:nodoc:</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='service identifier id'>service</span>  <span class='eq op'>==</span> <span class='o identifier id'>o</span><span class='dot token'>.</span><span class='service identifier id'>service</span> <span class='andop op'>&amp;&amp;</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='name identifier id'>name</span>     <span class='eq op'>==</span> <span class='o identifier id'>o</span><span class='dot token'>.</span><span class='name identifier id'>name</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>clone_for</h3>
+</div><div id="clone_for-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>clone_for</span><span class='args'>(o)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+114
+115
+116</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/simplepay/support/field.rb', line 114</span>
+
+<span class='def def kw'>def</span> <span class='clone_for identifier id'>clone_for</span><span class='lparen token'>(</span><span class='o identifier id'>o</span><span class='rparen token'>)</span> <span class='comment val'>#:nodoc:</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='o identifier id'>o</span><span class='comma token'>,</span> <span class='deep_clone identifier id'>deep_clone</span><span class='lparen token'>(</span><span class='@name ivar id'>@name</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='deep_clone identifier id'>deep_clone</span><span class='lparen token'>(</span><span class='@options ivar id'>@options</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>delegate</h3>
+</div><div id="delegate-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>delegate</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+118
+119
+120</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/simplepay/support/field.rb', line 118</span>
+
+<span class='def def kw'>def</span> <span class='delegate identifier id'>delegate</span> 
+  <span class='@delegate ivar id'>@delegate</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>delegated?</h3>
+</div><div id="delegated%3F-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>delegated?</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+77
+78
+79</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/simplepay/support/field.rb', line 77</span>
+
+<span class='def def kw'>def</span> <span class='delegated? fid id'>delegated?</span> 
+  <span class='@delegate ivar id'>@delegate</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>inspect</h3>
+</div><div id="inspect-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>inspect</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+110
+111
+112</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/simplepay/support/field.rb', line 110</span>
+
+<span class='def def kw'>def</span> <span class='inspect identifier id'>inspect</span> 
+  <span class='dstring node'>%|#&lt;#{self.class.name} Name:&quot;#{@name}&quot;#{&quot; ServiceName:\&quot;#{service_name}\&quot;&quot; if service_name != @name}#{&quot; REQUIRED&quot; if required?}&gt;|</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>required?</h3>
+</div><div id="required%3F-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>required?</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns <tt>true</tt> if the field is required for the service.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+65
+66
+67</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/simplepay/support/field.rb', line 65</span>
+
+<span class='def def kw'>def</span> <span class='required? fid id'>required?</span>
+  <span class='@options ivar id'>@options</span><span class='lbrack token'>[</span><span class='symbol val'>:required</span><span class='rbrack token'>]</span> <span class='question op'>?</span> <span class='true true kw'>true</span> <span class='colon op'>:</span> <span class='false false kw'>false</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>service_name</h3>
+</div><div id="service_name-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>service_name</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+<p class="aliases">
+  <span class="aka">Also known as:</span>
+  
+    <tt id="to_s-instance_method">to_s</tt>
+  
+</p>
+</div><div class="section docstring">
+  <p>
+Returns the name of the field used by the service. This may be different
+than the Ruby name given to the field.
+</p>
+<p>
+Symbol names (or :as options) are camelized. If this is not desired, use a
+String, instead.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+51
+52
+53
+54
+55
+56
+57
+58
+59</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/simplepay/support/field.rb', line 51</span>
+
+<span class='def def kw'>def</span> <span class='service_name identifier id'>service_name</span>
+  <span class='source identifier id'>source</span> <span class='assign token'>=</span> <span class='@options ivar id'>@options</span><span class='lbrack token'>[</span><span class='symbol val'>:as</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='@name ivar id'>@name</span>
+  <span class='case case kw'>case</span> <span class='source identifier id'>source</span>
+  <span class='when when kw'>when</span> <span class='Symbol constant id'>Symbol</span>
+    <span class='source identifier id'>source</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='camelize identifier id'>camelize</span><span class='lparen token'>(</span><span class='symbol val'>:lower</span><span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+    <span class='source identifier id'>source</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>to_input</h3>
+</div><div id="to_input-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>to_input</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Converts a Field into an HTML HIDDEN INPUT element as a string.
+</p>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="raise">
+  <h3>Raises:</h3>
+  <dl>
+  
+    <dt>
+      
+        <span class='type'>[<tt><a href='../RequiredFieldMissing.html' title='RequiredFieldMissing'>RequiredFieldMissing</a></tt>]</span>
+      
+      
+    </dt>
+    <dd>
+      <span class='desc'></span>
+    </dd>
+  
+  </dl>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+72
+73
+74
+75</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/simplepay/support/field.rb', line 72</span>
+
+<span class='def def kw'>def</span> <span class='to_input identifier id'>to_input</span>
+  <span class='raise identifier id'>raise</span><span class='lparen token'>(</span><span class='RequiredFieldMissing constant id'>RequiredFieldMissing</span><span class='comma token'>,</span> <span class='dstring node'>&quot;Missing Required Field value for #{name}&quot;</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='required? fid id'>required?</span> <span class='andop op'>&amp;&amp;</span> <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span>
+  <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span> <span class='integer val'>? </span><span class='string val'>''</span> <span class='colon op'>:</span> <span class='html_input_tag identifier id'>html_input_tag</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>value</h3>
+</div><div id="value-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>value</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/simplepay/support/field.rb', line 85</span>
+
+<span class='def def kw'>def</span> <span class='value identifier id'>value</span> 
+  <span class='if if kw'>if</span> <span class='delegated? fid id'>delegated?</span>
+    <span class='@value ivar id'>@value</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+  <span class='else else kw'>else</span>
+    <span class='case case kw'>case</span> <span class='@value ivar id'>@value</span>
+    <span class='when when kw'>when</span> <span class='Proc constant id'>Proc</span>
+      <span class='@value ivar id'>@value</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='rparen token'>)</span>
+    <span class='else else kw'>else</span>
+      <span class='@value ivar id'>@value</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

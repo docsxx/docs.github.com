@@ -1,0 +1,237 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: YARD::Rake::YardocTask</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class YARD_Rake_YardocTask">
+  <h1 class="title">Class: YARD::Rake::YardocTask</h1>
+  <div class="section inheritance">
+  <ul>
+  <li>Rake::TaskLib</li><ul><li>YARD::Rake::YardocTask</li>
+  </ul></ul>
+</div><div class="section attributes">
+  <h1>Attributes</h1>
+
+  
+    <div class="instance">
+      <h2>Instance Attributes</h2>
+      <table>
+      
+        <tr>
+          <th class="name">files</td>
+          <td class="readwrite">
+            [<span id='files-instance_method'>R</span><span id='files%3D-instance_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>files</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">name</td>
+          <td class="readwrite">
+            [<span id='name-instance_method'>R</span><span id='name%3D-instance_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>name</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">options</td>
+          <td class="readwrite">
+            [<span id='options-instance_method'>R</span><span id='options%3D-instance_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>options</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+      </table>
+    </div>
+  
+</div><div class="section constants">
+  
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(name = :yardoc)</span>
+    <span class='block'>{|_self| ... }</span>
+  </tt>
+</div>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="yieldparam">
+  <h3>Yield Parameters:</h3>
+  <dl>
+  
+    <dt>
+      
+        <span class='type'>[<tt><a href='' title='YARD::Rake::YardocTask'>YARD::Rake::YardocTask</a></tt>]</span>
+      
+      
+        <span class='name'>_self</span>
+      
+    </dt>
+    <dd>
+      <span class='desc'><p>
+the object that the method was called on
+</p>
+</span>
+    </dd>
+  
+  </dl>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/yard/rake/yardoc_task.rb', line 12</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='symbol val'>:yardoc</span><span class='rparen token'>)</span>
+  <span class='@name ivar id'>@name</span> <span class='assign token'>=</span> <span class='name identifier id'>name</span>
+  <span class='@options ivar id'>@options</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+  <span class='@files ivar id'>@files</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+  
+  <span class='yield yield kw'>yield</span> <span class='self self kw'>self</span> <span class='if if_mod kw'>if</span> <span class='block_given? fid id'>block_given?</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='options identifier id'>options</span> <span class='opasgn op'>+=</span>  <span class='ENV constant id'>ENV</span><span class='lbrack token'>[</span><span class='string val'>'OPTS'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='regexp val'>/[ ,]/</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='ENV constant id'>ENV</span><span class='lbrack token'>[</span><span class='string val'>'OPTS'</span><span class='rbrack token'>]</span> 
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='files identifier id'>files</span>   <span class='opasgn op'>+=</span> <span class='ENV constant id'>ENV</span><span class='lbrack token'>[</span><span class='string val'>'FILES'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='regexp val'>/[ ,]/</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='ENV constant id'>ENV</span><span class='lbrack token'>[</span><span class='string val'>'FILES'</span><span class='rbrack token'>]</span>
+  
+  <span class='define identifier id'>define</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#define-instance_method' title='#define'>#define</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>define</h3>
+</div><div id="define-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>define</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+24
+25
+26
+27</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/yard/rake/yardoc_task.rb', line 24</span>
+
+<span class='def def kw'>def</span> <span class='define identifier id'>define</span>
+  <span class='desc identifier id'>desc</span> <span class='string val'>&quot;Generate YARD Documentation&quot;</span>
+  <span class='task identifier id'>task</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='YARD constant id'>YARD</span><span class='colon2 op'>::</span><span class='CLI constant id'>CLI</span><span class='colon2 op'>::</span><span class='Yardoc constant id'>Yardoc</span><span class='dot token'>.</span><span class='run identifier id'>run</span> <span class='mult op'>*</span><span class='lparen token'>(</span><span class='options identifier id'>options</span> <span class='plus op'>+</span> <span class='files identifier id'>files</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

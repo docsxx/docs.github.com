@@ -1,0 +1,206 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: NewRelic::NoticedError</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class NewRelic_NoticedError">
+  <h1 class="title">Class: NewRelic::NoticedError</h1>
+  <div class="section inheritance">
+  <ul>
+  <li><a href='../Object.html' title='Object'>Object</a></li><ul><li>NewRelic::NoticedError</li>
+  </ul></ul>
+</div><div class="section docstring">
+  <p>
+this class encapsulates an error that was noticed by RPM in a managed app.
+Unfortunately it was put in the agent in the global namespace early on and
+for backward compatibility it needs to remain here.
+</p>
+
+</div><div class="section attributes">
+  <h1>Attributes</h1>
+
+  
+    <div class="instance">
+      <h2>Instance Attributes</h2>
+      <table>
+      
+        <tr>
+          <th class="name">exception_class</td>
+          <td class="readwrite">
+            [<span id='exception_class-instance_method'>R</span><span id='exception_class%3D-instance_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>exception_class</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">message</td>
+          <td class="readwrite">
+            [<span id='message-instance_method'>R</span><span id='message%3D-instance_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>message</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">params</td>
+          <td class="readwrite">
+            [<span id='params-instance_method'>R</span><span id='params%3D-instance_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>params</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">path</td>
+          <td class="readwrite">
+            [<span id='path-instance_method'>R</span><span id='path%3D-instance_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>path</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">timestamp</td>
+          <td class="readwrite">
+            [<span id='timestamp-instance_method'>R</span><span id='timestamp%3D-instance_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>timestamp</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+      </table>
+    </div>
+  
+</div><div class="section constants">
+  
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(path, data, exception)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/new_relic/noticed_error.rb', line 7</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='comma token'>,</span> <span class='data identifier id'>data</span><span class='comma token'>,</span> <span class='exception identifier id'>exception</span><span class='rparen token'>)</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='path identifier id'>path</span> <span class='assign token'>=</span> <span class='path identifier id'>path</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='params identifier id'>params</span> <span class='assign token'>=</span> <span class='data identifier id'>data</span>
+  
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='exception_class identifier id'>exception_class</span> <span class='assign token'>=</span> <span class='exception identifier id'>exception</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='name identifier id'>name</span>
+  
+  <span class='if if kw'>if</span> <span class='exception identifier id'>exception</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='string val'>'original_exception'</span><span class='rparen token'>)</span>
+    <span class='self self kw'>self</span><span class='dot token'>.</span><span class='message identifier id'>message</span> <span class='assign token'>=</span> <span class='exception identifier id'>exception</span><span class='dot token'>.</span><span class='original_exception identifier id'>original_exception</span><span class='dot token'>.</span><span class='message identifier id'>message</span>
+  <span class='else else kw'>else</span>
+    <span class='self self kw'>self</span><span class='dot token'>.</span><span class='message identifier id'>message</span> <span class='assign token'>=</span> <span class='exception identifier id'>exception</span><span class='dot token'>.</span><span class='message identifier id'>message</span>
+  <span class='end end kw'>end</span>
+
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='timestamp identifier id'>timestamp</span> <span class='assign token'>=</span> <span class='Time constant id'>Time</span><span class='dot token'>.</span><span class='now identifier id'>now</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <div class="inherited">
+  
+  <div>
+    <h1>Public Instance Methods Inherited from <a href='../Object.html' title='Object'>Object</a></h1>
+    <p><span class='name'><a href='../Object.html#new_relic_load-instance_method' title='new_relic_load'>new_relic_load</a></span>, <span class='name'><a href='../Object.html#new_relic_require-instance_method' title='new_relic_require'>new_relic_require</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

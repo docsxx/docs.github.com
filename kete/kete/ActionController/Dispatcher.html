@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: ActionController::Dispatcher</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class ActionController_Dispatcher">
+  <h1 class="title">Class: ActionController::Dispatcher</h1>
+  <div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <h1>Public Class Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#failsafe_response-class_method' title='failsafe_response'>failsafe_response</a></span><span class='args'>(fallback_output, status, originating_exception = nil)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails class public">
+  <h1>Public Class Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>failsafe_response</h3>
+</div><div id="failsafe_response-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>failsafe_response</span><span class='args'>(fallback_output, status, originating_exception = nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/error_handler.rb', line 8</span>
+
+<span class='def def kw'>def</span> <span class='failsafe_response identifier id'>failsafe_response</span><span class='lparen token'>(</span><span class='fallback_output identifier id'>fallback_output</span><span class='comma token'>,</span> <span class='status identifier id'>status</span><span class='comma token'>,</span> <span class='originating_exception identifier id'>originating_exception</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='yield yield kw'>yield</span>
+<span class='rescue rescue kw'>rescue</span> <span class='Exception constant id'>Exception</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='exception identifier id'>exception</span>
+  <span class='begin begin kw'>begin</span>
+    <span class='log_failsafe_exception identifier id'>log_failsafe_exception</span><span class='lparen token'>(</span><span class='status identifier id'>status</span><span class='comma token'>,</span> <span class='originating_exception identifier id'>originating_exception</span> <span class='orop op'>||</span> <span class='exception identifier id'>exception</span><span class='rparen token'>)</span>
+    <span class='comment val'>#failsafe_logger.info(exception)</span>
+    <span class='case case kw'>case</span> <span class='exception identifier id'>exception</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+      <span class='when when kw'>when</span> <span class='string val'>'No connection to server'</span> <span class='then then kw'>then</span>
+        <span class='body identifier id'>body</span> <span class='assign token'>=</span> <span class='failsafe_memcached_offline_body identifier id'>failsafe_memcached_offline_body</span><span class='lparen token'>(</span><span class='status identifier id'>status</span><span class='rparen token'>)</span>
+        <span class='body identifier id'>body</span> <span class='assign token'>=</span> <span class='body identifier id'>body</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='regexp val'>/MEMCACHED_ERROR/</span><span class='comma token'>,</span> <span class='exception identifier id'>exception</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rparen token'>)</span>
+      <span class='else else kw'>else</span>
+        <span class='body identifier id'>body</span> <span class='assign token'>=</span> <span class='failsafe_response_body identifier id'>failsafe_response_body</span><span class='lparen token'>(</span><span class='status identifier id'>status</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+    <span class='fallback_output identifier id'>fallback_output</span><span class='dot token'>.</span><span class='write identifier id'>write</span> <span class='body identifier id'>body</span>
+    <span class='nil nil kw'>nil</span>
+  <span class='rescue rescue kw'>rescue</span> <span class='Exception constant id'>Exception</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='failsafe_error identifier id'>failsafe_error</span> <span class='comment val'># Logger or IO errors</span>
+    <span class='$stderr gvar id'>$stderr</span><span class='dot token'>.</span><span class='puts identifier id'>puts</span> <span class='dstring node'>&quot;Error during failsafe response: #{failsafe_error}&quot;</span>
+    <span class='$stderr gvar id'>$stderr</span><span class='dot token'>.</span><span class='puts identifier id'>puts</span> <span class='dstring node'>&quot;(originally #{originating_exception})&quot;</span> <span class='if if_mod kw'>if</span> <span class='originating_exception identifier id'>originating_exception</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

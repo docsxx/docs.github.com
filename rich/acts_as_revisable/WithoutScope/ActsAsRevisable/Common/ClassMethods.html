@@ -1,0 +1,214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: WithoutScope::ActsAsRevisable::Common::ClassMethods</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module WithoutScope_ActsAsRevisable_Common_ClassMethods">
+  <h1 class="title">Module: WithoutScope::ActsAsRevisable::Common::ClassMethods</h1>
+  <div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#instantiate-instance_method' title='#instantiate'>#instantiate</a></span><span class='args'>(record)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+acts_as_revisable&#8217;s override for instantiate so we can return the
+appropriate type of model based on whether or not the record is the current
+record.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#revisable_should_clone_column%3F-instance_method' title='#revisable_should_clone_column?'>#revisable_should_clone_column?</a></span><span class='args'>(col)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns true if the revision should clone the given column.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>instantiate</h3>
+</div><div id="instantiate-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>instantiate</span><span class='args'>(record)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+acts_as_revisable&#8217;s override for instantiate so we can return the
+appropriate type of model based on whether or not the record is the current
+record.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/acts_as_revisable/acts/common.rb', line 179</span>
+
+<span class='def def kw'>def</span> <span class='instantiate identifier id'>instantiate</span><span class='lparen token'>(</span><span class='record identifier id'>record</span><span class='rparen token'>)</span> <span class='comment val'>#:nodoc:</span>
+  <span class='is_current identifier id'>is_current</span> <span class='assign token'>=</span> <span class='columns_hash identifier id'>columns_hash</span><span class='lbrack token'>[</span><span class='string val'>&quot;revisable_is_current&quot;</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='type_cast identifier id'>type_cast</span><span class='lparen token'>(</span>
+        <span class='record identifier id'>record</span><span class='lbrack token'>[</span><span class='string val'>&quot;revisable_is_current&quot;</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+
+  <span class='if if kw'>if</span> <span class='lparen token'>(</span><span class='is_current identifier id'>is_current</span> <span class='andop op'>&amp;&amp;</span> <span class='self self kw'>self</span> <span class='eq op'>==</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='revisable_class identifier id'>revisable_class</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='lparen token'>(</span><span class='notop op'>!</span><span class='is_current identifier id'>is_current</span> <span class='andop op'>&amp;&amp;</span> <span class='self self kw'>self</span> <span class='eq op'>==</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='revision_class identifier id'>revision_class</span><span class='rparen token'>)</span>
+    <span class='return return kw'>return</span> <span class='super super kw'>super</span><span class='lparen token'>(</span><span class='record identifier id'>record</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+
+  <span class='object identifier id'>object</span> <span class='assign token'>=</span> <span class='if if kw'>if</span> <span class='is_current identifier id'>is_current</span>
+    <span class='self self kw'>self</span><span class='dot token'>.</span><span class='revisable_class identifier id'>revisable_class</span>
+  <span class='else else kw'>else</span>
+    <span class='self self kw'>self</span><span class='dot token'>.</span><span class='revision_class identifier id'>revision_class</span>
+  <span class='end end kw'>end</span><span class='dot token'>.</span><span class='allocate identifier id'>allocate</span>
+
+  <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='instance_variable_set identifier id'>instance_variable_set</span><span class='lparen token'>(</span><span class='string val'>&quot;@attributes&quot;</span><span class='comma token'>,</span> <span class='record identifier id'>record</span><span class='rparen token'>)</span>
+  <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='instance_variable_set identifier id'>instance_variable_set</span><span class='lparen token'>(</span><span class='string val'>&quot;@attributes_cache&quot;</span><span class='comma token'>,</span> <span class='Hash constant id'>Hash</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='rparen token'>)</span>
+
+  <span class='if if kw'>if</span> <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='respond_to_without_attributes? fid id'>respond_to_without_attributes?</span><span class='lparen token'>(</span><span class='colon op'>:</span><span class='after_find identifier id'>after_find</span><span class='rparen token'>)</span>
+    <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='symbol val'>:callback</span><span class='comma token'>,</span> <span class='symbol val'>:after_find</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+
+  <span class='if if kw'>if</span> <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='respond_to_without_attributes? fid id'>respond_to_without_attributes?</span><span class='lparen token'>(</span><span class='colon op'>:</span><span class='after_initialize identifier id'>after_initialize</span><span class='rparen token'>)</span>
+    <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='symbol val'>:callback</span><span class='comma token'>,</span> <span class='symbol val'>:after_initialize</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+
+  <span class='object identifier id'>object</span>      
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>revisable_should_clone_column?</h3>
+</div><div id="revisable_should_clone_column%3F-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>revisable_should_clone_column?</span><span class='args'>(col)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns true if the revision should clone the given column.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+171
+172
+173
+174</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/acts_as_revisable/acts/common.rb', line 171</span>
+
+<span class='def def kw'>def</span> <span class='revisable_should_clone_column? fid id'>revisable_should_clone_column?</span><span class='lparen token'>(</span><span class='col identifier id'>col</span><span class='rparen token'>)</span> <span class='comment val'>#:nodoc:</span>
+  <span class='return return kw'>return</span> <span class='false false kw'>false</span> <span class='if if_mod kw'>if</span> <span class='lparen token'>(</span><span class='REVISABLE_SYSTEM_COLUMNS constant id'>REVISABLE_SYSTEM_COLUMNS</span> <span class='plus op'>+</span> <span class='REVISABLE_UNREVISABLE_COLUMNS constant id'>REVISABLE_UNREVISABLE_COLUMNS</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='member? fid id'>member?</span> <span class='col identifier id'>col</span>
+  <span class='true true kw'>true</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,346 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: Cucumber::StepDefinitionMethods</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module Cucumber_StepDefinitionMethods">
+  <h1 class="title">Module: Cucumber::StepDefinitionMethods</h1>
+  <div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#backtrace_line-instance_method' title='#backtrace_line'>#backtrace_line</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#format_args-instance_method' title='#format_args'>#format_args</a></span><span class='args'>(step_name, format)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Formats the matched arguments of the associated Step.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#match-instance_method' title='#match'>#match</a></span><span class='args'>(step_name)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#step_match-instance_method' title='#step_match'>#step_match</a></span><span class='args'>(name_to_match, name_to_report)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#text_length-instance_method' title='#text_length'>#text_length</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>backtrace_line</h3>
+</div><div id="backtrace_line-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>backtrace_line</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+41
+42
+43</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/cucumber/step_definition.rb', line 41</span>
+
+<span class='def def kw'>def</span> <span class='backtrace_line identifier id'>backtrace_line</span>
+  <span class='dstring node'>&quot;#{file_colon_line}:in `#{regexp.inspect}'&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>format_args</h3>
+</div><div id="format_args-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>format_args</span><span class='args'>(step_name, format)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Formats the matched arguments of the associated Step. This method is
+usually called from visitors, which render output.
+</p>
+<p>
+The <tt>format</tt> can either be a String or a Proc.
+</p>
+<p>
+If it is a String it should be a format string according to
+<tt>Kernel#sprinf</tt>, for example:
+</p>
+<pre class="code">
+  <span class='string val'>'&lt;span class=&quot;param&quot;&gt;%s&lt;/span&gt;&lt;/tt&gt;'</span>
+</pre>
+<p>
+If it is a Proc, it should take one argument and return the formatted
+argument, for example:
+</p>
+<pre class="code">
+  <span class='lambda identifier id'>lambda</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='param identifier id'>param</span><span class='bitor op'>|</span> <span class='dstring node'>&quot;[#{param}]&quot;</span> <span class='rbrace token'>}</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+30
+31
+32</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/cucumber/step_definition.rb', line 30</span>
+
+<span class='def def kw'>def</span> <span class='format_args identifier id'>format_args</span><span class='lparen token'>(</span><span class='step_name identifier id'>step_name</span><span class='comma token'>,</span> <span class='format identifier id'>format</span><span class='rparen token'>)</span>
+  <span class='step_name identifier id'>step_name</span><span class='dot token'>.</span><span class='gzub identifier id'>gzub</span><span class='lparen token'>(</span><span class='regexp identifier id'>regexp</span><span class='comma token'>,</span> <span class='format identifier id'>format</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>match</h3>
+</div><div id="match-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>match</span><span class='args'>(step_name)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+34
+35
+36
+37
+38
+39</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/cucumber/step_definition.rb', line 34</span>
+
+<span class='def def kw'>def</span> <span class='match identifier id'>match</span><span class='lparen token'>(</span><span class='step_name identifier id'>step_name</span><span class='rparen token'>)</span>
+  <span class='case case kw'>case</span> <span class='step_name identifier id'>step_name</span>
+  <span class='when when kw'>when</span> <span class='String constant id'>String</span> <span class='then then kw'>then</span> <span class='regexp identifier id'>regexp</span><span class='dot token'>.</span><span class='match identifier id'>match</span><span class='lparen token'>(</span><span class='step_name identifier id'>step_name</span><span class='rparen token'>)</span>
+  <span class='when when kw'>when</span> <span class='Regexp constant id'>Regexp</span> <span class='then then kw'>then</span> <span class='regexp identifier id'>regexp</span> <span class='eq op'>==</span> <span class='step_name identifier id'>step_name</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>step_match</h3>
+</div><div id="step_match-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>step_match</span><span class='args'>(name_to_match, name_to_report)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+7
+8
+9
+10
+11
+12
+13</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/cucumber/step_definition.rb', line 7</span>
+
+<span class='def def kw'>def</span> <span class='step_match identifier id'>step_match</span><span class='lparen token'>(</span><span class='name_to_match identifier id'>name_to_match</span><span class='comma token'>,</span> <span class='name_to_report identifier id'>name_to_report</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span><span class='lparen token'>(</span><span class='match identifier id'>match</span> <span class='assign token'>=</span> <span class='name_to_match identifier id'>name_to_match</span><span class='dot token'>.</span><span class='match identifier id'>match</span><span class='lparen token'>(</span><span class='regexp identifier id'>regexp</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+    <span class='StepMatch constant id'>StepMatch</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='name_to_match identifier id'>name_to_match</span><span class='comma token'>,</span> <span class='name_to_report identifier id'>name_to_report</span><span class='comma token'>,</span> <span class='match identifier id'>match</span><span class='dot token'>.</span><span class='captures identifier id'>captures</span><span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+    <span class='nil nil kw'>nil</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>text_length</h3>
+</div><div id="text_length-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>text_length</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+45
+46
+47</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/cucumber/step_definition.rb', line 45</span>
+
+<span class='def def kw'>def</span> <span class='text_length identifier id'>text_length</span>
+  <span class='regexp identifier id'>regexp</span><span class='dot token'>.</span><span class='inspect identifier id'>inspect</span><span class='dot token'>.</span><span class='jlength identifier id'>jlength</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

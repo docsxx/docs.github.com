@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: RespondsToParent</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module RespondsToParent">
+  <h1 class="title">Module: RespondsToParent</h1>
+  <div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#responds_to_parent-instance_method' title='#responds_to_parent'>#responds_to_parent</a></span><span class='args'>(&amp;block)</span>
+        <span class='block'></span>
+        
+          <span class='alias'>#respond_to_parent</span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Executes the response body as JavaScript in the context of the parent
+window.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>responds_to_parent</h3>
+</div><div id="responds_to_parent-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>responds_to_parent</span><span class='args'>(&amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+<p class="aliases">
+  <span class="aka">Also known as:</span>
+  
+    <tt id="respond_to_parent-instance_method">respond_to_parent</tt>
+  
+</p>
+</div><div class="section docstring">
+  <p>
+Executes the response body as JavaScript in the context of the parent
+window. Use this method of you are posting a form to a hidden IFRAME or if
+you would like to use IFRAME base RPC.
+</p>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/responds_to_parent.rb', line 29</span>
+
+<span class='def def kw'>def</span> <span class='responds_to_parent identifier id'>responds_to_parent</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='yield yield kw'>yield</span>
+  
+  <span class='if if kw'>if</span> <span class='performed? fid id'>performed?</span>
+    <span class='comment val'># We're returning HTML instead of JS or XML now</span>
+    <span class='response identifier id'>response</span><span class='dot token'>.</span><span class='headers identifier id'>headers</span><span class='lbrack token'>[</span><span class='string val'>'Content-Type'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='string val'>'text/html; charset=UTF-8'</span>
+    
+    <span class='comment val'># Either pull out a redirect or the request body</span>
+    <span class='script identifier id'>script</span> <span class='assign token'>=</span>  <span class='if if kw'>if</span> <span class='location identifier id'>location</span> <span class='assign token'>=</span> <span class='erase_redirect_results identifier id'>erase_redirect_results</span>
+                <span class='dstring node'>&quot;document.location.href = #{location.to_s.inspect}&quot;</span>
+              <span class='else else kw'>else</span>
+                <span class='response identifier id'>response</span><span class='dot token'>.</span><span class='body identifier id'>body</span>
+              <span class='end end kw'>end</span>
+              
+    <span class='comment val'># Escape quotes, linebreaks and slashes, maintaining previously escaped slashes</span>
+    <span class='comment val'># Suggestions for improvement?</span>
+    <span class='script identifier id'>script</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='script identifier id'>script</span> <span class='orop op'>||</span> <span class='string val'>''</span><span class='rparen token'>)</span><span class='dot token'>.</span>
+      <span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='string val'>'\\'</span><span class='comma token'>,</span> <span class='string val'>'\\\\\\'</span><span class='rparen token'>)</span><span class='dot token'>.</span>
+      <span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='regexp val'>/\r\n|\r|\n/</span><span class='comma token'>,</span> <span class='string val'>'\\n'</span><span class='rparen token'>)</span><span class='dot token'>.</span>
+      <span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='regexp val'>/['&quot;]/</span><span class='comma token'>,</span> <span class='string val'>'\\\\\&amp;'</span><span class='rparen token'>)</span><span class='dot token'>.</span>
+      <span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='string val'>'&lt;/script&gt;'</span><span class='comma token'>,</span><span class='string val'>'&lt;/scr&quot;+&quot;ipt&gt;'</span><span class='rparen token'>)</span>
+
+    <span class='comment val'># Clear out the previous render to prevent double render</span>
+    <span class='erase_results identifier id'>erase_results</span>
+    
+    <span class='comment val'># Eval in parent scope and replace document location of this frame </span>
+    <span class='comment val'># so back button doesn't replay action on targeted forms</span>
+    <span class='comment val'># loc = document.location to be set after parent is updated for IE</span>
+    <span class='comment val'># with(window.parent) - pull in variables from parent window</span>
+    <span class='comment val'># setTimeout - scope the execution in the windows parent for safari</span>
+    <span class='comment val'># window.eval - legal eval for Opera</span>
+    <span class='render identifier id'>render</span> <span class='symbol val'>:text</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='dstring node'>&quot;&lt;html&gt;&lt;body&gt;&lt;script type='text/javascript' charset='utf-8'&gt;
+      var loc = document.location;
+      with(window.parent) { setTimeout(function() { window.eval('#{script}'); loc.replace('about:blank'); }, 1) } 
+    &lt;/script&gt;&lt;/body&gt;&lt;/html&gt;&quot;</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

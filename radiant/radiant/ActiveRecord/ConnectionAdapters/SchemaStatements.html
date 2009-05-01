@@ -1,0 +1,130 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: ActiveRecord::ConnectionAdapters::SchemaStatements</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module ActiveRecord_ConnectionAdapters_SchemaStatements">
+  <h1 class="title">Module: ActiveRecord::ConnectionAdapters::SchemaStatements</h1>
+  <div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#assume_migrated_upto_version-instance_method' title='#assume_migrated_upto_version'>#assume_migrated_upto_version</a></span><span class='args'>(version)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>assume_migrated_upto_version</h3>
+</div><div id="assume_migrated_upto_version-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>assume_migrated_upto_version</span><span class='args'>(version)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/plugins/active_record_extensions/lib/active_record_extensions.rb', line 24</span>
+
+<span class='def def kw'>def</span> <span class='assume_migrated_upto_version identifier id'>assume_migrated_upto_version</span><span class='lparen token'>(</span><span class='version identifier id'>version</span><span class='rparen token'>)</span>
+  <span class='version identifier id'>version</span> <span class='assign token'>=</span> <span class='version identifier id'>version</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span>
+  <span class='sm_table identifier id'>sm_table</span> <span class='assign token'>=</span> <span class='quote_table_name identifier id'>quote_table_name</span><span class='lparen token'>(</span><span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Migrator constant id'>Migrator</span><span class='dot token'>.</span><span class='schema_migrations_table_name identifier id'>schema_migrations_table_name</span><span class='rparen token'>)</span>
+
+  <span class='migrated identifier id'>migrated</span> <span class='assign token'>=</span> <span class='select_values identifier id'>select_values</span><span class='lparen token'>(</span><span class='dstring node'>&quot;SELECT version FROM #{sm_table}&quot;</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='map identifier id'>map</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='symbol val'>:to_i</span><span class='rparen token'>)</span>
+  <span class='versions identifier id'>versions</span> <span class='assign token'>=</span> <span class='Dir constant id'>Dir</span><span class='lbrack token'>[</span><span class='dstring node'>&quot;#{RADIANT_ROOT}/db/migrate/[0-9]*_*.rb&quot;</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='filename identifier id'>filename</span><span class='bitor op'>|</span>
+    <span class='filename identifier id'>filename</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='string val'>'/'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='last identifier id'>last</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='string val'>'_'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span>
+  <span class='end end kw'>end</span>
+
+  <span class='unless unless kw'>unless</span> <span class='migrated identifier id'>migrated</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='version identifier id'>version</span><span class='rparen token'>)</span>
+    <span class='execute identifier id'>execute</span> <span class='dstring node'>&quot;INSERT INTO #{sm_table} (version) VALUES ('#{version}')&quot;</span>
+  <span class='end end kw'>end</span>
+
+  <span class='inserted identifier id'>inserted</span> <span class='assign token'>=</span> <span class='Set constant id'>Set</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+  <span class='lparen token'>(</span><span class='versions identifier id'>versions</span> <span class='minus op'>-</span> <span class='migrated identifier id'>migrated</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='v identifier id'>v</span><span class='bitor op'>|</span>
+    <span class='if if kw'>if</span> <span class='inserted identifier id'>inserted</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='v identifier id'>v</span><span class='rparen token'>)</span>
+      <span class='raise identifier id'>raise</span> <span class='dstring node'>&quot;Duplicate migration #{v}. Please renumber your migrations to resolve the conflict.&quot;</span>
+    <span class='elsif elsif kw'>elsif</span> <span class='v identifier id'>v</span> <span class='lt op'>&lt;</span> <span class='version identifier id'>version</span>
+      <span class='execute identifier id'>execute</span> <span class='dstring node'>&quot;INSERT INTO #{sm_table} (version) VALUES ('#{v}')&quot;</span>
+      <span class='inserted identifier id'>inserted</span> <span class='lshft op'>&lt;&lt;</span> <span class='v identifier id'>v</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

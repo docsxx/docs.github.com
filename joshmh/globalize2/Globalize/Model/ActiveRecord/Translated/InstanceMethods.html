@@ -1,0 +1,268 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: Globalize::Model::ActiveRecord::Translated::InstanceMethods</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module Globalize_Model_ActiveRecord_Translated_InstanceMethods">
+  <h1 class="title">Module: Globalize::Model::ActiveRecord::Translated::InstanceMethods</h1>
+  <div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#globalize-instance_method' title='#globalize'>#globalize</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#reload_with_globalize-instance_method' title='#reload_with_globalize'>#reload_with_globalize</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#translated_locales-instance_method' title='#translated_locales'>#translated_locales</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#update_globalize_record-instance_method' title='#update_globalize_record'>#update_globalize_record</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>globalize</h3>
+</div><div id="globalize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>globalize</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+124
+125
+126</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/globalize/model/active_record/translated.rb', line 124</span>
+
+<span class='def def kw'>def</span> <span class='globalize identifier id'>globalize</span>
+  <span class='@globalize ivar id'>@globalize</span> <span class='opasgn op'>||=</span> <span class='Adapter constant id'>Adapter</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='self self kw'>self</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>reload_with_globalize</h3>
+</div><div id="reload_with_globalize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>reload_with_globalize</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/globalize/model/active_record/translated.rb', line 112</span>
+
+<span class='def def kw'>def</span> <span class='reload_with_globalize identifier id'>reload_with_globalize</span>
+  <span class='globalize identifier id'>globalize</span><span class='dot token'>.</span><span class='clear identifier id'>clear</span>
+  
+  <span class='comment val'># clear all globalized attributes</span>
+  <span class='comment val'># TODO what's the best way to handle this?</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='globalize_options identifier id'>globalize_options</span><span class='lbrack token'>[</span><span class='symbol val'>:translated_attributes</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='attr identifier id'>attr</span><span class='bitor op'>|</span>
+    <span class='@attributes ivar id'>@attributes</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span> <span class='attr identifier id'>attr</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+  <span class='end end kw'>end</span>
+  
+  <span class='reload_without_globalize identifier id'>reload_without_globalize</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>translated_locales</h3>
+</div><div id="translated_locales-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>translated_locales</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+132
+133
+134</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/globalize/model/active_record/translated.rb', line 132</span>
+
+<span class='def def kw'>def</span> <span class='translated_locales identifier id'>translated_locales</span>
+  <span class='globalize_translations identifier id'>globalize_translations</span><span class='dot token'>.</span><span class='scoped identifier id'>scoped</span><span class='lparen token'>(</span><span class='symbol val'>:select</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'DISTINCT locale'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='gt identifier id'>gt</span><span class='bitor op'>|</span> <span class='gt identifier id'>gt</span><span class='dot token'>.</span><span class='locale identifier id'>locale</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span> <span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>update_globalize_record</h3>
+</div><div id="update_globalize_record-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>update_globalize_record</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+128
+129
+130</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/globalize/model/active_record/translated.rb', line 128</span>
+
+<span class='def def kw'>def</span> <span class='update_globalize_record identifier id'>update_globalize_record</span>
+  <span class='globalize identifier id'>globalize</span><span class='dot token'>.</span><span class='update_translations! fid id'>update_translations!</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

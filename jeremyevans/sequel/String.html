@@ -1,0 +1,199 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: String</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class String">
+  <h1 class="title">Class: String</h1>
+  <div class="section mixins">
+  <h1>Included Modules</h1>
+  <p><a href='Sequel/SQL/AliasMethods.html' title='Sequel::SQL::AliasMethods'>Sequel::SQL::AliasMethods</a>, <a href='Sequel/SQL/CastMethods.html' title='Sequel::SQL::CastMethods'>Sequel::SQL::CastMethods</a></p>
+</div><div class="section docstring">
+  <p>
+Sequel extends the String class to add methods to implement the SQL DSL.
+</p>
+
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#lit-instance_method' title='#lit'>#lit</a></span><span class='args'>(*args)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Converts a string into a Sequel::LiteralString, in order to override string
+literalization, e.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#to_sequel_blob-instance_method' title='#to_sequel_blob'>#to_sequel_blob</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns a Sequel::SQL::Blob that holds the same data as this string.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table><div class="included">
+  
+  <div>
+    <h1>Public Instance Methods Included from <a href='Sequel/SQL/AliasMethods.html' title='Sequel::SQL::AliasMethods'>Sequel::SQL::AliasMethods</a></h1>
+    <p><span class='name'><a href='Sequel/SQL/AliasMethods.html#as-instance_method' title='as'>as</a></span></p>
+  </div>
+  
+  <div>
+    <h1>Public Instance Methods Included from <a href='Sequel/SQL/CastMethods.html' title='Sequel::SQL::CastMethods'>Sequel::SQL::CastMethods</a></h1>
+    <p><span class='name'><a href='Sequel/SQL/CastMethods.html#cast-instance_method' title='cast'>cast</a></span>, <span class='name'><a href='Sequel/SQL/CastMethods.html#cast_numeric-instance_method' title='cast_numeric'>cast_numeric</a></span>, <span class='name'><a href='Sequel/SQL/CastMethods.html#cast_string-instance_method' title='cast_string'>cast_string</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>lit</h3>
+</div><div id="lit-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>lit</span><span class='args'>(*args)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Converts a string into a Sequel::LiteralString, in order to override string
+literalization, e.g.:
+</p>
+<pre class="code">
+  <span class='DB constant id'>DB</span><span class='lbrack token'>[</span><span class='symbol val'>:items</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='filter identifier id'>filter</span><span class='lparen token'>(</span><span class='symbol val'>:abc</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'def'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='sql identifier id'>sql</span> <span class='comment val'>#=&gt;</span>
+    <span class='string val'>&quot;SELECT * FROM items WHERE (abc = 'def')&quot;</span>
+
+  <span class='DB constant id'>DB</span><span class='lbrack token'>[</span><span class='symbol val'>:items</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='filter identifier id'>filter</span><span class='lparen token'>(</span><span class='symbol val'>:abc</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'def'</span><span class='dot token'>.</span><span class='lit identifier id'>lit</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='sql identifier id'>sql</span> <span class='comment val'>#=&gt;</span>
+    <span class='string val'>&quot;SELECT * FROM items WHERE (abc = def)&quot;</span>
+</pre>
+<p>
+You can also provide arguments, to create a
+Sequel::SQL::PlaceholderLiteralString:
+</p>
+<pre class="code">
+   <span class='DB constant id'>DB</span><span class='lbrack token'>[</span><span class='symbol val'>:items</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='select identifier id'>select</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='o identifier id'>o</span><span class='bitor op'>|</span> <span class='o identifier id'>o</span><span class='dot token'>.</span><span class='count identifier id'>count</span><span class='lparen token'>(</span><span class='string val'>'DISTINCT ?'</span><span class='dot token'>.</span><span class='lit identifier id'>lit</span><span class='lparen token'>(</span><span class='symbol val'>:a</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rbrace token'>}</span><span class='dot token'>.</span><span class='sql identifier id'>sql</span> <span class='comment val'>#=&gt;</span>
+     <span class='string val'>&quot;SELECT count(DISTINCT a) FROM items&quot;</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+192
+193
+194</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/core_sql.rb', line 192</span>
+
+<span class='def def kw'>def</span> <span class='lit identifier id'>lit</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span> <span class='integer val'>? </span><span class='Sequel constant id'>Sequel</span><span class='colon2 op'>::</span><span class='LiteralString constant id'>LiteralString</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='Sequel constant id'>Sequel</span><span class='colon2 op'>::</span><span class='SQL constant id'>SQL</span><span class='colon2 op'>::</span><span class='PlaceholderLiteralString constant id'>PlaceholderLiteralString</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='args identifier id'>args</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>to_sequel_blob</h3>
+</div><div id="to_sequel_blob-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>to_sequel_blob</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns a Sequel::SQL::Blob that holds the same data as this string. Blobs
+provide proper escaping of binary data.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+198
+199
+200</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/core_sql.rb', line 198</span>
+
+<span class='def def kw'>def</span> <span class='to_sequel_blob identifier id'>to_sequel_blob</span>
+  <span class='colon3 op'>::</span><span class='Sequel constant id'>Sequel</span><span class='colon2 op'>::</span><span class='SQL constant id'>SQL</span><span class='colon2 op'>::</span><span class='Blob constant id'>Blob</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,607 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <title>README</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section docstring readme">
+        <p>
+h1. Russian
+</p>
+<p>
+Поддержка русского языка для Ruby и Rails при
+помощи библиотеки I18n.
+</p>
+<p>
+Russian language support for Ruby and Rails, using I18n library.
+</p>
+<p>
+h3. If you don&#8217;t speak Russian
+</p>
+<p>
+This code may still be useful for you and Ruby I18n community. You can
+learn how to create custom backends for I18n and how to provide support of
+&quot;standalone&quot; (as defined in &quot;Unicode
+CLDR&quot;:http://unicode.org/cldr/) month names with I18n and Rails, and
+also how to add dead simple pluralization rules into your translation
+tables. This library also includes a module (@Russian@) with a set of
+helpers to provide simplistic pluralization and @strftime@ for Russian
+language &#8212; in a way that is easier than using I18n methods.
+</p>
+<p>
+Feel free to shoot an email to Yaroslav Markin
+(&quot;yaroslav@markin.net&quot;:mailto:yaroslav@markin.net)
+</p>
+<p>
+h1. Что это
+</p>
+<p>
+Russian &#8212; это библиотека для полноценной
+поддержки русского языка
+(форматирование даты и времени,
+плюрализация, локализация в целом) для Ruby
+и Ruby on Rails.
+</p>
+<p>
+Цель проекта &#8212; построить полноценную
+среду для русской локализации Ruby и Rails
+проектов, при этом используя минимально
+возможное количество хаков, сохраняя при
+этом поддержку локализации приложения
+на другие языки, а также форсировать
+включение в основную ветку I18n и Rails всех
+функций локализации, необходимых для
+работы с русским языком.
+</p>
+<p>
+Russian использует библиотеку I18n (включена в
+поставку), несколько хаков поверх нее
+(собственный бекэнд с поддержкой
+специфичного для русского
+форматирования даты и времени,
+поддержкой плюрализации), несколько
+хаков поверх Rails (хаки хелперов
+даты-времени, хак для сообщений
+валидации) и файлы переводов, а также
+набор хелперов, упрощающий работу с
+русским языком (простая плюрализация,
+простой strftime и др.).
+</p>
+<p>
+Russian стремится быть минимально
+деструктивной для окружения и быть
+полностью совместимой с другими языками
+(таким образом, когда приложение
+использует Russian и собственный бекэнд
+Russian, оно остается полностью совместимым
+с Rails i18n).
+</p>
+<p>
+h2. Что такое I18n
+</p>
+<p>
+Библиотека I18n входит в состав Ruby on Rails
+начиная с версии 2.2. В перспективе I18n &#8212;
+это самое простое и недеструктивное
+решение для локализации и
+интернационализации Rails приложений, но в
+текущей версии отсутствовала поддержка
+нескольких важных возможностей,
+специфичных для русского языка. Таким
+образом, русский язык для локализации в
+Rails 2.2 фактически не поддерживался.
+</p>
+<p>
+Для исправления этого досадного
+недоразумения появилась библиотека Russian
+(подробнее см. _Использование_).
+</p>
+<p>
+h1. Требования
+</p>
+<ul>
+<li>Ruby 1.8 (тестировалось на 1.8.6);
+
+</li>
+<li>Для использования с Rails нужна версия не
+ниже 2.2;
+
+</li>
+<li>Для тестирования библиотеки вам
+понадобится RSpec.
+
+</li>
+</ul>
+<p>
+h1. Установка
+</p>
+<p>
+Страница Russian на github &#8212;
+&quot;http://github.com/yaroslav/russian/&quot;:http://github.com/yaroslav/russian/
+</p>
+<p>
+Russian можно установить как gem с github. Для
+этого:
+</p>
+<ol>
+<li>Нужно добавить репозиторий gem&#8217;ов github в
+качестве источника
+
+</li>
+</ol>
+<p>
+@gem sources -a http://gems.github.com@
+</p>
+<ol>
+<li>Установить gem
+
+</li>
+</ol>
+<p>
+@gem install yaroslav-russian@
+</p>
+<p>
+_NB:_ Gem @russian@ также зеркалируется на RubyForge,
+поэтому его можно установить командой
+</p>
+<p>
+@gem install russian@.
+</p>
+<p>
+h2. Ruby on Rails
+</p>
+<p>
+Существует два варианта использования
+Russian вместе с Rails:
+</p>
+<ol>
+<li>Установка gem
+
+</li>
+</ol>
+<p>
+В файле @config/environment.rb@ сделайте ссылку на
+gem @yaroslav-russian@ с github:
+</p>
+<p>
+&lt;pre&gt;&lt;code&gt; Rails::Initializer.run do |config|
+</p>
+<pre class="code">
+  <span class='config identifier id'>config</span><span class='dot token'>.</span><span class='gem identifier id'>gem</span> <span class='string val'>'yaroslav-russian'</span><span class='comma token'>,</span> <span class='symbol val'>:lib</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'russian'</span><span class='comma token'>,</span> <span class='symbol val'>:source</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'http://gems.github.com'</span>
+</pre>
+<p>
+end &lt;/code&gt;&lt;/pre&gt;
+</p>
+<p>
+Чтобы установить gem, используйте команду
+</p>
+<p>
+@rake gems:install@.
+</p>
+<ol>
+<li>Установка плагина
+
+</li>
+</ol>
+<p>
+Для того, чтобы установить Russian как
+плагин к Rails, используйте команду
+</p>
+<p>
+@script/plugin install git://github.com/yaroslav/russian.git@
+</p>
+<p>
+Для Windows можно использовать версию git,
+расположенную по адресу:
+&quot;http://code.google.com/p/msysgit/&quot;:http://code.google.com/p/msysgit/
+</p>
+<p>
+h1. Использование
+</p>
+<p>
+При загрузке Russian включает:
+</p>
+<ul>
+<li>библиотеку I18n если она еще не
+используется (например, если Russian
+используется отдельно от Rails)
+
+</li>
+<li>собственный класс для I18n бекэнда
+(полностью совместим со стандартным
+бекэндом)
+
+</li>
+<li>перегрузку хелперов даты для Rails (если Rails
+загружен)
+
+</li>
+<li>пререгрузку обработки сообщений
+валидации для ActiveRecord (если Rails загружен)
+
+</li>
+</ul>
+<p>
+При инициализации:
+</p>
+<ul>
+<li>заменяется бэкэнд I18n со стандартного на
+собственный бекэнд Russian (@I18n::Backend::Advanced@)
+
+</li>
+<li>_NB:_ локаль русского языка (@:&#8217;ru&#8217;@)
+становится локалью по умолчанию
+
+</li>
+<li>загружаются все файлы переводов, в том
+числе переводы для Rails.
+
+</li>
+</ul>
+<p>
+После этого можно использовать все
+стандартные функции библиотеки I18n,
+пользоваться измененным функционалом
+для лучшей поддержки русского языка, или
+использовать хелперы модуля Russian для еще
+более простой работы с русским языком.
+</p>
+<p>
+h2. Отличия от стандартной библиотеки I18n
+</p>
+<ol>
+<li>Поддержка двух видов названий месяцев
+&#8212; контекст (&quot;сентября&quot;) и
+отдельностоящее (&quot;Сентябрь&quot;).
+
+</li>
+</ol>
+<p>
+Для этого перегружена функция
+локализации, теперь название месяца
+используется в зависимости от контекста.
+В словарях Russian определены оба варианта.
+</p>
+<p>
+Перегрузка недеструктивная: если для
+какого-то другого языка не определены
+два варианта названий месяцев, ошибки не
+возникнет.
+</p>
+<p>
+Аналогично есть поддержка двух видов
+названий дней недели.
+</p>
+<ol>
+<li>Плюрализация
+
+</li>
+</ol>
+<p>
+Стандартно I18n поддерживается только
+плюрализация по английским правилам;
+бекэнд, использующийся в Russian, позволяет
+каждому языку определять правила
+плюрализации в таблице переводов,
+задавая их как @Proc@.
+</p>
+<p>
+Перегрузка недеструктивная: если
+правила в таблице нет, используется
+правило по умолчанию (английский язык).
+</p>
+<p>
+Правила для русского языка включены.
+</p>
+<p>
+h1. Справочник
+</p>
+<p>
+h2. Примеры и справка по переводам (I18n)
+</p>
+<p>
+Небольшую справку по переводам (I18n) и
+пример того, как можно переводить имена
+моделей, атрибутов, и многие другие вещи,
+определенные в Rails или I18n, можно
+посмотреть в директории @lib/russian/locale@. Там
+находятся файлы переводов, которые
+используются в Russian, со всеми
+комментариями.
+</p>
+<p>
+h2. Вспомогательные методы модуля Russian
+</p>
+<p>
+&lt;pre&gt;<tt> Russian.locale Russian::LOCALE </tt>&lt;/pre&gt;
+</p>
+<p>
+&#8212; возвращает локаль русского языка
+(@:&#8217;ru&#8217;@).
+</p>
+<p>
+&lt;pre&gt;<tt> Russian::i18n_backend_class </tt>&lt;/pre&gt;
+</p>
+<p>
+&#8212; возвращает класс собственного
+бекенда I18n
+</p>
+<p>
+&lt;pre&gt;<tt> Russian::init_i18n </tt>&lt;/pre&gt;
+</p>
+<p>
+&#8212; инициализация Russian. Включение
+бекэнда, русский язык по умолчанию,
+загрузка переводов.
+</p>
+<p>
+_NB:_ Выполняется автоматически при
+загрузке.
+</p>
+<p>
+&lt;pre&gt;<tt> Russian::translate Russian::t </tt>&lt;/pre&gt;
+</p>
+<p>
+&#8212; прокси для метода @translate@ I18n,
+форсирует использование русской локали.
+</p>
+<p>
+&lt;pre&gt;<tt> Russian::localize Russian::l </tt>&lt;/pre&gt;
+</p>
+<p>
+&#8212; прокси для метода @localize@ I18n,
+форсирует использование русской локали.
+</p>
+<p>
+&lt;pre&gt;&lt;code&gt; Russian::strftime
+</p>
+<p>
+Russian::strftime(Time.now)
+</p>
+<h1>&gt; &quot;Пн, 01 сент. 2008, 11:12:43 +0300&quot;</h1>
+<p>
+Russian::strftime(Time.now, &quot;%B&quot;)
+</p>
+<h1>&gt; &quot;Сентябрь&quot;</h1>
+<p>
+&lt;/code&gt;&lt;/pre&gt;
+</p>
+<p>
+&#8212; @strftime@ с форсированием русской
+локали (упрощенный вариант @localize@)
+</p>
+<p>
+&lt;pre&gt;&lt;code&gt; Russian::pluralize Russian::p
+</p>
+<p>
+Russian.p(1, &quot;вещь&quot;, &quot;вещи&quot;,
+&quot;вещей&quot;)
+</p>
+<h1>&gt; &quot;вещь&quot;</h1>
+<p>
+Russian.p(2, &quot;вещь&quot;, &quot;вещи&quot;,
+&quot;вещей&quot;)
+</p>
+<h1>&gt; &quot;вещи&quot;</h1>
+<p>
+Russian.p(10, &quot;вещь&quot;, &quot;вещи&quot;,
+&quot;вещей&quot;)
+</p>
+<h1>&gt; &quot;вещей&quot;</h1>
+<p>
+Russian.p(3.14, &quot;вещь&quot;, &quot;вещи&quot;,
+&quot;вещей&quot;, &quot;вещи&quot;) # последний
+вариант используется для дробных
+величин
+</p>
+<h1>&gt; &quot;вещи&quot;</h1>
+<p>
+&lt;/code&gt;&lt;/pre&gt;
+</p>
+<p>
+&#8212; упрощенная (без использования хешей
+I18n) плюрализация для русского языка
+</p>
+<p>
+&lt;pre&gt;&lt;code&gt; Russian::transliterate Russian::translit
+</p>
+<p>
+Russian.translit(&quot;рубин&quot;)
+</p>
+<h1>&gt; &quot;rubin&quot;</h1>
+<p>
+Russian.translit(&quot;Hallo Юлику Тарханову&quot;)
+</p>
+<h1>&gt; &quot;Hallo Yuliku Tarhanovu&quot;</h1>
+<p>
+&lt;/code&gt;&lt;/pre&gt;
+</p>
+<p>
+&#8212; транслитерация русских букв в
+строке.
+</p>
+<p>
+h2. Ruby on Rails
+</p>
+<p>
+h3. Переводы
+</p>
+<p>
+При использовании с Ruby on Rails загружаются
+все стандартные переводы, и русский язык
+становится годным к использованию для
+локализации. В поставку включены все
+нужные переводы для ActionView, ActiveRecord,
+ActiveSupport, которые можно переопределять по
+необходимости стандартными средствами
+I18n.
+</p>
+<p>
+h3. Хелперы
+</p>
+<p>
+Хелперы даты-времени получают ключ
+@:use_standalone_month_names@ для форсирования
+отображения отдельностоящего названия
+месяца (&quot;Сентябрь&quot; а не
+&quot;сентября&quot;). Такое имя месяца
+используется когда включен ключ
+@:use_standalone_month_names@ (для отдельностоящего
+@select_month@ он включается по умолчанию), либо
+когда есть ключ @:discard_day@.
+</p>
+<p>
+В Russian включен плагин i18n_label, который
+подставляет в форм-хелпер @label@ перевод
+атрибута из таблицы переводов I18n.
+Например:
+</p>
+<ul>
+<li>в файле переводов:
+
+</li>
+</ul>
+<p>
+&lt;pre&gt;&lt;code&gt; ru:
+</p>
+<pre class="code">
+  <span class='activerecord identifier id'>activerecord</span><span class='colon op'>:</span>
+    <span class='attributes identifier id'>attributes</span><span class='colon op'>:</span>
+      <span class='user identifier id'>user</span><span class='colon op'>:</span>
+        <span class='name identifier id'>name</span><span class='colon op'>:</span> <span class='string val'>&quot;Имя&quot;</span>
+</pre>
+<p>
+&lt;/code&gt;&lt;/pre&gt;
+</p>
+<ul>
+<li>во view:
+
+</li>
+</ul>
+<p>
+&lt;pre&gt;&lt;code&gt; &lt;% form_for @user do |f| %&gt;
+</p>
+<pre class="code">
+  <span class='lt op'>&lt;</span><span class='string val'>%= f.label :name %&gt;
+</span></pre>
+<p>
+&lt;% end %&gt; &lt;/code&gt;&lt;/pre&gt;
+</p>
+<p>
+Даст:
+</p>
+<p>
+&lt;pre&gt;<tt> &lt;label for=&quot;user_name&quot;&gt;Имя&lt;/label&gt;
+</tt>&lt;/pre&gt;
+</p>
+<p>
+h3. Валидация
+</p>
+<p>
+Обработка ошибок в ActiveRecord перегружается
+&#8212; в Russian включен популярный плагин
+custom_error_message, с помощью которого можно
+переопределять стандартное отображение
+сообщений об ошибках. Так, например,
+</p>
+<p>
+@validates_acceptance_of :accepted_terms, :message =&gt; &#8217;нужно
+принять соглашение&#8217;@
+</p>
+<p>
+даст сообщение
+</p>
+<p>
+@Accepted terms нужно принять соглашение@
+</p>
+<p>
+или, например
+</p>
+<p>
+@Соглашение об использовании нужно
+принять соглашение@
+</p>
+<p>
+если вы указали перевод для имени
+атрибута.
+</p>
+<p>
+Но
+</p>
+<p>
+@validates_acceptance_of :accepted_terms, :message =&gt; &#8217;^Нужно
+принять соглашение&#8217;@
+</p>
+<p>
+даст сообщение
+</p>
+<p>
+@Нужно принять соглашение@
+</p>
+<p>
+_NB:_ в сообщениях валидации можно
+использовать такие макросы как @{{attribute}}@,
+@{{value}}@ &#8212; подробнее см. документацию по
+I18n.
+</p>
+<p>
+h3. Параметризация строк
+</p>
+<p>
+Перегружается метод @parameterize@ инфлектора
+ActiveSupport (он же &#8212; @String#parameterize@), теперь в
+нем идет транслитерация букв русского
+алфавита.
+</p>
+<p>
+Пример:
+</p>
+<p>
+&lt;pre&gt;&lt;code&gt; class Person
+</p>
+<pre class="code">
+  <span class='def def kw'>def</span> <span class='to_param identifier id'>to_param</span>
+    <span class='dstring node'>&quot;#{id}-#{name.parameterize}&quot;</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+end
+</p>
+<p>
+@person = Person.find(1) # =&gt; #&lt;Person id: 1, name:
+&quot;Дональд Кнут&quot;&gt;
+</p>
+<p>
+&lt;%= link_to(@person.name, person_path(@person)) %&gt; # =&gt; &lt;a
+href=&quot;/person/1-donald-knut&quot;&gt;Дональд Кнут&lt;/a&gt;
+&lt;/code&gt;&lt;/pre&gt;
+</p>
+<p>
+h1. Автор
+</p>
+<p>
+Для сообщений об ошибках, обнаруженных
+неточностях и предложений:
+</p>
+<p>
+Ярослав Маркин
+(&quot;yaroslav@markin.net&quot;:mailto:yaroslav@markin.net)
+</p>
+<p>
+Огромное спасибо:
+</p>
+<p>
+Юлику Тарханову (me@julik.nl) за
+&quot;rutils&quot;:http://rutils.rubyforge.org/
+</p>
+
+      </div>
+    </div>
+  </body>
+</html>

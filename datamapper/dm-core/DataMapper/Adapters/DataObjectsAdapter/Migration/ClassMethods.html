@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: DataMapper::Adapters::DataObjectsAdapter::Migration::ClassMethods</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module DataMapper_Adapters_DataObjectsAdapter_Migration_ClassMethods">
+  <h1 class="title">Module: DataMapper::Adapters::DataObjectsAdapter::Migration::ClassMethods</h1>
+  <div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#type_map-instance_method' title='#type_map'>#type_map</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Default TypeMap for all data object based adapters.
+</p>
+
+        
+          <p class='returns'>
+            Returns: 
+              <span class='return_types'>
+                 
+              </span>
+          </p>
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>type_map</h3>
+</div><div id="type_map-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>type_map</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Default TypeMap for all data object based adapters.
+</p>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="return">
+  <h3>Returns:</h3>
+  <dl>
+  
+    <dt>
+      
+        <span class='type'></span>
+      
+      
+        <span class='name'></span>
+      
+    </dt>
+    <dd>
+      <span class='desc'><p>
+&lt;DataMapper::TypeMap&gt; default TypeMap for data objects adapters.
+</p>
+<p>
+TODO: move to dm-more/dm-migrations
+</p>
+</span>
+    </dd>
+  
+  </dl>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+614
+615
+616
+617
+618
+619
+620
+621
+622
+623
+624
+625
+626
+627
+628
+629</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/adapters/data_objects_adapter.rb', line 614</span>
+
+<span class='def def kw'>def</span> <span class='type_map identifier id'>type_map</span>
+  <span class='@type_map ivar id'>@type_map</span> <span class='opasgn op'>||=</span> <span class='TypeMap constant id'>TypeMap</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='super super kw'>super</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='tm identifier id'>tm</span><span class='bitor op'>|</span>
+    <span class='tm identifier id'>tm</span><span class='dot token'>.</span><span class='map identifier id'>map</span><span class='lparen token'>(</span><span class='Integer constant id'>Integer</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to identifier id'>to</span><span class='lparen token'>(</span><span class='string val'>'INT'</span><span class='rparen token'>)</span>
+    <span class='tm identifier id'>tm</span><span class='dot token'>.</span><span class='map identifier id'>map</span><span class='lparen token'>(</span><span class='String constant id'>String</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to identifier id'>to</span><span class='lparen token'>(</span><span class='string val'>'VARCHAR'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:size</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='Property constant id'>Property</span><span class='colon2 op'>::</span><span class='DEFAULT_LENGTH constant id'>DEFAULT_LENGTH</span><span class='rparen token'>)</span>
+    <span class='tm identifier id'>tm</span><span class='dot token'>.</span><span class='map identifier id'>map</span><span class='lparen token'>(</span><span class='Class constant id'>Class</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to identifier id'>to</span><span class='lparen token'>(</span><span class='string val'>'VARCHAR'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:size</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='Property constant id'>Property</span><span class='colon2 op'>::</span><span class='DEFAULT_LENGTH constant id'>DEFAULT_LENGTH</span><span class='rparen token'>)</span>
+    <span class='tm identifier id'>tm</span><span class='dot token'>.</span><span class='map identifier id'>map</span><span class='lparen token'>(</span><span class='DM constant id'>DM</span><span class='colon2 op'>::</span><span class='Discriminator constant id'>Discriminator</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to identifier id'>to</span><span class='lparen token'>(</span><span class='string val'>'VARCHAR'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:size</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='Property constant id'>Property</span><span class='colon2 op'>::</span><span class='DEFAULT_LENGTH constant id'>DEFAULT_LENGTH</span><span class='rparen token'>)</span>
+    <span class='tm identifier id'>tm</span><span class='dot token'>.</span><span class='map identifier id'>map</span><span class='lparen token'>(</span><span class='BigDecimal constant id'>BigDecimal</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to identifier id'>to</span><span class='lparen token'>(</span><span class='string val'>'DECIMAL'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:precision</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='Property constant id'>Property</span><span class='colon2 op'>::</span><span class='DEFAULT_PRECISION constant id'>DEFAULT_PRECISION</span><span class='comma token'>,</span> <span class='symbol val'>:scale</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='Property constant id'>Property</span><span class='colon2 op'>::</span><span class='DEFAULT_SCALE_BIGDECIMAL constant id'>DEFAULT_SCALE_BIGDECIMAL</span><span class='rparen token'>)</span>
+    <span class='tm identifier id'>tm</span><span class='dot token'>.</span><span class='map identifier id'>map</span><span class='lparen token'>(</span><span class='Float constant id'>Float</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to identifier id'>to</span><span class='lparen token'>(</span><span class='string val'>'FLOAT'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:precision</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='Property constant id'>Property</span><span class='colon2 op'>::</span><span class='DEFAULT_PRECISION constant id'>DEFAULT_PRECISION</span><span class='rparen token'>)</span>
+    <span class='tm identifier id'>tm</span><span class='dot token'>.</span><span class='map identifier id'>map</span><span class='lparen token'>(</span><span class='DateTime constant id'>DateTime</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to identifier id'>to</span><span class='lparen token'>(</span><span class='string val'>'TIMESTAMP'</span><span class='rparen token'>)</span>
+    <span class='tm identifier id'>tm</span><span class='dot token'>.</span><span class='map identifier id'>map</span><span class='lparen token'>(</span><span class='Date constant id'>Date</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to identifier id'>to</span><span class='lparen token'>(</span><span class='string val'>'DATE'</span><span class='rparen token'>)</span>
+    <span class='tm identifier id'>tm</span><span class='dot token'>.</span><span class='map identifier id'>map</span><span class='lparen token'>(</span><span class='Time constant id'>Time</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to identifier id'>to</span><span class='lparen token'>(</span><span class='string val'>'TIMESTAMP'</span><span class='rparen token'>)</span>
+    <span class='tm identifier id'>tm</span><span class='dot token'>.</span><span class='map identifier id'>map</span><span class='lparen token'>(</span><span class='TrueClass constant id'>TrueClass</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to identifier id'>to</span><span class='lparen token'>(</span><span class='string val'>'BOOLEAN'</span><span class='rparen token'>)</span>
+    <span class='tm identifier id'>tm</span><span class='dot token'>.</span><span class='map identifier id'>map</span><span class='lparen token'>(</span><span class='DM constant id'>DM</span><span class='colon2 op'>::</span><span class='Object constant id'>Object</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to identifier id'>to</span><span class='lparen token'>(</span><span class='string val'>'TEXT'</span><span class='rparen token'>)</span>
+    <span class='tm identifier id'>tm</span><span class='dot token'>.</span><span class='map identifier id'>map</span><span class='lparen token'>(</span><span class='DM constant id'>DM</span><span class='colon2 op'>::</span><span class='Text constant id'>Text</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to identifier id'>to</span><span class='lparen token'>(</span><span class='string val'>'TEXT'</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

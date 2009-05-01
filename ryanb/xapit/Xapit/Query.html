@@ -1,0 +1,483 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: Xapit::Query</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class Xapit_Query">
+  <h1 class="title">Class: Xapit::Query</h1>
+  <div class="section docstring">
+  <p>
+This class wraps a Xapian::Query for convenience purposes. You will likely
+not need to use this class unless you are trying to query the Xapian
+database directly. You may be looking for Xapit::Collection instead.
+</p>
+
+</div><div class="section attributes">
+  <h1>Attributes</h1>
+
+  
+    <div class="instance">
+      <h2>Instance Attributes</h2>
+      <table>
+      
+        <tr>
+          <th class="name">default_options</td>
+          <td class="readwrite">
+            [<span id='default_options-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>default_options</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">xapian_query</td>
+          <td class="readwrite">
+            [<span id='xapian_query-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>xapian_query</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+      </table>
+    </div>
+  
+</div><div class="section constants">
+  
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(query)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+8
+9
+10
+11</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/xapit/query.rb', line 8</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='query identifier id'>query</span><span class='rparen token'>)</span>
+  <span class='@xapian_query ivar id'>@xapian_query</span> <span class='assign token'>=</span> <span class='build_xapian_query identifier id'>build_xapian_query</span><span class='lparen token'>(</span><span class='query identifier id'>query</span><span class='rparen token'>)</span>
+  <span class='@default_options ivar id'>@default_options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span> <span class='symbol val'>:offset</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>0</span><span class='comma token'>,</span> <span class='symbol val'>:sort_descending</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='false false kw'>false</span> <span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#and_query-instance_method' title='#and_query'>#and_query</a></span><span class='args'>(query)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#count-instance_method' title='#count'>#count</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#matches-instance_method' title='#matches'>#matches</a></span><span class='args'>(options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#matchset-instance_method' title='#matchset'>#matchset</a></span><span class='args'>(options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#not_query-instance_method' title='#not_query'>#not_query</a></span><span class='args'>(query)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#or_query-instance_method' title='#or_query'>#or_query</a></span><span class='args'>(query)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>and_query</h3>
+</div><div id="and_query-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>and_query</span><span class='args'>(query)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+13
+14
+15
+16</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/xapit/query.rb', line 13</span>
+
+<span class='def def kw'>def</span> <span class='and_query identifier id'>and_query</span><span class='lparen token'>(</span><span class='query identifier id'>query</span><span class='rparen token'>)</span>
+  <span class='@xapian_query ivar id'>@xapian_query</span> <span class='assign token'>=</span> <span class='Xapian constant id'>Xapian</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='Xapian constant id'>Xapian</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='colon2 op'>::</span><span class='OP_AND constant id'>OP_AND</span><span class='comma token'>,</span> <span class='@xapian_query ivar id'>@xapian_query</span><span class='comma token'>,</span> <span class='build_xapian_query identifier id'>build_xapian_query</span><span class='lparen token'>(</span><span class='query identifier id'>query</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='unless unless_mod kw'>unless</span> <span class='query identifier id'>query</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span>
+  <span class='self self kw'>self</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>count</h3>
+</div><div id="count-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>count</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+47
+48
+49
+50</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/xapit/query.rb', line 47</span>
+
+<span class='def def kw'>def</span> <span class='count identifier id'>count</span>
+  <span class='comment val'># a bit of a hack to get more accurate count estimate</span>
+  <span class='matchset identifier id'>matchset</span><span class='lparen token'>(</span><span class='symbol val'>:limit</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='Config constant id'>Config</span><span class='dot token'>.</span><span class='database identifier id'>database</span><span class='dot token'>.</span><span class='doccount identifier id'>doccount</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='matches_estimated identifier id'>matches_estimated</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>matches</h3>
+</div><div id="matches-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>matches</span><span class='args'>(options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+43
+44
+45</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/xapit/query.rb', line 43</span>
+
+<span class='def def kw'>def</span> <span class='matches identifier id'>matches</span><span class='lparen token'>(</span><span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='matchset identifier id'>matchset</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='matches identifier id'>matches</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>matchset</h3>
+</div><div id="matchset-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>matchset</span><span class='args'>(options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/xapit/query.rb', line 28</span>
+
+<span class='def def kw'>def</span> <span class='matchset identifier id'>matchset</span><span class='lparen token'>(</span><span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='reverse_merge! fid id'>reverse_merge!</span><span class='lparen token'>(</span><span class='default_options identifier id'>default_options</span><span class='rparen token'>)</span>
+  <span class='enquire identifier id'>enquire</span> <span class='assign token'>=</span> <span class='Xapian constant id'>Xapian</span><span class='colon2 op'>::</span><span class='Enquire constant id'>Enquire</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='Config constant id'>Config</span><span class='dot token'>.</span><span class='database identifier id'>database</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='colon op'>:</span><span class='sort_by_values identifier id'>sort_by_values</span><span class='rbrack token'>]</span>
+    <span class='sorter identifier id'>sorter</span> <span class='assign token'>=</span> <span class='Xapian constant id'>Xapian</span><span class='colon2 op'>::</span><span class='MultiValueSorter constant id'>MultiValueSorter</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+    <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:sort_by_values</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='sort_value identifier id'>sort_value</span><span class='bitor op'>|</span>
+      <span class='sorter identifier id'>sorter</span><span class='dot token'>.</span><span class='add identifier id'>add</span><span class='lparen token'>(</span><span class='sort_value identifier id'>sort_value</span><span class='comma token'>,</span> <span class='notop op'>!</span><span class='notop op'>!</span><span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:sort_descending</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+    <span class='enquire identifier id'>enquire</span><span class='dot token'>.</span><span class='set_sort_by_key_then_relevance identifier id'>set_sort_by_key_then_relevance</span><span class='lparen token'>(</span><span class='sorter identifier id'>sorter</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+  <span class='enquire identifier id'>enquire</span><span class='dot token'>.</span><span class='collapse_key identifier id'>collapse_key</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:collapse_key</span><span class='rbrack token'>]</span> <span class='if if_mod kw'>if</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:collapse_key</span><span class='rbrack token'>]</span>
+  <span class='enquire identifier id'>enquire</span><span class='dot token'>.</span><span class='query identifier id'>query</span> <span class='assign token'>=</span> <span class='@xapian_query ivar id'>@xapian_query</span>
+  <span class='enquire identifier id'>enquire</span><span class='dot token'>.</span><span class='mset identifier id'>mset</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:offset</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:limit</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>not_query</h3>
+</div><div id="not_query-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>not_query</span><span class='args'>(query)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+23
+24
+25
+26</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/xapit/query.rb', line 23</span>
+
+<span class='def def kw'>def</span> <span class='not_query identifier id'>not_query</span><span class='lparen token'>(</span><span class='query identifier id'>query</span><span class='rparen token'>)</span>
+  <span class='@xapian_query ivar id'>@xapian_query</span> <span class='assign token'>=</span> <span class='Xapian constant id'>Xapian</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='Xapian constant id'>Xapian</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='colon2 op'>::</span><span class='OP_AND_NOT constant id'>OP_AND_NOT</span><span class='comma token'>,</span> <span class='@xapian_query ivar id'>@xapian_query</span><span class='comma token'>,</span> <span class='build_xapian_query identifier id'>build_xapian_query</span><span class='lparen token'>(</span><span class='query identifier id'>query</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='unless unless_mod kw'>unless</span> <span class='query identifier id'>query</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span>
+  <span class='self self kw'>self</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>or_query</h3>
+</div><div id="or_query-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>or_query</span><span class='args'>(query)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+18
+19
+20
+21</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/xapit/query.rb', line 18</span>
+
+<span class='def def kw'>def</span> <span class='or_query identifier id'>or_query</span><span class='lparen token'>(</span><span class='query identifier id'>query</span><span class='rparen token'>)</span>
+  <span class='@xapian_query ivar id'>@xapian_query</span> <span class='assign token'>=</span> <span class='Xapian constant id'>Xapian</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='Xapian constant id'>Xapian</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='colon2 op'>::</span><span class='OP_OR constant id'>OP_OR</span><span class='comma token'>,</span> <span class='@xapian_query ivar id'>@xapian_query</span><span class='comma token'>,</span> <span class='build_xapian_query identifier id'>build_xapian_query</span><span class='lparen token'>(</span><span class='query identifier id'>query</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='unless unless_mod kw'>unless</span> <span class='query identifier id'>query</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span>
+  <span class='self self kw'>self</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

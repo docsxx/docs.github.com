@@ -1,0 +1,449 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: ActiveMerchant::Billing::PaypalCommonAPI</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module ActiveMerchant_Billing_PaypalCommonAPI">
+  <h1 class="title">Module: ActiveMerchant::Billing::PaypalCommonAPI</h1>
+  <div class="section docstring">
+  <p>
+This module is included in both PaypalGateway and PaypalExpressGateway
+</p>
+
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <h1>Public Class Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#included-class_method' title='included'>included</a></span><span class='args'>(base)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+  <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#capture-instance_method' title='#capture'>#capture</a></span><span class='args'>(money, authorization, options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#credit-instance_method' title='#credit'>#credit</a></span><span class='args'>(money, identification, options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#reauthorize-instance_method' title='#reauthorize'>#reauthorize</a></span><span class='args'>(money, authorization, options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#test%3F-instance_method' title='#test?'>#test?</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#transfer-instance_method' title='#transfer'>#transfer</a></span><span class='args'>(*args)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Transfer money to one or more recipients.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#void-instance_method' title='#void'>#void</a></span><span class='args'>(authorization, options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails class public">
+  <h1>Public Class Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>included</h3>
+</div><div id="included-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>included</span><span class='args'>(base)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+5
+6
+7
+8
+9</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/paypal/paypal_common_api.rb', line 5</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='included identifier id'>included</span><span class='lparen token'>(</span><span class='base identifier id'>base</span><span class='rparen token'>)</span>
+  <span class='base identifier id'>base</span><span class='dot token'>.</span><span class='default_currency identifier id'>default_currency</span> <span class='assign token'>=</span> <span class='string val'>'USD'</span>
+  <span class='base identifier id'>base</span><span class='dot token'>.</span><span class='cattr_accessor identifier id'>cattr_accessor</span> <span class='symbol val'>:pem_file</span>
+  <span class='base identifier id'>base</span><span class='dot token'>.</span><span class='cattr_accessor identifier id'>cattr_accessor</span> <span class='symbol val'>:signature</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div><div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>capture</h3>
+</div><div id="capture-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>capture</span><span class='args'>(money, authorization, options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+86
+87
+88</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/paypal/paypal_common_api.rb', line 86</span>
+
+<span class='def def kw'>def</span> <span class='capture identifier id'>capture</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='comma token'>,</span> <span class='authorization identifier id'>authorization</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='commit identifier id'>commit</span> <span class='string val'>'DoCapture'</span><span class='comma token'>,</span> <span class='build_capture_request identifier id'>build_capture_request</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='comma token'>,</span> <span class='authorization identifier id'>authorization</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>credit</h3>
+</div><div id="credit-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>credit</span><span class='args'>(money, identification, options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+108
+109
+110</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/paypal/paypal_common_api.rb', line 108</span>
+
+<span class='def def kw'>def</span> <span class='credit identifier id'>credit</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='comma token'>,</span> <span class='identification identifier id'>identification</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='commit identifier id'>commit</span> <span class='string val'>'RefundTransaction'</span><span class='comma token'>,</span> <span class='build_credit_request identifier id'>build_credit_request</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='comma token'>,</span> <span class='identification identifier id'>identification</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>reauthorize</h3>
+</div><div id="reauthorize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>reauthorize</span><span class='args'>(money, authorization, options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+82
+83
+84</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/paypal/paypal_common_api.rb', line 82</span>
+
+<span class='def def kw'>def</span> <span class='reauthorize identifier id'>reauthorize</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='comma token'>,</span> <span class='authorization identifier id'>authorization</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='commit identifier id'>commit</span> <span class='string val'>'DoReauthorization'</span><span class='comma token'>,</span> <span class='build_reauthorize_request identifier id'>build_reauthorize_request</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='comma token'>,</span> <span class='authorization identifier id'>authorization</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>test?</h3>
+</div><div id="test%3F-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>test?</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+78
+79
+80</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/paypal/paypal_common_api.rb', line 78</span>
+
+<span class='def def kw'>def</span> <span class='test? fid id'>test?</span>
+  <span class='@options ivar id'>@options</span><span class='lbrack token'>[</span><span class='symbol val'>:test</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='Base constant id'>Base</span><span class='dot token'>.</span><span class='gateway_mode identifier id'>gateway_mode</span> <span class='eq op'>==</span> <span class='symbol val'>:test</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>transfer</h3>
+</div><div id="transfer-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>transfer</span><span class='args'>(*args)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Transfer money to one or more recipients.
+</p>
+<pre class="code">
+  <span class='gateway identifier id'>gateway</span><span class='dot token'>.</span><span class='transfer identifier id'>transfer</span> <span class='integer val'>1000</span><span class='comma token'>,</span> <span class='string val'>'bob@example.com'</span><span class='comma token'>,</span>
+    <span class='symbol val'>:subject</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;The money I owe you&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:note</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;Sorry it's so late&quot;</span>
+
+  <span class='gateway identifier id'>gateway</span><span class='dot token'>.</span><span class='transfer identifier id'>transfer</span> <span class='lbrack token'>[</span><span class='integer val'>1000</span><span class='comma token'>,</span> <span class='string val'>'fred@example.com'</span><span class='rbrack token'>]</span><span class='comma token'>,</span>
+    <span class='lbrack token'>[</span><span class='integer val'>2450</span><span class='comma token'>,</span> <span class='string val'>'wilma@example.com'</span><span class='comma token'>,</span> <span class='symbol val'>:note</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'You will receive another payment on 3/24'</span><span class='rbrack token'>]</span><span class='comma token'>,</span>
+    <span class='lbrack token'>[</span><span class='integer val'>2000</span><span class='comma token'>,</span> <span class='string val'>'barney@example.com'</span><span class='rbrack token'>]</span><span class='comma token'>,</span>
+    <span class='symbol val'>:subject</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;Your Earnings&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:note</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;Thanks for your business.&quot;</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+100
+101
+102</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/paypal/paypal_common_api.rb', line 100</span>
+
+<span class='def def kw'>def</span> <span class='transfer identifier id'>transfer</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='commit identifier id'>commit</span> <span class='string val'>'MassPay'</span><span class='comma token'>,</span> <span class='build_mass_pay_request identifier id'>build_mass_pay_request</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>void</h3>
+</div><div id="void-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>void</span><span class='args'>(authorization, options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+104
+105
+106</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/paypal/paypal_common_api.rb', line 104</span>
+
+<span class='def def kw'>def</span> <span class='void identifier id'>void</span><span class='lparen token'>(</span><span class='authorization identifier id'>authorization</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='commit identifier id'>commit</span> <span class='string val'>'DoVoid'</span><span class='comma token'>,</span> <span class='build_void_request identifier id'>build_void_request</span><span class='lparen token'>(</span><span class='authorization identifier id'>authorization</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

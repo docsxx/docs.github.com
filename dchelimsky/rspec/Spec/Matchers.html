@@ -1,0 +1,221 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: Spec::Matchers</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module Spec_Matchers">
+  <h1 class="title">Module: Spec::Matchers</h1>
+  <div class="section docstring">
+  <p>
+RSpec ships with a number of useful Expression Matchers. An Expression
+Matcher is any object that responds to the following methods:
+</p>
+<pre class="code">
+  <span class='matches? fid id'>matches?</span><span class='lparen token'>(</span><span class='actual identifier id'>actual</span><span class='rparen token'>)</span>
+  <span class='failure_message_for_should identifier id'>failure_message_for_should</span>
+</pre>
+<p>
+These methods are also part of the matcher protocol, but are optional:
+</p>
+<pre class="code">
+  <span class='does_not_match? fid id'>does_not_match?</span><span class='lparen token'>(</span><span class='actual identifier id'>actual</span><span class='rparen token'>)</span>
+  <span class='failure_message_for_should_not identifier id'>failure_message_for_should_not</span>
+  <span class='description identifier id'>description</span> <span class='comment val'>#optional</span>
+</pre>
+<p>
+These methods are from older versions of the protocol. They are still
+supported, but are not recommended:
+</p>
+<pre class="code">
+  <span class='failure_message identifier id'>failure_message</span>          <span class='lparen token'>(</span><span class='use identifier id'>use</span> <span class='failure_message_for_should identifier id'>failure_message_for_should</span> <span class='instead identifier id'>instead</span><span class='rparen token'>)</span>
+  <span class='negative_failure_message identifier id'>negative_failure_message</span> <span class='lparen token'>(</span><span class='use identifier id'>use</span> <span class='failure_message_for_should_not identifier id'>failure_message_for_should_not</span> <span class='instead identifier id'>instead</span><span class='rparen token'>)</span>
+</pre>
+<p>
+See Spec::Expectations to learn how to use these as Expectation Matchers.
+</p>
+<h2>Predicates</h2>
+<p>
+In addition to those Expression Matchers that are defined explicitly, RSpec
+will create custom Matchers on the fly for any arbitrary predicate, giving
+your specs a much more natural language feel.
+</p>
+<p>
+A Ruby predicate is a method that ends with a &quot;?&quot; and returns
+true or false. Common examples are +empty?+, +nil?+, and +instance_of?+.
+</p>
+<p>
+All you need to do is write +should be_+ followed by the predicate without
+the question mark, and RSpec will figure it out from there. For example:
+</p>
+<pre class="code">
+  <span class='lbrack token'>[</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='should identifier id'>should</span> <span class='be_empty identifier id'>be_empty</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span> <span class='comment val'>#passes</span>
+  <span class='lbrack token'>[</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='should_not identifier id'>should_not</span> <span class='be_empty identifier id'>be_empty</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span> <span class='comment val'>#fails</span>
+</pre>
+<p>
+In addtion to prefixing the predicate matchers with &quot;be_&quot;, you
+can also use &quot;be_a_&quot; and &quot;be_an_&quot;, making your specs
+read much more naturally:
+</p>
+<pre class="code">
+  <span class='string val'>&quot;a string&quot;</span><span class='dot token'>.</span><span class='should identifier id'>should</span> <span class='be_an_instance_of identifier id'>be_an_instance_of</span><span class='lparen token'>(</span><span class='String constant id'>String</span><span class='rparen token'>)</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span><span class='string val'>&quot;a string&quot;</span><span class='dot token'>.</span><span class='instance_of? fid id'>instance_of?</span><span class='lparen token'>(</span><span class='String constant id'>String</span><span class='rparen token'>)</span> <span class='comment val'>#passes</span>
+
+  <span class='float val'>3</span><span class='dot token'>.</span><span class='should identifier id'>should</span> <span class='be_a_kind_of identifier id'>be_a_kind_of</span><span class='lparen token'>(</span><span class='Fixnum constant id'>Fixnum</span><span class='rparen token'>)</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='float val'>3</span><span class='dot token'>.</span><span class='kind_of? fid id'>kind_of?</span><span class='lparen token'>(</span><span class='Numeric constant id'>Numeric</span><span class='rparen token'>)</span> <span class='comment val'>#passes</span>
+  <span class='float val'>3</span><span class='dot token'>.</span><span class='should identifier id'>should</span> <span class='be_a_kind_of identifier id'>be_a_kind_of</span><span class='lparen token'>(</span><span class='Numeric constant id'>Numeric</span><span class='rparen token'>)</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='float val'>3</span><span class='dot token'>.</span><span class='kind_of? fid id'>kind_of?</span><span class='lparen token'>(</span><span class='Numeric constant id'>Numeric</span><span class='rparen token'>)</span> <span class='comment val'>#passes</span>
+  <span class='float val'>3</span><span class='dot token'>.</span><span class='should identifier id'>should</span> <span class='be_an_instance_of identifier id'>be_an_instance_of</span><span class='lparen token'>(</span><span class='Fixnum constant id'>Fixnum</span><span class='rparen token'>)</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='float val'>3</span><span class='dot token'>.</span><span class='instance_of? fid id'>instance_of?</span><span class='lparen token'>(</span><span class='Fixnum constant id'>Fixnum</span><span class='rparen token'>)</span> <span class='comment val'>#passes</span>
+  <span class='float val'>3</span><span class='dot token'>.</span><span class='should_not identifier id'>should_not</span> <span class='be_instance_of identifier id'>be_instance_of</span><span class='lparen token'>(</span><span class='Numeric constant id'>Numeric</span><span class='rparen token'>)</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='float val'>3</span><span class='dot token'>.</span><span class='instance_of? fid id'>instance_of?</span><span class='lparen token'>(</span><span class='Numeric constant id'>Numeric</span><span class='rparen token'>)</span> <span class='comment val'>#fails</span>
+</pre>
+<p>
+RSpec will also create custom matchers for predicates like +has_key?+. To
+use this feature, just state that the object should have_key(:key) and
+RSpec will call has_key?(:key) on the target. For example:
+</p>
+<pre class="code">
+  <span class='lbrace token'>{</span><span class='symbol val'>:a</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;A&quot;</span><span class='rbrace token'>}</span><span class='dot token'>.</span><span class='should identifier id'>should</span> <span class='have_key identifier id'>have_key</span><span class='lparen token'>(</span><span class='symbol val'>:a</span><span class='rparen token'>)</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='symbol val'>:a</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;A&quot;</span><span class='rbrace token'>}</span><span class='dot token'>.</span><span class='has_key? fid id'>has_key?</span><span class='lparen token'>(</span><span class='symbol val'>:a</span><span class='rparen token'>)</span> <span class='comment val'>#passes</span>
+  <span class='lbrace token'>{</span><span class='symbol val'>:a</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;A&quot;</span><span class='rbrace token'>}</span><span class='dot token'>.</span><span class='should identifier id'>should</span> <span class='have_key identifier id'>have_key</span><span class='lparen token'>(</span><span class='symbol val'>:b</span><span class='rparen token'>)</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='symbol val'>:a</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;A&quot;</span><span class='rbrace token'>}</span><span class='dot token'>.</span><span class='has_key? fid id'>has_key?</span><span class='lparen token'>(</span><span class='symbol val'>:b</span><span class='rparen token'>)</span> <span class='comment val'>#fails</span>
+</pre>
+<p>
+You can use this feature to invoke any predicate that begins with
+&quot;has_&quot;, whether it is part of the Ruby libraries (like
++Hash#has_key?+) or a method you wrote on your own class.
+</p>
+<h2>Custom Matchers</h2>
+<p>
+When you find that none of the stock Expectation Matchers provide a natural
+feeling expectation, you can very easily write your own using RSpec&#8217;s
+matcher DSL or writing one from scratch.
+</p>
+<h3>Matcher DSL</h3>
+<p>
+Imagine that you are writing a game in which players can be in various
+zones on a virtual board. To specify that bob should be in zone 4, you
+could say:
+</p>
+<pre class="code">
+  <span class='bob identifier id'>bob</span><span class='dot token'>.</span><span class='current_zone identifier id'>current_zone</span><span class='dot token'>.</span><span class='should identifier id'>should</span> <span class='eql identifier id'>eql</span><span class='lparen token'>(</span><span class='Zone constant id'>Zone</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;4&quot;</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+</pre>
+<p>
+But you might find it more expressive to say:
+</p>
+<pre class="code">
+  <span class='bob identifier id'>bob</span><span class='dot token'>.</span><span class='should identifier id'>should</span> <span class='be_in_zone identifier id'>be_in_zone</span><span class='lparen token'>(</span><span class='string val'>&quot;4&quot;</span><span class='rparen token'>)</span>
+</pre>
+<p>
+and/or
+</p>
+<pre class="code">
+  <span class='bob identifier id'>bob</span><span class='dot token'>.</span><span class='should_not identifier id'>should_not</span> <span class='be_in_zone identifier id'>be_in_zone</span><span class='lparen token'>(</span><span class='string val'>&quot;3&quot;</span><span class='rparen token'>)</span>
+</pre>
+<p>
+You can create such a matcher like so:
+</p>
+<pre class="code">
+  <span class='Spec constant id'>Spec</span><span class='colon2 op'>::</span><span class='Matchers constant id'>Matchers</span><span class='dot token'>.</span><span class='create identifier id'>create</span> <span class='symbol val'>:be_in_zone</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='zone identifier id'>zone</span><span class='bitor op'>|</span>
+    <span class='match identifier id'>match</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='player identifier id'>player</span><span class='bitor op'>|</span>
+      <span class='player identifier id'>player</span><span class='dot token'>.</span><span class='in_zone? fid id'>in_zone?</span><span class='lparen token'>(</span><span class='zone identifier id'>zone</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+This will generate a <tt>be_in_zone</tt> method that returns a matcher with
+logical default messages for failures. You can override the failure
+messages and the generated description as follows:
+</p>
+<pre class="code">
+  <span class='Spec constant id'>Spec</span><span class='colon2 op'>::</span><span class='Matchers constant id'>Matchers</span><span class='dot token'>.</span><span class='create identifier id'>create</span> <span class='symbol val'>:be_in_zone</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='zone identifier id'>zone</span><span class='bitor op'>|</span>
+    <span class='match identifier id'>match</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='player identifier id'>player</span><span class='bitor op'>|</span>
+      <span class='player identifier id'>player</span><span class='dot token'>.</span><span class='in_zone? fid id'>in_zone?</span><span class='lparen token'>(</span><span class='zone identifier id'>zone</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+    <span class='failure_message_for_should identifier id'>failure_message_for_should</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='player identifier id'>player</span><span class='bitor op'>|</span>
+      <span class='comment val'># generate and return the appropriate string.</span>
+    <span class='end end kw'>end</span>
+    <span class='failure_message_for_should_not identifier id'>failure_message_for_should_not</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='player identifier id'>player</span><span class='bitor op'>|</span>
+      <span class='comment val'># generate and return the appropriate string.</span>
+    <span class='end end kw'>end</span>
+    <span class='description identifier id'>description</span> <span class='do do kw'>do</span>
+      <span class='comment val'># generate and return the appropriate string.</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+Each of the message-generation methods has access to the block arguments
+passed to the <tt>create</tt> method (in this case, <tt>zone</tt>). The
+failure message methods (<tt>failure_message_for_should</tt> and
+<tt>failure_message_for_should_not</tt>) are passed the actual value (the
+receiver of <tt>should</tt> or <tt>should_not</tt>).
+</p>
+<h3>Custom Matcher from scratch</h3>
+<p>
+You could also write a custom matcher from scratch, as follows:
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='BeInZone constant id'>BeInZone</span>
+    <span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='expected identifier id'>expected</span><span class='rparen token'>)</span>
+      <span class='@expected ivar id'>@expected</span> <span class='assign token'>=</span> <span class='expected identifier id'>expected</span>
+    <span class='end end kw'>end</span>
+    <span class='def def kw'>def</span> <span class='matches? fid id'>matches?</span><span class='lparen token'>(</span><span class='target identifier id'>target</span><span class='rparen token'>)</span>
+      <span class='@target ivar id'>@target</span> <span class='assign token'>=</span> <span class='target identifier id'>target</span>
+      <span class='@target ivar id'>@target</span><span class='dot token'>.</span><span class='current_zone identifier id'>current_zone</span><span class='dot token'>.</span><span class='eql? fid id'>eql?</span><span class='lparen token'>(</span><span class='Zone constant id'>Zone</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='@expected ivar id'>@expected</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+    <span class='def def kw'>def</span> <span class='failure_message_for_should identifier id'>failure_message_for_should</span>
+      <span class='dstring node'>&quot;expected #{@target.inspect} to be in Zone #{@expected}&quot;</span>
+    <span class='end end kw'>end</span>
+    <span class='def def kw'>def</span> <span class='failure_message_for_should_not identifier id'>failure_message_for_should_not</span>
+      <span class='dstring node'>&quot;expected #{@target.inspect} not to be in Zone #{@expected}&quot;</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+&#8230; and a method like this:
+</p>
+<pre class="code">
+  <span class='def def kw'>def</span> <span class='be_in_zone identifier id'>be_in_zone</span><span class='lparen token'>(</span><span class='expected identifier id'>expected</span><span class='rparen token'>)</span>
+    <span class='BeInZone constant id'>BeInZone</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='expected identifier id'>expected</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+And then expose the method to your specs. This is normally done by
+including the method and the class in a module, which is then included in
+your spec:
+</p>
+<pre class="code">
+  <span class='module module kw'>module</span> <span class='CustomGameMatchers constant id'>CustomGameMatchers</span>
+    <span class='class class kw'>class</span> <span class='BeInZone constant id'>BeInZone</span>
+      <span class='dot3 op'>...</span>
+    <span class='end end kw'>end</span>
+
+    <span class='def def kw'>def</span> <span class='be_in_zone identifier id'>be_in_zone</span><span class='lparen token'>(</span><span class='expected identifier id'>expected</span><span class='rparen token'>)</span>
+      <span class='dot3 op'>...</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+
+  <span class='describe identifier id'>describe</span> <span class='string val'>&quot;Player behaviour&quot;</span> <span class='do do kw'>do</span>
+    <span class='include identifier id'>include</span> <span class='CustomGameMatchers constant id'>CustomGameMatchers</span>
+    <span class='dot3 op'>...</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+or you can include in globally in a spec_helper.rb file <tt>require</tt>d
+from your spec file(s):
+</p>
+<pre class="code">
+  <span class='Spec constant id'>Spec</span><span class='colon2 op'>::</span><span class='Runner constant id'>Runner</span><span class='dot token'>.</span><span class='configure identifier id'>configure</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='config identifier id'>config</span><span class='bitor op'>|</span>
+    <span class='config identifier id'>config</span><span class='dot token'>.</span><span class='include identifier id'>include</span><span class='lparen token'>(</span><span class='CustomGameMatchers constant id'>CustomGameMatchers</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+</pre>
+
+</div><div class="section constants">
+  
+</div>
+</div>
+    </div>
+  </body>
+</html>

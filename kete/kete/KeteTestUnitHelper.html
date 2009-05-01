@@ -1,0 +1,303 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: KeteTestUnitHelper</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module KeteTestUnitHelper">
+  <h1 class="title">Module: KeteTestUnitHelper</h1>
+  <div class="section docstring">
+  <p>
+Walter McGinnis, 2007-10-25 added tests
+</p>
+
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#test_duplicate-instance_method' title='#test_duplicate'>#test_duplicate</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#test_new-instance_method' title='#test_new'>#test_new</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#test_raw_validation-instance_method' title='#test_raw_validation'>#test_raw_validation</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#test_validates_presence_of-instance_method' title='#test_validates_presence_of'>#test_validates_presence_of</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>test_duplicate</h3>
+</div><div id="test_duplicate-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>test_duplicate</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+36
+37
+38
+39
+40
+41
+42
+43</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/kete_test_unit_helper.rb', line 36</span>
+
+<span class='def def kw'>def</span> <span class='test_duplicate identifier id'>test_duplicate</span>
+  <span class='current_model identifier id'>current_model</span> <span class='assign token'>=</span> <span class='Module constant id'>Module</span><span class='dot token'>.</span><span class='class_eval identifier id'>class_eval</span><span class='lparen token'>(</span><span class='@base_class ivar id'>@base_class</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='symbol val'>:first</span><span class='rparen token'>)</span>
+  <span class='@duplicate_attr_names ivar id'>@duplicate_attr_names</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='attr_name identifier id'>attr_name</span><span class='bitor op'>|</span>
+    <span class='model identifier id'>model</span> <span class='assign token'>=</span> <span class='Module constant id'>Module</span><span class='dot token'>.</span><span class='class_eval identifier id'>class_eval</span><span class='lparen token'>(</span><span class='@base_class ivar id'>@base_class</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='@new_model ivar id'>@new_model</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='attr_name identifier id'>attr_name</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='current_model identifier id'>current_model</span><span class='lbrack token'>[</span><span class='attr_name identifier id'>attr_name</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+    <span class='assert identifier id'>assert</span> <span class='notop op'>!</span><span class='model identifier id'>model</span><span class='dot token'>.</span><span class='valid? fid id'>valid?</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{@base_class} should be invalid, as @#{attr_name} is a duplicate&quot;</span>
+    <span class='assert identifier id'>assert</span> <span class='model identifier id'>model</span><span class='dot token'>.</span><span class='errors identifier id'>errors</span><span class='dot token'>.</span><span class='invalid? fid id'>invalid?</span><span class='lparen token'>(</span><span class='attr_name identifier id'>attr_name</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='dstring node'>&quot;Should be an error message for :#{attr_name}&quot;</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>test_new</h3>
+</div><div id="test_new-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>test_new</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+15
+16
+17
+18
+19
+20
+21
+22</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/kete_test_unit_helper.rb', line 15</span>
+
+<span class='def def kw'>def</span> <span class='test_new identifier id'>test_new</span>
+  <span class='comment val'># shouldn't this take the @new_model has args?</span>
+  <span class='model identifier id'>model</span> <span class='assign token'>=</span> <span class='Module constant id'>Module</span><span class='dot token'>.</span><span class='class_eval identifier id'>class_eval</span><span class='lparen token'>(</span><span class='@base_class ivar id'>@base_class</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='@new_model ivar id'>@new_model</span>
+  <span class='assert identifier id'>assert</span> <span class='model identifier id'>model</span><span class='dot token'>.</span><span class='valid? fid id'>valid?</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{@base_class} should be valid&quot;</span>
+  <span class='@new_model ivar id'>@new_model</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='attr_name identifier id'>attr_name</span><span class='bitor op'>|</span>
+    <span class='assert_equal identifier id'>assert_equal</span> <span class='@new_model ivar id'>@new_model</span><span class='lbrack token'>[</span><span class='attr_name identifier id'>attr_name</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='model identifier id'>model</span><span class='dot token'>.</span><span class='attributes identifier id'>attributes</span><span class='lbrack token'>[</span><span class='attr_name identifier id'>attr_name</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{@base_class}.@#{attr_name.to_s} incorrect&quot;</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>test_raw_validation</h3>
+</div><div id="test_raw_validation-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>test_raw_validation</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/kete_test_unit_helper.rb', line 4</span>
+
+<span class='def def kw'>def</span> <span class='test_raw_validation identifier id'>test_raw_validation</span>
+  <span class='model identifier id'>model</span> <span class='assign token'>=</span> <span class='Module constant id'>Module</span><span class='dot token'>.</span><span class='class_eval identifier id'>class_eval</span><span class='lparen token'>(</span><span class='@base_class ivar id'>@base_class</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+  <span class='if if kw'>if</span> <span class='@req_attr_names ivar id'>@req_attr_names</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span>
+    <span class='assert identifier id'>assert</span> <span class='model identifier id'>model</span><span class='dot token'>.</span><span class='valid? fid id'>valid?</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{@base_class} should be valid without initialisation parameters&quot;</span>
+  <span class='else else kw'>else</span>
+    <span class='comment val'># If @base_class has validation, then use the following:</span>
+    <span class='assert identifier id'>assert</span> <span class='notop op'>!</span><span class='model identifier id'>model</span><span class='dot token'>.</span><span class='valid? fid id'>valid?</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{@base_class} should not be valid without initialisation parameters&quot;</span>
+    <span class='@req_attr_names ivar id'>@req_attr_names</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='attr_name identifier id'>attr_name</span><span class='bitor op'>|</span> <span class='assert identifier id'>assert</span> <span class='model identifier id'>model</span><span class='dot token'>.</span><span class='errors identifier id'>errors</span><span class='dot token'>.</span><span class='invalid? fid id'>invalid?</span><span class='lparen token'>(</span><span class='attr_name identifier id'>attr_name</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='dstring node'>&quot;Should be an error message for :#{attr_name}&quot;</span><span class='rbrace token'>}</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>test_validates_presence_of</h3>
+</div><div id="test_validates_presence_of-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>test_validates_presence_of</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+25
+26
+27
+28
+29
+30
+31
+32
+33</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/kete_test_unit_helper.rb', line 25</span>
+
+<span class='def def kw'>def</span> <span class='test_validates_presence_of identifier id'>test_validates_presence_of</span>
+  <span class='@req_attr_names ivar id'>@req_attr_names</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='attr_name identifier id'>attr_name</span><span class='bitor op'>|</span>
+    <span class='tmp_model identifier id'>tmp_model</span> <span class='assign token'>=</span> <span class='@new_model ivar id'>@new_model</span><span class='dot token'>.</span><span class='clone identifier id'>clone</span>
+    <span class='tmp_model identifier id'>tmp_model</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span> <span class='attr_name identifier id'>attr_name</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span>
+    <span class='model identifier id'>model</span> <span class='assign token'>=</span> <span class='Module constant id'>Module</span><span class='dot token'>.</span><span class='class_eval identifier id'>class_eval</span><span class='lparen token'>(</span><span class='@base_class ivar id'>@base_class</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='tmp_model identifier id'>tmp_model</span><span class='rparen token'>)</span>
+    <span class='assert identifier id'>assert</span> <span class='notop op'>!</span><span class='model identifier id'>model</span><span class='dot token'>.</span><span class='valid? fid id'>valid?</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{@base_class} should be invalid, as @#{attr_name} is invalid&quot;</span>
+    <span class='assert identifier id'>assert</span> <span class='model identifier id'>model</span><span class='dot token'>.</span><span class='errors identifier id'>errors</span><span class='dot token'>.</span><span class='invalid? fid id'>invalid?</span><span class='lparen token'>(</span><span class='attr_name identifier id'>attr_name</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='dstring node'>&quot;Should be an error message for :#{attr_name}&quot;</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

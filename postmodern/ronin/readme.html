@@ -1,0 +1,379 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <title>README</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section docstring readme">
+        <h1>Ronin</h1>
+<ul>
+<li>http://ronin.rubyforge.org/
+
+</li>
+<li>http://github.com/postmodern/ronin
+
+</li>
+<li>irc.freenode.net ##ronin
+
+</li>
+<li>Postmodern (postmodern.mod3 at gmail.com)
+
+</li>
+</ul>
+<h2>DESCRIPTION:</h2>
+<p>
+Ronin is a Ruby platform designed for information security and data
+exploration tasks. Ronin allows for the rapid development and distribution
+of code over many of the common Source-Code-Management (SCM) systems.
+</p>
+<h3>Free</h3>
+<p>
+All source code within Ronin is licensed under the GPL-2, therefore no user
+will ever have to pay for Ronin or updates to Ronin. Not only is the source
+code free, the Ronin project will not sell enterprise grade security
+snake-oil solutions, give private training classes or later turn Ronin into
+commercial software.
+</p>
+<h3>Modular</h3>
+<p>
+Ronin was not designed as one monolithic framework but instead as a
+collection of libraries which can be individually installed. This allows
+users to pick and choose what functionality they want in Ronin.
+</p>
+<h3>Decentralized</h3>
+<p>
+Ronin does not have a central repository of exploits and payloads which all
+developers contribute to. Instead Ronin has Overlays, repositories of code
+that can be hosted on any SVN/Hg/Git/Rsync server. Users can then use Ronin
+to quickly install or update Overlays. This allows developers and users to
+form their own communities, independent of the main developers of Ronin.
+</p>
+<h2>FEATURES:</h2>
+<ul>
+<li>Supports installing/updating/uninstalling of Overlays.
+
+<ul>
+<li>Supports accessing Overlays from various media types:
+
+<ul>
+<li>Subversion (SVN)
+
+</li>
+<li>Mercurial (Hg)
+
+</li>
+<li>Git
+
+</li>
+<li>Rsync
+
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Allows for the loading of Extensions from one or more Overlays.
+
+</li>
+<li>Provides persistent storage of objects using DataMapper.
+
+</li>
+<li>Caches and mirrors objects stored in Overlays using DataMapper.
+
+</li>
+<li>Provides convenience methods for:
+
+<ul>
+<li>Formatting data:
+
+<ul>
+<li>Binary
+
+</li>
+<li>HTTP
+
+</li>
+<li>URIs
+
+</li>
+</ul>
+</li>
+<li>Generating random text.
+
+</li>
+<li>Networking:
+
+<ul>
+<li>TCP
+
+</li>
+<li>UDP
+
+</li>
+<li>SMTP
+
+</li>
+<li>POP
+
+</li>
+<li>Imap
+
+</li>
+<li>Telnet
+
+</li>
+<li>HTTP
+
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Provides an IRB styled console with:
+
+<ul>
+<li>Tab-completion enabled.
+
+</li>
+<li>Auto-indentation enabled.
+
+</li>
+<li>Pretty-Print loaded.
+
+</li>
+</ul>
+</li>
+</ul>
+<h2>REQUIREMENTS:</h2>
+<ul>
+<li>{libsqlite3}[http://sqlite.org/]
+
+</li>
+<li>{nokogiri}[http://nokogiri.rubyforge.org/] &gt;= 1.2.0
+
+</li>
+<li>{DataMapper}[http://datamapper.org/]:
+
+<ul>
+<li>dm-core &gt;= 0.9.9
+
+</li>
+<li>data_objects &gt;= 0.9.9
+
+</li>
+<li>do_sqlite3 &gt;= 0.9.9
+
+</li>
+<li>dm-types &gt;= 0.9.9
+
+</li>
+<li>dm-aggregates &gt;= 0.9.9
+
+</li>
+<li>dm-validations &gt;= 0.9.9
+
+</li>
+<li>dm-serializer &gt;= 0.9.9
+
+</li>
+</ul>
+</li>
+<li>{dm-prefined}[http://dm-predefined.rubyforge.org/] &gt;= 0.1.0
+
+</li>
+<li>{parameters}[http://parameters.rubyforge.org/] &gt;= 0.1.2
+
+</li>
+<li>{contextify}[http://contextify.rubyforge.org/] &gt;= 0.1.0
+
+</li>
+<li>{reverse-require}[http://reverserequire.rubyforge.org/] &gt;= 0.3.1
+
+</li>
+<li>{repertoire}[http://repertoire.rubyforge.org/] &gt;= 0.1.2
+
+</li>
+</ul>
+<h2>INSTALL:</h2>
+<pre class="code">
+  $ <span class='sudo identifier id'>sudo</span> <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='ronin identifier id'>ronin</span>
+</pre>
+<h2>SYNOPSIS:</h2>
+<ul>
+<li>Generate an Overlay:
+
+<pre class="code">
+  $ <span class='ronin identifier id'>ronin</span> <span class='overlay identifier id'>overlay</span> <span class='path identifier id'>path</span><span class='div op'>/</span><span class='to identifier id'>to</span><span class='div op'>/</span><span class='overlay identifier id'>overlay</span><span class='div op'>/</span><span class='name identifier id'>name</span><span class='div op'>/</span>
+</pre>
+</li>
+<li>Generate an Extension within an Overlay:
+
+<pre class="code">
+  $ <span class='ronin identifier id'>ronin</span> <span class='ext identifier id'>ext</span> <span class='path identifier id'>path</span><span class='div op'>/</span><span class='to identifier id'>to</span><span class='div op'>/</span><span class='overlay identifier id'>overlay</span><span class='div op'>/</span><span class='extension identifier id'>extension</span><span class='div op'>/</span>
+</pre>
+</li>
+<li>Install an Overlay:
+
+<pre class="code">
+  $ <span class='ronin identifier id'>ronin</span> <span class='install identifier id'>install</span> <span class='svn identifier id'>svn</span><span class='symbol val'>:/</span><span class='regexp val'>/example.com/</span><span class='var identifier id'>var</span><span class='div op'>/</span><span class='svn identifier id'>svn</span><span class='div op'>/</span><span class='overlay identifier id'>overlay</span>
+</pre>
+</li>
+<li>List installed Overlays:
+
+<pre class="code">
+  $ <span class='ronin identifier id'>ronin</span> <span class='ls identifier id'>ls</span>
+</pre>
+</li>
+<li>Update all installed Overlays:
+
+<pre class="code">
+  $ <span class='ronin identifier id'>ronin</span> <span class='update identifier id'>update</span>
+</pre>
+</li>
+<li>Update a specific Overlay:
+
+<pre class="code">
+  $ <span class='ronin identifier id'>ronin</span> <span class='update identifier id'>update</span> <span class='overlay identifier id'>overlay</span><span class='minus op'>-</span><span class='name identifier id'>name</span>
+</pre>
+</li>
+<li>Uninstall an Overlay:
+
+<pre class="code">
+  $ <span class='ronin identifier id'>ronin</span> <span class='uninstall identifier id'>uninstall</span> <span class='overlay identifier id'>overlay</span><span class='minus op'>-</span><span class='name identifier id'>name</span>
+</pre>
+</li>
+<li>Start the Ronin console:
+
+<pre class="code">
+  $ <span class='ronin identifier id'>ronin</span>
+</pre>
+</li>
+</ul>
+<h2>RONIN LIBRARIES:</h2>
+<h3>Ronin ASM</h3>
+<ul>
+<li>http://ronin.rubyforge.org/asm/
+
+</li>
+<li>http://github.com/postmodern/ronin-asm
+
+</li>
+</ul>
+<p>
+Ronin ASM is a Ruby library for Ronin that provides dynamic Assembly (ASM)
+generation of programs or shellcode.
+</p>
+<h3>Ronin Dorks</h3>
+<ul>
+<li>http://ronin.rubyforge.org/dorks/
+
+</li>
+<li>http://github.com/postmodern/ronin-dorks
+
+</li>
+</ul>
+<p>
+Ronin Dorks is a Ruby library for Ronin that provides support for various
+Google (tm) Dorks functionality.
+</p>
+<h3>Ronin Exploits</h3>
+<ul>
+<li>http://ronin.rubyforge.org/exploits/
+
+</li>
+<li>http://github.com/postmodern/ronin-exploits
+
+</li>
+</ul>
+<p>
+Ronin Exploits is a Ruby library for Ronin that provides exploitation and
+payload crafting functionality.
+</p>
+<h3>Ronin Gen</h3>
+<ul>
+<li>http://ronin.rubyforge.org/gen/
+
+</li>
+<li>http://github.com/postmodern/ronin-gen
+
+</li>
+</ul>
+<p>
+Ronin Gen is a Ruby library for Ronin that provides various generators.
+</p>
+<h3>Ronin SQL</h3>
+<ul>
+<li>http://ronin.rubyforge.org/sql/
+
+</li>
+<li>http://github.com/postmodern/ronin-sql
+
+</li>
+</ul>
+<p>
+Ronin SQL is a Ruby library for Ronin that provids support for SQL related
+security tasks, such as scanning for and exploiting SQL injections.
+</p>
+<h3>Ronin PHP</h3>
+<ul>
+<li>http://ronin.rubyforge.org/php/
+
+</li>
+<li>http://github.com/postmodern/ronin-php
+
+</li>
+</ul>
+<p>
+Ronin PHP is a Ruby library for Ronin that provides support for PHP related
+security tasks, such as finding and exploiting Local File Inclusion (LFI)
+and Remote File Inclusion (RFI).
+</p>
+<h3>Ronin Web</h3>
+<ul>
+<li>http://ronin.rubyforge.org/web/
+
+</li>
+<li>http://github.com/postmodern/ronin-web
+
+</li>
+</ul>
+<p>
+Ronin Web is a Ruby library for Ronin that provides support for web
+scraping and spidering functionality.
+</p>
+<h2>LICENSE:</h2>
+<p>
+Ronin - A Ruby platform designed for information security and data
+exploration tasks.
+</p>
+<p>
+Copyright &#169; 2006-2009 Hal Brodigan (postmodern.mod3 at gmail.com)
+</p>
+<p>
+This program is free software; you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the Free
+Software Foundation; either version 2 of the License, or (at your option)
+any later version.
+</p>
+<p>
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+more details.
+</p>
+<p>
+You should have received a copy of the GNU General Public License along
+with this program; if not, write to the Free Software Foundation, Inc., 51
+Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
+</p>
+
+      </div>
+    </div>
+  </body>
+</html>

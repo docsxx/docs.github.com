@@ -1,0 +1,263 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: DataMapper::Associations::RelationshipChain</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class DataMapper_Associations_RelationshipChain">
+  <h1 class="title">Class: DataMapper::Associations::RelationshipChain</h1>
+  <div class="section inheritance">
+  <ul>
+  <li><a href='Relationship.html' title='DataMapper::Associations::Relationship'>DataMapper::Associations::Relationship</a></li><ul><li>DataMapper::Associations::RelationshipChain</li>
+  </ul></ul>
+</div><div class="section constants">
+  <div class="thisclass">
+  <h1>Constants</h1>
+  <dl>
+    
+      <dt id="OPTIONS-constant">OPTIONS</dt>
+      <dd>[        :repository_name, :near_relationship_name, :remote_relationship_name,        :child_model, :parent_model, :parent_key, :child_key,        :min, :max      ]</dd>
+    
+  </dl>
+</div>
+
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>private</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(options)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/associations/relationship_chain.rb', line 35</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='lparen token'>(</span><span class='missing_options identifier id'>missing_options</span> <span class='assign token'>=</span> <span class='OPTIONS constant id'>OPTIONS</span> <span class='minus op'>-</span> <span class='lbrack token'>[</span> <span class='colon op'>:</span><span class='min identifier id'>min</span><span class='comma token'>,</span> <span class='symbol val'>:max</span> <span class='rbrack token'>]</span> <span class='minus op'>-</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='keys identifier id'>keys</span> <span class='rparen token'>)</span><span class='dot token'>.</span><span class='any? fid id'>any?</span>
+    <span class='raise identifier id'>raise</span> <span class='ArgumentError constant id'>ArgumentError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;The options #{missing_options * ', '} are required&quot;</span><span class='comma token'>,</span> <span class='caller identifier id'>caller</span>
+  <span class='end end kw'>end</span>
+
+  <span class='@repository_name ivar id'>@repository_name</span>          <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='symbol val'>:repository_name</span><span class='rparen token'>)</span>
+  <span class='@near_relationship_name ivar id'>@near_relationship_name</span>   <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='symbol val'>:near_relationship_name</span><span class='rparen token'>)</span>
+  <span class='@remote_relationship_name ivar id'>@remote_relationship_name</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='symbol val'>:remote_relationship_name</span><span class='rparen token'>)</span>
+  <span class='@child_model ivar id'>@child_model</span>              <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='symbol val'>:child_model</span><span class='rparen token'>)</span>
+  <span class='@parent_model ivar id'>@parent_model</span>             <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='symbol val'>:parent_model</span><span class='rparen token'>)</span>
+  <span class='@parent_properties ivar id'>@parent_properties</span>        <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='symbol val'>:parent_key</span><span class='rparen token'>)</span>
+  <span class='@child_properties ivar id'>@child_properties</span>         <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='symbol val'>:child_key</span><span class='rparen token'>)</span>
+  <span class='@mutable ivar id'>@mutable</span>                  <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:mutable</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='false false kw'>false</span>
+
+  <span class='@name ivar id'>@name</span>        <span class='assign token'>=</span> <span class='near_relationship identifier id'>near_relationship</span><span class='dot token'>.</span><span class='name identifier id'>name</span>
+  <span class='@query ivar id'>@query</span>       <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='reject identifier id'>reject</span><span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='key identifier id'>key</span><span class='comma token'>,</span><span class='val identifier id'>val</span><span class='bitor op'>|</span> <span class='OPTIONS constant id'>OPTIONS</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='key identifier id'>key</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  <span class='@extra_links ivar id'>@extra_links</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+  <span class='@options ivar id'>@options</span>     <span class='assign token'>=</span> <span class='options identifier id'>options</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#child_model-instance_method' title='#child_model'>#child_model</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#get_children-instance_method' title='#get_children'>#get_children</a></span><span class='args'>(parent, options = {}, finder = :all, *args)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table><div class="inherited">
+  
+  <div>
+    <h1>Public Instance Methods Inherited from <a href='Relationship.html' title='DataMapper::Associations::Relationship'>DataMapper::Associations::Relationship</a></h1>
+    <p><span class='name'><a href='Relationship.html#attach_parent-instance_method' title='attach_parent'>attach_parent</a></span>, <span class='name'><a href='Relationship.html#child_key-instance_method' title='child_key'>child_key</a></span>, <span class='name'><a href='Relationship.html#get_parent-instance_method' title='get_parent'>get_parent</a></span>, <span class='name'><a href='Relationship.html#parent_key-instance_method' title='parent_key'>parent_key</a></span>, <span class='name'><a href='Relationship.html#parent_model-instance_method' title='parent_model'>parent_model</a></span>, <span class='name'><a href='Relationship.html#with_repository-instance_method' title='with_repository'>with_repository</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>child_model</h3>
+</div><div id="child_model-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>child_model</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+14
+15
+16</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/associations/relationship_chain.rb', line 14</span>
+
+<span class='def def kw'>def</span> <span class='child_model identifier id'>child_model</span>
+  <span class='near_relationship identifier id'>near_relationship</span><span class='dot token'>.</span><span class='child_model identifier id'>child_model</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>get_children</h3>
+</div><div id="get_children-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>get_children</span><span class='args'>(parent, options = {}, finder = :all, *args)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/associations/relationship_chain.rb', line 19</span>
+
+<span class='def def kw'>def</span> <span class='get_children identifier id'>get_children</span><span class='lparen token'>(</span><span class='parent identifier id'>parent</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='finder identifier id'>finder</span> <span class='assign token'>=</span> <span class='symbol val'>:all</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='query identifier id'>query</span> <span class='assign token'>=</span> <span class='@query ivar id'>@query</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='child_key identifier id'>child_key</span><span class='dot token'>.</span><span class='to_query identifier id'>to_query</span><span class='lparen token'>(</span><span class='parent_key identifier id'>parent_key</span><span class='dot token'>.</span><span class='get identifier id'>get</span><span class='lparen token'>(</span><span class='parent identifier id'>parent</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+
+  <span class='query identifier id'>query</span><span class='lbrack token'>[</span><span class='symbol val'>:links</span><span class='rbrack token'>]</span>  <span class='assign token'>=</span> <span class='links identifier id'>links</span>
+  <span class='query identifier id'>query</span><span class='lbrack token'>[</span><span class='symbol val'>:unique</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+
+  <span class='with_repository identifier id'>with_repository</span><span class='lparen token'>(</span><span class='parent identifier id'>parent</span><span class='rparen token'>)</span> <span class='do do kw'>do</span>
+    <span class='results identifier id'>results</span> <span class='assign token'>=</span> <span class='grandchild_model identifier id'>grandchild_model</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='finder identifier id'>finder</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='lparen token'>(</span><span class='args identifier id'>args</span> <span class='lshft op'>&lt;&lt;</span> <span class='query identifier id'>query</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+    <span class='comment val'># FIXME: remove the need for the uniq.freeze</span>
+    <span class='finder identifier id'>finder</span> <span class='eq op'>==</span> <span class='symbol val'>:all</span> <span class='question op'>?</span> <span class='lparen token'>(</span><span class='@mutable ivar id'>@mutable</span> <span class='question op'>?</span> <span class='results identifier id'>results</span> <span class='colon op'>:</span> <span class='results identifier id'>results</span><span class='dot token'>.</span><span class='freeze identifier id'>freeze</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='results identifier id'>results</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

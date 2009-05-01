@@ -1,0 +1,442 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: Translate::Keys</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class Translate_Keys">
+  <h1 class="title">Class: Translate::Keys</h1>
+  <div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <h1>Public Class Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#deep_merge%21-class_method' title='deep_merge!'>deep_merge!</a></span><span class='args'>(hash1, hash2)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+deep_merge by Stefan Rusterholz, see http://www.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#files-class_method' title='files'>files</a></span><span class='args'>=(files)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Allows flushing of the files cache.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#to_deep_hash-class_method' title='to_deep_hash'>to_deep_hash</a></span><span class='args'>(hash)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Convert something like:.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+  <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#files-instance_method' title='#files'>#files</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+          <span class='alias'>#to_hash</span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#i18n_keys-instance_method' title='#i18n_keys'>#i18n_keys</a></span><span class='args'>(locale)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#keys-instance_method' title='#keys'>#keys</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+          <span class='alias'>#to_a</span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails class public">
+  <h1>Public Class Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>deep_merge!</h3>
+</div><div id="deep_merge%21-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>deep_merge!</span><span class='args'>(hash1, hash2)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+deep_merge by Stefan Rusterholz, see http://www.ruby-forum.com/topic/142809
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+53
+54
+55
+56</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/translate/keys.rb', line 53</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='deep_merge! fid id'>deep_merge!</span><span class='lparen token'>(</span><span class='hash1 identifier id'>hash1</span><span class='comma token'>,</span> <span class='hash2 identifier id'>hash2</span><span class='rparen token'>)</span>
+  <span class='merger identifier id'>merger</span> <span class='assign token'>=</span> <span class='proc identifier id'>proc</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='key identifier id'>key</span><span class='comma token'>,</span> <span class='v1 identifier id'>v1</span><span class='comma token'>,</span> <span class='v2 identifier id'>v2</span><span class='bitor op'>|</span> <span class='Hash constant id'>Hash</span> <span class='eqq op'>===</span> <span class='v1 identifier id'>v1</span> <span class='andop op'>&amp;&amp;</span> <span class='Hash constant id'>Hash</span> <span class='eqq op'>===</span> <span class='v2 identifier id'>v2</span> <span class='integer val'>? </span><span class='v1 identifier id'>v1</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='v2 identifier id'>v2</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='merger identifier id'>merger</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='v2 identifier id'>v2</span> <span class='rbrace token'>}</span>
+  <span class='hash1 identifier id'>hash1</span><span class='dot token'>.</span><span class='merge! fid id'>merge!</span><span class='lparen token'>(</span><span class='hash2 identifier id'>hash2</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='merger identifier id'>merger</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>files</h3>
+</div><div id="files-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>files</span><span class='args'>=(files)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Allows flushing of the files cache
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+10
+11
+12</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/translate/keys.rb', line 10</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='files identifier id'>files</span><span class='assign token'>=</span><span class='lparen token'>(</span><span class='files identifier id'>files</span><span class='rparen token'>)</span>
+  <span class='@@files ivar id'>@@files</span> <span class='assign token'>=</span> <span class='files identifier id'>files</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>to_deep_hash</h3>
+</div><div id="to_deep_hash-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>to_deep_hash</span><span class='args'>(hash)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Convert something like:
+</p>
+<pre class="code">
+ <span class='lbrace token'>{</span><span class='string val'>'pressrelease.label.one'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;Pressmeddelande&quot;</span><span class='rbrace token'>}</span>
+</pre>
+<p>
+to:
+</p>
+<p>
+{
+</p>
+<pre class="code">
+ <span class='symbol val'>:pressrelease</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span>
+   <span class='symbol val'>:label</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span>
+     <span class='symbol val'>:one</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;Pressmeddelande&quot;</span>
+   <span class='rbrace token'>}</span>
+  <span class='rbrace token'>}</span>
+</pre>
+<p>
+}
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+42
+43
+44
+45
+46
+47
+48
+49
+50</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/translate/keys.rb', line 42</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='to_deep_hash identifier id'>to_deep_hash</span><span class='lparen token'>(</span><span class='hash identifier id'>hash</span><span class='rparen token'>)</span>    
+  <span class='hash identifier id'>hash</span><span class='dot token'>.</span><span class='inject identifier id'>inject</span><span class='lparen token'>(</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='deep_hash identifier id'>deep_hash</span><span class='comma token'>,</span> <span class='lparen token'>(</span><span class='key identifier id'>key</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='rparen token'>)</span><span class='bitor op'>|</span>
+    <span class='keys identifier id'>keys</span> <span class='assign token'>=</span> <span class='key identifier id'>key</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='string val'>'.'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='reverse identifier id'>reverse</span>
+    <span class='leaf_key identifier id'>leaf_key</span> <span class='assign token'>=</span> <span class='keys identifier id'>keys</span><span class='dot token'>.</span><span class='shift identifier id'>shift</span>
+    <span class='key_hash identifier id'>key_hash</span> <span class='assign token'>=</span> <span class='keys identifier id'>keys</span><span class='dot token'>.</span><span class='inject identifier id'>inject</span><span class='lparen token'>(</span><span class='lbrace token'>{</span><span class='leaf_key identifier id'>leaf_key</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='value identifier id'>value</span><span class='rbrace token'>}</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='hash identifier id'>hash</span><span class='comma token'>,</span> <span class='key identifier id'>key</span><span class='bitor op'>|</span> <span class='lbrace token'>{</span><span class='key identifier id'>key</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='hash identifier id'>hash</span><span class='rbrace token'>}</span> <span class='rbrace token'>}</span>
+    <span class='deep_merge! fid id'>deep_merge!</span><span class='lparen token'>(</span><span class='deep_hash identifier id'>deep_hash</span><span class='comma token'>,</span> <span class='key_hash identifier id'>key_hash</span><span class='rparen token'>)</span>
+    <span class='deep_hash identifier id'>deep_hash</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div><div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>files</h3>
+</div><div id="files-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>files</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+<p class="aliases">
+  <span class="aka">Also known as:</span>
+  
+    <tt id="to_hash-instance_method">to_hash</tt>
+  
+</p>
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+14
+15
+16</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/translate/keys.rb', line 14</span>
+
+<span class='def def kw'>def</span> <span class='files identifier id'>files</span>
+  <span class='@files ivar id'>@files</span> <span class='opasgn op'>||=</span> <span class='extract_files identifier id'>extract_files</span>
+<span class='end end kw'>end</span>  
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>i18n_keys</h3>
+</div><div id="i18n_keys-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>i18n_keys</span><span class='args'>(locale)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+24
+25
+26
+27</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/translate/keys.rb', line 24</span>
+
+<span class='def def kw'>def</span> <span class='i18n_keys identifier id'>i18n_keys</span><span class='lparen token'>(</span><span class='locale identifier id'>locale</span><span class='rparen token'>)</span>
+  <span class='I18n constant id'>I18n</span><span class='dot token'>.</span><span class='backend identifier id'>backend</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='symbol val'>:init_translations</span><span class='rparen token'>)</span> <span class='unless unless_mod kw'>unless</span> <span class='I18n constant id'>I18n</span><span class='dot token'>.</span><span class='backend identifier id'>backend</span><span class='dot token'>.</span><span class='initialized? fid id'>initialized?</span>
+  <span class='extract_i18n_keys identifier id'>extract_i18n_keys</span><span class='lparen token'>(</span><span class='I18n constant id'>I18n</span><span class='dot token'>.</span><span class='backend identifier id'>backend</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='symbol val'>:translations</span><span class='rparen token'>)</span><span class='lbrack token'>[</span><span class='locale identifier id'>locale</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='sort identifier id'>sort</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>keys</h3>
+</div><div id="keys-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>keys</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+<p class="aliases">
+  <span class="aka">Also known as:</span>
+  
+    <tt id="to_a-instance_method">to_a</tt>
+  
+</p>
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+19
+20
+21</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/translate/keys.rb', line 19</span>
+
+<span class='def def kw'>def</span> <span class='keys identifier id'>keys</span>
+  <span class='files identifier id'>files</span><span class='dot token'>.</span><span class='keys identifier id'>keys</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

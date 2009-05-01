@@ -1,0 +1,594 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: Blather::Client</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class Blather_Client">
+  <h1 class="title">Class: Blather::Client</h1>
+  <div class="section attributes">
+  <h1>Attributes</h1>
+
+  
+    <div class="instance">
+      <h2>Instance Attributes</h2>
+      <table>
+      
+        <tr>
+          <th class="name">jid</td>
+          <td class="readwrite">
+            [<span id='jid-instance_method'>R</span><span id='jid%3D-instance_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>jid</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">roster</td>
+          <td class="readwrite">
+            [<span id='roster-instance_method'>R</span><span id='roster%3D-instance_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>roster</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+      </table>
+    </div>
+  
+</div><div class="section constants">
+  
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+11
+12
+13
+14
+15
+16
+17
+18
+19</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/blather/client.rb', line 11</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span>
+  <span class='@state ivar id'>@state</span> <span class='assign token'>=</span> <span class='symbol val'>:initializing</span>
+
+  <span class='@status ivar id'>@status</span> <span class='assign token'>=</span> <span class='Stanza constant id'>Stanza</span><span class='colon2 op'>::</span><span class='Presence constant id'>Presence</span><span class='colon2 op'>::</span><span class='Status constant id'>Status</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+  <span class='@handlers ivar id'>@handlers</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='@roster ivar id'>@roster</span> <span class='assign token'>=</span> <span class='Roster constant id'>Roster</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='self self kw'>self</span>
+
+  <span class='setup_initial_handlers identifier id'>setup_initial_handlers</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#call-instance_method' title='#call'>#call</a></span><span class='args'>(stanza)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#call_handler_for-instance_method' title='#call_handler_for'>#call_handler_for</a></span><span class='args'>(type, stanza)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#register_handler-instance_method' title='#register_handler'>#register_handler</a></span><span class='args'>(type, *guards, &amp;handler)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#status-instance_method' title='#status'>#status</a></span><span class='args'>=(state)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#stop-instance_method' title='#stop'>#stop</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#stopped-instance_method' title='#stopped'>#stopped</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#stream_started-instance_method' title='#stream_started'>#stream_started</a></span><span class='args'>(stream)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#write-instance_method' title='#write'>#write</a></span><span class='args'>(data)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>call</h3>
+</div><div id="call-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>call</span><span class='args'>(stanza)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+59
+60
+61
+62
+63</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/blather/client.rb', line 59</span>
+
+<span class='def def kw'>def</span> <span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='stanza identifier id'>stanza</span><span class='rparen token'>)</span>
+  <span class='stanza identifier id'>stanza</span><span class='dot token'>.</span><span class='handler_heirarchy identifier id'>handler_heirarchy</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='type identifier id'>type</span><span class='bitor op'>|</span>
+    <span class='break break kw'>break</span> <span class='if if_mod kw'>if</span> <span class='call_handler_for identifier id'>call_handler_for</span><span class='lparen token'>(</span><span class='type identifier id'>type</span><span class='comma token'>,</span> <span class='stanza identifier id'>stanza</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='lparen token'>(</span><span class='stanza identifier id'>stanza</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='BlatherError constant id'>BlatherError</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='stanza identifier id'>stanza</span><span class='dot token'>.</span><span class='type identifier id'>type</span> <span class='eq op'>==</span> <span class='symbol val'>:iq</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>call_handler_for</h3>
+</div><div id="call_handler_for-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>call_handler_for</span><span class='args'>(type, stanza)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+65
+66
+67
+68
+69
+70</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/blather/client.rb', line 65</span>
+
+<span class='def def kw'>def</span> <span class='call_handler_for identifier id'>call_handler_for</span><span class='lparen token'>(</span><span class='type identifier id'>type</span><span class='comma token'>,</span> <span class='stanza identifier id'>stanza</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='@handlers ivar id'>@handlers</span><span class='lbrack token'>[</span><span class='type identifier id'>type</span><span class='rbrack token'>]</span>
+    <span class='@handlers ivar id'>@handlers</span><span class='lbrack token'>[</span><span class='type identifier id'>type</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='find identifier id'>find</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='guards identifier id'>guards</span><span class='comma token'>,</span> <span class='handler identifier id'>handler</span><span class='bitor op'>|</span> <span class='handler identifier id'>handler</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='stanza identifier id'>stanza</span><span class='rparen token'>)</span> <span class='unless unless_mod kw'>unless</span> <span class='guarded? fid id'>guarded?</span><span class='lparen token'>(</span><span class='guards identifier id'>guards</span><span class='comma token'>,</span> <span class='stanza identifier id'>stanza</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+    <span class='true true kw'>true</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>register_handler</h3>
+</div><div id="register_handler-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>register_handler</span><span class='args'>(type, *guards, &amp;handler)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+21
+22
+23
+24</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/blather/client.rb', line 21</span>
+
+<span class='def def kw'>def</span> <span class='register_handler identifier id'>register_handler</span><span class='lparen token'>(</span><span class='type identifier id'>type</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='guards identifier id'>guards</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='handler identifier id'>handler</span><span class='rparen token'>)</span>
+  <span class='@handlers ivar id'>@handlers</span><span class='lbrack token'>[</span><span class='type identifier id'>type</span><span class='rbrack token'>]</span> <span class='opasgn op'>||=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+  <span class='@handlers ivar id'>@handlers</span><span class='lbrack token'>[</span><span class='type identifier id'>type</span><span class='rbrack token'>]</span> <span class='lshft op'>&lt;&lt;</span> <span class='lbrack token'>[</span><span class='guards identifier id'>guards</span><span class='comma token'>,</span> <span class='handler identifier id'>handler</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>status</h3>
+</div><div id="status-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>status</span><span class='args'>=(state)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+30
+31
+32
+33
+34
+35
+36
+37
+38</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/blather/client.rb', line 30</span>
+
+<span class='def def kw'>def</span> <span class='status= identifier id'>status=</span><span class='lparen token'>(</span><span class='state identifier id'>state</span><span class='rparen token'>)</span>
+  <span class='state identifier id'>state</span><span class='comma token'>,</span> <span class='msg identifier id'>msg</span><span class='comma token'>,</span> <span class='to identifier id'>to</span> <span class='assign token'>=</span> <span class='state identifier id'>state</span>
+
+  <span class='status identifier id'>status</span> <span class='assign token'>=</span> <span class='Stanza constant id'>Stanza</span><span class='colon2 op'>::</span><span class='Presence constant id'>Presence</span><span class='colon2 op'>::</span><span class='Status constant id'>Status</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='state identifier id'>state</span><span class='comma token'>,</span> <span class='msg identifier id'>msg</span>
+  <span class='status identifier id'>status</span><span class='dot token'>.</span><span class='to identifier id'>to</span> <span class='assign token'>=</span> <span class='to identifier id'>to</span>
+  <span class='@statustatus ivar id'>@statustatus</span> <span class='unless unless_mod kw'>unless</span> <span class='to identifier id'>to</span>
+
+  <span class='write identifier id'>write</span> <span class='status identifier id'>status</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>stop</h3>
+</div><div id="stop-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>stop</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+51
+52
+53</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/blather/client.rb', line 51</span>
+
+<span class='def def kw'>def</span> <span class='stop identifier id'>stop</span>
+  <span class='@stream ivar id'>@stream</span><span class='dot token'>.</span><span class='close_connection_after_writing identifier id'>close_connection_after_writing</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>stopped</h3>
+</div><div id="stopped-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>stopped</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+55
+56
+57</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/blather/client.rb', line 55</span>
+
+<span class='def def kw'>def</span> <span class='stopped identifier id'>stopped</span>
+  <span class='EM constant id'>EM</span><span class='dot token'>.</span><span class='stop identifier id'>stop</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>stream_started</h3>
+</div><div id="stream_started-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>stream_started</span><span class='args'>(stream)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+44
+45
+46
+47
+48
+49</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/blather/client.rb', line 44</span>
+
+<span class='def def kw'>def</span> <span class='stream_started identifier id'>stream_started</span><span class='lparen token'>(</span><span class='stream identifier id'>stream</span><span class='rparen token'>)</span>
+  <span class='@stream ivar id'>@stream</span> <span class='assign token'>=</span> <span class='stream identifier id'>stream</span>
+
+  <span class='comment val'>#retreive roster</span>
+  <span class='write identifier id'>write</span> <span class='Stanza constant id'>Stanza</span><span class='colon2 op'>::</span><span class='Iq constant id'>Iq</span><span class='colon2 op'>::</span><span class='Roster constant id'>Roster</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>write</h3>
+</div><div id="write-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>write</span><span class='args'>(data)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+40
+41
+42</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/blather/client.rb', line 40</span>
+
+<span class='def def kw'>def</span> <span class='write identifier id'>write</span><span class='lparen token'>(</span><span class='data identifier id'>data</span><span class='rparen token'>)</span>
+  <span class='@stream ivar id'>@stream</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='data identifier id'>data</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='@stream ivar id'>@stream</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

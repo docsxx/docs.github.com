@@ -1,0 +1,920 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: REXMLUtilityNode</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class REXMLUtilityNode">
+  <h1 class="title">Class: REXMLUtilityNode</h1>
+  <div class="section inheritance">
+  <ul>
+  <li><a href='Object.html' title='Object'>Object</a></li><ul><li>REXMLUtilityNode</li>
+  </ul></ul>
+</div><div class="section docstring">
+  <p>
+This is a slighly modified version of the XMLUtilityNode from
+http://merb.devjavu.com/projects/merb/ticket/95 (has.sox@gmail.com)
+It&#8217;s mainly just adding vowels, as I ht cd wth n vwls :) This
+represents the hard part of the work, all I did was change the underlying
+parser.
+</p>
+
+</div><div class="section attributes">
+  <h1>Attributes</h1>
+
+  
+    <div class="instance">
+      <h2>Instance Attributes</h2>
+      <table>
+      
+        <tr>
+          <th class="name">attributes</td>
+          <td class="readwrite">
+            [<span id='attributes-instance_method'>R</span><span id='attributes%3D-instance_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>attributes</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">children</td>
+          <td class="readwrite">
+            [<span id='children-instance_method'>R</span><span id='children%3D-instance_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>children</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">name</td>
+          <td class="readwrite">
+            [<span id='name-instance_method'>R</span><span id='name%3D-instance_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>name</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">type</td>
+          <td class="readwrite">
+            [<span id='type-instance_method'>R</span><span id='type%3D-instance_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>type</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+      </table>
+    </div>
+  
+</div><div class="section constants">
+  
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(name, normalized_attributes = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/crack/xml.rb', line 50</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='normalized_attributes identifier id'>normalized_attributes</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  
+  <span class='comment val'># unnormalize attribute values</span>
+  <span class='attributes identifier id'>attributes</span> <span class='assign token'>=</span> <span class='Hash constant id'>Hash</span><span class='lbrack token'>[</span><span class='mult op'>*</span> <span class='normalized_attributes identifier id'>normalized_attributes</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='key identifier id'>key</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='bitor op'>|</span>
+    <span class='lbrack token'>[</span> <span class='key identifier id'>key</span><span class='comma token'>,</span> <span class='unnormalize_xml_entities identifier id'>unnormalize_xml_entities</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span> <span class='rbrack token'>]</span>
+  <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='flatten identifier id'>flatten</span><span class='rbrack token'>]</span>
+  
+  <span class='@name ivar id'>@name</span>         <span class='assign token'>=</span> <span class='name identifier id'>name</span><span class='dot token'>.</span><span class='tr identifier id'>tr</span><span class='lparen token'>(</span><span class='string val'>&quot;-&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;_&quot;</span><span class='rparen token'>)</span>
+  <span class='comment val'># leave the type alone if we don't know what it is</span>
+  <span class='@type ivar id'>@type</span>         <span class='assign token'>=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='available_typecasts identifier id'>available_typecasts</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='attributes identifier id'>attributes</span><span class='lbrack token'>[</span><span class='string val'>&quot;type&quot;</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='attributes identifier id'>attributes</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='string val'>&quot;type&quot;</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='attributes identifier id'>attributes</span><span class='lbrack token'>[</span><span class='string val'>&quot;type&quot;</span><span class='rbrack token'>]</span>
+
+  <span class='@nil_element ivar id'>@nil_element</span>  <span class='assign token'>=</span> <span class='attributes identifier id'>attributes</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='string val'>&quot;nil&quot;</span><span class='rparen token'>)</span> <span class='eq op'>==</span> <span class='string val'>&quot;true&quot;</span>
+  <span class='@attributes ivar id'>@attributes</span>   <span class='assign token'>=</span> <span class='undasherize_keys identifier id'>undasherize_keys</span><span class='lparen token'>(</span><span class='attributes identifier id'>attributes</span><span class='rparen token'>)</span>
+  <span class='@children ivar id'>@children</span>     <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+  <span class='@text ivar id'>@text</span>         <span class='assign token'>=</span> <span class='false false kw'>false</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <h1>Public Class Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#available_typecasts-class_method' title='available_typecasts'>available_typecasts</a></span><span class='args'>=(obj)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#typecasts-class_method' title='typecasts'>typecasts</a></span><span class='args'>=(obj)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+  <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#add_node-instance_method' title='#add_node'>#add_node</a></span><span class='args'>(node)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#inner_html-instance_method' title='#inner_html'>#inner_html</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Get the inner_html of the REXML node.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#to_hash-instance_method' title='#to_hash'>#to_hash</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#to_html-instance_method' title='#to_html'>#to_html</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Converts the node into a readable HTML node.
+</p>
+
+        
+          <p class='returns'>
+            Returns: 
+              <span class='return_types'>
+                 
+              </span>
+          </p>
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#to_s-instance_method' title='#to_s'>#to_s</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#typecast_value-instance_method' title='#typecast_value'>#typecast_value</a></span><span class='args'>(value)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Typecasts a value based upon its type.
+</p>
+
+        
+          <p class='returns'>
+            Returns: 
+              <span class='return_types'>
+                 
+              </span>
+          </p>
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#undasherize_keys-instance_method' title='#undasherize_keys'>#undasherize_keys</a></span><span class='args'>(params)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Take keys of the form foo-bar and convert them to foo_bar.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table><div class="inherited">
+  
+  <div>
+    <h1>Public Instance Methods Inherited from <a href='Object.html' title='Object'>Object</a></h1>
+    <p><span class='name'><a href='Object.html#blank%3F-instance_method' title='blank?'>blank?</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails class public">
+  <h1>Public Class Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>available_typecasts</h3>
+</div><div id="available_typecasts-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>available_typecasts</span><span class='args'>=(obj)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+30
+31
+32</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/crack/xml.rb', line 30</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='available_typecasts identifier id'>available_typecasts</span><span class='assign token'>=</span><span class='lparen token'>(</span><span class='obj identifier id'>obj</span><span class='rparen token'>)</span>
+  <span class='@@available_typecasts ivar id'>@@available_typecasts</span> <span class='assign token'>=</span> <span class='obj identifier id'>obj</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>typecasts</h3>
+</div><div id="typecasts-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>typecasts</span><span class='args'>=(obj)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+22
+23
+24</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/crack/xml.rb', line 22</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='typecasts identifier id'>typecasts</span><span class='assign token'>=</span><span class='lparen token'>(</span><span class='obj identifier id'>obj</span><span class='rparen token'>)</span>
+  <span class='@@typecasts ivar id'>@@typecasts</span> <span class='assign token'>=</span> <span class='obj identifier id'>obj</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div><div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>add_node</h3>
+</div><div id="add_node-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>add_node</span><span class='args'>(node)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+67
+68
+69
+70</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/crack/xml.rb', line 67</span>
+
+<span class='def def kw'>def</span> <span class='add_node identifier id'>add_node</span><span class='lparen token'>(</span><span class='node identifier id'>node</span><span class='rparen token'>)</span>
+  <span class='@text ivar id'>@text</span> <span class='assign token'>=</span> <span class='true true kw'>true</span> <span class='if if_mod kw'>if</span> <span class='node identifier id'>node</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span> <span class='String constant id'>String</span>
+  <span class='@children ivar id'>@children</span> <span class='lshft op'>&lt;&lt;</span> <span class='node identifier id'>node</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>inner_html</h3>
+</div><div id="inner_html-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>inner_html</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Get the inner_html of the REXML node.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+160
+161
+162</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/crack/xml.rb', line 160</span>
+
+<span class='def def kw'>def</span> <span class='inner_html identifier id'>inner_html</span>
+  <span class='@children ivar id'>@children</span><span class='dot token'>.</span><span class='join identifier id'>join</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>to_hash</h3>
+</div><div id="to_hash-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>to_hash</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/crack/xml.rb', line 72</span>
+
+<span class='def def kw'>def</span> <span class='to_hash identifier id'>to_hash</span>
+  <span class='if if kw'>if</span> <span class='@type ivar id'>@type</span> <span class='eq op'>==</span> <span class='string val'>&quot;file&quot;</span>
+    <span class='f identifier id'>f</span> <span class='assign token'>=</span> <span class='StringIO constant id'>StringIO</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='lparen token'>(</span><span class='@children ivar id'>@children</span><span class='dot token'>.</span><span class='first identifier id'>first</span> <span class='orop op'>||</span> <span class='string val'>''</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='unpack identifier id'>unpack</span><span class='lparen token'>(</span><span class='string val'>'m'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='rparen token'>)</span>
+    <span class='class class kw'>class</span> <span class='lshft op'>&lt;&lt;</span> <span class='f identifier id'>f</span>
+      <span class='attr_accessor identifier id'>attr_accessor</span> <span class='symbol val'>:original_filename</span><span class='comma token'>,</span> <span class='symbol val'>:content_type</span>
+    <span class='end end kw'>end</span>
+    <span class='f identifier id'>f</span><span class='dot token'>.</span><span class='original_filename identifier id'>original_filename</span> <span class='assign token'>=</span> <span class='attributes identifier id'>attributes</span><span class='lbrack token'>[</span><span class='string val'>'name'</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='string val'>'untitled'</span>
+    <span class='f identifier id'>f</span><span class='dot token'>.</span><span class='content_type identifier id'>content_type</span> <span class='assign token'>=</span> <span class='attributes identifier id'>attributes</span><span class='lbrack token'>[</span><span class='string val'>'content_type'</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='string val'>'application/octet-stream'</span>
+    <span class='return return kw'>return</span> <span class='lbrace token'>{</span><span class='name identifier id'>name</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='f identifier id'>f</span><span class='rbrace token'>}</span>
+  <span class='end end kw'>end</span>
+
+  <span class='if if kw'>if</span> <span class='@text ivar id'>@text</span>
+    <span class='return return kw'>return</span> <span class='lbrace token'>{</span> <span class='name identifier id'>name</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='typecast_value identifier id'>typecast_value</span><span class='lparen token'>(</span> <span class='unnormalize_xml_entities identifier id'>unnormalize_xml_entities</span><span class='lparen token'>(</span> <span class='inner_html identifier id'>inner_html</span> <span class='rparen token'>)</span> <span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  <span class='else else kw'>else</span>
+    <span class='comment val'>#change repeating groups into an array</span>
+    <span class='groups identifier id'>groups</span> <span class='assign token'>=</span> <span class='@children ivar id'>@children</span><span class='dot token'>.</span><span class='inject identifier id'>inject</span><span class='lparen token'>(</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='s identifier id'>s</span><span class='comma token'>,</span><span class='e identifier id'>e</span><span class='bitor op'>|</span> <span class='lparen token'>(</span><span class='s identifier id'>s</span><span class='lbrack token'>[</span><span class='e identifier id'>e</span><span class='dot token'>.</span><span class='name identifier id'>name</span><span class='rbrack token'>]</span> <span class='opasgn op'>||=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='lshft op'>&lt;&lt;</span> <span class='e identifier id'>e</span><span class='semicolon token'>;</span> <span class='s identifier id'>s</span> <span class='rbrace token'>}</span>
+
+    <span class='out identifier id'>out</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+    <span class='if if kw'>if</span> <span class='@type ivar id'>@type</span> <span class='eq op'>==</span> <span class='string val'>&quot;array&quot;</span>
+      <span class='out identifier id'>out</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+      <span class='groups identifier id'>groups</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='k identifier id'>k</span><span class='comma token'>,</span> <span class='v identifier id'>v</span><span class='bitor op'>|</span>
+        <span class='if if kw'>if</span> <span class='v identifier id'>v</span><span class='dot token'>.</span><span class='size identifier id'>size</span> <span class='eq op'>==</span> <span class='integer val'>1</span>
+          <span class='out identifier id'>out</span> <span class='lshft op'>&lt;&lt;</span> <span class='v identifier id'>v</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='dot token'>.</span><span class='to_hash identifier id'>to_hash</span><span class='dot token'>.</span><span class='entries identifier id'>entries</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='dot token'>.</span><span class='last identifier id'>last</span>
+        <span class='else else kw'>else</span>
+          <span class='out identifier id'>out</span> <span class='lshft op'>&lt;&lt;</span> <span class='v identifier id'>v</span><span class='dot token'>.</span><span class='map identifier id'>map</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='e identifier id'>e</span><span class='bitor op'>|</span> <span class='e identifier id'>e</span><span class='dot token'>.</span><span class='to_hash identifier id'>to_hash</span><span class='lbrack token'>[</span><span class='k identifier id'>k</span><span class='rbrack token'>]</span><span class='rbrace token'>}</span>
+        <span class='end end kw'>end</span>
+      <span class='end end kw'>end</span>
+      <span class='out identifier id'>out</span> <span class='assign token'>=</span> <span class='out identifier id'>out</span><span class='dot token'>.</span><span class='flatten identifier id'>flatten</span>
+
+    <span class='else else kw'>else</span> <span class='comment val'># If Hash</span>
+      <span class='out identifier id'>out</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+      <span class='groups identifier id'>groups</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='k identifier id'>k</span><span class='comma token'>,</span><span class='v identifier id'>v</span><span class='bitor op'>|</span>
+        <span class='if if kw'>if</span> <span class='v identifier id'>v</span><span class='dot token'>.</span><span class='size identifier id'>size</span> <span class='eq op'>==</span> <span class='integer val'>1</span>
+          <span class='out identifier id'>out</span><span class='dot token'>.</span><span class='merge! fid id'>merge!</span><span class='lparen token'>(</span><span class='v identifier id'>v</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='rparen token'>)</span>
+        <span class='else else kw'>else</span>
+          <span class='out identifier id'>out</span><span class='dot token'>.</span><span class='merge! fid id'>merge!</span><span class='lparen token'>(</span> <span class='k identifier id'>k</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='v identifier id'>v</span><span class='dot token'>.</span><span class='map identifier id'>map</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='e identifier id'>e</span><span class='bitor op'>|</span> <span class='e identifier id'>e</span><span class='dot token'>.</span><span class='to_hash identifier id'>to_hash</span><span class='lbrack token'>[</span><span class='k identifier id'>k</span><span class='rbrack token'>]</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+        <span class='end end kw'>end</span>
+      <span class='end end kw'>end</span>
+      <span class='out identifier id'>out</span><span class='dot token'>.</span><span class='merge! fid id'>merge!</span> <span class='attributes identifier id'>attributes</span> <span class='unless unless_mod kw'>unless</span> <span class='attributes identifier id'>attributes</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span>
+      <span class='out identifier id'>out</span> <span class='assign token'>=</span> <span class='out identifier id'>out</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span> <span class='integer val'>? </span><span class='nil nil kw'>nil</span> <span class='colon op'>:</span> <span class='out identifier id'>out</span>
+    <span class='end end kw'>end</span>
+
+    <span class='if if kw'>if</span> <span class='@type ivar id'>@type</span> <span class='andop op'>&amp;&amp;</span> <span class='out identifier id'>out</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+      <span class='lbrace token'>{</span> <span class='name identifier id'>name</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='typecast_value identifier id'>typecast_value</span><span class='lparen token'>(</span><span class='out identifier id'>out</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+    <span class='else else kw'>else</span>
+      <span class='lbrace token'>{</span> <span class='name identifier id'>name</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='out identifier id'>out</span> <span class='rbrace token'>}</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>to_html</h3>
+</div><div id="to_html-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>to_html</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Converts the node into a readable HTML node.
+</p>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="return">
+  <h3>Returns:</h3>
+  <dl>
+  
+    <dt>
+      
+        <span class='type'></span>
+      
+      
+        <span class='name'></span>
+      
+    </dt>
+    <dd>
+      <span class='desc'><p>
+&lt;String&gt; The HTML node in text form.
+</p>
+</span>
+    </dd>
+  
+  </dl>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+167
+168
+169
+170</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/crack/xml.rb', line 167</span>
+
+<span class='def def kw'>def</span> <span class='to_html identifier id'>to_html</span>
+  <span class='attributes identifier id'>attributes</span><span class='dot token'>.</span><span class='merge! fid id'>merge!</span><span class='lparen token'>(</span><span class='symbol val'>:type</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='@type ivar id'>@type</span> <span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='@type ivar id'>@type</span>
+  <span class='dstring node'>&quot;&lt;#{name}#{attributes.to_xml_attributes}&gt;#{@nil_element ? '' : inner_html}&lt;/#{name}&gt;&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>to_s</h3>
+</div><div id="to_s-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>to_s</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+173
+174
+175</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/crack/xml.rb', line 173</span>
+
+<span class='def def kw'>def</span> <span class='to_s identifier id'>to_s</span>
+  <span class='to_html identifier id'>to_html</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>typecast_value</h3>
+</div><div id="typecast_value-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>typecast_value</span><span class='args'>(value)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Typecasts a value based upon its type. For instance, if <tt>node</tt> has
+#type == &quot;integer&quot;, {{[node.typecast_value(&quot;12&quot;) #=&gt;
+12]}}
+</p>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="param">
+  <h3>Parameters:</h3>
+  <dl>
+  
+    <dt>
+      
+        <span class='type'></span>
+      
+      
+        <span class='name'>value&lt;String&gt;</span>
+      
+    </dt>
+    <dd>
+      <span class='desc'><p>
+The value that is being typecast.
+</p>
+</span>
+    </dd>
+  
+  </dl>
+</div>
+<div class="return">
+  <h3>Returns:</h3>
+  <dl>
+  
+    <dt>
+      
+        <span class='type'></span>
+      
+      
+        <span class='name'></span>
+      
+    </dt>
+    <dd>
+      <span class='desc'><p>
+&lt;Integer, TrueClass, FalseClass, Time, Date, Object&gt; The result of
+typecasting <tt>value</tt>.
+</p>
+</span>
+    </dd>
+  
+  </dl>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+145
+146
+147
+148
+149</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/crack/xml.rb', line 145</span>
+
+<span class='def def kw'>def</span> <span class='typecast_value identifier id'>typecast_value</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+  <span class='return return kw'>return</span> <span class='value identifier id'>value</span> <span class='unless unless_mod kw'>unless</span> <span class='@type ivar id'>@type</span>
+  <span class='proc identifier id'>proc</span> <span class='assign token'>=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='typecasts identifier id'>typecasts</span><span class='lbrack token'>[</span><span class='@type ivar id'>@type</span><span class='rbrack token'>]</span>
+  <span class='proc identifier id'>proc</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span> <span class='integer val'>? </span><span class='value identifier id'>value</span> <span class='colon op'>:</span> <span class='proc identifier id'>proc</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>undasherize_keys</h3>
+</div><div id="undasherize_keys-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>undasherize_keys</span><span class='args'>(params)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Take keys of the form foo-bar and convert them to foo_bar
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+152
+153
+154
+155
+156
+157</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/crack/xml.rb', line 152</span>
+
+<span class='def def kw'>def</span> <span class='undasherize_keys identifier id'>undasherize_keys</span><span class='lparen token'>(</span><span class='params identifier id'>params</span><span class='rparen token'>)</span>
+  <span class='params identifier id'>params</span><span class='dot token'>.</span><span class='keys identifier id'>keys</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='key identifier id'>key</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='bitor op'>|</span>
+    <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='key identifier id'>key</span><span class='dot token'>.</span><span class='tr identifier id'>tr</span><span class='lparen token'>(</span><span class='string val'>&quot;-&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;_&quot;</span><span class='rparen token'>)</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='params identifier id'>params</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='key identifier id'>key</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+  <span class='params identifier id'>params</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

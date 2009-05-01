@@ -1,0 +1,209 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: HasContributorsTestUnitHelper</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module HasContributorsTestUnitHelper">
+  <h1 class="title">Module: HasContributorsTestUnitHelper</h1>
+  <div class="section docstring">
+  <p>
+Walter McGinnis, 2007-11-02 test that correspond to HasContributors Module
+</p>
+
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#test_add_contributor-instance_method' title='#test_add_contributor'>#test_add_contributor</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+can we add a user in the role of creator to this item.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#test_add_creator-instance_method' title='#test_add_creator'>#test_add_creator</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+can we add a user in the role of creator to this item.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>test_add_contributor</h3>
+</div><div id="test_add_contributor-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>test_add_contributor</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+can we add a user in the role of creator to this item
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/has_contributors_test_unit_helper.rb', line 16</span>
+
+<span class='def def kw'>def</span> <span class='test_add_contributor identifier id'>test_add_contributor</span>
+  <span class='model identifier id'>model</span> <span class='assign token'>=</span> <span class='Module constant id'>Module</span><span class='dot token'>.</span><span class='class_eval identifier id'>class_eval</span><span class='lparen token'>(</span><span class='@base_class ivar id'>@base_class</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='create! fid id'>create!</span> <span class='@new_model ivar id'>@new_model</span>
+  <span class='user identifier id'>user</span> <span class='assign token'>=</span> <span class='User constant id'>User</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='symbol val'>:first</span><span class='rparen token'>)</span>
+
+  <span class='comment val'># add creator first, because first contributor is always creator role</span>
+  <span class='model identifier id'>model</span><span class='dot token'>.</span><span class='creators identifier id'>creators</span> <span class='lshft op'>&lt;&lt;</span> <span class='user identifier id'>user</span>
+
+  <span class='comment val'># update model to have new version</span>
+  <span class='model identifier id'>model</span><span class='dot token'>.</span><span class='update_attributes identifier id'>update_attributes</span><span class='lparen token'>(</span><span class='symbol val'>:title</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'something else'</span><span class='rparen token'>)</span>
+
+  <span class='comment val'># make sure that version is 2</span>
+  <span class='assert_equal identifier id'>assert_equal</span> <span class='integer val'>2</span><span class='comma token'>,</span> <span class='model identifier id'>model</span><span class='dot token'>.</span><span class='version identifier id'>version</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{@base_class} failed didn't update version&quot;</span>
+
+  <span class='comment val'># now add the contributor of the new version</span>
+  <span class='model identifier id'>model</span><span class='dot token'>.</span><span class='add_as_contributor identifier id'>add_as_contributor</span><span class='lparen token'>(</span><span class='user identifier id'>user</span><span class='rparen token'>)</span>
+
+  <span class='comment val'># test that we have a contributor for that item</span>
+  <span class='assert_equal identifier id'>assert_equal</span> <span class='integer val'>1</span><span class='comma token'>,</span> <span class='model identifier id'>model</span><span class='dot token'>.</span><span class='contributors identifier id'>contributors</span><span class='dot token'>.</span><span class='size identifier id'>size</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{@base_class} failed to add contributor&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>test_add_creator</h3>
+</div><div id="test_add_creator-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>test_add_creator</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+can we add a user in the role of creator to this item
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+5
+6
+7
+8
+9
+10
+11
+12
+13</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/has_contributors_test_unit_helper.rb', line 5</span>
+
+<span class='def def kw'>def</span> <span class='test_add_creator identifier id'>test_add_creator</span>
+  <span class='model identifier id'>model</span> <span class='assign token'>=</span> <span class='Module constant id'>Module</span><span class='dot token'>.</span><span class='class_eval identifier id'>class_eval</span><span class='lparen token'>(</span><span class='@base_class ivar id'>@base_class</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='create! fid id'>create!</span> <span class='@new_model ivar id'>@new_model</span>
+  <span class='user identifier id'>user</span> <span class='assign token'>=</span> <span class='User constant id'>User</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='integer val'>1</span><span class='rparen token'>)</span>
+
+  <span class='model identifier id'>model</span><span class='dot token'>.</span><span class='creators identifier id'>creators</span> <span class='lshft op'>&lt;&lt;</span> <span class='user identifier id'>user</span>
+
+  <span class='comment val'># test that we have a creator for that item</span>
+  <span class='assert_equal identifier id'>assert_equal</span> <span class='integer val'>1</span><span class='comma token'>,</span> <span class='model identifier id'>model</span><span class='dot token'>.</span><span class='creators identifier id'>creators</span><span class='dot token'>.</span><span class='size identifier id'>size</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{@base_class} failed to add creator&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

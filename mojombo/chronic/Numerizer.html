@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: Numerizer</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class Numerizer">
+  <h1 class="title">Class: Numerizer</h1>
+  <div class="section constants">
+  <div class="thisclass">
+  <h1>Constants</h1>
+  <dl>
+    
+      <dt id="BIG_PREFIXES-constant">BIG_PREFIXES</dt>
+      <dd>[ ['hundred', 100],                    ['thousand', 1000],                    ['million', 1_000_000],                    ['billion', 1_000_000_000],                    ['trillion', 1_000_000_000_000],                  ]</dd>
+    
+      <dt id="DIRECT_NUMS-constant">DIRECT_NUMS</dt>
+      <dd>[                  ['eleven', '11'],                  ['twelve', '12'],                  ['thirteen', '13'],                  ['fourteen', '14'],                  ['fifteen', '15'],                  ['sixteen', '16'],                  ['seventeen', '17'],                  ['eighteen', '18'],                  ['nineteen', '19'],                  ['ninteen', '19'],                   ['zero', '0'],                  ['one', '1'],                  ['two', '2'],                  ['three', '3'],                  ['four(\W|$)', '4\1'],                    ['five', '5'],                  ['six(\W|$)', '6\1'],                  ['seven(\W|$)', '7\1'],                  ['eight(\W|$)', '8\1'],                  ['nine(\W|$)', '9\1'],                  ['ten', '10'],                  ['\ba[\b^$]', '1']                 ]</dd>
+    
+      <dt id="TEN_PREFIXES-constant">TEN_PREFIXES</dt>
+      <dd>[ ['twenty', 20],                    ['thirty', 30],                    ['fourty', 40],                    ['fifty', 50],                    ['sixty', 60],                    ['seventy', 70],                    ['eighty', 80],                    ['ninety', 90]                  ]</dd>
+    
+  </dl>
+</div>
+
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <h1>Public Class Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#numerize-class_method' title='numerize'>numerize</a></span><span class='args'>(string)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails class public">
+  <h1>Public Class Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>numerize</h3>
+</div><div id="numerize-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>numerize</span><span class='args'>(string)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/numerizer/numerizer.rb', line 47</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='numerize identifier id'>numerize</span><span class='lparen token'>(</span><span class='string identifier id'>string</span><span class='rparen token'>)</span>
+  <span class='string identifier id'>string</span> <span class='assign token'>=</span> <span class='string identifier id'>string</span><span class='dot token'>.</span><span class='dup identifier id'>dup</span>
+
+  <span class='comment val'># preprocess</span>
+  <span class='string identifier id'>string</span><span class='dot token'>.</span><span class='gsub! fid id'>gsub!</span><span class='lparen token'>(</span><span class='regexp val'>/ +|([^\d])-([^\d])/</span><span class='comma token'>,</span> <span class='string val'>'\1 \2'</span><span class='rparen token'>)</span> <span class='comment val'># will mutilate hyphenated-words but shouldn't matter for date extraction</span>
+  <span class='string identifier id'>string</span><span class='dot token'>.</span><span class='gsub! fid id'>gsub!</span><span class='lparen token'>(</span><span class='regexp val'>/a half/</span><span class='comma token'>,</span> <span class='string val'>'haAlf'</span><span class='rparen token'>)</span> <span class='comment val'># take the 'a' out so it doesn't turn into a 1, save the half for the end</span>
+  
+  <span class='comment val'># easy/direct replacements</span>
+  
+  <span class='DIRECT_NUMS constant id'>DIRECT_NUMS</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='dn identifier id'>dn</span><span class='bitor op'>|</span>
+    <span class='string identifier id'>string</span><span class='dot token'>.</span><span class='gsub! fid id'>gsub!</span><span class='lparen token'>(</span><span class='dregexp node'>/#{dn[0]}/i</span><span class='comma token'>,</span> <span class='string val'>'&lt;num&gt;'</span> <span class='plus op'>+</span> <span class='dn identifier id'>dn</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+  
+  <span class='comment val'># ten, twenty, etc.</span>
+  
+  <span class='TEN_PREFIXES constant id'>TEN_PREFIXES</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='tp identifier id'>tp</span><span class='bitor op'>|</span>
+    <span class='string identifier id'>string</span><span class='dot token'>.</span><span class='gsub! fid id'>gsub!</span><span class='lparen token'>(</span><span class='dregexp node'>/(?:#{tp[0]}) *&lt;num&gt;(\d(?=[^\d]|$))*/i</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='string val'>'&lt;num&gt;'</span> <span class='plus op'>+</span> <span class='lparen token'>(</span><span class='tp identifier id'>tp</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span> <span class='plus op'>+</span> <span class='$1 nth_ref id'>$1</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='rbrace token'>}</span>
+  <span class='end end kw'>end</span>
+  
+  <span class='TEN_PREFIXES constant id'>TEN_PREFIXES</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='tp identifier id'>tp</span><span class='bitor op'>|</span>
+    <span class='string identifier id'>string</span><span class='dot token'>.</span><span class='gsub! fid id'>gsub!</span><span class='lparen token'>(</span><span class='dregexp node'>/#{tp[0]}/i</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='string val'>'&lt;num&gt;'</span> <span class='plus op'>+</span> <span class='tp identifier id'>tp</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='rbrace token'>}</span>
+  <span class='end end kw'>end</span>
+  
+  <span class='comment val'># hundreds, thousands, millions, etc.</span>
+  
+  <span class='BIG_PREFIXES constant id'>BIG_PREFIXES</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='bp identifier id'>bp</span><span class='bitor op'>|</span>
+    <span class='string identifier id'>string</span><span class='dot token'>.</span><span class='gsub! fid id'>gsub!</span><span class='lparen token'>(</span><span class='dregexp node'>/(?:&lt;num&gt;)?(\d*) *#{bp[0]}/i</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='string val'>'&lt;num&gt;'</span> <span class='plus op'>+</span> <span class='lparen token'>(</span><span class='bp identifier id'>bp</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span> <span class='mult op'>*</span> <span class='$1 nth_ref id'>$1</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rbrace token'>}</span>
+    <span class='andition identifier id'>andition</span><span class='lparen token'>(</span><span class='string identifier id'>string</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+  
+  <span class='comment val'># fractional addition</span>
+  <span class='comment val'># I'm not combining this with the previous block as using float addition complicates the strings</span>
+  <span class='comment val'># (with extraneous .0's and such )</span>
+  <span class='string identifier id'>string</span><span class='dot token'>.</span><span class='gsub! fid id'>gsub!</span><span class='lparen token'>(</span><span class='regexp val'>/(\d+)(?: | and |-)*haAlf/i</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='lparen token'>(</span><span class='$1 nth_ref id'>$1</span><span class='dot token'>.</span><span class='to_f identifier id'>to_f</span> <span class='plus op'>+</span> <span class='integer val'>0</span><span class='integer val'>.5</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='rbrace token'>}</span>
+  
+  <span class='string identifier id'>string</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='regexp val'>/&lt;num&gt;/</span><span class='comma token'>,</span> <span class='string val'>''</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

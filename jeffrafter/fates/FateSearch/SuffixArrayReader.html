@@ -1,0 +1,550 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: FateSearch::SuffixArrayReader</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class FateSearch_SuffixArrayReader">
+  <h1 class="title">Class: FateSearch::SuffixArrayReader</h1>
+  <div class="section docstring">
+  <p>
+Read the suffixes that were read from the full text and find matches for
+search terms (or phrases). The matches can be returned as a <tt>Hit</tt> or
+as a <tt>Hits</tt> enumeration that can be read sequentially.
+</p>
+
+</div><div class="section constants">
+  
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(fulltext_reader, options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/suffix_array_reader.rb', line 97</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='fulltext_reader identifier id'>fulltext_reader</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='@comparator ivar id'>@comparator</span> <span class='assign token'>=</span> <span class='FateSearch constant id'>FateSearch</span><span class='colon2 op'>::</span><span class='Comparison constant id'>Comparison</span><span class='colon2 op'>::</span><span class='Comparator constant id'>Comparator</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+  <span class='@fulltext_reader ivar id'>@fulltext_reader</span> <span class='assign token'>=</span> <span class='fulltext_reader identifier id'>fulltext_reader</span>
+  <span class='unless unless kw'>unless</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='colon op'>:</span><span class='path identifier id'>path</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='colon op'>:</span><span class='io identifier id'>io</span><span class='rbrack token'>]</span>
+    <span class='raise identifier id'>raise</span> <span class='ArgumentError constant id'>ArgumentError</span><span class='comma token'>,</span> <span class='string val'>&quot;Need either the path to the suffix array file or an input/output stream.&quot;</span>
+  <span class='end end kw'>end</span>
+
+  <span class='comment val'># setup io</span>
+  <span class='if if kw'>if</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='colon op'>:</span><span class='path identifier id'>path</span><span class='rbrack token'>]</span>
+    <span class='@io ivar id'>@io</span> <span class='assign token'>=</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='open identifier id'>open</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:path</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='string val'>&quot;rb&quot;</span><span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+    <span class='@io ivar id'>@io</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:io</span><span class='rbrack token'>]</span>
+  <span class='end end kw'>end</span>
+  
+  <span class='comment val'># load</span>
+  <span class='read_header_and_suffixes identifier id'>read_header_and_suffixes</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#count_hits-instance_method' title='#count_hits'>#count_hits</a></span><span class='args'>(term)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#dump_data-instance_method' title='#dump_data'>#dump_data</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#find_all-instance_method' title='#find_all'>#find_all</a></span><span class='args'>(term)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#find_first-instance_method' title='#find_first'>#find_first</a></span><span class='args'>(term)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#hits_to_infos-instance_method' title='#hits_to_infos'>#hits_to_infos</a></span><span class='args'>(hits)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#index_to_info-instance_method' title='#index_to_info'>#index_to_info</a></span><span class='args'>(suffix_index)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#index_to_offset-instance_method' title='#index_to_offset'>#index_to_offset</a></span><span class='args'>(suffix_index)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>count_hits</h3>
+</div><div id="count_hits-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>count_hits</span><span class='args'>(term)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/suffix_array_reader.rb', line 115</span>
+
+<span class='def def kw'>def</span> <span class='count_hits identifier id'>count_hits</span><span class='lparen token'>(</span><span class='term identifier id'>term</span><span class='rparen token'>)</span>
+  <span class='prepared_term identifier id'>prepared_term</span> <span class='assign token'>=</span> <span class='@comparator ivar id'>@comparator</span><span class='dot token'>.</span><span class='prepare identifier id'>prepare</span><span class='lparen token'>(</span><span class='term identifier id'>term</span><span class='rparen token'>)</span>
+  <span class='suffix_index identifier id'>suffix_index</span> <span class='assign token'>=</span> <span class='binary_search identifier id'>binary_search</span><span class='lparen token'>(</span><span class='prepared_term identifier id'>prepared_term</span><span class='comma token'>,</span> <span class='integer val'>0</span><span class='comma token'>,</span> <span class='@suffixes ivar id'>@suffixes</span><span class='dot token'>.</span><span class='size identifier id'>size</span><span class='rparen token'>)</span>
+  <span class='offset identifier id'>offset</span> <span class='assign token'>=</span> <span class='index_to_offset identifier id'>index_to_offset</span><span class='lparen token'>(</span><span class='suffix_index identifier id'>suffix_index</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='@comparator ivar id'>@comparator</span><span class='dot token'>.</span><span class='prepare identifier id'>prepare</span><span class='lparen token'>(</span><span class='@fulltext_reader ivar id'>@fulltext_reader</span><span class='dot token'>.</span><span class='get_data identifier id'>get_data</span><span class='lparen token'>(</span><span class='offset identifier id'>offset</span><span class='comma token'>,</span> <span class='term identifier id'>term</span><span class='dot token'>.</span><span class='size identifier id'>size</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='eq op'>==</span> <span class='prepared_term identifier id'>prepared_term</span>
+    <span class='to identifier id'>to</span> <span class='assign token'>=</span> <span class='binary_search_upper identifier id'>binary_search_upper</span><span class='lparen token'>(</span><span class='prepared_term identifier id'>prepared_term</span><span class='comma token'>,</span> <span class='integer val'>0</span><span class='comma token'>,</span> <span class='@suffixes ivar id'>@suffixes</span><span class='dot token'>.</span><span class='size identifier id'>size</span><span class='rparen token'>)</span>
+    <span class='to identifier id'>to</span> <span class='minus op'>-</span> <span class='suffix_index identifier id'>suffix_index</span>
+  <span class='else else kw'>else</span>
+    <span class='integer val'>0</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>dump_data</h3>
+</div><div id="dump_data-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>dump_data</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+167
+168
+169
+170
+171
+172</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/suffix_array_reader.rb', line 167</span>
+
+<span class='def def kw'>def</span> <span class='dump_data identifier id'>dump_data</span>
+  <span class='@io ivar id'>@io</span><span class='dot token'>.</span><span class='pos identifier id'>pos</span> <span class='assign token'>=</span> <span class='@suffixes ivar id'>@suffixes</span><span class='dot token'>.</span><span class='base identifier id'>base</span>
+  <span class='while while kw'>while</span> <span class='data identifier id'>data</span> <span class='assign token'>=</span> <span class='@io ivar id'>@io</span><span class='dot token'>.</span><span class='read identifier id'>read</span><span class='lparen token'>(</span><span class='integer val'>32768</span><span class='rparen token'>)</span>
+    <span class='yield yield kw'>yield</span> <span class='data identifier id'>data</span><span class='dot token'>.</span><span class='unpack identifier id'>unpack</span><span class='lparen token'>(</span><span class='string val'>&quot;V*&quot;</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>find_all</h3>
+</div><div id="find_all-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>find_all</span><span class='args'>(term)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/suffix_array_reader.rb', line 127</span>
+
+<span class='def def kw'>def</span> <span class='find_all identifier id'>find_all</span><span class='lparen token'>(</span><span class='term identifier id'>term</span><span class='rparen token'>)</span>
+  <span class='prepared_term identifier id'>prepared_term</span> <span class='assign token'>=</span> <span class='@comparator ivar id'>@comparator</span><span class='dot token'>.</span><span class='prepare identifier id'>prepare</span><span class='lparen token'>(</span><span class='term identifier id'>term</span><span class='rparen token'>)</span>
+  <span class='suffix_index identifier id'>suffix_index</span> <span class='assign token'>=</span> <span class='binary_search identifier id'>binary_search</span><span class='lparen token'>(</span><span class='prepared_term identifier id'>prepared_term</span><span class='comma token'>,</span> <span class='integer val'>0</span><span class='comma token'>,</span> <span class='@suffixes ivar id'>@suffixes</span><span class='dot token'>.</span><span class='size identifier id'>size</span><span class='rparen token'>)</span>
+  <span class='offset identifier id'>offset</span> <span class='assign token'>=</span> <span class='index_to_offset identifier id'>index_to_offset</span><span class='lparen token'>(</span><span class='suffix_index identifier id'>suffix_index</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='@comparator ivar id'>@comparator</span><span class='dot token'>.</span><span class='prepare identifier id'>prepare</span><span class='lparen token'>(</span><span class='@fulltext_reader ivar id'>@fulltext_reader</span><span class='dot token'>.</span><span class='get_data identifier id'>get_data</span><span class='lparen token'>(</span><span class='offset identifier id'>offset</span><span class='comma token'>,</span> <span class='term identifier id'>term</span><span class='dot token'>.</span><span class='size identifier id'>size</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='eq op'>==</span> <span class='prepared_term identifier id'>prepared_term</span>
+    <span class='to identifier id'>to</span> <span class='assign token'>=</span> <span class='binary_search_upper identifier id'>binary_search_upper</span><span class='lparen token'>(</span><span class='prepared_term identifier id'>prepared_term</span><span class='comma token'>,</span> <span class='integer val'>0</span><span class='comma token'>,</span> <span class='@suffixes ivar id'>@suffixes</span><span class='dot token'>.</span><span class='size identifier id'>size</span><span class='rparen token'>)</span>
+    <span class='Hits constant id'>Hits</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='term identifier id'>term</span><span class='comma token'>,</span> <span class='suffix_index identifier id'>suffix_index</span><span class='comma token'>,</span> <span class='to identifier id'>to</span><span class='comma token'>,</span> <span class='@fulltext_reader ivar id'>@fulltext_reader</span><span class='comma token'>,</span> <span class='self self kw'>self</span><span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+    <span class='Hits constant id'>Hits</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='term identifier id'>term</span><span class='comma token'>,</span> <span class='integer val'>0</span><span class='comma token'>,</span> <span class='integer val'>0</span><span class='comma token'>,</span> <span class='@fulltext_reader ivar id'>@fulltext_reader</span><span class='comma token'>,</span> <span class='self self kw'>self</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>find_first</h3>
+</div><div id="find_first-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>find_first</span><span class='args'>(term)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/suffix_array_reader.rb', line 139</span>
+
+<span class='def def kw'>def</span> <span class='find_first identifier id'>find_first</span><span class='lparen token'>(</span><span class='term identifier id'>term</span><span class='rparen token'>)</span>
+  <span class='prepared_term identifier id'>prepared_term</span> <span class='assign token'>=</span> <span class='@comparator ivar id'>@comparator</span><span class='dot token'>.</span><span class='prepare identifier id'>prepare</span><span class='lparen token'>(</span><span class='term identifier id'>term</span><span class='rparen token'>)</span>
+  <span class='suffix_index identifier id'>suffix_index</span> <span class='assign token'>=</span> <span class='binary_search identifier id'>binary_search</span><span class='lparen token'>(</span><span class='prepared_term identifier id'>prepared_term</span><span class='comma token'>,</span> <span class='integer val'>0</span><span class='comma token'>,</span> <span class='@suffixes ivar id'>@suffixes</span><span class='dot token'>.</span><span class='size identifier id'>size</span><span class='rparen token'>)</span>
+  <span class='offset identifier id'>offset</span> <span class='assign token'>=</span> <span class='index_to_offset identifier id'>index_to_offset</span><span class='lparen token'>(</span><span class='suffix_index identifier id'>suffix_index</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='@comparator ivar id'>@comparator</span><span class='dot token'>.</span><span class='prepare identifier id'>prepare</span><span class='lparen token'>(</span><span class='@fulltext_reader ivar id'>@fulltext_reader</span><span class='dot token'>.</span><span class='get_data identifier id'>get_data</span><span class='lparen token'>(</span><span class='offset identifier id'>offset</span><span class='comma token'>,</span> <span class='term identifier id'>term</span><span class='dot token'>.</span><span class='size identifier id'>size</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='eq op'>==</span> <span class='prepared_term identifier id'>prepared_term</span>
+    <span class='Hit constant id'>Hit</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='term identifier id'>term</span><span class='comma token'>,</span> <span class='suffix_index identifier id'>suffix_index</span><span class='comma token'>,</span> <span class='offset identifier id'>offset</span><span class='comma token'>,</span> <span class='@fulltext_reader ivar id'>@fulltext_reader</span><span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+    <span class='nil nil kw'>nil</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>hits_to_infos</h3>
+</div><div id="hits_to_infos-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>hits_to_infos</span><span class='args'>(hits)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+158
+159
+160
+161
+162
+163
+164
+165</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/suffix_array_reader.rb', line 158</span>
+
+<span class='def def kw'>def</span> <span class='hits_to_infos identifier id'>hits_to_infos</span><span class='lparen token'>(</span><span class='hits identifier id'>hits</span><span class='rparen token'>)</span>
+  <span class='comment val'># 12 = 3 * size of a single long, the suffixes are a sequence of longs that </span>
+  <span class='comment val'># represent offsets into the fulltext with records offsets and field ids</span>
+  <span class='from identifier id'>from</span> <span class='assign token'>=</span> <span class='hits identifier id'>hits</span><span class='dot token'>.</span><span class='from_index identifier id'>from_index</span>
+  <span class='to identifier id'>to</span>   <span class='assign token'>=</span> <span class='hits identifier id'>hits</span><span class='dot token'>.</span><span class='to_index identifier id'>to_index</span>
+  <span class='@io ivar id'>@io</span><span class='dot token'>.</span><span class='pos identifier id'>pos</span> <span class='assign token'>=</span> <span class='@suffixes ivar id'>@suffixes</span><span class='dot token'>.</span><span class='base identifier id'>base</span> <span class='plus op'>+</span> <span class='integer val'>12</span> <span class='mult op'>*</span> <span class='from identifier id'>from</span>
+  <span class='@io ivar id'>@io</span><span class='dot token'>.</span><span class='read identifier id'>read</span><span class='lparen token'>(</span><span class='lparen token'>(</span><span class='to identifier id'>to</span> <span class='minus op'>-</span> <span class='from identifier id'>from</span><span class='rparen token'>)</span> <span class='mult op'>*</span> <span class='integer val'>12</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='unpack identifier id'>unpack</span><span class='lparen token'>(</span><span class='string val'>&quot;V*&quot;</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>index_to_info</h3>
+</div><div id="index_to_info-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>index_to_info</span><span class='args'>(suffix_index)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+154
+155
+156</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/suffix_array_reader.rb', line 154</span>
+
+<span class='def def kw'>def</span> <span class='index_to_info identifier id'>index_to_info</span><span class='lparen token'>(</span><span class='suffix_index identifier id'>suffix_index</span><span class='rparen token'>)</span>
+  <span class='@suffixes ivar id'>@suffixes</span><span class='lbrack token'>[</span><span class='suffix_index identifier id'>suffix_index</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>index_to_offset</h3>
+</div><div id="index_to_offset-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>index_to_offset</span><span class='args'>(suffix_index)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+150
+151
+152</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/suffix_array_reader.rb', line 150</span>
+
+<span class='def def kw'>def</span> <span class='index_to_offset identifier id'>index_to_offset</span><span class='lparen token'>(</span><span class='suffix_index identifier id'>suffix_index</span><span class='rparen token'>)</span>
+  <span class='@suffixes ivar id'>@suffixes</span><span class='dot token'>.</span><span class='offset identifier id'>offset</span><span class='lparen token'>(</span><span class='suffix_index identifier id'>suffix_index</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

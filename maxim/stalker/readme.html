@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <title>README</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section docstring readme">
+        <h1>Stalker</h1>
+<p>
+Rails micro-plugin (38 lines) which allows models to observe each other.
+</p>
+<h2>Install</h2>
+<pre class="code">
+  <span class='script identifier id'>script</span><span class='div op'>/</span><span class='plugin identifier id'>plugin</span> <span class='install identifier id'>install</span> <span class='git identifier id'>git</span><span class='symbol val'>:/</span><span class='regexp val'>/github.com/</span><span class='maxim identifier id'>maxim</span><span class='div op'>/</span><span class='stalker identifier id'>stalker</span><span class='dot token'>.</span><span class='git identifier id'>git</span>
+</pre>
+<h2>Usage</h2>
+<p>
+Simple.
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='Celebrity constant id'>Celebrity</span> <span class='lt op'>&lt;</span> <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
+  <span class='end end kw'>end</span>
+
+  <span class='class class kw'>class</span> <span class='Idiot constant id'>Idiot</span> <span class='lt op'>&lt;</span> <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
+    <span class='stalk identifier id'>stalk</span> <span class='Celebrity constant id'>Celebrity</span>
+
+    <span class='class class kw'>class</span> <span class='lshft op'>&lt;&lt;</span> <span class='self self kw'>self</span>
+      <span class='def def kw'>def</span> <span class='before_celebrity_save identifier id'>before_celebrity_save</span><span class='lparen token'>(</span><span class='celebrity identifier id'>celebrity</span><span class='rparen token'>)</span>
+        <span class='puts identifier id'>puts</span> <span class='string val'>&quot;Idiot: 'Click'. Haha, got your picture!&quot;</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+Just like with observers, you have to edit environment.rb to tell rails to
+load Idiot first. (Idiot should be on the scene when Celebrity shows up.)
+</p>
+<pre class="code">
+  <span class='config identifier id'>config</span><span class='dot token'>.</span><span class='active_record identifier id'>active_record</span><span class='dot token'>.</span><span class='observers identifier id'>observers</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='symbol val'>:idiot</span><span class='rbrack token'>]</span>
+</pre>
+<p>
+Now let&#8217;s see what happens.
+</p>
+<pre class="code">
+  <span class='string val'>% britney </span><span class='assign token'>=</span> <span class='Celebrity constant id'>Celebrity</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+  <span class='string val'>% britney.save
+ </span> <span class='mod op'>%</span> <span class='Idiot constant id'>Idiot</span><span class='colon op'>:</span> <span class='string val'>'Click'</span><span class='dot token'>.</span> <span class='Haha constant id'>Haha</span><span class='comma token'>,</span> <span class='got identifier id'>got</span> <span class='your identifier id'>your</span> <span class='picture! fid id'>picture!</span>
+</pre>
+<h2>What happened?</h2>
+<p>
+The stalker class (Idiot) now has magical class methods (such as
+before_[stalked_class]_save(stalked_instance),
+after_[stalked_class]_validate(stalked_instance), etc) for reacting to
+stalked class&#8217;s callbacks. Keep in mind they&#8217;re class methods,
+hence the class &lt;&lt; self thingie. As an argument these methods get the
+reference to the instance of the stalked class. This way you can alter the
+object or just extract information from it.
+</p>
+<h2>Group your victims!</h2>
+<p>
+If you want to stalk multiple models with same responses, it&#8217;s easy
+to do using :group option.
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='Celebrity constant id'>Celebrity</span> <span class='lt op'>&lt;</span> <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
+  <span class='end end kw'>end</span>
+
+  <span class='class class kw'>class</span> <span class='Politician constant id'>Politician</span> <span class='lt op'>&lt;</span> <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
+  <span class='end end kw'>end</span>
+
+  <span class='class class kw'>class</span> <span class='Idiot constant id'>Idiot</span> <span class='lt op'>&lt;</span> <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
+    <span class='stalk identifier id'>stalk</span> <span class='Celebrity constant id'>Celebrity</span><span class='comma token'>,</span> <span class='Politician constant id'>Politician</span><span class='comma token'>,</span> <span class='symbol val'>:group</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:victim</span>
+
+    <span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='before_victim_save identifier id'>before_victim_save</span><span class='lparen token'>(</span><span class='victim identifier id'>victim</span><span class='rparen token'>)</span>
+      <span class='if if kw'>if</span> <span class='victim identifier id'>victim</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Politician constant id'>Politician</span><span class='rparen token'>)</span>
+        <span class='poke identifier id'>poke</span><span class='lparen token'>(</span><span class='victim identifier id'>victim</span><span class='rparen token'>)</span>
+      <span class='else else kw'>else</span>
+        <span class='bite identifier id'>bite</span><span class='lparen token'>(</span><span class='victim identifier id'>victim</span><span class='rparen token'>)</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+</pre>
+<h2>Why?</h2>
+<p>
+Sometimes you want model A to notify model B if something happens to it, so
+that model B could react. It&#8217;s useful if it&#8217;s concern of model
+B, like it has to update its records. If you have Product model that needs
+to decrement count of products when Order has been placed, you&#8217;d want
+Order model to notify Product model about the fact that it&#8217;s been
+placed. Product can then decrement item count in itself.
+</p>
+<h2>Can Idiot prevent Celebrity from saving?</h2>
+<p>
+Yes. If Idiot defines method before_celebrity_save and return false - it
+will halt the callback chain for Celebrity as usual.
+</p>
+<h2>But rails already has observers!</h2>
+<p>
+They&#8217;re useful when you want to have separate class for reacting to
+certain model&#8217;s callbacks. What if you want other existing models to
+react? That&#8217;s extra manual work that could be eliminated.
+</p>
+<h2>TODO</h2>
+<p>
+Write tests!!!
+</p>
+<h2>License</h2>
+<p>
+Copyright &#169; 2009 Maxim Chernyak
+</p>
+<p>
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the
+&quot;Software&quot;), to deal in the Software without restriction,
+including without limitation the rights to use, copy, modify, merge,
+publish, distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to the
+following conditions:
+</p>
+<p>
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+</p>
+<p>
+THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+USE OR OTHER DEALINGS IN THE SOFTWARE.
+</p>
+
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,714 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <title>README</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section docstring readme">
+        <p>
+h1. Jekyll
+</p>
+<p>
+By Tom Preston-Werner, Nick Quaranto, and many awesome contributors!
+</p>
+<p>
+h2. Description
+</p>
+<p>
+Jekyll is a simple, blog aware, static site generator. It takes a template
+directory (representing the raw form of a website), runs it through Textile
+or Markdown and Liquid converters, and spits out a complete, static website
+suitable for serving with Apache or your favorite web server. Visit
+&quot;http://tom.preston-werner.com&quot;:http://tom.preston-werner.com to
+see an example of a Jekyll generated blog.
+</p>
+<p>
+To understand how this all works, open up my
+&quot;TPW&quot;:http://github.com/mojombo/tpw repo in a new browser window.
+I&#8217;ll be referencing the code there.
+</p>
+<p>
+Take a look at
+&quot;index.html&quot;:http://github.com/mojombo/tpw/tree/master/index.html.
+This file represents the homepage of the site. At the top of the file is a
+chunk of YAML that contains metadata about the file. This data tells Jekyll
+what layout to give the file, what the page&#8217;s title should be, etc.
+In this case, I specify that the &quot;default&quot; template should be
+used. You can find the layout files in the
+&quot;_layouts&quot;:http://github.com/mojombo/tpw/tree/master/_layouts
+directory. If you open
+&quot;default.html&quot;:http://github.com/mojombo/tpw/tree/master/_layouts/default.html
+you can see that the homepage is constructed by wrapping index.html with
+this layout.
+</p>
+<p>
+You&#8217;ll also notice Liquid templating code in these files.
+&quot;Liquid&quot;:http://www.liquidmarkup.org/ is a simple, extensible
+templating language that makes it easy to embed data in your templates. For
+my homepage I wanted to have a list of all my blog posts. Jekyll hands me a
+Hash containing various data about my site. A reverse chronological list of
+all my blog posts can be found in <tt>site.posts</tt>. Each post, in turn,
+contains various fields such as <tt>title</tt> and <tt>date</tt>.
+</p>
+<p>
+Jekyll gets the list of blog posts by parsing the files in any
+&quot;_posts&quot;:http://github.com/mojombo/tpw/tree/master/_posts
+directory found in subdirectories below the root. Each post&#8217;s
+filename contains (by default) the publishing date and slug (what shows up
+in the URL) that the final HTML file should have. Open up the file
+corresponding to a blog post:
+&quot;2008-11-17-blogging-like-a-hacker.textile&quot;:http://github.com/mojombo/tpw/tree/master/_posts/2008-11-17-blogging-like-a-hacker.textile.
+GitHub renders textile files by default, so to better understand the file,
+click on the
+&quot;raw&quot;:http://github.com/mojombo/tpw/tree/master/_posts/2008-11-17-blogging-like-a-hacker.textile?raw=true
+view to see the original file. Here I&#8217;ve specified the <tt>post</tt>
+layout. If you look at that file you&#8217;ll see an example of a nested
+layout. Layouts can contain other layouts allowing you a great deal of
+flexibility in how pages are assembled. In my case I use a nested layout in
+order to show related posts for each blog entry. The YAML also specifies
+the post&#8217;s title which is then embedded in the post&#8217;s body via
+Liquid.
+</p>
+<p>
+Posts are handled in a special way by Jekyll. The date you specify in the
+filename is used to construct the URL in the generated site. The example
+post, for instance, ends up at
+<tt>http://tom.preston-werner.com/2008/11/17/blogging-like-a-hacker.html</tt>.
+</p>
+<p>
+Categories for posts are derived from the directory structure the posts
+were found within. A post that appears in the directory foo/bar/_posts is
+placed in the categories &#8216;foo&#8217; and &#8216;bar&#8217;. By
+selecting posts from particular categories in your Liquid templates, you
+will be able to host multiple blogs within a site.
+</p>
+<p>
+Files that do not reside in directories prefixed with an underscore are
+mirrored into a corresponding directory structure in the generated site. If
+a file does not have a YAML preface, it is not run through the Liquid
+interpreter. Binary files are copied over unmodified.
+</p>
+<p>
+Jekyll is still a very young project. I&#8217;ve only developed the exact
+functionality that I&#8217;ve needed. As time goes on I&#8217;d like to see
+the project mature and support additional features. If you end up using
+Jekyll for your own blog, drop me a line and let me know what you&#8217;d
+like to see in future versions. Better yet, fork the project over at GitHub
+and hack in the features yourself!
+</p>
+<p>
+h2. Example Proto-Site
+</p>
+<p>
+My own personal site/blog is generated with Jekyll.
+</p>
+<p>
+The proto-site repo
+(&quot;http://github.com/mojombo/tpw&quot;:http://github.com/mojombo/tpw)
+is converted into the actual site
+(&quot;http://tom.preston-werner.com/&quot;:http://tom.preston-werner.com)
+</p>
+<p>
+h2. Install
+</p>
+<p>
+The best way to install Jekyll is via RubyGems:
+</p>
+<pre class="code">
+  $ <span class='sudo identifier id'>sudo</span> <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='mojombo identifier id'>mojombo</span><span class='minus op'>-</span><span class='jekyll identifier id'>jekyll</span> <span class='minus op'>-</span><span class='s identifier id'>s</span> <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/gems.github.com/</span>
+</pre>
+<p>
+Jekyll requires the gems `directory_watcher`, `liquid`, `open4`, and
+`maruku` (for markdown support). These are automatically installed by the
+gem install command.
+</p>
+<p>
+Maruku comes with optional support for LaTeX to PNG rendering via
+&quot;blahtex&quot;:http://gva.noekeon.org/blahtexml/ (Version 0.6) which
+must be in your $PATH along with `dvips`.
+</p>
+<p>
+(NOTE: the version of maruku I am using is `remi-maruku` on GitHub as it
+does not assume a fixed location for `dvips`.)
+</p>
+<p>
+h2. Run
+</p>
+<pre class="code">
+  $ <span class='cd identifier id'>cd</span> <span class='div op'>/</span><span class='path identifier id'>path</span><span class='div op'>/</span><span class='to identifier id'>to</span><span class='div op'>/</span><span class='proto identifier id'>proto</span><span class='div op'>/</span><span class='site identifier id'>site</span>
+  $ <span class='jekyll identifier id'>jekyll</span>
+</pre>
+<p>
+This will generate the site and place it in /path/to/proto/site/_site. If
+you&#8217;d like the generated site placed somewhere else:
+</p>
+<pre class="code">
+  $ <span class='jekyll identifier id'>jekyll</span> <span class='div op'>/</span><span class='path identifier id'>path</span><span class='div op'>/</span><span class='to identifier id'>to</span><span class='div op'>/</span><span class='place identifier id'>place</span><span class='div op'>/</span><span class='generated identifier id'>generated</span><span class='div op'>/</span><span class='site identifier id'>site</span>
+</pre>
+<p>
+And if you don&#8217;t want to be in the proto site root to run Jekyll:
+</p>
+<pre class="code">
+  $ <span class='jekyll identifier id'>jekyll</span> <span class='div op'>/</span><span class='path identifier id'>path</span><span class='div op'>/</span><span class='to identifier id'>to</span><span class='div op'>/</span><span class='proto identifier id'>proto</span><span class='div op'>/</span><span class='site identifier id'>site</span> <span class='regexp val'>/path/</span><span class='to identifier id'>to</span><span class='div op'>/</span><span class='place identifier id'>place</span><span class='div op'>/</span><span class='generated identifier id'>generated</span><span class='div op'>/</span><span class='site identifier id'>site</span>
+</pre>
+<p>
+h2. Run Options
+</p>
+<p>
+h3. Autobuild
+</p>
+<p>
+There is an autobuild feature that will regenerate your site if any of the
+files change. The autobuild feature can be used on any of the invocations:
+</p>
+<pre class="code">
+  $ <span class='jekyll identifier id'>jekyll</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='auto identifier id'>auto</span>
+</pre>
+<p>
+h3. Related Posts
+</p>
+<p>
+By default, the &quot;related posts&quot; functionality will produce crappy
+results. In order to get high quality results with a true LSI algorithm,
+you must enable it (it may take some time to run if you have many posts):
+</p>
+<pre class="code">
+  $ <span class='jekyll identifier id'>jekyll</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='lsi identifier id'>lsi</span>
+</pre>
+<p>
+h3. Code Highlighting
+</p>
+<p>
+For static code highlighting, you can install Pygments (see below) and then
+use that to make your code blocks look pretty. To activate Pygments support
+during the conversion:
+</p>
+<pre class="code">
+  $ <span class='jekyll identifier id'>jekyll</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='pygments identifier id'>pygments</span>
+</pre>
+<p>
+h3. Markdown Processor
+</p>
+<p>
+By default, Jekyll uses &quot;Maruku&quot;:http://maruku.rubyforge.org
+(pure Ruby) for Markdown support. If you&#8217;d like to use RDiscount
+(faster, but requires compilation), you must install it (gem install
+rdiscount) and then you can have it used instead:
+</p>
+<pre class="code">
+  $ <span class='jekyll identifier id'>jekyll</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='rdiscount identifier id'>rdiscount</span>
+</pre>
+<p>
+h3. Local Server
+</p>
+<p>
+When previewing complex sites locally, simply opening the site in a web
+browser (using file://) can cause problems with links that are relative to
+the site root (e.g., &quot;/stylesheets/style.css&quot;). To get around
+this, Jekyll can launch a simple WEBrick server (works well in conjunction
+with &#8212;auto). Default port is 4000:
+</p>
+<pre class="code">
+  $ <span class='jekyll identifier id'>jekyll</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='server identifier id'>server</span> <span class='lbrack token'>[</span><span class='PORT constant id'>PORT</span><span class='rbrack token'>]</span>
+</pre>
+<p>
+h3. Permalink Style
+</p>
+<p>
+By default, the permalink for each post begins with its date in
+&#8216;YYYY/MM/DD&#8217; format.
+</p>
+<p>
+If you do not wish to have the date appear in the URL of each post, you can
+change the permalink style to &#8216;none&#8217; so that only the
+&#8216;slug&#8217; part of the filename is used. For example, with the
+permalink style set to &#8216;none&#8217; the file
+&#8216;2009-01-01-happy-new-year.markdown&#8217; will have a permalink like
+&#8216;http://yoursite.com/happy-new-year.html&#8217;. The date of the post
+will still be read from the filename (and is required!) to be used
+elsewhere in Jekyll.
+</p>
+<p>
+If you want WordPress-style pretty URLs that leave off the .html, you can
+change the permalink style to &#8216;pretty&#8217; and directories
+corresponding to the date parts and post name will be made and an
+index.html will be placed in the leaf directory resulting in URLs like
+2008/11/17/blogging-like-a-hacker/.
+</p>
+<pre class="code">
+  $ <span class='jekyll identifier id'>jekyll</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='permalink identifier id'>permalink</span> <span class='lbrack token'>[</span><span class='date identifier id'>date</span><span class='bitor op'>|</span><span class='none identifier id'>none</span><span class='bitor op'>|</span><span class='pretty identifier id'>pretty</span><span class='rbrack token'>]</span>
+</pre>
+<p>
+h2. Configuration File
+</p>
+<p>
+All of the options listed above can be specified on a site-by-site basis in
+a &#8216;_config.yml&#8217; file at the root of the site&#8217;s source. As
+the filename suggests, the configuration is given in
+&quot;YAML&quot;:http://www.yaml.org/. As well as all of the options
+discussed in the last section, there are a few additional options:
+</p>
+<pre class="code">
+  <span class='destination identifier id'>destination</span><span class='colon op'>:</span> <span class='lbrack token'>[</span><span class='PATH constant id'>PATH</span><span class='rbrack token'>]</span>           <span class='comment val'># Specify where the site should be rendered</span>
+  <span class='markdown identifier id'>markdown</span><span class='colon op'>:</span> <span class='lbrack token'>[</span><span class='maruku identifier id'>maruku</span><span class='bitor op'>|</span><span class='rdiscount identifier id'>rdiscount</span><span class='rbrack token'>]</span>  <span class='comment val'># Which markdown renderer to use?</span>
+
+  <span class='maruku identifier id'>maruku</span><span class='colon op'>:</span>               <span class='comment val'># This is a YAML hash for Maruku settings</span>
+    <span class='use_divs identifier id'>use_divs</span><span class='colon op'>:</span> <span class='lbrack token'>[</span><span class='BOOLEAN constant id'>BOOLEAN</span><span class='rbrack token'>]</span> <span class='comment val'># Use the div element Maruku extension</span>
+    <span class='use_tex identifier id'>use_tex</span><span class='colon op'>:</span>  <span class='lbrack token'>[</span><span class='BOOLEAN constant id'>BOOLEAN</span><span class='rbrack token'>]</span> <span class='comment val'># Use the LaTeX extension to Maruku</span>
+    <span class='png_dir identifier id'>png_dir</span><span class='colon op'>:</span>  <span class='lbrack token'>[</span><span class='PATH constant id'>PATH</span><span class='rbrack token'>]</span>    <span class='comment val'># Where should the math PNGs be stored?</span>
+    <span class='png_url identifier id'>png_url</span><span class='colon op'>:</span>  <span class='lbrack token'>[</span><span class='URL constant id'>URL</span><span class='rbrack token'>]</span>     <span class='comment val'># A relative URL for the PNGs</span>
+</pre>
+<p>
+The default configuration is shown below as in YAML format:
+</p>
+<pre class="code">
+  <span class='destination identifier id'>destination</span><span class='colon op'>:</span> <span class='dot token'>.</span><span class='div op'>/</span><span class='_site identifier id'>_site</span>
+  <span class='auto identifier id'>auto</span><span class='colon op'>:</span>        <span class='false false kw'>false</span>
+  <span class='lsi identifier id'>lsi</span><span class='colon op'>:</span>         <span class='false false kw'>false</span>
+  <span class='server_port identifier id'>server_port</span><span class='colon op'>:</span> <span class='integer val'>4000</span>
+  <span class='pygments identifier id'>pygments</span><span class='colon op'>:</span>    <span class='false false kw'>false</span>
+  <span class='markdown identifier id'>markdown</span><span class='colon op'>:</span>    <span class='maruku identifier id'>maruku</span>
+  <span class='permalink identifier id'>permalink</span><span class='colon op'>:</span>   <span class='date identifier id'>date</span>
+
+  <span class='maruku identifier id'>maruku</span><span class='colon op'>:</span>
+    <span class='use_tex identifier id'>use_tex</span><span class='colon op'>:</span>    <span class='false false kw'>false</span>
+    <span class='use_divs identifier id'>use_divs</span><span class='colon op'>:</span>   <span class='false false kw'>false</span>
+    <span class='png_dir identifier id'>png_dir</span><span class='colon op'>:</span>    <span class='images identifier id'>images</span><span class='div op'>/</span><span class='latex identifier id'>latex</span>
+    <span class='png_url identifier id'>png_url</span><span class='colon op'>:</span>    <span class='regexp val'>/images/</span><span class='latex identifier id'>latex</span>
+</pre>
+<p>
+Parameters set in a configuration file override the default values.
+Parameters set using command line options override both the default values
+and those set in a configuration file.
+</p>
+<p>
+h2. Data
+</p>
+<p>
+Jekyll traverses your site looking for files to process. Any files with
+YAML front matter (see below) are subject to processing. For each of these
+files, Jekyll makes a variety of data available to the pages via the Liquid
+templating system. The following is a reference of the available data.
+</p>
+<p>
+h3. Global
+</p>
+<pre class="code">
+  <span class='site identifier id'>site</span>
+    <span class='Sitewide constant id'>Sitewide</span> <span class='information identifier id'>information</span><span class='dot token'>.</span>
+
+  <span class='page identifier id'>page</span>
+    <span class='For constant id'>For</span> <span class='Posts constant id'>Posts</span><span class='comma token'>,</span> <span class='this identifier id'>this</span> <span class='is identifier id'>is</span> <span class='the identifier id'>the</span> <span class='union identifier id'>union</span> <span class='of identifier id'>of</span> <span class='the identifier id'>the</span> <span class='data identifier id'>data</span> <span class='in in kw'>in</span> <span class='the identifier id'>the</span> <span class='YAML constant id'>YAML</span> <span class='front identifier id'>front</span> <span class='matter identifier id'>matter</span> <span class='and and kw'>and</span> <span class='the identifier id'>the</span>
+    <span class='computed identifier id'>computed</span> <span class='data identifier id'>data</span> <span class='lparen token'>(</span><span class='such identifier id'>such</span> <span class='as identifier id'>as</span> <span class='URL constant id'>URL</span> <span class='and and kw'>and</span> <span class='date identifier id'>date</span><span class='rparen token'>)</span><span class='dot token'>.</span> <span class='For constant id'>For</span> <span class='regular identifier id'>regular</span> <span class='pages identifier id'>pages</span><span class='comma token'>,</span> <span class='this identifier id'>this</span> <span class='is identifier id'>is</span> <span class='just identifier id'>just</span> <span class='the identifier id'>the</span>
+    <span class='YAML constant id'>YAML</span> <span class='front identifier id'>front</span> <span class='matter identifier id'>matter</span><span class='dot token'>.</span>
+
+  <span class='content identifier id'>content</span>
+    <span class='In constant id'>In</span> <span class='layout identifier id'>layout</span> <span class='files identifier id'>files</span><span class='comma token'>,</span> <span class='this identifier id'>this</span> <span class='contains identifier id'>contains</span> <span class='the identifier id'>the</span> <span class='content identifier id'>content</span> <span class='of identifier id'>of</span> <span class='the identifier id'>the</span> <span class='subview identifier id'>subview</span><span class='lparen token'>(</span><span class='s identifier id'>s</span><span class='rparen token'>)</span><span class='dot token'>.</span> <span class='In constant id'>In</span> <span class='Posts constant id'>Posts</span> <span class='or or kw'>or</span>
+    <span class='Pages constant id'>Pages</span><span class='comma token'>,</span> <span class='this identifier id'>this</span> <span class='is identifier id'>is</span> <span class='undefined identifier id'>undefined</span><span class='dot token'>.</span>
+</pre>
+<p>
+h3. Site
+</p>
+<pre class="code">
+  <span class='site identifier id'>site</span><span class='dot token'>.</span><span class='time identifier id'>time</span>
+    <span class='The constant id'>The</span> <span class='current identifier id'>current</span> <span class='Time constant id'>Time</span> <span class='lparen token'>(</span><span class='when when kw'>when</span> <span class='you identifier id'>you</span> <span class='run identifier id'>run</span> <span class='the identifier id'>the</span> <span class='jekyll identifier id'>jekyll</span> <span class='command identifier id'>command</span><span class='rparen token'>)</span><span class='dot token'>.</span>
+
+  <span class='site identifier id'>site</span><span class='dot token'>.</span><span class='posts identifier id'>posts</span>
+    <span class='A constant id'>A</span> <span class='reverse identifier id'>reverse</span> <span class='chronological identifier id'>chronological</span> <span class='list identifier id'>list</span> <span class='of identifier id'>of</span> <span class='all identifier id'>all</span> <span class='Posts constant id'>Posts</span><span class='dot token'>.</span>
+
+  <span class='site identifier id'>site</span><span class='dot token'>.</span><span class='related_posts identifier id'>related_posts</span>
+    <span class='If constant id'>If</span> <span class='the identifier id'>the</span> <span class='page identifier id'>page</span> <span class='being identifier id'>being</span> <span class='processed identifier id'>processed</span> <span class='is identifier id'>is</span> <span class='a identifier id'>a</span> <span class='Post constant id'>Post</span><span class='comma token'>,</span> <span class='this identifier id'>this</span> <span class='contains identifier id'>contains</span> <span class='a identifier id'>a</span> <span class='list identifier id'>list</span> <span class='of identifier id'>of</span> <span class='up identifier id'>up</span> <span class='to identifier id'>to</span> <span class='ten identifier id'>ten</span>
+    <span class='related identifier id'>related</span> <span class='Posts constant id'>Posts</span><span class='dot token'>.</span> <span class='By constant id'>By</span> <span class='default identifier id'>default</span><span class='comma token'>,</span> <span class='these identifier id'>these</span> <span class='are identifier id'>are</span> <span class='low identifier id'>low</span> <span class='quality identifier id'>quality</span> <span class='but identifier id'>but</span> <span class='fast identifier id'>fast</span> <span class='to identifier id'>to</span> <span class='compute identifier id'>compute</span><span class='dot token'>.</span> <span class='For constant id'>For</span>
+    <span class='high identifier id'>high</span> <span class='quality identifier id'>quality</span> <span class='but identifier id'>but</span> <span class='slow identifier id'>slow</span> <span class='to identifier id'>to</span> <span class='compute identifier id'>compute</span> <span class='results identifier id'>results</span><span class='comma token'>,</span> <span class='run identifier id'>run</span> <span class='the identifier id'>the</span> <span class='jekyll identifier id'>jekyll</span> <span class='command identifier id'>command</span> <span class='with identifier id'>with</span> <span class='the identifier id'>the</span>
+    <span class='minus op'>-</span><span class='minus op'>-</span><span class='lsi identifier id'>lsi</span> <span class='lparen token'>(</span><span class='latent identifier id'>latent</span> <span class='semantic identifier id'>semantic</span> <span class='indexing identifier id'>indexing</span><span class='rparen token'>)</span> <span class='option identifier id'>option</span><span class='dot token'>.</span>
+
+  <span class='site identifier id'>site</span><span class='dot token'>.</span><span class='categories identifier id'>categories</span><span class='dot token'>.</span><span class='CATEGORY constant id'>CATEGORY</span>
+    <span class='The constant id'>The</span> <span class='list identifier id'>list</span> <span class='of identifier id'>of</span> <span class='all identifier id'>all</span> <span class='Posts constant id'>Posts</span> <span class='in in kw'>in</span> <span class='category identifier id'>category</span> <span class='CATEGORY constant id'>CATEGORY</span><span class='dot token'>.</span>
+</pre>
+<p>
+h3. Post
+</p>
+<pre class="code">
+  <span class='post identifier id'>post</span><span class='dot token'>.</span><span class='title identifier id'>title</span>
+    <span class='The constant id'>The</span> <span class='title identifier id'>title</span> <span class='of identifier id'>of</span> <span class='the identifier id'>the</span> <span class='Post constant id'>Post</span><span class='dot token'>.</span>
+
+  <span class='post identifier id'>post</span><span class='dot token'>.</span><span class='url identifier id'>url</span>
+    <span class='The constant id'>The</span> <span class='URL constant id'>URL</span> <span class='of identifier id'>of</span> <span class='the identifier id'>the</span> <span class='Post constant id'>Post</span> <span class='without identifier id'>without</span> <span class='the identifier id'>the</span> <span class='domain identifier id'>domain</span><span class='dot token'>.</span>
+    <span class='e identifier id'>e</span><span class='dot token'>.</span><span class='g identifier id'>g</span><span class='dot token'>.</span> <span class='div op'>/</span><span class='integer val'>2008</span><span class='div op'>/</span><span class='integer val'>12</span><span class='div op'>/</span><span class='integer val'>14</span><span class='div op'>/</span><span class='my identifier id'>my</span><span class='minus op'>-</span><span class='post identifier id'>post</span><span class='dot token'>.</span><span class='html identifier id'>html</span>
+
+  <span class='post identifier id'>post</span><span class='dot token'>.</span><span class='date identifier id'>date</span>
+    <span class='The constant id'>The</span> <span class='Date constant id'>Date</span> <span class='assigned identifier id'>assigned</span> <span class='to identifier id'>to</span> <span class='the identifier id'>the</span> <span class='Post constant id'>Post</span><span class='dot token'>.</span>
+
+  <span class='post identifier id'>post</span><span class='dot token'>.</span><span class='id identifier id'>id</span>
+    <span class='An constant id'>An</span> <span class='identifier identifier id'>identifier</span> <span class='unique identifier id'>unique</span> <span class='to identifier id'>to</span> <span class='the identifier id'>the</span> <span class='Post constant id'>Post</span> <span class='lparen token'>(</span><span class='useful identifier id'>useful</span> <span class='in in kw'>in</span> <span class='RSS constant id'>RSS</span> <span class='feeds identifier id'>feeds</span><span class='rparen token'>)</span><span class='dot token'>.</span>
+    <span class='e identifier id'>e</span><span class='dot token'>.</span><span class='g identifier id'>g</span><span class='dot token'>.</span> <span class='div op'>/</span><span class='integer val'>2008</span><span class='div op'>/</span><span class='integer val'>12</span><span class='div op'>/</span><span class='integer val'>14</span><span class='div op'>/</span><span class='my identifier id'>my</span><span class='minus op'>-</span><span class='post identifier id'>post</span>
+
+  <span class='post identifier id'>post</span><span class='dot token'>.</span><span class='categories identifier id'>categories</span>
+    <span class='The constant id'>The</span> <span class='list identifier id'>list</span> <span class='of identifier id'>of</span> <span class='categories identifier id'>categories</span> <span class='to identifier id'>to</span> <span class='which identifier id'>which</span> <span class='this identifier id'>this</span> <span class='post identifier id'>post</span> <span class='belongs identifier id'>belongs</span><span class='dot token'>.</span> <span class='Categories constant id'>Categories</span> <span class='are identifier id'>are</span>
+    <span class='derived identifier id'>derived</span> <span class='from identifier id'>from</span> <span class='the identifier id'>the</span> <span class='directory identifier id'>directory</span> <span class='structure identifier id'>structure</span> <span class='above identifier id'>above</span> <span class='the identifier id'>the</span> <span class='_posts identifier id'>_posts</span> <span class='directory identifier id'>directory</span><span class='dot token'>.</span> <span class='For constant id'>For</span>
+    <span class='example identifier id'>example</span><span class='comma token'>,</span> <span class='a identifier id'>a</span> <span class='post identifier id'>post</span> <span class='at identifier id'>at</span> <span class='div op'>/</span><span class='work identifier id'>work</span><span class='div op'>/</span><span class='code identifier id'>code</span><span class='div op'>/</span><span class='_posts identifier id'>_posts</span><span class='div op'>/</span><span class='integer val'>2008</span><span class='minus op'>-</span><span class='integer val'>12</span><span class='minus op'>-</span><span class='integer val'>24</span><span class='minus op'>-</span><span class='closures identifier id'>closures</span><span class='dot token'>.</span><span class='textile identifier id'>textile</span>
+    <span class='would identifier id'>would</span> <span class='have identifier id'>have</span> <span class='this identifier id'>this</span> <span class='field identifier id'>field</span> <span class='set identifier id'>set</span> <span class='to identifier id'>to</span> <span class='lbrack token'>[</span><span class='string val'>'work'</span><span class='comma token'>,</span> <span class='string val'>'code'</span><span class='rbrack token'>]</span><span class='dot token'>.</span>
+
+  <span class='post identifier id'>post</span><span class='dot token'>.</span><span class='topics identifier id'>topics</span>
+    <span class='The constant id'>The</span> <span class='list identifier id'>list</span> <span class='of identifier id'>of</span> <span class='topics identifier id'>topics</span> <span class='for for kw'>for</span> <span class='this identifier id'>this</span> <span class='Post constant id'>Post</span><span class='dot token'>.</span> <span class='Topics constant id'>Topics</span> <span class='are identifier id'>are</span> <span class='derived identifier id'>derived</span> <span class='from identifier id'>from</span> <span class='the identifier id'>the</span> <span class='directory identifier id'>directory</span>
+    <span class='structure identifier id'>structure</span> <span class='beneath identifier id'>beneath</span> <span class='the identifier id'>the</span> <span class='_posts identifier id'>_posts</span> <span class='directory identifier id'>directory</span><span class='dot token'>.</span> <span class='For constant id'>For</span> <span class='example identifier id'>example</span><span class='comma token'>,</span> <span class='a identifier id'>a</span> <span class='post identifier id'>post</span> <span class='at identifier id'>at</span>
+    <span class='regexp val'>/_posts/</span><span class='music identifier id'>music</span><span class='div op'>/</span><span class='metal identifier id'>metal</span><span class='div op'>/</span><span class='integer val'>2008</span><span class='minus op'>-</span><span class='integer val'>12</span><span class='minus op'>-</span><span class='integer val'>24</span><span class='minus op'>-</span><span class='metalocalypse identifier id'>metalocalypse</span><span class='dot token'>.</span><span class='textile identifier id'>textile</span> <span class='would identifier id'>would</span> <span class='have identifier id'>have</span> <span class='this identifier id'>this</span> <span class='field identifier id'>field</span>
+    <span class='set identifier id'>set</span> <span class='to identifier id'>to</span> <span class='lbrack token'>[</span><span class='string val'>'music'</span><span class='comma token'>,</span> <span class='string val'>'metal'</span><span class='rbrack token'>]</span><span class='dot token'>.</span>
+
+  <span class='post identifier id'>post</span><span class='dot token'>.</span><span class='content identifier id'>content</span>
+    <span class='The constant id'>The</span> <span class='content identifier id'>content</span> <span class='of identifier id'>of</span> <span class='the identifier id'>the</span> <span class='Post constant id'>Post</span><span class='dot token'>.</span>
+</pre>
+<p>
+h2. YAML Front Matter
+</p>
+<p>
+Any files that contain a YAML front matter block will be processed by
+Jekyll as special files. The front matter must be the first thing in the
+file and takes the form of:
+</p>
+<p>
+&lt;pre&gt;
+</p>
+<hr size="1"></hr><p>
+layout: post title: Blogging Like a Hacker
+</p>
+<hr size="1"></hr><p>
+&lt;/pre&gt;
+</p>
+<p>
+Between the triple-dashed lines, you can set predefined variables (see
+below for a reference) or custom data of your own.
+</p>
+<p>
+h3. Predefined Global Variables
+</p>
+<pre class="code">
+  <span class='layout identifier id'>layout</span>
+    <span class='If constant id'>If</span> <span class='set identifier id'>set</span><span class='comma token'>,</span> <span class='this identifier id'>this</span> <span class='specifies identifier id'>specifies</span> <span class='the identifier id'>the</span> <span class='layout identifier id'>layout</span> <span class='file identifier id'>file</span> <span class='to identifier id'>to</span> <span class='use identifier id'>use</span><span class='dot token'>.</span> <span class='Use constant id'>Use</span> <span class='the identifier id'>the</span> <span class='layout identifier id'>layout</span> <span class='file identifier id'>file</span>
+    <span class='name identifier id'>name</span> <span class='without identifier id'>without</span> <span class='file identifier id'>file</span> <span class='extension identifier id'>extension</span><span class='dot token'>.</span> <span class='Layout constant id'>Layout</span> <span class='files identifier id'>files</span> <span class='must identifier id'>must</span> <span class='be identifier id'>be</span> <span class='placed identifier id'>placed</span> <span class='in in kw'>in</span> <span class='the identifier id'>the</span>
+    <span class='lt op'>&lt;</span><span class='code identifier id'>code</span><span class='gt op'>&gt;</span><span class='_layouts identifier id'>_layouts</span><span class='lt op'>&lt;</span><span class='regexp val'>/code&gt; directory.
+</span></pre>
+<p>
+h3. Predefined Post Variables
+</p>
+<pre class="code">
+  <span class='permalink identifier id'>permalink</span>
+    <span class='If constant id'>If</span> <span class='you identifier id'>you</span> <span class='need identifier id'>need</span> <span class='your identifier id'>your</span> <span class='processed identifier id'>processed</span> <span class='URLs constant id'>URLs</span> <span class='to identifier id'>to</span> <span class='be identifier id'>be</span> <span class='something identifier id'>something</span> <span class='other identifier id'>other</span> <span class='than identifier id'>than</span> <span class='the identifier id'>the</span> <span class='default identifier id'>default</span>
+    <span class='regexp val'>/year/</span><span class='month identifier id'>month</span><span class='div op'>/</span><span class='day identifier id'>day</span><span class='div op'>/</span><span class='title identifier id'>title</span><span class='dot token'>.</span><span class='html identifier id'>html</span> <span class='then then kw'>then</span> <span class='you identifier id'>you</span> <span class='can identifier id'>can</span> <span class='set identifier id'>set</span> <span class='this identifier id'>this</span> <span class='variable identifier id'>variable</span> <span class='and and kw'>and</span> <span class='it identifier id'>it</span> <span class='will identifier id'>will</span>
+    <span class='be identifier id'>be</span> <span class='used identifier id'>used</span> <span class='as identifier id'>as</span> <span class='the identifier id'>the</span> <span class='final identifier id'>final</span> <span class='URL constant id'>URL</span><span class='dot token'>.</span>
+
+  <span class='published identifier id'>published</span>
+    <span class='Set constant id'>Set</span> <span class='to identifier id'>to</span> <span class='false false kw'>false</span> <span class='if if_mod kw'>if</span> <span class='you identifier id'>you</span> <span class='don identifier id'>don</span><span class='string val'>'t want a post to show up when the site is
+    generated.
+
+  category/categories
+    Instead of placing posts inside of folders, you can specify one or more
+    categories that the post belongs to. When the site is generated the post
+    will act as though it had been set with these categories normally.
+</span></pre>
+<p>
+h3. Custom Variables
+</p>
+<p>
+Any variables in the front matter that are not predefined are mixed into
+the data that is sent to the Liquid templating engine during the
+conversion. For instance, if you set a <tt>title</tt>, you can use that in
+your layout to set the page title:
+</p>
+<p>
+&lt;pre&gt; &lt;title&gt;{{ page.title }}&lt;/title&gt; &lt;/pre&gt;
+</p>
+<p>
+h2. Filters, Tags, and Blocks
+</p>
+<p>
+In addition to the built-in Liquid filters, tags, and blocks, Jekyll
+provides some additional items that you can use in your site.
+</p>
+<p>
+h3. Date to XML Schema (Filter)
+</p>
+<p>
+Convert a Time into XML Schema format.
+</p>
+<pre class="code">
+  <span class='lbrace token'>{</span><span class='lbrace token'>{</span> <span class='site identifier id'>site</span><span class='dot token'>.</span><span class='time identifier id'>time</span> <span class='bitor op'>|</span> <span class='date_to_xmlschema identifier id'>date_to_xmlschema</span> <span class='rbrace token'>}</span><span class='rbrace token'>}</span>
+</pre>
+<p>
+becomes
+</p>
+<pre class="code">
+  <span class='integer val'>2008</span><span class='minus op'>-</span><span class='integer val'>11</span><span class='minus op'>-</span><span class='integer val'>17</span><span class='T13 constant id'>T13</span><span class='symbol val'>:07</span><span class='symbol val'>:54</span><span class='minus op'>-</span><span class='integer val'>0</span><span class='integer val'>8</span><span class='symbol val'>:00</span>
+</pre>
+<p>
+h3. XML Escape (Filter)
+</p>
+<p>
+Escape some text for use in XML.
+</p>
+<pre class="code">
+  <span class='lbrace token'>{</span><span class='lbrace token'>{</span> <span class='post identifier id'>post</span><span class='dot token'>.</span><span class='content identifier id'>content</span> <span class='bitor op'>|</span> <span class='xml_escape identifier id'>xml_escape</span> <span class='rbrace token'>}</span><span class='rbrace token'>}</span>
+</pre>
+<p>
+h3. Number of Words (Filter)
+</p>
+<p>
+Count the number of words in some text.
+</p>
+<pre class="code">
+  <span class='lbrace token'>{</span><span class='lbrace token'>{</span> <span class='post identifier id'>post</span><span class='dot token'>.</span><span class='content identifier id'>content</span> <span class='bitor op'>|</span> <span class='number_of_words identifier id'>number_of_words</span> <span class='rbrace token'>}</span><span class='rbrace token'>}</span>
+</pre>
+<p>
+becomes
+</p>
+<pre class="code">
+  <span class='integer val'>1337</span>
+</pre>
+<p>
+h3. Array to Sentence String
+</p>
+<p>
+Convert an array into a sentence.
+</p>
+<pre class="code">
+  <span class='lbrace token'>{</span><span class='lbrace token'>{</span> <span class='page identifier id'>page</span><span class='dot token'>.</span><span class='tags identifier id'>tags</span> <span class='bitor op'>|</span> <span class='array_to_sentence_string identifier id'>array_to_sentence_string</span> <span class='rbrace token'>}</span><span class='rbrace token'>}</span>
+</pre>
+<p>
+becomes
+</p>
+<pre class="code">
+  <span class='foo identifier id'>foo</span><span class='comma token'>,</span> <span class='bar identifier id'>bar</span><span class='comma token'>,</span> <span class='and and kw'>and</span> <span class='baz identifier id'>baz</span>
+</pre>
+<p>
+h3. Textilize
+</p>
+<p>
+Convert a Textile-formatted string into HTML, formatted via RedCloth
+</p>
+<pre class="code">
+  <span class='lbrace token'>{</span><span class='lbrace token'>{</span> <span class='page identifier id'>page</span><span class='dot token'>.</span><span class='excerpt identifier id'>excerpt</span> <span class='bitor op'>|</span> <span class='textilize identifier id'>textilize</span> <span class='rbrace token'>}</span><span class='rbrace token'>}</span>
+</pre>
+<p>
+h3. Include (Tag)
+</p>
+<p>
+If you have small page fragments that you wish to include in multiple
+places on your site, you can use the <tt>include</tt> tag.
+</p>
+<p>
+&lt;pre&gt;{% include sig.textile %}&lt;/pre&gt;
+</p>
+<p>
+Jekyll expects all include files to be placed in an <tt>_includes</tt>
+directory at the root of your source dir. So this will embed the contents
+of <tt>/path/to/proto/site/_includes/sig.textile</tt> into the calling
+file.
+</p>
+<p>
+h3. Code Highlighting (Block)
+</p>
+<p>
+Jekyll has built in support for syntax highlighting of over &quot;100
+languages&quot;:http://pygments.org/languages/ via
+&quot;Pygments&quot;:http://pygments.org/. In order to take advantage of
+this you&#8217;ll need to have Pygments installed, and the pygmentize
+binary must be in your path. When you run Jekyll, make sure you run it with
+Pygments support:
+</p>
+<pre class="code">
+  $ <span class='jekyll identifier id'>jekyll</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='pygments identifier id'>pygments</span>
+</pre>
+<p>
+To denote a code block that should be highlighted:
+</p>
+<p>
+&lt;pre&gt; <tt>highlight ruby %</tt> def foo
+</p>
+<pre class="code">
+  <span class='puts identifier id'>puts</span> <span class='string val'>'foo'</span>
+</pre>
+<p>
+end <tt>endhighlight %</tt> &lt;/pre&gt;
+</p>
+<p>
+The argument to <tt>highlight</tt> is the language identifier. To find the
+appropriate identifier to use for your favorite language, look for the
+&quot;short name&quot; on the
+&quot;Lexers&quot;:http://pygments.org/docs/lexers/ page.
+</p>
+<p>
+There is a second argument to <tt>highlight</tt> called <tt>linenos</tt>
+that is optional. Including the <tt>linenos</tt> argument will force the
+highlighted code to include line numbers. For instance, the following code
+block would include line numbers next to each line:
+</p>
+<p>
+&lt;pre&gt; <tt>highlight ruby linenos %</tt> def foo
+</p>
+<pre class="code">
+  <span class='puts identifier id'>puts</span> <span class='string val'>'foo'</span>
+</pre>
+<p>
+end <tt>endhighlight %</tt> &lt;/pre&gt;
+</p>
+<p>
+In order for the highlighting to show up, you&#8217;ll need to include a
+highlighting stylesheet. For an example stylesheet you can look at
+&quot;syntax.css&quot;:http://github.com/mojombo/tpw/tree/master/css/syntax.css.
+These are the same styles as used by GitHub and you are free to use them
+for your own site. If you use linenos, you might want to include an
+additional CSS class definition for <tt>lineno</tt> in syntax.css to
+distinguish the line numbers from the highlighted code.
+</p>
+<p>
+h2. Categories
+</p>
+<p>
+Posts are placed into categories based on the directory structure they are
+found within (see above for an example). The categories can be accessed
+from within a Liquid template as follows:
+</p>
+<p>
+&lt;pre&gt; <tt>for post in site.categories.foo %</tt>
+</p>
+<pre class="code">
+  <span class='lt op'>&lt;</span><span class='li identifier id'>li</span><span class='gt op'>&gt;</span><span class='lt op'>&lt;</span><span class='span identifier id'>span</span><span class='gt op'>&gt;</span><span class='lbrace token'>{</span><span class='lbrace token'>{</span> <span class='post identifier id'>post</span><span class='dot token'>.</span><span class='date identifier id'>date</span> <span class='bitor op'>|</span> <span class='date_to_string identifier id'>date_to_string</span> <span class='rbrace token'>}</span><span class='rbrace token'>}</span><span class='lt op'>&lt;</span><span class='regexp val'>/span&gt; - {{ post.title }}&lt;/</span><span class='li identifier id'>li</span><span class='gt op'>&gt;</span>
+</pre>
+<p> <tt>endfor %</tt> &lt;/pre&gt;
+</p>
+<p>
+This would list all the posts in the category &#8216;foo&#8217; by date and
+title.
+</p>
+<p>
+The posts within each category are sorted in reverse chronological order.
+</p>
+<p>
+h2. Blog migrations
+</p>
+<p>
+h3. Movable Type
+</p>
+<p>
+To migrate your MT blog into Jekyll, you&#8217;ll need read access to the
+database. The lib/jekyll/converters/mt.rb module provides a simple convert
+to create .markdown files in a _posts directory based on the entries
+contained therein.
+</p>
+<pre class="code">
+  $ <span class='export identifier id'>export</span> <span class='DB constant id'>DB</span><span class='assign token'>=</span><span class='my_mtdb identifier id'>my_mtdb</span>
+  $ <span class='export identifier id'>export</span> <span class='USER constant id'>USER</span><span class='assign token'>=</span><span class='dbuser identifier id'>dbuser</span>
+  $ <span class='export identifier id'>export</span> <span class='PASS constant id'>PASS</span><span class='assign token'>=</span><span class='dbpass identifier id'>dbpass</span>
+  $ <span class='ruby identifier id'>ruby</span> <span class='minus op'>-</span><span class='r identifier id'>r</span> <span class='string val'>'./lib/jekyll/converters/mt'</span> <span class='minus op'>-</span><span class='e identifier id'>e</span> <span class='string val'>'Jekyll::MT.process( \
+    &quot;#{ENV[&quot;DB&quot;]}&quot;, &quot;#{ENV[&quot;USER&quot;]}&quot;, &quot;#{ENV[&quot;PASS&quot;]}&quot;)'</span>
+</pre>
+<p>
+You may need to adjust the SQL query used to retrieve MT entries. Left
+alone, it will attempt to pull all entries across all blogs regardless of
+status. Please check the results and verify the posts before publishing.
+</p>
+<p>
+h3. Typo 4+
+</p>
+<p>
+To migrate your Typo blog into Jekyll, you&#8217;ll need read access to the
+MySQL database. The lib/jekyll/converters/typo.rb module provides a simple
+convert to create .html, .textile, or .markdown files in a _posts directory
+based on the entries contained therein.
+</p>
+<pre class="code">
+  $ <span class='export identifier id'>export</span> <span class='DB constant id'>DB</span><span class='assign token'>=</span><span class='my_typo_db identifier id'>my_typo_db</span>
+  $ <span class='export identifier id'>export</span> <span class='USER constant id'>USER</span><span class='assign token'>=</span><span class='dbuser identifier id'>dbuser</span>
+  $ <span class='export identifier id'>export</span> <span class='PASS constant id'>PASS</span><span class='assign token'>=</span><span class='dbpass identifier id'>dbpass</span>
+  $ <span class='ruby identifier id'>ruby</span> <span class='minus op'>-</span><span class='r identifier id'>r</span> <span class='string val'>'./lib/jekyll/converters/typo'</span> <span class='minus op'>-</span><span class='e identifier id'>e</span> <span class='string val'>'Jekyll::Typo.process( \
+    &quot;#{ENV[&quot;DB&quot;]}&quot;, &quot;#{ENV[&quot;USER&quot;]}&quot;, &quot;#{ENV[&quot;PASS&quot;]}&quot;)'</span>
+</pre>
+<p>
+You may need to adjust the code used to filter Typo entries. Left alone, it
+will attempt to pull all entries across all blogs that were published. This
+code also has only been tested with Typo version 4+. Previous versions of
+Typo may not convert correctly. Please check the results and verify the
+posts before publishing.
+</p>
+<p>
+h3. TextPattern 4
+</p>
+<p>
+To migrate your TextPattern blog into Jekyll, you&#8217;ll need read access
+to the MySQL database. The lib/jekyll/converters/textpattern.rb module
+provides a simple convert to create .textile files in a _posts directory
+based on the entries contained therein.
+</p>
+<pre class="code">
+  $ <span class='ruby identifier id'>ruby</span> <span class='minus op'>-</span><span class='r identifier id'>r</span> <span class='string val'>'./lib/jekyll/converters/textpattern'</span> <span class='minus op'>-</span><span class='e identifier id'>e</span> <span class='string val'>'Jekyll::TextPattern.process( \
+    &quot;database_name&quot;, &quot;username&quot;, &quot;password&quot;, &quot;hostname&quot;)'</span>
+</pre>
+<p>
+The hostname defaults to <em>localhost</em>, all other variables are needed
+You may need to adjust the code used to filter entries. Left alone, it will
+attempt to pull all entries that are live or sticky.
+</p>
+<p>
+h2. Contribute
+</p>
+<p>
+If you&#8217;d like to hack on Jekyll, start by forking my repo on GitHub:
+</p>
+<p>
+http://github.com/mojombo/jekyll
+</p>
+<p>
+To get all of the dependencies, install the gem first. The best way to get
+your changes merged back into core is as follows:
+</p>
+<p>
+# Clone down your fork # Create a topic branch to contain your change #
+Hack away # Add tests and make sure everything still passes by running
+`rake` # If you are adding new functionality, document it in README.textile
+# Do not change the version number, I will do that on my end # If
+necessary, rebase your commits into logical chunks, without errors # Push
+the branch up to GitHub # Create an issue on mojombo/grit with a
+description and link to your branch
+</p>
+<p>
+h2. License
+</p>
+<p>
+(The MIT License)
+</p>
+<p>
+Copyright &#169; 2008 Tom Preston-Werner
+</p>
+<p>
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the
+&#8216;Software&#8217;), to deal in the Software without restriction,
+including without limitation the rights to use, copy, modify, merge,
+publish, distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to the
+following conditions:
+</p>
+<p>
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+</p>
+<p>
+THE SOFTWARE IS PROVIDED &#8216;AS IS&#8217;, WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+USE OR OTHER DEALINGS IN THE SOFTWARE.
+</p>
+
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,625 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: ActionView::Helpers::ActiveRecordHelper</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module ActionView_Helpers_ActiveRecordHelper">
+  <h1 class="title">Module: ActionView::Helpers::ActiveRecordHelper</h1>
+  <div class="section docstring">
+  <p>
+The Active Record Helper makes it easier to create forms for records kept
+in instance variables. The most far-reaching is the <tt>form</tt> method
+that creates a complete form for all the basic content types of the record
+(not associations or aggregations, though). This is a great way of making
+the record quickly available for editing, but likely to prove lackluster
+for a complicated real-world form. In that case, it&#8217;s better to use
+the <tt>input</tt> method and the specialized <tt>form</tt> methods in
+link:classes/ActionView/Helpers/FormHelper.html
+</p>
+
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#error_message_on-instance_method' title='#error_message_on'>#error_message_on</a></span><span class='args'>(object, method, *args)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns a string containing the error message attached to the
+<tt>method</tt> on the <tt>object</tt> if one exists.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#error_messages_for-instance_method' title='#error_messages_for'>#error_messages_for</a></span><span class='args'>(*params)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns a string with a <tt>DIV</tt> containing all of the error messages
+for the objects located as instance variables by the names given.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#form-instance_method' title='#form'>#form</a></span><span class='args'>(record_name, options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns an entire form with all needed input tags for a specified Active
+Record object.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#input-instance_method' title='#input'>#input</a></span><span class='args'>(record_name, method, options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns a default input tag for the type of object returned by the method.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>error_message_on</h3>
+</div><div id="error_message_on-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>error_message_on</span><span class='args'>(object, method, *args)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns a string containing the error message attached to the
+<tt>method</tt> on the <tt>object</tt> if one exists. This error message is
+wrapped in a <tt>DIV</tt> tag, which can be extended to include a
+<tt>:prepend_text</tt> and/or <tt>:append_text</tt> (to properly explain
+the error), and a <tt>:css_class</tt> to style it accordingly.
+<tt>object</tt> should either be the name of an instance variable or the
+actual object. The method can be passed in either as a string or a symbol.
+As an example, let&#8217;s say you have a model <tt>@post</tt> that has an
+error message on the <tt>title</tt> attribute:
+</p>
+<pre class="code">
+  <span class='lt op'>&lt;</span><span class='string val'>%= error_message_on &quot;post&quot;, &quot;title&quot; %&gt;
+  # =</span><span class='gt op'>&gt;</span> <span class='lt op'>&lt;</span><span class='div identifier id'>div</span> <span class='class class kw'>class</span><span class='assign token'>=</span><span class='string val'>&quot;formError&quot;</span><span class='gt op'>&gt;</span><span class='can identifier id'>can</span><span class='string val'>'t be empty&lt;/div&gt;
+
+  &lt;%= error_message_on @post, :title %&gt;
+  # =&gt; &lt;div class=&quot;formError&quot;&gt;can'</span><span class='t identifier id'>t</span> <span class='be identifier id'>be</span> <span class='empty identifier id'>empty</span><span class='lt op'>&lt;</span><span class='regexp val'>/div&gt;
+
+  &lt;%= error_message_on &quot;post&quot;, &quot;title&quot;,
+      :prepend_text =&gt; &quot;Title simply &quot;,
+      :append_text =&gt; &quot; (or it won't work).&quot;,
+      :css_class =&gt; &quot;inputError&quot; %&gt;
+</span></pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'actionpack/lib/action_view/helpers/active_record_helper.rb', line 109</span>
+
+<span class='def def kw'>def</span> <span class='error_message_on identifier id'>error_message_on</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='comma token'>,</span> <span class='method identifier id'>method</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='extract_options! fid id'>extract_options!</span>
+  <span class='unless unless kw'>unless</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span>
+    <span class='ActiveSupport constant id'>ActiveSupport</span><span class='colon2 op'>::</span><span class='Deprecation constant id'>Deprecation</span><span class='dot token'>.</span><span class='warn identifier id'>warn</span><span class='lparen token'>(</span><span class='string val'>'error_message_on takes an option hash instead of separate '</span> <span class='plus op'>+</span>
+      <span class='string val'>'prepend_text, append_text, and css_class arguments'</span><span class='comma token'>,</span> <span class='caller identifier id'>caller</span><span class='rparen token'>)</span>
+
+    <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:prepend_text</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='args identifier id'>args</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='string val'>''</span>
+    <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:append_text</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='args identifier id'>args</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='string val'>''</span>
+    <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:css_class</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='args identifier id'>args</span><span class='lbrack token'>[</span><span class='integer val'>2</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='string val'>'formError'</span>
+  <span class='end end kw'>end</span>
+  <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='reverse_merge! fid id'>reverse_merge!</span><span class='lparen token'>(</span><span class='symbol val'>:prepend_text</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>''</span><span class='comma token'>,</span> <span class='symbol val'>:append_text</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>''</span><span class='comma token'>,</span> <span class='symbol val'>:css_class</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'formError'</span><span class='rparen token'>)</span>
+
+  <span class='if if kw'>if</span> <span class='lparen token'>(</span><span class='obj identifier id'>obj</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='colon op'>:</span><span class='errors identifier id'>errors</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='object identifier id'>object</span> <span class='colon op'>:</span> <span class='instance_variable_get identifier id'>instance_variable_get</span><span class='lparen token'>(</span><span class='dstring node'>&quot;@#{object}&quot;</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span>
+    <span class='lparen token'>(</span><span class='errors identifier id'>errors</span> <span class='assign token'>=</span> <span class='obj identifier id'>obj</span><span class='dot token'>.</span><span class='errors identifier id'>errors</span><span class='dot token'>.</span><span class='on identifier id'>on</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+    <span class='content_tag identifier id'>content_tag</span><span class='lparen token'>(</span><span class='string val'>&quot;div&quot;</span><span class='comma token'>,</span>
+      <span class='dstring node'>&quot;#{options[:prepend_text]}#{ERB::Util.html_escape(errors.is_a?(Array) ? errors.first : errors)}#{options[:append_text]}&quot;</span><span class='comma token'>,</span>
+      <span class='symbol val'>:class</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:css_class</span><span class='rbrack token'>]</span>
+    <span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+    <span class='string val'>''</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>error_messages_for</h3>
+</div><div id="error_messages_for-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>error_messages_for</span><span class='args'>(*params)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns a string with a <tt>DIV</tt> containing all of the error messages
+for the objects located as instance variables by the names given. If more
+than one object is specified, the errors for the objects are displayed in
+the order that the object names are provided.
+</p>
+<p>
+This <tt>DIV</tt> can be tailored by the following options:
+</p>
+<ul>
+<li><tt>:header_tag</tt> - Used for the header of the error div (default:
+&quot;h2&quot;).
+
+</li>
+<li><tt>:id</tt> - The id of the error div (default:
+&quot;errorExplanation&quot;).
+
+</li>
+<li><tt>:class</tt> - The class of the error div (default:
+&quot;errorExplanation&quot;).
+
+</li>
+<li><tt>:object</tt> - The object (or array of objects) for which to display
+errors, if you need to escape the instance variable convention.
+
+</li>
+<li><tt>:object_name</tt> - The object name to use in the header, or any text
+that you prefer. If <tt>:object_name</tt> is not set, the name of the first
+object will be used.
+
+</li>
+<li><tt>:header_message</tt> - The message in the header of the error div. Pass
+<tt>nil</tt> or an empty string to avoid the header message altogether.
+(Default: &quot;X errors prohibited this object from being saved&quot;).
+
+</li>
+<li><tt>:message</tt> - The explanation message after the header message and
+before the error list. Pass <tt>nil</tt> or an empty string to avoid the
+explanation message altogether. (Default: &quot;There were problems with
+the following fields:&quot;).
+
+</li>
+</ul>
+<p>
+To specify the display for one object, you simply provide its name as a
+parameter. For example, for the <tt>@user</tt> model:
+</p>
+<pre class="code">
+  <span class='error_messages_for identifier id'>error_messages_for</span> <span class='string val'>'user'</span>
+</pre>
+<p>
+To specify more than one object, you simply list them; optionally, you can
+add an extra <tt>:object_name</tt> parameter, which will be the name used
+in the header message:
+</p>
+<pre class="code">
+  <span class='error_messages_for identifier id'>error_messages_for</span> <span class='string val'>'user_common'</span><span class='comma token'>,</span> <span class='string val'>'user'</span><span class='comma token'>,</span> <span class='symbol val'>:object_name</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'user'</span>
+</pre>
+<p>
+If the objects cannot be located as instance variables, you can add an
+extra <tt>:object</tt> parameter which gives the actual object (or array of
+objects to use):
+</p>
+<pre class="code">
+  <span class='error_messages_for identifier id'>error_messages_for</span> <span class='string val'>'user'</span><span class='comma token'>,</span> <span class='symbol val'>:object</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='@question ivar id'>@question</span><span class='dot token'>.</span><span class='user identifier id'>user</span>
+</pre>
+<p>
+NOTE: This is a pre-packaged presentation of the errors with embedded
+strings and a certain HTML structure. If what you need is significantly
+different from the default presentation, it makes plenty of sense to access
+the <tt>object.errors</tt> instance yourself and set it up. View the source
+of this method to see how easy it is.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'actionpack/lib/action_view/helpers/active_record_helper.rb', line 170</span>
+
+<span class='def def kw'>def</span> <span class='error_messages_for identifier id'>error_messages_for</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='params identifier id'>params</span><span class='rparen token'>)</span>
+  <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='params identifier id'>params</span><span class='dot token'>.</span><span class='extract_options! fid id'>extract_options!</span><span class='dot token'>.</span><span class='symbolize_keys identifier id'>symbolize_keys</span>
+
+  <span class='if if kw'>if</span> <span class='object identifier id'>object</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='colon op'>:</span><span class='object identifier id'>object</span><span class='rparen token'>)</span>
+    <span class='objects identifier id'>objects</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='object identifier id'>object</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='flatten identifier id'>flatten</span>
+  <span class='else else kw'>else</span>
+    <span class='objects identifier id'>objects</span> <span class='assign token'>=</span> <span class='params identifier id'>params</span><span class='dot token'>.</span><span class='collect identifier id'>collect</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='object_name identifier id'>object_name</span><span class='bitor op'>|</span> <span class='instance_variable_get identifier id'>instance_variable_get</span><span class='lparen token'>(</span><span class='dstring node'>&quot;@#{object_name}&quot;</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='compact identifier id'>compact</span>
+  <span class='end end kw'>end</span>
+
+  <span class='count identifier id'>count</span>  <span class='assign token'>=</span> <span class='objects identifier id'>objects</span><span class='dot token'>.</span><span class='inject identifier id'>inject</span><span class='lparen token'>(</span><span class='integer val'>0</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='sum identifier id'>sum</span><span class='comma token'>,</span> <span class='object identifier id'>object</span><span class='bitor op'>|</span> <span class='sum identifier id'>sum</span> <span class='plus op'>+</span> <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='errors identifier id'>errors</span><span class='dot token'>.</span><span class='count identifier id'>count</span> <span class='rbrace token'>}</span>
+  <span class='unless unless kw'>unless</span> <span class='count identifier id'>count</span><span class='dot token'>.</span><span class='zero? fid id'>zero?</span>
+    <span class='html identifier id'>html</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+    <span class='lbrack token'>[</span><span class='symbol val'>:id</span><span class='comma token'>,</span> <span class='symbol val'>:class</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='key identifier id'>key</span><span class='bitor op'>|</span>
+      <span class='if if kw'>if</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='key identifier id'>key</span><span class='rparen token'>)</span>
+        <span class='value identifier id'>value</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='key identifier id'>key</span><span class='rbrack token'>]</span>
+        <span class='html identifier id'>html</span><span class='lbrack token'>[</span><span class='key identifier id'>key</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='value identifier id'>value</span> <span class='unless unless_mod kw'>unless</span> <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span>
+      <span class='else else kw'>else</span>
+        <span class='html identifier id'>html</span><span class='lbrack token'>[</span><span class='key identifier id'>key</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='string val'>'errorExplanation'</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+    <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:object_name</span><span class='rbrack token'>]</span> <span class='opasgn op'>||=</span> <span class='params identifier id'>params</span><span class='dot token'>.</span><span class='first identifier id'>first</span>
+
+    <span class='I18n constant id'>I18n</span><span class='dot token'>.</span><span class='with_options identifier id'>with_options</span> <span class='symbol val'>:locale</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:locale</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='symbol val'>:scope</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='symbol val'>:activerecord</span><span class='comma token'>,</span> <span class='symbol val'>:errors</span><span class='comma token'>,</span> <span class='symbol val'>:template</span><span class='rbrack token'>]</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='locale identifier id'>locale</span><span class='bitor op'>|</span>
+      <span class='header_message identifier id'>header_message</span> <span class='assign token'>=</span> <span class='if if kw'>if</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='colon op'>:</span><span class='header_message identifier id'>header_message</span><span class='rparen token'>)</span>
+        <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:header_message</span><span class='rbrack token'>]</span>
+      <span class='else else kw'>else</span>
+        <span class='object_name identifier id'>object_name</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:object_name</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='string val'>'_'</span><span class='comma token'>,</span> <span class='string val'>' '</span><span class='rparen token'>)</span>
+        <span class='object_name identifier id'>object_name</span> <span class='assign token'>=</span> <span class='I18n constant id'>I18n</span><span class='dot token'>.</span><span class='t identifier id'>t</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:object_name</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='comma token'>,</span> <span class='symbol val'>:default</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='object_name identifier id'>object_name</span><span class='comma token'>,</span> <span class='symbol val'>:scope</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='symbol val'>:activerecord</span><span class='comma token'>,</span> <span class='symbol val'>:models</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='symbol val'>:count</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>1</span><span class='rparen token'>)</span>
+        <span class='locale identifier id'>locale</span><span class='dot token'>.</span><span class='t identifier id'>t</span> <span class='symbol val'>:header</span><span class='comma token'>,</span> <span class='symbol val'>:count</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='count identifier id'>count</span><span class='comma token'>,</span> <span class='symbol val'>:model</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='object_name identifier id'>object_name</span>
+      <span class='end end kw'>end</span>
+      <span class='message identifier id'>message</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='symbol val'>:message</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:message</span><span class='rbrack token'>]</span> <span class='colon op'>:</span> <span class='locale identifier id'>locale</span><span class='dot token'>.</span><span class='t identifier id'>t</span><span class='lparen token'>(</span><span class='symbol val'>:body</span><span class='rparen token'>)</span>
+      <span class='error_messages identifier id'>error_messages</span> <span class='assign token'>=</span> <span class='objects identifier id'>objects</span><span class='dot token'>.</span><span class='sum identifier id'>sum</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='object identifier id'>object</span><span class='bitor op'>|</span> <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='errors identifier id'>errors</span><span class='dot token'>.</span><span class='full_messages identifier id'>full_messages</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='msg identifier id'>msg</span><span class='bitor op'>|</span> <span class='content_tag identifier id'>content_tag</span><span class='lparen token'>(</span><span class='symbol val'>:li</span><span class='comma token'>,</span> <span class='ERB constant id'>ERB</span><span class='colon2 op'>::</span><span class='Util constant id'>Util</span><span class='dot token'>.</span><span class='html_escape identifier id'>html_escape</span><span class='lparen token'>(</span><span class='msg identifier id'>msg</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span> <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='join identifier id'>join</span>
+
+      <span class='contents identifier id'>contents</span> <span class='assign token'>=</span> <span class='string val'>''</span>
+      <span class='contents identifier id'>contents</span> <span class='lshft op'>&lt;&lt;</span> <span class='content_tag identifier id'>content_tag</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:header_tag</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='symbol val'>:h2</span><span class='comma token'>,</span> <span class='header_message identifier id'>header_message</span><span class='rparen token'>)</span> <span class='unless unless_mod kw'>unless</span> <span class='header_message identifier id'>header_message</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span>
+      <span class='contents identifier id'>contents</span> <span class='lshft op'>&lt;&lt;</span> <span class='content_tag identifier id'>content_tag</span><span class='lparen token'>(</span><span class='symbol val'>:p</span><span class='comma token'>,</span> <span class='message identifier id'>message</span><span class='rparen token'>)</span> <span class='unless unless_mod kw'>unless</span> <span class='message identifier id'>message</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span>
+      <span class='contents identifier id'>contents</span> <span class='lshft op'>&lt;&lt;</span> <span class='content_tag identifier id'>content_tag</span><span class='lparen token'>(</span><span class='symbol val'>:ul</span><span class='comma token'>,</span> <span class='error_messages identifier id'>error_messages</span><span class='rparen token'>)</span>
+
+      <span class='content_tag identifier id'>content_tag</span><span class='lparen token'>(</span><span class='symbol val'>:div</span><span class='comma token'>,</span> <span class='contents identifier id'>contents</span><span class='comma token'>,</span> <span class='html identifier id'>html</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='else else kw'>else</span>
+    <span class='string val'>''</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>form</h3>
+</div><div id="form-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>form</span><span class='args'>(record_name, options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns an entire form with all needed input tags for a specified Active
+Record object. For example, if <tt>@post</tt> has attributes named
+<tt>title</tt> of type <tt>VARCHAR</tt> and <tt>body</tt> of type
+<tt>TEXT</tt> then
+</p>
+<pre class="code">
+  <span class='form identifier id'>form</span><span class='lparen token'>(</span><span class='string val'>&quot;post&quot;</span><span class='rparen token'>)</span>
+</pre>
+<p>
+would yield a form like the following (modulus formatting):
+</p>
+<pre class="code">
+  <span class='lt op'>&lt;</span><span class='form identifier id'>form</span> <span class='action identifier id'>action</span><span class='assign token'>=</span><span class='string val'>'/posts/create'</span> <span class='method identifier id'>method</span><span class='assign token'>=</span><span class='string val'>'post'</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='p identifier id'>p</span><span class='gt op'>&gt;</span>
+      <span class='lt op'>&lt;</span><span class='label identifier id'>label</span> <span class='for for kw'>for</span><span class='assign token'>=</span><span class='string val'>&quot;post_title&quot;</span><span class='gt op'>&gt;</span><span class='Title constant id'>Title</span><span class='lt op'>&lt;</span><span class='regexp val'>/label&gt;&lt;br /</span><span class='gt op'>&gt;</span>
+      <span class='lt op'>&lt;</span><span class='input identifier id'>input</span> <span class='id identifier id'>id</span><span class='assign token'>=</span><span class='string val'>&quot;post_title&quot;</span> <span class='name identifier id'>name</span><span class='assign token'>=</span><span class='string val'>&quot;post[title]&quot;</span> <span class='size identifier id'>size</span><span class='assign token'>=</span><span class='string val'>&quot;30&quot;</span> <span class='type identifier id'>type</span><span class='assign token'>=</span><span class='string val'>&quot;text&quot;</span> <span class='value identifier id'>value</span><span class='assign token'>=</span><span class='string val'>&quot;Hello World&quot;</span> <span class='div op'>/</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='regexp val'>/p&gt;
+    &lt;p&gt;
+      &lt;label for=&quot;post_body&quot;&gt;Body&lt;/</span><span class='label identifier id'>label</span><span class='gt op'>&gt;</span><span class='lt op'>&lt;</span><span class='br identifier id'>br</span> <span class='regexp val'>/&gt;
+      &lt;textarea cols=&quot;40&quot; id=&quot;post_body&quot; name=&quot;post[body]&quot; rows=&quot;20&quot;&gt;&lt;/</span><span class='textarea identifier id'>textarea</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='regexp val'>/p&gt;
+    &lt;input name=&quot;commit&quot; type=&quot;submit&quot; value=&quot;Create&quot; /</span><span class='gt op'>&gt;</span>
+  <span class='lt op'>&lt;</span><span class='regexp val'>/form&gt;
+</span></pre>
+<p>
+It&#8217;s possible to specialize the form builder by using a different
+action name and by supplying another block renderer. For example, if
+<tt>@entry</tt> has an attribute <tt>message</tt> of type <tt>VARCHAR</tt>
+then
+</p>
+<pre class="code">
+  <span class='form identifier id'>form</span><span class='lparen token'>(</span><span class='string val'>&quot;entry&quot;</span><span class='comma token'>,</span>
+    <span class='symbol val'>:action</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;sign&quot;</span><span class='comma token'>,</span>
+    <span class='symbol val'>:input_block</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='Proc constant id'>Proc</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='record identifier id'>record</span><span class='comma token'>,</span> <span class='column identifier id'>column</span><span class='bitor op'>|</span>
+      <span class='dstring node'>&quot;#{column.human_name}: #{input(record, column.name)}&lt;br /&gt;&quot;</span>
+  <span class='rbrace token'>}</span><span class='rparen token'>)</span>
+</pre>
+<p>
+would yield a form like the following (modulus formatting):
+</p>
+<pre class="code">
+  <span class='lt op'>&lt;</span><span class='form identifier id'>form</span> <span class='action identifier id'>action</span><span class='assign token'>=</span><span class='string val'>&quot;/entries/sign&quot;</span> <span class='method identifier id'>method</span><span class='assign token'>=</span><span class='string val'>&quot;post&quot;</span><span class='gt op'>&gt;</span>
+    <span class='Message constant id'>Message</span><span class='colon op'>:</span>
+    <span class='lt op'>&lt;</span><span class='input identifier id'>input</span> <span class='id identifier id'>id</span><span class='assign token'>=</span><span class='string val'>&quot;entry_message&quot;</span> <span class='name identifier id'>name</span><span class='assign token'>=</span><span class='string val'>&quot;entry[message]&quot;</span> <span class='size identifier id'>size</span><span class='assign token'>=</span><span class='string val'>&quot;30&quot;</span> <span class='type identifier id'>type</span><span class='assign token'>=</span><span class='string val'>&quot;text&quot;</span> <span class='div op'>/</span><span class='gt op'>&gt;</span><span class='lt op'>&lt;</span><span class='br identifier id'>br</span> <span class='regexp val'>/&gt;
+    &lt;input name=&quot;commit&quot; type=&quot;submit&quot; value=&quot;Sign&quot; /</span><span class='gt op'>&gt;</span>
+  <span class='lt op'>&lt;</span><span class='regexp val'>/form&gt;
+</span></pre>
+<p>
+It&#8217;s also possible to add additional content to the form by giving it
+a block, such as:
+</p>
+<pre class="code">
+  <span class='form identifier id'>form</span><span class='lparen token'>(</span><span class='string val'>&quot;entry&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:action</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;sign&quot;</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='form identifier id'>form</span><span class='bitor op'>|</span>
+    <span class='form identifier id'>form</span> <span class='lshft op'>&lt;&lt;</span> <span class='content_tag identifier id'>content_tag</span><span class='lparen token'>(</span><span class='string val'>&quot;b&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;Department&quot;</span><span class='rparen token'>)</span>
+    <span class='form identifier id'>form</span> <span class='lshft op'>&lt;&lt;</span> <span class='collection_select identifier id'>collection_select</span><span class='lparen token'>(</span><span class='string val'>&quot;department&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;id&quot;</span><span class='comma token'>,</span> <span class='@departments ivar id'>@departments</span><span class='comma token'>,</span> <span class='string val'>&quot;id&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;name&quot;</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+The following options are available:
+</p>
+<ul>
+<li><tt>:action</tt> - The action used when submitting the form (default:
+<tt>create</tt> if a new record, otherwise <tt>update</tt>).
+
+</li>
+<li><tt>:input_block</tt> - Specialize the output using a different block, see
+above.
+
+</li>
+<li><tt>:method</tt> - The method used when submitting the form (default:
+<tt>post</tt>).
+
+</li>
+<li><tt>:multipart</tt> - Whether to change the enctype of the form to
+&quot;multipart/form-data&quot;, used when uploading a file (default:
+<tt>false</tt>).
+
+</li>
+<li><tt>:submit_value</tt> - The text of the submit button (default:
+&quot;Create&quot; if a new record, otherwise &quot;Update&quot;).
+
+</li>
+</ul>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'actionpack/lib/action_view/helpers/active_record_helper.rb', line 75</span>
+
+<span class='def def kw'>def</span> <span class='form identifier id'>form</span><span class='lparen token'>(</span><span class='record_name identifier id'>record_name</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='record identifier id'>record</span> <span class='assign token'>=</span> <span class='instance_variable_get identifier id'>instance_variable_get</span><span class='lparen token'>(</span><span class='dstring node'>&quot;@#{record_name}&quot;</span><span class='rparen token'>)</span>
+
+  <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='symbolize_keys identifier id'>symbolize_keys</span>
+  <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:action</span><span class='rbrack token'>]</span> <span class='opasgn op'>||=</span> <span class='record identifier id'>record</span><span class='dot token'>.</span><span class='new_record? fid id'>new_record?</span> <span class='integer val'>? </span><span class='string val'>&quot;create&quot;</span> <span class='colon op'>:</span> <span class='string val'>&quot;update&quot;</span>
+  <span class='action identifier id'>action</span> <span class='assign token'>=</span> <span class='url_for identifier id'>url_for</span><span class='lparen token'>(</span><span class='symbol val'>:action</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:action</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='symbol val'>:id</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='record identifier id'>record</span><span class='rparen token'>)</span>
+
+  <span class='submit_value identifier id'>submit_value</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:submit_value</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:action</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='regexp val'>/[^\w]/</span><span class='comma token'>,</span> <span class='string val'>''</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='capitalize identifier id'>capitalize</span>
+
+  <span class='contents identifier id'>contents</span> <span class='assign token'>=</span> <span class='form_tag identifier id'>form_tag</span><span class='lparen token'>(</span><span class='lbrace token'>{</span><span class='symbol val'>:action</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='action identifier id'>action</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='symbol val'>:method</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:method</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='string val'>'post'</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:enctype</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:multipart</span><span class='rbrack token'>]</span> <span class='question op'>?</span> <span class='string val'>'multipart/form-data'</span><span class='colon op'>:</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='contents identifier id'>contents</span> <span class='lshft op'>&lt;&lt;</span> <span class='hidden_field identifier id'>hidden_field</span><span class='lparen token'>(</span><span class='record_name identifier id'>record_name</span><span class='comma token'>,</span> <span class='symbol val'>:id</span><span class='rparen token'>)</span> <span class='unless unless_mod kw'>unless</span> <span class='record identifier id'>record</span><span class='dot token'>.</span><span class='new_record? fid id'>new_record?</span>
+  <span class='contents identifier id'>contents</span> <span class='lshft op'>&lt;&lt;</span> <span class='all_input_tags identifier id'>all_input_tags</span><span class='lparen token'>(</span><span class='record identifier id'>record</span><span class='comma token'>,</span> <span class='record_name identifier id'>record_name</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='yield yield kw'>yield</span> <span class='contents identifier id'>contents</span> <span class='if if_mod kw'>if</span> <span class='block_given? fid id'>block_given?</span>
+  <span class='contents identifier id'>contents</span> <span class='lshft op'>&lt;&lt;</span> <span class='submit_tag identifier id'>submit_tag</span><span class='lparen token'>(</span><span class='submit_value identifier id'>submit_value</span><span class='rparen token'>)</span>
+  <span class='contents identifier id'>contents</span> <span class='lshft op'>&lt;&lt;</span> <span class='string val'>'&lt;/form&gt;'</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>input</h3>
+</div><div id="input-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>input</span><span class='args'>(record_name, method, options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns a default input tag for the type of object returned by the method.
+For example, if <tt>@post</tt> has an attribute <tt>title</tt> mapped to a
+<tt>VARCHAR</tt> column that holds &quot;Hello World&quot;:
+</p>
+<pre class="code">
+  <span class='input identifier id'>input</span><span class='lparen token'>(</span><span class='string val'>&quot;post&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;title&quot;</span><span class='rparen token'>)</span>
+  <span class='comment val'># =&gt; &lt;input id=&quot;post_title&quot; name=&quot;post[title]&quot; size=&quot;30&quot; type=&quot;text&quot; value=&quot;Hello World&quot; /&gt;</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+21
+22
+23</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'actionpack/lib/action_view/helpers/active_record_helper.rb', line 21</span>
+
+<span class='def def kw'>def</span> <span class='input identifier id'>input</span><span class='lparen token'>(</span><span class='record_name identifier id'>record_name</span><span class='comma token'>,</span> <span class='method identifier id'>method</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='InstanceTag constant id'>InstanceTag</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='record_name identifier id'>record_name</span><span class='comma token'>,</span> <span class='method identifier id'>method</span><span class='comma token'>,</span> <span class='self self kw'>self</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_tag identifier id'>to_tag</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

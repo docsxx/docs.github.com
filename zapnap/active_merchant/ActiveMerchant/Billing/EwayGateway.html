@@ -1,0 +1,1083 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: ActiveMerchant::Billing::EwayGateway</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class ActiveMerchant_Billing_EwayGateway">
+  <h1 class="title">Class: ActiveMerchant::Billing::EwayGateway</h1>
+  <div class="section inheritance">
+  <ul>
+  <li><a href='Gateway.html' title='ActiveMerchant::Billing::Gateway'>ActiveMerchant::Billing::Gateway</a></li><ul><li>ActiveMerchant::Billing::EwayGateway</li>
+  </ul></ul>
+</div><div class="section docstring">
+  <p>
+First, make sure you have everything setup correctly and all of your
+dependencies in place with:
+</p>
+<pre class="code">
+  <span class='require identifier id'>require</span> <span class='string val'>'rubygems'</span>
+  <span class='require identifier id'>require</span> <span class='string val'>'active_merchant'</span>
+</pre>
+<p>
+ActiveMerchant expects the amounts to be given as an Integer in cents. In
+this case, $10 US becomes 1000.
+</p>
+<pre class="code">
+  <span class='tendollar identifier id'>tendollar</span> <span class='assign token'>=</span> <span class='integer val'>1000</span>
+</pre>
+<p>
+Next, create a credit card object using a TC approved test card.
+</p>
+<pre class="code">
+  <span class='creditcard identifier id'>creditcard</span> <span class='assign token'>=</span> <span class='ActiveMerchant constant id'>ActiveMerchant</span><span class='colon2 op'>::</span><span class='Billing constant id'>Billing</span><span class='colon2 op'>::</span><span class='CreditCard constant id'>CreditCard</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span>
+    <span class='symbol val'>:number</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'4111111111111111'</span><span class='comma token'>,</span>
+    <span class='symbol val'>:month</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>8</span><span class='comma token'>,</span>
+    <span class='symbol val'>:year</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>2006</span><span class='comma token'>,</span>
+    <span class='symbol val'>:first_name</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'Longbob'</span><span class='comma token'>,</span>
+    <span class='symbol val'>:last_name</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'Longsen'</span>
+  <span class='rparen token'>)</span>
+  <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span>
+    <span class='symbol val'>:order_id</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'1230123'</span><span class='comma token'>,</span>
+    <span class='symbol val'>:email</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'bob@testbob.com'</span><span class='comma token'>,</span>
+    <span class='symbol val'>:address</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span> <span class='symbol val'>:address1</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'47 Bobway'</span><span class='comma token'>,</span>
+                  <span class='symbol val'>:city</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'Bobville'</span><span class='comma token'>,</span>
+                  <span class='symbol val'>:state</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'WA'</span><span class='comma token'>,</span>
+                  <span class='symbol val'>:country</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'Australia'</span><span class='comma token'>,</span>
+                  <span class='symbol val'>:zip</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'2000'</span>
+                <span class='rbrace token'>}</span>
+    <span class='symbol val'>:description</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'purchased items'</span>
+  <span class='rbrace token'>}</span>
+</pre>
+<p>
+To finish setting up, create the active_merchant object you will be using,
+with the eWay gateway. If you have a functional eWay account, replace
+:login with your account info.
+</p>
+<pre class="code">
+  <span class='gateway identifier id'>gateway</span> <span class='assign token'>=</span> <span class='ActiveMerchant constant id'>ActiveMerchant</span><span class='colon2 op'>::</span><span class='Billing constant id'>Billing</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='dot token'>.</span><span class='gateway identifier id'>gateway</span><span class='lparen token'>(</span><span class='symbol val'>:eway</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='symbol val'>:login</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'87654321'</span><span class='rparen token'>)</span>
+</pre>
+<p>
+Now we are ready to process our transaction
+</p>
+<pre class="code">
+  <span class='response identifier id'>response</span> <span class='assign token'>=</span> <span class='gateway identifier id'>gateway</span><span class='dot token'>.</span><span class='purchase identifier id'>purchase</span><span class='lparen token'>(</span><span class='tendollar identifier id'>tendollar</span><span class='comma token'>,</span> <span class='creditcard identifier id'>creditcard</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+</pre>
+<p>
+Sending a transaction to TrustCommerce with active_merchant returns a
+Response object, which consistently allows you to:
+</p>
+<p>
+1) Check whether the transaction was successful
+</p>
+<pre class="code">
+  <span class='response identifier id'>response</span><span class='dot token'>.</span><span class='success? fid id'>success?</span>
+</pre>
+<p>
+2) Retrieve any message returned by eWay, either a &quot;transaction was
+successful&quot; note or an explanation of why the transaction was
+rejected.
+</p>
+<pre class="code">
+  <span class='response identifier id'>response</span><span class='dot token'>.</span><span class='message identifier id'>message</span>
+</pre>
+<p>
+3) Retrieve and store the unique transaction ID returned by eWway, for use
+in referencing the transaction in the future.
+</p>
+<pre class="code">
+  <span class='response identifier id'>response</span><span class='dot token'>.</span><span class='authorization identifier id'>authorization</span>
+</pre>
+<p>
+This should be enough to get you started with eWay and active_merchant. For
+further information, review the methods below and the rest of
+active_merchant&#8217;s documentation.
+</p>
+
+</div><div class="section constants">
+  <div class="thisclass">
+  <h1>Constants</h1>
+  <dl>
+    
+      <dt id="LIVE_CVN_URL-constant">LIVE_CVN_URL</dt>
+      <dd>'https://www.eway.com.au/gateway_cvn/xmlpayment.asp'</dd>
+    
+      <dt id="LIVE_URL-constant">LIVE_URL</dt>
+      <dd>'https://www.eway.com.au/gateway/xmlpayment.asp'</dd>
+    
+      <dt id="MESSAGES-constant">MESSAGES</dt>
+      <dd>{        &quot;00&quot; =&gt; &quot;Transaction Approved&quot;,        &quot;01&quot; =&gt; &quot;Refer to Issuer&quot;,        &quot;02&quot; =&gt; &quot;Refer to Issuer, special&quot;,         &quot;03&quot; =&gt; &quot;No Merchant&quot;,        &quot;04&quot; =&gt; &quot;Pick Up Card&quot;,         &quot;05&quot; =&gt; &quot;Do Not Honour&quot;,          &quot;06&quot; =&gt; &quot;Error&quot;,        &quot;07&quot; =&gt; &quot;Pick Up Card, Special&quot;,          &quot;08&quot; =&gt; &quot;Honour With Identification&quot;,         &quot;09&quot; =&gt; &quot;Request In Progress&quot;,        &quot;10&quot; =&gt; &quot;Approved For Partial Amount&quot;,          &quot;11&quot; =&gt; &quot;Approved, VIP&quot;,          &quot;12&quot; =&gt; &quot;Invalid Transaction&quot;,          &quot;13&quot; =&gt; &quot;Invalid Amount&quot;,        &quot;14&quot; =&gt; &quot;Invalid Card Number&quot;,          &quot;15&quot; =&gt; &quot;No Issuer&quot;,          &quot;16&quot; =&gt; &quot;Approved, Update Track 3&quot;,         &quot;19&quot; =&gt; &quot;Re-enter Last Transaction&quot;,          &quot;21&quot; =&gt; &quot;No Action Taken&quot;,          &quot;22&quot; =&gt; &quot;Suspected Malfunction&quot;,          &quot;23&quot; =&gt; &quot;Unacceptable Transaction Fee&quot;,         &quot;25&quot; =&gt; &quot;Unable to Locate Record On File&quot;,          &quot;30&quot; =&gt; &quot;Format Error&quot;,         &quot;31&quot; =&gt; &quot;Bank Not Supported By Switch&quot;,         &quot;33&quot; =&gt; &quot;Expired Card, Capture&quot;,          &quot;34&quot; =&gt; &quot;Suspected Fraud, Retain Card&quot;,         &quot;35&quot; =&gt; &quot;Card Acceptor, Contact Acquirer, Retain Card&quot;,         &quot;36&quot; =&gt; &quot;Restricted Card, Retain Card&quot;,         &quot;37&quot; =&gt; &quot;Contact Acquirer Security Department, Retain Card&quot;,          &quot;38&quot; =&gt; &quot;PIN Tries Exceeded, Capture&quot;,          &quot;39&quot; =&gt; &quot;No Credit Account&quot;,          &quot;40&quot; =&gt; &quot;Function Not Supported&quot;,         &quot;41&quot; =&gt; &quot;Lost Card&quot;,          &quot;42&quot; =&gt; &quot;No Universal Account&quot;,         &quot;43&quot; =&gt; &quot;Stolen Card&quot;,          &quot;44&quot; =&gt; &quot;No Investment Account&quot;,          &quot;51&quot; =&gt; &quot;Insufficient Funds&quot;,         &quot;52&quot; =&gt; &quot;No Cheque Account&quot;,          &quot;53&quot; =&gt; &quot;No Savings Account&quot;,         &quot;54&quot; =&gt; &quot;Expired Card&quot;,         &quot;55&quot; =&gt; &quot;Incorrect PIN&quot;,          &quot;56&quot; =&gt; &quot;No Card Record&quot;,         &quot;57&quot; =&gt; &quot;Function Not Permitted to Cardholder&quot;,         &quot;58&quot; =&gt; &quot;Function Not Permitted to Terminal&quot;,         &quot;59&quot; =&gt; &quot;Suspected Fraud&quot;,          &quot;60&quot; =&gt; &quot;Acceptor Contact Acquirer&quot;,          &quot;61&quot; =&gt; &quot;Exceeds Withdrawal Limit&quot;,         &quot;62&quot; =&gt; &quot;Restricted Card&quot;,          &quot;63&quot; =&gt; &quot;Security Violation&quot;,         &quot;64&quot; =&gt; &quot;Original Amount Incorrect&quot;,          &quot;66&quot; =&gt; &quot;Acceptor Contact Acquirer, Security&quot;,          &quot;67&quot; =&gt; &quot;Capture Card&quot;,         &quot;75&quot; =&gt; &quot;PIN Tries Exceeded&quot;,         &quot;82&quot; =&gt; &quot;CVV Validation Error&quot;,         &quot;90&quot; =&gt; &quot;Cutoff In Progress&quot;,         &quot;91&quot; =&gt; &quot;Card Issuer Unavailable&quot;,          &quot;92&quot; =&gt; &quot;Unable To Route Transaction&quot;,          &quot;93&quot; =&gt; &quot;Cannot Complete, Violation Of The Law&quot;,          &quot;94&quot; =&gt; &quot;Duplicate Transaction&quot;,          &quot;96&quot; =&gt; &quot;System Error&quot;      }</dd>
+    
+      <dt id="TEST_CVN_URL-constant">TEST_CVN_URL</dt>
+      <dd>'https://www.eway.com.au/gateway_cvn/xmltest/testpage.asp'</dd>
+    
+      <dt id="TEST_URL-constant">TEST_URL</dt>
+      <dd>'https://www.eway.com.au/gateway/xmltest/testpage.asp'</dd>
+    
+  </dl>
+</div>
+<div class="inherited">
+  
+  <div>
+    <h1>Constants Inherited from <a href='Gateway.html' title='ActiveMerchant::Billing::Gateway'>ActiveMerchant::Billing::Gateway</a></h1>
+    <p><span class='name'><a href='Gateway.html#DEBIT_CARDS-constant' title='DEBIT_CARDS'>DEBIT_CARDS</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+138
+139
+140
+141
+142</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/eway.rb', line 138</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='requires! fid id'>requires!</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='comma token'>,</span> <span class='symbol val'>:login</span><span class='rparen token'>)</span>
+  <span class='@options ivar id'>@options</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span>
+  <span class='super super kw'>super</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <div class="inherited">
+  
+  <div>
+    <h1>Public Class Methods Inherited from <a href='Gateway.html' title='ActiveMerchant::Billing::Gateway'>ActiveMerchant::Billing::Gateway</a></h1>
+    <p><span class='name'><a href='Gateway.html#card_brand-class_method' title='card_brand'>card_brand</a></span>, <span class='name'><a href='Gateway.html#inherited-class_method' title='inherited'>inherited</a></span>, <span class='name'><a href='Gateway.html#supports%3F-class_method' title='supports?'>supports?</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+  <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#add_address-instance_method' title='#add_address'>#add_address</a></span><span class='args'>(post, options)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#add_creditcard-instance_method' title='#add_creditcard'>#add_creditcard</a></span><span class='args'>(post, creditcard)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#add_customer_data-instance_method' title='#add_customer_data'>#add_customer_data</a></span><span class='args'>(post, options)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#add_invoice_data-instance_method' title='#add_invoice_data'>#add_invoice_data</a></span><span class='args'>(post, options)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#add_optional_data-instance_method' title='#add_optional_data'>#add_optional_data</a></span><span class='args'>(post)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#commit-instance_method' title='#commit'>#commit</a></span><span class='args'>(money, parameters)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#gateway_url-instance_method' title='#gateway_url'>#gateway_url</a></span><span class='args'>(cvn, test)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#message_from-instance_method' title='#message_from'>#message_from</a></span><span class='args'>(message)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#normalize-instance_method' title='#normalize'>#normalize</a></span><span class='args'>(field)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Make a ruby type out of the response string.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#parse-instance_method' title='#parse'>#parse</a></span><span class='args'>(xml)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Parse eway response xml into a convinient hash.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#post_data-instance_method' title='#post_data'>#post_data</a></span><span class='args'>(parameters = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#purchase-instance_method' title='#purchase'>#purchase</a></span><span class='args'>(money, creditcard, options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+ewayCustomerEmail, ewayCustomerAddress, ewayCustomerPostcode.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#success%3F-instance_method' title='#success?'>#success?</a></span><span class='args'>(response)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table><div class="inherited">
+  
+  <div>
+    <h1>Public Instance Methods Inherited from <a href='Gateway.html' title='ActiveMerchant::Billing::Gateway'>ActiveMerchant::Billing::Gateway</a></h1>
+    <p><span class='name'><a href='Gateway.html#amount-instance_method' title='amount'>amount</a></span>, <span class='name'><a href='Gateway.html#card_brand-instance_method' title='card_brand'>card_brand</a></span>, <span class='name'><a href='Gateway.html#currency-instance_method' title='currency'>currency</a></span>, <span class='name'><a href='Gateway.html#name-instance_method' title='name'>name</a></span>, <span class='name'><a href='Gateway.html#requires_start_date_or_issue_number%3F-instance_method' title='requires_start_date_or_issue_number?'>requires_start_date_or_issue_number?</a></span>, <span class='name'><a href='Gateway.html#test%3F-instance_method' title='test?'>test?</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>add_address</h3>
+</div><div id="add_address-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>add_address</span><span class='args'>(post, options)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+171
+172
+173
+174
+175
+176</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/eway.rb', line 171</span>
+
+<span class='def def kw'>def</span> <span class='add_address identifier id'>add_address</span><span class='lparen token'>(</span><span class='post identifier id'>post</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='address identifier id'>address</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='colon op'>:</span><span class='billing_address identifier id'>billing_address</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='colon op'>:</span><span class='address identifier id'>address</span><span class='rbrack token'>]</span>
+    <span class='post identifier id'>post</span><span class='lbrack token'>[</span><span class='symbol val'>:CustomerAddress</span><span class='rbrack token'>]</span>    <span class='assign token'>=</span> <span class='lbrack token'>[</span> <span class='address identifier id'>address</span><span class='lbrack token'>[</span><span class='symbol val'>:address1</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='address identifier id'>address</span><span class='lbrack token'>[</span><span class='symbol val'>:address2</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='address identifier id'>address</span><span class='lbrack token'>[</span><span class='symbol val'>:city</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='address identifier id'>address</span><span class='lbrack token'>[</span><span class='symbol val'>:state</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='address identifier id'>address</span><span class='lbrack token'>[</span><span class='symbol val'>:country</span><span class='rbrack token'>]</span> <span class='rbrack token'>]</span><span class='dot token'>.</span><span class='compact identifier id'>compact</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='string val'>', '</span><span class='rparen token'>)</span>
+    <span class='post identifier id'>post</span><span class='lbrack token'>[</span><span class='symbol val'>:CustomerPostcode</span><span class='rbrack token'>]</span>   <span class='assign token'>=</span> <span class='address identifier id'>address</span><span class='lbrack token'>[</span><span class='symbol val'>:zip</span><span class='rbrack token'>]</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>add_creditcard</h3>
+</div><div id="add_creditcard-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>add_creditcard</span><span class='args'>(post, creditcard)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/eway.rb', line 160</span>
+
+<span class='def def kw'>def</span> <span class='add_creditcard identifier id'>add_creditcard</span><span class='lparen token'>(</span><span class='post identifier id'>post</span><span class='comma token'>,</span> <span class='creditcard identifier id'>creditcard</span><span class='rparen token'>)</span>
+  <span class='post identifier id'>post</span><span class='lbrack token'>[</span><span class='symbol val'>:CardNumber</span><span class='rbrack token'>]</span>  <span class='assign token'>=</span> <span class='creditcard identifier id'>creditcard</span><span class='dot token'>.</span><span class='number identifier id'>number</span>
+  <span class='post identifier id'>post</span><span class='lbrack token'>[</span><span class='symbol val'>:CardExpiryMonth</span><span class='rbrack token'>]</span>  <span class='assign token'>=</span> <span class='sprintf identifier id'>sprintf</span><span class='lparen token'>(</span><span class='string val'>&quot;%.2i&quot;</span><span class='comma token'>,</span> <span class='creditcard identifier id'>creditcard</span><span class='dot token'>.</span><span class='month identifier id'>month</span><span class='rparen token'>)</span>
+  <span class='post identifier id'>post</span><span class='lbrack token'>[</span><span class='symbol val'>:CardExpiryYear</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='sprintf identifier id'>sprintf</span><span class='lparen token'>(</span><span class='string val'>&quot;%.4i&quot;</span><span class='comma token'>,</span> <span class='creditcard identifier id'>creditcard</span><span class='dot token'>.</span><span class='year identifier id'>year</span><span class='rparen token'>)</span><span class='lbrack token'>[</span><span class='float val'>-2</span><span class='dot2 op'>..</span><span class='integer val'>-1</span><span class='rbrack token'>]</span>
+  <span class='post identifier id'>post</span><span class='lbrack token'>[</span><span class='symbol val'>:CustomerFirstName</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='creditcard identifier id'>creditcard</span><span class='dot token'>.</span><span class='first_name identifier id'>first_name</span>
+  <span class='post identifier id'>post</span><span class='lbrack token'>[</span><span class='symbol val'>:CustomerLastName</span><span class='rbrack token'>]</span>  <span class='assign token'>=</span> <span class='creditcard identifier id'>creditcard</span><span class='dot token'>.</span><span class='last_name identifier id'>last_name</span>
+  <span class='post identifier id'>post</span><span class='lbrack token'>[</span><span class='symbol val'>:CardHoldersName</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='creditcard identifier id'>creditcard</span><span class='dot token'>.</span><span class='name identifier id'>name</span>
+        
+  <span class='post identifier id'>post</span><span class='lbrack token'>[</span><span class='symbol val'>:CVN</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='creditcard identifier id'>creditcard</span><span class='dot token'>.</span><span class='verification_value identifier id'>verification_value</span> <span class='if if_mod kw'>if</span> <span class='creditcard identifier id'>creditcard</span><span class='dot token'>.</span><span class='verification_value? fid id'>verification_value?</span>
+<span class='end end kw'>end</span> 
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>add_customer_data</h3>
+</div><div id="add_customer_data-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>add_customer_data</span><span class='args'>(post, options)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+178
+179
+180</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/eway.rb', line 178</span>
+
+<span class='def def kw'>def</span> <span class='add_customer_data identifier id'>add_customer_data</span><span class='lparen token'>(</span><span class='post identifier id'>post</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='post identifier id'>post</span><span class='lbrack token'>[</span><span class='symbol val'>:CustomerEmail</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:email</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>add_invoice_data</h3>
+</div><div id="add_invoice_data-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>add_invoice_data</span><span class='args'>(post, options)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+182
+183
+184
+185</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/eway.rb', line 182</span>
+
+<span class='def def kw'>def</span> <span class='add_invoice_data identifier id'>add_invoice_data</span><span class='lparen token'>(</span><span class='post identifier id'>post</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='post identifier id'>post</span><span class='lbrack token'>[</span><span class='symbol val'>:CustomerInvoiceRef</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:order_id</span><span class='rbrack token'>]</span>
+  <span class='post identifier id'>post</span><span class='lbrack token'>[</span><span class='symbol val'>:CustomerInvoiceDescription</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:description</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>add_optional_data</h3>
+</div><div id="add_optional_data-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>add_optional_data</span><span class='args'>(post)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+187
+188
+189
+190
+191
+192</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/eway.rb', line 187</span>
+
+<span class='def def kw'>def</span> <span class='add_optional_data identifier id'>add_optional_data</span><span class='lparen token'>(</span><span class='post identifier id'>post</span><span class='rparen token'>)</span>
+  <span class='post identifier id'>post</span><span class='lbrack token'>[</span><span class='symbol val'>:TrxnNumber</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+  <span class='post identifier id'>post</span><span class='lbrack token'>[</span><span class='symbol val'>:Option1</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+  <span class='post identifier id'>post</span><span class='lbrack token'>[</span><span class='symbol val'>:Option2</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+  <span class='post identifier id'>post</span><span class='lbrack token'>[</span><span class='symbol val'>:Option3</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>     
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>commit</h3>
+</div><div id="commit-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>commit</span><span class='args'>(money, parameters)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/eway.rb', line 194</span>
+
+<span class='def def kw'>def</span> <span class='commit identifier id'>commit</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='comma token'>,</span> <span class='parameters identifier id'>parameters</span><span class='rparen token'>)</span>       
+  <span class='parameters identifier id'>parameters</span><span class='lbrack token'>[</span><span class='symbol val'>:TotalAmount</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='amount identifier id'>amount</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='rparen token'>)</span>
+
+  <span class='response identifier id'>response</span> <span class='assign token'>=</span> <span class='parse identifier id'>parse</span><span class='lparen token'>(</span> <span class='ssl_post identifier id'>ssl_post</span><span class='lparen token'>(</span><span class='gateway_url identifier id'>gateway_url</span><span class='lparen token'>(</span><span class='parameters identifier id'>parameters</span><span class='lbrack token'>[</span><span class='symbol val'>:CVN</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='test? fid id'>test?</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='post_data identifier id'>post_data</span><span class='lparen token'>(</span><span class='parameters identifier id'>parameters</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='rparen token'>)</span>
+
+  <span class='Response constant id'>Response</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='success? fid id'>success?</span><span class='lparen token'>(</span><span class='response identifier id'>response</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='message_from identifier id'>message_from</span><span class='lparen token'>(</span><span class='response identifier id'>response</span><span class='lbrack token'>[</span><span class='symbol val'>:ewaytrxnerror</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='response identifier id'>response</span><span class='comma token'>,</span>
+    <span class='symbol val'>:authorization</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='response identifier id'>response</span><span class='lbrack token'>[</span><span class='symbol val'>:ewayauthcode</span><span class='rbrack token'>]</span><span class='comma token'>,</span>
+    <span class='symbol val'>:test</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='regexp val'>/\(Test( CVN)? Gateway\)/</span> <span class='eqq op'>===</span> <span class='response identifier id'>response</span><span class='lbrack token'>[</span><span class='symbol val'>:ewaytrxnerror</span><span class='rbrack token'>]</span>
+  <span class='rparen token'>)</span>      
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>gateway_url</h3>
+</div><div id="gateway_url-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>gateway_url</span><span class='args'>(cvn, test)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+263
+264
+265
+266
+267
+268
+269</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/eway.rb', line 263</span>
+
+<span class='def def kw'>def</span> <span class='gateway_url identifier id'>gateway_url</span><span class='lparen token'>(</span><span class='cvn identifier id'>cvn</span><span class='comma token'>,</span> <span class='test identifier id'>test</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='cvn identifier id'>cvn</span>
+    <span class='test identifier id'>test</span> <span class='integer val'>? </span><span class='TEST_CVN_URL constant id'>TEST_CVN_URL</span> <span class='colon op'>:</span> <span class='LIVE_CVN_URL constant id'>LIVE_CVN_URL</span>
+  <span class='else else kw'>else</span>
+    <span class='test identifier id'>test</span> <span class='integer val'>? </span><span class='TEST_URL constant id'>TEST_URL</span> <span class='colon op'>:</span> <span class='LIVE_URL constant id'>LIVE_URL</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>message_from</h3>
+</div><div id="message_from-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>message_from</span><span class='args'>(message)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+247
+248
+249
+250</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/eway.rb', line 247</span>
+
+<span class='def def kw'>def</span> <span class='message_from identifier id'>message_from</span><span class='lparen token'>(</span><span class='message identifier id'>message</span><span class='rparen token'>)</span>
+  <span class='return return kw'>return</span> <span class='string val'>''</span> <span class='if if_mod kw'>if</span> <span class='message identifier id'>message</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span>
+  <span class='MESSAGES constant id'>MESSAGES</span><span class='lbrack token'>[</span><span class='message identifier id'>message</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='comma token'>,</span><span class='integer val'>2</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='message identifier id'>message</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>normalize</h3>
+</div><div id="normalize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>normalize</span><span class='args'>(field)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Make a ruby type out of the response string
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+253
+254
+255
+256
+257
+258
+259
+260
+261</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/eway.rb', line 253</span>
+
+<span class='def def kw'>def</span> <span class='normalize identifier id'>normalize</span><span class='lparen token'>(</span><span class='field identifier id'>field</span><span class='rparen token'>)</span>
+  <span class='case case kw'>case</span> <span class='field identifier id'>field</span>
+  <span class='when when kw'>when</span> <span class='string val'>&quot;true&quot;</span>   <span class='then then kw'>then</span> <span class='true true kw'>true</span>
+  <span class='when when kw'>when</span> <span class='string val'>&quot;false&quot;</span>  <span class='then then kw'>then</span> <span class='false false kw'>false</span>
+  <span class='when when kw'>when</span> <span class='string val'>&quot;&quot;</span>       <span class='then then kw'>then</span> <span class='nil nil kw'>nil</span>
+  <span class='when when kw'>when</span> <span class='string val'>&quot;null&quot;</span>   <span class='then then kw'>then</span> <span class='nil nil kw'>nil</span>
+  <span class='else else kw'>else</span> <span class='field identifier id'>field</span>
+  <span class='end end kw'>end</span>        
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>parse</h3>
+</div><div id="parse-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>parse</span><span class='args'>(xml)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Parse eway response xml into a convinient hash
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/eway.rb', line 210</span>
+
+<span class='def def kw'>def</span> <span class='parse identifier id'>parse</span><span class='lparen token'>(</span><span class='xml identifier id'>xml</span><span class='rparen token'>)</span>
+  <span class='comment val'>#  &quot;&lt;?xml version=\&quot;1.0\&quot;?&gt;&quot;.</span>
+  <span class='comment val'>#  &lt;ewayResponse&gt;</span>
+  <span class='comment val'>#  &lt;ewayTrxnError&gt;&lt;/ewayTrxnError&gt;</span>
+  <span class='comment val'>#  &lt;ewayTrxnStatus&gt;True&lt;/ewayTrxnStatus&gt;</span>
+  <span class='comment val'>#  &lt;ewayTrxnNumber&gt;10002&lt;/ewayTrxnNumber&gt;</span>
+  <span class='comment val'>#  &lt;ewayTrxnOption1&gt;&lt;/ewayTrxnOption1&gt;</span>
+  <span class='comment val'>#  &lt;ewayTrxnOption2&gt;&lt;/ewayTrxnOption2&gt;</span>
+  <span class='comment val'>#  &lt;ewayTrxnOption3&gt;&lt;/ewayTrxnOption3&gt;</span>
+  <span class='comment val'>#  &lt;ewayReturnAmount&gt;10&lt;/ewayReturnAmount&gt;</span>
+  <span class='comment val'>#  &lt;ewayAuthCode&gt;123456&lt;/ewayAuthCode&gt;</span>
+  <span class='comment val'>#  &lt;ewayTrxnReference&gt;987654321&lt;/ewayTrxnReference&gt;</span>
+  <span class='comment val'>#  &lt;/ewayResponse&gt;     </span>
+
+  <span class='response identifier id'>response</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='xml identifier id'>xml</span> <span class='assign token'>=</span> <span class='REXML constant id'>REXML</span><span class='colon2 op'>::</span><span class='Document constant id'>Document</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='xml identifier id'>xml</span><span class='rparen token'>)</span>          
+  <span class='xml identifier id'>xml</span><span class='dot token'>.</span><span class='elements identifier id'>elements</span><span class='dot token'>.</span><span class='each identifier id'>each</span><span class='lparen token'>(</span><span class='string val'>'//ewayResponse/*'</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='node identifier id'>node</span><span class='bitor op'>|</span>
+
+    <span class='response identifier id'>response</span><span class='lbrack token'>[</span><span class='node identifier id'>node</span><span class='dot token'>.</span><span class='name identifier id'>name</span><span class='dot token'>.</span><span class='downcase identifier id'>downcase</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='normalize identifier id'>normalize</span><span class='lparen token'>(</span><span class='node identifier id'>node</span><span class='dot token'>.</span><span class='text identifier id'>text</span><span class='rparen token'>)</span>
+
+  <span class='end end kw'>end</span> <span class='unless unless_mod kw'>unless</span> <span class='xml identifier id'>xml</span><span class='dot token'>.</span><span class='root identifier id'>root</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+
+  <span class='response identifier id'>response</span>
+<span class='end end kw'>end</span>   
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>post_data</h3>
+</div><div id="post_data-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>post_data</span><span class='args'>(parameters = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/eway.rb', line 235</span>
+
+<span class='def def kw'>def</span> <span class='post_data identifier id'>post_data</span><span class='lparen token'>(</span><span class='parameters identifier id'>parameters</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='parameters identifier id'>parameters</span><span class='lbrack token'>[</span><span class='symbol val'>:CustomerID</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='@options ivar id'>@options</span><span class='lbrack token'>[</span><span class='symbol val'>:login</span><span class='rbrack token'>]</span>
+  
+  <span class='xml identifier id'>xml</span>   <span class='assign token'>=</span> <span class='REXML constant id'>REXML</span><span class='colon2 op'>::</span><span class='Document constant id'>Document</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+  <span class='root identifier id'>root</span>  <span class='assign token'>=</span> <span class='xml identifier id'>xml</span><span class='dot token'>.</span><span class='add_element identifier id'>add_element</span><span class='lparen token'>(</span><span class='string val'>&quot;ewaygateway&quot;</span><span class='rparen token'>)</span>
+  
+  <span class='parameters identifier id'>parameters</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='key identifier id'>key</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='bitor op'>|</span>
+    <span class='root identifier id'>root</span><span class='dot token'>.</span><span class='add_element identifier id'>add_element</span><span class='lparen token'>(</span><span class='dstring node'>&quot;eway#{key}&quot;</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='text identifier id'>text</span> <span class='assign token'>=</span> <span class='value identifier id'>value</span>
+  <span class='end end kw'>end</span>    
+  <span class='xml identifier id'>xml</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>purchase</h3>
+</div><div id="purchase-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>purchase</span><span class='args'>(money, creditcard, options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+ewayCustomerEmail, ewayCustomerAddress, ewayCustomerPostcode
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/eway.rb', line 145</span>
+
+<span class='def def kw'>def</span> <span class='purchase identifier id'>purchase</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='comma token'>,</span> <span class='creditcard identifier id'>creditcard</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='requires! fid id'>requires!</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='comma token'>,</span> <span class='symbol val'>:order_id</span><span class='rparen token'>)</span>
+
+  <span class='post identifier id'>post</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='add_creditcard identifier id'>add_creditcard</span><span class='lparen token'>(</span><span class='post identifier id'>post</span><span class='comma token'>,</span> <span class='creditcard identifier id'>creditcard</span><span class='rparen token'>)</span>
+  <span class='add_address identifier id'>add_address</span><span class='lparen token'>(</span><span class='post identifier id'>post</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>  
+  <span class='add_customer_data identifier id'>add_customer_data</span><span class='lparen token'>(</span><span class='post identifier id'>post</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='add_invoice_data identifier id'>add_invoice_data</span><span class='lparen token'>(</span><span class='post identifier id'>post</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='comment val'># The request fails if all of the fields aren't present</span>
+  <span class='add_optional_data identifier id'>add_optional_data</span><span class='lparen token'>(</span><span class='post identifier id'>post</span><span class='rparen token'>)</span>
+    
+  <span class='commit identifier id'>commit</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='comma token'>,</span> <span class='post identifier id'>post</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>success?</h3>
+</div><div id="success%3F-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>success?</span><span class='args'>(response)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+205
+206
+207</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/eway.rb', line 205</span>
+
+<span class='def def kw'>def</span> <span class='success? fid id'>success?</span><span class='lparen token'>(</span><span class='response identifier id'>response</span><span class='rparen token'>)</span>
+  <span class='response identifier id'>response</span><span class='lbrack token'>[</span><span class='symbol val'>:ewaytrxnstatus</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='string val'>&quot;True&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

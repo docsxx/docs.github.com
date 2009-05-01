@@ -1,0 +1,249 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: YouTubeModel::Helpers</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module YouTubeModel_Helpers">
+  <h1 class="title">Module: YouTubeModel::Helpers</h1>
+  <div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#youtube_auth_url-instance_method' title='#youtube_auth_url'>#youtube_auth_url</a></span><span class='args'>(next_url)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns a link to the authentication Google page.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#youtube_embed-instance_method' title='#youtube_embed'>#youtube_embed</a></span><span class='args'>(video, options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+This helper returns the required html to embed a youtube video.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>youtube_auth_url</h3>
+</div><div id="youtube_auth_url-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>youtube_auth_url</span><span class='args'>(next_url)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns a link to the authentication Google page.
+</p>
+<p>
+Pass the new_&lt;your-controller&gt;_url or whatever url you use to the
+Upload&#8217;s step 1
+</p>
+<p>
+Example:
+</p>
+<pre class="code">
+  <span class='lt op'>&lt;</span><span class='string val'>%= link_to 'Upload a new video', youtube_auth_url(new_videos_url) %&gt;
+</span></pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+48
+49
+50
+51
+52
+53
+54
+55
+56</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/you_tube_helpers.rb', line 48</span>
+
+<span class='def def kw'>def</span> <span class='youtube_auth_url identifier id'>youtube_auth_url</span><span class='lparen token'>(</span><span class='next_url identifier id'>next_url</span><span class='rparen token'>)</span>
+  <span class='params identifier id'>params</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span>
+    <span class='symbol val'>:session</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='YT_CONFIG constant id'>YT_CONFIG</span><span class='lbrack token'>[</span><span class='string val'>'auth_sub'</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='string val'>'session'</span><span class='rbrack token'>]</span><span class='comma token'>,</span>
+    <span class='symbol val'>:secure</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='YT_CONFIG constant id'>YT_CONFIG</span><span class='lbrack token'>[</span><span class='string val'>'auth_sub'</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='string val'>'secure'</span><span class='rbrack token'>]</span><span class='comma token'>,</span>
+    <span class='symbol val'>:scope</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'http://gdata.youtube.com'</span><span class='comma token'>,</span>
+    <span class='symbol val'>:next</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='next_url identifier id'>next_url</span>
+  <span class='rbrace token'>}</span>
+  <span class='dstring node'>&quot;https://www.google.com/accounts/AuthSubRequest?#{params.to_query}&quot;</span>
+<span class='end end kw'>end</span> 
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>youtube_embed</h3>
+</div><div id="youtube_embed-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>youtube_embed</span><span class='args'>(video, options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+This helper returns the required html to embed a youtube video. You can
+customize it with the following options:
+</p>
+<ul>
+<li><tt>:border</tt> Specifies if the player is bordered or not.
+
+</li>
+<li><tt>:related</tt> Specifies if the player will include related videos.
+
+</li>
+<li><tt>:colors</tt> Array with the desired colors of the player.
+
+</li>
+<li><tt>:language</tt> Specifies the language of the player.
+
+</li>
+<li><tt>:width</tt> Specifies the player&#8217;s width.
+
+</li>
+<li><tt>:height</tt> Specifies the player&#8217;s height.
+
+</li>
+</ul>
+<p>
+Example:
+</p>
+<pre class="code">
+  <span class='comment val'># in controller:</span>
+  <span class='@top_rated ivar id'>@top_rated</span> <span class='assign token'>=</span> <span class='YouTube constant id'>YouTube</span><span class='dot token'>.</span><span class='top_rated identifier id'>top_rated</span><span class='lparen token'>(</span><span class='symbol val'>:today</span><span class='rparen token'>)</span>
+
+  <span class='comment val'># in view:</span>
+  <span class='lt op'>&lt;</span><span class='string val'>% @top_rated.videos.each </span><span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='video identifier id'>video</span><span class='bitor op'>|</span> <span class='minus op'>-</span><span class='string val'>%&gt;
+    &lt;p&gt;</span><span class='lt op'>&lt;</span><span class='string val'>%= youtube_embed video, :border =</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span> <span class='mod op'>%</span><span class='gt op'>&gt;</span><span class='lt op'>&lt;</span><span class='regexp val'>/p&gt;
+  &lt;% end -%&gt;
+</span></pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/you_tube_helpers.rb', line 20</span>
+
+<span class='def def kw'>def</span> <span class='youtube_embed identifier id'>youtube_embed</span><span class='lparen token'>(</span><span class='video identifier id'>video</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='settings identifier id'>settings</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span>
+    <span class='symbol val'>:border</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'0'</span><span class='comma token'>,</span>
+    <span class='symbol val'>:rel</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'0'</span><span class='comma token'>,</span>
+    <span class='symbol val'>:color1</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'0x666666'</span><span class='comma token'>,</span>
+    <span class='symbol val'>:color2</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'0x666666'</span><span class='comma token'>,</span>
+    <span class='symbol val'>:hl</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'en'</span><span class='comma token'>,</span>
+    <span class='symbol val'>:width</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>425</span><span class='comma token'>,</span>
+    <span class='symbol val'>:height</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>373</span>
+  <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='rparen token'>)</span>
+
+  <span class='params identifier id'>params</span> <span class='assign token'>=</span> <span class='settings identifier id'>settings</span><span class='dot token'>.</span><span class='to_query identifier id'>to_query</span>
+  <span class='dstring node'>%Q(
+&lt;object width=&quot;#{settings[:width]}&quot; height=&quot;#{settings[:height]}&quot;&gt;
+    &lt;param name=&quot;movie&quot; value=&quot;http://www.youtube.com/v/#{video.id}&amp;#{params}&quot;&gt;&lt;/param&gt;
+    &lt;param name=&quot;wmode&quot; value=&quot;transparent&quot;&gt;&lt;/param&gt;
+    &lt;embed src=&quot;http://www.youtube.com/v/#{video.id}&amp;#{params}&quot; type=&quot;application/x-shockwave-flash&quot; wmode=&quot;transparent&quot; width=&quot;#{settings[:width]}&quot; height=&quot;#{settings[:height]}&quot;&gt;&lt;/embed&gt;
+&lt;/object&gt;
+  )</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

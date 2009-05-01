@@ -1,0 +1,814 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: DataMapper::Transaction</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class DataMapper_Transaction">
+  <h1 class="title">Class: DataMapper::Transaction</h1>
+  <div class="section attributes">
+  <h1>Attributes</h1>
+
+  
+    <div class="instance">
+      <h2>Instance Attributes</h2>
+      <table>
+      
+        <tr>
+          <th class="name">adapters</td>
+          <td class="readwrite">
+            [<span id='adapters-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>adapters</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">state</td>
+          <td class="readwrite">
+            [<span id='state-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>state</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">transaction_primitives</td>
+          <td class="readwrite">
+            [<span id='transaction_primitives-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>transaction_primitives</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+      </table>
+    </div>
+  
+</div><div class="section constants">
+  
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(*things)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Create a new DataMapper::Transaction
+</p>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="see">
+  <h3>See Also:</h3>
+  <dl>
+    <dt></dt>
+    <dd>
+      <span class='desc'>
+        <tt>DataMapper::Transaction#link
+
+In fact, it just calls #link with the given arguments at the end of the constructor.</tt>
+      </span>
+    </dd>
+  </dl>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+16
+17
+18
+19
+20
+21
+22</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/transaction.rb', line 16</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='things identifier id'>things</span><span class='rparen token'>)</span>
+  <span class='@transaction_primitives ivar id'>@transaction_primitives</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='@state ivar id'>@state</span> <span class='assign token'>=</span> <span class='symbol val'>:none</span>
+  <span class='@adapters ivar id'>@adapters</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='link identifier id'>link</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='things identifier id'>things</span><span class='rparen token'>)</span>
+  <span class='commit identifier id'>commit</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='mult op'>*</span><span class='block_args identifier id'>block_args</span><span class='bitor op'>|</span> <span class='yield yield kw'>yield</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='block_args identifier id'>block_args</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span> <span class='if if_mod kw'>if</span> <span class='block_given? fid id'>block_given?</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div><div class="section methodmissing">
+  <h1>Dynamic Method Handling</h1>
+
+  <p class="note">
+    This class handles dynamic methods through the <tt>method_missing</tt> method
+    
+  </p>
+
+  <div id="method_missing-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>method_missing</span><span class='args'>(meth, *args, &amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/transaction.rb', line 146</span>
+
+<span class='def def kw'>def</span> <span class='method_missing identifier id'>method_missing</span><span class='lparen token'>(</span><span class='meth identifier id'>meth</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='size identifier id'>size</span> <span class='eq op'>==</span> <span class='integer val'>1</span> <span class='andop op'>&amp;&amp;</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='DataMapper constant id'>DataMapper</span><span class='colon2 op'>::</span><span class='Adapters constant id'>Adapters</span><span class='colon2 op'>::</span><span class='AbstractAdapter constant id'>AbstractAdapter</span><span class='rparen token'>)</span>
+    <span class='if if kw'>if</span> <span class='lparen token'>(</span><span class='match identifier id'>match</span> <span class='assign token'>=</span> <span class='meth identifier id'>meth</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='match identifier id'>match</span><span class='lparen token'>(</span><span class='regexp val'>/^(.*)_if_(none|begin|prepare|rollback|commit)$/</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+      <span class='if if kw'>if</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='match identifier id'>match</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='true true kw'>true</span><span class='rparen token'>)</span>
+        <span class='self self kw'>self</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='match identifier id'>match</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='state_for identifier id'>state_for</span><span class='lparen token'>(</span><span class='args identifier id'>args</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='eq op'>==</span> <span class='match identifier id'>match</span><span class='lbrack token'>[</span><span class='integer val'>2</span><span class='rbrack token'>]</span>
+      <span class='else else kw'>else</span>
+        <span class='super super kw'>super</span>
+      <span class='end end kw'>end</span>
+    <span class='elsif elsif kw'>elsif</span> <span class='lparen token'>(</span><span class='match identifier id'>match</span> <span class='assign token'>=</span> <span class='meth identifier id'>meth</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='match identifier id'>match</span><span class='lparen token'>(</span><span class='regexp val'>/^(.*)_unless_(none|begin|prepare|rollback|commit)$/</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+      <span class='if if kw'>if</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='match identifier id'>match</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='true true kw'>true</span><span class='rparen token'>)</span>
+        <span class='self self kw'>self</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='match identifier id'>match</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='rparen token'>)</span> <span class='unless unless_mod kw'>unless</span> <span class='state_for identifier id'>state_for</span><span class='lparen token'>(</span><span class='args identifier id'>args</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='eq op'>==</span> <span class='match identifier id'>match</span><span class='lbrack token'>[</span><span class='integer val'>2</span><span class='rbrack token'>]</span>
+      <span class='else else kw'>else</span>
+        <span class='super super kw'>super</span>
+      <span class='end end kw'>end</span>
+    <span class='else else kw'>else</span>
+      <span class='super super kw'>super</span>
+    <span class='end end kw'>end</span>
+  <span class='else else kw'>else</span>
+    <span class='super super kw'>super</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#begin-instance_method' title='#begin'>#begin</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Begin the transaction.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#commit-instance_method' title='#commit'>#commit</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Commit the transaction.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#link-instance_method' title='#link'>#link</a></span><span class='args'>(*things)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Associate this Transaction with some things.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#primitive_for-instance_method' title='#primitive_for'>#primitive_for</a></span><span class='args'>(adapter)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#rollback-instance_method' title='#rollback'>#rollback</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Rollback the transaction.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#within-instance_method' title='#within'>#within</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Execute a block within this Transaction.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>begin</h3>
+</div><div id="begin-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>begin</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Begin the transaction
+</p>
+<p>
+Before #begin is called, the transaction is not valid and can not be used.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+68
+69
+70
+71
+72</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/transaction.rb', line 68</span>
+
+<span class='def def kw'>def</span> <span class='begin begin kw'>begin</span><span class='semicolon token'>;</span>      <span class='raise identifier id'>raise</span> <span class='dstring node'>&quot;Illegal state for begin: #{@state}&quot;</span> <span class='unless unless_mod kw'>unless</span> <span class='@state ivar id'>@state</span> <span class='eq op'>==</span> <span class='symbol val'>:none</span>
+  <span class='each_adapter identifier id'>each_adapter</span><span class='lparen token'>(</span><span class='symbol val'>:connect_adapter</span><span class='comma token'>,</span> <span class='lbrack token'>[</span><span class='symbol val'>:log_fatal_transaction_breakage</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+  <span class='each_adapter identifier id'>each_adapter</span><span class='lparen token'>(</span><span class='symbol val'>:begin_adapter</span><span class='comma token'>,</span> <span class='lbrack token'>[</span><span class='symbol val'>:rollback_and_close_adapter_if_begin</span><span class='comma token'>,</span> <span class='symbol val'>:close_adapter_if_none</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+  <span class='@state ivar id'>@state</span> <span class='assign token'>=</span> <span class='symbol val'>:begin</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>commit</h3>
+</div><div id="commit-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>commit</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Commit the transaction
+</p>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="param">
+  <h3>Parameters:</h3>
+  <dl>
+  
+    <dt>
+      
+        <span class='type'></span>
+      
+      
+        <span class='name'>block&lt;Block&gt;</span>
+      
+    </dt>
+    <dd>
+      <span class='desc'><p>
+a block (taking the one argument, the Transaction) to execute within this
+transaction. The transaction will begin and commit around the block, and
+roll back if an exception is raised.
+</p>
+</span>
+    </dd>
+  
+  </dl>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/transaction.rb', line 86</span>
+
+<span class='def def kw'>def</span> <span class='commit identifier id'>commit</span>
+  <span class='if if kw'>if</span> <span class='block_given? fid id'>block_given?</span>
+    <span class='raise identifier id'>raise</span> <span class='dstring node'>&quot;Illegal state for commit with block: #{@state}&quot;</span> <span class='unless unless_mod kw'>unless</span> <span class='@state ivar id'>@state</span> <span class='eq op'>==</span> <span class='symbol val'>:none</span>
+    <span class='begin begin kw'>begin</span>
+      <span class='self self kw'>self</span><span class='dot token'>.</span><span class='begin identifier id'>begin</span>
+      <span class='rval identifier id'>rval</span> <span class='assign token'>=</span> <span class='within identifier id'>within</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='mult op'>*</span><span class='block_args identifier id'>block_args</span><span class='bitor op'>|</span> <span class='yield yield kw'>yield</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='block_args identifier id'>block_args</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+      <span class='self self kw'>self</span><span class='dot token'>.</span><span class='commit identifier id'>commit</span> <span class='if if_mod kw'>if</span> <span class='@state ivar id'>@state</span> <span class='eq op'>==</span> <span class='symbol val'>:begin</span>
+      <span class='return return kw'>return</span> <span class='rval identifier id'>rval</span>
+    <span class='rescue rescue kw'>rescue</span> <span class='Exception constant id'>Exception</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
+      <span class='self self kw'>self</span><span class='dot token'>.</span><span class='rollback identifier id'>rollback</span> <span class='if if_mod kw'>if</span> <span class='@state ivar id'>@state</span> <span class='eq op'>==</span> <span class='symbol val'>:begin</span>
+      <span class='raise identifier id'>raise</span> <span class='e identifier id'>e</span>
+    <span class='end end kw'>end</span>
+  <span class='else else kw'>else</span>
+    <span class='raise identifier id'>raise</span> <span class='dstring node'>&quot;Illegal state for commit without block: #{@state}&quot;</span> <span class='unless unless_mod kw'>unless</span> <span class='@state ivar id'>@state</span> <span class='eq op'>==</span> <span class='symbol val'>:begin</span>
+    <span class='each_adapter identifier id'>each_adapter</span><span class='lparen token'>(</span><span class='symbol val'>:prepare_adapter</span><span class='comma token'>,</span> <span class='lbrack token'>[</span><span class='symbol val'>:rollback_and_close_adapter_if_begin</span><span class='comma token'>,</span> <span class='symbol val'>:rollback_prepared_and_close_adapter_if_prepare</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+    <span class='each_adapter identifier id'>each_adapter</span><span class='lparen token'>(</span><span class='symbol val'>:commit_adapter</span><span class='comma token'>,</span> <span class='lbrack token'>[</span><span class='symbol val'>:log_fatal_transaction_breakage</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+    <span class='each_adapter identifier id'>each_adapter</span><span class='lparen token'>(</span><span class='symbol val'>:close_adapter</span><span class='comma token'>,</span> <span class='lbrack token'>[</span><span class='symbol val'>:log_fatal_transaction_breakage</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+    <span class='@state ivar id'>@state</span> <span class='assign token'>=</span> <span class='symbol val'>:commit</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>link</h3>
+</div><div id="link-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>link</span><span class='args'>(*things)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Associate this Transaction with some things.
+</p>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="param">
+  <h3>Parameters:</h3>
+  <dl>
+  
+    <dt>
+      
+        <span class='type'></span>
+      
+      
+        <span class='name'>things&lt;any</span>
+      
+    </dt>
+    <dd>
+      <span class='desc'><p>
+number of Object&gt; the things you want this Transaction associated with
+</p>
+</span>
+    </dd>
+  
+    <dt>
+      
+        <span class='type'></span>
+      
+      
+        <span class='name'>block&lt;Block&gt;</span>
+      
+    </dt>
+    <dd>
+      <span class='desc'><p>
+a block (taking one argument, the Transaction) to execute within this
+transaction. The transaction will begin and commit around the block, and
+rollback if an exception is raised.
+</p>
+</span>
+    </dd>
+  
+  </dl>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/transaction.rb', line 42</span>
+
+<span class='def def kw'>def</span> <span class='link identifier id'>link</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='things identifier id'>things</span><span class='rparen token'>)</span>
+  <span class='raise identifier id'>raise</span> <span class='dstring node'>&quot;Illegal state for link: #{@state}&quot;</span> <span class='unless unless_mod kw'>unless</span> <span class='@state ivar id'>@state</span> <span class='eq op'>==</span> <span class='symbol val'>:none</span>
+  <span class='things identifier id'>things</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='thing identifier id'>thing</span><span class='bitor op'>|</span>
+    <span class='if if kw'>if</span> <span class='thing identifier id'>thing</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Array constant id'>Array</span><span class='rparen token'>)</span>
+      <span class='link identifier id'>link</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='thing identifier id'>thing</span><span class='rparen token'>)</span>
+    <span class='elsif elsif kw'>elsif</span> <span class='thing identifier id'>thing</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='DataMapper constant id'>DataMapper</span><span class='colon2 op'>::</span><span class='Adapters constant id'>Adapters</span><span class='colon2 op'>::</span><span class='AbstractAdapter constant id'>AbstractAdapter</span><span class='rparen token'>)</span>
+      <span class='@adapters ivar id'>@adapters</span><span class='lbrack token'>[</span><span class='thing identifier id'>thing</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='symbol val'>:none</span>
+    <span class='elsif elsif kw'>elsif</span> <span class='thing identifier id'>thing</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='DataMapper constant id'>DataMapper</span><span class='colon2 op'>::</span><span class='Repository constant id'>Repository</span><span class='rparen token'>)</span>
+      <span class='link identifier id'>link</span><span class='lparen token'>(</span><span class='thing identifier id'>thing</span><span class='dot token'>.</span><span class='adapter identifier id'>adapter</span><span class='rparen token'>)</span>
+    <span class='elsif elsif kw'>elsif</span> <span class='thing identifier id'>thing</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Class constant id'>Class</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='thing identifier id'>thing</span><span class='dot token'>.</span><span class='ancestors identifier id'>ancestors</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='DataMapper constant id'>DataMapper</span><span class='colon2 op'>::</span><span class='Resource constant id'>Resource</span><span class='rparen token'>)</span>
+      <span class='link identifier id'>link</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='thing identifier id'>thing</span><span class='dot token'>.</span><span class='repositories identifier id'>repositories</span><span class='rparen token'>)</span>
+    <span class='elsif elsif kw'>elsif</span> <span class='thing identifier id'>thing</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='DataMapper constant id'>DataMapper</span><span class='colon2 op'>::</span><span class='Resource constant id'>Resource</span><span class='rparen token'>)</span>
+      <span class='link identifier id'>link</span><span class='lparen token'>(</span><span class='thing identifier id'>thing</span><span class='dot token'>.</span><span class='model identifier id'>model</span><span class='rparen token'>)</span>
+    <span class='else else kw'>else</span>
+      <span class='raise identifier id'>raise</span> <span class='dstring node'>&quot;Unknown argument to #{self}#link: #{thing.inspect}&quot;</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+  <span class='return return kw'>return</span> <span class='commit identifier id'>commit</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='mult op'>*</span><span class='block_args identifier id'>block_args</span><span class='bitor op'>|</span> <span class='yield yield kw'>yield</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='block_args identifier id'>block_args</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span> <span class='if if_mod kw'>if</span> <span class='block_given? fid id'>block_given?</span>
+  <span class='return return kw'>return</span> <span class='self self kw'>self</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>primitive_for</h3>
+</div><div id="primitive_for-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>primitive_for</span><span class='args'>(adapter)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+168
+169
+170
+171
+172</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/transaction.rb', line 168</span>
+
+<span class='def def kw'>def</span> <span class='primitive_for identifier id'>primitive_for</span><span class='lparen token'>(</span><span class='adapter identifier id'>adapter</span><span class='rparen token'>)</span>
+  <span class='raise identifier id'>raise</span> <span class='dstring node'>&quot;Unknown adapter #{adapter}&quot;</span> <span class='unless unless_mod kw'>unless</span> <span class='@adapters ivar id'>@adapters</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='adapter identifier id'>adapter</span><span class='rparen token'>)</span>
+  <span class='raise identifier id'>raise</span> <span class='dstring node'>&quot;No primitive for #{adapter}&quot;</span> <span class='unless unless_mod kw'>unless</span> <span class='@transaction_primitives ivar id'>@transaction_primitives</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='adapter identifier id'>adapter</span><span class='rparen token'>)</span>
+  <span class='@transaction_primitives ivar id'>@transaction_primitives</span><span class='lbrack token'>[</span><span class='adapter identifier id'>adapter</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>rollback</h3>
+</div><div id="rollback-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>rollback</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Rollback the transaction
+</p>
+<p>
+Will undo all changes made during the transaction.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+112
+113
+114
+115
+116
+117
+118</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/transaction.rb', line 112</span>
+
+<span class='def def kw'>def</span> <span class='rollback identifier id'>rollback</span>
+  <span class='raise identifier id'>raise</span> <span class='dstring node'>&quot;Illegal state for rollback: #{@state}&quot;</span> <span class='unless unless_mod kw'>unless</span> <span class='@state ivar id'>@state</span> <span class='eq op'>==</span> <span class='symbol val'>:begin</span>
+  <span class='each_adapter identifier id'>each_adapter</span><span class='lparen token'>(</span><span class='symbol val'>:rollback_adapter_if_begin</span><span class='comma token'>,</span> <span class='lbrack token'>[</span><span class='symbol val'>:rollback_and_close_adapter_if_begin</span><span class='comma token'>,</span> <span class='symbol val'>:close_adapter_if_none</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+  <span class='each_adapter identifier id'>each_adapter</span><span class='lparen token'>(</span><span class='symbol val'>:rollback_prepared_adapter_if_prepare</span><span class='comma token'>,</span> <span class='lbrack token'>[</span><span class='symbol val'>:rollback_prepared_and_close_adapter_if_begin</span><span class='comma token'>,</span> <span class='symbol val'>:close_adapter_if_none</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+  <span class='each_adapter identifier id'>each_adapter</span><span class='lparen token'>(</span><span class='symbol val'>:close_adapter_if_open</span><span class='comma token'>,</span> <span class='lbrack token'>[</span><span class='symbol val'>:log_fatal_transaction_breakage</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+  <span class='@state ivar id'>@state</span> <span class='assign token'>=</span> <span class='symbol val'>:rollback</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>within</h3>
+</div><div id="within-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>within</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Execute a block within this Transaction.
+</p>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="param">
+  <h3>Parameters:</h3>
+  <dl>
+  
+    <dt>
+      
+        <span class='type'></span>
+      
+      
+        <span class='name'>block&lt;Block&gt;</span>
+      
+    </dt>
+    <dd>
+      <span class='desc'><p>
+the block of code to execute.
+</p>
+</span>
+    </dd>
+  
+  </dl>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/transaction.rb', line 131</span>
+
+<span class='def def kw'>def</span> <span class='within identifier id'>within</span>
+  <span class='raise identifier id'>raise</span> <span class='string val'>&quot;No block provided&quot;</span> <span class='unless unless_mod kw'>unless</span> <span class='block_given? fid id'>block_given?</span>
+  <span class='raise identifier id'>raise</span> <span class='dstring node'>&quot;Illegal state for within: #{@state}&quot;</span> <span class='unless unless_mod kw'>unless</span> <span class='@state ivar id'>@state</span> <span class='eq op'>==</span> <span class='symbol val'>:begin</span>
+  <span class='@adapters ivar id'>@adapters</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='adapter identifier id'>adapter</span><span class='comma token'>,</span> <span class='state identifier id'>state</span><span class='bitor op'>|</span>
+    <span class='adapter identifier id'>adapter</span><span class='dot token'>.</span><span class='push_transaction identifier id'>push_transaction</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+  <span class='begin begin kw'>begin</span>
+    <span class='return return kw'>return</span> <span class='yield yield kw'>yield</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='rparen token'>)</span>
+  <span class='ensure ensure kw'>ensure</span>
+    <span class='@adapters ivar id'>@adapters</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='adapter identifier id'>adapter</span><span class='comma token'>,</span> <span class='state identifier id'>state</span><span class='bitor op'>|</span>
+      <span class='adapter identifier id'>adapter</span><span class='dot token'>.</span><span class='pop_transaction identifier id'>pop_transaction</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

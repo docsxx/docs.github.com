@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <title>README</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section docstring readme">
+        <h1>Mogo: A Planet-Style Feed Aggregator</h1>
+<p>
+Mogo combines multiple news feeds (or feed topic searches) into a single
+web page view, much like a typical &quot;Planet&quot;-style feed
+aggregator. It&#8217;s built in Ruby on top of Sinatra and DataMapper.
+</p>
+<h2>Configuration</h2>
+<p>
+Dependencies and all configuration is done in <tt>environment.rb</tt>. Your
+database is also set up here. DataMapper will use sqlite3 by default. Tests
+use the sqlite3-memory adapter (no configuration needed).
+</p>
+<h2>Getting Started</h2>
+<pre class="code">
+  <span class='rake identifier id'>rake</span> <span class='db identifier id'>db</span><span class='symbol val'>:migrate</span>
+  <span class='rake identifier id'>rake</span> <span class='feeds identifier id'>feeds</span><span class='symbol val'>:add</span> <span class='URL constant id'>URL</span><span class='assign token'>=</span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/blog.zerosum.org
+  rake feeds:update
+  ruby application.rb
+</span></pre>
+<h2>Adding Feeds</h2>
+<p>
+Use the web interface located at <tt>/admin</tt> to add and remove feeds.
+Accessing this URL will require a username and password. These settings are
+adjustable in <tt>environment.rb</tt>; the defaults are &#8216;admin&#8217;
+and &#8216;password&#8217;.
+</p>
+<p>
+You can also add feeds directly from the command line:
+</p>
+<pre class="code">
+  <span class='rake identifier id'>rake</span> <span class='feeds identifier id'>feeds</span><span class='symbol val'>:add</span> <span class='URL constant id'>URL</span><span class='assign token'>=</span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/blog.zerosum.org
+</span></pre>
+<h2>Status Updates</h2>
+<p>
+Run <tt>rake feeds:update</tt> to update the cached feeds. You can schedule
+this as a cron job to fire every few minutes if you like.
+</p>
+<h2>Searching</h2>
+<p>
+We use Sphinx for full-text indexing and search. Therefore, you&#8217;ll
+need to have it installed. You can find downloads and installation
+instructions at http://www.sphinxsearch.com.
+</p>
+<p>
+To enable search in Mogo, set the option in <tt>environment.rb</tt>. Search
+is disabled by default. I&#8217;ve only tested search with MySQL, so set
+your database connection string to a MySQL database you&#8217;ll create
+(default: &#8216;mogo&#8217; with user &#8216;root&#8217;). Feel free to
+tune the sample configuration provided in <tt>sphinx.conf</tt> to your
+taste. You probably won&#8217;t want to use a passwordless root user in a
+production environment ;-).
+</p>
+<p>
+Once that&#8217;s done, go ahead and run the supplied Rake tasks to get up
+and running:
+</p>
+<pre class="code">
+  <span class='rake identifier id'>rake</span> <span class='sphinx identifier id'>sphinx</span><span class='symbol val'>:reindex</span>      <span class='comment val'># update the search indexes; you'll probably want to schedule this periodically</span>
+  <span class='rake identifier id'>rake</span> <span class='sphinx identifier id'>sphinx</span><span class='symbol val'>:search</span><span class='symbol val'>:start</span> <span class='comment val'># start it up</span>
+  <span class='rake identifier id'>rake</span> <span class='sphinx identifier id'>sphinx</span><span class='symbol val'>:search</span><span class='symbol val'>:stop</span>  <span class='comment val'># shut it down</span>
+</pre>
+<p>
+You should now be able to run <tt>application.rb</tt> and use the
+rudimentary search interface.
+</p>
+
+      </div>
+    </div>
+  </body>
+</html>

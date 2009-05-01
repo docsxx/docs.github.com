@@ -1,0 +1,316 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: Sequel::SQL::ComplexExpressionMethods</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module Sequel_SQL_ComplexExpressionMethods">
+  <h1 class="title">Module: Sequel::SQL::ComplexExpressionMethods</h1>
+  <div class="section docstring">
+  <p>
+Adds methods that allow you to treat an object as an instance of a specific
+ComplexExpression subclass. This is useful if another library overrides the
+methods defined by Sequel.
+</p>
+<p>
+For example, if Symbol#/ is overridden to produce a string (for example, to
+make file system path creation easier), the following code will not do what
+you want:
+</p>
+<pre class="code">
+  <span class='symbol val'>:price</span><span class='div op'>/</span><span class='integer val'>10</span> <span class='gt op'>&gt;</span> <span class='integer val'>100</span>
+</pre>
+<p>
+In that case, you need to do the following:
+</p>
+<pre class="code">
+  <span class='symbol val'>:price</span><span class='dot token'>.</span><span class='sql_number identifier id'>sql_number</span><span class='div op'>/</span><span class='integer val'>10</span> <span class='gt op'>&gt;</span> <span class='integer val'>100</span>
+</pre>
+
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#extract-instance_method' title='#extract'>#extract</a></span><span class='args'>(datetime_part)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Extract a datetime_part (e.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#sql_boolean-instance_method' title='#sql_boolean'>#sql_boolean</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Return a BooleanExpression representation of self.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#sql_number-instance_method' title='#sql_number'>#sql_number</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Return a NumericExpression representation of self.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#sql_string-instance_method' title='#sql_string'>#sql_string</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Return a StringExpression representation of self.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>extract</h3>
+</div><div id="extract-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>extract</span><span class='args'>(datetime_part)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Extract a datetime_part (e.g. year, month) from self:
+</p>
+<pre class="code">
+  <span class='symbol val'>:date</span><span class='dot token'>.</span><span class='extract identifier id'>extract</span><span class='lparen token'>(</span><span class='symbol val'>:year</span><span class='rparen token'>)</span> <span class='comment val'># SQL:  extract(year FROM &quot;date&quot;)</span>
+</pre>
+<p>
+Also has the benefit of returning the result as a NumericExpression instead
+of a generic ComplexExpression.
+</p>
+<p>
+The extract function is in the SQL standard, but it doesn&#8217;t
+doesn&#8217;t use the standard function calling convention.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+216
+217
+218</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/sql.rb', line 216</span>
+
+<span class='def def kw'>def</span> <span class='extract identifier id'>extract</span><span class='lparen token'>(</span><span class='datetime_part identifier id'>datetime_part</span><span class='rparen token'>)</span>
+  <span class='Function constant id'>Function</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='symbol val'>:extract</span><span class='comma token'>,</span> <span class='PlaceholderLiteralString constant id'>PlaceholderLiteralString</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{datetime_part} FROM ?&quot;</span><span class='comma token'>,</span> <span class='lbrack token'>[</span><span class='self self kw'>self</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='sql_number identifier id'>sql_number</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>sql_boolean</h3>
+</div><div id="sql_boolean-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>sql_boolean</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Return a BooleanExpression representation of self.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+221
+222
+223</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/sql.rb', line 221</span>
+
+<span class='def def kw'>def</span> <span class='sql_boolean identifier id'>sql_boolean</span>
+  <span class='BooleanExpression constant id'>BooleanExpression</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='symbol val'>:NOOP</span><span class='comma token'>,</span> <span class='self self kw'>self</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>sql_number</h3>
+</div><div id="sql_number-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>sql_number</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Return a NumericExpression representation of self.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+226
+227
+228</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/sql.rb', line 226</span>
+
+<span class='def def kw'>def</span> <span class='sql_number identifier id'>sql_number</span>
+  <span class='NumericExpression constant id'>NumericExpression</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='symbol val'>:NOOP</span><span class='comma token'>,</span> <span class='self self kw'>self</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>sql_string</h3>
+</div><div id="sql_string-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>sql_string</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Return a StringExpression representation of self.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+231
+232
+233</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/sql.rb', line 231</span>
+
+<span class='def def kw'>def</span> <span class='sql_string identifier id'>sql_string</span>
+  <span class='StringExpression constant id'>StringExpression</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='symbol val'>:NOOP</span><span class='comma token'>,</span> <span class='self self kw'>self</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

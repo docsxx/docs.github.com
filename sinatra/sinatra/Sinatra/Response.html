@@ -1,0 +1,222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: Sinatra::Response</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class Sinatra_Response">
+  <h1 class="title">Class: Sinatra::Response</h1>
+  <div class="section inheritance">
+  <ul>
+  <li>Rack::Response</li><ul><li>Sinatra::Response</li>
+  </ul></ul>
+</div><div class="section docstring">
+  <p>
+The response object. See Rack::Response and Rack::ResponseHelpers for more
+info: http://rack.rubyforge.org/doc/classes/Rack/Response.html
+http://rack.rubyforge.org/doc/classes/Rack/Response/Helpers.html
+</p>
+
+</div><div class="section constants">
+  
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+36
+37
+38
+39</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sinatra/base.rb', line 36</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span>
+  <span class='@status ivar id'>@status</span><span class='comma token'>,</span> <span class='@body ivar id'>@body</span> <span class='assign token'>=</span> <span class='integer val'>200</span><span class='comma token'>,</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+  <span class='@header ivar id'>@header</span> <span class='assign token'>=</span> <span class='Rack constant id'>Rack</span><span class='colon2 op'>::</span><span class='Utils constant id'>Utils</span><span class='colon2 op'>::</span><span class='HeaderHash constant id'>HeaderHash</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='lbrace token'>{</span><span class='string val'>'Content-Type'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'text/html'</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#finish-instance_method' title='#finish'>#finish</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#write-instance_method' title='#write'>#write</a></span><span class='args'>(str)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>finish</h3>
+</div><div id="finish-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>finish</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sinatra/base.rb', line 46</span>
+
+<span class='def def kw'>def</span> <span class='finish identifier id'>finish</span>
+  <span class='@body ivar id'>@body</span> <span class='assign token'>=</span> <span class='block identifier id'>block</span> <span class='if if_mod kw'>if</span> <span class='block_given? fid id'>block_given?</span>
+  <span class='if if kw'>if</span> <span class='lbrack token'>[</span><span class='integer val'>204</span><span class='comma token'>,</span> <span class='integer val'>304</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='status identifier id'>status</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span><span class='rparen token'>)</span>
+    <span class='header identifier id'>header</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span> <span class='string val'>&quot;Content-Type&quot;</span>
+    <span class='lbrack token'>[</span><span class='status identifier id'>status</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span><span class='comma token'>,</span> <span class='header identifier id'>header</span><span class='dot token'>.</span><span class='to_hash identifier id'>to_hash</span><span class='comma token'>,</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span>
+  <span class='else else kw'>else</span>
+    <span class='body identifier id'>body</span> <span class='assign token'>=</span> <span class='@body ivar id'>@body</span> <span class='orop op'>||</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+    <span class='body identifier id'>body</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='body identifier id'>body</span><span class='rbrack token'>]</span> <span class='if if_mod kw'>if</span> <span class='body identifier id'>body</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span> <span class='symbol val'>:to_str</span>
+    <span class='if if kw'>if</span> <span class='body identifier id'>body</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='colon op'>:</span><span class='to_ary identifier id'>to_ary</span><span class='rparen token'>)</span>
+      <span class='header identifier id'>header</span><span class='lbrack token'>[</span><span class='string val'>&quot;Content-Length&quot;</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='body identifier id'>body</span><span class='dot token'>.</span><span class='to_ary identifier id'>to_ary</span><span class='dot token'>.</span>
+        <span class='inject identifier id'>inject</span><span class='lparen token'>(</span><span class='integer val'>0</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='len identifier id'>len</span><span class='comma token'>,</span> <span class='part identifier id'>part</span><span class='bitor op'>|</span> <span class='len identifier id'>len</span> <span class='plus op'>+</span> <span class='part identifier id'>part</span><span class='dot token'>.</span><span class='bytesize identifier id'>bytesize</span> <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+    <span class='end end kw'>end</span>
+    <span class='lbrack token'>[</span><span class='status identifier id'>status</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span><span class='comma token'>,</span> <span class='header identifier id'>header</span><span class='dot token'>.</span><span class='to_hash identifier id'>to_hash</span><span class='comma token'>,</span> <span class='body identifier id'>body</span><span class='rbrack token'>]</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>write</h3>
+</div><div id="write-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>write</span><span class='args'>(str)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+41
+42
+43
+44</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sinatra/base.rb', line 41</span>
+
+<span class='def def kw'>def</span> <span class='write identifier id'>write</span><span class='lparen token'>(</span><span class='str identifier id'>str</span><span class='rparen token'>)</span>
+  <span class='@body ivar id'>@body</span> <span class='lshft op'>&lt;&lt;</span> <span class='str identifier id'>str</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+  <span class='str identifier id'>str</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

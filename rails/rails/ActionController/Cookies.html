@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: ActionController::Cookies</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module ActionController_Cookies">
+  <h1 class="title">Module: ActionController::Cookies</h1>
+  <div class="section docstring">
+  <p>
+Cookies are read and written through ActionController#cookies.
+</p>
+<p>
+The cookies being read are the ones received along with the request, the
+cookies being written will be sent out with the response. Reading a cookie
+does not get the cookie object itself back, just the value it holds.
+</p>
+<p>
+Examples for writing:
+</p>
+<pre class="code">
+  <span class='comment val'># Sets a simple session cookie.</span>
+  <span class='cookies identifier id'>cookies</span><span class='lbrack token'>[</span><span class='symbol val'>:user_name</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='string val'>&quot;david&quot;</span>
+
+  <span class='comment val'># Sets a cookie that expires in 1 hour.</span>
+  <span class='cookies identifier id'>cookies</span><span class='lbrack token'>[</span><span class='symbol val'>:login</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span> <span class='symbol val'>:value</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;XJ-122&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:expires</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='float val'>1</span><span class='dot token'>.</span><span class='hour identifier id'>hour</span><span class='dot token'>.</span><span class='from_now identifier id'>from_now</span> <span class='rbrace token'>}</span>
+</pre>
+<p>
+Examples for reading:
+</p>
+<pre class="code">
+  <span class='cookies identifier id'>cookies</span><span class='lbrack token'>[</span><span class='symbol val'>:user_name</span><span class='rbrack token'>]</span> <span class='comment val'># =&gt; &quot;david&quot;</span>
+  <span class='cookies identifier id'>cookies</span><span class='dot token'>.</span><span class='size identifier id'>size</span>        <span class='comment val'># =&gt; 2</span>
+</pre>
+<p>
+Example for deleting:
+</p>
+<pre class="code">
+  <span class='cookies identifier id'>cookies</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span> <span class='symbol val'>:user_name</span>
+</pre>
+<p>
+Please note that if you specify a :domain when setting a cookie, you must
+also specify the domain when deleting the cookie:
+</p>
+<pre class="code">
+ <span class='cookies identifier id'>cookies</span><span class='lbrack token'>[</span><span class='symbol val'>:key</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span>
+   <span class='symbol val'>:value</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'a yummy cookie'</span><span class='comma token'>,</span>
+   <span class='symbol val'>:expires</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='float val'>1</span><span class='dot token'>.</span><span class='year identifier id'>year</span><span class='dot token'>.</span><span class='from_now identifier id'>from_now</span><span class='comma token'>,</span>
+   <span class='symbol val'>:domain</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'domain.com'</span>
+ <span class='rbrace token'>}</span>
+
+ <span class='cookies identifier id'>cookies</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:key</span><span class='comma token'>,</span> <span class='symbol val'>:domain</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'domain.com'</span><span class='rparen token'>)</span>
+</pre>
+<p>
+The option symbols for setting cookies are:
+</p>
+<ul>
+<li><tt>:value</tt> - The cookie&#8217;s value or list of values (as an array).
+
+</li>
+<li><tt>:path</tt> - The path for which this cookie applies. Defaults to the
+root of the application.
+
+</li>
+<li><tt>:domain</tt> - The domain for which this cookie applies.
+
+</li>
+<li><tt>:expires</tt> - The time at which this cookie expires, as a Time
+object.
+
+</li>
+<li><tt>:secure</tt> - Whether this cookie is a only transmitted to HTTPS
+servers. Default is <tt>false</tt>.
+
+</li>
+<li><tt>:httponly</tt> - Whether this cookie is accessible via scripting or
+only HTTP. Defaults to <tt>false</tt>.
+
+</li>
+</ul>
+
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <h1>Public Class Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#included-class_method' title='included'>included</a></span><span class='args'>(base)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails class public">
+  <h1>Public Class Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>included</h3>
+</div><div id="included-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>included</span><span class='args'>(base)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+47
+48
+49</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'actionpack/lib/action_controller/base/cookies.rb', line 47</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='included identifier id'>included</span><span class='lparen token'>(</span><span class='base identifier id'>base</span><span class='rparen token'>)</span>
+  <span class='base identifier id'>base</span><span class='dot token'>.</span><span class='helper_method identifier id'>helper_method</span> <span class='symbol val'>:cookies</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: Nokogiri::XML::SAX</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module Nokogiri_XML_SAX">
+  <h1 class="title">Module: Nokogiri::XML::SAX</h1>
+  <div class="section docstring">
+  <p>
+SAX Parsers are event driven parsers. Nokogiri provides two different event
+based parsers when dealing with XML. If you want to do SAX style parsing
+using HTML, check out Nokogiri::HTML::SAX.
+</p>
+<p>
+The basic way a SAX style parser works is by creating a parser, telling the
+parser about the events we&#8217;re interested in, then giving the parser
+some XML to process. The parser will notify you when it encounters events
+your said you would like to know about.
+</p>
+<p>
+To register for events, you simply subclass Nokogiri::XML::SAX::Document,
+and implement the methods for which you would like notification.
+</p>
+<p>
+For example, if I want to be notified when a document ends, and when an
+element starts, I would write a class like this:
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='MyDocument constant id'>MyDocument</span> <span class='lt op'>&lt;</span> <span class='Nokogiri constant id'>Nokogiri</span><span class='colon2 op'>::</span><span class='XML constant id'>XML</span><span class='colon2 op'>::</span><span class='SAX constant id'>SAX</span><span class='colon2 op'>::</span><span class='Document constant id'>Document</span>
+    <span class='def def kw'>def</span> <span class='end_document identifier id'>end_document</span>
+      <span class='puts identifier id'>puts</span> <span class='string val'>&quot;the document has ended&quot;</span>
+    <span class='end end kw'>end</span>
+
+    <span class='def def kw'>def</span> <span class='start_element identifier id'>start_element</span> <span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='attributes identifier id'>attributes</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+      <span class='puts identifier id'>puts</span> <span class='dstring node'>&quot;#{name} started&quot;</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+Then I would instantiate a SAX parser with this document, and feed the
+parser some XML
+</p>
+<pre class="code">
+  <span class='comment val'># Create a new parser</span>
+  <span class='parser identifier id'>parser</span> <span class='assign token'>=</span> <span class='Nokogiri constant id'>Nokogiri</span><span class='colon2 op'>::</span><span class='XML constant id'>XML</span><span class='colon2 op'>::</span><span class='SAX constant id'>SAX</span><span class='colon2 op'>::</span><span class='Parser constant id'>Parser</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='MyDocument constant id'>MyDocument</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='rparen token'>)</span>
+
+  <span class='comment val'># Feed the parser some XML</span>
+  <span class='parser identifier id'>parser</span><span class='dot token'>.</span><span class='parse identifier id'>parse</span><span class='lparen token'>(</span><span class='File constant id'>File</span><span class='dot token'>.</span><span class='read identifier id'>read</span><span class='lparen token'>(</span><span class='ARGV constant id'>ARGV</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='string val'>'rb'</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+</pre>
+<p>
+Now my document handler will be called when each node starts, and when then
+document ends. To see what kinds of events are available, take a look at
+Nokogiri::XML::SAX::Document.
+</p>
+<p>
+Two SAX parsers for XML are available, a parser that reads from a string or
+IO object as it feels necessary, and a parser that lets you spoon feed it
+XML. If you want to let Nokogiri deal with reading your XML, use the
+Nokogiri::XML::SAX::Parser. If you want to have fine grain control over the
+XML input, use the Nokogiri::XML::SAX::PushParser.
+</p>
+
+</div><div class="section constants">
+  
+</div>
+</div>
+    </div>
+  </body>
+</html>

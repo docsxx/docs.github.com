@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: FeedsWorker</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class FeedsWorker">
+  <h1 class="title">Class: FeedsWorker</h1>
+  <div class="section inheritance">
+  <ul>
+  <li>BackgrounDRb::MetaWorker</li><ul><li>FeedsWorker</li>
+  </ul></ul>
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#create-instance_method' title='#create'>#create</a></span><span class='args'>(feed_id = nil)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#update-instance_method' title='#update'>#update</a></span><span class='args'>(feed_id)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>create</h3>
+</div><div id="create-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>create</span><span class='args'>(feed_id = nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/workers/feeds_worker.rb', line 5</span>
+
+<span class='def def kw'>def</span> <span class='create identifier id'>create</span><span class='lparen token'>(</span><span class='feed_id identifier id'>feed_id</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='raise identifier id'>raise</span> <span class='string val'>&quot;Trying to start worker with :data nil or less than 1 (needs Feed id &gt; 0)&quot;</span> <span class='if if_mod kw'>if</span> <span class='feed_id identifier id'>feed_id</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span> <span class='orop op'>||</span> <span class='feed_id identifier id'>feed_id</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span> <span class='lt op'>&lt;</span> <span class='integer val'>1</span>
+
+  <span class='feed identifier id'>feed</span> <span class='assign token'>=</span> <span class='Feed constant id'>Feed</span><span class='dot token'>.</span><span class='find_by_id identifier id'>find_by_id</span><span class='lparen token'>(</span><span class='feed_id identifier id'>feed_id</span><span class='rparen token'>)</span>
+  <span class='raise identifier id'>raise</span> <span class='dstring node'>&quot;Feed of id #{feed_id} not found! Please supply valid feed id.&quot;</span> <span class='unless unless_mod kw'>unless</span> <span class='feed identifier id'>feed</span>
+
+  <span class='comment val'># update_frequency is stored in minutes</span>
+  <span class='frequency_in_seconds identifier id'>frequency_in_seconds</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='feed identifier id'>feed</span><span class='dot token'>.</span><span class='update_frequency identifier id'>update_frequency</span> <span class='mult op'>*</span> <span class='integer val'>60</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span>
+  <span class='add_periodic_timer identifier id'>add_periodic_timer</span><span class='lparen token'>(</span><span class='frequency_in_seconds identifier id'>frequency_in_seconds</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='update identifier id'>update</span><span class='lparen token'>(</span><span class='feed_id identifier id'>feed_id</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>update</h3>
+</div><div id="update-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>update</span><span class='args'>(feed_id)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+16
+17
+18
+19
+20
+21
+22
+23
+24</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/workers/feeds_worker.rb', line 16</span>
+
+<span class='def def kw'>def</span> <span class='update identifier id'>update</span><span class='lparen token'>(</span><span class='feed_id identifier id'>feed_id</span><span class='rparen token'>)</span>
+  <span class='begin begin kw'>begin</span>
+    <span class='feed identifier id'>feed</span> <span class='assign token'>=</span> <span class='Feed constant id'>Feed</span><span class='dot token'>.</span><span class='find_by_id identifier id'>find_by_id</span><span class='lparen token'>(</span><span class='feed_id identifier id'>feed_id</span><span class='rparen token'>)</span>
+    <span class='feed identifier id'>feed</span><span class='dot token'>.</span><span class='update_feed identifier id'>update_feed</span> <span class='if if_mod kw'>if</span> <span class='feed identifier id'>feed</span>
+  <span class='rescue rescue kw'>rescue</span>
+    <span class='comment val'># if the update above fails for any reason, we dont want the worker stopping completely</span>
+    <span class='comment val'># so rescue from it and make sure it doesn't execute a raise!</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

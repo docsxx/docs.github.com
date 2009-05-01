@@ -1,0 +1,309 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: AjaxfulRating::Helper</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module AjaxfulRating_Helper">
+  <h1 class="title">Module: AjaxfulRating::Helper</h1>
+  <div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#ajaxful_rating_style-instance_method' title='#ajaxful_rating_style'>#ajaxful_rating_style</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Call this method &lt;strong&gt;within head tags&lt;/strong&gt; of the main
+layout to yield the dynamic styles.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#ratings_for-instance_method' title='#ratings_for'>#ratings_for</a></span><span class='args'>(rateable, *args)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Generates the stars list to submit a rate.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>ajaxful_rating_style</h3>
+</div><div id="ajaxful_rating_style-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>ajaxful_rating_style</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Call this method &lt;strong&gt;within head tags&lt;/strong&gt; of the main
+layout to yield the dynamic styles. It will include the necessary
+stlyesheet and output the dynamic CSS.
+</p>
+<p>
+Example:
+</p>
+<pre class="code">
+  <span class='lt op'>&lt;</span><span class='head identifier id'>head</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='string val'>%= ajaxful_rating_style %&gt;
+  &lt;/head&gt;
+</span></pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+95
+96
+97
+98</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/ajaxful_rating_helper.rb', line 95</span>
+
+<span class='def def kw'>def</span> <span class='ajaxful_rating_style identifier id'>ajaxful_rating_style</span>
+  <span class='stylesheet_link_tag identifier id'>stylesheet_link_tag</span><span class='lparen token'>(</span><span class='string val'>'ajaxful_rating'</span><span class='rparen token'>)</span> <span class='plus op'>+</span> <span class='content_tag identifier id'>content_tag</span><span class='lparen token'>(</span><span class='symbol val'>:style</span><span class='comma token'>,</span> <span class='ajaxful_styles identifier id'>ajaxful_styles</span><span class='comma token'>,</span>
+    <span class='symbol val'>:type</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'text/css'</span><span class='rparen token'>)</span> <span class='unless unless_mod kw'>unless</span> <span class='ajaxful_styles identifier id'>ajaxful_styles</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>ratings_for</h3>
+</div><div id="ratings_for-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>ratings_for</span><span class='args'>(rateable, *args)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Generates the stars list to submit a rate.
+</p>
+<p>
+It accepts the next options:
+</p>
+<ul>
+<li><tt>:class</tt> CSS class for the ul. Default is
+&#8216;ajaxful-rating&#8217;.
+
+</li>
+<li><tt>:link_class_prefix</tt> Prefix for the li a CSS class. Default is
+&#8216;stars&#8217;.
+
+</li>
+<li><tt>:small_stars</tt> Set this param to true to display smaller images.
+Default is false.
+
+</li>
+<li><tt>:small_star_class</tt> CSS class for the list when using small images.
+Default is &#8216;small-stars&#8217;.
+
+</li>
+<li><tt>:html</tt> Hash of options to customise the ul tag.
+
+</li>
+<li><tt>:remote_options</tt> Hash of options for the link_to_remote function.
+
+</li>
+</ul>
+<p>
+Default is {:method =&gt; :post, :url =&gt;
+rate_rateablemodel_path(rateable)}.
+</p>
+<ul>
+<li><tt>:wrap</tt> Whether the star list is wrapped within a div tag or not.
+This is useful when page updating. Default is true.
+
+</li>
+</ul>
+<p>
+Example:
+</p>
+<pre class="code">
+  <span class='lt op'>&lt;</span><span class='string val'>%= ratings_for @article %&gt;
+  # =</span><span class='gt op'>&gt;</span> <span class='Will constant id'>Will</span> <span class='produce identifier id'>produce</span> <span class='something identifier id'>something</span> <span class='like identifier id'>like</span><span class='colon op'>:</span>
+  <span class='lt op'>&lt;</span><span class='ul identifier id'>ul</span> <span class='class class kw'>class</span><span class='assign token'>=</span><span class='string val'>&quot;ajaxful-rating&quot;</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='li identifier id'>li</span> <span class='class class kw'>class</span><span class='assign token'>=</span><span class='string val'>&quot;current-rating&quot;</span> <span class='style identifier id'>style</span><span class='assign token'>=</span><span class='string val'>&quot;width: 60%;&quot;</span><span class='gt op'>&gt;</span><span class='Currently constant id'>Currently</span> <span class='integer val'>3</span><span class='div op'>/</span><span class='integer val'>5</span> <span class='stars identifier id'>stars</span><span class='lt op'>&lt;</span><span class='regexp val'>/li&gt;
+    &lt;li&gt;&lt;%= link_to_remote 1, :url =&gt; rate_article_path(@article, :stars =&gt; 1), :method =&gt; :post, :html =&gt; {:class =&gt; 'stars-1', :title =&gt; '1 star out of 5'} %&gt;&lt;/</span><span class='li identifier id'>li</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='li identifier id'>li</span><span class='gt op'>&gt;</span><span class='lt op'>&lt;</span><span class='string val'>%= link_to_remote 2, :url =</span><span class='gt op'>&gt;</span> <span class='rate_article_path identifier id'>rate_article_path</span><span class='lparen token'>(</span><span class='@article ivar id'>@article</span><span class='comma token'>,</span> <span class='symbol val'>:stars</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>2</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:method</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:post</span><span class='comma token'>,</span> <span class='symbol val'>:html</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='symbol val'>:class</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'stars-2'</span><span class='comma token'>,</span> <span class='symbol val'>:title</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'2 stars out of 5'</span><span class='rbrace token'>}</span> <span class='mod op'>%</span><span class='gt op'>&gt;</span><span class='lt op'>&lt;</span><span class='regexp val'>/li&gt;
+    &lt;li&gt;&lt;%= link_to_remote 3, :url =&gt; rate_article_path(@article, :stars =&gt; 3), :method =&gt; :post, :html =&gt; {:class =&gt; 'stars-3', :title =&gt; '3 stars out of 5'} %&gt;&lt;/</span><span class='li identifier id'>li</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='li identifier id'>li</span><span class='gt op'>&gt;</span><span class='lt op'>&lt;</span><span class='string val'>%= link_to_remote 4, :url =</span><span class='gt op'>&gt;</span> <span class='rate_article_path identifier id'>rate_article_path</span><span class='lparen token'>(</span><span class='@article ivar id'>@article</span><span class='comma token'>,</span> <span class='symbol val'>:stars</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>4</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:method</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:post</span><span class='comma token'>,</span> <span class='symbol val'>:html</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='symbol val'>:class</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'stars-4'</span><span class='comma token'>,</span> <span class='symbol val'>:title</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'4 stars out of 5'</span><span class='rbrace token'>}</span> <span class='mod op'>%</span><span class='gt op'>&gt;</span><span class='lt op'>&lt;</span><span class='regexp val'>/li&gt;
+    &lt;li&gt;&lt;%= link_to_remote 5, :url =&gt; rate_article_path(@article, :stars =&gt; 5), :method =&gt; :post, :html =&gt; {:class =&gt; 'stars-5', :title =&gt; '5 stars out of 5'} %&gt;&lt;/</span><span class='li identifier id'>li</span><span class='gt op'>&gt;</span>
+  <span class='lt op'>&lt;</span><span class='regexp val'>/ul&gt;
+</span></pre>
+<p>
+It will try to use the method <tt>current_user</tt> as the user instance.
+You can specify a custom instance in the second parameter or pass
+<tt>:static</tt> to leave the list of stars static.
+</p>
+<p>
+Example:
+</p>
+<pre class="code">
+  <span class='lt op'>&lt;</span><span class='string val'>%= ratings_for @article, @user, :small_stars =</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span> <span class='mod op'>%</span><span class='gt op'>&gt;</span>
+  <span class='comment val'># =&gt; Will use @user instead &lt;tt&gt;current_user&lt;/tt&gt;</span>
+
+  <span class='lt op'>&lt;</span><span class='string val'>%= ratings_for @article, :static, :small_stars =</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span> <span class='mod op'>%</span><span class='gt op'>&gt;</span>
+  <span class='comment val'># =&gt; Will produce a static list of stars showing the current rating average for @article.</span>
+</pre>
+<p>
+The user passed here will <b>not</b> be the one who submits the rate. It
+will be used only for the display behavior of the stars. Like for example,
+if there is a user logged in or if the current logged in user is able to
+submit a rate depending on the configuration (accepts update of rates,
+etc).
+</p>
+<p>
+So to actually set the user who will rate the model you need to do it in
+your controller:
+</p>
+<pre class="code">
+  <span class='comment val'># controller</span>
+  <span class='def def kw'>def</span> <span class='rate identifier id'>rate</span>
+    <span class='@article ivar id'>@article</span> <span class='assign token'>=</span> <span class='Article constant id'>Article</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:id</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+    <span class='@article ivar id'>@article</span><span class='dot token'>.</span><span class='rate identifier id'>rate</span><span class='lparen token'>(</span><span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:stars</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='current_user identifier id'>current_user</span><span class='rparen token'>)</span> <span class='comment val'># or any user instance</span>
+    <span class='comment val'># update page, etc.</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+I18n:
+</p>
+<p>
+You can translate the title of the images (the tool tip that shows when the
+mouse is over) and the &#8216;Currently x/x stars&#8217; string by setting
+these keys on your translation hash:
+</p>
+<pre class="code">
+  <span class='ajaxful_rating identifier id'>ajaxful_rating</span><span class='colon op'>:</span>
+    <span class='stars identifier id'>stars</span><span class='colon op'>:</span>
+      <span class='current_average identifier id'>current_average</span><span class='colon op'>:</span> <span class='string val'>&quot;Current rating: {{average}}/{{max}}&quot;</span>
+      <span class='title identifier id'>title</span><span class='colon op'>:</span>
+        <span class='one identifier id'>one</span><span class='colon op'>:</span> <span class='integer val'>1</span> <span class='star identifier id'>star</span> <span class='out identifier id'>out</span> <span class='of identifier id'>of</span> <span class='lbrace token'>{</span><span class='lbrace token'>{</span><span class='total identifier id'>total</span><span class='rbrace token'>}</span><span class='rbrace token'>}</span>
+        <span class='other identifier id'>other</span><span class='colon op'>:</span> <span class='string val'>&quot;{{count}} stars out of {{total}}&quot;</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/ajaxful_rating_helper.rb', line 67</span>
+
+<span class='def def kw'>def</span> <span class='ratings_for identifier id'>ratings_for</span><span class='lparen token'>(</span><span class='rateable identifier id'>rateable</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='user identifier id'>user</span> <span class='assign token'>=</span> <span class='extract_options identifier id'>extract_options</span><span class='lparen token'>(</span><span class='rateable identifier id'>rateable</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='ajaxful_styles identifier id'>ajaxful_styles</span> <span class='lshft op'>&lt;&lt;</span> <span class='dstring node'>%Q(
+  .#{options[:class]} { width: #{rateable.class.max_rate_value * 25}px; }
+  .#{options[:small_star_class]} { width: #{rateable.class.max_rate_value * 10}px; }
+  )</span>
+  <span class='width identifier id'>width</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='rateable identifier id'>rateable</span><span class='dot token'>.</span><span class='rate_average identifier id'>rate_average</span><span class='lparen token'>(</span><span class='true true kw'>true</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:dimension</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='div op'>/</span> <span class='rateable identifier id'>rateable</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='max_rate_value identifier id'>max_rate_value</span><span class='dot token'>.</span><span class='to_f identifier id'>to_f</span><span class='rparen token'>)</span> <span class='mult op'>*</span> <span class='integer val'>100</span>
+  <span class='ul identifier id'>ul</span> <span class='assign token'>=</span> <span class='content_tag identifier id'>content_tag</span><span class='lparen token'>(</span><span class='symbol val'>:ul</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:html</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='do do kw'>do</span>
+    <span class='Range constant id'>Range</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='integer val'>1</span><span class='comma token'>,</span> <span class='rateable identifier id'>rateable</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='max_rate_value identifier id'>max_rate_value</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='collect identifier id'>collect</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='i identifier id'>i</span><span class='bitor op'>|</span>
+      <span class='build_star identifier id'>build_star</span> <span class='rateable identifier id'>rateable</span><span class='comma token'>,</span> <span class='user identifier id'>user</span><span class='comma token'>,</span> <span class='i identifier id'>i</span>
+    <span class='end end kw'>end</span><span class='dot token'>.</span><span class='insert identifier id'>insert</span><span class='lparen token'>(</span><span class='integer val'>0</span><span class='comma token'>,</span> <span class='content_tag identifier id'>content_tag</span><span class='lparen token'>(</span><span class='symbol val'>:li</span><span class='comma token'>,</span> <span class='current_average identifier id'>current_average</span><span class='lparen token'>(</span><span class='rateable identifier id'>rateable</span><span class='rparen token'>)</span><span class='comma token'>,</span>
+        <span class='symbol val'>:class</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'current-rating'</span><span class='comma token'>,</span> <span class='symbol val'>:style</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='dstring node'>&quot;width:#{width}%&quot;</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+  <span class='if if kw'>if</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='colon op'>:</span><span class='wrap identifier id'>wrap</span><span class='rbrack token'>]</span>
+    <span class='content_tag identifier id'>content_tag</span><span class='lparen token'>(</span><span class='symbol val'>:div</span><span class='comma token'>,</span> <span class='ul identifier id'>ul</span><span class='comma token'>,</span> <span class='symbol val'>:id</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='dstring node'>&quot;ajaxful-rating-#{!options[:dimension].blank? ?
+      &quot;#{options[:dimension]}-&quot; : ''}#{rateable.class.name.downcase}-#{rateable.id}&quot;</span><span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+    <span class='ul identifier id'>ul</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

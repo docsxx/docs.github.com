@@ -1,0 +1,335 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: CouchRest::Validation::AutoValidate</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module CouchRest_Validation_AutoValidate">
+  <h1 class="title">Module: CouchRest::Validation::AutoValidate</h1>
+  <div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#auto_generate_validations-instance_method' title='#auto_generate_validations'>#auto_generate_validations</a></span><span class='args'>(property)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Auto-generate validations for a given property.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#options_with_message-instance_method' title='#options_with_message'>#options_with_message</a></span><span class='args'>(base_options, property, validator_name)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+# Force the auto validation for the class properties # This feature is
+still not fully ported over, # test are lacking, so please use with caution
+def auto_validate!
+</p>
+<pre class="code">
+  <span class='require identifier id'>require</span> <span class='string val'>'ruby-debug'</span>
+  <span class='debugger identifier id'>debugger</span>
+  <span class='auto_validation identifier id'>auto_validation</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+</pre>
+<p>
+end adds message for validator.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>auto_generate_validations</h3>
+</div><div id="auto_generate_validations-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>auto_generate_validations</span><span class='args'>(property)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Auto-generate validations for a given property. This will only occur if the
+option :auto_validation is either true or left undefined.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/couchrest/validation/auto_validate.rb', line 93</span>
+
+<span class='def def kw'>def</span> <span class='auto_generate_validations identifier id'>auto_generate_validations</span><span class='lparen token'>(</span><span class='property identifier id'>property</span><span class='rparen token'>)</span>
+  <span class='return return kw'>return</span> <span class='unless unless_mod kw'>unless</span> <span class='lparen token'>(</span><span class='lparen token'>(</span><span class='property identifier id'>property</span><span class='dot token'>.</span><span class='autovalidation_check identifier id'>autovalidation_check</span> <span class='neq op'>!=</span> <span class='true true kw'>true</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='auto_validation identifier id'>auto_validation</span><span class='rparen token'>)</span>
+  <span class='return return kw'>return</span> <span class='if if_mod kw'>if</span> <span class='lparen token'>(</span><span class='property identifier id'>property</span><span class='dot token'>.</span><span class='options identifier id'>options</span> <span class='andop op'>&amp;&amp;</span> <span class='lparen token'>(</span><span class='property identifier id'>property</span><span class='dot token'>.</span><span class='options identifier id'>options</span><span class='dot token'>.</span><span class='has_key? fid id'>has_key?</span><span class='lparen token'>(</span><span class='symbol val'>:auto_validation</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='notop op'>!</span><span class='property identifier id'>property</span><span class='dot token'>.</span><span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:auto_validation</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='property identifier id'>property</span><span class='dot token'>.</span><span class='read_only identifier id'>read_only</span><span class='rparen token'>)</span>
+  <span class='comment val'># value is set by the storage system</span>
+  <span class='opts identifier id'>opts</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:context</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='property identifier id'>property</span><span class='dot token'>.</span><span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:validates</span><span class='rbrack token'>]</span> <span class='if if_mod kw'>if</span> <span class='property identifier id'>property</span><span class='dot token'>.</span><span class='options identifier id'>options</span><span class='dot token'>.</span><span class='has_key? fid id'>has_key?</span><span class='lparen token'>(</span><span class='symbol val'>:validates</span><span class='rparen token'>)</span>
+
+  <span class='comment val'># presence</span>
+  <span class='if if kw'>if</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='colon op'>:</span><span class='allow_nil identifier id'>allow_nil</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='false false kw'>false</span>
+    <span class='comment val'># validates_present property.name, opts</span>
+    <span class='validates_present identifier id'>validates_present</span> <span class='property identifier id'>property</span><span class='dot token'>.</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='options_with_message identifier id'>options_with_message</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='comma token'>,</span> <span class='property identifier id'>property</span><span class='comma token'>,</span> <span class='symbol val'>:presence</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+
+  <span class='comment val'># length</span>
+  <span class='if if kw'>if</span> <span class='property identifier id'>property</span><span class='dot token'>.</span><span class='type identifier id'>type</span> <span class='eq op'>==</span> <span class='string val'>&quot;String&quot;</span>
+    <span class='comment val'># XXX: maybe length should always return a Range, with the min defaulting to 1</span>
+    <span class='comment val'># 52 being the max set </span>
+    <span class='len identifier id'>len</span> <span class='assign token'>=</span> <span class='property identifier id'>property</span><span class='dot token'>.</span><span class='options identifier id'>options</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='symbol val'>:length</span><span class='comma token'>,</span> <span class='property identifier id'>property</span><span class='dot token'>.</span><span class='options identifier id'>options</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='symbol val'>:size</span><span class='comma token'>,</span> <span class='integer val'>52</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+    <span class='if if kw'>if</span> <span class='len identifier id'>len</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Range constant id'>Range</span><span class='rparen token'>)</span>
+      <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:within</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='len identifier id'>len</span>
+    <span class='else else kw'>else</span>
+      <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:maximum</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='len identifier id'>len</span>
+    <span class='end end kw'>end</span>
+    <span class='comment val'># validates_length property.name, opts</span>
+    <span class='validates_length identifier id'>validates_length</span> <span class='property identifier id'>property</span><span class='dot token'>.</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='options_with_message identifier id'>options_with_message</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='comma token'>,</span> <span class='property identifier id'>property</span><span class='comma token'>,</span> <span class='symbol val'>:length</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+
+  <span class='comment val'># format</span>
+  <span class='if if kw'>if</span> <span class='property identifier id'>property</span><span class='dot token'>.</span><span class='options identifier id'>options</span><span class='dot token'>.</span><span class='has_key? fid id'>has_key?</span><span class='lparen token'>(</span><span class='colon op'>:</span><span class='format identifier id'>format</span><span class='rparen token'>)</span>
+    <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:with</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='property identifier id'>property</span><span class='dot token'>.</span><span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:format</span><span class='rbrack token'>]</span>
+    <span class='comment val'># validates_format property.name, opts</span>
+    <span class='validates_format identifier id'>validates_format</span> <span class='property identifier id'>property</span><span class='dot token'>.</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='options_with_message identifier id'>options_with_message</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='comma token'>,</span> <span class='property identifier id'>property</span><span class='comma token'>,</span> <span class='symbol val'>:format</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+
+  <span class='comment val'># uniqueness validator</span>
+  <span class='if if kw'>if</span> <span class='property identifier id'>property</span><span class='dot token'>.</span><span class='options identifier id'>options</span><span class='dot token'>.</span><span class='has_key? fid id'>has_key?</span><span class='lparen token'>(</span><span class='colon op'>:</span><span class='unique identifier id'>unique</span><span class='rparen token'>)</span>
+    <span class='value identifier id'>value</span> <span class='assign token'>=</span> <span class='property identifier id'>property</span><span class='dot token'>.</span><span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:unique</span><span class='rbrack token'>]</span>
+    <span class='if if kw'>if</span> <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Array constant id'>Array</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Symbol constant id'>Symbol</span><span class='rparen token'>)</span>
+      <span class='comment val'># validates_is_unique property.name, :scope =&gt; Array(value)</span>
+      <span class='validates_is_unique identifier id'>validates_is_unique</span> <span class='property identifier id'>property</span><span class='dot token'>.</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='options_with_message identifier id'>options_with_message</span><span class='lparen token'>(</span><span class='lbrace token'>{</span><span class='symbol val'>:scope</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='Array constant id'>Array</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='property identifier id'>property</span><span class='comma token'>,</span> <span class='symbol val'>:is_unique</span><span class='rparen token'>)</span>
+    <span class='elsif elsif kw'>elsif</span> <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='TrueClass constant id'>TrueClass</span><span class='rparen token'>)</span>
+      <span class='comment val'># validates_is_unique property.name</span>
+      <span class='validates_is_unique identifier id'>validates_is_unique</span> <span class='property identifier id'>property</span><span class='dot token'>.</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='options_with_message identifier id'>options_with_message</span><span class='lparen token'>(</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='property identifier id'>property</span><span class='comma token'>,</span> <span class='symbol val'>:is_unique</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+
+  <span class='comment val'># within validator</span>
+  <span class='if if kw'>if</span> <span class='property identifier id'>property</span><span class='dot token'>.</span><span class='options identifier id'>options</span><span class='dot token'>.</span><span class='has_key? fid id'>has_key?</span><span class='lparen token'>(</span><span class='colon op'>:</span><span class='set identifier id'>set</span><span class='rparen token'>)</span>
+    <span class='validates_within identifier id'>validates_within</span> <span class='property identifier id'>property</span><span class='dot token'>.</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='options_with_message identifier id'>options_with_message</span><span class='lparen token'>(</span><span class='lbrace token'>{</span><span class='symbol val'>:set</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='property identifier id'>property</span><span class='dot token'>.</span><span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:set</span><span class='rbrack token'>]</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='property identifier id'>property</span><span class='comma token'>,</span> <span class='symbol val'>:within</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+
+  <span class='comment val'># numeric validator</span>
+  <span class='if if kw'>if</span> <span class='string val'>&quot;Integer&quot;</span> <span class='eq op'>==</span> <span class='property identifier id'>property</span><span class='dot token'>.</span><span class='type identifier id'>type</span>
+    <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:integer_only</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+    <span class='comment val'># validates_is_number property.name, opts</span>
+    <span class='validates_is_number identifier id'>validates_is_number</span> <span class='property identifier id'>property</span><span class='dot token'>.</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='options_with_message identifier id'>options_with_message</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='comma token'>,</span> <span class='property identifier id'>property</span><span class='comma token'>,</span> <span class='symbol val'>:is_number</span><span class='rparen token'>)</span>
+  <span class='elsif elsif kw'>elsif</span> <span class='Float constant id'>Float</span> <span class='eq op'>==</span> <span class='property identifier id'>property</span><span class='dot token'>.</span><span class='type identifier id'>type</span>
+    <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:precision</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='property identifier id'>property</span><span class='dot token'>.</span><span class='precision identifier id'>precision</span>
+    <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:scale</span><span class='rbrack token'>]</span>     <span class='assign token'>=</span> <span class='property identifier id'>property</span><span class='dot token'>.</span><span class='scale identifier id'>scale</span>
+    <span class='comment val'># validates_is_number property.name, opts</span>
+    <span class='validates_is_number identifier id'>validates_is_number</span> <span class='property identifier id'>property</span><span class='dot token'>.</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='options_with_message identifier id'>options_with_message</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='comma token'>,</span> <span class='property identifier id'>property</span><span class='comma token'>,</span> <span class='symbol val'>:is_number</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+  
+  <span class='comment val'># marked the property has checked</span>
+  <span class='property identifier id'>property</span><span class='dot token'>.</span><span class='autovalidation_check identifier id'>autovalidation_check</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+  
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>options_with_message</h3>
+</div><div id="options_with_message-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>options_with_message</span><span class='args'>(base_options, property, validator_name)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+# Force the auto validation for the class properties # This feature is
+still not fully ported over, # test are lacking, so please use with caution
+def auto_validate!
+</p>
+<pre class="code">
+  <span class='require identifier id'>require</span> <span class='string val'>'ruby-debug'</span>
+  <span class='debugger identifier id'>debugger</span>
+  <span class='auto_validation identifier id'>auto_validation</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+</pre>
+<p>
+end adds message for validator
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/couchrest/validation/auto_validate.rb', line 25</span>
+
+<span class='def def kw'>def</span> <span class='options_with_message identifier id'>options_with_message</span><span class='lparen token'>(</span><span class='base_options identifier id'>base_options</span><span class='comma token'>,</span> <span class='property identifier id'>property</span><span class='comma token'>,</span> <span class='validator_name identifier id'>validator_name</span><span class='rparen token'>)</span>
+  <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='base_options identifier id'>base_options</span><span class='dot token'>.</span><span class='clone identifier id'>clone</span>
+  <span class='opts identifier id'>opts</span> <span class='assign token'>=</span> <span class='property identifier id'>property</span><span class='dot token'>.</span><span class='options identifier id'>options</span>
+  <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:message</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='if if kw'>if</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='colon op'>:</span><span class='messages identifier id'>messages</span><span class='rbrack token'>]</span>
+    <span class='if if kw'>if</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='colon op'>:</span><span class='messages identifier id'>messages</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Hash constant id'>Hash</span><span class='rparen token'>)</span> <span class='and and kw'>and</span> <span class='msg identifier id'>msg</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='colon op'>:</span><span class='messages identifier id'>messages</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='validator_name identifier id'>validator_name</span><span class='rbrack token'>]</span>
+      <span class='msg identifier id'>msg</span>
+    <span class='else else kw'>else</span>
+      <span class='nil nil kw'>nil</span>
+    <span class='end end kw'>end</span>
+  <span class='elsif elsif kw'>elsif</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:message</span><span class='rbrack token'>]</span>
+    <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:message</span><span class='rbrack token'>]</span>
+  <span class='else else kw'>else</span>
+    <span class='nil nil kw'>nil</span>
+  <span class='end end kw'>end</span>
+  <span class='options identifier id'>options</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

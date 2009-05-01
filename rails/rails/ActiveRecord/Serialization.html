@@ -1,0 +1,597 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: ActiveRecord::Serialization</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module ActiveRecord_Serialization">
+  <h1 class="title">Module: ActiveRecord::Serialization</h1>
+  <div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <h1>Public Class Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#included-class_method' title='included'>included</a></span><span class='args'>(base)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+  <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#from_json-instance_method' title='#from_json'>#from_json</a></span><span class='args'>(json)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#from_xml-instance_method' title='#from_xml'>#from_xml</a></span><span class='args'>(xml)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#to_json-instance_method' title='#to_json'>#to_json</a></span><span class='args'>(options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns a JSON string representing the model.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#to_xml-instance_method' title='#to_xml'>#to_xml</a></span><span class='args'>(options = {}, &amp;block)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Builds an XML document to represent the model.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails class public">
+  <h1>Public Class Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>included</h3>
+</div><div id="included-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>included</span><span class='args'>(base)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+3
+4
+5
+6</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/serializers/json_serializer.rb', line 3</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='included identifier id'>included</span><span class='lparen token'>(</span><span class='base identifier id'>base</span><span class='rparen token'>)</span>
+  <span class='base identifier id'>base</span><span class='dot token'>.</span><span class='cattr_accessor identifier id'>cattr_accessor</span> <span class='symbol val'>:include_root_in_json</span><span class='comma token'>,</span> <span class='symbol val'>:instance_writer</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='false false kw'>false</span>
+  <span class='base identifier id'>base</span><span class='dot token'>.</span><span class='extend identifier id'>extend</span> <span class='ClassMethods constant id'>ClassMethods</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div><div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>from_json</h3>
+</div><div id="from_json-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>from_json</span><span class='args'>(json)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+82
+83
+84
+85</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/serializers/json_serializer.rb', line 82</span>
+
+<span class='def def kw'>def</span> <span class='from_json identifier id'>from_json</span><span class='lparen token'>(</span><span class='json identifier id'>json</span><span class='rparen token'>)</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='attributes identifier id'>attributes</span> <span class='assign token'>=</span> <span class='ActiveSupport constant id'>ActiveSupport</span><span class='colon2 op'>::</span><span class='JSON constant id'>JSON</span><span class='dot token'>.</span><span class='decode identifier id'>decode</span><span class='lparen token'>(</span><span class='json identifier id'>json</span><span class='rparen token'>)</span>
+  <span class='self self kw'>self</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>from_xml</h3>
+</div><div id="from_xml-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>from_xml</span><span class='args'>(xml)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+159
+160
+161
+162</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/serializers/xml_serializer.rb', line 159</span>
+
+<span class='def def kw'>def</span> <span class='from_xml identifier id'>from_xml</span><span class='lparen token'>(</span><span class='xml identifier id'>xml</span><span class='rparen token'>)</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='attributes identifier id'>attributes</span> <span class='assign token'>=</span> <span class='Hash constant id'>Hash</span><span class='dot token'>.</span><span class='from_xml identifier id'>from_xml</span><span class='lparen token'>(</span><span class='xml identifier id'>xml</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='values identifier id'>values</span><span class='dot token'>.</span><span class='first identifier id'>first</span>
+  <span class='self self kw'>self</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>to_json</h3>
+</div><div id="to_json-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>to_json</span><span class='args'>(options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns a JSON string representing the model. Some configuration is
+available through <tt>options</tt>.
+</p>
+<p>
+The option <tt>ActiveRecord::Base.include_root_in_json</tt> controls the
+top-level behavior of to_json. In a new Rails application, it is set to
+<tt>true</tt> in initializers/new_rails_defaults.rb. When it is
+<tt>true</tt>, to_json will emit a single root node named after the
+object&#8217;s type. For example:
+</p>
+<pre class="code">
+  <span class='konata identifier id'>konata</span> <span class='assign token'>=</span> <span class='User constant id'>User</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='integer val'>1</span><span class='rparen token'>)</span>
+  <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='dot token'>.</span><span class='include_root_in_json identifier id'>include_root_in_json</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+  <span class='konata identifier id'>konata</span><span class='dot token'>.</span><span class='to_json identifier id'>to_json</span>
+  <span class='comment val'># =&gt; { &quot;user&quot;: {&quot;id&quot;: 1, &quot;name&quot;: &quot;Konata Izumi&quot;, &quot;age&quot;: 16,</span>
+                  <span class='string val'>&quot;created_at&quot;</span><span class='colon op'>:</span> <span class='string val'>&quot;2006/08/01&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;awesome&quot;</span><span class='colon op'>:</span> <span class='true true kw'>true</span><span class='rbrace token'>}</span> <span class='rbrace token'>}</span>
+
+  <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='dot token'>.</span><span class='include_root_in_json identifier id'>include_root_in_json</span> <span class='assign token'>=</span> <span class='false false kw'>false</span>
+  <span class='konata identifier id'>konata</span><span class='dot token'>.</span><span class='to_json identifier id'>to_json</span>
+  <span class='comment val'># =&gt; {&quot;id&quot;: 1, &quot;name&quot;: &quot;Konata Izumi&quot;, &quot;age&quot;: 16,</span>
+        <span class='string val'>&quot;created_at&quot;</span><span class='colon op'>:</span> <span class='string val'>&quot;2006/08/01&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;awesome&quot;</span><span class='colon op'>:</span> <span class='true true kw'>true</span><span class='rbrace token'>}</span>
+</pre>
+<p>
+The remainder of the examples in this section assume include_root_in_json
+is set to <tt>false</tt>.
+</p>
+<p>
+Without any <tt>options</tt>, the returned JSON string will include all the
+model&#8217;s attributes. For example:
+</p>
+<pre class="code">
+  <span class='konata identifier id'>konata</span> <span class='assign token'>=</span> <span class='User constant id'>User</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='integer val'>1</span><span class='rparen token'>)</span>
+  <span class='konata identifier id'>konata</span><span class='dot token'>.</span><span class='to_json identifier id'>to_json</span>
+  <span class='comment val'># =&gt; {&quot;id&quot;: 1, &quot;name&quot;: &quot;Konata Izumi&quot;, &quot;age&quot;: 16,</span>
+        <span class='string val'>&quot;created_at&quot;</span><span class='colon op'>:</span> <span class='string val'>&quot;2006/08/01&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;awesome&quot;</span><span class='colon op'>:</span> <span class='true true kw'>true</span><span class='rbrace token'>}</span>
+</pre>
+<p>
+The <tt>:only</tt> and <tt>:except</tt> options can be used to limit the
+attributes included, and work similar to the <tt>attributes</tt> method.
+For example:
+</p>
+<pre class="code">
+  <span class='konata identifier id'>konata</span><span class='dot token'>.</span><span class='to_json identifier id'>to_json</span><span class='lparen token'>(</span><span class='symbol val'>:only</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span> <span class='symbol val'>:id</span><span class='comma token'>,</span> <span class='symbol val'>:name</span> <span class='rbrack token'>]</span><span class='rparen token'>)</span>
+  <span class='comment val'># =&gt; {&quot;id&quot;: 1, &quot;name&quot;: &quot;Konata Izumi&quot;}</span>
+
+  <span class='konata identifier id'>konata</span><span class='dot token'>.</span><span class='to_json identifier id'>to_json</span><span class='lparen token'>(</span><span class='symbol val'>:except</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span> <span class='symbol val'>:id</span><span class='comma token'>,</span> <span class='symbol val'>:created_at</span><span class='comma token'>,</span> <span class='symbol val'>:age</span> <span class='rbrack token'>]</span><span class='rparen token'>)</span>
+  <span class='comment val'># =&gt; {&quot;name&quot;: &quot;Konata Izumi&quot;, &quot;awesome&quot;: true}</span>
+</pre>
+<p>
+To include any methods on the model, use <tt>:methods</tt>.
+</p>
+<pre class="code">
+  <span class='konata identifier id'>konata</span><span class='dot token'>.</span><span class='to_json identifier id'>to_json</span><span class='lparen token'>(</span><span class='symbol val'>:methods</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:permalink</span><span class='rparen token'>)</span>
+  <span class='comment val'># =&gt; {&quot;id&quot;: 1, &quot;name&quot;: &quot;Konata Izumi&quot;, &quot;age&quot;: 16,</span>
+        <span class='string val'>&quot;created_at&quot;</span><span class='colon op'>:</span> <span class='string val'>&quot;2006/08/01&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;awesome&quot;</span><span class='colon op'>:</span> <span class='true true kw'>true</span><span class='comma token'>,</span>
+        <span class='string val'>&quot;permalink&quot;</span><span class='colon op'>:</span> <span class='string val'>&quot;1-konata-izumi&quot;</span><span class='rbrace token'>}</span>
+</pre>
+<p>
+To include associations, use <tt>:include</tt>.
+</p>
+<pre class="code">
+  <span class='konata identifier id'>konata</span><span class='dot token'>.</span><span class='to_json identifier id'>to_json</span><span class='lparen token'>(</span><span class='symbol val'>:include</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:posts</span><span class='rparen token'>)</span>
+  <span class='comment val'># =&gt; {&quot;id&quot;: 1, &quot;name&quot;: &quot;Konata Izumi&quot;, &quot;age&quot;: 16,</span>
+        <span class='string val'>&quot;created_at&quot;</span><span class='colon op'>:</span> <span class='string val'>&quot;2006/08/01&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;awesome&quot;</span><span class='colon op'>:</span> <span class='true true kw'>true</span><span class='comma token'>,</span>
+        <span class='string val'>&quot;posts&quot;</span><span class='colon op'>:</span> <span class='lbrack token'>[</span><span class='lbrace token'>{</span><span class='string val'>&quot;id&quot;</span><span class='colon op'>:</span> <span class='integer val'>1</span><span class='comma token'>,</span> <span class='string val'>&quot;author_id&quot;</span><span class='colon op'>:</span> <span class='integer val'>1</span><span class='comma token'>,</span> <span class='string val'>&quot;title&quot;</span><span class='colon op'>:</span> <span class='string val'>&quot;Welcome to the weblog&quot;</span><span class='rbrace token'>}</span><span class='comma token'>,</span>
+                  <span class='lbrace token'>{</span><span class='string val'>&quot;id&quot;</span><span class='colon op'>:</span> <span class='integer val'>2</span><span class='comma token'>,</span> <span class='author_id identifier id'>author_id</span><span class='colon op'>:</span> <span class='integer val'>1</span><span class='comma token'>,</span> <span class='string val'>&quot;title&quot;</span><span class='colon op'>:</span> <span class='string val'>&quot;So I was thinking&quot;</span><span class='rbrace token'>}</span><span class='rbrack token'>]</span><span class='rbrace token'>}</span>
+</pre>
+<p>
+2nd level and higher order associations work as well:
+</p>
+<pre class="code">
+  <span class='konata identifier id'>konata</span><span class='dot token'>.</span><span class='to_json identifier id'>to_json</span><span class='lparen token'>(</span><span class='symbol val'>:include</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span> <span class='symbol val'>:posts</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span>
+                                 <span class='symbol val'>:include</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span> <span class='symbol val'>:comments</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span>
+                                               <span class='symbol val'>:only</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:body</span> <span class='rbrace token'>}</span> <span class='rbrace token'>}</span><span class='comma token'>,</span>
+                                 <span class='symbol val'>:only</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:title</span> <span class='rbrace token'>}</span> <span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='comment val'># =&gt; {&quot;id&quot;: 1, &quot;name&quot;: &quot;Konata Izumi&quot;, &quot;age&quot;: 16,</span>
+        <span class='string val'>&quot;created_at&quot;</span><span class='colon op'>:</span> <span class='string val'>&quot;2006/08/01&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;awesome&quot;</span><span class='colon op'>:</span> <span class='true true kw'>true</span><span class='comma token'>,</span>
+        <span class='string val'>&quot;posts&quot;</span><span class='colon op'>:</span> <span class='lbrack token'>[</span><span class='lbrace token'>{</span><span class='string val'>&quot;comments&quot;</span><span class='colon op'>:</span> <span class='lbrack token'>[</span><span class='lbrace token'>{</span><span class='string val'>&quot;body&quot;</span><span class='colon op'>:</span> <span class='string val'>&quot;1st post!&quot;</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='lbrace token'>{</span><span class='string val'>&quot;body&quot;</span><span class='colon op'>:</span> <span class='string val'>&quot;Second!&quot;</span><span class='rbrace token'>}</span><span class='rbrack token'>]</span><span class='comma token'>,</span>
+                   <span class='string val'>&quot;title&quot;</span><span class='colon op'>:</span> <span class='string val'>&quot;Welcome to the weblog&quot;</span><span class='rbrace token'>}</span><span class='comma token'>,</span>
+                  <span class='lbrace token'>{</span><span class='string val'>&quot;comments&quot;</span><span class='colon op'>:</span> <span class='lbrack token'>[</span><span class='lbrace token'>{</span><span class='string val'>&quot;body&quot;</span><span class='colon op'>:</span> <span class='string val'>&quot;Don't think too hard&quot;</span><span class='rbrace token'>}</span><span class='rbrack token'>]</span><span class='comma token'>,</span>
+                   <span class='string val'>&quot;title&quot;</span><span class='colon op'>:</span> <span class='string val'>&quot;So I was thinking&quot;</span><span class='rbrace token'>}</span><span class='rbrack token'>]</span><span class='rbrace token'>}</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+74
+75
+76
+77
+78
+79
+80</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/serializers/json_serializer.rb', line 74</span>
+
+<span class='def def kw'>def</span> <span class='to_json identifier id'>to_json</span><span class='lparen token'>(</span><span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='include_root_in_json identifier id'>include_root_in_json</span>
+    <span class='dstring node'>&quot;{#{self.class.json_class_name}: #{JsonSerializer.new(self, options).to_s}}&quot;</span>
+  <span class='else else kw'>else</span>
+    <span class='JsonSerializer constant id'>JsonSerializer</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>to_xml</h3>
+</div><div id="to_xml-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>to_xml</span><span class='args'>(options = {}, &amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Builds an XML document to represent the model. Some configuration is
+available through <tt>options</tt>. However more complicated cases should
+override ActiveRecord::Base#to_xml.
+</p>
+<p>
+By default the generated XML document will include the processing
+instruction and all the object&#8217;s attributes. For example:
+</p>
+<pre class="code">
+  <span class='lt op'>&lt;</span><span class='integer val'>?x</span><span class='ml identifier id'>ml</span> <span class='version identifier id'>version</span><span class='assign token'>=</span><span class='string val'>&quot;1.0&quot;</span> <span class='encoding identifier id'>encoding</span><span class='assign token'>=</span><span class='string val'>&quot;UTF-8&quot;</span><span class='question op'>?</span><span class='gt op'>&gt;</span>
+  <span class='lt op'>&lt;</span><span class='topic identifier id'>topic</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='title identifier id'>title</span><span class='gt op'>&gt;</span><span class='The constant id'>The</span> <span class='First constant id'>First</span> <span class='Topic constant id'>Topic</span><span class='lt op'>&lt;</span><span class='regexp val'>/title&gt;
+    &lt;author-name&gt;David&lt;/</span><span class='author identifier id'>author</span><span class='minus op'>-</span><span class='name identifier id'>name</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='id identifier id'>id</span> <span class='type identifier id'>type</span><span class='assign token'>=</span><span class='string val'>&quot;integer&quot;</span><span class='gt op'>&gt;</span><span class='integer val'>1</span><span class='lt op'>&lt;</span><span class='regexp val'>/id&gt;
+    &lt;approved type=&quot;boolean&quot;&gt;false&lt;/</span><span class='approved identifier id'>approved</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='replies identifier id'>replies</span><span class='minus op'>-</span><span class='count identifier id'>count</span> <span class='type identifier id'>type</span><span class='assign token'>=</span><span class='string val'>&quot;integer&quot;</span><span class='gt op'>&gt;</span><span class='integer val'>0</span><span class='lt op'>&lt;</span><span class='regexp val'>/replies-count&gt;
+    &lt;bonus-time type=&quot;datetime&quot;&gt;2000-01-01T08:28:00+12:00&lt;/</span><span class='bonus identifier id'>bonus</span><span class='minus op'>-</span><span class='time identifier id'>time</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='written identifier id'>written</span><span class='minus op'>-</span><span class='on identifier id'>on</span> <span class='type identifier id'>type</span><span class='assign token'>=</span><span class='string val'>&quot;datetime&quot;</span><span class='gt op'>&gt;</span><span class='integer val'>2003</span><span class='minus op'>-</span><span class='integer val'>07</span><span class='minus op'>-</span><span class='integer val'>16</span><span class='T09 constant id'>T09</span><span class='symbol val'>:28</span><span class='symbol val'>:00</span><span class='plus op'>+</span><span class='integer val'>1200</span><span class='lt op'>&lt;</span><span class='regexp val'>/written-on&gt;
+    &lt;content&gt;Have a nice day&lt;/</span><span class='content identifier id'>content</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='author identifier id'>author</span><span class='minus op'>-</span><span class='email identifier id'>email</span><span class='minus op'>-</span><span class='address identifier id'>address</span><span class='gt op'>&gt;</span><span class='david identifier id'>david</span><span class='@loudthinking ivar id'>@loudthinking</span><span class='dot token'>.</span><span class='com identifier id'>com</span><span class='lt op'>&lt;</span><span class='regexp val'>/author-email-address&gt;
+    &lt;parent-id&gt;&lt;/</span><span class='parent identifier id'>parent</span><span class='minus op'>-</span><span class='id identifier id'>id</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='last identifier id'>last</span><span class='minus op'>-</span><span class='read identifier id'>read</span> <span class='type identifier id'>type</span><span class='assign token'>=</span><span class='string val'>&quot;date&quot;</span><span class='gt op'>&gt;</span><span class='integer val'>2004</span><span class='minus op'>-</span><span class='integer val'>04</span><span class='minus op'>-</span><span class='integer val'>15</span><span class='lt op'>&lt;</span><span class='regexp val'>/last-read&gt;
+  &lt;/</span><span class='topic identifier id'>topic</span><span class='gt op'>&gt;</span>
+</pre>
+<p>
+This behavior can be controlled with <tt>:only</tt>, <tt>:except</tt>,
+<tt>:skip_instruct</tt>, <tt>:skip_types</tt>, <tt>:dasherize</tt> and
+<tt>:camelize</tt> . The <tt>:only</tt> and <tt>:except</tt> options are
+the same as for the <tt>attributes</tt> method. The default is to dasherize
+all column names, but you can disable this setting <tt>:dasherize</tt> to
+<tt>false</tt>. Setting <tt>:camelize</tt> to <tt>true</tt> will camelize
+all column names - this also overrides <tt>:dasherize</tt>. To not have the
+column type included in the XML output set <tt>:skip_types</tt> to
+<tt>true</tt>.
+</p>
+<p>
+For instance:
+</p>
+<pre class="code">
+  <span class='topic identifier id'>topic</span><span class='dot token'>.</span><span class='to_xml identifier id'>to_xml</span><span class='lparen token'>(</span><span class='symbol val'>:skip_instruct</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span><span class='comma token'>,</span> <span class='symbol val'>:except</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span> <span class='symbol val'>:id</span><span class='comma token'>,</span> <span class='symbol val'>:bonus_time</span><span class='comma token'>,</span> <span class='symbol val'>:written_on</span><span class='comma token'>,</span> <span class='symbol val'>:replies_count</span> <span class='rbrack token'>]</span><span class='rparen token'>)</span>
+
+  <span class='lt op'>&lt;</span><span class='topic identifier id'>topic</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='title identifier id'>title</span><span class='gt op'>&gt;</span><span class='The constant id'>The</span> <span class='First constant id'>First</span> <span class='Topic constant id'>Topic</span><span class='lt op'>&lt;</span><span class='regexp val'>/title&gt;
+    &lt;author-name&gt;David&lt;/</span><span class='author identifier id'>author</span><span class='minus op'>-</span><span class='name identifier id'>name</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='approved identifier id'>approved</span> <span class='type identifier id'>type</span><span class='assign token'>=</span><span class='string val'>&quot;boolean&quot;</span><span class='gt op'>&gt;</span><span class='false false kw'>false</span><span class='lt op'>&lt;</span><span class='regexp val'>/approved&gt;
+    &lt;content&gt;Have a nice day&lt;/</span><span class='content identifier id'>content</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='author identifier id'>author</span><span class='minus op'>-</span><span class='email identifier id'>email</span><span class='minus op'>-</span><span class='address identifier id'>address</span><span class='gt op'>&gt;</span><span class='david identifier id'>david</span><span class='@loudthinking ivar id'>@loudthinking</span><span class='dot token'>.</span><span class='com identifier id'>com</span><span class='lt op'>&lt;</span><span class='regexp val'>/author-email-address&gt;
+    &lt;parent-id&gt;&lt;/</span><span class='parent identifier id'>parent</span><span class='minus op'>-</span><span class='id identifier id'>id</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='last identifier id'>last</span><span class='minus op'>-</span><span class='read identifier id'>read</span> <span class='type identifier id'>type</span><span class='assign token'>=</span><span class='string val'>&quot;date&quot;</span><span class='gt op'>&gt;</span><span class='integer val'>2004</span><span class='minus op'>-</span><span class='integer val'>04</span><span class='minus op'>-</span><span class='integer val'>15</span><span class='lt op'>&lt;</span><span class='regexp val'>/last-read&gt;
+  &lt;/</span><span class='topic identifier id'>topic</span><span class='gt op'>&gt;</span>
+</pre>
+<p>
+To include first level associations use <tt>:include</tt>:
+</p>
+<pre class="code">
+  <span class='firm identifier id'>firm</span><span class='dot token'>.</span><span class='to_xml identifier id'>to_xml</span> <span class='symbol val'>:include</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span> <span class='symbol val'>:account</span><span class='comma token'>,</span> <span class='symbol val'>:clients</span> <span class='rbrack token'>]</span>
+
+  <span class='lt op'>&lt;</span><span class='integer val'>?x</span><span class='ml identifier id'>ml</span> <span class='version identifier id'>version</span><span class='assign token'>=</span><span class='string val'>&quot;1.0&quot;</span> <span class='encoding identifier id'>encoding</span><span class='assign token'>=</span><span class='string val'>&quot;UTF-8&quot;</span><span class='question op'>?</span><span class='gt op'>&gt;</span>
+  <span class='lt op'>&lt;</span><span class='firm identifier id'>firm</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='id identifier id'>id</span> <span class='type identifier id'>type</span><span class='assign token'>=</span><span class='string val'>&quot;integer&quot;</span><span class='gt op'>&gt;</span><span class='integer val'>1</span><span class='lt op'>&lt;</span><span class='regexp val'>/id&gt;
+    &lt;rating type=&quot;integer&quot;&gt;1&lt;/</span><span class='rating identifier id'>rating</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='name identifier id'>name</span><span class='gt op'>&gt;</span><span class='integer val'>37</span><span class='signals identifier id'>signals</span><span class='lt op'>&lt;</span><span class='regexp val'>/name&gt;
+    &lt;clients type=&quot;array&quot;&gt;
+      &lt;client&gt;
+        &lt;rating type=&quot;integer&quot;&gt;1&lt;/</span><span class='rating identifier id'>rating</span><span class='gt op'>&gt;</span>
+        <span class='lt op'>&lt;</span><span class='name identifier id'>name</span><span class='gt op'>&gt;</span><span class='Summit constant id'>Summit</span><span class='lt op'>&lt;</span><span class='regexp val'>/name&gt;
+      &lt;/</span><span class='client identifier id'>client</span><span class='gt op'>&gt;</span>
+      <span class='lt op'>&lt;</span><span class='client identifier id'>client</span><span class='gt op'>&gt;</span>
+        <span class='lt op'>&lt;</span><span class='rating identifier id'>rating</span> <span class='type identifier id'>type</span><span class='assign token'>=</span><span class='string val'>&quot;integer&quot;</span><span class='gt op'>&gt;</span><span class='integer val'>1</span><span class='lt op'>&lt;</span><span class='regexp val'>/rating&gt;
+        &lt;name&gt;Microsoft&lt;/n</span><span class='ame identifier id'>ame</span><span class='gt op'>&gt;</span>
+      <span class='lt op'>&lt;</span><span class='regexp val'>/client&gt;
+    &lt;/</span><span class='clients identifier id'>clients</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='account identifier id'>account</span><span class='gt op'>&gt;</span>
+      <span class='lt op'>&lt;</span><span class='id identifier id'>id</span> <span class='type identifier id'>type</span><span class='assign token'>=</span><span class='string val'>&quot;integer&quot;</span><span class='gt op'>&gt;</span><span class='integer val'>1</span><span class='lt op'>&lt;</span><span class='regexp val'>/id&gt;
+      &lt;credit-limit type=&quot;integer&quot;&gt;50&lt;/</span><span class='credit identifier id'>credit</span><span class='minus op'>-</span><span class='limit identifier id'>limit</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='regexp val'>/account&gt;
+  &lt;/</span><span class='firm identifier id'>firm</span><span class='gt op'>&gt;</span>
+</pre>
+<p>
+To include deeper levels of associations pass a hash like this:
+</p>
+<pre class="code">
+  <span class='firm identifier id'>firm</span><span class='dot token'>.</span><span class='to_xml identifier id'>to_xml</span> <span class='symbol val'>:include</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='symbol val'>:account</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='symbol val'>:clients</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='symbol val'>:include</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:address</span><span class='rbrace token'>}</span><span class='rbrace token'>}</span>
+  <span class='lt op'>&lt;</span><span class='integer val'>?x</span><span class='ml identifier id'>ml</span> <span class='version identifier id'>version</span><span class='assign token'>=</span><span class='string val'>&quot;1.0&quot;</span> <span class='encoding identifier id'>encoding</span><span class='assign token'>=</span><span class='string val'>&quot;UTF-8&quot;</span><span class='question op'>?</span><span class='gt op'>&gt;</span>
+  <span class='lt op'>&lt;</span><span class='firm identifier id'>firm</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='id identifier id'>id</span> <span class='type identifier id'>type</span><span class='assign token'>=</span><span class='string val'>&quot;integer&quot;</span><span class='gt op'>&gt;</span><span class='integer val'>1</span><span class='lt op'>&lt;</span><span class='regexp val'>/id&gt;
+    &lt;rating type=&quot;integer&quot;&gt;1&lt;/</span><span class='rating identifier id'>rating</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='name identifier id'>name</span><span class='gt op'>&gt;</span><span class='integer val'>37</span><span class='signals identifier id'>signals</span><span class='lt op'>&lt;</span><span class='regexp val'>/name&gt;
+    &lt;clients type=&quot;array&quot;&gt;
+      &lt;client&gt;
+        &lt;rating type=&quot;integer&quot;&gt;1&lt;/</span><span class='rating identifier id'>rating</span><span class='gt op'>&gt;</span>
+        <span class='lt op'>&lt;</span><span class='name identifier id'>name</span><span class='gt op'>&gt;</span><span class='Summit constant id'>Summit</span><span class='lt op'>&lt;</span><span class='regexp val'>/name&gt;
+        &lt;address&gt;
+          ...
+        &lt;/</span><span class='address identifier id'>address</span><span class='gt op'>&gt;</span>
+      <span class='lt op'>&lt;</span><span class='regexp val'>/client&gt;
+      &lt;client&gt;
+        &lt;rating type=&quot;integer&quot;&gt;1&lt;/</span><span class='rating identifier id'>rating</span><span class='gt op'>&gt;</span>
+        <span class='lt op'>&lt;</span><span class='name identifier id'>name</span><span class='gt op'>&gt;</span><span class='Microsoft constant id'>Microsoft</span><span class='lt op'>&lt;</span><span class='regexp val'>/name&gt;
+        &lt;address&gt;
+          ...
+        &lt;/</span><span class='address identifier id'>address</span><span class='gt op'>&gt;</span>
+      <span class='lt op'>&lt;</span><span class='regexp val'>/client&gt;
+    &lt;/</span><span class='clients identifier id'>clients</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='account identifier id'>account</span><span class='gt op'>&gt;</span>
+      <span class='lt op'>&lt;</span><span class='id identifier id'>id</span> <span class='type identifier id'>type</span><span class='assign token'>=</span><span class='string val'>&quot;integer&quot;</span><span class='gt op'>&gt;</span><span class='integer val'>1</span><span class='lt op'>&lt;</span><span class='regexp val'>/id&gt;
+      &lt;credit-limit type=&quot;integer&quot;&gt;50&lt;/</span><span class='credit identifier id'>credit</span><span class='minus op'>-</span><span class='limit identifier id'>limit</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='regexp val'>/account&gt;
+  &lt;/</span><span class='firm identifier id'>firm</span><span class='gt op'>&gt;</span>
+</pre>
+<p>
+To include any methods on the model being called use <tt>:methods</tt>:
+</p>
+<pre class="code">
+  <span class='firm identifier id'>firm</span><span class='dot token'>.</span><span class='to_xml identifier id'>to_xml</span> <span class='symbol val'>:methods</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span> <span class='symbol val'>:calculated_earnings</span><span class='comma token'>,</span> <span class='symbol val'>:real_earnings</span> <span class='rbrack token'>]</span>
+
+  <span class='lt op'>&lt;</span><span class='firm identifier id'>firm</span><span class='gt op'>&gt;</span>
+    <span class='comment val'># ... normal attributes as shown above ...</span>
+    <span class='lt op'>&lt;</span><span class='calculated identifier id'>calculated</span><span class='minus op'>-</span><span class='earnings identifier id'>earnings</span><span class='gt op'>&gt;</span><span class='integer val'>100000000000000000</span><span class='lt op'>&lt;</span><span class='regexp val'>/calculated-earnings&gt;
+    &lt;real-earnings&gt;5&lt;/</span><span class='real identifier id'>real</span><span class='minus op'>-</span><span class='earnings identifier id'>earnings</span><span class='gt op'>&gt;</span>
+  <span class='lt op'>&lt;</span><span class='regexp val'>/firm&gt;
+</span></pre>
+<p>
+To call any additional Procs use <tt>:procs</tt>. The Procs are passed a
+modified version of the options hash that was given to <tt>to_xml</tt>:
+</p>
+<pre class="code">
+  <span class='proc identifier id'>proc</span> <span class='assign token'>=</span> <span class='Proc constant id'>Proc</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='options identifier id'>options</span><span class='bitor op'>|</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:builder</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='tag! fid id'>tag!</span><span class='lparen token'>(</span><span class='string val'>'abc'</span><span class='comma token'>,</span> <span class='string val'>'def'</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  <span class='firm identifier id'>firm</span><span class='dot token'>.</span><span class='to_xml identifier id'>to_xml</span> <span class='symbol val'>:procs</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span> <span class='proc identifier id'>proc</span> <span class='rbrack token'>]</span>
+
+  <span class='lt op'>&lt;</span><span class='firm identifier id'>firm</span><span class='gt op'>&gt;</span>
+    <span class='comment val'># ... normal attributes as shown above ...</span>
+    <span class='lt op'>&lt;</span><span class='abc identifier id'>abc</span><span class='gt op'>&gt;</span><span class='def def kw'>def</span><span class='lt op'>&lt;</span><span class='regexp val'>/abc&gt;
+  &lt;/</span><span class='firm identifier id'>firm</span><span class='gt op'>&gt;</span>
+</pre>
+<p>
+Alternatively, you can yield the builder object as part of the
+<tt>to_xml</tt> call:
+</p>
+<pre class="code">
+  <span class='firm identifier id'>firm</span><span class='dot token'>.</span><span class='to_xml identifier id'>to_xml</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='xml identifier id'>xml</span><span class='bitor op'>|</span>
+    <span class='xml identifier id'>xml</span><span class='dot token'>.</span><span class='creator identifier id'>creator</span> <span class='do do kw'>do</span>
+      <span class='xml identifier id'>xml</span><span class='dot token'>.</span><span class='first_name identifier id'>first_name</span> <span class='string val'>&quot;David&quot;</span>
+      <span class='xml identifier id'>xml</span><span class='dot token'>.</span><span class='last_name identifier id'>last_name</span> <span class='string val'>&quot;Heinemeier Hansson&quot;</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+
+  <span class='lt op'>&lt;</span><span class='firm identifier id'>firm</span><span class='gt op'>&gt;</span>
+    <span class='comment val'># ... normal attributes as shown above ...</span>
+    <span class='lt op'>&lt;</span><span class='creator identifier id'>creator</span><span class='gt op'>&gt;</span>
+      <span class='lt op'>&lt;</span><span class='first_name identifier id'>first_name</span><span class='gt op'>&gt;</span><span class='David constant id'>David</span><span class='lt op'>&lt;</span><span class='regexp val'>/first_name&gt;
+      &lt;last_name&gt;Heinemeier Hansson&lt;/</span><span class='last_name identifier id'>last_name</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='regexp val'>/creator&gt;
+  &lt;/</span><span class='firm identifier id'>firm</span><span class='gt op'>&gt;</span>
+</pre>
+<p>
+As noted above, you may override <tt>to_xml</tt> in your ActiveRecord::Base
+subclasses to have complete control about what&#8217;s generated. The
+general form of doing this is:
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='IHaveMyOwnXML constant id'>IHaveMyOwnXML</span> <span class='lt op'>&lt;</span> <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
+    <span class='def def kw'>def</span> <span class='to_xml identifier id'>to_xml</span><span class='lparen token'>(</span><span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+      <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:indent</span><span class='rbrack token'>]</span> <span class='opasgn op'>||=</span> <span class='integer val'>2</span>
+      <span class='xml identifier id'>xml</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:builder</span><span class='rbrack token'>]</span> <span class='opasgn op'>||=</span> <span class='Builder constant id'>Builder</span><span class='colon2 op'>::</span><span class='XmlMarkup constant id'>XmlMarkup</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='symbol val'>:indent</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:indent</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+      <span class='xml identifier id'>xml</span><span class='dot token'>.</span><span class='instruct! fid id'>instruct!</span> <span class='unless unless_mod kw'>unless</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:skip_instruct</span><span class='rbrack token'>]</span>
+      <span class='xml identifier id'>xml</span><span class='dot token'>.</span><span class='level_one identifier id'>level_one</span> <span class='do do kw'>do</span>
+        <span class='xml identifier id'>xml</span><span class='dot token'>.</span><span class='tag! fid id'>tag!</span><span class='lparen token'>(</span><span class='symbol val'>:second_level</span><span class='comma token'>,</span> <span class='string val'>'content'</span><span class='rparen token'>)</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+154
+155
+156
+157</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activerecord/lib/active_record/serializers/xml_serializer.rb', line 154</span>
+
+<span class='def def kw'>def</span> <span class='to_xml identifier id'>to_xml</span><span class='lparen token'>(</span><span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='serializer identifier id'>serializer</span> <span class='assign token'>=</span> <span class='XmlSerializer constant id'>XmlSerializer</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='block_given? fid id'>block_given?</span> <span class='integer val'>? </span><span class='serializer identifier id'>serializer</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='serializer identifier id'>serializer</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

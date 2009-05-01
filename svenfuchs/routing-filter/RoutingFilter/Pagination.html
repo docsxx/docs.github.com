@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: RoutingFilter::Pagination</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class RoutingFilter_Pagination">
+  <h1 class="title">Class: RoutingFilter::Pagination</h1>
+  <div class="section inheritance">
+  <ul>
+  <li><a href='Base.html' title='RoutingFilter::Base'>RoutingFilter::Base</a></li><ul><li>RoutingFilter::Pagination</li>
+  </ul></ul>
+</div><div class="section constants">
+  
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <p class="inherited_msg">
+    This class inherits a constructor from <a href='Base.html#initialize-instance_method' title='RoutingFilter::Base'>RoutingFilter::Base</a>.
+  </p>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#around_generate-instance_method' title='#around_generate'>#around_generate</a></span><span class='args'>(*args, &amp;block)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#around_recognize-instance_method' title='#around_recognize'>#around_recognize</a></span><span class='args'>(path, env, &amp;block)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table><div class="inherited">
+  
+  <div>
+    <h1>Public Instance Methods Inherited from <a href='Base.html' title='RoutingFilter::Base'>RoutingFilter::Base</a></h1>
+    <p><span class='name'><a href='Base.html#run-instance_method' title='run'>run</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>around_generate</h3>
+</div><div id="around_generate-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>around_generate</span><span class='args'>(*args, &amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+12
+13
+14
+15
+16
+17
+18
+19
+20</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/routing_filter/pagination.rb', line 12</span>
+
+<span class='def def kw'>def</span> <span class='around_generate identifier id'>around_generate</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='page identifier id'>page</span> <span class='assign token'>=</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='extract_options! fid id'>extract_options!</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:page</span><span class='rparen token'>)</span>
+  <span class='returning identifier id'>returning</span> <span class='yield yield kw'>yield</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='result identifier id'>result</span><span class='bitor op'>|</span>
+    <span class='if if kw'>if</span> <span class='page identifier id'>page</span> <span class='andop op'>&amp;&amp;</span> <span class='page identifier id'>page</span> <span class='neq op'>!=</span> <span class='integer val'>1</span>
+      <span class='url identifier id'>url</span> <span class='assign token'>=</span> <span class='result identifier id'>result</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Array constant id'>Array</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='result identifier id'>result</span><span class='dot token'>.</span><span class='first identifier id'>first</span> <span class='colon op'>:</span> <span class='result identifier id'>result</span>
+      <span class='append_page! fid id'>append_page!</span><span class='lparen token'>(</span><span class='url identifier id'>url</span><span class='comma token'>,</span> <span class='page identifier id'>page</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>around_recognize</h3>
+</div><div id="around_recognize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>around_recognize</span><span class='args'>(path, env, &amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+5
+6
+7
+8
+9
+10</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/routing_filter/pagination.rb', line 5</span>
+
+<span class='def def kw'>def</span> <span class='around_recognize identifier id'>around_recognize</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='comma token'>,</span> <span class='env identifier id'>env</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='page identifier id'>page</span> <span class='assign token'>=</span> <span class='extract_page! fid id'>extract_page!</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='rparen token'>)</span>
+  <span class='returning identifier id'>returning</span> <span class='yield yield kw'>yield</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='comma token'>,</span> <span class='env identifier id'>env</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='params identifier id'>params</span><span class='bitor op'>|</span>
+    <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:page</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='page identifier id'>page</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span> <span class='if if_mod kw'>if</span> <span class='page identifier id'>page</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

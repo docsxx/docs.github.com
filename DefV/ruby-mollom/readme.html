@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <title>README</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section docstring readme">
+        <h2>Mollom</h2>
+<p>
+This is a Ruby class for easy interfacing with the mollom.com open API for
+spam detection and content quality assessment.
+</p>
+<h2>Installation</h2>
+<p>
+You can either install the library as a gem
+</p>
+<pre class="code">
+  <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='mollom identifier id'>mollom</span>
+</pre>
+<p>
+Or you can get the latest development version from GitHub:
+</p>
+<pre class="code">
+  <span class='git identifier id'>git</span> <span class='clone identifier id'>clone</span> <span class='git identifier id'>git</span><span class='symbol val'>:/</span><span class='regexp val'>/github.com/</span><span class='DefV constant id'>DefV</span><span class='div op'>/</span><span class='ruby identifier id'>ruby</span><span class='minus op'>-</span><span class='mollom identifier id'>mollom</span><span class='dot token'>.</span><span class='git identifier id'>git</span>
+</pre>
+<h2>Usage</h2>
+<p>
+After you have requested a public/private key-pair from Mollom (on
+http://www.mollom.com), you can start using this class.
+</p>
+<pre class="code">
+  <span class='require identifier id'>require</span> <span class='string val'>'rubygems'</span>
+  <span class='require identifier id'>require</span> <span class='string val'>'mollom'</span>
+
+  <span class='m identifier id'>m</span> <span class='assign token'>=</span> <span class='Mollom constant id'>Mollom</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='symbol val'>:private_key</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'your-private-key'</span><span class='comma token'>,</span> <span class='symbol val'>:public_key</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'your-public-key'</span><span class='rparen token'>)</span>
+
+  <span class='content identifier id'>content</span> <span class='assign token'>=</span> <span class='m identifier id'>m</span><span class='dot token'>.</span><span class='check_content identifier id'>check_content</span><span class='lparen token'>(</span><span class='symbol val'>:post_title</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'Mollem is an open API'</span><span class='comma token'>,</span>
+                                                        <span class='symbol val'>:post_body</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;Lorem Ipsum dolor...&quot;</span><span class='comma token'>,</span>
+                                                        <span class='symbol val'>:author_name</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'Jan De Poorter'</span><span class='comma token'>,</span>
+                                                        <span class='symbol val'>:author_url</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'http://workswithruby.com'</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='content identifier id'>content</span><span class='dot token'>.</span><span class='spam? fid id'>spam?</span>
+        <span class='puts identifier id'>puts</span> <span class='string val'>&quot;You, sir, are a spammer.. Goodbye!&quot;</span>
+  <span class='elsif elsif kw'>elsif</span> <span class='content identifier id'>content</span><span class='dot token'>.</span><span class='unsure? fid id'>unsure?</span>
+    <span class='comment val'># possible spam, possible ham, show CAPTCHA</span>
+    <span class='puts identifier id'>puts</span> <span class='string val'>&quot;CAPTCHA: &quot;</span> <span class='plus op'>+</span> <span class='m identifier id'>m</span><span class='dot token'>.</span><span class='image_captcha identifier id'>image_captcha</span><span class='lparen token'>(</span><span class='symbol val'>:session_id</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='content identifier id'>content</span><span class='dot token'>.</span><span class='session_id identifier id'>session_id</span><span class='rparen token'>)</span><span class='lbrack token'>[</span><span class='string val'>&quot;url&quot;</span><span class='rbrack token'>]</span>
+
+    <span class='captcha_correct identifier id'>captcha_correct</span> <span class='assign token'>=</span> <span class='m identifier id'>m</span><span class='dot token'>.</span><span class='check_captcha identifier id'>check_captcha</span><span class='lparen token'>(</span><span class='symbol val'>:session_id</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='content identifier id'>content</span><span class='dot token'>.</span><span class='session_id identifier id'>session_id</span><span class='comma token'>,</span> <span class='symbol val'>:solution</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='STDIN constant id'>STDIN</span><span class='dot token'>.</span><span class='gets identifier id'>gets</span><span class='dot token'>.</span><span class='chomp identifier id'>chomp</span><span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+    <span class='puts identifier id'>puts</span> <span class='string val'>&quot;The post is perfect! No spam!&quot;</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+Copyright &#169; 2008 Jan De Poorter - Openminds BVBA, released under the
+MIT license
+</p>
+
+      </div>
+    </div>
+  </body>
+</html>

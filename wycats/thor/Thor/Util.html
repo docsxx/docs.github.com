@@ -1,0 +1,500 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: Thor::Util</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module Thor_Util">
+  <h1 class="title">Module: Thor::Util</h1>
+  <div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <h1>Public Class Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#constant_from_thor_path-class_method' title='constant_from_thor_path'>constant_from_thor_path</a></span><span class='args'>(str)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#constant_to_thor_path-class_method' title='constant_to_thor_path'>constant_to_thor_path</a></span><span class='args'>(str, remove_default = true)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#constants_in_contents-class_method' title='constants_in_contents'>constants_in_contents</a></span><span class='args'>(str, file = __FILE__)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#full_const_get-class_method' title='full_const_get'>full_const_get</a></span><span class='args'>(obj, name)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#make_constant-class_method' title='make_constant'>make_constant</a></span><span class='args'>(str, base = [Thor::Tasks, Object])</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#snake_case-class_method' title='snake_case'>snake_case</a></span><span class='args'>(str)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#to_constant-class_method' title='to_constant'>to_constant</a></span><span class='args'>(str)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails class public">
+  <h1>Public Class Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>constant_from_thor_path</h3>
+</div><div id="constant_from_thor_path-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>constant_from_thor_path</span><span class='args'>(str)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="raise">
+  <h3>Raises:</h3>
+  <dl>
+  
+    <dt>
+      
+        <span class='type'>[<tt><a href='Error.html' title='Error'>Error</a></tt>]</span>
+      
+      
+    </dt>
+    <dd>
+      <span class='desc'></span>
+    </dd>
+  
+  </dl>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+40
+41
+42
+43
+44
+45</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/thor/util.rb', line 40</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='constant_from_thor_path identifier id'>constant_from_thor_path</span><span class='lparen token'>(</span><span class='str identifier id'>str</span><span class='rparen token'>)</span>
+  <span class='make_constant identifier id'>make_constant</span><span class='lparen token'>(</span><span class='to_constant identifier id'>to_constant</span><span class='lparen token'>(</span><span class='str identifier id'>str</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+<span class='rescue rescue kw'>rescue</span> <span class='NameError constant id'>NameError</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
+  <span class='raise identifier id'>raise</span> <span class='e identifier id'>e</span> <span class='unless unless_mod kw'>unless</span> <span class='e identifier id'>e</span><span class='dot token'>.</span><span class='message identifier id'>message</span> <span class='match op'>=~</span> <span class='regexp val'>/^uninitialized constant (.*)$/</span>
+  <span class='raise identifier id'>raise</span> <span class='Error constant id'>Error</span><span class='comma token'>,</span> <span class='dstring node'>&quot;There was no available namespace `#{str}'.&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>constant_to_thor_path</h3>
+</div><div id="constant_to_thor_path-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>constant_to_thor_path</span><span class='args'>(str, remove_default = true)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+33
+34
+35
+36
+37
+38</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/thor/util.rb', line 33</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='constant_to_thor_path identifier id'>constant_to_thor_path</span><span class='lparen token'>(</span><span class='str identifier id'>str</span><span class='comma token'>,</span> <span class='remove_default identifier id'>remove_default</span> <span class='assign token'>=</span> <span class='true true kw'>true</span><span class='rparen token'>)</span>
+  <span class='str identifier id'>str</span> <span class='assign token'>=</span> <span class='str identifier id'>str</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='regexp val'>/^Thor::Tasks::/</span><span class='comma token'>,</span> <span class='string val'>&quot;&quot;</span><span class='rparen token'>)</span>
+  <span class='str identifier id'>str</span> <span class='assign token'>=</span> <span class='snake_case identifier id'>snake_case</span><span class='lparen token'>(</span><span class='str identifier id'>str</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='squeeze identifier id'>squeeze</span><span class='lparen token'>(</span><span class='string val'>&quot;:&quot;</span><span class='rparen token'>)</span>
+  <span class='str identifier id'>str</span><span class='dot token'>.</span><span class='gsub! fid id'>gsub!</span><span class='lparen token'>(</span><span class='regexp val'>/^default/</span><span class='comma token'>,</span> <span class='string val'>''</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='remove_default identifier id'>remove_default</span>
+  <span class='str identifier id'>str</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>constants_in_contents</h3>
+</div><div id="constants_in_contents-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>constants_in_contents</span><span class='args'>(str, file = __FILE__)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+52
+53
+54
+55
+56
+57
+58</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/thor/util.rb', line 52</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='constants_in_contents identifier id'>constants_in_contents</span><span class='lparen token'>(</span><span class='str identifier id'>str</span><span class='comma token'>,</span> <span class='file identifier id'>file</span> <span class='assign token'>=</span> <span class='__FILE__ __file__ kw'>__FILE__</span><span class='rparen token'>)</span>
+  <span class='klasses identifier id'>klasses</span> <span class='assign token'>=</span> <span class='ObjectSpace constant id'>ObjectSpace</span><span class='dot token'>.</span><span class='classes identifier id'>classes</span><span class='dot token'>.</span><span class='dup identifier id'>dup</span>
+  <span class='Module constant id'>Module</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='dot token'>.</span><span class='class_eval identifier id'>class_eval</span><span class='lparen token'>(</span><span class='str identifier id'>str</span><span class='comma token'>,</span> <span class='file identifier id'>file</span><span class='rparen token'>)</span>
+  <span class='klasses identifier id'>klasses</span> <span class='assign token'>=</span> <span class='ObjectSpace constant id'>ObjectSpace</span><span class='dot token'>.</span><span class='classes identifier id'>classes</span> <span class='minus op'>-</span> <span class='klasses identifier id'>klasses</span>
+  <span class='klasses identifier id'>klasses</span> <span class='assign token'>=</span> <span class='klasses identifier id'>klasses</span><span class='dot token'>.</span><span class='select identifier id'>select</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='k identifier id'>k</span><span class='bitor op'>|</span> <span class='k identifier id'>k</span> <span class='lt op'>&lt;</span> <span class='Thor constant id'>Thor</span> <span class='rbrace token'>}</span>
+  <span class='klasses identifier id'>klasses</span><span class='dot token'>.</span><span class='map! fid id'>map!</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='k identifier id'>k</span><span class='bitor op'>|</span> <span class='k identifier id'>k</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='regexp val'>/#&lt;Module:\w+&gt;::/</span><span class='comma token'>,</span> <span class='string val'>''</span><span class='rparen token'>)</span><span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>full_const_get</h3>
+</div><div id="full_const_get-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>full_const_get</span><span class='args'>(obj, name)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/thor/util.rb', line 22</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='full_const_get identifier id'>full_const_get</span><span class='lparen token'>(</span><span class='obj identifier id'>obj</span><span class='comma token'>,</span> <span class='name identifier id'>name</span><span class='rparen token'>)</span>
+  <span class='list identifier id'>list</span> <span class='assign token'>=</span> <span class='name identifier id'>name</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='string val'>&quot;::&quot;</span><span class='rparen token'>)</span>
+  <span class='list identifier id'>list</span><span class='dot token'>.</span><span class='shift identifier id'>shift</span> <span class='if if_mod kw'>if</span> <span class='list identifier id'>list</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span>
+  <span class='list identifier id'>list</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='x identifier id'>x</span><span class='bitor op'>|</span> 
+    <span class='comment val'># This is required because const_get tries to look for constants in the </span>
+    <span class='comment val'># ancestor chain, but we only want constants that are HERE</span>
+    <span class='obj identifier id'>obj</span> <span class='assign token'>=</span> <span class='obj identifier id'>obj</span><span class='dot token'>.</span><span class='const_defined? fid id'>const_defined?</span><span class='lparen token'>(</span><span class='x identifier id'>x</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='obj identifier id'>obj</span><span class='dot token'>.</span><span class='const_get identifier id'>const_get</span><span class='lparen token'>(</span><span class='x identifier id'>x</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='obj identifier id'>obj</span><span class='dot token'>.</span><span class='const_missing identifier id'>const_missing</span><span class='lparen token'>(</span><span class='x identifier id'>x</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+  <span class='obj identifier id'>obj</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>make_constant</h3>
+</div><div id="make_constant-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>make_constant</span><span class='args'>(str, base = [Thor::Tasks, Object])</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="raise">
+  <h3>Raises:</h3>
+  <dl>
+  
+    <dt>
+      
+        <span class='type'>[<tt>NameError</tt>]</span>
+      
+      
+    </dt>
+    <dd>
+      <span class='desc'></span>
+    </dd>
+  
+  </dl>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+60
+61
+62
+63
+64
+65
+66</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/thor/util.rb', line 60</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='make_constant identifier id'>make_constant</span><span class='lparen token'>(</span><span class='str identifier id'>str</span><span class='comma token'>,</span> <span class='base identifier id'>base</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='Thor constant id'>Thor</span><span class='colon2 op'>::</span><span class='Tasks constant id'>Tasks</span><span class='comma token'>,</span> <span class='Object constant id'>Object</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+  <span class='which identifier id'>which</span> <span class='assign token'>=</span> <span class='base identifier id'>base</span><span class='dot token'>.</span><span class='find identifier id'>find</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='obj identifier id'>obj</span><span class='bitor op'>|</span>
+    <span class='full_const_get identifier id'>full_const_get</span><span class='lparen token'>(</span><span class='obj identifier id'>obj</span><span class='comma token'>,</span> <span class='str identifier id'>str</span><span class='rparen token'>)</span> <span class='rescue rescue kw'>rescue</span> <span class='nil nil kw'>nil</span>
+  <span class='end end kw'>end</span>
+  <span class='return return kw'>return</span> <span class='full_const_get identifier id'>full_const_get</span><span class='lparen token'>(</span><span class='which identifier id'>which</span><span class='comma token'>,</span> <span class='str identifier id'>str</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='which identifier id'>which</span>
+  <span class='raise identifier id'>raise</span> <span class='NameError constant id'>NameError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;uninitialized constant #{str}&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>snake_case</h3>
+</div><div id="snake_case-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>snake_case</span><span class='args'>(str)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+68
+69
+70
+71
+72</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/thor/util.rb', line 68</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='snake_case identifier id'>snake_case</span><span class='lparen token'>(</span><span class='str identifier id'>str</span><span class='rparen token'>)</span>
+  <span class='return return kw'>return</span> <span class='str identifier id'>str</span><span class='dot token'>.</span><span class='downcase identifier id'>downcase</span> <span class='if if_mod kw'>if</span> <span class='str identifier id'>str</span> <span class='match op'>=~</span> <span class='regexp val'>/^[A-Z_]+$/</span>
+  <span class='str identifier id'>str</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='regexp val'>/\B[A-Z]/</span><span class='comma token'>,</span> <span class='string val'>'_\&amp;'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='squeeze identifier id'>squeeze</span><span class='lparen token'>(</span><span class='string val'>'_'</span><span class='rparen token'>)</span> <span class='match op'>=~</span> <span class='regexp val'>/_*(.*)/</span>
+  <span class='return return kw'>return</span> <span class='$+ back_ref id'>$+</span><span class='dot token'>.</span><span class='downcase identifier id'>downcase</span>
+<span class='end end kw'>end</span>  
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>to_constant</h3>
+</div><div id="to_constant-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>to_constant</span><span class='args'>(str)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+47
+48
+49
+50</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/thor/util.rb', line 47</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='to_constant identifier id'>to_constant</span><span class='lparen token'>(</span><span class='str identifier id'>str</span><span class='rparen token'>)</span>
+  <span class='str identifier id'>str</span> <span class='assign token'>=</span> <span class='string val'>'default'</span> <span class='if if_mod kw'>if</span> <span class='str identifier id'>str</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span>
+  <span class='str identifier id'>str</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='regexp val'>/:(.?)/</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='dstring node'>&quot;::#{$1.upcase}&quot;</span> <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='regexp val'>/(?:^|_)(.)/</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='$1 nth_ref id'>$1</span><span class='dot token'>.</span><span class='upcase identifier id'>upcase</span> <span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: Simplepay::Services::Subscription</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class Simplepay_Services_Subscription">
+  <h1 class="title">Class: Simplepay::Services::Subscription</h1>
+  <div class="section inheritance">
+  <ul>
+  <li><a href='../Service.html' title='Simplepay::Service'>Simplepay::Service</a></li><ul><li>Simplepay::Services::Subscription</li>
+  </ul></ul>
+</div><div class="section docstring">
+  <p>
+A Simple Pay Subscription is an automatically recurring payment which is
+charged every interval (Simplepay::Support::BillingFrequency) until a
+limiting period (Simplepay::Support::SubscriptionPeriod) is met.
+</p>
+<p>
+With this type of payment, for example, you may charge your customer:
+</p>
+<pre class="code">
+    <span class='$10 nth_ref id'>$10</span><span class='integer val'>.00</span> <span class='every identifier id'>every</span> <span class='integer val'>3</span> <span class='days identifier id'>days</span> <span class='until until_mod kw'>until</span> <span class='integer val'>9</span> <span class='days identifier id'>days</span><span class='dot token'>.</span>
+    <span class='$9 nth_ref id'>$9</span><span class='integer val'>.95</span> <span class='every identifier id'>every</span> <span class='integer val'>1</span> <span class='month identifier id'>month</span> <span class='until until_mod kw'>until</span> <span class='forever identifier id'>forever</span><span class='dot token'>.</span>
+</pre>
+<h3>Simple Pay Subscription Fields</h3>
+<h3>Required Fields</h3>
+<p>
+The following attributes are required when creating a Simple Pay
+Subscription form (in addition to those listed in +Simplepay::Service+):
+</p>
+<table>
+<tr><td valign="top">amount:</td><td>The dollar value you&#8217;d like to collect.
+
+</td></tr>
+<tr><td valign="top">description:</td><td>A summary of the reason for the payment, this is displayed to your customer
+during checkout.
+
+</td></tr>
+<tr><td valign="top">recurring_frequency:</td><td>Defines how often to charge your customer (ex. &quot;1 month&quot;)
+
+</td></tr>
+</table>
+<h4>Optional Fields</h4>
+<table>
+<tr><td valign="top">abandon_url:</td><td>The fully-qualified URL to send your custom if they cancel during payment.
+
+</td></tr>
+<tr><td valign="top">auto_renew:</td><td>Instructs Amazon to automatically renew the subscription after the
+<tt>subscription_period</tt> ends.
+
+</td></tr>
+<tr><td valign="top">cobranding_style:</td><td>Defines the type of cobranding to use during the checkout process.
+
+</td></tr>
+<tr><td valign="top">collect_shipping_address:</td><td>Tells Amazon whether or not to ask for shipping address and contact
+information.
+
+</td></tr>
+<tr><td valign="top">immediate_return:</td><td>Immediately returns the customer to your <tt>return_url</tt> directly after
+payment.
+
+</td></tr>
+<tr><td valign="top">ipn_url:</td><td>Fully-qualified URL to which Amazon will POST instant payment
+notifications.
+
+</td></tr>
+<tr><td valign="top">process_immediately:</td><td>Instructs Amazon to immediately process the payment.
+
+</td></tr>
+<tr><td valign="top">reference_id:</td><td>A custom string your can set to identify this transaction, it will be
+returned with the IPNs and other returned data.
+
+</td></tr>
+<tr><td valign="top">return_url:</td><td>Fully-qualified URL for where to send your customer following payment.
+
+</td></tr>
+<tr><td valign="top">start_date:</td><td>Instructs Amazon with the timestamp to start the recurring subscription
+charges.
+
+</td></tr>
+<tr><td valign="top">subscription_period:</td><td>Defines the expiration window of the subscription (i.e. charge
+<tt>amount</tt> every <tt>recurring_frequency</tt> for &quot;36
+months&quot;)
+
+</td></tr>
+</table>
+<h3>Example</h3>
+<pre class="code">
+    <span class='lparen token'>(</span><span class='in in kw'>in</span> <span class='your identifier id'>your</span> <span class='view identifier id'>view</span><span class='comma token'>,</span> <span class='using identifier id'>using</span> <span class='the identifier id'>the</span> <span class='form identifier id'>form</span> <span class='helper identifier id'>helper</span><span class='rparen token'>)</span>
+
+    <span class='lt op'>&lt;</span><span class='string val'>%= simplepay_form_for(:subscription, {
+          :amount               =</span><span class='gt op'>&gt;</span> <span class='float val'>12.95</span><span class='comma token'>,</span>
+          <span class='symbol val'>:recurring_frequency</span>  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;1 year&quot;</span><span class='comma token'>,</span>
+          <span class='symbol val'>:description</span>          <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;My.Url Yearly Dues&quot;</span>
+    <span class='rbrace token'>}</span><span class='rparen token'>)</span> <span class='mod op'>%</span><span class='gt op'>&gt;</span>
+</pre>
+
+</div><div class="section constants">
+  <div class="inherited">
+  
+  <div>
+    <h1>Constants Inherited from <a href='../Service.html' title='Simplepay::Service'>Simplepay::Service</a></h1>
+    <p><span class='name'><a href='../Service.html#ENDPOINT_URL-constant' title='ENDPOINT_URL'>ENDPOINT_URL</a></span>, <span class='name'><a href='../Service.html#SANDBOX_URL-constant' title='SANDBOX_URL'>SANDBOX_URL</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <div class="inherited">
+  
+  <div>
+    <h1>Public Class Methods Inherited from <a href='../Service.html' title='Simplepay::Service'>Simplepay::Service</a></h1>
+    <p><span class='name'><a href='../Service.html#field-class_method' title='field'>field</a></span>, <span class='name'><a href='../Service.html#fields-class_method' title='fields'>fields</a></span>, <span class='name'><a href='../Service.html#required_field-class_method' title='required_field'>required_field</a></span>, <span class='name'><a href='../Service.html#set_submit_tag-class_method' title='set_submit_tag'>set_submit_tag</a></span>, <span class='name'><a href='../Service.html#submit_tag-class_method' title='submit_tag'>submit_tag</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+  <div class="section methodsummary instance public">
+    <div class="inherited">
+  
+  <div>
+    <h1>Public Instance Methods Inherited from <a href='../Service.html' title='Simplepay::Service'>Simplepay::Service</a></h1>
+    <p><span class='name'><a href='../Service.html#fields-instance_method' title='fields'>fields</a></span>, <span class='name'><a href='../Service.html#form-instance_method' title='form'>form</a></span>, <span class='name'><a href='../Service.html#url-instance_method' title='url'>url</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

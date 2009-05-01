@@ -1,0 +1,181 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: Spec::Example</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module Spec_Example">
+  <h1 class="title">Module: Spec::Example</h1>
+  <div class="section docstring">
+  <h2>Example Groups and Code Examples</h2>
+<p>
+A Code Example is an executable example of how a bit of code is expected to
+behave.
+</p>
+<p>
+An Example Group is a group of code examples.
+</p>
+<p>
+RSpec exposes a DSL to describe groups of examples.
+</p>
+<pre class="code">
+  <span class='describe identifier id'>describe</span> <span class='Account constant id'>Account</span> <span class='do do kw'>do</span>
+    <span class='it identifier id'>it</span> <span class='string val'>&quot;should have a balance of $0&quot;</span> <span class='do do kw'>do</span>
+      <span class='account identifier id'>account</span> <span class='assign token'>=</span> <span class='Account constant id'>Account</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+      <span class='account identifier id'>account</span><span class='dot token'>.</span><span class='balance identifier id'>balance</span><span class='dot token'>.</span><span class='should identifier id'>should</span> <span class='eq op'>==</span> <span class='Money constant id'>Money</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='integer val'>0</span><span class='comma token'>,</span> <span class='symbol val'>:dollars</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+</pre>
+<h2>Before and After</h2>
+<p>
+You can use the <tt>before()</tt> and <tt>after()</tt> methods to extract
+common code within an Example Group. Both methods take an optional scope
+argument so you can run the block before :each example or before :all
+examples
+</p>
+<pre class="code">
+  <span class='describe identifier id'>describe</span> <span class='string val'>&quot;...&quot;</span> <span class='do do kw'>do</span>
+    <span class='before identifier id'>before</span> <span class='symbol val'>:all</span> <span class='do do kw'>do</span>
+      <span class='dot3 op'>...</span>
+    <span class='end end kw'>end</span>
+
+    <span class='before identifier id'>before</span> <span class='symbol val'>:each</span> <span class='do do kw'>do</span>
+      <span class='dot3 op'>...</span>
+    <span class='end end kw'>end</span>
+
+    <span class='it identifier id'>it</span> <span class='string val'>&quot;should do something&quot;</span> <span class='do do kw'>do</span>
+      <span class='dot3 op'>...</span>
+    <span class='end end kw'>end</span>
+
+    <span class='it identifier id'>it</span> <span class='string val'>&quot;should do something else&quot;</span> <span class='do do kw'>do</span>
+      <span class='dot3 op'>...</span>
+    <span class='end end kw'>end</span>
+
+    <span class='after identifier id'>after</span> <span class='symbol val'>:each</span> <span class='do do kw'>do</span>
+      <span class='dot3 op'>...</span>
+    <span class='end end kw'>end</span>
+
+    <span class='after identifier id'>after</span> <span class='symbol val'>:all</span> <span class='do do kw'>do</span>
+      <span class='dot3 op'>...</span>
+    <span class='end end kw'>end</span>
+
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+The <tt>before :each</tt> block will run before each of the examples, once
+for each example. Likewise, the <tt>after :each</tt> block will run after
+each of the examples.
+</p>
+<p>
+It is also possible to specify a <tt>before :all</tt> and <tt>after
+:all</tt> block that will run only once for each example group, before the
+first <tt>before :each</tt> and after the last <tt>after :each</tt>
+respectively. The use of these is generally discouraged, because it
+introduces dependencies between the examples. Still, it might prove useful
+for very expensive operations if you know what you are doing.
+</p>
+<h2>Local helper methods</h2>
+<p>
+You can include local helper methods by simply expressing them within an
+example group:
+</p>
+<pre class="code">
+  <span class='describe identifier id'>describe</span> <span class='string val'>&quot;...&quot;</span> <span class='do do kw'>do</span>
+
+    <span class='it identifier id'>it</span> <span class='string val'>&quot;...&quot;</span> <span class='do do kw'>do</span>
+      <span class='helper_method identifier id'>helper_method</span>
+    <span class='end end kw'>end</span>
+
+    <span class='def def kw'>def</span> <span class='helper_method identifier id'>helper_method</span>
+      <span class='dot3 op'>...</span>
+    <span class='end end kw'>end</span>
+
+  <span class='end end kw'>end</span>
+</pre>
+<h2>Included helper methods</h2>
+<p>
+You can include helper methods in multiple example groups by expressing
+them within a module, and then including that module in your example
+groups:
+</p>
+<pre class="code">
+  <span class='module module kw'>module</span> <span class='AccountExampleHelperMethods constant id'>AccountExampleHelperMethods</span>
+    <span class='def def kw'>def</span> <span class='helper_method identifier id'>helper_method</span>
+      <span class='dot3 op'>...</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+
+  <span class='describe identifier id'>describe</span> <span class='string val'>&quot;A new account&quot;</span> <span class='do do kw'>do</span>
+    <span class='include identifier id'>include</span> <span class='AccountExampleHelperMethods constant id'>AccountExampleHelperMethods</span>
+    <span class='before identifier id'>before</span> <span class='do do kw'>do</span>
+      <span class='@account ivar id'>@account</span> <span class='assign token'>=</span> <span class='Account constant id'>Account</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+    <span class='end end kw'>end</span>
+
+    <span class='it identifier id'>it</span> <span class='string val'>&quot;should have a balance of $0&quot;</span> <span class='do do kw'>do</span>
+      <span class='helper_method identifier id'>helper_method</span>
+      <span class='@account ivar id'>@account</span><span class='dot token'>.</span><span class='balance identifier id'>balance</span><span class='dot token'>.</span><span class='should identifier id'>should</span> <span class='eql identifier id'>eql</span><span class='lparen token'>(</span><span class='Money constant id'>Money</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='integer val'>0</span><span class='comma token'>,</span> <span class='symbol val'>:dollars</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+</pre>
+<h2>Shared Example Groups</h2>
+<p>
+You can define a shared example group, that may be used on other groups
+</p>
+<pre class="code">
+ <span class='share_examples_for identifier id'>share_examples_for</span> <span class='string val'>&quot;All Editions&quot;</span> <span class='do do kw'>do</span>
+   <span class='it identifier id'>it</span> <span class='string val'>&quot;all editions behaviour&quot;</span> <span class='dot3 op'>...</span>
+ <span class='end end kw'>end</span>
+
+ <span class='describe identifier id'>describe</span> <span class='SmallEdition constant id'>SmallEdition</span> <span class='do do kw'>do</span>
+   <span class='it_should_behave_like identifier id'>it_should_behave_like</span> <span class='string val'>&quot;All Editions&quot;</span>
+
+   <span class='it identifier id'>it</span> <span class='string val'>&quot;should do small edition stuff&quot;</span> <span class='do do kw'>do</span>
+     <span class='dot3 op'>...</span>
+   <span class='end end kw'>end</span>
+ <span class='end end kw'>end</span>
+</pre>
+<p>
+You can also assign the shared group to a module and include that
+</p>
+<pre class="code">
+ <span class='share_as identifier id'>share_as</span> <span class='symbol val'>:AllEditions</span> <span class='do do kw'>do</span>
+   <span class='it identifier id'>it</span> <span class='string val'>&quot;should do all editions stuff&quot;</span> <span class='dot3 op'>...</span>
+ <span class='end end kw'>end</span>
+
+ <span class='describe identifier id'>describe</span> <span class='SmallEdition constant id'>SmallEdition</span> <span class='do do kw'>do</span>
+   <span class='it_should_behave_like identifier id'>it_should_behave_like</span> <span class='AllEditions constant id'>AllEditions</span>
+
+   <span class='it identifier id'>it</span> <span class='string val'>&quot;should do small edition stuff&quot;</span> <span class='do do kw'>do</span>
+     <span class='dot3 op'>...</span>
+   <span class='end end kw'>end</span>
+ <span class='end end kw'>end</span>
+</pre>
+<p>
+And, for those of you who prefer to use something more like Ruby, you can
+just include the module directly
+</p>
+<pre class="code">
+ <span class='describe identifier id'>describe</span> <span class='SmallEdition constant id'>SmallEdition</span> <span class='do do kw'>do</span>
+   <span class='include identifier id'>include</span> <span class='AllEditions constant id'>AllEditions</span>
+
+   <span class='it identifier id'>it</span> <span class='string val'>&quot;should do small edition stuff&quot;</span> <span class='do do kw'>do</span>
+     <span class='dot3 op'>...</span>
+   <span class='end end kw'>end</span>
+ <span class='end end kw'>end</span>
+</pre>
+
+</div><div class="section constants">
+  
+</div>
+</div>
+    </div>
+  </body>
+</html>

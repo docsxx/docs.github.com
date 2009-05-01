@@ -1,0 +1,639 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: ActiveMerchant::Billing::SkipJackGateway</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class ActiveMerchant_Billing_SkipJackGateway">
+  <h1 class="title">Class: ActiveMerchant::Billing::SkipJackGateway</h1>
+  <div class="section inheritance">
+  <ul>
+  <li><a href='Gateway.html' title='ActiveMerchant::Billing::Gateway'>ActiveMerchant::Billing::Gateway</a></li><ul><li>ActiveMerchant::Billing::SkipJackGateway</li>
+  </ul></ul>
+</div><div class="section constants">
+  <div class="thisclass">
+  <h1>Constants</h1>
+  <dl>
+    
+      <dt id="ACTIONS-constant">ACTIONS</dt>
+      <dd>{        :authorization =&gt; 'AuthorizeAPI',        :change_status =&gt; 'SJAPI_TransactionChangeStatusRequest',        :get_status =&gt; 'SJAPI_TransactionStatusRequest'      }</dd>
+    
+      <dt id="API_VERSION-constant">API_VERSION</dt>
+      <dd>'?.?'</dd>
+    
+      <dt id="AVS_ERRORS-constant">AVS_ERRORS</dt>
+      <dd>%w( A B C E I N O P R W Z )</dd>
+    
+      <dt id="AVS_MESSAGES-constant">AVS_MESSAGES</dt>
+      <dd>{        &quot;A&quot; =&gt; &quot;Street address matches billing information, zip/postal code does not&quot;,        &quot;B&quot; =&gt; &quot;Street address match for international transaction. Postal code not verified due to incompatible formats&quot;,        &quot;C&quot; =&gt; &quot;Street address and postal code not verified for internation transaction due to incompatible formats&quot;,        &quot;D&quot; =&gt; &quot;Street address and postal code match for international transaction&quot;,        &quot;E&quot; =&gt; &quot;Address verification service error&quot;,        &quot;I&quot; =&gt; &quot;Address information not verified by international issuer&quot;,        &quot;M&quot; =&gt; &quot;Street address and postal code match for international transaction&quot;,        &quot;N&quot; =&gt; &quot;Neither street address nor zip/postal match billing information&quot;,        &quot;O&quot; =&gt; &quot;Non-US issuer does not participate&quot;,        &quot;P&quot; =&gt; &quot;Postal codes match for international transaction but street address not verified due to incompatible formats&quot;,        &quot;P&quot; =&gt; &quot;Address verification not applicable for this transaction&quot;,        &quot;R&quot; =&gt; &quot;Payment gateway was unavailable or timed out&quot;,        &quot;S&quot; =&gt; &quot;Address verification service not supported by issuer&quot;,        &quot;U&quot; =&gt; &quot;Address information is unavailable&quot;,        &quot;W&quot; =&gt; &quot;9-digit zip/postal code matches billing information, street address does not&quot;,        &quot;X&quot; =&gt; &quot;Street address and 9-digit zip/postal code matches billing information&quot;,        &quot;Y&quot; =&gt; &quot;Street address and 5-digit zip/postal code matches billing information&quot;,        &quot;Z&quot; =&gt; &quot;5-digit zip/postal code matches billing information, street address does not&quot;,      }</dd>
+    
+      <dt id="CARD_CODE_ERRORS-constant">CARD_CODE_ERRORS</dt>
+      <dd>%w( N S &quot;&quot; )</dd>
+    
+      <dt id="CARD_CODE_MESSAGES-constant">CARD_CODE_MESSAGES</dt>
+      <dd>{        &quot;M&quot; =&gt; &quot;Card verification number matched&quot;,        &quot;N&quot; =&gt; &quot;Card verification number didn't match&quot;,        &quot;P&quot; =&gt; &quot;Card verification number was not processed&quot;,        &quot;S&quot; =&gt; &quot;Card verification number should be on card but was not indicated&quot;,        &quot;U&quot; =&gt; &quot;Issuer was not certified for card verification&quot;,        &quot;&quot; =&gt; &quot;Transaction failed because incorrect card verification number was entered or no number was entered&quot;      }</dd>
+    
+      <dt id="CHANGE_STATUS_ERROR_MESSAGES-constant">CHANGE_STATUS_ERROR_MESSAGES</dt>
+      <dd>{        '0'  =&gt; 'Success',        '-1' =&gt; 'Invalid Command',        '-2' =&gt; 'Parameter Missing',        '-3' =&gt; 'Failed retrieving response',        '-4' =&gt; 'Invalid Status',        '-5' =&gt; 'Failed reading security flags',        '-6' =&gt; 'Developer serial number not found',        '-7' =&gt; 'Invalid Serial Number'      }</dd>
+    
+      <dt id="LIVE_URL-constant">LIVE_URL</dt>
+      <dd>&quot;https://www.skipjackic.com/scripts/evolvcc.dll&quot;</dd>
+    
+      <dt id="MONETARY_CHANGE_STATUSES-constant">MONETARY_CHANGE_STATUSES</dt>
+      <dd>['AUTHORIZE', 'AUTHORIZE ADDITIONAL', 'CREDIT', 'SPLITSETTLE']</dd>
+    
+      <dt id="RETURN_CODE_MESSAGES-constant">RETURN_CODE_MESSAGES</dt>
+      <dd>{        '-1' =&gt; 'Data was not by received intact by Skipjack Transaction Network.',        '0' =&gt; 'Communication Failure. Error in Request and Response at IP level.',        '1' =&gt; 'Valid Data. Authorization request was valid.',        '-35' =&gt; 'Invalid credit card number. Retry with correct credit card number.',        '-37' =&gt; 'Merchant Processor Unavailable. Skipjack is unable to communicate with payment Processor. Retry',        '-39' =&gt; 'Length or value of HTML Serial. Number Invalid serial number. Check HTML Serial Number length and that it is a correct/valid number. Confirm you are sending to the correct environment (Development or Production)',        '-51' =&gt; 'The value or length for billing zip code is incorrect.',        '-52' =&gt; 'The value or length for shipping zip code is incorrect.',        '-53' =&gt; 'The value or length for credit card expiration month is incorrect.',        '-54' =&gt; 'The value or length of the month or year of the credit card account number was incorrect.',        '-55' =&gt; 'The value or length or billing street address is incorrect.',        '-56' =&gt; 'The value or length of the shipping address is incorrect.',        '-57' =&gt; 'The length of the transaction amount must be at least 3 digits long (excluding the decimal place).',        '-58' =&gt; 'Length or value in Merchant Name Merchant Name associated with Skipjack account is misconfigured or invalid',        '-59' =&gt; 'Length or value in Merchant Address Merchant Address associated with Skipjack account is misconfigured or invalid',        '-60' =&gt; 'Length or value in Merchant State Merchant State associated with Skipjack account is misconfigured or invalid',        '-61' =&gt; 'The value or length for shipping state/province is empty.',        '-62' =&gt; 'The value for length orderstring is empty.',        '-64' =&gt; 'The value for the phone number is incorrect.',        '-65' =&gt; 'The value or length for billing name is empty.',        '-66' =&gt; 'The value or length for billing e-mail is empty.',        '-67' =&gt; 'The value or length for billing street address is empty.',        '-68' =&gt; 'The value or length for billing city is empty.',        '-69' =&gt; 'The value or length for billing state is empty.',        '-70' =&gt; 'Empty zipcode Zip Code field is empty.',        '-71' =&gt; 'Empty ordernumber Ordernumber field is empty.',        '-72' =&gt; 'Empty accountnumber Accountnumber field is empty',        '-73' =&gt; 'Empty month Month field is empty.',        '-74' =&gt; 'Empty year Year field is empty.',        '-75' =&gt; 'Empty serialnumber Serialnumber field is empty.',        '-76' =&gt; 'Empty transactionamount Transaction amount field is empty.',        '-77' =&gt; 'Empty orderstring Orderstring field is empty.',        '-78' =&gt; 'Empty shiptophone Shiptophone field is empty.',        '-79' =&gt; 'The value or length for billing name is empty.',        '-80' =&gt; 'Length shipto name Error in the length or value of shiptophone.',        '-81' =&gt; 'Length or value of Customer location',        '-82' =&gt; 'The value or length for billing state is empty.',        '-83' =&gt; 'The value or length for shipping phone is empty.',        '-84' =&gt; 'There is already an existing pending transaction in the register sharing the posted Order Number.',        '-85' =&gt; 'Airline leg info invalid Airline leg field value is invalid or empty.',        '-86' =&gt; 'Airline ticket info invalid Airline ticket info field is invalid or empty',        '-87' =&gt; 'Point of Sale check routing number must be 9 numeric digits Point of Sale check routing number is invalid or empty.',        '-88' =&gt; 'Point of Sale check account number missing or invalid Point of Sale check account number is invalid or empty.',        '-89' =&gt; 'Point of Sale check MICR missing or invalid Point of Sale check MICR invalid or empty.',        '-90' =&gt; 'Point of Sale check number missing or invalid Point of Sale check number invalid or empty.',        '-91' =&gt; 'CVV2 Invalid or empty “Make CVV a required field feature” enabled (New feature 01 April 2006) in the Merchant Account Setup interface but no CVV code was sent in the transaction data.',        '-92' =&gt; 'Approval Code Invalid Approval Code Invalid. Approval Code is a 6 digit code.',        '-93' =&gt; 'Blind Credits Request Refused “Allow Blind Credits” option must be enabled on the Skipjack Merchant Account.',        '-94' =&gt; 'Blind Credits Failed',        '-95' =&gt; 'Voice Authorization Request Refused Voice Authorization option must be enabled on the Skipjack Merchant Account.',        '-96' =&gt; 'Voice Authorizations Failed',        '-97' =&gt; 'Fraud Rejection Violates Velocity Settling.',        '-98' =&gt; 'Invalid Discount Amount',        '-99' =&gt; 'POS PIN Debit Pin Block Debit-specific',        '-100' =&gt; 'POS PIN Debit Invalid Key Serial Number Debit-specific',        '-101' =&gt; 'Invalid Authentication Data Data for Verified by Visa/MC Secure Code is invalid.',        '-102' =&gt; 'Authentication Data Not Allowed',        '-103' =&gt; 'POS Check Invalid Birth Date POS check dateofbirth variable contains a birth date in an incorrect format. Use MM/DD/YYYY format for this variable.',        '-104' =&gt; 'POS Check Invalid Identification Type POS check identificationtype variable contains a identification type value which is invalid. Use the single digit value where Social Security Number=1, Drivers License=2 for this variable.',        '-105' =&gt; 'Invalid trackdata Track Data is in invalid format.',        '-106' =&gt; 'POS Check Invalid Account Type',        '-107' =&gt; 'POS PIN Debit Invalid Sequence Number',        '-108' =&gt; 'Invalid Transaction ID',        '-109' =&gt; 'Invalid From Account Type',        '-110' =&gt; 'Pos Error Invalid To Account Type',        '-112' =&gt; 'Pos Error Invalid Auth Option',        '-113' =&gt; 'Pos Error Transaction Failed',        '-114' =&gt; 'Pos Error Invalid Incoming Eci',        '-115' =&gt; 'POS Check Invalid Check Type',        '-116' =&gt; 'POS Check Invalid Lane Number POS Check lane or cash register number is invalid. Use a valid lane or cash register number that has been configured in the Skipjack Merchant Account.',        '-117' =&gt; 'POS Check Invalid Cashier Number'      }</dd>
+    
+      <dt id="SUCCESS_MESSAGE-constant">SUCCESS_MESSAGE</dt>
+      <dd>'The transaction was successful.'</dd>
+    
+      <dt id="TEST_URL-constant">TEST_URL</dt>
+      <dd>&quot;https://developer.skipjackic.com/scripts/evolvcc.dll&quot;</dd>
+    
+      <dt id="TRANSACTION_CURRENT_STATUS-constant">TRANSACTION_CURRENT_STATUS</dt>
+      <dd>{        '0' =&gt; 'Idle',        '1' =&gt; 'Authorized',        '2' =&gt; 'Denied',        '3' =&gt; 'Settled',        '4' =&gt; 'Credited',        '5' =&gt; 'Deleted',        '6' =&gt; 'Archived',        '7' =&gt; 'Pre-Authorized',        '8' =&gt; 'Split Settled'      }</dd>
+    
+      <dt id="TRANSACTION_PENDING_STATUS-constant">TRANSACTION_PENDING_STATUS</dt>
+      <dd>{        '0' =&gt; 'Idle',        '1' =&gt; 'Pending Credit',        '2' =&gt; 'Pending Settlement',        '3' =&gt; 'Pending Authorization',        '4' =&gt; 'Pending Manual Settlement',        '5' =&gt; 'Pending Recurring'      }</dd>
+    
+  </dl>
+</div>
+<div class="inherited">
+  
+  <div>
+    <h1>Constants Inherited from <a href='Gateway.html' title='ActiveMerchant::Billing::Gateway'>ActiveMerchant::Billing::Gateway</a></h1>
+    <p><span class='name'><a href='Gateway.html#DEBIT_CARDS-constant' title='DEBIT_CARDS'>DEBIT_CARDS</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Creates a new SkipJackGateway
+</p>
+<p>
+The gateway requires that a valid login and password be passed in the
+<tt>options</tt> hash.
+</p>
+<h4>Options</h4>
+<ul>
+<li><tt>:login</tt> &#8212; The SkipJack Merchant Serial Number.
+
+</li>
+<li><tt>:password</tt> &#8212; The SkipJack Developer Serial Number.
+
+</li>
+<li><tt>:test =&gt; true or false</tt> &#8212; Use the test or live SkipJack
+url.
+
+</li>
+</ul>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+173
+174
+175
+176
+177</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/skip_jack.rb', line 173</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='requires! fid id'>requires!</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='comma token'>,</span> <span class='symbol val'>:login</span><span class='comma token'>,</span> <span class='symbol val'>:password</span><span class='rparen token'>)</span>
+  <span class='@options ivar id'>@options</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span>
+  <span class='super super kw'>super</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <div class="inherited">
+  
+  <div>
+    <h1>Public Class Methods Inherited from <a href='Gateway.html' title='ActiveMerchant::Billing::Gateway'>ActiveMerchant::Billing::Gateway</a></h1>
+    <p><span class='name'><a href='Gateway.html#card_brand-class_method' title='card_brand'>card_brand</a></span>, <span class='name'><a href='Gateway.html#inherited-class_method' title='inherited'>inherited</a></span>, <span class='name'><a href='Gateway.html#supports%3F-class_method' title='supports?'>supports?</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+  <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#authorize-instance_method' title='#authorize'>#authorize</a></span><span class='args'>(money, creditcard, options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#capture-instance_method' title='#capture'>#capture</a></span><span class='args'>(money, authorization, options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Captures the funds from an authorized transaction.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#credit-instance_method' title='#credit'>#credit</a></span><span class='args'>(money, identification, options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#purchase-instance_method' title='#purchase'>#purchase</a></span><span class='args'>(money, creditcard, options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#status-instance_method' title='#status'>#status</a></span><span class='args'>(order_id)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#test%3F-instance_method' title='#test?'>#test?</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#void-instance_method' title='#void'>#void</a></span><span class='args'>(authorization, options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table><div class="inherited">
+  
+  <div>
+    <h1>Public Instance Methods Inherited from <a href='Gateway.html' title='ActiveMerchant::Billing::Gateway'>ActiveMerchant::Billing::Gateway</a></h1>
+    <p><span class='name'><a href='Gateway.html#amount-instance_method' title='amount'>amount</a></span>, <span class='name'><a href='Gateway.html#card_brand-instance_method' title='card_brand'>card_brand</a></span>, <span class='name'><a href='Gateway.html#currency-instance_method' title='currency'>currency</a></span>, <span class='name'><a href='Gateway.html#name-instance_method' title='name'>name</a></span>, <span class='name'><a href='Gateway.html#requires_start_date_or_issue_number%3F-instance_method' title='requires_start_date_or_issue_number?'>requires_start_date_or_issue_number?</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>authorize</h3>
+</div><div id="authorize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>authorize</span><span class='args'>(money, creditcard, options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+183
+184
+185
+186
+187
+188
+189
+190
+191</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/skip_jack.rb', line 183</span>
+
+<span class='def def kw'>def</span> <span class='authorize identifier id'>authorize</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='comma token'>,</span> <span class='creditcard identifier id'>creditcard</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='requires! fid id'>requires!</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='comma token'>,</span> <span class='symbol val'>:order_id</span><span class='comma token'>,</span> <span class='symbol val'>:email</span><span class='rparen token'>)</span>
+  <span class='post identifier id'>post</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='add_invoice identifier id'>add_invoice</span><span class='lparen token'>(</span><span class='post identifier id'>post</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='add_creditcard identifier id'>add_creditcard</span><span class='lparen token'>(</span><span class='post identifier id'>post</span><span class='comma token'>,</span> <span class='creditcard identifier id'>creditcard</span><span class='rparen token'>)</span>
+  <span class='add_address identifier id'>add_address</span><span class='lparen token'>(</span><span class='post identifier id'>post</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='add_customer_data identifier id'>add_customer_data</span><span class='lparen token'>(</span><span class='post identifier id'>post</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='commit identifier id'>commit</span><span class='lparen token'>(</span><span class='symbol val'>:authorization</span><span class='comma token'>,</span> <span class='money identifier id'>money</span><span class='comma token'>,</span> <span class='post identifier id'>post</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>capture</h3>
+</div><div id="capture-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>capture</span><span class='args'>(money, authorization, options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Captures the funds from an authorized transaction.
+</p>
+<h4>Parameters</h4>
+<ul>
+<li><tt>money</tt> &#8212; The amount to be capture as an Integer in cents.
+
+</li>
+<li><tt>authorization</tt> &#8212; The authorization returned from the previous
+authorize request.
+
+</li>
+<li><tt>options</tt> &#8212; A hash of optional parameters.
+
+</li>
+</ul>
+<h4>Options</h4>
+<ul>
+<li><tt>:force_settlement</tt> &#8212; Force the settlement to occur as soon as
+possible. This option is not supported by other gateways. See the SkipJack
+API reference for more details
+
+</li>
+</ul>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+214
+215
+216
+217
+218
+219
+220</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/skip_jack.rb', line 214</span>
+
+<span class='def def kw'>def</span> <span class='capture identifier id'>capture</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='comma token'>,</span> <span class='authorization identifier id'>authorization</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='post identifier id'>post</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span> <span class='rbrace token'>}</span>
+  <span class='add_status_action identifier id'>add_status_action</span><span class='lparen token'>(</span><span class='post identifier id'>post</span><span class='comma token'>,</span> <span class='string val'>'SETTLE'</span><span class='rparen token'>)</span>
+  <span class='add_forced_settlement identifier id'>add_forced_settlement</span><span class='lparen token'>(</span><span class='post identifier id'>post</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='add_transaction_id identifier id'>add_transaction_id</span><span class='lparen token'>(</span><span class='post identifier id'>post</span><span class='comma token'>,</span> <span class='authorization identifier id'>authorization</span><span class='rparen token'>)</span>
+  <span class='commit identifier id'>commit</span><span class='lparen token'>(</span><span class='symbol val'>:change_status</span><span class='comma token'>,</span> <span class='money identifier id'>money</span><span class='comma token'>,</span> <span class='post identifier id'>post</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>credit</h3>
+</div><div id="credit-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>credit</span><span class='args'>(money, identification, options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+230
+231
+232
+233
+234
+235
+236</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/skip_jack.rb', line 230</span>
+
+<span class='def def kw'>def</span> <span class='credit identifier id'>credit</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='comma token'>,</span> <span class='identification identifier id'>identification</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='post identifier id'>post</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='add_status_action identifier id'>add_status_action</span><span class='lparen token'>(</span><span class='post identifier id'>post</span><span class='comma token'>,</span> <span class='string val'>'CREDIT'</span><span class='rparen token'>)</span>
+  <span class='add_forced_settlement identifier id'>add_forced_settlement</span><span class='lparen token'>(</span><span class='post identifier id'>post</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='add_transaction_id identifier id'>add_transaction_id</span><span class='lparen token'>(</span><span class='post identifier id'>post</span><span class='comma token'>,</span> <span class='identification identifier id'>identification</span><span class='rparen token'>)</span>
+  <span class='commit identifier id'>commit</span><span class='lparen token'>(</span><span class='symbol val'>:change_status</span><span class='comma token'>,</span> <span class='money identifier id'>money</span><span class='comma token'>,</span> <span class='post identifier id'>post</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>purchase</h3>
+</div><div id="purchase-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>purchase</span><span class='args'>(money, creditcard, options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+193
+194
+195
+196
+197
+198
+199
+200
+201</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/skip_jack.rb', line 193</span>
+
+<span class='def def kw'>def</span> <span class='purchase identifier id'>purchase</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='comma token'>,</span> <span class='creditcard identifier id'>creditcard</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='post identifier id'>post</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='authorization identifier id'>authorization</span> <span class='assign token'>=</span> <span class='authorize identifier id'>authorize</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='comma token'>,</span> <span class='creditcard identifier id'>creditcard</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='authorization identifier id'>authorization</span><span class='dot token'>.</span><span class='success? fid id'>success?</span>
+    <span class='capture identifier id'>capture</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='comma token'>,</span> <span class='authorization identifier id'>authorization</span><span class='dot token'>.</span><span class='authorization identifier id'>authorization</span><span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+    <span class='authorization identifier id'>authorization</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>status</h3>
+</div><div id="status-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>status</span><span class='args'>(order_id)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+238
+239
+240
+241
+242</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/skip_jack.rb', line 238</span>
+
+<span class='def def kw'>def</span> <span class='status identifier id'>status</span><span class='lparen token'>(</span><span class='order_id identifier id'>order_id</span><span class='rparen token'>)</span>
+  <span class='post identifier id'>post</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span> <span class='rbrace token'>}</span>
+  <span class='post identifier id'>post</span><span class='lbrack token'>[</span><span class='symbol val'>:szOrderNumber</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='symbol val'>:order_id</span>
+  <span class='commit identifier id'>commit</span><span class='lparen token'>(</span><span class='symbol val'>:get_status</span><span class='comma token'>,</span> <span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='post identifier id'>post</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>test?</h3>
+</div><div id="test%3F-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>test?</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+179
+180
+181</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/skip_jack.rb', line 179</span>
+
+<span class='def def kw'>def</span> <span class='test? fid id'>test?</span>
+  <span class='@options ivar id'>@options</span><span class='lbrack token'>[</span><span class='symbol val'>:test</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='super super kw'>super</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>void</h3>
+</div><div id="void-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>void</span><span class='args'>(authorization, options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+222
+223
+224
+225
+226
+227
+228</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/skip_jack.rb', line 222</span>
+
+<span class='def def kw'>def</span> <span class='void identifier id'>void</span><span class='lparen token'>(</span><span class='authorization identifier id'>authorization</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='post identifier id'>post</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='add_status_action identifier id'>add_status_action</span><span class='lparen token'>(</span><span class='post identifier id'>post</span><span class='comma token'>,</span> <span class='string val'>'DELETE'</span><span class='rparen token'>)</span>
+  <span class='add_forced_settlement identifier id'>add_forced_settlement</span><span class='lparen token'>(</span><span class='post identifier id'>post</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='add_transaction_id identifier id'>add_transaction_id</span><span class='lparen token'>(</span><span class='post identifier id'>post</span><span class='comma token'>,</span> <span class='authorization identifier id'>authorization</span><span class='rparen token'>)</span>
+  <span class='commit identifier id'>commit</span><span class='lparen token'>(</span><span class='symbol val'>:change_status</span><span class='comma token'>,</span> <span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='post identifier id'>post</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

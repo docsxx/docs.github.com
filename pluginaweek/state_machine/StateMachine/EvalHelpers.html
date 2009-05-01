@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: StateMachine::EvalHelpers</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module StateMachine_EvalHelpers">
+  <h1 class="title">Module: StateMachine::EvalHelpers</h1>
+  <div class="section docstring">
+  <p>
+Provides a set of helper methods for evaluating methods within the context
+of an object.
+</p>
+
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#evaluate_method-instance_method' title='#evaluate_method'>#evaluate_method</a></span><span class='args'>(object, method, *args)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Evaluates one of several different types of methods within the context of
+the given object.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>evaluate_method</h3>
+</div><div id="evaluate_method-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>evaluate_method</span><span class='args'>(object, method, *args)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Evaluates one of several different types of methods within the context of
+the given object. Methods can be one of the following types:
+</p>
+<ul>
+<li>Symbol
+
+</li>
+<li>Method / Proc
+
+</li>
+<li>String
+
+</li>
+</ul>
+<h2>Examples</h2>
+<p>
+Below are examples of the various ways that a method can be evaluated on an
+object:
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='Person constant id'>Person</span>
+    <span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='rparen token'>)</span>
+      <span class='@name ivar id'>@name</span> <span class='assign token'>=</span> <span class='name identifier id'>name</span>
+    <span class='end end kw'>end</span>
+
+    <span class='def def kw'>def</span> <span class='name identifier id'>name</span>
+      <span class='@name ivar id'>@name</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+
+  <span class='class class kw'>class</span> <span class='PersonCallback constant id'>PersonCallback</span>
+    <span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='run identifier id'>run</span><span class='lparen token'>(</span><span class='person identifier id'>person</span><span class='rparen token'>)</span>
+      <span class='person identifier id'>person</span><span class='dot token'>.</span><span class='name identifier id'>name</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+
+  <span class='person identifier id'>person</span> <span class='assign token'>=</span> <span class='Person constant id'>Person</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'John Smith'</span><span class='rparen token'>)</span>
+
+  <span class='evaluate_method identifier id'>evaluate_method</span><span class='lparen token'>(</span><span class='person identifier id'>person</span><span class='comma token'>,</span> <span class='symbol val'>:name</span><span class='rparen token'>)</span>                            <span class='comment val'># =&gt; &quot;John Smith&quot;</span>
+  <span class='evaluate_method identifier id'>evaluate_method</span><span class='lparen token'>(</span><span class='person identifier id'>person</span><span class='comma token'>,</span> <span class='PersonCallback constant id'>PersonCallback</span><span class='dot token'>.</span><span class='method identifier id'>method</span><span class='lparen token'>(</span><span class='symbol val'>:run</span><span class='rparen token'>)</span><span class='rparen token'>)</span>      <span class='comment val'># =&gt; &quot;John Smith&quot;</span>
+  <span class='evaluate_method identifier id'>evaluate_method</span><span class='lparen token'>(</span><span class='person identifier id'>person</span><span class='comma token'>,</span> <span class='Proc constant id'>Proc</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='person identifier id'>person</span><span class='bitor op'>|</span> <span class='person identifier id'>person</span><span class='dot token'>.</span><span class='name identifier id'>name</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>  <span class='comment val'># =&gt; &quot;John Smith&quot;</span>
+  <span class='evaluate_method identifier id'>evaluate_method</span><span class='lparen token'>(</span><span class='person identifier id'>person</span><span class='comma token'>,</span> <span class='lambda identifier id'>lambda</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='person identifier id'>person</span><span class='bitor op'>|</span> <span class='person identifier id'>person</span><span class='dot token'>.</span><span class='name identifier id'>name</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>    <span class='comment val'># =&gt; &quot;John Smith&quot;</span>
+  <span class='evaluate_method identifier id'>evaluate_method</span><span class='lparen token'>(</span><span class='person identifier id'>person</span><span class='comma token'>,</span> <span class='string val'>'@name'</span><span class='rparen token'>)</span>                          <span class='comment val'># =&gt; &quot;John Smith&quot;</span>
+</pre>
+<h2>Additional arguments</h2>
+<p>
+Additional arguments can be passed to the methods being evaluated. If the
+method defines additional arguments other than the object context, then all
+arguments are required.
+</p>
+<p>
+For example,
+</p>
+<pre class="code">
+  <span class='person identifier id'>person</span> <span class='assign token'>=</span> <span class='Person constant id'>Person</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'John Smith'</span><span class='rparen token'>)</span>
+
+  <span class='evaluate_method identifier id'>evaluate_method</span><span class='lparen token'>(</span><span class='person identifier id'>person</span><span class='comma token'>,</span> <span class='lambda identifier id'>lambda</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='person identifier id'>person</span><span class='bitor op'>|</span> <span class='person identifier id'>person</span><span class='dot token'>.</span><span class='name identifier id'>name</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='integer val'>21</span><span class='rparen token'>)</span>                              <span class='comment val'># =&gt; &quot;John Smith&quot;</span>
+  <span class='evaluate_method identifier id'>evaluate_method</span><span class='lparen token'>(</span><span class='person identifier id'>person</span><span class='comma token'>,</span> <span class='lambda identifier id'>lambda</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='person identifier id'>person</span><span class='comma token'>,</span> <span class='age identifier id'>age</span><span class='bitor op'>|</span> <span class='dstring node'>&quot;#{person.name} is #{age}&quot;</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='integer val'>21</span><span class='rparen token'>)</span>          <span class='comment val'># =&gt; &quot;John Smith is 21&quot;</span>
+  <span class='evaluate_method identifier id'>evaluate_method</span><span class='lparen token'>(</span><span class='person identifier id'>person</span><span class='comma token'>,</span> <span class='lambda identifier id'>lambda</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='person identifier id'>person</span><span class='comma token'>,</span> <span class='age identifier id'>age</span><span class='bitor op'>|</span> <span class='dstring node'>&quot;#{person.name} is #{age}&quot;</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='integer val'>21</span><span class='comma token'>,</span> <span class='string val'>'male'</span><span class='rparen token'>)</span>  <span class='comment val'># =&gt; ArgumentError: wrong number of arguments (3 for 2)</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/state_machine/eval_helpers.rb', line 53</span>
+
+<span class='def def kw'>def</span> <span class='evaluate_method identifier id'>evaluate_method</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='comma token'>,</span> <span class='method identifier id'>method</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='case case kw'>case</span> <span class='method identifier id'>method</span>
+    <span class='when when kw'>when</span> <span class='Symbol constant id'>Symbol</span>
+      <span class='method identifier id'>method</span> <span class='assign token'>=</span> <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='method identifier id'>method</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='rparen token'>)</span>
+      <span class='method identifier id'>method</span><span class='dot token'>.</span><span class='arity identifier id'>arity</span> <span class='eq op'>==</span> <span class='integer val'>0</span> <span class='question op'>?</span> <span class='method identifier id'>method</span><span class='dot token'>.</span><span class='call identifier id'>call</span> <span class='colon op'>:</span> <span class='method identifier id'>method</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+    <span class='when when kw'>when</span> <span class='Proc constant id'>Proc</span><span class='comma token'>,</span> <span class='Method constant id'>Method</span>
+      <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='unshift identifier id'>unshift</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span>
+      <span class='lbrack token'>[</span><span class='integer val'>0</span><span class='comma token'>,</span> <span class='integer val'>1</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='dot token'>.</span><span class='arity identifier id'>arity</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='method identifier id'>method</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='dot token'>.</span><span class='slice identifier id'>slice</span><span class='lparen token'>(</span><span class='integer val'>0</span><span class='comma token'>,</span> <span class='method identifier id'>method</span><span class='dot token'>.</span><span class='arity identifier id'>arity</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='method identifier id'>method</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+    <span class='when when kw'>when</span> <span class='String constant id'>String</span>
+      <span class='eval identifier id'>eval</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='comma token'>,</span> <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='instance_eval identifier id'>instance_eval</span> <span class='lbrace token'>{</span><span class='binding identifier id'>binding</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+    <span class='else else kw'>else</span>
+      <span class='raise identifier id'>raise</span> <span class='ArgumentError constant id'>ArgumentError</span><span class='comma token'>,</span> <span class='string val'>'Methods must be a symbol denoting the method to call, a block to be invoked, or a string to be evaluated'</span>
+    <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

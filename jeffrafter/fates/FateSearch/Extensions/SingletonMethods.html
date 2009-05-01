@@ -1,0 +1,352 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: FateSearch::Extensions::SingletonMethods</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module FateSearch_Extensions_SingletonMethods">
+  <h1 class="title">Module: FateSearch::Extensions::SingletonMethods</h1>
+  <div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#fulltext_count-instance_method' title='#fulltext_count'>#fulltext_count</a></span><span class='args'>(query)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#fulltext_find-instance_method' title='#fulltext_find'>#fulltext_find</a></span><span class='args'>(query, offset = nil, limit = nil)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#fulltext_index-instance_method' title='#fulltext_index'>#fulltext_index</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#fulltext_load-instance_method' title='#fulltext_load'>#fulltext_load</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>fulltext_count</h3>
+</div><div id="fulltext_count-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>fulltext_count</span><span class='args'>(query)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+48
+49
+50
+51</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/fates.rb', line 48</span>
+
+<span class='def def kw'>def</span> <span class='fulltext_count identifier id'>fulltext_count</span><span class='lparen token'>(</span><span class='query identifier id'>query</span><span class='rparen token'>)</span>
+  <span class='fulltext_load identifier id'>fulltext_load</span> <span class='unless unless_mod kw'>unless</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='fulltext_reader identifier id'>fulltext_reader</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='suffix_array_reader identifier id'>suffix_array_reader</span><span class='dot token'>.</span><span class='count_hits identifier id'>count_hits</span><span class='lparen token'>(</span><span class='query identifier id'>query</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>fulltext_find</h3>
+</div><div id="fulltext_find-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>fulltext_find</span><span class='args'>(query, offset = nil, limit = nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/fates.rb', line 53</span>
+
+<span class='def def kw'>def</span> <span class='fulltext_find identifier id'>fulltext_find</span><span class='lparen token'>(</span><span class='query identifier id'>query</span><span class='comma token'>,</span> <span class='offset identifier id'>offset</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='limit identifier id'>limit</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='fulltext_load identifier id'>fulltext_load</span> <span class='unless unless_mod kw'>unless</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='fulltext_reader identifier id'>fulltext_reader</span>
+  <span class='offset identifier id'>offset</span> <span class='opasgn op'>||=</span> <span class='integer val'>0</span>
+  <span class='if if kw'>if</span> <span class='lparen token'>(</span><span class='offset identifier id'>offset</span> <span class='eq op'>==</span> <span class='integer val'>0</span> <span class='andop op'>&amp;&amp;</span> <span class='limit identifier id'>limit</span> <span class='eq op'>==</span> <span class='integer val'>1</span><span class='rparen token'>)</span>
+    <span class='hits identifier id'>hits</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='self self kw'>self</span><span class='dot token'>.</span><span class='suffix_array_reader identifier id'>suffix_array_reader</span><span class='dot token'>.</span><span class='find_first identifier id'>find_first</span><span class='lparen token'>(</span><span class='query identifier id'>query</span><span class='rparen token'>)</span><span class='rbrack token'>]</span>
+  <span class='else else kw'>else</span>
+    <span class='hits identifier id'>hits</span> <span class='assign token'>=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='suffix_array_reader identifier id'>suffix_array_reader</span><span class='dot token'>.</span><span class='find_all identifier id'>find_all</span><span class='lparen token'>(</span><span class='query identifier id'>query</span><span class='rparen token'>)</span>            
+  <span class='end end kw'>end</span>
+  <span class='fulltext_data identifier id'>fulltext_data</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+  <span class='if if kw'>if</span> <span class='hits identifier id'>hits</span> <span class='andop op'>&amp;&amp;</span> <span class='hits identifier id'>hits</span><span class='dot token'>.</span><span class='size identifier id'>size</span> <span class='gt op'>&gt;</span> <span class='integer val'>0</span>
+    <span class='limit identifier id'>limit</span> <span class='assign token'>=</span> <span class='hits identifier id'>hits</span><span class='dot token'>.</span><span class='size identifier id'>size</span> <span class='unless unless_mod kw'>unless</span> <span class='limit identifier id'>limit</span>
+    <span class='if if kw'>if</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='fatesearch_default_sorting identifier id'>fatesearch_default_sorting</span> 
+      <span class='self self kw'>self</span><span class='dot token'>.</span><span class='fatesearch_weights identifier id'>fatesearch_weights</span> <span class='opasgn op'>||=</span> <span class='Array constant id'>Array</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='dot token'>.</span><span class='fatesearch_fields identifier id'>fatesearch_fields</span><span class='dot token'>.</span><span class='size identifier id'>size</span><span class='comma token'>,</span> <span class='integer val'>100000</span><span class='rparen token'>)</span>
+      <span class='sorted identifier id'>sorted</span> <span class='assign token'>=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='fulltext_reader identifier id'>fulltext_reader</span><span class='dot token'>.</span><span class='rank_offsets identifier id'>rank_offsets</span><span class='lparen token'>(</span><span class='hits identifier id'>hits</span><span class='comma token'>,</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='fatesearch_weights identifier id'>fatesearch_weights</span><span class='comma token'>,</span> <span class='query identifier id'>query</span><span class='comma token'>,</span> <span class='offset identifier id'>offset</span><span class='plus op'>+</span><span class='limit identifier id'>limit</span><span class='rparen token'>)</span>
+      <span class='offset identifier id'>offset</span><span class='dot token'>.</span><span class='upto identifier id'>upto</span><span class='lparen token'>(</span><span class='lparen token'>(</span><span class='offset identifier id'>offset</span><span class='plus op'>+</span><span class='limit identifier id'>limit</span><span class='rparen token'>)</span><span class='minus op'>-</span><span class='integer val'>1</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='i identifier id'>i</span><span class='bitor op'>|</span> 
+        <span class='if if kw'>if</span> <span class='i identifier id'>i</span> <span class='lt op'>&lt;</span> <span class='sorted identifier id'>sorted</span><span class='dot token'>.</span><span class='size identifier id'>size</span> 
+          <span class='fulltext_data identifier id'>fulltext_data</span> <span class='lshft op'>&lt;&lt;</span> <span class='sorted identifier id'>sorted</span><span class='lbrack token'>[</span><span class='i identifier id'>i</span><span class='rbrack token'>]</span>
+        <span class='end end kw'>end</span>  
+      <span class='rbrace token'>}</span>  
+    <span class='else else kw'>else</span>  
+      <span class='offset identifier id'>offset</span><span class='dot token'>.</span><span class='upto identifier id'>upto</span><span class='lparen token'>(</span><span class='lparen token'>(</span><span class='offset identifier id'>offset</span><span class='plus op'>+</span><span class='limit identifier id'>limit</span><span class='rparen token'>)</span><span class='minus op'>-</span><span class='integer val'>1</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='i identifier id'>i</span><span class='bitor op'>|</span> 
+        <span class='if if kw'>if</span> <span class='i identifier id'>i</span> <span class='lt op'>&lt;</span> <span class='hits identifier id'>hits</span><span class='dot token'>.</span><span class='size identifier id'>size</span> 
+          <span class='record_data identifier id'>record_data</span> <span class='assign token'>=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='fulltext_reader identifier id'>fulltext_reader</span><span class='dot token'>.</span><span class='hit_to_record_data identifier id'>hit_to_record_data</span><span class='lparen token'>(</span><span class='hits identifier id'>hits</span><span class='lbrack token'>[</span><span class='i identifier id'>i</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> 
+          <span class='primary_key identifier id'>primary_key</span> <span class='assign token'>=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='fulltext_reader identifier id'>fulltext_reader</span><span class='dot token'>.</span><span class='get_primary_key identifier id'>get_primary_key</span><span class='lparen token'>(</span><span class='record_data identifier id'>record_data</span><span class='rparen token'>)</span> 
+          <span class='fields identifier id'>fields</span> <span class='assign token'>=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='fulltext_reader identifier id'>fulltext_reader</span><span class='dot token'>.</span><span class='get_fields identifier id'>get_fields</span><span class='lparen token'>(</span><span class='record_data identifier id'>record_data</span><span class='rparen token'>)</span> 
+          <span class='fulltext_data identifier id'>fulltext_data</span> <span class='lshft op'>&lt;&lt;</span> <span class='lbrack token'>[</span><span class='primary_key identifier id'>primary_key</span><span class='comma token'>,</span> <span class='fields identifier id'>fields</span><span class='comma token'>,</span> <span class='integer val'>0</span><span class='rbrack token'>]</span>
+        <span class='end end kw'>end</span>  
+      <span class='rbrace token'>}</span>  
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>  
+  <span class='fulltext_data identifier id'>fulltext_data</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>fulltext_index</h3>
+</div><div id="fulltext_index-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>fulltext_index</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/fates.rb', line 86</span>
+
+<span class='def def kw'>def</span> <span class='fulltext_index identifier id'>fulltext_index</span>      
+  <span class='puts identifier id'>puts</span> <span class='dstring node'>&quot;Building indexes for #{self.fatesearch_path}&quot;</span>
+  <span class='white_space identifier id'>white_space</span> <span class='assign token'>=</span> <span class='FateSearch constant id'>FateSearch</span><span class='colon2 op'>::</span><span class='Analysis constant id'>Analysis</span><span class='colon2 op'>::</span><span class='WhitespaceAnalyzer constant id'>WhitespaceAnalyzer</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+  <span class='analyzers identifier id'>analyzers</span> <span class='assign token'>=</span> <span class='Array constant id'>Array</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='dot token'>.</span><span class='fatesearch_fields identifier id'>fatesearch_fields</span><span class='dot token'>.</span><span class='size identifier id'>size</span><span class='comma token'>,</span> <span class='white_space identifier id'>white_space</span><span class='rparen token'>)</span>
+  <span class='path identifier id'>path</span> <span class='assign token'>=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='fatesearch_path identifier id'>fatesearch_path</span>
+  <span class='raise identifier id'>raise</span> <span class='string val'>&quot;Invalid base path&quot;</span> <span class='if if_mod kw'>if</span> <span class='path identifier id'>path</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span> <span class='orop op'>||</span> <span class='path identifier id'>path</span> <span class='eq op'>==</span> <span class='string val'>'/'</span> 
+  <span class='FileUtils constant id'>FileUtils</span><span class='dot token'>.</span><span class='rm_rf identifier id'>rm_rf</span> <span class='path identifier id'>path</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='fragment_writer identifier id'>fragment_writer</span> <span class='assign token'>=</span> <span class='FateSearch constant id'>FateSearch</span><span class='colon2 op'>::</span><span class='FragmentWriter constant id'>FragmentWriter</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='symbol val'>:path</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='path identifier id'>path</span><span class='comma token'>,</span> <span class='symbol val'>:analyzers</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='analyzers identifier id'>analyzers</span><span class='rparen token'>)</span>
+  <span class='puts identifier id'>puts</span> <span class='dstring node'>&quot;Reading records for #{self.fatesearch_path}&quot;</span>
+  <span class='records identifier id'>records</span> <span class='assign token'>=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='symbol val'>:all</span><span class='comma token'>,</span> <span class='symbol val'>:select</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='dstring node'>&quot;#{self.fatesearch_key},&quot;</span> <span class='plus op'>+</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='fatesearch_fields identifier id'>fatesearch_fields</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='string val'>','</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='puts identifier id'>puts</span> <span class='dstring node'>&quot;Indexing records for #{self.fatesearch_path}&quot;</span>
+  <span class='records identifier id'>records</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='row identifier id'>row</span><span class='bitor op'>|</span>
+    <span class='key identifier id'>key</span> <span class='assign token'>=</span> <span class='row identifier id'>row</span><span class='lbrack token'>[</span><span class='self self kw'>self</span><span class='dot token'>.</span><span class='fatesearch_key identifier id'>fatesearch_key</span><span class='rbrack token'>]</span>
+    <span class='values identifier id'>values</span> <span class='assign token'>=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='fatesearch_fields identifier id'>fatesearch_fields</span><span class='dot token'>.</span><span class='map identifier id'>map</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='field identifier id'>field</span><span class='bitor op'>|</span> <span class='row identifier id'>row</span><span class='lbrack token'>[</span><span class='field identifier id'>field</span><span class='rbrack token'>]</span><span class='rbrace token'>}</span>
+    <span class='puts identifier id'>puts</span> <span class='values identifier id'>values</span><span class='dot token'>.</span><span class='inspect identifier id'>inspect</span>
+    <span class='self self kw'>self</span><span class='dot token'>.</span><span class='fragment_writer identifier id'>fragment_writer</span><span class='dot token'>.</span><span class='add identifier id'>add</span><span class='lparen token'>(</span><span class='key identifier id'>key</span><span class='comma token'>,</span> <span class='values identifier id'>values</span><span class='rparen token'>)</span> 
+  <span class='rbrace token'>}</span>          
+  <span class='puts identifier id'>puts</span> <span class='dstring node'>&quot;Writing indexes for #{self.fatesearch_path}&quot;</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='fragment_writer identifier id'>fragment_writer</span><span class='dot token'>.</span><span class='finish! fid id'>finish!</span>
+  <span class='puts identifier id'>puts</span> <span class='dstring node'>&quot;Indexes built for #{self.fatesearch_path}&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>fulltext_load</h3>
+</div><div id="fulltext_load-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>fulltext_load</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+108
+109
+110
+111
+112</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/fates.rb', line 108</span>
+
+<span class='def def kw'>def</span> <span class='fulltext_load identifier id'>fulltext_load</span>
+  <span class='latest identifier id'>latest</span> <span class='assign token'>=</span> <span class='Dir constant id'>Dir</span><span class='lbrack token'>[</span><span class='self self kw'>self</span><span class='dot token'>.</span><span class='fatesearch_path identifier id'>fatesearch_path</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='sort identifier id'>sort</span><span class='dot token'>.</span><span class='last identifier id'>last</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='fulltext_reader identifier id'>fulltext_reader</span> <span class='assign token'>=</span> <span class='FateSearch constant id'>FateSearch</span><span class='colon2 op'>::</span><span class='FulltextReader constant id'>FulltextReader</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='symbol val'>:path</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='dstring node'>&quot;#{latest}/fulltext&quot;</span><span class='rparen token'>)</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='suffix_array_reader identifier id'>suffix_array_reader</span> <span class='assign token'>=</span> <span class='FateSearch constant id'>FateSearch</span><span class='colon2 op'>::</span><span class='SuffixArrayReader constant id'>SuffixArrayReader</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='dot token'>.</span><span class='fulltext_reader identifier id'>fulltext_reader</span><span class='comma token'>,</span> <span class='symbol val'>:path</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='dstring node'>&quot;#{latest}/suffixes&quot;</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

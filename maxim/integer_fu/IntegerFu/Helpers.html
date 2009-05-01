@@ -1,0 +1,337 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: IntegerFu::Helpers</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module IntegerFu_Helpers">
+  <h1 class="title">Module: IntegerFu::Helpers</h1>
+  <div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#array_to_integer_with_keys-instance_method' title='#array_to_integer_with_keys'>#array_to_integer_with_keys</a></span><span class='args'>(array, *keys)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#keys_with_truthy_values-instance_method' title='#keys_with_truthy_values'>#keys_with_truthy_values</a></span><span class='args'>(hash)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#mapped_integer_for_key-instance_method' title='#mapped_integer_for_key'>#mapped_integer_for_key</a></span><span class='args'>(key, array)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#raise_undefined_key_error-instance_method' title='#raise_undefined_key_error'>#raise_undefined_key_error</a></span><span class='args'>(key)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#symbolize-instance_method' title='#symbolize'>#symbolize</a></span><span class='args'>(array)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>array_to_integer_with_keys</h3>
+</div><div id="array_to_integer_with_keys-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>array_to_integer_with_keys</span><span class='args'>(array, *keys)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+13
+14
+15
+16
+17
+18
+19</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/helpers.rb', line 13</span>
+
+<span class='def def kw'>def</span> <span class='array_to_integer_with_keys identifier id'>array_to_integer_with_keys</span><span class='lparen token'>(</span><span class='array identifier id'>array</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='keys identifier id'>keys</span><span class='rparen token'>)</span>
+  <span class='set_keys identifier id'>set_keys</span> <span class='assign token'>=</span> <span class='symbolize identifier id'>symbolize</span><span class='lparen token'>(</span><span class='keys identifier id'>keys</span><span class='dot token'>.</span><span class='flatten identifier id'>flatten</span><span class='rparen token'>)</span>
+  <span class='all_keys identifier id'>all_keys</span> <span class='assign token'>=</span> <span class='symbolize identifier id'>symbolize</span><span class='lparen token'>(</span><span class='array identifier id'>array</span><span class='rparen token'>)</span>
+  <span class='set_keys identifier id'>set_keys</span><span class='dot token'>.</span><span class='inject identifier id'>inject</span><span class='lparen token'>(</span><span class='integer val'>0</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='sum identifier id'>sum</span><span class='comma token'>,</span> <span class='set_key identifier id'>set_key</span><span class='bitor op'>|</span>
+    <span class='sum identifier id'>sum</span> <span class='opasgn op'>+=</span> <span class='mapped_integer_for_key identifier id'>mapped_integer_for_key</span><span class='lparen token'>(</span><span class='set_key identifier id'>set_key</span><span class='comma token'>,</span> <span class='all_keys identifier id'>all_keys</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>keys_with_truthy_values</h3>
+</div><div id="keys_with_truthy_values-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>keys_with_truthy_values</span><span class='args'>(hash)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+27
+28
+29</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/helpers.rb', line 27</span>
+
+<span class='def def kw'>def</span> <span class='keys_with_truthy_values identifier id'>keys_with_truthy_values</span><span class='lparen token'>(</span><span class='hash identifier id'>hash</span><span class='rparen token'>)</span>
+  <span class='hash identifier id'>hash</span><span class='dot token'>.</span><span class='keys identifier id'>keys</span><span class='dot token'>.</span><span class='select identifier id'>select</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='k identifier id'>k</span><span class='bitor op'>|</span> <span class='notop op'>!</span><span class='notop op'>!</span><span class='hash identifier id'>hash</span><span class='lbrack token'>[</span><span class='k identifier id'>k</span><span class='rbrack token'>]</span><span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>mapped_integer_for_key</h3>
+</div><div id="mapped_integer_for_key-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>mapped_integer_for_key</span><span class='args'>(key, array)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+21
+22
+23
+24
+25</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/helpers.rb', line 21</span>
+
+<span class='def def kw'>def</span> <span class='mapped_integer_for_key identifier id'>mapped_integer_for_key</span><span class='lparen token'>(</span><span class='key identifier id'>key</span><span class='comma token'>,</span> <span class='array identifier id'>array</span><span class='rparen token'>)</span>
+  <span class='key identifier id'>key</span> <span class='assign token'>=</span> <span class='key identifier id'>key</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span>
+  <span class='all_keys identifier id'>all_keys</span> <span class='assign token'>=</span> <span class='symbolize identifier id'>symbolize</span><span class='lparen token'>(</span><span class='array identifier id'>array</span><span class='rparen token'>)</span>
+  <span class='all_keys identifier id'>all_keys</span><span class='dot token'>.</span><span class='index identifier id'>index</span><span class='lparen token'>(</span><span class='key identifier id'>key</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='integer val'>2</span><span class='pow op'>**</span><span class='all_keys identifier id'>all_keys</span><span class='dot token'>.</span><span class='index identifier id'>index</span><span class='lparen token'>(</span><span class='key identifier id'>key</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='integer val'>0</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>raise_undefined_key_error</h3>
+</div><div id="raise_undefined_key_error-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>raise_undefined_key_error</span><span class='args'>(key)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="raise">
+  <h3>Raises:</h3>
+  <dl>
+  
+    <dt>
+      
+        <span class='type'>[<tt><a href='IntegerFuError.html' title='IntegerFu::IntegerFuError'>IntegerFu::IntegerFuError</a></tt>]</span>
+      
+      
+    </dt>
+    <dd>
+      <span class='desc'></span>
+    </dd>
+  
+  </dl>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+5
+6
+7</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/helpers.rb', line 5</span>
+
+<span class='def def kw'>def</span> <span class='raise_undefined_key_error identifier id'>raise_undefined_key_error</span><span class='lparen token'>(</span><span class='key identifier id'>key</span><span class='rparen token'>)</span>
+  <span class='raise identifier id'>raise</span> <span class='IntegerFu constant id'>IntegerFu</span><span class='colon2 op'>::</span><span class='IntegerFuError constant id'>IntegerFuError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;Attempt to access undefined key \&quot;#{key}\&quot;.&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>symbolize</h3>
+</div><div id="symbolize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>symbolize</span><span class='args'>(array)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+9
+10
+11</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/helpers.rb', line 9</span>
+
+<span class='def def kw'>def</span> <span class='symbolize identifier id'>symbolize</span><span class='lparen token'>(</span><span class='array identifier id'>array</span><span class='rparen token'>)</span>
+  <span class='array identifier id'>array</span><span class='dot token'>.</span><span class='map identifier id'>map</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='v identifier id'>v</span><span class='bitor op'>|</span> <span class='v identifier id'>v</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span><span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

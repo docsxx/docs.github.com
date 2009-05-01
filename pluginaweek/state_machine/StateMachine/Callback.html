@@ -1,0 +1,410 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: StateMachine::Callback</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class StateMachine_Callback">
+  <h1 class="title">Class: StateMachine::Callback</h1>
+  <div class="section mixins">
+  <h1>Included Modules</h1>
+  <p><a href='Callback/EvalHelpers.html' title='StateMachine::EvalHelpers'>StateMachine::EvalHelpers</a></p>
+</div><div class="section docstring">
+  <p>
+Callbacks represent hooks into objects that allow logic to be triggered
+before or after a specific transition occurs.
+</p>
+
+</div><div class="section attributes">
+  <h1>Attributes</h1>
+
+  
+    <div class="class">
+      <h2>Class Attributes</h2>
+      <table>
+      
+        <tr>
+          <th class="name">bind_to_object</td>
+          <td class="readwrite">
+            [<span id='bind_to_object-class_method'>R</span><span id='bind_to_object%3D-class_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Determines whether to automatically bind the callback to the object being
+transitioned.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">terminator</td>
+          <td class="readwrite">
+            [<span id='terminator-class_method'>R</span><span id='terminator%3D-class_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+The application-wide terminator to use for callbacks when not explicitly
+defined.
+</p>
+
+            
+          </td>
+        </tr>
+      
+      </table>
+    </div>
+  
+    <div class="instance">
+      <h2>Instance Attributes</h2>
+      <table>
+      
+        <tr>
+          <th class="name">guard</td>
+          <td class="readwrite">
+            [<span id='guard-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+The guard that determines whether or not this callback can be invoked based
+on the context of the transition.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">terminator</td>
+          <td class="readwrite">
+            [<span id='terminator-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+An optional block for determining whether to cancel the callback chain
+based on the return value of the callback.
+</p>
+
+            
+          </td>
+        </tr>
+      
+      </table>
+    </div>
+  
+</div><div class="section constants">
+  
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(*args, &amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Creates a new callback that can get called based on the configured options.
+</p>
+<p>
+In addition to the possible configuration options for guards, the following
+options can be configured:
+</p>
+<ul>
+<li><tt>:bind_to_object</tt> - Whether to bind the callback to the object
+involved. If set to false, the object will be passed as a parameter
+instead. Default is integration-specific or set to the application default.
+
+</li>
+<li><tt>:terminator</tt> - A block/proc that determines what callback results
+should cause the callback chain to halt (if not using the default <tt>throw
+:halt</tt> technique).
+
+</li>
+</ul>
+<p>
+More information about how those options affect the behavior of the
+callback can be found in their attribute definitions.
+</p>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="raise">
+  <h3>Raises:</h3>
+  <dl>
+  
+    <dt>
+      
+        <span class='type'>[<tt>ArgumentError</tt>]</span>
+      
+      
+    </dt>
+    <dd>
+      <span class='desc'></span>
+    </dd>
+  
+  </dl>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/state_machine/callback.rb', line 115</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='last identifier id'>last</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Hash constant id'>Hash</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='pop identifier id'>pop</span> <span class='colon op'>:</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='@methods ivar id'>@methods</span> <span class='assign token'>=</span> <span class='args identifier id'>args</span>
+  <span class='@methods ivar id'>@methods</span><span class='dot token'>.</span><span class='concat identifier id'>concat</span><span class='lparen token'>(</span><span class='Array constant id'>Array</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:do</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='@methods ivar id'>@methods</span> <span class='lshft op'>&lt;&lt;</span> <span class='block identifier id'>block</span> <span class='if if_mod kw'>if</span> <span class='block_given? fid id'>block_given?</span>
+  
+  <span class='raise identifier id'>raise</span> <span class='ArgumentError constant id'>ArgumentError</span><span class='comma token'>,</span> <span class='string val'>'Method(s) for callback must be specified'</span> <span class='unless unless_mod kw'>unless</span> <span class='@methods ivar id'>@methods</span><span class='dot token'>.</span><span class='any? fid id'>any?</span>
+  
+  <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='symbol val'>:bind_to_object</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='bind_to_object identifier id'>bind_to_object</span><span class='comma token'>,</span> <span class='symbol val'>:terminator</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='terminator identifier id'>terminator</span><span class='rbrace token'>}</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  
+  <span class='comment val'># Proxy lambda blocks so that they're bound to the object</span>
+  <span class='bind_to_object identifier id'>bind_to_object</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:bind_to_object</span><span class='rparen token'>)</span>
+  <span class='@methods ivar id'>@methods</span><span class='dot token'>.</span><span class='map! fid id'>map!</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='method identifier id'>method</span><span class='bitor op'>|</span>
+    <span class='bind_to_object identifier id'>bind_to_object</span> <span class='andop op'>&amp;&amp;</span> <span class='method identifier id'>method</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Proc constant id'>Proc</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='bound_method identifier id'>bound_method</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='method identifier id'>method</span>
+  <span class='end end kw'>end</span>
+  
+  <span class='@terminator ivar id'>@terminator</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:terminator</span><span class='rparen token'>)</span>
+  
+  <span class='@guard ivar id'>@guard</span> <span class='assign token'>=</span> <span class='Guard constant id'>Guard</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#call-instance_method' title='#call'>#call</a></span><span class='args'>(object, context = {}, *args)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Runs the callback as long as the transition context matches the guard
+requirements configured for this callback.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#known_states-instance_method' title='#known_states'>#known_states</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Gets a list of the states known to this callback by looking at the
+guard&#8217;s known states.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table><div class="included">
+  
+  <div>
+    <h1>Public Instance Methods Included from <a href='Callback/EvalHelpers.html' title='StateMachine::EvalHelpers'>StateMachine::EvalHelpers</a></h1>
+    <p><span class='name'><a href='EvalHelpers.html#evaluate_method-instance_method' title='evaluate_method'>evaluate_method</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>call</h3>
+</div><div id="call-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>call</span><span class='args'>(object, context = {}, *args)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Runs the callback as long as the transition context matches the guard
+requirements configured for this callback.
+</p>
+<p>
+If a terminator has been configured and it matches the result from the
+evaluated method, then the callback chain should be halted
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/state_machine/callback.rb', line 147</span>
+
+<span class='def def kw'>def</span> <span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='comma token'>,</span> <span class='context identifier id'>context</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='@guard ivar id'>@guard</span><span class='dot token'>.</span><span class='matches? fid id'>matches?</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='comma token'>,</span> <span class='context identifier id'>context</span><span class='rparen token'>)</span>
+    <span class='@methods ivar id'>@methods</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='method identifier id'>method</span><span class='bitor op'>|</span>
+      <span class='result identifier id'>result</span> <span class='assign token'>=</span> <span class='evaluate_method identifier id'>evaluate_method</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='comma token'>,</span> <span class='method identifier id'>method</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+      <span class='throw identifier id'>throw</span> <span class='symbol val'>:halt</span> <span class='if if_mod kw'>if</span> <span class='@terminator ivar id'>@terminator</span> <span class='andop op'>&amp;&amp;</span> <span class='@terminator ivar id'>@terminator</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='result identifier id'>result</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+    
+    <span class='true true kw'>true</span>
+  <span class='else else kw'>else</span>
+    <span class='false false kw'>false</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>known_states</h3>
+</div><div id="known_states-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>known_states</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Gets a list of the states known to this callback by looking at the
+guard&#8217;s known states
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+138
+139
+140</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/state_machine/callback.rb', line 138</span>
+
+<span class='def def kw'>def</span> <span class='known_states identifier id'>known_states</span>
+  <span class='guard identifier id'>guard</span><span class='dot token'>.</span><span class='known_states identifier id'>known_states</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

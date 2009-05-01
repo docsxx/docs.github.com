@@ -1,0 +1,462 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: Ronin::Platform::ExtensionCache</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class Ronin_Platform_ExtensionCache">
+  <h1 class="title">Class: Ronin::Platform::ExtensionCache</h1>
+  <div class="section inheritance">
+  <ul>
+  <li><a href='../../Object.html' title='Object'>Object</a></li><ul><li><a href='../../Hash.html' title='Hash'>Hash</a></li><ul><li>Ronin::Platform::ExtensionCache</li>
+  </ul></ul></ul>
+</div><div class="section constants">
+  
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(&amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Creates a new empty ExtensionCache object. If a <em>block</em> is given it
+will be passed the newly created ExtensionCache object.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/ronin/platform/extension_cache.rb', line 35</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='super super kw'>super</span><span class='lparen token'>(</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='hash identifier id'>hash</span><span class='comma token'>,</span><span class='key identifier id'>key</span><span class='bitor op'>|</span>
+    <span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='key identifier id'>key</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+
+    <span class='hash identifier id'>hash</span><span class='lbrack token'>[</span><span class='name identifier id'>name</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='load_extension identifier id'>load_extension</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+
+  <span class='at_exit identifier id'>at_exit</span> <span class='do do kw'>do</span>
+    <span class='each_extension identifier id'>each_extension</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='ext identifier id'>ext</span><span class='bitor op'>|</span> <span class='ext identifier id'>ext</span><span class='dot token'>.</span><span class='teardown! fid id'>teardown!</span> <span class='rbrace token'>}</span>
+  <span class='end end kw'>end</span>
+
+  <span class='block identifier id'>block</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='block identifier id'>block</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#extensions_with-instance_method' title='#extensions_with'>#extensions_with</a></span><span class='args'>(&amp;block)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Selects the extensions within the cache that match the specified
+<em>block</em>.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#has_extension%3F-instance_method' title='#has_extension?'>#has_extension?</a></span><span class='args'>(name)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns <tt>true</tt> if the cache contains the extension with the
+specified <em>name</em>, returns <tt>false</tt> otherwise.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#load_extension-instance_method' title='#load_extension'>#load_extension</a></span><span class='args'>(name,&amp;block)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Loads the extension with the specified <em>name</em>.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#names-instance_method' title='#names'>#names</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns the sorted names of the extensions within the cache.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#reload%21-instance_method' title='#reload!'>#reload!</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Reloads the extensions within the extension cache.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table><div class="inherited">
+  
+  <div>
+    <h1>Public Instance Methods Inherited from <a href='../../Hash.html' title='Hash'>Hash</a></h1>
+    <p><span class='name'><a href='../../Hash.html#explode-instance_method' title='explode'>explode</a></span></p>
+  </div>
+  
+  <div>
+    <h1>Public Instance Methods Inherited from <a href='../../Object.html' title='Object'>Object</a></h1>
+    <p><span class='name'><a href='../../Object.html#class_def-instance_method' title='class_def'>class_def</a></span>, <span class='name'><a href='../../Object.html#meta_def-instance_method' title='meta_def'>meta_def</a></span>, <span class='name'><a href='../../Object.html#meta_eval-instance_method' title='meta_eval'>meta_eval</a></span>, <span class='name'><a href='../../Object.html#metaclass-instance_method' title='metaclass'>metaclass</a></span>, <span class='name'><a href='../../Object.html#metaclass_def-instance_method' title='metaclass_def'>metaclass_def</a></span>, <span class='name'><a href='../../Object.html#metaclass_eval-instance_method' title='metaclass_eval'>metaclass_eval</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>extensions_with</h3>
+</div><div id="extensions_with-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>extensions_with</span><span class='args'>(&amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Selects the extensions within the cache that match the specified
+<em>block</em>.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+63
+64
+65</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/ronin/platform/extension_cache.rb', line 63</span>
+
+<span class='def def kw'>def</span> <span class='extensions_with identifier id'>extensions_with</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='values identifier id'>values</span><span class='dot token'>.</span><span class='select identifier id'>select</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>has_extension?</h3>
+</div><div id="has_extension%3F-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>has_extension?</span><span class='args'>(name)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns <tt>true</tt> if the cache contains the extension with the
+specified <em>name</em>, returns <tt>false</tt> otherwise.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+71
+72
+73</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/ronin/platform/extension_cache.rb', line 71</span>
+
+<span class='def def kw'>def</span> <span class='has_extension? fid id'>has_extension?</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='rparen token'>)</span>
+  <span class='has_key? fid id'>has_key?</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>load_extension</h3>
+</div><div id="load_extension-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>load_extension</span><span class='args'>(name,&amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Loads the extension with the specified <em>name</em>. If no such extension
+exists an ExtensionNotFound exception will be raised. If a <em>block</em>
+is given, it will be passed the loaded extension.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/ronin/platform/extension_cache.rb', line 80</span>
+
+<span class='def def kw'>def</span> <span class='load_extension identifier id'>load_extension</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='name identifier id'>name</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+
+  <span class='unless unless kw'>unless</span> <span class='Platform constant id'>Platform</span><span class='dot token'>.</span><span class='overlays identifier id'>overlays</span><span class='dot token'>.</span><span class='has_extension? fid id'>has_extension?</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='rparen token'>)</span>
+    <span class='raise identifier id'>raise</span><span class='lparen token'>(</span><span class='ExtensionNotFound constant id'>ExtensionNotFound</span><span class='comma token'>,</span><span class='dstring node'>&quot;extension #{name.dump} does not eixst&quot;</span><span class='comma token'>,</span><span class='caller identifier id'>caller</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+
+  <span class='return return kw'>return</span> <span class='Extension constant id'>Extension</span><span class='dot token'>.</span><span class='load identifier id'>load</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='ext identifier id'>ext</span><span class='bitor op'>|</span>
+    <span class='ext identifier id'>ext</span><span class='dot token'>.</span><span class='setup! fid id'>setup!</span>
+
+    <span class='block identifier id'>block</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='ext identifier id'>ext</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='block identifier id'>block</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>names</h3>
+</div><div id="names-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>names</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns the sorted names of the extensions within the cache.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+52
+53
+54</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/ronin/platform/extension_cache.rb', line 52</span>
+
+<span class='def def kw'>def</span> <span class='names identifier id'>names</span>
+  <span class='keys identifier id'>keys</span><span class='dot token'>.</span><span class='sort identifier id'>sort</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>reload!</h3>
+</div><div id="reload%21-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>reload!</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Reloads the extensions within the extension cache.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+97
+98
+99
+100
+101
+102
+103</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/ronin/platform/extension_cache.rb', line 97</span>
+
+<span class='def def kw'>def</span> <span class='reload! fid id'>reload!</span>
+  <span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='name identifier id'>name</span><span class='comma token'>,</span><span class='ext identifier id'>ext</span><span class='bitor op'>|</span>
+    <span class='ext identifier id'>ext</span><span class='dot token'>.</span><span class='teardown! fid id'>teardown!</span>
+
+    <span class='self self kw'>self</span><span class='lbrack token'>[</span><span class='name identifier id'>name</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='load_extension identifier id'>load_extension</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

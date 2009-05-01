@@ -1,0 +1,233 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: StateMachine::Integrations</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module StateMachine_Integrations">
+  <h1 class="title">Module: StateMachine::Integrations</h1>
+  <div class="section docstring">
+  <p>
+Integrations allow state machines to take advantage of features within the
+context of a particular library. This is currently most useful with
+database libraries. For example, the various database integrations allow
+state machines to hook into features like:
+</p>
+<ul>
+<li>Saving
+
+</li>
+<li>Transactions
+
+</li>
+<li>Observers
+
+</li>
+<li>Scopes
+
+</li>
+<li>Callbacks
+
+</li>
+<li>Validation errors
+
+</li>
+</ul>
+<p>
+This type of integration allows the user to work with state machines in a
+fashion similar to other object models in their application.
+</p>
+<p>
+The integration interface is loosely defined by various unimplemented
+methods in the StateMachine::Machine class. See that class or the various
+built-in integrations for more information about how to define additional
+integrations.
+</p>
+
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <h1>Public Class Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#find-class_method' title='find'>find</a></span><span class='args'>(name)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Finds an integration with the given name.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#match-class_method' title='match'>match</a></span><span class='args'>(klass)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Attempts to find an integration that matches the given class.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails class public">
+  <h1>Public Class Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>find</h3>
+</div><div id="find-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>find</span><span class='args'>(name)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Finds an integration with the given name. If the integration cannot be
+found, then a NameError exception will be raised.
+</p>
+<h2>Examples</h2>
+<pre class="code">
+  <span class='StateMachine constant id'>StateMachine</span><span class='colon2 op'>::</span><span class='Integrations constant id'>Integrations</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='symbol val'>:active_record</span><span class='rparen token'>)</span>   <span class='comment val'># =&gt; StateMachine::Integrations::ActiveRecord</span>
+  <span class='StateMachine constant id'>StateMachine</span><span class='colon2 op'>::</span><span class='Integrations constant id'>Integrations</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='symbol val'>:data_mapper</span><span class='rparen token'>)</span>     <span class='comment val'># =&gt; StateMachine::Integrations::DataMapper</span>
+  <span class='StateMachine constant id'>StateMachine</span><span class='colon2 op'>::</span><span class='Integrations constant id'>Integrations</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='symbol val'>:sequel</span><span class='rparen token'>)</span>          <span class='comment val'># =&gt; StateMachine::Integrations::Sequel</span>
+  <span class='StateMachine constant id'>StateMachine</span><span class='colon2 op'>::</span><span class='Integrations constant id'>Integrations</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='symbol val'>:invalid</span><span class='rparen token'>)</span>         <span class='comment val'># =&gt; NameError: wrong constant name Invalid</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+64
+65
+66</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/state_machine/integrations.rb', line 64</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='rparen token'>)</span>
+  <span class='const_get identifier id'>const_get</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='regexp val'>/(?:^|_)(.)/</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='$1 nth_ref id'>$1</span><span class='dot token'>.</span><span class='upcase identifier id'>upcase</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>match</h3>
+</div><div id="match-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>match</span><span class='args'>(klass)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Attempts to find an integration that matches the given class. This will
+look through all of the built-in integrations under the
+StateMachine::Integrations namespace and find one that successfully matches
+the class.
+</p>
+<h2>Examples</h2>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='Vehicle constant id'>Vehicle</span>
+  <span class='end end kw'>end</span>
+
+  <span class='class class kw'>class</span> <span class='ARVehicle constant id'>ARVehicle</span> <span class='lt op'>&lt;</span> <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
+  <span class='end end kw'>end</span>
+
+  <span class='class class kw'>class</span> <span class='DMVehicle constant id'>DMVehicle</span>
+    <span class='include identifier id'>include</span> <span class='DataMapper constant id'>DataMapper</span><span class='colon2 op'>::</span><span class='Resource constant id'>Resource</span>
+  <span class='end end kw'>end</span>
+
+  <span class='class class kw'>class</span> <span class='SequelVehicle constant id'>SequelVehicle</span> <span class='lt op'>&lt;</span> <span class='Sequel constant id'>Sequel</span><span class='colon2 op'>::</span><span class='Model constant id'>Model</span>
+  <span class='end end kw'>end</span>
+
+  <span class='StateMachine constant id'>StateMachine</span><span class='colon2 op'>::</span><span class='Integrations constant id'>Integrations</span><span class='dot token'>.</span><span class='match identifier id'>match</span><span class='lparen token'>(</span><span class='Vehicle constant id'>Vehicle</span><span class='rparen token'>)</span>         <span class='comment val'># =&gt; nil</span>
+  <span class='StateMachine constant id'>StateMachine</span><span class='colon2 op'>::</span><span class='Integrations constant id'>Integrations</span><span class='dot token'>.</span><span class='match identifier id'>match</span><span class='lparen token'>(</span><span class='ARVehicle constant id'>ARVehicle</span><span class='rparen token'>)</span>       <span class='comment val'># =&gt; StateMachine::Integrations::ActiveRecord</span>
+  <span class='StateMachine constant id'>StateMachine</span><span class='colon2 op'>::</span><span class='Integrations constant id'>Integrations</span><span class='dot token'>.</span><span class='match identifier id'>match</span><span class='lparen token'>(</span><span class='DMVehicle constant id'>DMVehicle</span><span class='rparen token'>)</span>       <span class='comment val'># =&gt; StateMachine::Integrations::DataMapper</span>
+  <span class='StateMachine constant id'>StateMachine</span><span class='colon2 op'>::</span><span class='Integrations constant id'>Integrations</span><span class='dot token'>.</span><span class='match identifier id'>match</span><span class='lparen token'>(</span><span class='SequelVehicle constant id'>SequelVehicle</span><span class='rparen token'>)</span>   <span class='comment val'># =&gt; StateMachine::Integrations::Sequel</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+49
+50
+51
+52
+53</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/state_machine/integrations.rb', line 49</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='match identifier id'>match</span><span class='lparen token'>(</span><span class='klass identifier id'>klass</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='integration identifier id'>integration</span> <span class='assign token'>=</span> <span class='constants identifier id'>constants</span><span class='dot token'>.</span><span class='find identifier id'>find</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='name identifier id'>name</span><span class='bitor op'>|</span> <span class='const_get identifier id'>const_get</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='matches? fid id'>matches?</span><span class='lparen token'>(</span><span class='klass identifier id'>klass</span><span class='rparen token'>)</span><span class='rbrace token'>}</span>
+    <span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='integration identifier id'>integration</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

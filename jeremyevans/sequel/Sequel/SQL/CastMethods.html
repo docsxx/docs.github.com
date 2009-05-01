@@ -1,0 +1,235 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: Sequel::SQL::CastMethods</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module Sequel_SQL_CastMethods">
+  <h1 class="title">Module: Sequel::SQL::CastMethods</h1>
+  <div class="section docstring">
+  <p>
+Holds methods that are used to cast objects to differen SQL types.
+</p>
+
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#cast-instance_method' title='#cast'>#cast</a></span><span class='args'>(sql_type)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Cast the reciever to the given SQL type.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#cast_numeric-instance_method' title='#cast_numeric'>#cast_numeric</a></span><span class='args'>(sql_type = nil)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Cast the reciever to the given SQL type (or the database&#8217;s default
+integer type if none given), and return the result as a NumericExpression.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#cast_string-instance_method' title='#cast_string'>#cast_string</a></span><span class='args'>(sql_type = nil)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Cast the reciever to the given SQL type (or the database&#8217;s default
+string type if none given), and return the result as a StringExpression, so
+you can use + directly on the result for SQL string concatenation.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>cast</h3>
+</div><div id="cast-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>cast</span><span class='args'>(sql_type)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Cast the reciever to the given SQL type. You can specify a ruby class as a
+type, and it is handled similarly to using a database independent type in
+the schema methods.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+175
+176
+177</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/sql.rb', line 175</span>
+
+<span class='def def kw'>def</span> <span class='cast identifier id'>cast</span><span class='lparen token'>(</span><span class='sql_type identifier id'>sql_type</span><span class='rparen token'>)</span>
+  <span class='Cast constant id'>Cast</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='sql_type identifier id'>sql_type</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>cast_numeric</h3>
+</div><div id="cast_numeric-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>cast_numeric</span><span class='args'>(sql_type = nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Cast the reciever to the given SQL type (or the database&#8217;s default
+integer type if none given), and return the result as a NumericExpression.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+181
+182
+183</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/sql.rb', line 181</span>
+
+<span class='def def kw'>def</span> <span class='cast_numeric identifier id'>cast_numeric</span><span class='lparen token'>(</span><span class='sql_type identifier id'>sql_type</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='cast identifier id'>cast</span><span class='lparen token'>(</span><span class='sql_type identifier id'>sql_type</span> <span class='orop op'>||</span> <span class='Integer constant id'>Integer</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='sql_number identifier id'>sql_number</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>cast_string</h3>
+</div><div id="cast_string-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>cast_string</span><span class='args'>(sql_type = nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Cast the reciever to the given SQL type (or the database&#8217;s default
+string type if none given), and return the result as a StringExpression, so
+you can use + directly on the result for SQL string concatenation.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+188
+189
+190</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/sql.rb', line 188</span>
+
+<span class='def def kw'>def</span> <span class='cast_string identifier id'>cast_string</span><span class='lparen token'>(</span><span class='sql_type identifier id'>sql_type</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='cast identifier id'>cast</span><span class='lparen token'>(</span><span class='sql_type identifier id'>sql_type</span> <span class='orop op'>||</span> <span class='String constant id'>String</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='sql_string identifier id'>sql_string</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

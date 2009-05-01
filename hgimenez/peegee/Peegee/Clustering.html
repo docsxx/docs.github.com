@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: Peegee::Clustering</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module Peegee_Clustering">
+  <h1 class="title">Module: Peegee::Clustering</h1>
+  <div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#cluster-instance_method' title='#cluster'>#cluster</a></span><span class='args'>(cluster_index = nil)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Clusters this table.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>cluster</h3>
+</div><div id="cluster-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>cluster</span><span class='args'>(cluster_index = nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Clusters this table. See
+http://www.postgresql.org/docs/8.3/interactive/sql-cluster.html Optionally
+specify the index to cluster by (by name or Peegee::Index object). The
+index to use would ideally be specified using the
+<tt>Peegee::Configuration</tt> instance. If the index is not specified, it
+will try to induce which index to use by looking at postgresql&#8217;s
+internals. If a proper index can&#8217;t be found, an exception will be
+raised.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/peegee/clustering.rb', line 10</span>
+
+<span class='def def kw'>def</span> <span class='cluster identifier id'>cluster</span><span class='lparen token'>(</span><span class='cluster_index identifier id'>cluster_index</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='cluster_index identifier id'>cluster_index</span> <span class='assign token'>=</span> <span class='find_cluster_index identifier id'>find_cluster_index</span><span class='lparen token'>(</span><span class='cluster_index identifier id'>cluster_index</span><span class='rparen token'>)</span>
+  <span class='cache_dependencies identifier id'>cache_dependencies</span>
+  <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='dot token'>.</span><span class='transaction identifier id'>transaction</span> <span class='do do kw'>do</span>
+    <span class='create_tmp_table identifier id'>create_tmp_table</span>
+    <span class='move_data identifier id'>move_data</span><span class='lparen token'>(</span><span class='cluster_index identifier id'>cluster_index</span><span class='rparen token'>)</span>
+    <span class='dependent_foreign_keys identifier id'>dependent_foreign_keys</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='dfk identifier id'>dfk</span><span class='bitor op'>|</span> <span class='dfk identifier id'>dfk</span><span class='dot token'>.</span><span class='drop identifier id'>drop</span> <span class='rbrace token'>}</span>
+    <span class='drop_original_and_rename_tmp_table identifier id'>drop_original_and_rename_tmp_table</span>
+    <span class='indexes identifier id'>indexes</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='i identifier id'>i</span><span class='bitor op'>|</span> <span class='i identifier id'>i</span><span class='dot token'>.</span><span class='create identifier id'>create</span> <span class='rbrace token'>}</span>
+    <span class='foreign_keys identifier id'>foreign_keys</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='fk identifier id'>fk</span><span class='bitor op'>|</span> <span class='fk identifier id'>fk</span><span class='dot token'>.</span><span class='create identifier id'>create</span> <span class='rbrace token'>}</span>
+    <span class='dependent_foreign_keys identifier id'>dependent_foreign_keys</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='dfk identifier id'>dfk</span><span class='bitor op'>|</span> <span class='dfk identifier id'>dfk</span><span class='dot token'>.</span><span class='create identifier id'>create</span> <span class='rbrace token'>}</span>
+    <span class='unique_constraints identifier id'>unique_constraints</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='uc identifier id'>uc</span><span class='bitor op'>|</span> <span class='uc identifier id'>uc</span><span class='dot token'>.</span><span class='create identifier id'>create</span> <span class='rbrace token'>}</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

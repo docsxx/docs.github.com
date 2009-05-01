@@ -1,0 +1,386 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: XSD::XMLParser::Nokogiri</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class XSD_XMLParser_Nokogiri">
+  <h1 class="title">Class: XSD::XMLParser::Nokogiri</h1>
+  <div class="section inheritance">
+  <ul>
+  <li>XSD::XMLParser::Parser</li><ul><li>XSD::XMLParser::Nokogiri</li>
+  </ul></ul>
+</div><div class="section docstring">
+  <p>
+Nokogiri XML parser for soap4r.
+</p>
+<p>
+Nokogiri may be used as the XML parser in soap4r. Simply require
+&#8216;xsd/xmlparser/nokogiri&#8217; in your soap4r applications, and
+soap4r will use Nokogiri as it&#8217;s XML parser. No other changes should
+be required to use Nokogiri as the XML parser.
+</p>
+<p>
+Example (using UW ITS Web Services):
+</p>
+<pre class="code">
+  <span class='require identifier id'>require</span> <span class='string val'>'rubygems'</span>
+  <span class='gem identifier id'>gem</span> <span class='string val'>'soap4r'</span>
+  <span class='require identifier id'>require</span> <span class='string val'>'nokogiri'</span>
+  <span class='require identifier id'>require</span> <span class='string val'>'xsd/xmlparser/nokogiri'</span>
+  <span class='require identifier id'>require</span> <span class='string val'>'defaultDriver'</span>
+
+  <span class='obj identifier id'>obj</span> <span class='assign token'>=</span> <span class='AvlPortType constant id'>AvlPortType</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+  <span class='obj identifier id'>obj</span><span class='dot token'>.</span><span class='getLatestByRoute identifier id'>getLatestByRoute</span><span class='lparen token'>(</span><span class='obj identifier id'>obj</span><span class='dot token'>.</span><span class='getAgencies identifier id'>getAgencies</span><span class='comma token'>,</span> <span class='integer val'>8</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='event identifier id'>event</span><span class='bitor op'>|</span>
+    <span class='dot3 op'>...</span>
+  <span class='end end kw'>end</span>
+</pre>
+
+</div><div class="section constants">
+  
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>host, opt = {}</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Create a new XSD parser with <tt>host</tt> and <tt>opt</tt>
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+28
+29
+30
+31</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/xsd/xmlparser/nokogiri.rb', line 28</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span> <span class='host identifier id'>host</span><span class='comma token'>,</span> <span class='opt identifier id'>opt</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='super super kw'>super</span>
+  <span class='@parser ivar id'>@parser</span> <span class='assign token'>=</span> <span class='colon3 op'>::</span><span class='Nokogiri constant id'>Nokogiri</span><span class='colon2 op'>::</span><span class='XML constant id'>XML</span><span class='colon2 op'>::</span><span class='SAX constant id'>SAX</span><span class='colon2 op'>::</span><span class='Parser constant id'>Parser</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='@charset ivar id'>@charset</span> <span class='orop op'>||</span> <span class='string val'>'UTF-8'</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#cdata_block-instance_method' title='#cdata_block'>#cdata_block</a></span><span class='args'>string</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Handle cdata_blocks containing <tt>string</tt>.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#do_parse-instance_method' title='#do_parse'>#do_parse</a></span><span class='args'>string_or_readable</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Start parsing <tt>string_or_readable</tt>.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#error-instance_method' title='#error'>#error</a></span><span class='args'>msg</span>
+        <span class='block'></span>
+        
+          <span class='alias'>#warning</span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Handle errors with message <tt>msg</tt>.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#start_element-instance_method' title='#start_element'>#start_element</a></span><span class='args'>name, attrs = []</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Handle the start_element event with <tt>name</tt> and <tt>attrs</tt>.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>cdata_block</h3>
+</div><div id="cdata_block-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>cdata_block</span><span class='args'>string</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Handle cdata_blocks containing <tt>string</tt>
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+54
+55
+56</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/xsd/xmlparser/nokogiri.rb', line 54</span>
+
+<span class='def def kw'>def</span> <span class='cdata_block identifier id'>cdata_block</span> <span class='string identifier id'>string</span>
+  <span class='characters identifier id'>characters</span> <span class='string identifier id'>string</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>do_parse</h3>
+</div><div id="do_parse-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>do_parse</span><span class='args'>string_or_readable</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Start parsing <tt>string_or_readable</tt>
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+35
+36
+37</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/xsd/xmlparser/nokogiri.rb', line 35</span>
+
+<span class='def def kw'>def</span> <span class='do_parse identifier id'>do_parse</span> <span class='string_or_readable identifier id'>string_or_readable</span>
+  <span class='@parser ivar id'>@parser</span><span class='dot token'>.</span><span class='parse identifier id'>parse</span><span class='lparen token'>(</span><span class='string_or_readable identifier id'>string_or_readable</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>error</h3>
+</div><div id="error-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>error</span><span class='args'>msg</span>
+    <span class='block'></span>
+  </tt>
+</div>
+<p class="aliases">
+  <span class="aka">Also known as:</span>
+  
+    <tt id="warning-instance_method">warning</tt>
+  
+</p>
+</div><div class="section docstring">
+  <p>
+Handle errors with message <tt>msg</tt>
+</p>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="raise">
+  <h3>Raises:</h3>
+  <dl>
+  
+    <dt>
+      
+        <span class='type'>[<tt>ParseError</tt>]</span>
+      
+      
+    </dt>
+    <dd>
+      <span class='desc'></span>
+    </dd>
+  
+  </dl>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+47
+48
+49</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/xsd/xmlparser/nokogiri.rb', line 47</span>
+
+<span class='def def kw'>def</span> <span class='error identifier id'>error</span> <span class='msg identifier id'>msg</span>
+  <span class='raise identifier id'>raise</span> <span class='ParseError constant id'>ParseError</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='msg identifier id'>msg</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>start_element</h3>
+</div><div id="start_element-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>start_element</span><span class='args'>name, attrs = []</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Handle the start_element event with <tt>name</tt> and <tt>attrs</tt>
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+41
+42
+43</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/xsd/xmlparser/nokogiri.rb', line 41</span>
+
+<span class='def def kw'>def</span> <span class='start_element identifier id'>start_element</span> <span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='attrs identifier id'>attrs</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+  <span class='super super kw'>super</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='Hash constant id'>Hash</span><span class='lbrack token'>[</span><span class='mult op'>*</span><span class='attrs identifier id'>attrs</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

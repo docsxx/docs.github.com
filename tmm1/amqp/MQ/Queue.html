@@ -1,0 +1,1476 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: MQ::Queue</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class MQ_Queue">
+  <h1 class="title">Class: MQ::Queue</h1>
+  <div class="section mixins">
+  <h1>Included Modules</h1>
+  <p><a href='Queue/AMQP.html' title='AMQP'>AMQP</a></p>
+</div><div class="section attributes">
+  <h1>Attributes</h1>
+
+  
+    <div class="instance">
+      <h2>Instance Attributes</h2>
+      <table>
+      
+        <tr>
+          <th class="name">name</td>
+          <td class="readwrite">
+            [<span id='name-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>name</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+      </table>
+    </div>
+  
+</div><div class="section constants">
+  <div class="included">
+  
+  <div>
+    <h1>Constants Included from <a href='Queue/AMQP.html' title='AMQP'>AMQP</a></h1>
+    <p><span class='name'><a href='../AMQP.html#DIR-constant' title='DIR'>DIR</a></span>, <span class='name'><a href='../AMQP.html#FIELDS-constant' title='FIELDS'>FIELDS</a></span>, <span class='name'><a href='../AMQP.html#HEADER-constant' title='HEADER'>HEADER</a></span>, <span class='name'><a href='../AMQP.html#PORT-constant' title='PORT'>PORT</a></span>, <span class='name'><a href='../AMQP.html#RESPONSES-constant' title='RESPONSES'>RESPONSES</a></span>, <span class='name'><a href='../AMQP.html#VERSION-constant' title='VERSION'>VERSION</a></span>, <span class='name'><a href='../AMQP.html#VERSION_MAJOR-constant' title='VERSION_MAJOR'>VERSION_MAJOR</a></span>, <span class='name'><a href='../AMQP.html#VERSION_MINOR-constant' title='VERSION_MINOR'>VERSION_MINOR</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>mq, name, opts = {}</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Queues store and forward messages. Queues can be configured in the server
+or created at runtime. Queues must be attached to at least one exchange in
+order to receive messages from publishers.
+</p>
+<p>
+Like an Exchange, queue names starting with &#8216;amq.&#8217; are reserved
+for internal use. Attempts to create queue names in violation of this
+reservation will raise MQ:Error (ACCESS_REFUSED).
+</p>
+<p>
+When a queue is created without a name, the server will generate a unique
+name internally (not currently supported in this library).
+</p>
+<h2>Options</h2>
+<ul>
+<li>:passive =&gt; true | false (default false)
+
+</li>
+</ul>
+<p>
+If set, the server will not create the exchange if it does not already
+exist. The client can use this to check whether an exchange exists without
+modifying the server state.
+</p>
+<ul>
+<li>:durable =&gt; true | false (default false)
+
+</li>
+</ul>
+<p>
+If set when creating a new queue, the queue will be marked as durable.
+Durable queues remain active when a server restarts. Non-durable queues
+(transient queues) are purged if/when a server restarts. Note that durable
+queues do not necessarily hold persistent messages, although it does not
+make sense to send persistent messages to a transient queue (though it is
+allowed).
+</p>
+<p>
+If the queue has already been declared, any redeclaration will ignore this
+setting. A queue may only be declared durable the first time when it is
+created.
+</p>
+<ul>
+<li>:exclusive =&gt; true | false (default false)
+
+</li>
+</ul>
+<p>
+Exclusive queues may only be consumed from by the current connection.
+Setting the &#8216;exclusive&#8217; flag always implies
+&#8216;auto-delete&#8217;. Only a single consumer is allowed to remove
+messages from this queue.
+</p>
+<p>
+The default is a shared queue. Multiple clients may consume messages from
+this queue.
+</p>
+<p>
+Attempting to redeclare an already-declared queue as :exclusive =&gt; true
+will raise MQ:Error.
+</p>
+<ul>
+<li>:auto_delete = true | false (default false)
+
+</li>
+</ul>
+<p>
+If set, the queue is deleted when all consumers have finished using it.
+Last consumer can be cancelled either explicitly or because its channel is
+closed. If there was no consumer ever on the queue, it won&#8217;t be
+deleted.
+</p>
+<p>
+The server waits for a short period of time before determining the queue is
+unused to give time to the client code to bind an exchange to it.
+</p>
+<p>
+If the queue has been previously declared, this option is ignored on
+subsequent declarations.
+</p>
+<ul>
+<li>:nowait =&gt; true | false (default true)
+
+</li>
+</ul>
+<p>
+If set, the server will not respond to the method. The client should not
+wait for a reply method. If the server could not complete the method it
+will raise a channel or connection exception.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/mq/queue.rb', line 64</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span> <span class='mq identifier id'>mq</span><span class='comma token'>,</span> <span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='@mq ivar id'>@mq</span> <span class='assign token'>=</span> <span class='mq identifier id'>mq</span>
+  <span class='@opts ivar id'>@opts</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span>
+  <span class='@bindings ivar id'>@bindings</span> <span class='opasgn op'>||=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='@mq ivar id'>@mq</span><span class='dot token'>.</span><span class='queues identifier id'>queues</span><span class='lbrack token'>[</span><span class='@name ivar id'>@name</span> <span class='assign token'>=</span> <span class='name identifier id'>name</span><span class='rbrack token'>]</span> <span class='opasgn op'>||=</span> <span class='self self kw'>self</span>
+  <span class='@mq ivar id'>@mq</span><span class='dot token'>.</span><span class='callback identifier id'>callback</span><span class='lbrace token'>{</span>
+    <span class='@mq ivar id'>@mq</span><span class='dot token'>.</span><span class='send identifier id'>send</span> <span class='Protocol constant id'>Protocol</span><span class='colon2 op'>::</span><span class='Queue constant id'>Queue</span><span class='colon2 op'>::</span><span class='Declare constant id'>Declare</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='lbrace token'>{</span> <span class='symbol val'>:queue</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='name identifier id'>name</span><span class='comma token'>,</span>
+                                            <span class='symbol val'>:nowait</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span> <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <div class="included">
+  
+  <div>
+    <h1>Public Class Methods Included from <a href='Queue/AMQP.html' title='AMQP'>AMQP</a></h1>
+    <p><span class='name'><a href='../AMQP.html#client-class_method' title='client'>client</a></span>, <span class='name'><a href='../AMQP.html#connect-class_method' title='connect'>connect</a></span>, <span class='name'><a href='../AMQP.html#fork-class_method' title='fork'>fork</a></span>, <span class='name'><a href='../AMQP.html#settings-class_method' title='settings'>settings</a></span>, <span class='name'><a href='../AMQP.html#start-class_method' title='start'>start</a></span>, <span class='name'><a href='../AMQP.html#stop-class_method' title='stop'>stop</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+  <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#bind-instance_method' title='#bind'>#bind</a></span><span class='args'>exchange, opts = {}</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+This method binds a queue to an exchange.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#cancelled-instance_method' title='#cancelled'>#cancelled</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#delete-instance_method' title='#delete'>#delete</a></span><span class='args'>opts = {}</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+This method deletes a queue.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#pop-instance_method' title='#pop'>#pop</a></span><span class='args'>opts = {}, &amp;blk</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+This method provides a direct access to the messages in a queue using a
+synchronous dialogue that is designed for specific types of application
+where synchronous functionality is more important than performance.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#publish-instance_method' title='#publish'>#publish</a></span><span class='args'>data, opts = {}</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#receive-instance_method' title='#receive'>#receive</a></span><span class='args'>headers, body</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Passes the message to the block passed to pop or subscribe.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#recieve_status-instance_method' title='#recieve_status'>#recieve_status</a></span><span class='args'>declare_ok</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#reset-instance_method' title='#reset'>#reset</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#status-instance_method' title='#status'>#status</a></span><span class='args'>opts = {}, &amp;blk</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Get the number of messages and consumers on a queue.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#subscribe-instance_method' title='#subscribe'>#subscribe</a></span><span class='args'>opts = {}, &amp;blk</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Subscribes to asynchronous message delivery.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#subscribed%3F-instance_method' title='#subscribed?'>#subscribed?</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Boolean check to see if the current queue has already been subscribed to an
+exchange.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#unbind-instance_method' title='#unbind'>#unbind</a></span><span class='args'>exchange, opts = {}</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Remove the binding between the queue and exchange.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#unsubscribe-instance_method' title='#unsubscribe'>#unsubscribe</a></span><span class='args'>opts = {}, &amp;blk</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Removes the subscription from the queue and cancels the consumer.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table><div class="included">
+  
+  <div>
+    <h1>Public Instance Methods Included from <a href='Queue/AMQP.html' title='AMQP'>AMQP</a></h1>
+    <p><span class='name'><a href='../AMQP.html#_read-instance_method' title='_read'>_read</a></span>, <span class='name'><a href='../AMQP.html#_write-instance_method' title='_write'>_write</a></span>, <span class='name'><a href='../AMQP.html#extract-instance_method' title='extract'>extract</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>bind</h3>
+</div><div id="bind-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>bind</span><span class='args'>exchange, opts = {}</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+This method binds a queue to an exchange. Until a queue is bound it will
+not receive any messages. In a classic messaging model, store-and-forward
+queues are bound to a dest exchange and subscription queues are bound to a
+dest_wild exchange.
+</p>
+<p>
+A valid exchange name (or reference) must be passed as the first parameter.
+Both of these are valid:
+</p>
+<pre class="code">
+ <span class='exch identifier id'>exch</span> <span class='assign token'>=</span> <span class='MQ constant id'>MQ</span><span class='dot token'>.</span><span class='direct identifier id'>direct</span><span class='lparen token'>(</span><span class='string val'>'foo exchange'</span><span class='rparen token'>)</span>
+ <span class='queue identifier id'>queue</span> <span class='assign token'>=</span> <span class='MQ constant id'>MQ</span><span class='dot token'>.</span><span class='queue identifier id'>queue</span><span class='lparen token'>(</span><span class='string val'>'bar queue'</span><span class='rparen token'>)</span>
+ <span class='queue identifier id'>queue</span><span class='dot token'>.</span><span class='bind identifier id'>bind</span><span class='lparen token'>(</span><span class='string val'>'foo.exchange'</span><span class='rparen token'>)</span> <span class='comment val'># OR</span>
+ <span class='queue identifier id'>queue</span><span class='dot token'>.</span><span class='bind identifier id'>bind</span><span class='lparen token'>(</span><span class='exch identifier id'>exch</span><span class='rparen token'>)</span>
+</pre>
+<p>
+It is not valid to call #bind without the <tt>exchange</tt> parameter.
+</p>
+<p>
+It is unnecessary to call #bind when the exchange name and queue name match
+exactly (for <tt>direct</tt> and <tt>fanout</tt> exchanges only). There is
+an implicit bind which will deliver the messages from the exchange to the
+queue.
+</p>
+<h2>Options</h2>
+<ul>
+<li>:key =&gt; &#8216;some string&#8217;
+
+</li>
+</ul>
+<p>
+Specifies the routing key for the binding. The routing key is used for
+routing messages depending on the exchange configuration. Not all exchanges
+use a routing key - refer to the specific exchange documentation. If the
+routing key is empty and the queue name is empty, the routing key will be
+the current queue for the channel, which is the last declared queue.
+</p>
+<ul>
+<li>:nowait =&gt; true | false (default true)
+
+</li>
+</ul>
+<p>
+If set, the server will not respond to the method. The client should not
+wait for a reply method. If the server could not complete the method it
+will raise a channel or connection exception.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/mq/queue.rb', line 109</span>
+
+<span class='def def kw'>def</span> <span class='bind identifier id'>bind</span> <span class='exchange identifier id'>exchange</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='exchange identifier id'>exchange</span> <span class='assign token'>=</span> <span class='exchange identifier id'>exchange</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:name</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='exchange identifier id'>exchange</span><span class='dot token'>.</span><span class='name identifier id'>name</span> <span class='colon op'>:</span> <span class='exchange identifier id'>exchange</span>
+  <span class='@bindings ivar id'>@bindings</span><span class='lbrack token'>[</span><span class='exchange identifier id'>exchange</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span>
+
+  <span class='@mq ivar id'>@mq</span><span class='dot token'>.</span><span class='callback identifier id'>callback</span><span class='lbrace token'>{</span>
+    <span class='@mq ivar id'>@mq</span><span class='dot token'>.</span><span class='send identifier id'>send</span> <span class='Protocol constant id'>Protocol</span><span class='colon2 op'>::</span><span class='Queue constant id'>Queue</span><span class='colon2 op'>::</span><span class='Bind constant id'>Bind</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='lbrace token'>{</span> <span class='symbol val'>:queue</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='name identifier id'>name</span><span class='comma token'>,</span>
+                                         <span class='symbol val'>:exchange</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='exchange identifier id'>exchange</span><span class='comma token'>,</span>
+                                         <span class='symbol val'>:routing_key</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='opts identifier id'>opts</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:key</span><span class='rparen token'>)</span><span class='comma token'>,</span>
+                                         <span class='symbol val'>:nowait</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span> <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='rbrace token'>}</span>
+  <span class='self self kw'>self</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>cancelled</h3>
+</div><div id="cancelled-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>cancelled</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+402
+403
+404
+405
+406
+407</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/mq/queue.rb', line 402</span>
+
+<span class='def def kw'>def</span> <span class='cancelled identifier id'>cancelled</span>
+  <span class='@on_cancel ivar id'>@on_cancel</span><span class='dot token'>.</span><span class='call identifier id'>call</span> <span class='if if_mod kw'>if</span> <span class='@on_cancel ivar id'>@on_cancel</span>
+  <span class='@on_cancel ivar id'>@on_cancel</span> <span class='assign token'>=</span> <span class='@on_msg ivar id'>@on_msg</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+  <span class='@mq ivar id'>@mq</span><span class='dot token'>.</span><span class='consumers identifier id'>consumers</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span> <span class='@consumer_tag ivar id'>@consumer_tag</span>
+  <span class='@consumer_tag ivar id'>@consumer_tag</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>delete</h3>
+</div><div id="delete-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>delete</span><span class='args'>opts = {}</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+This method deletes a queue. When a queue is deleted any pending messages
+are sent to a dead-letter queue if this is defined in the server
+configuration, and all consumers on the queue are cancelled.
+</p>
+<h2>Options</h2>
+<ul>
+<li>:if_unused =&gt; true | false (default false)
+
+</li>
+</ul>
+<p>
+If set, the server will only delete the queue if it has no consumers. If
+the queue has consumers the server does does not delete it but raises a
+channel exception instead.
+</p>
+<ul>
+<li>:if_empty =&gt; true | false (default false)
+
+</li>
+</ul>
+<p>
+If set, the server will only delete the queue if it has no messages. If the
+queue is not empty the server raises a channel exception.
+</p>
+<ul>
+<li>:nowait =&gt; true | false (default true)
+
+</li>
+</ul>
+<p>
+If set, the server will not respond to the method. The client should not
+wait for a reply method. If the server could not complete the method it
+will raise a channel or connection exception.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+169
+170
+171
+172
+173
+174
+175
+176</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/mq/queue.rb', line 169</span>
+
+<span class='def def kw'>def</span> <span class='delete identifier id'>delete</span> <span class='opts identifier id'>opts</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='@mq ivar id'>@mq</span><span class='dot token'>.</span><span class='callback identifier id'>callback</span><span class='lbrace token'>{</span>
+    <span class='@mq ivar id'>@mq</span><span class='dot token'>.</span><span class='send identifier id'>send</span> <span class='Protocol constant id'>Protocol</span><span class='colon2 op'>::</span><span class='Queue constant id'>Queue</span><span class='colon2 op'>::</span><span class='Delete constant id'>Delete</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='lbrace token'>{</span> <span class='symbol val'>:queue</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='name identifier id'>name</span><span class='comma token'>,</span>
+                                           <span class='symbol val'>:nowait</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span> <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='rbrace token'>}</span>
+  <span class='@mq ivar id'>@mq</span><span class='dot token'>.</span><span class='queues identifier id'>queues</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span> <span class='@name ivar id'>@name</span>
+  <span class='nil nil kw'>nil</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>pop</h3>
+</div><div id="pop-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>pop</span><span class='args'>opts = {}, &amp;blk</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+This method provides a direct access to the messages in a queue using a
+synchronous dialogue that is designed for specific types of application
+where synchronous functionality is more important than performance.
+</p>
+<p>
+The provided block is passed a single message each time pop is called.
+</p>
+<pre class="code">
+ <span class='EM constant id'>EM</span><span class='dot token'>.</span><span class='run identifier id'>run</span> <span class='do do kw'>do</span>
+   <span class='exchange identifier id'>exchange</span> <span class='assign token'>=</span> <span class='MQ constant id'>MQ</span><span class='dot token'>.</span><span class='direct identifier id'>direct</span><span class='lparen token'>(</span><span class='string val'>&quot;foo queue&quot;</span><span class='rparen token'>)</span>
+   <span class='EM constant id'>EM</span><span class='dot token'>.</span><span class='add_periodic_timer identifier id'>add_periodic_timer</span><span class='lparen token'>(</span><span class='integer val'>1</span><span class='rparen token'>)</span> <span class='do do kw'>do</span>
+     <span class='exchange identifier id'>exchange</span><span class='dot token'>.</span><span class='publish identifier id'>publish</span><span class='lparen token'>(</span><span class='dstring node'>&quot;random number #{rand(1000)}&quot;</span><span class='rparen token'>)</span>
+   <span class='end end kw'>end</span>
+
+   <span class='comment val'># note that #bind is never called; it is implicit because</span>
+   <span class='comment val'># the exchange and queue names match</span>
+   <span class='queue identifier id'>queue</span> <span class='assign token'>=</span> <span class='MQ constant id'>MQ</span><span class='dot token'>.</span><span class='queue identifier id'>queue</span><span class='lparen token'>(</span><span class='string val'>'foo queue'</span><span class='rparen token'>)</span>
+   <span class='queue identifier id'>queue</span><span class='dot token'>.</span><span class='pop identifier id'>pop</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='body identifier id'>body</span><span class='bitor op'>|</span> <span class='puts identifier id'>puts</span> <span class='dstring node'>&quot;received payload [#{body}]&quot;</span> <span class='rbrace token'>}</span>
+
+   <span class='EM constant id'>EM</span><span class='dot token'>.</span><span class='add_periodic_timer identifier id'>add_periodic_timer</span><span class='lparen token'>(</span><span class='integer val'>1</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='queue identifier id'>queue</span><span class='dot token'>.</span><span class='pop identifier id'>pop</span> <span class='rbrace token'>}</span>
+ <span class='end end kw'>end</span>
+</pre>
+<p>
+If the block takes 2 parameters, both the <tt>header</tt> and the
+<tt>body</tt> will be passed in for processing. The header object is
+defined by AMQP::Protocol::Header.
+</p>
+<pre class="code">
+ <span class='EM constant id'>EM</span><span class='dot token'>.</span><span class='run identifier id'>run</span> <span class='do do kw'>do</span>
+   <span class='exchange identifier id'>exchange</span> <span class='assign token'>=</span> <span class='MQ constant id'>MQ</span><span class='dot token'>.</span><span class='direct identifier id'>direct</span><span class='lparen token'>(</span><span class='string val'>&quot;foo queue&quot;</span><span class='rparen token'>)</span>
+   <span class='EM constant id'>EM</span><span class='dot token'>.</span><span class='add_periodic_timer identifier id'>add_periodic_timer</span><span class='lparen token'>(</span><span class='integer val'>1</span><span class='rparen token'>)</span> <span class='do do kw'>do</span>
+     <span class='exchange identifier id'>exchange</span><span class='dot token'>.</span><span class='publish identifier id'>publish</span><span class='lparen token'>(</span><span class='dstring node'>&quot;random number #{rand(1000)}&quot;</span><span class='rparen token'>)</span>
+   <span class='end end kw'>end</span>
+
+   <span class='queue identifier id'>queue</span> <span class='assign token'>=</span> <span class='MQ constant id'>MQ</span><span class='dot token'>.</span><span class='queue identifier id'>queue</span><span class='lparen token'>(</span><span class='string val'>'foo queue'</span><span class='rparen token'>)</span>
+   <span class='queue identifier id'>queue</span><span class='dot token'>.</span><span class='pop identifier id'>pop</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='header identifier id'>header</span><span class='comma token'>,</span> <span class='body identifier id'>body</span><span class='bitor op'>|</span>
+     <span class='p identifier id'>p</span> <span class='header identifier id'>header</span>
+     <span class='puts identifier id'>puts</span> <span class='dstring node'>&quot;received payload [#{body}]&quot;</span>
+   <span class='end end kw'>end</span>
+
+   <span class='EM constant id'>EM</span><span class='dot token'>.</span><span class='add_periodic_timer identifier id'>add_periodic_timer</span><span class='lparen token'>(</span><span class='integer val'>1</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='queue identifier id'>queue</span><span class='dot token'>.</span><span class='pop identifier id'>pop</span> <span class='rbrace token'>}</span>
+ <span class='end end kw'>end</span>
+</pre>
+<h2>Options</h2>
+<ul>
+<li>:ack =&gt; true | false (default false)
+
+</li>
+</ul>
+<p>
+If this field is set to false the server does not expect acknowledgments
+for messages. That is, when a message is delivered to the client the server
+automatically and silently acknowledges it on behalf of the client. This
+functionality increases performance but at the cost of reliability.
+Messages can get lost if a client dies before it can deliver them to the
+application.
+</p>
+<ul>
+<li>:nowait =&gt; true | false (default true)
+
+</li>
+</ul>
+<p>
+If set, the server will not respond to the method. The client should not
+wait for a reply method. If the server could not complete the method it
+will raise a channel or connection exception.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/mq/queue.rb', line 232</span>
+
+<span class='def def kw'>def</span> <span class='pop identifier id'>pop</span> <span class='opts identifier id'>opts</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='blk identifier id'>blk</span>
+  <span class='if if kw'>if</span> <span class='blk identifier id'>blk</span>
+    <span class='@on_pop ivar id'>@on_pop</span> <span class='assign token'>=</span> <span class='blk identifier id'>blk</span>
+    <span class='@on_pop_opts ivar id'>@on_pop_opts</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span>
+  <span class='end end kw'>end</span>
+
+  <span class='@mq ivar id'>@mq</span><span class='dot token'>.</span><span class='callback identifier id'>callback</span><span class='lbrace token'>{</span>
+    <span class='@mq ivar id'>@mq</span><span class='dot token'>.</span><span class='get_queue identifier id'>get_queue</span><span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='q identifier id'>q</span><span class='bitor op'>|</span>
+      <span class='q identifier id'>q</span><span class='dot token'>.</span><span class='push identifier id'>push</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='rparen token'>)</span>
+      <span class='@mq ivar id'>@mq</span><span class='dot token'>.</span><span class='send identifier id'>send</span> <span class='Protocol constant id'>Protocol</span><span class='colon2 op'>::</span><span class='Basic constant id'>Basic</span><span class='colon2 op'>::</span><span class='Get constant id'>Get</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='lbrace token'>{</span> <span class='symbol val'>:queue</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='name identifier id'>name</span><span class='comma token'>,</span>
+                                          <span class='symbol val'>:consumer_tag</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='name identifier id'>name</span><span class='comma token'>,</span>
+                                          <span class='symbol val'>:no_ack</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='notop op'>!</span><span class='opts identifier id'>opts</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:ack</span><span class='rparen token'>)</span><span class='comma token'>,</span>
+                                          <span class='symbol val'>:nowait</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span> <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+    <span class='rbrace token'>}</span>
+  <span class='rbrace token'>}</span>
+
+  <span class='self self kw'>self</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>publish</h3>
+</div><div id="publish-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>publish</span><span class='args'>data, opts = {}</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+347
+348
+349</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/mq/queue.rb', line 347</span>
+
+<span class='def def kw'>def</span> <span class='publish identifier id'>publish</span> <span class='data identifier id'>data</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='exchange identifier id'>exchange</span><span class='dot token'>.</span><span class='publish identifier id'>publish</span><span class='lparen token'>(</span><span class='data identifier id'>data</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>receive</h3>
+</div><div id="receive-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>receive</span><span class='args'>headers, body</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Passes the message to the block passed to pop or subscribe.
+</p>
+<p>
+Performs an arity check on the block&#8217;s parameters. If arity == 1,
+pass only the message body. If arity != 1, pass the headers and the body to
+the block.
+</p>
+<p>
+See AMQP::Protocol::Header for the hash properties available from the
+headers parameter. See #pop or #subscribe for a code example.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+371
+372
+373
+374
+375
+376
+377</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/mq/queue.rb', line 371</span>
+
+<span class='def def kw'>def</span> <span class='receive identifier id'>receive</span> <span class='headers identifier id'>headers</span><span class='comma token'>,</span> <span class='body identifier id'>body</span>
+  <span class='headers identifier id'>headers</span> <span class='assign token'>=</span> <span class='MQ constant id'>MQ</span><span class='colon2 op'>::</span><span class='Header constant id'>Header</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='@mq ivar id'>@mq</span><span class='comma token'>,</span> <span class='headers identifier id'>headers</span><span class='rparen token'>)</span>
+
+  <span class='if if kw'>if</span> <span class='cb identifier id'>cb</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='@on_msg ivar id'>@on_msg</span> <span class='orop op'>||</span> <span class='@on_pop ivar id'>@on_pop</span><span class='rparen token'>)</span>
+    <span class='cb identifier id'>cb</span><span class='dot token'>.</span><span class='call identifier id'>call</span> <span class='mult op'>*</span><span class='lparen token'>(</span><span class='cb identifier id'>cb</span><span class='dot token'>.</span><span class='arity identifier id'>arity</span> <span class='eq op'>==</span> <span class='integer val'>1</span> <span class='question op'>?</span> <span class='lbrack token'>[</span><span class='body identifier id'>body</span><span class='rbrack token'>]</span> <span class='colon op'>:</span> <span class='lbrack token'>[</span><span class='headers identifier id'>headers</span><span class='comma token'>,</span> <span class='body identifier id'>body</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>recieve_status</h3>
+</div><div id="recieve_status-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>recieve_status</span><span class='args'>declare_ok</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+394
+395
+396
+397
+398
+399
+400</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/mq/queue.rb', line 394</span>
+
+<span class='def def kw'>def</span> <span class='recieve_status identifier id'>recieve_status</span> <span class='declare_ok identifier id'>declare_ok</span>
+  <span class='if if kw'>if</span> <span class='@on_status ivar id'>@on_status</span>
+    <span class='m identifier id'>m</span><span class='comma token'>,</span> <span class='c identifier id'>c</span> <span class='assign token'>=</span> <span class='declare_ok identifier id'>declare_ok</span><span class='dot token'>.</span><span class='message_count identifier id'>message_count</span><span class='comma token'>,</span> <span class='declare_ok identifier id'>declare_ok</span><span class='dot token'>.</span><span class='consumer_count identifier id'>consumer_count</span>
+    <span class='@on_status ivar id'>@on_status</span><span class='dot token'>.</span><span class='call identifier id'>call</span> <span class='mult op'>*</span><span class='lparen token'>(</span><span class='@on_status ivar id'>@on_status</span><span class='dot token'>.</span><span class='arity identifier id'>arity</span> <span class='eq op'>==</span> <span class='integer val'>1</span> <span class='question op'>?</span> <span class='lbrack token'>[</span><span class='m identifier id'>m</span><span class='rbrack token'>]</span> <span class='colon op'>:</span> <span class='lbrack token'>[</span><span class='m identifier id'>m</span><span class='comma token'>,</span> <span class='c identifier id'>c</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+    <span class='@on_status ivar id'>@on_status</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>reset</h3>
+</div><div id="reset-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>reset</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/mq/queue.rb', line 409</span>
+
+<span class='def def kw'>def</span> <span class='reset identifier id'>reset</span>
+  <span class='@deferred_status ivar id'>@deferred_status</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+  <span class='initialize identifier id'>initialize</span> <span class='@mq ivar id'>@mq</span><span class='comma token'>,</span> <span class='@name ivar id'>@name</span><span class='comma token'>,</span> <span class='@opts ivar id'>@opts</span>
+
+  <span class='binds identifier id'>binds</span> <span class='assign token'>=</span> <span class='@bindings ivar id'>@bindings</span>
+  <span class='@bindings ivar id'>@bindings</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='binds identifier id'>binds</span><span class='dot token'>.</span><span class='each identifier id'>each</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='ex identifier id'>ex</span><span class='comma token'>,</span><span class='opts identifier id'>opts</span><span class='bitor op'>|</span> <span class='bind identifier id'>bind</span><span class='lparen token'>(</span><span class='ex identifier id'>ex</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+
+  <span class='if if kw'>if</span> <span class='blk identifier id'>blk</span> <span class='assign token'>=</span> <span class='@on_msg ivar id'>@on_msg</span>
+    <span class='@on_msg ivar id'>@on_msg</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+    <span class='subscribe identifier id'>subscribe</span> <span class='@on_msg_opts ivar id'>@on_msg_opts</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='blk identifier id'>blk</span>
+  <span class='end end kw'>end</span>
+
+  <span class='if if kw'>if</span> <span class='@on_pop ivar id'>@on_pop</span>
+    <span class='pop identifier id'>pop</span> <span class='@on_pop_opts ivar id'>@on_pop_opts</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='@on_pop ivar id'>@on_pop</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>status</h3>
+</div><div id="status-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>status</span><span class='args'>opts = {}, &amp;blk</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Get the number of messages and consumers on a queue.
+</p>
+<pre class="code">
+ <span class='MQ constant id'>MQ</span><span class='dot token'>.</span><span class='queue identifier id'>queue</span><span class='lparen token'>(</span><span class='string val'>'name'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='status identifier id'>status</span><span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='num_messages identifier id'>num_messages</span><span class='comma token'>,</span> <span class='num_consumers identifier id'>num_consumers</span><span class='bitor op'>|</span>
+  <span class='puts identifier id'>puts</span> <span class='num_messages identifier id'>num_messages</span>
+ <span class='rbrace token'>}</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+385
+386
+387
+388
+389
+390
+391
+392</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/mq/queue.rb', line 385</span>
+
+<span class='def def kw'>def</span> <span class='status identifier id'>status</span> <span class='opts identifier id'>opts</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='blk identifier id'>blk</span>
+  <span class='@on_status ivar id'>@on_status</span> <span class='assign token'>=</span> <span class='blk identifier id'>blk</span>
+  <span class='@mq ivar id'>@mq</span><span class='dot token'>.</span><span class='callback identifier id'>callback</span><span class='lbrace token'>{</span>
+    <span class='@mq ivar id'>@mq</span><span class='dot token'>.</span><span class='send identifier id'>send</span> <span class='Protocol constant id'>Protocol</span><span class='colon2 op'>::</span><span class='Queue constant id'>Queue</span><span class='colon2 op'>::</span><span class='Declare constant id'>Declare</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='lbrace token'>{</span> <span class='symbol val'>:queue</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='name identifier id'>name</span><span class='comma token'>,</span>
+                                            <span class='symbol val'>:passive</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span> <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='rbrace token'>}</span>
+  <span class='self self kw'>self</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>subscribe</h3>
+</div><div id="subscribe-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>subscribe</span><span class='args'>opts = {}, &amp;blk</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Subscribes to asynchronous message delivery.
+</p>
+<p>
+The provided block is passed a single message each time the exchange
+matches a message to this queue.
+</p>
+<pre class="code">
+ <span class='EM constant id'>EM</span><span class='dot token'>.</span><span class='run identifier id'>run</span> <span class='do do kw'>do</span>
+   <span class='exchange identifier id'>exchange</span> <span class='assign token'>=</span> <span class='MQ constant id'>MQ</span><span class='dot token'>.</span><span class='direct identifier id'>direct</span><span class='lparen token'>(</span><span class='string val'>&quot;foo queue&quot;</span><span class='rparen token'>)</span>
+   <span class='EM constant id'>EM</span><span class='dot token'>.</span><span class='add_periodic_timer identifier id'>add_periodic_timer</span><span class='lparen token'>(</span><span class='integer val'>1</span><span class='rparen token'>)</span> <span class='do do kw'>do</span>
+     <span class='exchange identifier id'>exchange</span><span class='dot token'>.</span><span class='publish identifier id'>publish</span><span class='lparen token'>(</span><span class='dstring node'>&quot;random number #{rand(1000)}&quot;</span><span class='rparen token'>)</span>
+   <span class='end end kw'>end</span>
+
+   <span class='queue identifier id'>queue</span> <span class='assign token'>=</span> <span class='MQ constant id'>MQ</span><span class='dot token'>.</span><span class='queue identifier id'>queue</span><span class='lparen token'>(</span><span class='string val'>'foo queue'</span><span class='rparen token'>)</span>
+   <span class='queue identifier id'>queue</span><span class='dot token'>.</span><span class='subscribe identifier id'>subscribe</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='body identifier id'>body</span><span class='bitor op'>|</span> <span class='puts identifier id'>puts</span> <span class='dstring node'>&quot;received payload [#{body}]&quot;</span> <span class='rbrace token'>}</span>
+ <span class='end end kw'>end</span>
+</pre>
+<p>
+If the block takes 2 parameters, both the <tt>header</tt> and the
+<tt>body</tt> will be passed in for processing. The header object is
+defined by AMQP::Protocol::Header.
+</p>
+<pre class="code">
+ <span class='EM constant id'>EM</span><span class='dot token'>.</span><span class='run identifier id'>run</span> <span class='do do kw'>do</span>
+   <span class='exchange identifier id'>exchange</span> <span class='assign token'>=</span> <span class='MQ constant id'>MQ</span><span class='dot token'>.</span><span class='direct identifier id'>direct</span><span class='lparen token'>(</span><span class='string val'>&quot;foo queue&quot;</span><span class='rparen token'>)</span>
+   <span class='EM constant id'>EM</span><span class='dot token'>.</span><span class='add_periodic_timer identifier id'>add_periodic_timer</span><span class='lparen token'>(</span><span class='integer val'>1</span><span class='rparen token'>)</span> <span class='do do kw'>do</span>
+     <span class='exchange identifier id'>exchange</span><span class='dot token'>.</span><span class='publish identifier id'>publish</span><span class='lparen token'>(</span><span class='dstring node'>&quot;random number #{rand(1000)}&quot;</span><span class='rparen token'>)</span>
+   <span class='end end kw'>end</span>
+
+   <span class='comment val'># note that #bind is never called; it is implicit because</span>
+   <span class='comment val'># the exchange and queue names match</span>
+   <span class='queue identifier id'>queue</span> <span class='assign token'>=</span> <span class='MQ constant id'>MQ</span><span class='dot token'>.</span><span class='queue identifier id'>queue</span><span class='lparen token'>(</span><span class='string val'>'foo queue'</span><span class='rparen token'>)</span>
+   <span class='queue identifier id'>queue</span><span class='dot token'>.</span><span class='subscribe identifier id'>subscribe</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='header identifier id'>header</span><span class='comma token'>,</span> <span class='body identifier id'>body</span><span class='bitor op'>|</span>
+     <span class='p identifier id'>p</span> <span class='header identifier id'>header</span>
+     <span class='puts identifier id'>puts</span> <span class='dstring node'>&quot;received payload [#{body}]&quot;</span>
+   <span class='end end kw'>end</span>
+ <span class='end end kw'>end</span>
+</pre>
+<h2>Options</h2>
+<ul>
+<li>:ack =&gt; true | false (default false)
+
+</li>
+</ul>
+<p>
+If this field is set to false the server does not expect acknowledgments
+for messages. That is, when a message is delivered to the client the server
+automatically and silently acknowledges it on behalf of the client. This
+functionality increases performance but at the cost of reliability.
+Messages can get lost if a client dies before it can deliver them to the
+application.
+</p>
+<ul>
+<li>:nowait =&gt; true | false (default true)
+
+</li>
+</ul>
+<p>
+If set, the server will not respond to the method. The client should not
+wait for a reply method. If the server could not complete the method it
+will raise a channel or connection exception.
+</p>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="raise">
+  <h3>Raises:</h3>
+  <dl>
+  
+    <dt>
+      
+        <span class='type'>[<tt><a href='Error.html' title='Error'>Error</a></tt>]</span>
+      
+      
+    </dt>
+    <dd>
+      <span class='desc'></span>
+    </dd>
+  
+  </dl>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/mq/queue.rb', line 299</span>
+
+<span class='def def kw'>def</span> <span class='subscribe identifier id'>subscribe</span> <span class='opts identifier id'>opts</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='blk identifier id'>blk</span>
+  <span class='@consumer_tag ivar id'>@consumer_tag</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;#{name}-#{Kernel.rand(999_999_999_999)}&quot;</span>
+  <span class='@mq ivar id'>@mq</span><span class='dot token'>.</span><span class='consumers identifier id'>consumers</span><span class='lbrack token'>[</span><span class='@consumer_tag ivar id'>@consumer_tag</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='self self kw'>self</span>
+
+  <span class='raise identifier id'>raise</span> <span class='Error constant id'>Error</span><span class='comma token'>,</span> <span class='string val'>'already subscribed to the queue'</span> <span class='if if_mod kw'>if</span> <span class='subscribed? fid id'>subscribed?</span>
+
+  <span class='@on_msg ivar id'>@on_msg</span> <span class='assign token'>=</span> <span class='blk identifier id'>blk</span>
+  <span class='@on_msg_opts ivar id'>@on_msg_opts</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span>
+
+  <span class='@mq ivar id'>@mq</span><span class='dot token'>.</span><span class='callback identifier id'>callback</span><span class='lbrace token'>{</span>
+    <span class='@mq ivar id'>@mq</span><span class='dot token'>.</span><span class='send identifier id'>send</span> <span class='Protocol constant id'>Protocol</span><span class='colon2 op'>::</span><span class='Basic constant id'>Basic</span><span class='colon2 op'>::</span><span class='Consume constant id'>Consume</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='lbrace token'>{</span> <span class='symbol val'>:queue</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='name identifier id'>name</span><span class='comma token'>,</span>
+                                            <span class='symbol val'>:consumer_tag</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='@consumer_tag ivar id'>@consumer_tag</span><span class='comma token'>,</span>
+                                            <span class='symbol val'>:no_ack</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='notop op'>!</span><span class='opts identifier id'>opts</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:ack</span><span class='rparen token'>)</span><span class='comma token'>,</span>
+                                            <span class='symbol val'>:nowait</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span> <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='rbrace token'>}</span>
+  <span class='self self kw'>self</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>subscribed?</h3>
+</div><div id="subscribed%3F-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>subscribed?</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Boolean check to see if the current queue has already been subscribed to an
+exchange.
+</p>
+<p>
+Attempts to #subscribe multiple times to any exchange will raise an
+Exception. Only a single block at a time can be associated with any one
+queue for processing incoming messages.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+358
+359
+360</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/mq/queue.rb', line 358</span>
+
+<span class='def def kw'>def</span> <span class='subscribed? fid id'>subscribed?</span>
+  <span class='notop op'>!</span><span class='notop op'>!</span><span class='@on_msg ivar id'>@on_msg</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>unbind</h3>
+</div><div id="unbind-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>unbind</span><span class='args'>exchange, opts = {}</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Remove the binding between the queue and exchange. The queue will not
+receive any more messages until it is bound to another exchange.
+</p>
+<p>
+Due to the asynchronous nature of the protocol, it is possible for &quot;in
+flight&quot; messages to be received after this call completes. Those
+messages will be serviced by the last block used in a #subscribe or #pop
+call.
+</p>
+<ul>
+<li>:nowait =&gt; true | false (default true)
+
+</li>
+</ul>
+<p>
+If set, the server will not respond to the method. The client should not
+wait for a reply method. If the server could not complete the method it
+will raise a channel or connection exception.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/mq/queue.rb', line 136</span>
+
+<span class='def def kw'>def</span> <span class='unbind identifier id'>unbind</span> <span class='exchange identifier id'>exchange</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='exchange identifier id'>exchange</span> <span class='assign token'>=</span> <span class='exchange identifier id'>exchange</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:name</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='exchange identifier id'>exchange</span><span class='dot token'>.</span><span class='name identifier id'>name</span> <span class='colon op'>:</span> <span class='exchange identifier id'>exchange</span>
+  <span class='@bindings ivar id'>@bindings</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span> <span class='exchange identifier id'>exchange</span>
+
+  <span class='@mq ivar id'>@mq</span><span class='dot token'>.</span><span class='callback identifier id'>callback</span><span class='lbrace token'>{</span>
+    <span class='@mq ivar id'>@mq</span><span class='dot token'>.</span><span class='send identifier id'>send</span> <span class='Protocol constant id'>Protocol</span><span class='colon2 op'>::</span><span class='Queue constant id'>Queue</span><span class='colon2 op'>::</span><span class='Unbind constant id'>Unbind</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='lbrace token'>{</span> <span class='symbol val'>:queue</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='name identifier id'>name</span><span class='comma token'>,</span>
+                                           <span class='symbol val'>:exchange</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='exchange identifier id'>exchange</span><span class='comma token'>,</span>
+                                           <span class='symbol val'>:routing_key</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='opts identifier id'>opts</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:key</span><span class='rparen token'>)</span><span class='comma token'>,</span>
+                                           <span class='symbol val'>:nowait</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span> <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='rbrace token'>}</span>
+  <span class='self self kw'>self</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>unsubscribe</h3>
+</div><div id="unsubscribe-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>unsubscribe</span><span class='args'>opts = {}, &amp;blk</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Removes the subscription from the queue and cancels the consumer. New
+messages will not be received by the queue. This call is similar in result
+to calling #unbind.
+</p>
+<p>
+Due to the asynchronous nature of the protocol, it is possible for &quot;in
+flight&quot; messages to be received after this call completes. Those
+messages will be serviced by the last block used in a #subscribe or #pop
+call.
+</p>
+<p>
+Additionally, if the queue was created with <em>autodelete</em> set to
+true, the server will delete the queue after its wait period has expired
+unless the queue is bound to an active exchange.
+</p>
+<p>
+The method accepts a block which will be executed when the unsubscription
+request is acknowledged as complete by the server.
+</p>
+<ul>
+<li>:nowait =&gt; true | false (default true)
+
+</li>
+</ul>
+<p>
+If set, the server will not respond to the method. The client should not
+wait for a reply method. If the server could not complete the method it
+will raise a channel or connection exception.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+338
+339
+340
+341
+342
+343
+344
+345</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/mq/queue.rb', line 338</span>
+
+<span class='def def kw'>def</span> <span class='unsubscribe identifier id'>unsubscribe</span> <span class='opts identifier id'>opts</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='blk identifier id'>blk</span>
+  <span class='@on_msg ivar id'>@on_msg</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+  <span class='@on_cancel ivar id'>@on_cancel</span> <span class='assign token'>=</span> <span class='blk identifier id'>blk</span>
+  <span class='@mq ivar id'>@mq</span><span class='dot token'>.</span><span class='callback identifier id'>callback</span><span class='lbrace token'>{</span>
+    <span class='@mq ivar id'>@mq</span><span class='dot token'>.</span><span class='send identifier id'>send</span> <span class='Protocol constant id'>Protocol</span><span class='colon2 op'>::</span><span class='Basic constant id'>Basic</span><span class='colon2 op'>::</span><span class='Cancel constant id'>Cancel</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='lbrace token'>{</span> <span class='symbol val'>:consumer_tag</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='@consumer_tag ivar id'>@consumer_tag</span> <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='rbrace token'>}</span>
+  <span class='self self kw'>self</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

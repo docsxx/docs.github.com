@@ -1,0 +1,219 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: ExtendedContent</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module ExtendedContent">
+  <h1 class="title">Module: ExtendedContent</h1>
+  <div class="section docstring">
+  <p>
+ExtendedContent provides a way to access additional, extended content
+directly on a model. (ExtendedContent is included in all Kete content
+types.)
+</p>
+<p>
+Extended Content definitions are configured separately by users with
+ExtendedField records which are mapped to topic types or content types via
+the TopicTypeToFieldMapping and ContentTypeToFieldMapping relationship
+models. So, the relationships between item classes and extended fields is
+something like AudioRecording -&gt; ContentTypeToFieldMapping(s) -&gt;
+ExtendedField. In the case of Topics the relations are Topic -&gt;
+TopicType -&gt; TopicTypeToFieldMapping(s) -&gt; ExtendedField. Refer to
+the individual classes for more information.
+</p>
+<p>
+On the model, extended content can be accessed by the
+#extended_content_values accessor methods, and by the less efficient
+individual accessor methods for each field. Behind the scenes the data
+received as a Hash instance of values (or single value in the case of
+accessor methods) is stored into a particular XML data structure in the
+#extended_content attribute, which is present as a column in the item
+class&#8217;s table.
+</p>
+<p>
+XML Schema
+</p>
+<p>
+Extended content is stored as XML in the #extended_content attribute in the
+model. There are several conventions for how the XML is represented,
+outlined below:
+</p>
+<p>
+Items with single values are stored simply as follows:
+&lt;field_label&gt;Value&lt;/field_label&gt;
+</p>
+<p>
+Items with multiple values:
+&lt;field_label_multiple&gt;&lt;1&gt;&lt;field_label&gt;Value&lt;/field_label&gt;&lt;/1&gt;&lt;2&gt;&lt;field_label&gt;Value
+2&lt;/field_label&gt;&lt;/2&gt;&lt;/field_label_multiple&gt;
+</p>
+<p>
+Choices with single values:
+&lt;field_label&gt;&lt;1&gt;Value&lt;/1&gt;&lt;/field_label&gt;
+</p>
+<p>
+Choices with multiple hierarchical values:
+&lt;field_label&gt;&lt;1&gt;Value&lt;/1&gt;&lt;2&gt;Child of
+value&lt;/2&gt;&lt;/field_label&gt;
+</p>
+<p>
+Choices with multiple hierarchical values AND multiple values (i.e.
+multiple different hierchical selections)
+&lt;field_label_multiple&gt;&lt;1&gt;&lt;field_label&gt;&lt;1&gt;Value&lt;/1&gt;&lt;2&gt;Child
+of value&lt;/2&gt;&lt;/field_label&gt;&lt;/1&gt; ..
+</p>
+<pre class="code">
+  <span class='lt op'>&lt;</span><span class='integer val'>2</span><span class='gt op'>&gt;</span><span class='lt op'>&lt;</span><span class='field_label identifier id'>field_label</span><span class='gt op'>&gt;</span><span class='lt op'>&lt;</span><span class='integer val'>1</span><span class='gt op'>&gt;</span><span class='Value constant id'>Value</span><span class='lt op'>&lt;</span><span class='regexp val'>/1&gt;&lt;2&gt;Child of value&lt;/</span><span class='integer val'>2</span><span class='gt op'>&gt;</span><span class='lt op'>&lt;</span><span class='regexp val'>/field_label&gt;&lt;/</span><span class='integer val'>2</span><span class='gt op'>&gt;</span><span class='lt op'>&lt;</span><span class='regexp val'>/field_label_multiple&gt;
+</span></pre>
+<p>
+Label/Value variation: Values are often what we want to match when we are
+doing searches, etc. They are meant to be precise and can conform to
+technical rules (e.g.
+http://must_have_valid_protocol_and_domain/and/path/for/a_url/or/link/will/fail).
+However, they often NOT what we want to be human facing. This is where a
+corresponding label may come in.
+</p>
+<p>
+For example, if I want to have an extended field for &quot;Father&quot; on
+the &quot;Person&quot; Topic Type that links to a URL about the
+person&#8217;s father, I probably don&#8217;t want to display
+&quot;http://a_kete/site/topics/show/666-the-devil&quot;. I probably want
+to display &quot;The Devil!&quot; and clicking on that takes me to the
+appropriate topic, i.e. the URL.
+</p>
+<p>
+The same can be said of forms. The user probably only wants to choose
+&quot;The Devil!&quot; and not have to remember the exact URL to input. The
+Choice model, in conjunction with the ExtendedField model, handles this in
+&quot;Choices (dropdown)&quot; and &quot;Choices (autocomplete)&quot;
+extended field ftypes. A choice may have a label (that the user sees) that
+is different from the value (that the admin assigns the choice, but end
+user doesn&#8217;t see) that gets saved to extended_content.
+</p>
+<p>
+The problem is, how do you we get the label on the display side on an
+item&#8217;s detail page when all that is submitted is the value?
+</p>
+<p>
+We would like label, if it is different from value, to travel with the
+value as it is used.
+</p>
+<ol>
+<li>in forms, when value is different than label, we pass the form input value
+of &quot;Label (Value)&quot;, unless otherwise handled (choices).
+
+</li>
+<li>when processing the form input in our model, via this module, we know to
+split label and value using this convention
+
+</li>
+<li>model.extended_content we store the corresponding xml like so:
+
+</li>
+</ol>
+<p>
+Items with single values are stored simply as follows: &lt;field_label
+label=&quot;Label&quot;&gt;Value&lt;/field_label&gt;
+</p>
+<p>
+Items with multiple values:
+&lt;field_label_multiple&gt;&lt;1&gt;&lt;field_label
+label=&quot;Label&quot;&gt;Value&lt;/field_label&gt;&lt;/1&gt;&lt;2&gt;&lt;field_label
+label=&quot;Label&quot;&gt;Value
+2&lt;/field_label&gt;&lt;/2&gt;&lt;/field_label_multiple&gt;
+</p>
+<p>
+Choices with single values: &lt;field_label&gt;&lt;1
+label=&quot;Label&quot;&gt;Value&lt;/1&gt;&lt;/field_label&gt;
+</p>
+<p>
+Choices with multiple hierarchical values: &lt;field_label&gt;&lt;1
+label=&quot;Label&quot;&gt;Value&lt;/1&gt;&lt;2
+label=&quot;Label&quot;&gt;Child of value&lt;/2&gt;&lt;/field_label&gt;
+</p>
+<p>
+etc.
+</p>
+<p>
+NOTE: a label attribute isn&#8217;t required for every value. So something
+like this is valid:
+</p>
+<p>
+Choices with multiple hierarchical values: &lt;field_label&gt;&lt;1
+label=&quot;Label&quot;&gt;Value&lt;/1&gt;&lt;2&gt;Child of
+value&lt;/2&gt;&lt;/field_label&gt;
+</p>
+<ol>
+<li>when converting our xml to a hash for dealing with, we&#8217;ll have a
+:label key/value pair.
+
+</li>
+</ol>
+<p>
+General notes on XML schema: XML element name for the OAI XML schema is
+stored in the xml_element_name attribute in the XML tag, for instance:
+&lt;field_name
+xml_element_name=&quot;dc:description&quot;&gt;value&lt;/field_name&gt;
+</p>
+<p>
+OAI XML Schema
+</p>
+<p>
+The OAI XML Schema has a different representation to the internal XML
+schema. The main differences are:
+</p>
+<ul>
+<li>Where an XML element name has been declared in the ExtendedField record, it
+is used as the tag name. For instance, &lt;field_name
+xml_element_name=&quot;dc:subject&quot;&gt;value&lt;/field_name&gt; in the
+internal XML is translated to &lt;dc:subject&gt;value&lt;/dc:subject&gt; in
+the OAI XML.
+
+</li>
+<li>Where an XML element name is not given in the ExtendedField record, the
+whole tag is wrapped verbatim in a dc:description tag. For instance,
+&lt;field_name&gt;value&lt;/field_name&gt; translates to the following in
+the OAI XML schema:
+&lt;dc:description&gt;\n&lt;field_name&gt;value&lt;/field_name&gt;\n&lt;/dc:description&gt;.
+Where multiple fields are missing XML element names, they are all wrapped
+in a single dc:description tag.
+
+</li>
+<li>For values relating to the Choice ftypes are present, these are delimited
+by colons. For instance, assuming that the ftype on the ExtendedField
+record is a variation of Choice, a singular, single level selection would
+be represented as follows: &lt;dc:description&gt;:choice
+value:&lt;/dc:description&gt; (note the dc:description could be the field
+name wrapped in a dc:description tag as mentioned in the point above in
+some cases. Where hierarchical selections are present, the values are
+presented as follows &lt;dc:description&gt;:first choice:child of first
+choice:&lt;/dc:description&gt;.
+
+</li>
+</ul>
+
+</div><div class="section constants">
+  <div class="thisclass">
+  <h1>Constants</h1>
+  <dl>
+    
+      <dt id="CLASSES_WITH_SUMMARIES-constant">CLASSES_WITH_SUMMARIES</dt>
+      <dd>['Topic', 'Document']</dd>
+    
+  </dl>
+</div>
+
+</div>
+</div>
+    </div>
+  </body>
+</html>

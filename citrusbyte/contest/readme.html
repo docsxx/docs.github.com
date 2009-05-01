@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <title>README</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section docstring readme">
+        <p>
+Contest
+</p>
+<h6>=</h6>
+<p>
+Contexts for Test::Unit.
+</p>
+<p>
+Description
+</p>
+<hr size="9"></hr><p>
+Write declarative tests using nested contexts without performance
+penalties. Contest is less than 100 lines of code and gets the job done.
+</p>
+<p>
+Usage
+</p>
+<hr size="3"></hr><p>
+Declare your tests as you would in RSpec or Shoulda:
+</p>
+<pre class="code">
+    <span class='require identifier id'>require</span> <span class='string val'>'contest'</span>
+
+    <span class='class class kw'>class</span> <span class='SomeTest constant id'>SomeTest</span> <span class='lt op'>&lt;</span> <span class='Test constant id'>Test</span><span class='colon2 op'>::</span><span class='Unit constant id'>Unit</span><span class='colon2 op'>::</span><span class='TestCase constant id'>TestCase</span>
+      <span class='setup identifier id'>setup</span> <span class='do do kw'>do</span>
+        <span class='@value ivar id'>@value</span> <span class='assign token'>=</span> <span class='integer val'>1</span>
+      <span class='end end kw'>end</span>
+
+      <span class='teardown identifier id'>teardown</span> <span class='do do kw'>do</span>
+        <span class='@value ivar id'>@value</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+      <span class='end end kw'>end</span>
+
+      <span class='test identifier id'>test</span> <span class='string val'>&quot;sample test&quot;</span> <span class='do do kw'>do</span>
+        <span class='assert_equal identifier id'>assert_equal</span> <span class='integer val'>1</span><span class='comma token'>,</span> <span class='@value ivar id'>@value</span>
+      <span class='end end kw'>end</span>
+
+      <span class='context identifier id'>context</span> <span class='string val'>&quot;a context&quot;</span> <span class='do do kw'>do</span>
+        <span class='setup identifier id'>setup</span> <span class='do do kw'>do</span>
+          <span class='@value ivar id'>@value</span> <span class='opasgn op'>+=</span> <span class='integer val'>1</span>
+        <span class='end end kw'>end</span>
+
+        <span class='test identifier id'>test</span> <span class='string val'>&quot;more tests&quot;</span> <span class='do do kw'>do</span>
+          <span class='assert_equal identifier id'>assert_equal</span> <span class='integer val'>2</span><span class='comma token'>,</span> <span class='@value ivar id'>@value</span>
+        <span class='end end kw'>end</span>
+
+        <span class='context identifier id'>context</span> <span class='string val'>&quot;a nested context&quot;</span> <span class='do do kw'>do</span>
+          <span class='setup identifier id'>setup</span> <span class='do do kw'>do</span>
+            <span class='@value ivar id'>@value</span> <span class='opasgn op'>+=</span> <span class='integer val'>1</span>
+          <span class='end end kw'>end</span>
+
+          <span class='test identifier id'>test</span> <span class='string val'>&quot;yet more tests&quot;</span> <span class='do do kw'>do</span>
+            <span class='assert_equal identifier id'>assert_equal</span> <span class='integer val'>3</span><span class='comma token'>,</span> <span class='@value ivar id'>@value</span>
+          <span class='end end kw'>end</span>
+        <span class='end end kw'>end</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+</pre>
+<p>
+For your convenience, `context` is aliased as `describe` and `test` is
+aliased as `should`, so this is valid:
+</p>
+<pre class="code">
+    <span class='class class kw'>class</span> <span class='SomeTest constant id'>SomeTest</span> <span class='lt op'>&lt;</span> <span class='Test constant id'>Test</span><span class='colon2 op'>::</span><span class='Unit constant id'>Unit</span><span class='colon2 op'>::</span><span class='TestCase constant id'>TestCase</span>
+      <span class='setup identifier id'>setup</span> <span class='do do kw'>do</span>
+        <span class='@value ivar id'>@value</span> <span class='assign token'>=</span> <span class='integer val'>1</span>
+      <span class='end end kw'>end</span>
+
+      <span class='describe identifier id'>describe</span> <span class='string val'>&quot;something&quot;</span> <span class='do do kw'>do</span>
+        <span class='setup identifier id'>setup</span> <span class='do do kw'>do</span>
+          <span class='@value ivar id'>@value</span> <span class='opasgn op'>+=</span> <span class='integer val'>1</span>
+        <span class='end end kw'>end</span>
+
+        <span class='should identifier id'>should</span> <span class='string val'>&quot;equal 2&quot;</span> <span class='do do kw'>do</span>
+          <span class='assert_equal identifier id'>assert_equal</span> <span class='integer val'>2</span><span class='comma token'>,</span> <span class='@value ivar id'>@value</span>
+        <span class='end end kw'>end</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+</pre>
+<p>
+You can run it normally, it&#8217;s Test::Unit after all. If you want to
+run a particular test, say &quot;yet more tests&quot;, try this:
+</p>
+<pre class="code">
+    $ <span class='testrb identifier id'>testrb</span> <span class='my_test identifier id'>my_test</span><span class='dot token'>.</span><span class='rb identifier id'>rb</span> <span class='minus op'>-</span><span class='n identifier id'>n</span> <span class='test_yet_more_tests identifier id'>test_yet_more_tests</span>
+</pre>
+<p>
+Or with a regular expression:
+</p>
+<pre class="code">
+    $ <span class='testrb identifier id'>testrb</span> <span class='my_test identifier id'>my_test</span><span class='dot token'>.</span><span class='rb identifier id'>rb</span> <span class='minus op'>-</span><span class='n identifier id'>n</span> <span class='regexp val'>/yet_more_tests/</span>
+</pre>
+<p>
+Installation
+</p>
+<hr size="10"></hr><pre class="code">
+    $ <span class='gem identifier id'>gem</span> <span class='sources identifier id'>sources</span> <span class='minus op'>-</span><span class='a identifier id'>a</span> <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/gems.github.com (you only have to do this once)
+    $ sudo gem install citrusbyte-contest
+</span></pre>
+<p>
+License
+</p>
+<hr size="5"></hr><p>
+Copyright &#169; 2009 Damian Janowski and Michel Martens for Citrusbyte
+</p>
+<p>
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the
+&quot;Software&quot;), to deal in the Software without restriction,
+including without limitation the rights to use, copy, modify, merge,
+publish, distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to the
+following conditions:
+</p>
+<p>
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+</p>
+<p>
+THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+USE OR OTHER DEALINGS IN THE SOFTWARE.
+</p>
+
+      </div>
+    </div>
+  </body>
+</html>

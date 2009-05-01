@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: Sequel::SQL::VirtualRow</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class Sequel_SQL_VirtualRow">
+  <h1 class="title">Class: Sequel::SQL::VirtualRow</h1>
+  <div class="section docstring">
+  <p>
+The purpose of this class is to allow the easy creation of SQL identifiers
+and functions without relying on methods defined on Symbol. This is useful
+if another library defines the methods defined by Sequel, or if you are
+running on ruby 1.9.
+</p>
+<p>
+An instance of this class is yielded to the block supplied to filter,
+order, and select. If Sequel.virtual_row_instance_eval is true and the
+block doesn&#8217;t take an argument, the block is instance_evaled in the
+context of a new instance of this class.
+</p>
+<p>
+Examples:
+</p>
+<pre class="code">
+  <span class='ds identifier id'>ds</span> <span class='assign token'>=</span> <span class='DB constant id'>DB</span><span class='lbrack token'>[</span><span class='symbol val'>:t</span><span class='rbrack token'>]</span>
+  <span class='ds identifier id'>ds</span><span class='dot token'>.</span><span class='filter identifier id'>filter</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='r identifier id'>r</span><span class='bitor op'>|</span> <span class='r identifier id'>r</span><span class='dot token'>.</span><span class='name identifier id'>name</span> <span class='lt op'>&lt;</span> <span class='integer val'>2</span><span class='rbrace token'>}</span> <span class='comment val'># SELECT * FROM t WHERE (name &lt; 2)</span>
+  <span class='ds identifier id'>ds</span><span class='dot token'>.</span><span class='filter identifier id'>filter</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='r identifier id'>r</span><span class='bitor op'>|</span> <span class='r identifier id'>r</span><span class='dot token'>.</span><span class='table__column identifier id'>table__column</span> <span class='plus op'>+</span> <span class='integer val'>1</span> <span class='lt op'>&lt;</span> <span class='integer val'>2</span><span class='rbrace token'>}</span> <span class='comment val'># SELECT * FROM t WHERE ((table.column + 1) &lt; 2)</span>
+  <span class='ds identifier id'>ds</span><span class='dot token'>.</span><span class='filter identifier id'>filter</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='r identifier id'>r</span><span class='bitor op'>|</span> <span class='r identifier id'>r</span><span class='dot token'>.</span><span class='is_active identifier id'>is_active</span><span class='lparen token'>(</span><span class='integer val'>1</span><span class='comma token'>,</span> <span class='string val'>'arg2'</span><span class='rparen token'>)</span><span class='rbrace token'>}</span> <span class='comment val'># SELECT * FROM t WHERE is_active(1, 'arg2')</span>
+</pre>
+
+</div><div class="section constants">
+  
+</div><div class="section methodmissing">
+  <h1>Dynamic Method Handling</h1>
+
+  <p class="note">
+    This class handles dynamic methods through the <tt>method_missing</tt> method
+    
+  </p>
+
+  <div id="method_missing-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>method_missing</span><span class='args'>(m, *args)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Can return Identifiers, QualifiedIdentifiers, or Functions:
+</p>
+<ul>
+<li>Function - returned if any arguments are supplied, using the method name as
+the function name, and the arguments as the function arguments.
+
+</li>
+<li>QualifiedIdentifier - returned if the method name contains __, with the
+table being the part before __, and the column being the part after.
+
+</li>
+<li>Identifier - returned otherwise, using the method name.
+
+</li>
+</ul>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+771
+772
+773
+774
+775
+776
+777
+778</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/sql.rb', line 771</span>
+
+<span class='def def kw'>def</span> <span class='method_missing identifier id'>method_missing</span><span class='lparen token'>(</span><span class='m identifier id'>m</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span>
+    <span class='table identifier id'>table</span><span class='comma token'>,</span> <span class='column identifier id'>column</span> <span class='assign token'>=</span> <span class='m identifier id'>m</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='string val'>'__'</span><span class='comma token'>,</span> <span class='integer val'>2</span><span class='rparen token'>)</span>
+    <span class='column identifier id'>column</span> <span class='integer val'>? </span><span class='QualifiedIdentifier constant id'>QualifiedIdentifier</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='table identifier id'>table</span><span class='comma token'>,</span> <span class='column identifier id'>column</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='Identifier constant id'>Identifier</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='m identifier id'>m</span><span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+    <span class='Function constant id'>Function</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='m identifier id'>m</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>
+</div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,851 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: ActiveMerchant::Billing::Gateway</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class ActiveMerchant_Billing_Gateway">
+  <h1 class="title">Class: ActiveMerchant::Billing::Gateway</h1>
+  <div class="section mixins">
+  <h1>Included Modules</h1>
+  <p><a href='Gateway/PostsData.html' title='ActiveMerchant::PostsData'>ActiveMerchant::PostsData</a>, <a href='Gateway/RequiresParameters.html' title='ActiveMerchant::RequiresParameters'>ActiveMerchant::RequiresParameters</a>, <a href='Gateway/CreditCardFormatting.html' title='ActiveMerchant::Billing::CreditCardFormatting'>ActiveMerchant::Billing::CreditCardFormatting</a>, <a href='Gateway/Utils.html' title='ActiveMerchant::Utils'>ActiveMerchant::Utils</a></p>
+</div><div class="section docstring">
+  <h2>Description</h2>
+<p>
+The Gateway class is the base class for all ActiveMerchant gateway
+implementations.
+</p>
+<p>
+The standard list of gateway functions that most concrete gateway
+subclasses implement is:
+</p>
+<ul>
+<li><tt>purchase(money, creditcard, options = {})</tt>
+
+</li>
+<li><tt>authorize(money, creditcard, options = {})</tt>
+
+</li>
+<li><tt>capture(money, authorization, options = {})</tt>
+
+</li>
+<li><tt>void(identification, options = {})</tt>
+
+</li>
+<li><tt>credit(money, identification, options = {})</tt>
+
+</li>
+</ul>
+<p>
+Some gateways include features for recurring billing
+</p>
+<ul>
+<li><tt>recurring(money, creditcard, options = {})</tt>
+
+</li>
+</ul>
+<p>
+Some gateways also support features for storing credit cards:
+</p>
+<ul>
+<li><tt>store(creditcard, options = {})</tt>
+
+</li>
+<li><tt>unstore(identification, options = {})</tt>
+
+</li>
+</ul>
+<h3>Gateway Options</h3>
+<p>
+The options hash consists of the following options:
+</p>
+<ul>
+<li><tt>:order_id</tt> - The order number
+
+</li>
+<li><tt>:ip</tt> - The IP address of the customer making the purchase
+
+</li>
+<li><tt>:customer</tt> - The name, customer number, or other information that
+identifies the customer
+
+</li>
+<li><tt>:invoice</tt> - The invoice number
+
+</li>
+<li><tt>:merchant</tt> - The name or description of the merchant offering the
+product
+
+</li>
+<li><tt>:description</tt> - A description of the transaction
+
+</li>
+<li><tt>:email</tt> - The email address of the customer
+
+</li>
+<li><tt>:currency</tt> - The currency of the transaction. Only important when
+you are using a currency that is not the default with a gateway that
+supports multiple currencies.
+
+</li>
+<li><tt>:billing_address</tt> - A hash containing the billing address of the
+customer.
+
+</li>
+<li><tt>:shipping_address</tt> - A hash containing the shipping address of the
+customer.
+
+</li>
+</ul>
+<p>
+The <tt>:billing_address</tt>, and <tt>:shipping_address</tt> hashes can
+have the following keys:
+</p>
+<ul>
+<li><tt>:name</tt> - The full name of the customer.
+
+</li>
+<li><tt>:company</tt> - The company name of the customer.
+
+</li>
+<li><tt>:address1</tt> - The primary street address of the customer.
+
+</li>
+<li><tt>:address2</tt> - Additional line of address information.
+
+</li>
+<li><tt>:city</tt> - The city of the customer.
+
+</li>
+<li><tt>:state</tt> - The state of the customer. The 2 digit code for US and
+Canadian addresses. The full name of the state or province for foreign
+addresses.
+
+</li>
+<li><tt>:country</tt> - The [ISO 3166-1-alpha-2
+code](http://www.iso.org/iso/country_codes/iso_3166_code_lists/english_country_names_and_code_elements.htm)
+for the customer.
+
+</li>
+<li><tt>:zip</tt> - The zip or postal code of the customer.
+
+</li>
+<li><tt>:phone</tt> - The phone number of the customer.
+
+</li>
+</ul>
+<h2>Implmenting new gateways</h2>
+<p>
+See the {ActiveMerchant Guide to
+Contributing}[http://code.google.com/p/activemerchant/wiki/Contributing]
+</p>
+
+</div><div class="section attributes">
+  <h1>Attributes</h1>
+
+  
+    <div class="instance">
+      <h2>Instance Attributes</h2>
+      <table>
+      
+        <tr>
+          <th class="name">options</td>
+          <td class="readwrite">
+            [<span id='options-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>options</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+      </table>
+    </div>
+  
+</div><div class="section constants">
+  <div class="thisclass">
+  <h1>Constants</h1>
+  <dl>
+    
+      <dt id="DEBIT_CARDS-constant">DEBIT_CARDS</dt>
+      <dd>[ :switch, :solo ]</dd>
+    
+  </dl>
+</div>
+<div class="included">
+  
+  <div>
+    <h1>Constants Included from <a href='Gateway/PostsData.html' title='ActiveMerchant::PostsData'>ActiveMerchant::PostsData</a></h1>
+    <p><span class='name'><a href='../PostsData.html#MAX_RETRIES-constant' title='MAX_RETRIES'>MAX_RETRIES</a></span>, <span class='name'><a href='../PostsData.html#OPEN_TIMEOUT-constant' title='OPEN_TIMEOUT'>OPEN_TIMEOUT</a></span>, <span class='name'><a href='../PostsData.html#READ_TIMEOUT-constant' title='READ_TIMEOUT'>READ_TIMEOUT</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Initialize a new gateway.
+</p>
+<p>
+See the documentation for the gateway you will be using to make sure there
+are no other required options.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+119
+120</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateway.rb', line 119</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <h1>Public Class Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#card_brand-class_method' title='card_brand'>card_brand</a></span><span class='args'>(source)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#inherited-class_method' title='inherited'>inherited</a></span><span class='args'>(subclass)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#supports%3F-class_method' title='supports?'>supports?</a></span><span class='args'>(card_type)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Use this method to check if your gateway of interest supports a credit card
+of some type.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table><div class="included">
+  
+  <div>
+    <h1>Public Class Methods Included from <a href='Gateway/PostsData.html' title='ActiveMerchant::PostsData'>ActiveMerchant::PostsData</a></h1>
+    <p><span class='name'><a href='../PostsData.html#included-class_method' title='included'>included</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+  <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#amount-instance_method' title='#amount'>#amount</a></span><span class='args'>(money)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Return a String with the amount in the appropriate format &#8212; TODO
+Refactor this method.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#card_brand-instance_method' title='#card_brand'>#card_brand</a></span><span class='args'>(source)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#currency-instance_method' title='#currency'>#currency</a></span><span class='args'>(money)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Ascertains the currency to be used on the money supplied.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#name-instance_method' title='#name'>#name</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#requires_start_date_or_issue_number%3F-instance_method' title='#requires_start_date_or_issue_number?'>#requires_start_date_or_issue_number?</a></span><span class='args'>(credit_card)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#test%3F-instance_method' title='#test?'>#test?</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Are we running in test mode?.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table><div class="included">
+  
+  <div>
+    <h1>Public Instance Methods Included from <a href='Gateway/PostsData.html' title='ActiveMerchant::PostsData'>ActiveMerchant::PostsData</a></h1>
+    <p><span class='name'><a href='../PostsData.html#ssl_get-instance_method' title='ssl_get'>ssl_get</a></span>, <span class='name'><a href='../PostsData.html#ssl_post-instance_method' title='ssl_post'>ssl_post</a></span></p>
+  </div>
+  
+  <div>
+    <h1>Public Instance Methods Included from <a href='Gateway/RequiresParameters.html' title='ActiveMerchant::RequiresParameters'>ActiveMerchant::RequiresParameters</a></h1>
+    <p><span class='name'><a href='../RequiresParameters.html#requires%21-instance_method' title='requires!'>requires!</a></span></p>
+  </div>
+  
+  <div>
+    <h1>Public Instance Methods Included from <a href='Gateway/CreditCardFormatting.html' title='ActiveMerchant::Billing::CreditCardFormatting'>ActiveMerchant::Billing::CreditCardFormatting</a></h1>
+    <p><span class='name'><a href='CreditCardFormatting.html#format-instance_method' title='format'>format</a></span></p>
+  </div>
+  
+  <div>
+    <h1>Public Instance Methods Included from <a href='Gateway/Utils.html' title='ActiveMerchant::Utils'>ActiveMerchant::Utils</a></h1>
+    <p><span class='name'><a href='../Utils.html#generate_unique_id-instance_method' title='generate_unique_id'>generate_unique_id</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails class public">
+  <h1>Public Class Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>card_brand</h3>
+</div><div id="card_brand-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>card_brand</span><span class='args'>(source)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+106
+107
+108
+109</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateway.rb', line 106</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='card_brand identifier id'>card_brand</span><span class='lparen token'>(</span><span class='source identifier id'>source</span><span class='rparen token'>)</span>
+  <span class='result identifier id'>result</span> <span class='assign token'>=</span> <span class='source identifier id'>source</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:brand</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='source identifier id'>source</span><span class='dot token'>.</span><span class='brand identifier id'>brand</span> <span class='colon op'>:</span> <span class='source identifier id'>source</span><span class='dot token'>.</span><span class='type identifier id'>type</span>
+  <span class='result identifier id'>result</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='downcase identifier id'>downcase</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>inherited</h3>
+</div><div id="inherited-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>inherited</span><span class='args'>(subclass)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+69
+70
+71
+72</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateway.rb', line 69</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='inherited identifier id'>inherited</span><span class='lparen token'>(</span><span class='subclass identifier id'>subclass</span><span class='rparen token'>)</span>
+  <span class='super super kw'>super</span>
+  <span class='@@implementations ivar id'>@@implementations</span> <span class='lshft op'>&lt;&lt;</span> <span class='subclass identifier id'>subclass</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>supports?</h3>
+</div><div id="supports%3F-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>supports?</span><span class='args'>(card_type)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Use this method to check if your gateway of interest supports a credit card
+of some type
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+102
+103
+104</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateway.rb', line 102</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='supports? fid id'>supports?</span><span class='lparen token'>(</span><span class='card_type identifier id'>card_type</span><span class='rparen token'>)</span>
+  <span class='supported_cardtypes identifier id'>supported_cardtypes</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='card_type identifier id'>card_type</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div><div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>amount</h3>
+</div><div id="amount-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>amount</span><span class='args'>(money)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Return a String with the amount in the appropriate format &#8212; TODO
+Refactor this method. It&#8217;s a tad on the ugly side.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateway.rb', line 136</span>
+
+<span class='def def kw'>def</span> <span class='amount identifier id'>amount</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='rparen token'>)</span>
+  <span class='return return kw'>return</span> <span class='nil nil kw'>nil</span> <span class='if if_mod kw'>if</span> <span class='money identifier id'>money</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+  <span class='cents identifier id'>cents</span> <span class='assign token'>=</span> <span class='money identifier id'>money</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:cents</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='money identifier id'>money</span><span class='dot token'>.</span><span class='cents identifier id'>cents</span> <span class='colon op'>:</span> <span class='money identifier id'>money</span> 
+
+  <span class='if if kw'>if</span> <span class='money identifier id'>money</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='String constant id'>String</span><span class='rparen token'>)</span> <span class='or or kw'>or</span> <span class='cents identifier id'>cents</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span> <span class='lt op'>&lt;</span> <span class='integer val'>0</span>
+    <span class='raise identifier id'>raise</span> <span class='ArgumentError constant id'>ArgumentError</span><span class='comma token'>,</span> <span class='string val'>'money amount must be either a Money object or a positive integer in cents.'</span> 
+  <span class='end end kw'>end</span>
+
+  <span class='if if kw'>if</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='money_format identifier id'>money_format</span> <span class='eq op'>==</span> <span class='colon op'>:</span><span class='cents identifier id'>cents</span>
+    <span class='cents identifier id'>cents</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+  <span class='else else kw'>else</span>
+    <span class='sprintf identifier id'>sprintf</span><span class='lparen token'>(</span><span class='string val'>&quot;%.2f&quot;</span><span class='comma token'>,</span> <span class='cents identifier id'>cents</span><span class='dot token'>.</span><span class='to_f identifier id'>to_f</span> <span class='div op'>/</span> <span class='integer val'>100</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>card_brand</h3>
+</div><div id="card_brand-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>card_brand</span><span class='args'>(source)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+111
+112
+113</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateway.rb', line 111</span>
+
+<span class='def def kw'>def</span> <span class='card_brand identifier id'>card_brand</span><span class='lparen token'>(</span><span class='source identifier id'>source</span><span class='rparen token'>)</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='card_brand identifier id'>card_brand</span><span class='lparen token'>(</span><span class='source identifier id'>source</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>currency</h3>
+</div><div id="currency-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>currency</span><span class='args'>(money)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Ascertains the currency to be used on the money supplied.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+152
+153
+154</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateway.rb', line 152</span>
+
+<span class='def def kw'>def</span> <span class='currency identifier id'>currency</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='rparen token'>)</span>
+  <span class='money identifier id'>money</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:currency</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='money identifier id'>money</span><span class='dot token'>.</span><span class='currency identifier id'>currency</span> <span class='colon op'>:</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='default_currency identifier id'>default_currency</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>name</h3>
+</div><div id="name-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>name</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+129
+130
+131</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateway.rb', line 129</span>
+
+<span class='def def kw'>def</span> <span class='name identifier id'>name</span> 
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='name identifier id'>name</span><span class='dot token'>.</span><span class='scan identifier id'>scan</span><span class='lparen token'>(</span><span class='regexp val'>/\:\:(\w+)Gateway/</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='flatten identifier id'>flatten</span><span class='dot token'>.</span><span class='first identifier id'>first</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>requires_start_date_or_issue_number?</h3>
+</div><div id="requires_start_date_or_issue_number%3F-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>requires_start_date_or_issue_number?</span><span class='args'>(credit_card)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+156
+157
+158
+159</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateway.rb', line 156</span>
+
+<span class='def def kw'>def</span> <span class='requires_start_date_or_issue_number? fid id'>requires_start_date_or_issue_number?</span><span class='lparen token'>(</span><span class='credit_card identifier id'>credit_card</span><span class='rparen token'>)</span>
+  <span class='return return kw'>return</span> <span class='false false kw'>false</span> <span class='if if_mod kw'>if</span> <span class='card_brand identifier id'>card_brand</span><span class='lparen token'>(</span><span class='credit_card identifier id'>credit_card</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span>
+  <span class='DEBIT_CARDS constant id'>DEBIT_CARDS</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='card_brand identifier id'>card_brand</span><span class='lparen token'>(</span><span class='credit_card identifier id'>credit_card</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>test?</h3>
+</div><div id="test%3F-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>test?</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Are we running in test mode?
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+123
+124
+125</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateway.rb', line 123</span>
+
+<span class='def def kw'>def</span> <span class='test? fid id'>test?</span>
+  <span class='Base constant id'>Base</span><span class='dot token'>.</span><span class='gateway_mode identifier id'>gateway_mode</span> <span class='eq op'>==</span> <span class='symbol val'>:test</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

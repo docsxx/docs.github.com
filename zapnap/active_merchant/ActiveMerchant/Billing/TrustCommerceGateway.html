@@ -1,0 +1,1120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: ActiveMerchant::Billing::TrustCommerceGateway</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class ActiveMerchant_Billing_TrustCommerceGateway">
+  <h1 class="title">Class: ActiveMerchant::Billing::TrustCommerceGateway</h1>
+  <div class="section inheritance">
+  <ul>
+  <li><a href='Gateway.html' title='ActiveMerchant::Billing::Gateway'>ActiveMerchant::Billing::Gateway</a></li><ul><li>ActiveMerchant::Billing::TrustCommerceGateway</li>
+  </ul></ul>
+</div><div class="section docstring">
+  <p>
+TO USE: First, make sure you have everything setup correctly and all of
+your dependencies in place with:
+</p>
+<pre class="code">
+  <span class='require identifier id'>require</span> <span class='string val'>'rubygems'</span>
+  <span class='require identifier id'>require</span> <span class='string val'>'active_merchant'</span>
+</pre>
+<p>
+ActiveMerchant expects amounts to be Integer values in cents
+</p>
+<pre class="code">
+  <span class='tendollar identifier id'>tendollar</span> <span class='assign token'>=</span> <span class='integer val'>1000</span>
+</pre>
+<p>
+Next, create a credit card object using a TC approved test card.
+</p>
+<pre class="code">
+  <span class='creditcard identifier id'>creditcard</span> <span class='assign token'>=</span> <span class='ActiveMerchant constant id'>ActiveMerchant</span><span class='colon2 op'>::</span><span class='Billing constant id'>Billing</span><span class='colon2 op'>::</span><span class='CreditCard constant id'>CreditCard</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span>
+    <span class='symbol val'>:number</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'4111111111111111'</span><span class='comma token'>,</span>
+    <span class='symbol val'>:month</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>8</span><span class='comma token'>,</span>
+    <span class='symbol val'>:year</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>2006</span><span class='comma token'>,</span>
+    <span class='symbol val'>:first_name</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'Longbob'</span><span class='comma token'>,</span>
+    <span class='symbol val'>:last_name</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'Longsen'</span>
+  <span class='rparen token'>)</span>
+</pre>
+<p>
+To finish setting up, create the active_merchant object you will be using,
+with the TrustCommerce gateway. If you have a functional TrustCommerce
+account, replace login and password with your account info. Otherwise the
+defaults will work for testing.
+</p>
+<pre class="code">
+  <span class='gateway identifier id'>gateway</span> <span class='assign token'>=</span> <span class='ActiveMerchant constant id'>ActiveMerchant</span><span class='colon2 op'>::</span><span class='Billing constant id'>Billing</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='dot token'>.</span><span class='gateway identifier id'>gateway</span><span class='lparen token'>(</span><span class='symbol val'>:trust_commerce</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='symbol val'>:login</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;TestMerchant&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:password</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;password&quot;</span><span class='rparen token'>)</span>
+</pre>
+<p>
+Now we are ready to process our transaction
+</p>
+<pre class="code">
+  <span class='response identifier id'>response</span> <span class='assign token'>=</span> <span class='gateway identifier id'>gateway</span><span class='dot token'>.</span><span class='purchase identifier id'>purchase</span><span class='lparen token'>(</span><span class='tendollar identifier id'>tendollar</span><span class='comma token'>,</span> <span class='creditcard identifier id'>creditcard</span><span class='rparen token'>)</span>
+</pre>
+<p>
+Sending a transaction to TrustCommerce with active_merchant returns a
+Response object, which consistently allows you to:
+</p>
+<p>
+1) Check whether the transaction was successful
+</p>
+<pre class="code">
+  <span class='response identifier id'>response</span><span class='dot token'>.</span><span class='success? fid id'>success?</span>
+</pre>
+<p>
+2) Retrieve any message returned by TrustCommerce, either a
+&quot;transaction was successful&quot; note or an explanation of why the
+transaction was rejected.
+</p>
+<pre class="code">
+  <span class='response identifier id'>response</span><span class='dot token'>.</span><span class='message identifier id'>message</span>
+</pre>
+<p>
+3) Retrieve and store the unique transaction ID returned by Trust
+Commerece, for use in referencing the transaction in the future.
+</p>
+<pre class="code">
+  <span class='response identifier id'>response</span><span class='dot token'>.</span><span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='string val'>&quot;transid&quot;</span><span class='rbrack token'>]</span>
+</pre>
+<p>
+For higher performance and failover with the TrustCommerceGateway you can
+install the TCLink library from http://www.trustcommerce.com/tclink.html.
+Follow the instructions available there to get it working on your system.
+ActiveMerchant will automatically use tclink if available.
+</p>
+<p>
+The TCLink library has the following added benefits:
+</p>
+<pre class="code">
+ <span class='mult op'>*</span> <span class='Good constant id'>Good</span> <span class='transaction identifier id'>transaction</span> <span class='times identifier id'>times</span><span class='dot token'>.</span> <span class='Transaction constant id'>Transaction</span> <span class='duration identifier id'>duration</span> <span class='under identifier id'>under</span> <span class='float val'>1.2</span> <span class='seconds identifier id'>seconds</span> <span class='are identifier id'>are</span> <span class='common identifier id'>common</span><span class='dot token'>.</span>
+ <span class='mult op'>*</span> <span class='Fail constant id'>Fail</span><span class='minus op'>-</span><span class='over identifier id'>over</span> <span class='to identifier id'>to</span> <span class='geographically identifier id'>geographically</span> <span class='distributed identifier id'>distributed</span> <span class='servers identifier id'>servers</span> <span class='for for kw'>for</span> <span class='extreme identifier id'>extreme</span> <span class='reliability identifier id'>reliability</span>
+</pre>
+<p>
+Once it is installed, you should be able to make sure that it is visible to
+your ruby install by opening irb and typing &quot;require
+&#8216;tclink&#8217;&quot;, which should return &quot;true&quot;.
+</p>
+<p>
+This should be enough to get you started with Trust Commerce and
+active_merchant. For further information, review the methods below and the
+rest of active_merchant&#8217;s documentation, as well as Trust
+Commerce&#8217;s user and developer documentation.
+</p>
+
+</div><div class="section constants">
+  <div class="thisclass">
+  <h1>Constants</h1>
+  <dl>
+    
+      <dt id="BADDATA_CODES-constant">BADDATA_CODES</dt>
+      <dd>{        &quot;missingfields&quot;       =&gt; &quot;One or more parameters required for this transaction type were not sent&quot;,        &quot;extrafields&quot;         =&gt; &quot;Parameters not allowed for this transaction type were sent&quot;,        &quot;badformat&quot;           =&gt; &quot;A field was improperly formatted, such as non-digit characters in a number field&quot;,        &quot;badlength&quot;           =&gt; &quot;A field was longer or shorter than the server allows&quot;,        &quot;merchantcantaccept&quot;  =&gt; &quot;The merchant can't accept data passed in this field&quot;,        &quot;mismatch&quot;            =&gt; &quot;Data in one of the offending fields did not cross-check with the other offending field&quot;      }</dd>
+    
+      <dt id="DECLINE_CODES-constant">DECLINE_CODES</dt>
+      <dd>{        &quot;decline&quot;       =&gt; &quot;The credit card was declined&quot;,        &quot;avs&quot;           =&gt; &quot;AVS failed; the address entered does not match the billing address on file at the bank&quot;,        &quot;cvv&quot;           =&gt; &quot;CVV failed; the number provided is not the correct verification number for the card&quot;,        &quot;call&quot;          =&gt; &quot;The card must be authorized manually over the phone&quot;,        &quot;expiredcard&quot;   =&gt; &quot;Issuer was not certified for card verification&quot;,        &quot;carderror&quot;     =&gt; &quot;Card number is invalid&quot;,        &quot;authexpired&quot;   =&gt; &quot;Attempt to postauth an expired (more than 14 days old) preauth&quot;,        &quot;fraud&quot;         =&gt; &quot;CrediGuard fraud score was below requested threshold&quot;,        &quot;blacklist&quot;     =&gt; &quot;CrediGuard blacklist value was triggered&quot;,         &quot;velocity&quot;      =&gt; &quot;CrediGuard velocity control value was triggered&quot;,        &quot;dailylimit&quot;    =&gt; &quot;Daily limit in transaction count or amount as been reached&quot;,        &quot;weeklylimit&quot;   =&gt; &quot;Weekly limit in transaction count or amount as been reached&quot;,        &quot;monthlylimit&quot;  =&gt; &quot;Monthly limit in transaction count or amount as been reached&quot;      }</dd>
+    
+      <dt id="ERROR_CODES-constant">ERROR_CODES</dt>
+      <dd>{        &quot;cantconnect&quot;   =&gt; &quot;Couldn't connect to the TrustCommerce gateway&quot;,        &quot;dnsfailure&quot;    =&gt; &quot;The TCLink software was unable to resolve DNS hostnames&quot;,        &quot;linkfailure&quot;   =&gt; &quot;The connection was established, but was severed before the transaction could complete&quot;,        &quot;failtoprocess&quot; =&gt; &quot;The bank servers are offline and unable to authorize transactions&quot;      }</dd>
+    
+      <dt id="SUCCESS_TYPES-constant">SUCCESS_TYPES</dt>
+      <dd>[&quot;approved&quot;, &quot;accepted&quot;]</dd>
+    
+      <dt id="TEST_LOGIN-constant">TEST_LOGIN</dt>
+      <dd>'TestMerchant'</dd>
+    
+      <dt id="TEST_PASSWORD-constant">TEST_PASSWORD</dt>
+      <dd>'password'</dd>
+    
+      <dt id="URL-constant">URL</dt>
+      <dd>'https://vault.trustcommerce.com/trans/'</dd>
+    
+  </dl>
+</div>
+<div class="inherited">
+  
+  <div>
+    <h1>Constants Inherited from <a href='Gateway.html' title='ActiveMerchant::Billing::Gateway'>ActiveMerchant::Billing::Gateway</a></h1>
+    <p><span class='name'><a href='Gateway.html#DEBIT_CARDS-constant' title='DEBIT_CARDS'>DEBIT_CARDS</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Creates a new TrustCommerceGateway
+</p>
+<p>
+The gateway requires that a valid login and password be passed in the
+<tt>options</tt> hash.
+</p>
+<h4>Options</h4>
+<ul>
+<li><tt>:login</tt> &#8212; The TrustCommerce account login.
+
+</li>
+<li><tt>:password</tt> &#8212; The TrustCommerce account password.
+
+</li>
+<li><tt>:test =&gt; true or false</tt> &#8212; Perform test transactions
+
+</li>
+</ul>
+<h4>Test Account Credentials</h4>
+<ul>
+<li><tt>:login</tt> &#8212; TestMerchant
+
+</li>
+<li><tt>:password</tt> &#8212; password
+
+</li>
+</ul>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+131
+132
+133
+134
+135
+136</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/trust_commerce.rb', line 131</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='requires! fid id'>requires!</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='comma token'>,</span> <span class='symbol val'>:login</span><span class='comma token'>,</span> <span class='symbol val'>:password</span><span class='rparen token'>)</span>
+
+  <span class='@options ivar id'>@options</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span>
+  <span class='super super kw'>super</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <h1>Public Class Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#tclink%3F-class_method' title='tclink?'>tclink?</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table><div class="inherited">
+  
+  <div>
+    <h1>Public Class Methods Inherited from <a href='Gateway.html' title='ActiveMerchant::Billing::Gateway'>ActiveMerchant::Billing::Gateway</a></h1>
+    <p><span class='name'><a href='Gateway.html#card_brand-class_method' title='card_brand'>card_brand</a></span>, <span class='name'><a href='Gateway.html#inherited-class_method' title='inherited'>inherited</a></span>, <span class='name'><a href='Gateway.html#supports%3F-class_method' title='supports?'>supports?</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+  <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#authorize-instance_method' title='#authorize'>#authorize</a></span><span class='args'>(money, creditcard_or_billing_id, options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+authorize() is the first half of the preauth(authorize)/postauth(capture)
+model.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#capture-instance_method' title='#capture'>#capture</a></span><span class='args'>(money, authorization, options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+capture() is the second half of the preauth(authorize)/postauth(capture)
+model.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#credit-instance_method' title='#credit'>#credit</a></span><span class='args'>(money, identification, options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+credit() allows you to return money to a card that was previously billed.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#purchase-instance_method' title='#purchase'>#purchase</a></span><span class='args'>(money, creditcard_or_billing_id, options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+purchase() is a simple sale.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#recurring-instance_method' title='#recurring'>#recurring</a></span><span class='args'>(money, creditcard, options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+recurring() a TrustCommerce account that is activated for Citatdel,
+TrustCommerce&#8217;s hosted customer billing info database.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#store-instance_method' title='#store'>#store</a></span><span class='args'>(creditcard, options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+store() requires a TrustCommerce account that is activated for Citatdel.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#tclink%3F-instance_method' title='#tclink?'>#tclink?</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#test%3F-instance_method' title='#test?'>#test?</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#unstore-instance_method' title='#unstore'>#unstore</a></span><span class='args'>(identification, options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+To unstore a creditcard stored in Citadel using store() or recurring(), all
+that is required is the billing id.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#void-instance_method' title='#void'>#void</a></span><span class='args'>(authorization, options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+void() clears an existing authorization and releases the reserved fund s
+back to the cardholder.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table><div class="inherited">
+  
+  <div>
+    <h1>Public Instance Methods Inherited from <a href='Gateway.html' title='ActiveMerchant::Billing::Gateway'>ActiveMerchant::Billing::Gateway</a></h1>
+    <p><span class='name'><a href='Gateway.html#amount-instance_method' title='amount'>amount</a></span>, <span class='name'><a href='Gateway.html#card_brand-instance_method' title='card_brand'>card_brand</a></span>, <span class='name'><a href='Gateway.html#currency-instance_method' title='currency'>currency</a></span>, <span class='name'><a href='Gateway.html#name-instance_method' title='name'>name</a></span>, <span class='name'><a href='Gateway.html#requires_start_date_or_issue_number%3F-instance_method' title='requires_start_date_or_issue_number?'>requires_start_date_or_issue_number?</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails class public">
+  <h1>Public Class Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>tclink?</h3>
+</div><div id="tclink%3F-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>tclink?</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+113
+114
+115</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/trust_commerce.rb', line 113</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='tclink? fid id'>tclink?</span>
+  <span class='defined? defined kw'>defined?</span><span class='lparen token'>(</span><span class='TCLink constant id'>TCLink</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div><div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>authorize</h3>
+</div><div id="authorize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>authorize</span><span class='args'>(money, creditcard_or_billing_id, options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+authorize() is the first half of the preauth(authorize)/postauth(capture)
+model. The TC API docs call this preauth, we preserve
+active_merchant&#8217;s nomenclature of authorize() for consistency with
+the rest of the library. This method simply checks to make sure funds are
+available for a transaction, and returns a transid that can be used later
+to postauthorize (capture) the funds.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/trust_commerce.rb', line 152</span>
+
+<span class='def def kw'>def</span> <span class='authorize identifier id'>authorize</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='comma token'>,</span> <span class='creditcard_or_billing_id identifier id'>creditcard_or_billing_id</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='parameters identifier id'>parameters</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span>
+    <span class='symbol val'>:amount</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='amount identifier id'>amount</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='rparen token'>)</span><span class='comma token'>,</span>
+  <span class='rbrace token'>}</span>                                                             
+  
+  <span class='add_order_id identifier id'>add_order_id</span><span class='lparen token'>(</span><span class='parameters identifier id'>parameters</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='add_customer_data identifier id'>add_customer_data</span><span class='lparen token'>(</span><span class='parameters identifier id'>parameters</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='add_payment_source identifier id'>add_payment_source</span><span class='lparen token'>(</span><span class='parameters identifier id'>parameters</span><span class='comma token'>,</span> <span class='creditcard_or_billing_id identifier id'>creditcard_or_billing_id</span><span class='rparen token'>)</span>
+  <span class='add_addresses identifier id'>add_addresses</span><span class='lparen token'>(</span><span class='parameters identifier id'>parameters</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='commit identifier id'>commit</span><span class='lparen token'>(</span><span class='string val'>'preauth'</span><span class='comma token'>,</span> <span class='parameters identifier id'>parameters</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>capture</h3>
+</div><div id="capture-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>capture</span><span class='args'>(money, authorization, options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+capture() is the second half of the preauth(authorize)/postauth(capture)
+model. The TC API docs call this postauth, we preserve
+active_merchant&#8217;s nomenclature of capture() for consistency with the
+rest of the library. To process a postauthorization with TC, you need an
+amount in cents or a money object, and a TC transid.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+181
+182
+183
+184
+185
+186
+187
+188</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/trust_commerce.rb', line 181</span>
+
+<span class='def def kw'>def</span> <span class='capture identifier id'>capture</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='comma token'>,</span> <span class='authorization identifier id'>authorization</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='parameters identifier id'>parameters</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span>
+    <span class='symbol val'>:amount</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='amount identifier id'>amount</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='rparen token'>)</span><span class='comma token'>,</span>
+    <span class='symbol val'>:transid</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='authorization identifier id'>authorization</span><span class='comma token'>,</span>
+  <span class='rbrace token'>}</span>
+                                            
+  <span class='commit identifier id'>commit</span><span class='lparen token'>(</span><span class='string val'>'postauth'</span><span class='comma token'>,</span> <span class='parameters identifier id'>parameters</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>credit</h3>
+</div><div id="credit-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>credit</span><span class='args'>(money, identification, options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+credit() allows you to return money to a card that was previously billed.
+You need to supply the amount, in cents or a money object, that you want to
+refund, and a TC transid for the transaction that you are refunding.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+192
+193
+194
+195
+196
+197
+198
+199</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/trust_commerce.rb', line 192</span>
+
+<span class='def def kw'>def</span> <span class='credit identifier id'>credit</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='comma token'>,</span> <span class='identification identifier id'>identification</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>  
+  <span class='parameters identifier id'>parameters</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span>
+    <span class='symbol val'>:amount</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='amount identifier id'>amount</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='rparen token'>)</span><span class='comma token'>,</span>
+    <span class='symbol val'>:transid</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='identification identifier id'>identification</span>
+  <span class='rbrace token'>}</span>
+                                            
+  <span class='commit identifier id'>commit</span><span class='lparen token'>(</span><span class='string val'>'credit'</span><span class='comma token'>,</span> <span class='parameters identifier id'>parameters</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>purchase</h3>
+</div><div id="purchase-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>purchase</span><span class='args'>(money, creditcard_or_billing_id, options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+purchase() is a simple sale. This is one of the most common types of
+transactions, and is extremely simple. All that you need to process a
+purchase are an amount in cents or a money object and a creditcard object
+or billingid string.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/trust_commerce.rb', line 166</span>
+
+<span class='def def kw'>def</span> <span class='purchase identifier id'>purchase</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='comma token'>,</span> <span class='creditcard_or_billing_id identifier id'>creditcard_or_billing_id</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>        
+  <span class='parameters identifier id'>parameters</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span>
+    <span class='symbol val'>:amount</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='amount identifier id'>amount</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='rparen token'>)</span><span class='comma token'>,</span>
+  <span class='rbrace token'>}</span>                                                             
+  
+  <span class='add_order_id identifier id'>add_order_id</span><span class='lparen token'>(</span><span class='parameters identifier id'>parameters</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='add_customer_data identifier id'>add_customer_data</span><span class='lparen token'>(</span><span class='parameters identifier id'>parameters</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='add_payment_source identifier id'>add_payment_source</span><span class='lparen token'>(</span><span class='parameters identifier id'>parameters</span><span class='comma token'>,</span> <span class='creditcard_or_billing_id identifier id'>creditcard_or_billing_id</span><span class='rparen token'>)</span>
+  <span class='add_addresses identifier id'>add_addresses</span><span class='lparen token'>(</span><span class='parameters identifier id'>parameters</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='commit identifier id'>commit</span><span class='lparen token'>(</span><span class='string val'>'sale'</span><span class='comma token'>,</span> <span class='parameters identifier id'>parameters</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>recurring</h3>
+</div><div id="recurring-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>recurring</span><span class='args'>(money, creditcard, options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+recurring() a TrustCommerce account that is activated for Citatdel,
+TrustCommerce&#8217;s hosted customer billing info database.
+</p>
+<p>
+Recurring billing uses the same TC action as a plain-vanilla
+&#8216;store&#8217;, but we have a separate method for clarity. It can be
+called like store, with the addition of a required
+&#8216;periodicity&#8217; parameter:
+</p>
+<p>
+The parameter :periodicity should be specified as either :bimonthly,
+:monthly, :biweekly, :weekly, :yearly or :daily
+</p>
+<pre class="code">
+  <span class='gateway identifier id'>gateway</span><span class='dot token'>.</span><span class='recurring identifier id'>recurring</span><span class='lparen token'>(</span><span class='tendollar identifier id'>tendollar</span><span class='comma token'>,</span> <span class='creditcard identifier id'>creditcard</span><span class='comma token'>,</span> <span class='symbol val'>:periodicity</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:weekly</span><span class='rparen token'>)</span>
+</pre>
+<p>
+You can optionally specify how long you want payments to continue using
+&#8216;payments&#8217;
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/trust_commerce.rb', line 234</span>
+
+<span class='def def kw'>def</span> <span class='recurring identifier id'>recurring</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='comma token'>,</span> <span class='creditcard identifier id'>creditcard</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>        
+  <span class='requires! fid id'>requires!</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='comma token'>,</span> <span class='lbrack token'>[</span><span class='symbol val'>:periodicity</span><span class='comma token'>,</span> <span class='symbol val'>:bimonthly</span><span class='comma token'>,</span> <span class='symbol val'>:monthly</span><span class='comma token'>,</span> <span class='symbol val'>:biweekly</span><span class='comma token'>,</span> <span class='symbol val'>:weekly</span><span class='comma token'>,</span> <span class='symbol val'>:yearly</span><span class='comma token'>,</span> <span class='symbol val'>:daily</span><span class='rbrack token'>]</span> <span class='rparen token'>)</span>
+
+  <span class='cycle identifier id'>cycle</span> <span class='assign token'>=</span> <span class='case case kw'>case</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:periodicity</span><span class='rbrack token'>]</span>
+  <span class='when when kw'>when</span> <span class='symbol val'>:monthly</span>
+    <span class='string val'>'1m'</span>
+  <span class='when when kw'>when</span> <span class='symbol val'>:bimonthly</span>
+    <span class='string val'>'2m'</span>
+  <span class='when when kw'>when</span> <span class='symbol val'>:weekly</span>
+    <span class='string val'>'1w'</span>
+  <span class='when when kw'>when</span> <span class='symbol val'>:biweekly</span>
+    <span class='string val'>'2w'</span>
+  <span class='when when kw'>when</span> <span class='symbol val'>:yearly</span>
+    <span class='string val'>'1y'</span>
+  <span class='when when kw'>when</span> <span class='symbol val'>:daily</span>
+    <span class='string val'>'1d'</span>
+  <span class='end end kw'>end</span>
+  
+  <span class='parameters identifier id'>parameters</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span>
+    <span class='symbol val'>:amount</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='amount identifier id'>amount</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='rparen token'>)</span><span class='comma token'>,</span>
+    <span class='symbol val'>:cycle</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='cycle identifier id'>cycle</span><span class='comma token'>,</span>
+    <span class='symbol val'>:verify</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:verify</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='string val'>'y'</span><span class='comma token'>,</span>
+    <span class='symbol val'>:billingid</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:billingid</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='nil nil kw'>nil</span><span class='comma token'>,</span>
+    <span class='symbol val'>:payments</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:payments</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='nil nil kw'>nil</span><span class='comma token'>,</span>
+  <span class='rbrace token'>}</span>
+  
+  <span class='add_creditcard identifier id'>add_creditcard</span><span class='lparen token'>(</span><span class='parameters identifier id'>parameters</span><span class='comma token'>,</span> <span class='creditcard identifier id'>creditcard</span><span class='rparen token'>)</span>
+                                            
+  <span class='commit identifier id'>commit</span><span class='lparen token'>(</span><span class='string val'>'store'</span><span class='comma token'>,</span> <span class='parameters identifier id'>parameters</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>      
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>store</h3>
+</div><div id="store-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>store</span><span class='args'>(creditcard, options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+store() requires a TrustCommerce account that is activated for Citatdel.
+You can call it with a credit card and a billing ID you would like to use
+to reference the stored credit card info for future captures. Use
+&#8216;verify&#8217; to specify whether you want to simply store the card
+in the DB, or you want TC to verify the data first.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/trust_commerce.rb', line 269</span>
+
+<span class='def def kw'>def</span> <span class='store identifier id'>store</span><span class='lparen token'>(</span><span class='creditcard identifier id'>creditcard</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>   
+  <span class='parameters identifier id'>parameters</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span>
+    <span class='symbol val'>:verify</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:verify</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='string val'>'y'</span><span class='comma token'>,</span>
+    <span class='symbol val'>:billingid</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:billingid</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:billing_id</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='nil nil kw'>nil</span><span class='comma token'>,</span>
+  <span class='rbrace token'>}</span>
+  
+  <span class='add_creditcard identifier id'>add_creditcard</span><span class='lparen token'>(</span><span class='parameters identifier id'>parameters</span><span class='comma token'>,</span> <span class='creditcard identifier id'>creditcard</span><span class='rparen token'>)</span>
+  <span class='add_addresses identifier id'>add_addresses</span><span class='lparen token'>(</span><span class='parameters identifier id'>parameters</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>                              
+  <span class='commit identifier id'>commit</span><span class='lparen token'>(</span><span class='string val'>'store'</span><span class='comma token'>,</span> <span class='parameters identifier id'>parameters</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>tclink?</h3>
+</div><div id="tclink%3F-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>tclink?</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+138
+139
+140</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/trust_commerce.rb', line 138</span>
+
+<span class='def def kw'>def</span> <span class='tclink? fid id'>tclink?</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='tclink? fid id'>tclink?</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>test?</h3>
+</div><div id="test%3F-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>test?</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+142
+143
+144
+145</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/trust_commerce.rb', line 142</span>
+
+<span class='def def kw'>def</span> <span class='test? fid id'>test?</span>
+  <span class='@options ivar id'>@options</span><span class='lbrack token'>[</span><span class='symbol val'>:login</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='TEST_LOGIN constant id'>TEST_LOGIN</span> <span class='andop op'>&amp;&amp;</span>
+    <span class='@options ivar id'>@options</span><span class='lbrack token'>[</span><span class='symbol val'>:password</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='TEST_PASSWORD constant id'>TEST_PASSWORD</span> <span class='orop op'>||</span> <span class='@options ivar id'>@options</span><span class='lbrack token'>[</span><span class='symbol val'>:test</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='super super kw'>super</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>unstore</h3>
+</div><div id="unstore-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>unstore</span><span class='args'>(identification, options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+To unstore a creditcard stored in Citadel using store() or recurring(), all
+that is required is the billing id. When you run unstore() the information
+will be removed and a Response object will be returned indicating the
+success of the action.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+282
+283
+284
+285
+286
+287
+288</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/trust_commerce.rb', line 282</span>
+
+<span class='def def kw'>def</span> <span class='unstore identifier id'>unstore</span><span class='lparen token'>(</span><span class='identification identifier id'>identification</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='parameters identifier id'>parameters</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span>
+    <span class='symbol val'>:billingid</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='identification identifier id'>identification</span><span class='comma token'>,</span>
+  <span class='rbrace token'>}</span>
+                                            
+  <span class='commit identifier id'>commit</span><span class='lparen token'>(</span><span class='string val'>'unstore'</span><span class='comma token'>,</span> <span class='parameters identifier id'>parameters</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>      
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>void</h3>
+</div><div id="void-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>void</span><span class='args'>(authorization, options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+void() clears an existing authorization and releases the reserved fund s
+back to the cardholder. The TC API refers to this transaction as a
+reversal. After voiding, you will no longer be able to capture funds from
+this authorization. TrustCommerce seems to always return a status of
+&quot;accepted&quot; even if the transid you are trying to deauthorize has
+already been captured. Note: Your account needs to be configured by
+TrustCommerce to allow for reversal transactions before you can use this
+method.
+</p>
+<p>
+NOTE: AMEX preauth&#8217;s cannot be reversed. If you want to clear it more
+quickly than the automatic expiration (7-10 days), you will have to capture
+it and then immediately issue a credit for the same amount which should
+clear the customers credit card with 48 hours according to TC.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+215
+216
+217
+218
+219
+220
+221</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/trust_commerce.rb', line 215</span>
+
+<span class='def def kw'>def</span> <span class='void identifier id'>void</span><span class='lparen token'>(</span><span class='authorization identifier id'>authorization</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='parameters identifier id'>parameters</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span>
+    <span class='symbol val'>:transid</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='authorization identifier id'>authorization</span><span class='comma token'>,</span>
+  <span class='rbrace token'>}</span>
+  
+  <span class='commit identifier id'>commit</span><span class='lparen token'>(</span><span class='string val'>'reversal'</span><span class='comma token'>,</span> <span class='parameters identifier id'>parameters</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

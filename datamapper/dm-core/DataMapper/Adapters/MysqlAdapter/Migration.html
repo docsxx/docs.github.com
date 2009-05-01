@@ -1,0 +1,176 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: DataMapper::Adapters::MysqlAdapter::Migration</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module DataMapper_Adapters_MysqlAdapter_Migration">
+  <h1 class="title">Module: DataMapper::Adapters::MysqlAdapter::Migration</h1>
+  <div class="section mixins">
+  <h1>Included Modules</h1>
+  <p><a href='Migration/SQL.html' title='DataMapper::Adapters::MysqlAdapter::Migration::SQL'>DataMapper::Adapters::MysqlAdapter::Migration::SQL</a></p>
+</div><div class="section docstring">
+  <p>
+TODO: move to dm-more/dm-migrations
+</p>
+
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#field_exists%3F-instance_method' title='#field_exists?'>#field_exists?</a></span><span class='args'>(storage_name, field_name)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+TODO: move to dm-more/dm-migrations (if possible).
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#storage_exists%3F-instance_method' title='#storage_exists?'>#storage_exists?</a></span><span class='args'>(storage_name)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+TODO: move to dm-more/dm-migrations (if possible).
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>field_exists?</h3>
+</div><div id="field_exists%3F-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>field_exists?</span><span class='args'>(storage_name, field_name)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+TODO: move to dm-more/dm-migrations (if possible)
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+53
+54
+55
+56
+57</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/adapters/mysql_adapter.rb', line 53</span>
+
+<span class='def def kw'>def</span> <span class='field_exists? fid id'>field_exists?</span><span class='lparen token'>(</span><span class='storage_name identifier id'>storage_name</span><span class='comma token'>,</span> <span class='field_name identifier id'>field_name</span><span class='rparen token'>)</span>
+  <span class='statement identifier id'>statement</span> <span class='assign token'>=</span> <span class='string val'>&quot;SELECT COUNT(*)\nFROM `information_schema`.`columns`\nWHERE `table_schema` = ?\nAND `table_name` = ?\nAND `column_name` = ?\n&quot;</span><span class='dot token'>.</span><span class='compress_lines identifier id'>compress_lines</span>
+
+  <span class='query identifier id'>query</span><span class='lparen token'>(</span><span class='statement identifier id'>statement</span><span class='comma token'>,</span> <span class='db_name identifier id'>db_name</span><span class='comma token'>,</span> <span class='storage_name identifier id'>storage_name</span><span class='comma token'>,</span> <span class='field_name identifier id'>field_name</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='first identifier id'>first</span> <span class='gt op'>&gt;</span> <span class='integer val'>0</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>storage_exists?</h3>
+</div><div id="storage_exists%3F-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>storage_exists?</span><span class='args'>(storage_name)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+TODO: move to dm-more/dm-migrations (if possible)
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+39
+40
+41
+42
+43</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/adapters/mysql_adapter.rb', line 39</span>
+
+<span class='def def kw'>def</span> <span class='storage_exists? fid id'>storage_exists?</span><span class='lparen token'>(</span><span class='storage_name identifier id'>storage_name</span><span class='rparen token'>)</span>
+  <span class='statement identifier id'>statement</span> <span class='assign token'>=</span> <span class='string val'>&quot;SELECT COUNT(*)\nFROM `information_schema`.`tables`\nWHERE `table_type` = 'BASE TABLE'\nAND `table_schema` = ?\nAND `table_name` = ?\n&quot;</span><span class='dot token'>.</span><span class='compress_lines identifier id'>compress_lines</span>
+
+  <span class='query identifier id'>query</span><span class='lparen token'>(</span><span class='statement identifier id'>statement</span><span class='comma token'>,</span> <span class='db_name identifier id'>db_name</span><span class='comma token'>,</span> <span class='storage_name identifier id'>storage_name</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='first identifier id'>first</span> <span class='gt op'>&gt;</span> <span class='integer val'>0</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

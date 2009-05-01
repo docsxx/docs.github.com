@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: ActionController::Caching::Sweeping</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module ActionController_Caching_Sweeping">
+  <h1 class="title">Module: ActionController::Caching::Sweeping</h1>
+  <div class="section docstring">
+  <p>
+Sweepers are the terminators of the caching world and responsible for
+expiring caches when model objects change. They do this by being
+half-observers, half-filters and implementing callbacks for both roles. A
+Sweeper example:
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='ListSweeper constant id'>ListSweeper</span> <span class='lt op'>&lt;</span> <span class='ActionController constant id'>ActionController</span><span class='colon2 op'>::</span><span class='Caching constant id'>Caching</span><span class='colon2 op'>::</span><span class='Sweeper constant id'>Sweeper</span>
+    <span class='observe identifier id'>observe</span> <span class='List constant id'>List</span><span class='comma token'>,</span> <span class='Item constant id'>Item</span>
+
+    <span class='def def kw'>def</span> <span class='after_save identifier id'>after_save</span><span class='lparen token'>(</span><span class='record identifier id'>record</span><span class='rparen token'>)</span>
+      <span class='list identifier id'>list</span> <span class='assign token'>=</span> <span class='record identifier id'>record</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='List constant id'>List</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='record identifier id'>record</span> <span class='colon op'>:</span> <span class='record identifier id'>record</span><span class='dot token'>.</span><span class='list identifier id'>list</span>
+      <span class='expire_page identifier id'>expire_page</span><span class='lparen token'>(</span><span class='symbol val'>:controller</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;lists&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:action</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='dstring node'>%w( show public feed )</span><span class='comma token'>,</span> <span class='symbol val'>:id</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='list identifier id'>list</span><span class='dot token'>.</span><span class='id identifier id'>id</span><span class='rparen token'>)</span>
+      <span class='expire_action identifier id'>expire_action</span><span class='lparen token'>(</span><span class='symbol val'>:controller</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;lists&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:action</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;all&quot;</span><span class='rparen token'>)</span>
+      <span class='list identifier id'>list</span><span class='dot token'>.</span><span class='shares identifier id'>shares</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='share identifier id'>share</span><span class='bitor op'>|</span> <span class='expire_page identifier id'>expire_page</span><span class='lparen token'>(</span><span class='symbol val'>:controller</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;lists&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:action</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;show&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:id</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='share identifier id'>share</span><span class='dot token'>.</span><span class='url_key identifier id'>url_key</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+The sweeper is assigned in the controllers that wish to have its job
+performed using the <tt>cache_sweeper</tt> class method:
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='ListsController constant id'>ListsController</span> <span class='lt op'>&lt;</span> <span class='ApplicationController constant id'>ApplicationController</span>
+    <span class='caches_action identifier id'>caches_action</span> <span class='symbol val'>:index</span><span class='comma token'>,</span> <span class='symbol val'>:show</span><span class='comma token'>,</span> <span class='symbol val'>:public</span><span class='comma token'>,</span> <span class='symbol val'>:feed</span>
+    <span class='cache_sweeper identifier id'>cache_sweeper</span> <span class='symbol val'>:list_sweeper</span><span class='comma token'>,</span> <span class='symbol val'>:only</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span> <span class='symbol val'>:edit</span><span class='comma token'>,</span> <span class='symbol val'>:destroy</span><span class='comma token'>,</span> <span class='symbol val'>:share</span> <span class='rbrack token'>]</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+In the example above, four actions are cached and three actions are
+responsible for expiring those caches.
+</p>
+<p>
+You can also name an explicit class in the declaration of a sweeper, which
+is needed if the sweeper is in a module:
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='ListsController constant id'>ListsController</span> <span class='lt op'>&lt;</span> <span class='ApplicationController constant id'>ApplicationController</span>
+    <span class='caches_action identifier id'>caches_action</span> <span class='symbol val'>:index</span><span class='comma token'>,</span> <span class='symbol val'>:show</span><span class='comma token'>,</span> <span class='symbol val'>:public</span><span class='comma token'>,</span> <span class='symbol val'>:feed</span>
+    <span class='cache_sweeper identifier id'>cache_sweeper</span> <span class='OpenBar constant id'>OpenBar</span><span class='colon2 op'>::</span><span class='Sweeper constant id'>Sweeper</span><span class='comma token'>,</span> <span class='symbol val'>:only</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span> <span class='symbol val'>:edit</span><span class='comma token'>,</span> <span class='symbol val'>:destroy</span><span class='comma token'>,</span> <span class='symbol val'>:share</span> <span class='rbrack token'>]</span>
+  <span class='end end kw'>end</span>
+</pre>
+
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <h1>Public Class Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#included-class_method' title='included'>included</a></span><span class='args'>(base)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails class public">
+  <h1>Public Class Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>included</h3>
+</div><div id="included-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>included</span><span class='args'>(base)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+33
+34
+35</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'actionpack/lib/action_controller/caching/sweeping.rb', line 33</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='included identifier id'>included</span><span class='lparen token'>(</span><span class='base identifier id'>base</span><span class='rparen token'>)</span> <span class='comment val'>#:nodoc:</span>
+  <span class='base identifier id'>base</span><span class='dot token'>.</span><span class='extend identifier id'>extend</span><span class='lparen token'>(</span><span class='ClassMethods constant id'>ClassMethods</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

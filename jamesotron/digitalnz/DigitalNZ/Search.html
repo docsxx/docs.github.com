@@ -1,0 +1,377 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: DigitalNZ::Search</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class DigitalNZ_Search">
+  <h1 class="title">Class: DigitalNZ::Search</h1>
+  <div class="section constants">
+  
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(params)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/digitalnz/search.rb', line 3</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='params identifier id'>params</span><span class='rparen token'>)</span> 
+  <span class='url identifier id'>url</span> <span class='assign token'>=</span> <span class='string val'>'http://api.digitalnz.org/records/v1.json/?'</span>
+  <span class='query identifier id'>query</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+  <span class='for for kw'>for</span> <span class='k identifier id'>k</span><span class='comma token'>,</span><span class='v identifier id'>v</span> <span class='in in kw'>in</span> <span class='params identifier id'>params</span>
+    <span class='query identifier id'>query</span> <span class='opasgn op'>+=</span> <span class='lbrack token'>[</span> <span class='k identifier id'>k</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='plus op'>+</span> <span class='string val'>'='</span> <span class='plus op'>+</span> <span class='CGI constant id'>CGI</span><span class='dot token'>.</span><span class='escape identifier id'>escape</span><span class='lparen token'>(</span><span class='v identifier id'>v</span><span class='rparen token'>)</span> <span class='rbrack token'>]</span>
+  <span class='end end kw'>end</span>
+  <span class='url identifier id'>url</span> <span class='opasgn op'>+=</span> <span class='query identifier id'>query</span> <span class='mult op'>*</span> <span class='string val'>&quot;&amp;&quot;</span>
+  <span class='puts identifier id'>puts</span> <span class='url identifier id'>url</span>
+  <span class='res identifier id'>res</span> <span class='assign token'>=</span> <span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='url identifier id'>url</span><span class='rparen token'>)</span>
+  <span class='res identifier id'>res</span> <span class='assign token'>=</span> <span class='JSON constant id'>JSON</span><span class='dot token'>.</span><span class='parse identifier id'>parse</span><span class='lparen token'>(</span><span class='res identifier id'>res</span><span class='dot token'>.</span><span class='body identifier id'>body</span><span class='rparen token'>)</span>
+  <span class='@orig ivar id'>@orig</span> <span class='assign token'>=</span> <span class='res identifier id'>res</span>
+  <span class='@num_results_requestes ivar id'>@num_results_requestes</span> <span class='assign token'>=</span> <span class='res identifier id'>res</span><span class='lbrack token'>[</span><span class='string val'>'num_results_requested'</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='nil nil kw'>nil</span>
+  <span class='@count ivar id'>@count</span> <span class='assign token'>=</span> <span class='res identifier id'>res</span><span class='lbrack token'>[</span><span class='string val'>'result_count'</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='nil nil kw'>nil</span>
+  <span class='@start ivar id'>@start</span> <span class='assign token'>=</span> <span class='res identifier id'>res</span><span class='lbrack token'>[</span><span class='string val'>'start'</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='nil nil kw'>nil</span>
+  <span class='@results ivar id'>@results</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+  <span class='for for kw'>for</span> <span class='r identifier id'>r</span> <span class='in in kw'>in</span> <span class='res identifier id'>res</span><span class='lbrack token'>[</span><span class='string val'>'results'</span><span class='rbrack token'>]</span>
+    <span class='@results ivar id'>@results</span> <span class='lshft op'>&lt;&lt;</span> <span class='Result constant id'>Result</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='r identifier id'>r</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#count-instance_method' title='#count'>#count</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#num_results_requested-instance_method' title='#num_results_requested'>#num_results_requested</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#results-instance_method' title='#results'>#results</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#start-instance_method' title='#start'>#start</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#to_yaml-instance_method' title='#to_yaml'>#to_yaml</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>count</h3>
+</div><div id="count-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>count</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+27
+28
+29</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/digitalnz/search.rb', line 27</span>
+
+<span class='def def kw'>def</span> <span class='count identifier id'>count</span>
+  <span class='@count ivar id'>@count</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>num_results_requested</h3>
+</div><div id="num_results_requested-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>num_results_requested</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+23
+24
+25</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/digitalnz/search.rb', line 23</span>
+
+<span class='def def kw'>def</span> <span class='num_results_requested identifier id'>num_results_requested</span>
+  <span class='@num_results_requested ivar id'>@num_results_requested</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>results</h3>
+</div><div id="results-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>results</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+35
+36
+37</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/digitalnz/search.rb', line 35</span>
+
+<span class='def def kw'>def</span> <span class='results identifier id'>results</span>
+  <span class='@results ivar id'>@results</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>start</h3>
+</div><div id="start-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>start</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+31
+32
+33</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/digitalnz/search.rb', line 31</span>
+
+<span class='def def kw'>def</span> <span class='start identifier id'>start</span>
+  <span class='@start ivar id'>@start</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>to_yaml</h3>
+</div><div id="to_yaml-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>to_yaml</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+39
+40
+41</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/digitalnz/search.rb', line 39</span>
+
+<span class='def def kw'>def</span> <span class='to_yaml identifier id'>to_yaml</span>
+  <span class='@orig ivar id'>@orig</span><span class='dot token'>.</span><span class='to_yaml identifier id'>to_yaml</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

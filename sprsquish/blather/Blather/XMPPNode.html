@@ -1,0 +1,1193 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: Blather::XMPPNode</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class Blather_XMPPNode">
+  <h1 class="title">Class: Blather::XMPPNode</h1>
+  <div class="section inheritance">
+  <ul>
+  <li>XML::Node</li><ul><li>Blather::XMPPNode</li>
+  </ul></ul>
+</div><div class="section docstring">
+  <p>
+Base XML Node All XML classes subclass XMPPNode it allows the addition of
+helpers
+</p>
+
+</div><div class="section constants">
+  <div class="thisclass">
+  <h1>Constants</h1>
+  <dl>
+    
+      <dt id="BASE_NAMES-constant">BASE_NAMES</dt>
+      <dd>%w[presence message iq].freeze</dd>
+    
+  </dl>
+</div>
+
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(name = nil, content = nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Automatically sets the namespace registered by the subclass
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+117
+118
+119
+120
+121
+122
+123</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/blather/xmpp_node.rb', line 117</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='content identifier id'>content</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='name identifier id'>name</span> <span class='opasgn op'>||=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='name identifier id'>name</span>
+  <span class='content identifier id'>content</span> <span class='assign token'>=</span> <span class='content identifier id'>content</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='if if_mod kw'>if</span> <span class='content identifier id'>content</span>
+
+  <span class='super super kw'>super</span> <span class='name identifier id'>name</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='comma token'>,</span> <span class='content identifier id'>content</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='namespace identifier id'>namespace</span> <span class='assign token'>=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='ns identifier id'>ns</span> <span class='unless unless_mod kw'>unless</span> <span class='BASE_NAMES constant id'>BASE_NAMES</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <h1>Public Class Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#attribute_accessor-class_method' title='attribute_accessor'>attribute_accessor</a></span><span class='args'>(*syms)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Provides an attribute accessor helper combining <tt>attribute_reader</tt>
+and <tt>attribute_writer</tt>.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#attribute_reader-class_method' title='attribute_reader'>attribute_reader</a></span><span class='args'>(*syms)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Provides an attribute reader helper.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#attribute_writer-class_method' title='attribute_writer'>attribute_writer</a></span><span class='args'>(*syms)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Provides an attribute writer helper.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#class_from_registration-class_method' title='class_from_registration'>class_from_registration</a></span><span class='args'>(name, xmlns)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Find the class to use given the name and namespace of a stanza.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#import-class_method' title='import'>import</a></span><span class='args'>(node)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Looks up the class to use then instantiates an object of that class and
+imports all the <tt>node</tt>&#8217;s attributes and children into it.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#register-class_method' title='register'>register</a></span><span class='args'>(name, ns = nil)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Lets a subclass register itself.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+  <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#content_from-instance_method' title='#content_from'>#content_from</a></span><span class='args'>(name)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Pull the content from a child.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#copy-instance_method' title='#copy'>#copy</a></span><span class='args'>(deep = true)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Create a copy.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#find-instance_method' title='#find'>#find</a></span><span class='args'>(what, nslist = nil)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Override #find to work when a node isn&#8217;t attached to a document.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#inherit-instance_method' title='#inherit'>#inherit</a></span><span class='args'>(stanza)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Inherit all of <tt>stanza</tt>&#8217;s attributes and children.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#inherit_attrs-instance_method' title='#inherit_attrs'>#inherit_attrs</a></span><span class='args'>(attrs)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Inherit only <tt>stanza</tt>&#8217;s attributes.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#namespace-instance_method' title='#namespace'>#namespace</a></span><span class='args'>(prefix = nil)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#remove_child-instance_method' title='#remove_child'>#remove_child</a></span><span class='args'>(name, ns = nil)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Remove a child with the name and (optionally) namespace given.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#remove_children-instance_method' title='#remove_children'>#remove_children</a></span><span class='args'>(name)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Remove all children with a given name.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#to_stanza-instance_method' title='#to_stanza'>#to_stanza</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Quickway of turning itself into a proper object.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#to_xml-instance_method' title='#to_xml'>#to_xml</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Turn itself into an XML string and remove all whitespace between nodes.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails class public">
+  <h1>Public Class Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>attribute_accessor</h3>
+</div><div id="attribute_accessor-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>attribute_accessor</span><span class='args'>(*syms)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Provides an attribute accessor helper combining <tt>attribute_reader</tt>
+and <tt>attribute_writer</tt>
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='Node constant id'>Node</span>
+    <span class='attribute_accessor identifier id'>attribute_accessor</span> <span class='symbol val'>:type</span>
+    <span class='attribute_accessor identifier id'>attribute_accessor</span> <span class='symbol val'>:name</span><span class='comma token'>,</span> <span class='symbol val'>:to_sym</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='false false kw'>false</span>
+  <span class='end end kw'>end</span>
+
+  <span class='n identifier id'>n</span> <span class='assign token'>=</span> <span class='Node constant id'>Node</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+  <span class='n identifier id'>n</span><span class='dot token'>.</span><span class='type identifier id'>type</span> <span class='assign token'>=</span> <span class='string val'>'foo'</span>
+  <span class='n identifier id'>n</span><span class='dot token'>.</span><span class='type identifier id'>type</span> <span class='eq op'>==</span> <span class='symbol val'>:foo</span>
+  <span class='n identifier id'>n</span><span class='dot token'>.</span><span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='string val'>'bar'</span>
+  <span class='n identifier id'>n</span><span class='dot token'>.</span><span class='name identifier id'>name</span> <span class='eq op'>==</span> <span class='string val'>'bar'</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+110
+111
+112
+113</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/blather/xmpp_node.rb', line 110</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='attribute_accessor identifier id'>attribute_accessor</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='syms identifier id'>syms</span><span class='rparen token'>)</span>
+  <span class='attribute_reader identifier id'>attribute_reader</span> <span class='mult op'>*</span><span class='syms identifier id'>syms</span>
+  <span class='attribute_writer identifier id'>attribute_writer</span> <span class='mult op'>*</span><span class='syms identifier id'>syms</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>attribute_reader</h3>
+</div><div id="attribute_reader-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>attribute_reader</span><span class='args'>(*syms)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Provides an attribute reader helper. Default behavior is to conver the
+values of the attribute into a symbol. This can be turned off by passing
+<tt>:to_sym =&gt; false</tt>
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='Node constant id'>Node</span>
+    <span class='attribute_reader identifier id'>attribute_reader</span> <span class='symbol val'>:type</span>
+    <span class='attribute_reader identifier id'>attribute_reader</span> <span class='symbol val'>:name</span><span class='comma token'>,</span> <span class='symbol val'>:to_sym</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='false false kw'>false</span>
+  <span class='end end kw'>end</span>
+
+  <span class='n identifier id'>n</span> <span class='assign token'>=</span> <span class='Node constant id'>Node</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+  <span class='n identifier id'>n</span><span class='dot token'>.</span><span class='attributes identifier id'>attributes</span><span class='lbrack token'>[</span><span class='symbol val'>:type</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='string val'>'foo'</span>
+  <span class='n identifier id'>n</span><span class='dot token'>.</span><span class='type identifier id'>type</span> <span class='eq op'>==</span> <span class='symbol val'>:foo</span>
+  <span class='n identifier id'>n</span><span class='dot token'>.</span><span class='attributes identifier id'>attributes</span><span class='lbrack token'>[</span><span class='symbol val'>:name</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='string val'>'bar'</span>
+  <span class='n identifier id'>n</span><span class='dot token'>.</span><span class='name identifier id'>name</span> <span class='eq op'>==</span> <span class='string val'>'bar'</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+62
+63
+64
+65
+66
+67</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/blather/xmpp_node.rb', line 62</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='attribute_reader identifier id'>attribute_reader</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='syms identifier id'>syms</span><span class='rparen token'>)</span>
+  <span class='opts identifier id'>opts</span> <span class='assign token'>=</span> <span class='syms identifier id'>syms</span><span class='dot token'>.</span><span class='last identifier id'>last</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Hash constant id'>Hash</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='syms identifier id'>syms</span><span class='dot token'>.</span><span class='pop identifier id'>pop</span> <span class='colon op'>:</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='syms identifier id'>syms</span><span class='dot token'>.</span><span class='flatten identifier id'>flatten</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='sym identifier id'>sym</span><span class='bitor op'>|</span>
+    <span class='class_eval identifier id'>class_eval</span><span class='lparen token'>(</span><span class='string val'>&quot;def \#{sym}\nattributes[:\#{sym}]\#{\&quot;.to_sym unless attributes[:\#{sym}].blank?\&quot; unless opts[:to_sym] == false}\nend\n&quot;</span><span class='comma token'>,</span> <span class='__FILE__ __file__ kw'>__FILE__</span><span class='comma token'>,</span> <span class='__LINE__ __line__ kw'>__LINE__</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>attribute_writer</h3>
+</div><div id="attribute_writer-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>attribute_writer</span><span class='args'>(*syms)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Provides an attribute writer helper.
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='Node constant id'>Node</span>
+    <span class='attribute_writer identifier id'>attribute_writer</span> <span class='symbol val'>:type</span>
+  <span class='end end kw'>end</span>
+
+  <span class='n identifier id'>n</span> <span class='assign token'>=</span> <span class='Node constant id'>Node</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+  <span class='n identifier id'>n</span><span class='dot token'>.</span><span class='type identifier id'>type</span> <span class='assign token'>=</span> <span class='string val'>'foo'</span>
+  <span class='n identifier id'>n</span><span class='dot token'>.</span><span class='attributes identifier id'>attributes</span><span class='lbrack token'>[</span><span class='symbol val'>:type</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='string val'>'foo'</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+84
+85
+86
+87
+88
+89</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/blather/xmpp_node.rb', line 84</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='attribute_writer identifier id'>attribute_writer</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='syms identifier id'>syms</span><span class='rparen token'>)</span>
+  <span class='syms identifier id'>syms</span><span class='dot token'>.</span><span class='flatten identifier id'>flatten</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='sym identifier id'>sym</span><span class='bitor op'>|</span>
+    <span class='next next kw'>next</span> <span class='if if_mod kw'>if</span> <span class='sym identifier id'>sym</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Hash constant id'>Hash</span><span class='rparen token'>)</span>
+    <span class='class_eval identifier id'>class_eval</span><span class='lparen token'>(</span><span class='string val'>&quot;def \#{sym}=(value)\nattributes[:\#{sym}] = value\nend\n&quot;</span><span class='comma token'>,</span> <span class='__FILE__ __file__ kw'>__FILE__</span><span class='comma token'>,</span> <span class='__LINE__ __line__ kw'>__LINE__</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>class_from_registration</h3>
+</div><div id="class_from_registration-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>class_from_registration</span><span class='args'>(name, xmlns)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Find the class to use given the name and namespace of a stanza
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+29
+30
+31
+32</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/blather/xmpp_node.rb', line 29</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class_from_registration identifier id'>class_from_registration</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='xmlns identifier id'>xmlns</span><span class='rparen token'>)</span>
+  <span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='name identifier id'>name</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+  <span class='@@registrations ivar id'>@@registrations</span><span class='lbrack token'>[</span><span class='lbrack token'>[</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='xmlns identifier id'>xmlns</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='@@registrations ivar id'>@@registrations</span><span class='lbrack token'>[</span><span class='lbrack token'>[</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='nil nil kw'>nil</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>import</h3>
+</div><div id="import-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>import</span><span class='args'>(node)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Looks up the class to use then instantiates an object of that class and
+imports all the <tt>node</tt>&#8217;s attributes and children into it.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+38
+39
+40
+41
+42
+43
+44
+45</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/blather/xmpp_node.rb', line 38</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='import identifier id'>import</span><span class='lparen token'>(</span><span class='node identifier id'>node</span><span class='rparen token'>)</span>
+  <span class='klass identifier id'>klass</span> <span class='assign token'>=</span> <span class='class_from_registration identifier id'>class_from_registration</span><span class='lparen token'>(</span><span class='node identifier id'>node</span><span class='dot token'>.</span><span class='element_name identifier id'>element_name</span><span class='comma token'>,</span> <span class='node identifier id'>node</span><span class='dot token'>.</span><span class='namespace identifier id'>namespace</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='klass identifier id'>klass</span> <span class='andop op'>&amp;&amp;</span> <span class='klass identifier id'>klass</span> <span class='neq op'>!=</span> <span class='self self kw'>self</span>
+    <span class='klass identifier id'>klass</span><span class='dot token'>.</span><span class='import identifier id'>import</span><span class='lparen token'>(</span><span class='node identifier id'>node</span><span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+    <span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='node identifier id'>node</span><span class='dot token'>.</span><span class='element_name identifier id'>element_name</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='inherit identifier id'>inherit</span><span class='lparen token'>(</span><span class='node identifier id'>node</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>register</h3>
+</div><div id="register-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>register</span><span class='args'>(name, ns = nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Lets a subclass register itself
+</p>
+<p>
+This registers a namespace that is used when looking up the class name of
+the object to instantiate when a new stanza is received
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+21
+22
+23
+24
+25</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/blather/xmpp_node.rb', line 21</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='ns identifier id'>ns</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='name identifier id'>name</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='ns identifier id'>ns</span> <span class='assign token'>=</span> <span class='ns identifier id'>ns</span>
+  <span class='@@registrations ivar id'>@@registrations</span><span class='lbrack token'>[</span><span class='lbrack token'>[</span><span class='self self kw'>self</span><span class='dot token'>.</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='ns identifier id'>ns</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='self self kw'>self</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div><div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>content_from</h3>
+</div><div id="content_from-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>content_from</span><span class='args'>(name)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Pull the content from a child
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+158
+159
+160
+161</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/blather/xmpp_node.rb', line 158</span>
+
+<span class='def def kw'>def</span> <span class='content_from identifier id'>content_from</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='rparen token'>)</span>
+  <span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='name identifier id'>name</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+  <span class='lparen token'>(</span><span class='child identifier id'>child</span> <span class='assign token'>=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='detect identifier id'>detect</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='n identifier id'>n</span><span class='bitor op'>|</span> <span class='n identifier id'>n</span><span class='dot token'>.</span><span class='element_name identifier id'>element_name</span> <span class='eq op'>==</span> <span class='name identifier id'>name</span> <span class='rbrace token'>}</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='child identifier id'>child</span><span class='dot token'>.</span><span class='content identifier id'>content</span> <span class='colon op'>:</span> <span class='nil nil kw'>nil</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>copy</h3>
+</div><div id="copy-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>copy</span><span class='args'>(deep = true)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Create a copy
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+165
+166
+167
+168
+169</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/blather/xmpp_node.rb', line 165</span>
+
+<span class='def def kw'>def</span> <span class='copy identifier id'>copy</span><span class='lparen token'>(</span><span class='deep identifier id'>deep</span> <span class='assign token'>=</span> <span class='true true kw'>true</span><span class='rparen token'>)</span>
+  <span class='copy identifier id'>copy</span> <span class='assign token'>=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='dot token'>.</span><span class='inherit identifier id'>inherit</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='rparen token'>)</span>
+  <span class='copy identifier id'>copy</span><span class='dot token'>.</span><span class='element_name identifier id'>element_name</span> <span class='assign token'>=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='element_name identifier id'>element_name</span>
+  <span class='copy identifier id'>copy</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>find</h3>
+</div><div id="find-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>find</span><span class='args'>(what, nslist = nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Override #find to work when a node isn&#8217;t attached to a document
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+195
+196
+197
+198</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/blather/xmpp_node.rb', line 195</span>
+
+<span class='def def kw'>def</span> <span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='what identifier id'>what</span><span class='comma token'>,</span> <span class='nslist identifier id'>nslist</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='what identifier id'>what</span> <span class='assign token'>=</span> <span class='what identifier id'>what</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+  <span class='lparen token'>(</span><span class='self self kw'>self</span><span class='dot token'>.</span><span class='doc identifier id'>doc</span> <span class='integer val'>? </span><span class='super super kw'>super</span><span class='lparen token'>(</span><span class='what identifier id'>what</span><span class='comma token'>,</span> <span class='nslist identifier id'>nslist</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='select identifier id'>select</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='i identifier id'>i</span><span class='bitor op'>|</span> <span class='i identifier id'>i</span><span class='dot token'>.</span><span class='element_name identifier id'>element_name</span> <span class='eq op'>==</span> <span class='what identifier id'>what</span> <span class='rbrace token'>}</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>inherit</h3>
+</div><div id="inherit-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>inherit</span><span class='args'>(stanza)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Inherit all of <tt>stanza</tt>&#8217;s attributes and children
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+173
+174
+175
+176
+177</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/blather/xmpp_node.rb', line 173</span>
+
+<span class='def def kw'>def</span> <span class='inherit identifier id'>inherit</span><span class='lparen token'>(</span><span class='stanza identifier id'>stanza</span><span class='rparen token'>)</span>
+  <span class='inherit_attrs identifier id'>inherit_attrs</span> <span class='stanza identifier id'>stanza</span><span class='dot token'>.</span><span class='attributes identifier id'>attributes</span>
+  <span class='stanza identifier id'>stanza</span><span class='dot token'>.</span><span class='children identifier id'>children</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span> <span class='self self kw'>self</span> <span class='lshft op'>&lt;&lt;</span> <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='copy identifier id'>copy</span><span class='lparen token'>(</span><span class='true true kw'>true</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  <span class='self self kw'>self</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>inherit_attrs</h3>
+</div><div id="inherit_attrs-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>inherit_attrs</span><span class='args'>(attrs)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Inherit only <tt>stanza</tt>&#8217;s attributes
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+181
+182
+183
+184</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/blather/xmpp_node.rb', line 181</span>
+
+<span class='def def kw'>def</span> <span class='inherit_attrs identifier id'>inherit_attrs</span><span class='lparen token'>(</span><span class='attrs identifier id'>attrs</span><span class='rparen token'>)</span>
+  <span class='attrs identifier id'>attrs</span><span class='dot token'>.</span><span class='each identifier id'>each</span>  <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='a identifier id'>a</span><span class='bitor op'>|</span> <span class='attributes identifier id'>attributes</span><span class='lbrack token'>[</span><span class='a identifier id'>a</span><span class='dot token'>.</span><span class='name identifier id'>name</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='a identifier id'>a</span><span class='dot token'>.</span><span class='value identifier id'>value</span> <span class='rbrace token'>}</span>
+  <span class='self self kw'>self</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>namespace</h3>
+</div><div id="namespace-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>namespace</span><span class='args'>(prefix = nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+138
+139
+140</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/blather/xmpp_node.rb', line 138</span>
+
+<span class='def def kw'>def</span> <span class='namespace identifier id'>namespace</span><span class='lparen token'>(</span><span class='prefix identifier id'>prefix</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='lparen token'>(</span><span class='ns identifier id'>ns</span> <span class='assign token'>=</span> <span class='namespaces identifier id'>namespaces</span><span class='dot token'>.</span><span class='find_by_prefix identifier id'>find_by_prefix</span><span class='lparen token'>(</span><span class='prefix identifier id'>prefix</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='ns identifier id'>ns</span><span class='dot token'>.</span><span class='href identifier id'>href</span> <span class='colon op'>:</span> <span class='nil nil kw'>nil</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>remove_child</h3>
+</div><div id="remove_child-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>remove_child</span><span class='args'>(name, ns = nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Remove a child with the name and (optionally) namespace given
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+144
+145
+146
+147</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/blather/xmpp_node.rb', line 144</span>
+
+<span class='def def kw'>def</span> <span class='remove_child identifier id'>remove_child</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='ns identifier id'>ns</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='name identifier id'>name</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='detect identifier id'>detect</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='n identifier id'>n</span><span class='bitor op'>|</span> <span class='n identifier id'>n</span><span class='dot token'>.</span><span class='remove! fid id'>remove!</span> <span class='if if_mod kw'>if</span> <span class='n identifier id'>n</span><span class='dot token'>.</span><span class='element_name identifier id'>element_name</span> <span class='eq op'>==</span> <span class='name identifier id'>name</span> <span class='andop op'>&amp;&amp;</span> <span class='lparen token'>(</span><span class='notop op'>!</span><span class='ns identifier id'>ns</span> <span class='orop op'>||</span> <span class='n identifier id'>n</span><span class='dot token'>.</span><span class='namespace identifier id'>namespace</span> <span class='eq op'>==</span> <span class='ns identifier id'>ns</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>remove_children</h3>
+</div><div id="remove_children-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>remove_children</span><span class='args'>(name)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Remove all children with a given name
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+151
+152
+153
+154</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/blather/xmpp_node.rb', line 151</span>
+
+<span class='def def kw'>def</span> <span class='remove_children identifier id'>remove_children</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='rparen token'>)</span>
+  <span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='name identifier id'>name</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='n identifier id'>n</span><span class='bitor op'>|</span> <span class='n identifier id'>n</span><span class='dot token'>.</span><span class='remove! fid id'>remove!</span> <span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>to_stanza</h3>
+</div><div id="to_stanza-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>to_stanza</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Quickway of turning itself into a proper object
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+127
+128
+129</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/blather/xmpp_node.rb', line 127</span>
+
+<span class='def def kw'>def</span> <span class='to_stanza identifier id'>to_stanza</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='import identifier id'>import</span> <span class='self self kw'>self</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>to_xml</h3>
+</div><div id="to_xml-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>to_xml</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Turn itself into an XML string and remove all whitespace between nodes
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+188
+189
+190
+191</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/blather/xmpp_node.rb', line 188</span>
+
+<span class='def def kw'>def</span> <span class='to_xml identifier id'>to_xml</span>
+  <span class='comment val'># TODO: Fix this for HTML nodes (and any other that might require whitespace)</span>
+  <span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='string val'>&quot;&gt;\n&lt;&quot;</span><span class='comma token'>,</span> <span class='string val'>'&gt;&lt;'</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

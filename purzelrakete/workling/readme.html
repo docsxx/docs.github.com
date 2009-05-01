@@ -1,0 +1,663 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <title>README</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section docstring readme">
+        <p>
+# Workling
+</p>
+<p>
+Workling gives your Rails App a simple API that you can use to make code
+run in the background, outside of the your request.
+</p>
+<p>
+You can configure how the background code will be run. Currently, workling
+supports Starling, BackgroundJob and Spawn Runners. Workling is a bit like
+Actve* for background work: you can write your code once, then swap in any
+of the supported background Runners later. This keeps things flexible.
+</p>
+<p>
+## Installing Workling
+</p>
+<p>
+The easiest way of getting started with workling is like this:
+</p>
+<pre class="code">
+    <span class='script identifier id'>script</span><span class='div op'>/</span><span class='plugin identifier id'>plugin</span> <span class='install identifier id'>install</span> <span class='git identifier id'>git</span><span class='symbol val'>:/</span><span class='regexp val'>/github.com/</span><span class='purzelrakete identifier id'>purzelrakete</span><span class='div op'>/</span><span class='workling identifier id'>workling</span><span class='dot token'>.</span><span class='git identifier id'>git</span>
+    <span class='script identifier id'>script</span><span class='div op'>/</span><span class='plugin identifier id'>plugin</span> <span class='install identifier id'>install</span> <span class='git identifier id'>git</span><span class='symbol val'>:/</span><span class='regexp val'>/github.com/</span><span class='tra identifier id'>tra</span><span class='div op'>/</span><span class='spawn identifier id'>spawn</span><span class='dot token'>.</span><span class='git identifier id'>git</span>
+</pre>
+<p>
+If you&#8217;re on an older Rails version, there&#8217;s also a subversion
+mirror wor workling (I&#8217;ll do my best to keep it synched) at:
+</p>
+<pre class="code">
+    <span class='script identifier id'>script</span><span class='div op'>/</span><span class='plugin identifier id'>plugin</span> <span class='install identifier id'>install</span> <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/svn.playtype.net/</span><span class='plugins identifier id'>plugins</span><span class='div op'>/</span><span class='workling identifier id'>workling</span><span class='div op'>/</span>
+</pre>
+<p>
+## Writing and calling Workers
+</p>
+<p>
+This is pretty easy. Just put `cow_worker.rb` into into `app/workers`, and
+subclass `Workling::Base`:
+</p>
+<pre class="code">
+    <span class='comment val'># handle asynchronous mooing.</span>
+    <span class='class class kw'>class</span> <span class='CowWorker constant id'>CowWorker</span> <span class='lt op'>&lt;</span> <span class='Workling constant id'>Workling</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
+      <span class='def def kw'>def</span> <span class='moo identifier id'>moo</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='rparen token'>)</span>
+        <span class='cow identifier id'>cow</span> <span class='assign token'>=</span> <span class='Cow constant id'>Cow</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:id</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+        <span class='logger identifier id'>logger</span><span class='dot token'>.</span><span class='info identifier id'>info</span><span class='lparen token'>(</span><span class='string val'>&quot;about to moo.&quot;</span><span class='rparen token'>)</span>
+        <span class='cow identifier id'>cow</span><span class='dot token'>.</span><span class='moo identifier id'>moo</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+</pre>
+<p>
+Make sure you have exactly one hash parameter in your methods, workling
+passes the job :uid into here. Btw, in case you want to follow along with
+the Mooing, grab &#8216;cows-not-kittens&#8217; off github, it&#8217;s an
+example workling project. Look at the branches, there&#8217;s one for each
+Runner.
+</p>
+<p>
+Next, you&#8217;ll want to call your workling in a controller. Your
+controller might looks like this:
+</p>
+<pre class="code">
+    <span class='class class kw'>class</span> <span class='CowsController constant id'>CowsController</span> <span class='lt op'>&lt;</span> <span class='ApplicationController constant id'>ApplicationController</span>
+
+      <span class='comment val'># milking has the side effect of causing</span>
+      <span class='comment val'># the cow to moo. we don't want to</span>
+      <span class='comment val'># wait for this while milking, though,</span>
+      <span class='comment val'># it would be a terrible waste ouf our time.</span>
+      <span class='def def kw'>def</span> <span class='milk identifier id'>milk</span>
+        <span class='@cow ivar id'>@cow</span> <span class='assign token'>=</span> <span class='Cow constant id'>Cow</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:id</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+        <span class='CowWorker constant id'>CowWorker</span><span class='dot token'>.</span><span class='asynch_moo identifier id'>asynch_moo</span><span class='lparen token'>(</span><span class='symbol val'>:id</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='@cow ivar id'>@cow</span><span class='dot token'>.</span><span class='id identifier id'>id</span><span class='rparen token'>)</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+</pre>
+<p>
+Notice the `asynch_moo` call to `CowWorker`. This will call the `moo`
+method on the `CowWorker` in the background, passing any parameters you
+like on. In fact, workling will call whatever comes after asynch_ as a
+method on the worker instance.
+</p>
+<p>
+## Worker Lifecycle
+</p>
+<p>
+All worker classes must inherit from this class, and be saved in
+`app/workers`. The Worker is loaded once, at which point the instance
+method `create` is called.
+</p>
+<p>
+Calling `async_my_method` on the worker class will trigger background work.
+This means that the loaded Worker instance will receive a call to the
+method `my_method(:uid =&gt; &quot;thisjobsuid2348732947923&quot;)`.
+</p>
+<p>
+## Exception handling in Workers
+</p>
+<p>
+If an exception is raised in your Worker, it will not be propagated to the
+calling code by workling. This is because the code is called
+asynchronously, meaning that exceptions may be raised after the calling
+code has already returned. If you need your calling code to handle
+exceptional situations, you have to pass the error into the return store.
+</p>
+<p>
+Workling does log all exceptions that propagate out of the worker methods.
+</p>
+<p>
+## Logging with Workling
+</p>
+<p>
+`RAILS_DEFAULT_LOGGER` is available in all workers. Workers also have a
+logger method which returns the default logger, so you can log like this:
+</p>
+<pre class="code">
+    <span class='logger identifier id'>logger</span><span class='dot token'>.</span><span class='info identifier id'>info</span><span class='lparen token'>(</span><span class='string val'>&quot;about to moo.&quot;</span><span class='rparen token'>)</span>
+</pre>
+<p>
+## What should I know about the Spawn Runner?
+</p>
+<p>
+Workling automatically detects and uses Spawn, if installed. Spawn
+basically forks Rails every time you invoke a workling. To see what sort of
+characteristics this has, go into script/console, and run this:
+</p>
+<pre class="code">
+    <span class='rshft op'>&gt;&gt;</span> <span class='fork identifier id'>fork</span> <span class='lbrace token'>{</span> <span class='sleep identifier id'>sleep</span> <span class='integer val'>100</span> <span class='rbrace token'>}</span>
+    <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>1060</span> <span class='lparen token'>(</span><span class='the identifier id'>the</span> <span class='pid identifier id'>pid</span> <span class='is identifier id'>is</span> <span class='returned identifier id'>returned</span><span class='rparen token'>)</span>
+</pre>
+<p>
+You&#8217;ll see that this executes pretty much instantly. Run
+&#8216;top&#8217; in another terminal window, and look for the new ruby
+process. This might be around 30 MB. This tells you that using spawn as a
+runner will result low latency, but will take at least 30MB for each
+request you make.
+</p>
+<p>
+You cannot run your workers on a remote machine or cluster them with spawn.
+You also have no persistence: if you&#8217;ve fired of a lot of work and
+everything dies, there&#8217;s no way of picking up where you left off.
+</p>
+<p>
+# Using the Starling runner
+</p>
+<p>
+If you want cross machine jobs with low latency and a low memory overhead,
+you might want to look into using the Starling Runner.
+</p>
+<p>
+## Installing Starling
+</p>
+<p>
+As of 27. September 2008, the recommended Starling setup is as follows:
+</p>
+<pre class="code">
+    <span class='gem identifier id'>gem</span> <span class='sources identifier id'>sources</span> <span class='minus op'>-</span><span class='a identifier id'>a</span> <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/gems.github.com/</span>
+    <span class='sudo identifier id'>sudo</span> <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='starling identifier id'>starling</span><span class='minus op'>-</span><span class='starling identifier id'>starling</span>
+    <span class='mkdir identifier id'>mkdir</span> <span class='regexp val'>/var/s</span><span class='pool identifier id'>pool</span><span class='div op'>/</span><span class='starling identifier id'>starling</span>
+</pre>
+<p>
+The robot Co-Op Memcached Gem version 1.5.0 has several bugs, which have
+been fixed in the fiveruns-memcache-client gem. The starling-starling gem
+will install this as a dependency. Refer to the fiveruns README to see what
+the exact fixes are.
+</p>
+<p>
+The Rubyforge Starling gem is also out of date. Currently, the most
+authorative Project is starling-starling on github (27. September 2008).
+</p>
+<p>
+Workling will now automatically detect and use Starling, unless you have
+also installed Spawn. If you have Spawn installed, you need to tell
+Workling to use Starling by putting this in your environment.rb:
+</p>
+<pre class="code">
+    <span class='Workling constant id'>Workling</span><span class='colon2 op'>::</span><span class='Remote constant id'>Remote</span><span class='dot token'>.</span><span class='dispatcher identifier id'>dispatcher</span> <span class='assign token'>=</span> <span class='Workling constant id'>Workling</span><span class='colon2 op'>::</span><span class='Remote constant id'>Remote</span><span class='colon2 op'>::</span><span class='Runners constant id'>Runners</span><span class='colon2 op'>::</span><span class='StarlingRunner constant id'>StarlingRunner</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+</pre>
+<p>
+## Starting up the required processes
+</p>
+<p>
+Here&#8217;s what you need to get up and started in development mode. Look
+in config/workling.yml to see what the default ports are for other
+environments.
+</p>
+<pre class="code">
+    <span class='sudo identifier id'>sudo</span> <span class='starling identifier id'>starling</span> <span class='minus op'>-</span><span class='d identifier id'>d</span> <span class='minus op'>-</span><span class='p identifier id'>p</span> <span class='integer val'>22122</span>
+    <span class='script identifier id'>script</span><span class='div op'>/</span><span class='workling_client identifier id'>workling_client</span> <span class='start identifier id'>start</span>
+</pre>
+<p>
+## Configuring workling.yml
+</p>
+<p>
+Workling copies a file called workling.yml into your applications config
+directory. The config file tells Workling on which port Starling is
+listening.
+</p>
+<p>
+Notice that the default production port is 15151. This means you&#8217;ll
+need to start Starling with -p 15151 on production.
+</p>
+<p>
+You can also use this config file to pass configuration options to the
+memcache client which workling uses to connect to starling. use the key
+&#8216;memcache_options&#8217; for this.
+</p>
+<p>
+You can also set sleep time for each Worker. See the key
+&#8216;listeners&#8217; for this. Put in the modularized Class name as a
+key.
+</p>
+<pre class="code">
+    <span class='development identifier id'>development</span><span class='colon op'>:</span>
+      <span class='listens_on identifier id'>listens_on</span><span class='colon op'>:</span> <span class='localhost identifier id'>localhost</span><span class='symbol val'>:22122</span>
+      <span class='sleep_time identifier id'>sleep_time</span><span class='colon op'>:</span> <span class='integer val'>2</span>
+      <span class='reset_time identifier id'>reset_time</span><span class='colon op'>:</span> <span class='integer val'>30</span>
+      <span class='listeners identifier id'>listeners</span><span class='colon op'>:</span>
+        <span class='Util constant id'>Util</span><span class='colon op'>:</span>
+          <span class='sleep_time identifier id'>sleep_time</span><span class='colon op'>:</span> <span class='integer val'>20</span>
+      <span class='memcache_options identifier id'>memcache_options</span><span class='colon op'>:</span>
+        <span class='namespace identifier id'>namespace</span><span class='colon op'>:</span> <span class='myapp_development identifier id'>myapp_development</span>
+
+    <span class='production identifier id'>production</span><span class='colon op'>:</span>
+      <span class='listens_on identifier id'>listens_on</span><span class='colon op'>:</span> <span class='localhost identifier id'>localhost</span><span class='symbol val'>:22122</span><span class='comma token'>,</span> <span class='localhost identifier id'>localhost</span><span class='symbol val'>:221223</span><span class='comma token'>,</span> <span class='localhost identifier id'>localhost</span><span class='symbol val'>:221224</span>
+      <span class='sleep_time identifier id'>sleep_time</span><span class='colon op'>:</span> <span class='integer val'>2</span>
+      <span class='reset_time identifier id'>reset_time</span><span class='colon op'>:</span> <span class='integer val'>30</span>
+</pre>
+<p>
+Note that you can cluster Starling instances by passing a comma separated
+list of values to
+</p>
+<p>
+Sleep time determines the wait time between polls against polls. A single
+poll will do one .get on every queue (there is a corresponding queue for
+each worker method).
+</p>
+<p>
+If there is a memcache error, the Poller will hang for a bit to give it a
+chance to fire up again and reset the connection. The wait time can be set
+with the key reset_time.
+</p>
+<p>
+## Seeing what Starling is doing
+</p>
+<p>
+Starling comes with it&#8217;s own script, starling_top. If you want
+statistics specific to workling, run:
+</p>
+<pre class="code">
+    <span class='script identifier id'>script</span><span class='div op'>/</span><span class='starling_status identifier id'>starling_status</span><span class='dot token'>.</span><span class='rb identifier id'>rb</span>
+</pre>
+<p>
+## A Quick Starling Primer
+</p>
+<p>
+You might wonder what exactly starling does. Here&#8217;s a little snippet
+you can play with to illustrate how it works:
+</p>
+<pre class="code">
+     <span class='integer val'>4</span> <span class='comment val'># Put messages onto a queue:</span>
+     <span class='integer val'>5</span> <span class='require identifier id'>require</span> <span class='string val'>'memcache'</span>
+     <span class='integer val'>6</span> <span class='starling identifier id'>starling</span> <span class='assign token'>=</span> <span class='MemCache constant id'>MemCache</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'localhost:22122'</span><span class='rparen token'>)</span>
+     <span class='integer val'>7</span> <span class='starling identifier id'>starling</span><span class='dot token'>.</span><span class='set identifier id'>set</span><span class='lparen token'>(</span><span class='string val'>'my_queue'</span><span class='comma token'>,</span> <span class='integer val'>1</span><span class='rparen token'>)</span>
+     <span class='integer val'>8</span>
+     <span class='integer val'>9</span> <span class='comment val'># Get messages from the queue:</span>
+    <span class='integer val'>10</span> <span class='require identifier id'>require</span> <span class='string val'>'memcache'</span>
+    <span class='integer val'>11</span> <span class='starling identifier id'>starling</span> <span class='assign token'>=</span> <span class='MemCache constant id'>MemCache</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'localhost:22122'</span><span class='rparen token'>)</span>
+    <span class='integer val'>12</span> <span class='loop identifier id'>loop</span> <span class='lbrace token'>{</span> <span class='puts identifier id'>puts</span> <span class='starling identifier id'>starling</span><span class='dot token'>.</span><span class='get identifier id'>get</span><span class='lparen token'>(</span><span class='string val'>'my_queue'</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+    <span class='integer val'>13</span>
+</pre>
+<p>
+# Using RabbitMQ or any Queue Server that supports AMQP
+</p>
+<p>
+RabbitMQ is a reliable, high performance queue server written in erlang. If
+you&#8217;re doing high volume messaging and need a high degree of
+reliability, you should definitely consider using RabbitMQ over Starling.
+</p>
+<p>
+A lot of Ruby people have been talking about using RabbitMQ as their Queue
+of choice. Soundcloud.com are using it, as is new bamboo founder Johnathan
+Conway, who is using it at his video startup http://www.vzaar.com/. He
+says:
+</p>
+<p>
+&gt; RabbitMQ – Now this is the matrons knockers when it comes to kick
+ass, ultra fast and scalable messaging. It simply rocks, with performance
+off the hook. It’s written in Erlang and supports the AMPQ protocol.
+</p>
+<p>
+If you&#8217;re on OSX, you can get started with RabbitMQ by following the
+installation instructions
+[here](http://playtype.net/past/2008/10/9/installing_rabbitmq_on_osx/). To
+get an idea of how to directly connect to RabbitMQ using ruby, have a look
+at [this
+article](http://playtype.net/past/2008/10/10/kickass_queuing_over_ruby_using_amqp).
+</p>
+<p>
+Once you&#8217;ve installed RabbitMQ, install the ruby amqp library:
+</p>
+<pre class="code">
+    <span class='gem identifier id'>gem</span> <span class='sources identifier id'>sources</span> <span class='minus op'>-</span><span class='a identifier id'>a</span> <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/gems.github.com/</span> <span class='lparen token'>(</span><span class='if if kw'>if</span> <span class='necessary identifier id'>necessary</span><span class='rparen token'>)</span>
+    <span class='sudo identifier id'>sudo</span> <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='tmm1 identifier id'>tmm1</span><span class='minus op'>-</span><span class='amqp identifier id'>amqp</span>
+</pre>
+<p>
+then configure configure your application to use Amqp by adding this:
+</p>
+<pre class="code">
+    <span class='Workling constant id'>Workling</span><span class='colon2 op'>::</span><span class='Remote constant id'>Remote</span><span class='dot token'>.</span><span class='invoker identifier id'>invoker</span> <span class='assign token'>=</span> <span class='Workling constant id'>Workling</span><span class='colon2 op'>::</span><span class='Remote constant id'>Remote</span><span class='colon2 op'>::</span><span class='Invokers constant id'>Invokers</span><span class='colon2 op'>::</span><span class='EventmachineSubscriber constant id'>EventmachineSubscriber</span>
+    <span class='Workling constant id'>Workling</span><span class='colon2 op'>::</span><span class='Remote constant id'>Remote</span><span class='dot token'>.</span><span class='dispatcher identifier id'>dispatcher</span> <span class='assign token'>=</span> <span class='Workling constant id'>Workling</span><span class='colon2 op'>::</span><span class='Remote constant id'>Remote</span><span class='colon2 op'>::</span><span class='Runners constant id'>Runners</span><span class='colon2 op'>::</span><span class='ClientRunner constant id'>ClientRunner</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+    <span class='Workling constant id'>Workling</span><span class='colon2 op'>::</span><span class='Remote constant id'>Remote</span><span class='dot token'>.</span><span class='dispatcher identifier id'>dispatcher</span><span class='dot token'>.</span><span class='client identifier id'>client</span> <span class='assign token'>=</span> <span class='Workling constant id'>Workling</span><span class='colon2 op'>::</span><span class='Clients constant id'>Clients</span><span class='colon2 op'>::</span><span class='AmqpClient constant id'>AmqpClient</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+</pre>
+<p>
+Then start the workling Client:
+</p>
+<pre class="code">
+    <span class='integer val'>1</span> <span class='dot token'>.</span><span class='div op'>/</span><span class='script identifier id'>script</span><span class='div op'>/</span><span class='workling_client identifier id'>workling_client</span> <span class='start identifier id'>start</span>
+</pre>
+<p>
+You&#8217;re good.
+</p>
+<p>
+# Using RudeQueue
+</p>
+<p>
+RudeQueue is a Starling-like Queue that runs on top of your database and
+requires no extra processes. Use this if you don&#8217;t need very fast job
+processing and want to avoid managing the extra process starling requires.
+</p>
+<p>
+Install the RudeQ plugin like this:
+</p>
+<pre class="code">
+    <span class='integer val'>1</span> <span class='dot token'>.</span><span class='div op'>/</span><span class='script identifier id'>script</span><span class='div op'>/</span><span class='plugin identifier id'>plugin</span> <span class='install identifier id'>install</span> <span class='git identifier id'>git</span><span class='symbol val'>:/</span><span class='regexp val'>/github.com/</span><span class='matthewrudy identifier id'>matthewrudy</span><span class='div op'>/</span><span class='rudeq identifier id'>rudeq</span><span class='dot token'>.</span><span class='git identifier id'>git</span>
+    <span class='integer val'>2</span> <span class='rake identifier id'>rake</span> <span class='queue identifier id'>queue</span><span class='symbol val'>:setup</span>
+    <span class='integer val'>3</span> <span class='rake identifier id'>rake</span> <span class='db identifier id'>db</span><span class='symbol val'>:migrate</span>
+</pre>
+<p>
+Configure Workling to use RudeQ. Add this to your environment:
+</p>
+<pre class="code">
+    <span class='Workling constant id'>Workling</span><span class='colon2 op'>::</span><span class='Clients constant id'>Clients</span><span class='colon2 op'>::</span><span class='MemcacheQueueClient constant id'>MemcacheQueueClient</span><span class='dot token'>.</span><span class='memcache_client_class identifier id'>memcache_client_class</span> <span class='assign token'>=</span> <span class='RudeQ constant id'>RudeQ</span><span class='colon2 op'>::</span><span class='Client constant id'>Client</span>
+    <span class='Workling constant id'>Workling</span><span class='colon2 op'>::</span><span class='Remote constant id'>Remote</span><span class='dot token'>.</span><span class='dispatcher identifier id'>dispatcher</span> <span class='assign token'>=</span> <span class='Workling constant id'>Workling</span><span class='colon2 op'>::</span><span class='Remote constant id'>Remote</span><span class='colon2 op'>::</span><span class='Runners constant id'>Runners</span><span class='colon2 op'>::</span><span class='ClientRunner constant id'>ClientRunner</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+</pre>
+<p>
+Now start the Workling Client:
+</p>
+<pre class="code">
+    <span class='integer val'>1</span> <span class='dot token'>.</span><span class='div op'>/</span><span class='script identifier id'>script</span><span class='div op'>/</span><span class='workling_client identifier id'>workling_client</span> <span class='start identifier id'>start</span>
+</pre>
+<p>
+You&#8217;re good.
+</p>
+<p>
+# Using BackgroundJob
+</p>
+<p>
+If you don&#8217;t want to bother with seperate processes, are not worried
+about latence or memory footprint, then you might want to use Bj to power
+workling.
+</p>
+<p>
+Install the Bj plugin like this:
+</p>
+<pre class="code">
+    <span class='integer val'>1</span> <span class='dot token'>.</span><span class='div op'>/</span><span class='script identifier id'>script</span><span class='div op'>/</span><span class='plugin identifier id'>plugin</span> <span class='install identifier id'>install</span> <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/codeforpeople.rubyforge.org/s</span><span class='vn identifier id'>vn</span><span class='div op'>/</span><span class='rails identifier id'>rails</span><span class='div op'>/</span><span class='plugins identifier id'>plugins</span><span class='div op'>/</span><span class='bj identifier id'>bj</span>
+    <span class='integer val'>2</span> <span class='dot token'>.</span><span class='div op'>/</span><span class='script identifier id'>script</span><span class='div op'>/</span><span class='bj identifier id'>bj</span> <span class='setup identifier id'>setup</span>
+</pre>
+<p>
+Workling will now automatically detect and use Bj, unless you have also
+installed Starling. If you have Starling installed, you need to tell
+Workling to use Bj by putting this in your environment.rb:
+</p>
+<pre class="code">
+    <span class='Workling constant id'>Workling</span><span class='colon2 op'>::</span><span class='Remote constant id'>Remote</span><span class='dot token'>.</span><span class='dispatcher identifier id'>dispatcher</span> <span class='assign token'>=</span> <span class='Workling constant id'>Workling</span><span class='colon2 op'>::</span><span class='Remote constant id'>Remote</span><span class='colon2 op'>::</span><span class='Runners constant id'>Runners</span><span class='colon2 op'>::</span><span class='BackgroundjobRunner constant id'>BackgroundjobRunner</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+</pre>
+<p>
+# Progress indicators and return stores
+</p>
+<p>
+Your worklings can write back to a return store. This allows you to write
+progress indicators, or access results from your workling. As above, this
+is fairly slim. Again, you can swap in any return store implementation you
+like without changing your code. They all behave like memcached. For tests,
+there is a memory return store, for production use there is currently a
+starling return store. You can easily add a new return store (over the
+database for instance) by subclassing `Workling::Return::Store::Base`.
+Configure it like this in your test environment:
+</p>
+<pre class="code">
+    <span class='Workling constant id'>Workling</span><span class='colon2 op'>::</span><span class='Return constant id'>Return</span><span class='colon2 op'>::</span><span class='Store constant id'>Store</span><span class='dot token'>.</span><span class='instance identifier id'>instance</span> <span class='assign token'>=</span> <span class='Workling constant id'>Workling</span><span class='colon2 op'>::</span><span class='Return constant id'>Return</span><span class='colon2 op'>::</span><span class='Store constant id'>Store</span><span class='colon2 op'>::</span><span class='MemoryReturnStore constant id'>MemoryReturnStore</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+</pre>
+<p>
+Setting and getting values works as follows. Read the next paragraph to see
+where the job-id comes from.
+</p>
+<pre class="code">
+    <span class='Workling constant id'>Workling</span><span class='dot token'>.</span><span class='return identifier id'>return</span><span class='dot token'>.</span><span class='set identifier id'>set</span><span class='lparen token'>(</span><span class='string val'>&quot;job-id-1&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;moo&quot;</span><span class='rparen token'>)</span>
+    <span class='Workling constant id'>Workling</span><span class='dot token'>.</span><span class='return identifier id'>return</span><span class='dot token'>.</span><span class='get identifier id'>get</span><span class='lparen token'>(</span><span class='string val'>&quot;job-id-1&quot;</span><span class='rparen token'>)</span>           <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;moo&quot;</span>
+</pre>
+<p>
+Here is an example worker that crawls an addressbook and puts results into
+a return store. Workling makes sure you have a :uid in your argument hash -
+set the value into the return store using this uid as a key:
+</p>
+<pre class="code">
+    <span class='require identifier id'>require</span> <span class='string val'>'blackbook'</span>
+    <span class='class class kw'>class</span> <span class='NetworkWorker constant id'>NetworkWorker</span> <span class='lt op'>&lt;</span> <span class='Workling constant id'>Workling</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
+      <span class='def def kw'>def</span> <span class='search identifier id'>search</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='rparen token'>)</span>
+        <span class='results identifier id'>results</span> <span class='assign token'>=</span> <span class='Blackbook constant id'>Blackbook</span><span class='dot token'>.</span><span class='get identifier id'>get</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:key</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:username</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:password</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+        <span class='Workling constant id'>Workling</span><span class='dot token'>.</span><span class='return identifier id'>return</span><span class='dot token'>.</span><span class='set identifier id'>set</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:uid</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='results identifier id'>results</span><span class='rparen token'>)</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+</pre>
+<p>
+call your workling as above:
+</p>
+<pre class="code">
+    <span class='@uid ivar id'>@uid</span> <span class='assign token'>=</span> <span class='NetworkWorker constant id'>NetworkWorker</span><span class='dot token'>.</span><span class='asynch_search identifier id'>asynch_search</span><span class='lparen token'>(</span><span class='symbol val'>:key</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:gmail</span><span class='comma token'>,</span> <span class='symbol val'>:username</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;foo@gmail.com&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:password</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;bar&quot;</span><span class='rparen token'>)</span>
+</pre>
+<p>
+you can now use the @uid to query the return store:
+</p>
+<pre class="code">
+    <span class='results identifier id'>results</span> <span class='assign token'>=</span> <span class='Workling constant id'>Workling</span><span class='dot token'>.</span><span class='return identifier id'>return</span><span class='dot token'>.</span><span class='get identifier id'>get</span><span class='lparen token'>(</span><span class='@uid ivar id'>@uid</span><span class='rparen token'>)</span>
+</pre>
+<p>
+of course, you can use this for progress indicators. just put the progress
+into the return store.
+</p>
+<p>
+enjoy!
+</p>
+<p>
+## Adding new work brokers to Workling
+</p>
+<p>
+There are two new base classes you can extend to add new brokers.
+I&#8217;ll describe how this is done usin amqp as an example. The code i
+show is already a part of workling.
+</p>
+<p>
+### Clients
+</p>
+<p>
+Clients help workling to connect to job brokers. To add an AmqpClient, we
+need to extend from `Workling::Client::Base` and implement a couple of
+methods.
+</p>
+<pre class="code">
+    <span class='require identifier id'>require</span> <span class='string val'>'workling/clients/base'</span>
+    <span class='require identifier id'>require</span> <span class='string val'>'mq'</span>
+
+    <span class='comment val'>#</span>
+    <span class='comment val'>#  An Ampq client</span>
+    <span class='comment val'>#</span>
+    <span class='module module kw'>module</span> <span class='Workling constant id'>Workling</span>
+      <span class='module module kw'>module</span> <span class='Clients constant id'>Clients</span>
+        <span class='class class kw'>class</span> <span class='AmqpClient constant id'>AmqpClient</span> <span class='lt op'>&lt;</span> <span class='Workling constant id'>Workling</span><span class='colon2 op'>::</span><span class='Clients constant id'>Clients</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
+
+          <span class='comment val'># starts the client.</span>
+          <span class='def def kw'>def</span> <span class='connect identifier id'>connect</span>
+            <span class='@amq ivar id'>@amq</span> <span class='assign token'>=</span> <span class='MQ constant id'>MQ</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+          <span class='end end kw'>end</span>
+
+          <span class='comment val'># stops the client.</span>
+          <span class='def def kw'>def</span> <span class='close identifier id'>close</span>
+            <span class='@amq ivar id'>@amq</span><span class='dot token'>.</span><span class='close identifier id'>close</span>
+          <span class='end end kw'>end</span>
+
+          <span class='comment val'># request work</span>
+          <span class='def def kw'>def</span> <span class='request identifier id'>request</span><span class='lparen token'>(</span><span class='queue identifier id'>queue</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='rparen token'>)</span>
+            <span class='@amq ivar id'>@amq</span><span class='dot token'>.</span><span class='queue identifier id'>queue</span><span class='lparen token'>(</span><span class='queue identifier id'>queue</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='publish identifier id'>publish</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+          <span class='end end kw'>end</span>
+
+          <span class='comment val'># retrieve work</span>
+          <span class='def def kw'>def</span> <span class='retrieve identifier id'>retrieve</span><span class='lparen token'>(</span><span class='queue identifier id'>queue</span><span class='rparen token'>)</span>
+            <span class='@amq ivar id'>@amq</span><span class='dot token'>.</span><span class='queue identifier id'>queue</span><span class='lparen token'>(</span><span class='queue identifier id'>queue</span><span class='rparen token'>)</span>
+          <span class='end end kw'>end</span>
+
+          <span class='comment val'># subscribe to a queue</span>
+          <span class='def def kw'>def</span> <span class='subscribe identifier id'>subscribe</span><span class='lparen token'>(</span><span class='queue identifier id'>queue</span><span class='rparen token'>)</span>
+            <span class='@amq ivar id'>@amq</span><span class='dot token'>.</span><span class='queue identifier id'>queue</span><span class='lparen token'>(</span><span class='queue identifier id'>queue</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='subscribe identifier id'>subscribe</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='value identifier id'>value</span><span class='bitor op'>|</span>
+              <span class='yield yield kw'>yield</span> <span class='value identifier id'>value</span>
+            <span class='end end kw'>end</span>
+          <span class='end end kw'>end</span>
+
+        <span class='end end kw'>end</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+</pre>
+<p>
+Were&#8217;s using the eventmachine amqp client for this, you can find it
+[up on github](http://github.com/tmm1/amqp/tree/master). `connect` and
+`close` do exactly what it says on the tin: connecting to rabbitmq and
+closing the connection.
+</p>
+<p>
+`request` and `retrieve` are responsible for placing work on rabbitmq. The
+methods are passed the correct queue, and a value that contains the worker
+method arguments. If you need control over the queue names, look at the
+RDoc for Workling::Routing::Base. In our case, there&#8217;s no special
+requirement here.
+</p>
+<p>
+Finally, we implement a `subscribe` method. Use this if your broker
+supports callbacks, as is the case with amqp. This method expects to a
+block, which we pass into the amqp subscribe method here. The block will be
+called when a message is available on the queue, and the result is yielded
+into the block.
+</p>
+<p>
+Having subscription callbacks is very nice, because this way, we
+don&#8217;t need to keep calling `get` on the queue to see if something new
+is waiting.
+</p>
+<p>
+So now we&#8217;re done! That&#8217;s all you need to add RabbitMQ to
+workling. Configure it in your application as descibed below.
+</p>
+<p>
+### Invokers
+</p>
+<p>
+There&#8217;s still potential to improve things though. Workling 0.4.0
+introduces the idea of invokers. Invokers grab work off a job broker, using
+a client (see above). They subclass Workling::Remote::Invokers::Base. Read
+the RDoc for a description of the methods.
+</p>
+<p>
+Workling comes with a couple of standard invokers, like the BasicPoller.
+This invoker simply keeps hitting the broker every n seconds, checking for
+new work and executing it immediately. The ThreadedInvoker does the same,
+but spawns a Thread for every Worker class the project defines.
+</p>
+<p>
+So Amqp: it would be nice if we had an invoker that makes use of the
+subscription callbacks. Easily done, lets have a look:
+</p>
+<pre class="code">
+    <span class='require identifier id'>require</span> <span class='string val'>'eventmachine'</span>
+    <span class='require identifier id'>require</span> <span class='string val'>'workling/remote/invokers/base'</span>
+
+    <span class='comment val'>#</span>
+    <span class='comment val'>#  Subscribes the workers to the correct queues.</span>
+    <span class='comment val'>#</span>
+    <span class='module module kw'>module</span> <span class='Workling constant id'>Workling</span>
+      <span class='module module kw'>module</span> <span class='Remote constant id'>Remote</span>
+        <span class='module module kw'>module</span> <span class='Invokers constant id'>Invokers</span>
+          <span class='class class kw'>class</span> <span class='EventmachineSubscriber constant id'>EventmachineSubscriber</span> <span class='lt op'>&lt;</span> <span class='Workling constant id'>Workling</span><span class='colon2 op'>::</span><span class='Remote constant id'>Remote</span><span class='colon2 op'>::</span><span class='Invokers constant id'>Invokers</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
+
+            <span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='routing identifier id'>routing</span><span class='comma token'>,</span> <span class='client_class identifier id'>client_class</span><span class='rparen token'>)</span>
+              <span class='super super kw'>super</span>
+            <span class='end end kw'>end</span>
+
+            <span class='comment val'>#</span>
+            <span class='comment val'>#  Starts EM loop and sets up subscription callbacks for workers.</span>
+            <span class='comment val'>#</span>
+            <span class='def def kw'>def</span> <span class='listen identifier id'>listen</span>
+              <span class='EM constant id'>EM</span><span class='dot token'>.</span><span class='run identifier id'>run</span> <span class='do do kw'>do</span>
+                <span class='connect identifier id'>connect</span> <span class='do do kw'>do</span>
+                  <span class='routes identifier id'>routes</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='queue identifier id'>queue</span><span class='bitor op'>|</span>
+                    <span class='@client ivar id'>@client</span><span class='dot token'>.</span><span class='subscribe identifier id'>subscribe</span><span class='lparen token'>(</span><span class='queue identifier id'>queue</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='args identifier id'>args</span><span class='bitor op'>|</span>
+                      <span class='run identifier id'>run</span><span class='lparen token'>(</span><span class='queue identifier id'>queue</span><span class='comma token'>,</span> <span class='args identifier id'>args</span><span class='rparen token'>)</span>
+                    <span class='end end kw'>end</span>
+                  <span class='end end kw'>end</span>
+                <span class='end end kw'>end</span>
+              <span class='end end kw'>end</span>
+            <span class='end end kw'>end</span>
+
+            <span class='def def kw'>def</span> <span class='stop identifier id'>stop</span>
+              <span class='EM constant id'>EM</span><span class='dot token'>.</span><span class='stop identifier id'>stop</span> <span class='if if_mod kw'>if</span> <span class='EM constant id'>EM</span><span class='dot token'>.</span><span class='reactor_running? fid id'>reactor_running?</span>
+            <span class='end end kw'>end</span>
+          <span class='end end kw'>end</span>
+        <span class='end end kw'>end</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+</pre>
+<p>
+Invokers have to implement two methods, `listen` and `stop`. Listen starts
+the main listener loop, which is responsible for starting work when it
+becomes available.
+</p>
+<p>
+In our case, we need to start an EM loop around `listen`. This is because
+the Ruby AMQP library needs to run inside of an eventmachine reactor loop.
+</p>
+<p>
+Next, inside of `listen`, we need to iterate through all defined routes.
+There is a route for each worker method you defined in your application.
+The routes double as queue names. For this, you can use the helper method
+`routes`. Now we attach a callback to each queue. We can use the helper
+method `run`, which executes the worker method associated with the queue,
+passing along any supplied arguments.
+</p>
+<p>
+That&#8217;s it! We now have a more effective Invoker.
+</p>
+<p>
+# Contributors
+</p>
+<p>
+The following people contributed code to workling so far. Many thanks :) If
+I forgot anybody, I aplogise. Just drop me a note and I&#8217;ll add you to
+the project so that you can amend this!
+</p>
+<p>
+Anybody who contributes fixes (with tests), or new functionality (whith
+tests) which is pulled into the main project, will also be be added to the
+project.
+</p>
+<ul>
+<li>Andrew Carter (ascarter)
+
+</li>
+<li>Chris Gaffney (gaffneyc)
+
+</li>
+<li>Matthew Rudy (matthewrudy)
+
+</li>
+<li>Larry Diehl (reeze)
+
+</li>
+<li>grantr (francios)
+
+</li>
+<li>David (digitalronin)
+
+</li>
+<li>Dave Dupré
+
+</li>
+<li>Douglas Shearer (dougal)
+
+</li>
+<li>Nick Plante (zapnap)
+
+</li>
+<li>Brent
+
+</li>
+<li>Evan Light (elight)
+
+</li>
+</ul>
+<p>
+Copyright &#169; 2008 play/type GmbH, released under the MIT license
+</p>
+
+      </div>
+    </div>
+  </body>
+</html>

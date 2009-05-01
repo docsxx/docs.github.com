@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: FateSearch::SuffixArrayReader::Hit</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class FateSearch_SuffixArrayReader_Hit">
+  <h1 class="title">Class: FateSearch::SuffixArrayReader::Hit</h1>
+  <div class="section inheritance">
+  <ul>
+  <li>Struct</li><ul><li>FateSearch::SuffixArrayReader::Hit</li>
+  </ul></ul>
+</div><div class="section docstring">
+  <p>
+A hit is a structure that represents single match for a term. The structure
+contains the term, the index of the term in the suffix array, the offset of
+the term in the fulltext and the fulltext reader.
+</p>
+
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#context-instance_method' title='#context'>#context</a></span><span class='args'>(size)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+The context of the hit.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#text-instance_method' title='#text'>#text</a></span><span class='args'>(size)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+The text for the hit.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>context</h3>
+</div><div id="context-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>context</span><span class='args'>(size)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+The context of the hit. This will grab the textual information from the
+full text reader on either side of the match up to <tt>size</tt>.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+19
+20
+21</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/suffix_array_reader.rb', line 19</span>
+
+<span class='def def kw'>def</span> <span class='context identifier id'>context</span><span class='lparen token'>(</span><span class='size identifier id'>size</span><span class='rparen token'>)</span>
+  <span class='strip_markers identifier id'>strip_markers</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='dot token'>.</span><span class='fulltext_reader identifier id'>fulltext_reader</span><span class='dot token'>.</span><span class='get_data identifier id'>get_data</span><span class='lparen token'>(</span><span class='offset identifier id'>offset</span> <span class='minus op'>-</span> <span class='size identifier id'>size</span><span class='comma token'>,</span> <span class='integer val'>2</span> <span class='mult op'>*</span> <span class='size identifier id'>size</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='size identifier id'>size</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>text</h3>
+</div><div id="text-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>text</span><span class='args'>(size)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+The text for the hit. In general the <tt>size</tt> should be the actual
+length of the textual data or term that was matched.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+25
+26
+27</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/suffix_array_reader.rb', line 25</span>
+
+<span class='def def kw'>def</span> <span class='text identifier id'>text</span><span class='lparen token'>(</span><span class='size identifier id'>size</span><span class='rparen token'>)</span>
+  <span class='strip_markers identifier id'>strip_markers</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='dot token'>.</span><span class='fulltext_reader identifier id'>fulltext_reader</span><span class='dot token'>.</span><span class='get_data identifier id'>get_data</span><span class='lparen token'>(</span><span class='offset identifier id'>offset</span><span class='comma token'>,</span> <span class='size identifier id'>size</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='integer val'>0</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>    
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

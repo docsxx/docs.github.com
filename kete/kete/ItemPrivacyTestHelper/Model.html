@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: ItemPrivacyTestHelper::Model</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module ItemPrivacyTestHelper_Model">
+  <h1 class="title">Module: ItemPrivacyTestHelper::Model</h1>
+  <div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#full_filename-instance_method' title='#full_filename'>#full_filename</a></span><span class='args'>(thumbnail = nil)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Normally, testing attachment_fu methods will cause real files to be written
+into your development and production environment file folders, as defined
+in the models.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>full_filename</h3>
+</div><div id="full_filename-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>full_filename</span><span class='args'>(thumbnail = nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Normally, testing attachment_fu methods will cause real files to be written
+into your development and production environment file folders, as defined
+in the models. To work around this, this override forces the files to be
+saved into the tmp/attachment_fu_test/.. folder instead of RAILS_ROOT/..
+Based on work-around described here
+http://www.fngtps.com/2007/04/testing-with-attachment_fu
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+14
+15
+16
+17</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/item_privacy_test_helper.rb', line 14</span>
+
+<span class='def def kw'>def</span> <span class='full_filename identifier id'>full_filename</span><span class='lparen token'>(</span><span class='thumbnail identifier id'>thumbnail</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='file_system_path identifier id'>file_system_path</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='thumbnail identifier id'>thumbnail</span> <span class='integer val'>? </span><span class='thumbnail_class identifier id'>thumbnail_class</span> <span class='colon op'>:</span> <span class='self self kw'>self</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='attachment_options identifier id'>attachment_options</span><span class='lbrack token'>[</span><span class='symbol val'>:path_prefix</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='string val'>&quot;public&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;&quot;</span><span class='rparen token'>)</span>
+  <span class='File constant id'>File</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='RAILS_ROOT constant id'>RAILS_ROOT</span><span class='comma token'>,</span> <span class='string val'>&quot;tmp&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;attachment_fu_test&quot;</span><span class='comma token'>,</span> <span class='attachment_path_prefix identifier id'>attachment_path_prefix</span><span class='comma token'>,</span> <span class='file_system_path identifier id'>file_system_path</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='partitioned_path identifier id'>partitioned_path</span><span class='lparen token'>(</span><span class='thumbnail_name_for identifier id'>thumbnail_name_for</span><span class='lparen token'>(</span><span class='thumbnail identifier id'>thumbnail</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

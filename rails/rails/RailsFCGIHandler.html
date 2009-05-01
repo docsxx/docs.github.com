@@ -1,0 +1,385 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: RailsFCGIHandler</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class RailsFCGIHandler">
+  <h1 class="title">Class: RailsFCGIHandler</h1>
+  <div class="section inheritance">
+  <ul>
+  <li><a href='Object.html' title='Object'>Object</a></li><ul><li>RailsFCGIHandler</li>
+  </ul></ul>
+</div><div class="section attributes">
+  <h1>Attributes</h1>
+
+  
+    <div class="instance">
+      <h2>Instance Attributes</h2>
+      <table>
+      
+        <tr>
+          <th class="name">gc_request_period</td>
+          <td class="readwrite">
+            [<span id='gc_request_period-instance_method'>R</span><span id='gc_request_period%3D-instance_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>gc_request_period</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">log_file_path</td>
+          <td class="readwrite">
+            [<span id='log_file_path-instance_method'>R</span><span id='log_file_path%3D-instance_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>log_file_path</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">when_ready</td>
+          <td class="readwrite">
+            [<span id='when_ready-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>when_ready</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+      </table>
+    </div>
+  
+</div><div class="section constants">
+  <div class="thisclass">
+  <h1>Constants</h1>
+  <dl>
+    
+      <dt id="GLOBAL_SIGNALS-constant">GLOBAL_SIGNALS</dt>
+      <dd>SIGNALS.keys - %w(USR1)</dd>
+    
+      <dt id="SIGNALS-constant">SIGNALS</dt>
+      <dd>{    'HUP'     =&gt; :reload,    'INT'     =&gt; :exit_now,    'TERM'    =&gt; :exit_now,    'USR1'    =&gt; :exit,    'USR2'    =&gt; :restart  }</dd>
+    
+  </dl>
+</div>
+
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(log_file_path = nil, gc_request_period = nil)</span>
+    <span class='block'>{|_self| ... }</span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Initialize the FastCGI instance with the path to a crash log detailing
+unhandled exceptions (default RAILS_ROOT/log/fastcgi.crash.log) and the
+number of requests to process between garbage collection runs (default nil
+for normal GC behavior.) Optionally, pass a block which takes this instance
+as an argument for further configuration.
+</p>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="yieldparam">
+  <h3>Yield Parameters:</h3>
+  <dl>
+  
+    <dt>
+      
+        <span class='type'>[<tt><a href='' title='RailsFCGIHandler'>RailsFCGIHandler</a></tt>]</span>
+      
+      
+        <span class='name'>_self</span>
+      
+    </dt>
+    <dd>
+      <span class='desc'><p>
+the object that the method was called on
+</p>
+</span>
+    </dd>
+  
+  </dl>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'railties/lib/fcgi_handler.rb', line 31</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='log_file_path identifier id'>log_file_path</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='gc_request_period identifier id'>gc_request_period</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='log_file_path identifier id'>log_file_path</span> <span class='assign token'>=</span> <span class='log_file_path identifier id'>log_file_path</span> <span class='orop op'>||</span> <span class='dstring node'>&quot;#{RAILS_ROOT}/log/fastcgi.crash.log&quot;</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='gc_request_period identifier id'>gc_request_period</span> <span class='assign token'>=</span> <span class='gc_request_period identifier id'>gc_request_period</span>
+
+  <span class='comment val'># Yield for additional configuration.</span>
+  <span class='yield yield kw'>yield</span> <span class='self self kw'>self</span> <span class='if if_mod kw'>if</span> <span class='block_given? fid id'>block_given?</span>
+
+  <span class='comment val'># Safely install signal handlers.</span>
+  <span class='install_signal_handlers identifier id'>install_signal_handlers</span>
+
+  <span class='@app ivar id'>@app</span> <span class='assign token'>=</span> <span class='Dispatcher constant id'>Dispatcher</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+
+  <span class='comment val'># Start error timestamp at 11 seconds ago.</span>
+  <span class='@last_error_on ivar id'>@last_error_on</span> <span class='assign token'>=</span> <span class='Time constant id'>Time</span><span class='dot token'>.</span><span class='now identifier id'>now</span> <span class='minus op'>-</span> <span class='integer val'>11</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <h1>Public Class Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#process%21-class_method' title='process!'>process!</a></span><span class='args'>(*args, &amp;block)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Initialize and run the FastCGI instance, passing arguments through to new.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+  <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#process%21-instance_method' title='#process!'>#process!</a></span><span class='args'>(provider = FCGI)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table><div class="inherited">
+  
+  <div>
+    <h1>Public Instance Methods Inherited from <a href='Object.html' title='Object'>Object</a></h1>
+    <p><span class='name'><a href='Object.html#blank%3F-instance_method' title='blank?'>blank?</a></span>, <span class='name'><a href='Object.html#duplicable%3F-instance_method' title='duplicable?'>duplicable?</a></span>, <span class='name'><a href='Object.html#present%3F-instance_method' title='present?'>present?</a></span>, <span class='name'><a href='Object.html#to_param-instance_method' title='to_param'>to_param</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails class public">
+  <h1>Public Class Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>process!</h3>
+</div><div id="process%21-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>process!</span><span class='args'>(*args, &amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Initialize and run the FastCGI instance, passing arguments through to new.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+22
+23
+24</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'railties/lib/fcgi_handler.rb', line 22</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='process! fid id'>process!</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='process! fid id'>process!</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div><div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>process!</h3>
+</div><div id="process%21-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>process!</span><span class='args'>(provider = FCGI)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'railties/lib/fcgi_handler.rb', line 47</span>
+
+<span class='def def kw'>def</span> <span class='process! fid id'>process!</span><span class='lparen token'>(</span><span class='provider identifier id'>provider</span> <span class='assign token'>=</span> <span class='FCGI constant id'>FCGI</span><span class='rparen token'>)</span>
+  <span class='mark_features! fid id'>mark_features!</span>
+
+  <span class='dispatcher_log identifier id'>dispatcher_log</span> <span class='symbol val'>:info</span><span class='comma token'>,</span> <span class='string val'>'starting'</span>
+  <span class='process_each_request identifier id'>process_each_request</span> <span class='provider identifier id'>provider</span>
+  <span class='dispatcher_log identifier id'>dispatcher_log</span> <span class='symbol val'>:info</span><span class='comma token'>,</span> <span class='string val'>'stopping gracefully'</span>
+
+<span class='rescue rescue kw'>rescue</span> <span class='Exception constant id'>Exception</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='error identifier id'>error</span>
+  <span class='case case kw'>case</span> <span class='error identifier id'>error</span>
+  <span class='when when kw'>when</span> <span class='SystemExit constant id'>SystemExit</span>
+    <span class='dispatcher_log identifier id'>dispatcher_log</span> <span class='symbol val'>:info</span><span class='comma token'>,</span> <span class='string val'>'stopping after explicit exit'</span>
+  <span class='when when kw'>when</span> <span class='SignalException constant id'>SignalException</span>
+    <span class='dispatcher_error identifier id'>dispatcher_error</span> <span class='error identifier id'>error</span><span class='comma token'>,</span> <span class='string val'>'stopping after unhandled signal'</span>
+  <span class='else else kw'>else</span>
+    <span class='comment val'># Retry if exceptions occur more than 10 seconds apart.</span>
+    <span class='if if kw'>if</span> <span class='Time constant id'>Time</span><span class='dot token'>.</span><span class='now identifier id'>now</span> <span class='minus op'>-</span> <span class='@last_error_on ivar id'>@last_error_on</span> <span class='gt op'>&gt;</span> <span class='integer val'>10</span>
+      <span class='@last_error_on ivar id'>@last_error_on</span> <span class='assign token'>=</span> <span class='Time constant id'>Time</span><span class='dot token'>.</span><span class='now identifier id'>now</span>
+      <span class='dispatcher_error identifier id'>dispatcher_error</span> <span class='error identifier id'>error</span><span class='comma token'>,</span> <span class='string val'>'retrying after unhandled exception'</span>
+      <span class='retry retry kw'>retry</span>
+    <span class='else else kw'>else</span>
+      <span class='dispatcher_error identifier id'>dispatcher_error</span> <span class='error identifier id'>error</span><span class='comma token'>,</span> <span class='string val'>'stopping after unhandled exception within 10 seconds of the last'</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

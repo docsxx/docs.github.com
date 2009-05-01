@@ -1,0 +1,492 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: Sinatra</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module Sinatra">
+  <h1 class="title">Module: Sinatra</h1>
+  <div class="section constants">
+  <div class="thisclass">
+  <h1>Constants</h1>
+  <dl>
+    
+      <dt id="VERSION-constant">VERSION</dt>
+      <dd>'0.9.1.1'</dd>
+    
+  </dl>
+</div>
+
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <h1>Public Class Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#application-class_method' title='application'>application</a></span><span class='args'>=(value)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Deprecated.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#build_application-class_method' title='build_application'>build_application</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#const_missing-class_method' title='const_missing'>const_missing</a></span><span class='args'>(const_name)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Make Sinatra::EventContext an alias for Sinatra::Default to unbreak
+plugins.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#env-class_method' title='env'>env</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#host-class_method' title='host'>host</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#options-class_method' title='options'>options</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#port-class_method' title='port'>port</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails class public">
+  <h1>Public Class Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>application</h3>
+</div><div id="application-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>application</span><span class='args'>=(value)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Deprecated. Use: Sinatra::Application.reset!
+</p>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="raise">
+  <h3>Raises:</h3>
+  <dl>
+  
+    <dt>
+      
+        <span class='type'>[<tt>ArgumentError</tt>]</span>
+      
+      
+    </dt>
+    <dd>
+      <span class='desc'></span>
+    </dd>
+  
+  </dl>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+232
+233
+234
+235
+236
+237
+238
+239</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sinatra/compat.rb', line 232</span>
+
+<span class='def def kw'>def</span> <span class='application= identifier id'>application=</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+  <span class='raise identifier id'>raise</span> <span class='ArgumentError constant id'>ArgumentError</span> <span class='unless unless_mod kw'>unless</span> <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+  <span class='sinatra_warn identifier id'>sinatra_warn</span> <span class='string val'>&quot;Setting Sinatra.application to nil is deprecated; create a new instance instead.&quot;</span>
+  <span class='Sinatra constant id'>Sinatra</span><span class='dot token'>.</span><span class='class_eval identifier id'>class_eval</span> <span class='do do kw'>do</span>
+    <span class='remove_const identifier id'>remove_const</span> <span class='symbol val'>:Application</span>
+    <span class='const_set identifier id'>const_set</span> <span class='symbol val'>:Application</span><span class='comma token'>,</span> <span class='Class constant id'>Class</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='Sinatra constant id'>Sinatra</span><span class='colon2 op'>::</span><span class='Default constant id'>Default</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>build_application</h3>
+</div><div id="build_application-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>build_application</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+241
+242
+243
+244</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sinatra/compat.rb', line 241</span>
+
+<span class='def def kw'>def</span> <span class='build_application identifier id'>build_application</span>
+  <span class='sinatra_warn identifier id'>sinatra_warn</span> <span class='string val'>&quot;Sinatra.build_application is deprecated; use Sinatra::Application instead.&quot;</span>
+  <span class='Sinatra constant id'>Sinatra</span><span class='colon2 op'>::</span><span class='Application constant id'>Application</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>const_missing</h3>
+</div><div id="const_missing-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>const_missing</span><span class='args'>(const_name)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Make Sinatra::EventContext an alias for Sinatra::Default to unbreak
+plugins.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+57
+58
+59
+60
+61
+62
+63
+64
+65</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sinatra/compat.rb', line 57</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='const_missing identifier id'>const_missing</span><span class='lparen token'>(</span><span class='const_name identifier id'>const_name</span><span class='rparen token'>)</span> <span class='comment val'>#:nodoc:</span>
+  <span class='if if kw'>if</span> <span class='const_name identifier id'>const_name</span> <span class='eq op'>==</span> <span class='colon op'>:</span><span class='EventContext constant id'>EventContext</span>
+    <span class='const_set identifier id'>const_set</span> <span class='symbol val'>:EventContext</span><span class='comma token'>,</span> <span class='Sinatra constant id'>Sinatra</span><span class='colon2 op'>::</span><span class='Default constant id'>Default</span>
+    <span class='sinatra_warn identifier id'>sinatra_warn</span> <span class='string val'>'Sinatra::EventContext is deprecated; use Sinatra::Default instead.'</span>
+    <span class='Sinatra constant id'>Sinatra</span><span class='colon2 op'>::</span><span class='Default constant id'>Default</span>
+  <span class='else else kw'>else</span>
+    <span class='super super kw'>super</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>env</h3>
+</div><div id="env-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>env</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+261
+262
+263
+264</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sinatra/compat.rb', line 261</span>
+
+<span class='def def kw'>def</span> <span class='env identifier id'>env</span>
+  <span class='sinatra_warn identifier id'>sinatra_warn</span> <span class='string val'>&quot;Sinatra.env is deprecated; use Sinatra::Application.environment instead.&quot;</span>
+  <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='environment identifier id'>environment</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>host</h3>
+</div><div id="host-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>host</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+256
+257
+258
+259</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sinatra/compat.rb', line 256</span>
+
+<span class='def def kw'>def</span> <span class='host identifier id'>host</span>
+  <span class='sinatra_warn identifier id'>sinatra_warn</span> <span class='string val'>&quot;Sinatra.host is deprecated; use Sinatra::Application.host instead.&quot;</span>
+  <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='host identifier id'>host</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>options</h3>
+</div><div id="options-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>options</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+246
+247
+248
+249</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sinatra/compat.rb', line 246</span>
+
+<span class='def def kw'>def</span> <span class='options identifier id'>options</span>
+  <span class='sinatra_warn identifier id'>sinatra_warn</span> <span class='string val'>&quot;Sinatra.options is deprecated; use Sinatra::Application.option_name instead.&quot;</span>
+  <span class='Sinatra constant id'>Sinatra</span><span class='colon2 op'>::</span><span class='Application constant id'>Application</span><span class='dot token'>.</span><span class='options identifier id'>options</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>port</h3>
+</div><div id="port-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>port</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+251
+252
+253
+254</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sinatra/compat.rb', line 251</span>
+
+<span class='def def kw'>def</span> <span class='port identifier id'>port</span>
+  <span class='sinatra_warn identifier id'>sinatra_warn</span> <span class='string val'>&quot;Sinatra.port is deprecated; use Sinatra::Application.port instead.&quot;</span>
+  <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='port identifier id'>port</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

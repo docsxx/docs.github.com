@@ -1,0 +1,646 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: YARD::Parser::RubyLex::BufferedReader</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class YARD_Parser_RubyLex_BufferedReader">
+  <h1 class="title">Class: YARD::Parser::RubyLex::BufferedReader</h1>
+  <div class="section docstring">
+  <p>
+Read an input stream character by character. We allow for unlimited
+ungetting of characters just read.
+</p>
+<p>
+We simplify the implementation greatly by reading the entire input into a
+buffer initially, and then simply traversing it using pointers.
+</p>
+<p>
+We also have to allow for the <em>here document diversion</em>. This little
+gem comes about when the lexer encounters a here document. At this point we
+effectively need to split the input stream into two parts: one to read the
+body of the here document, the other to read the rest of the input line
+where the here document was initially encountered. For example, we might
+have
+</p>
+<pre class="code">
+  <span class='do_something identifier id'>do_something</span><span class='lparen token'>(</span><span class='string val'>&quot;stuff\nfor\n&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;stuff\nfor\n&quot;</span><span class='rparen token'>)</span>
+</pre>
+<p>
+When the lexer encounters the &lt;&lt;A, it reads until the end of the
+line, and keeps it around for later. It then reads the body of the here
+document. Once complete, it needs to read the rest of the original line,
+but then skip the here document body.
+</p>
+
+</div><div class="section attributes">
+  <h1>Attributes</h1>
+
+  
+    <div class="instance">
+      <h2>Instance Attributes</h2>
+      <table>
+      
+        <tr>
+          <th class="name">line_num</td>
+          <td class="readwrite">
+            [<span id='line_num-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>line_num</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+      </table>
+    </div>
+  
+</div><div class="section constants">
+  
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(content)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/yard/parser/ruby_lex.rb', line 331</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='content identifier id'>content</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='regexp val'>/\t/</span> <span class='match op'>=~</span> <span class='content identifier id'>content</span>
+    <span class='tab_width identifier id'>tab_width</span> <span class='assign token'>=</span> <span class='integer val'>2</span>
+    <span class='content identifier id'>content</span> <span class='assign token'>=</span> <span class='content identifier id'>content</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='regexp val'>/\n/</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='line identifier id'>line</span><span class='bitor op'>|</span>
+      <span class='integer val'>1</span> <span class='while while_mod kw'>while</span> <span class='line identifier id'>line</span><span class='dot token'>.</span><span class='gsub! fid id'>gsub!</span><span class='lparen token'>(</span><span class='regexp val'>/\t+/</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='string val'>' '</span> <span class='mult op'>*</span> <span class='lparen token'>(</span><span class='tab_width identifier id'>tab_width</span><span class='mult op'>*</span><span class='$&amp; back_ref id'>$&amp;</span><span class='dot token'>.</span><span class='length identifier id'>length</span> <span class='minus op'>-</span> <span class='$` back_ref id'>$`</span><span class='dot token'>.</span><span class='length identifier id'>length</span> <span class='mod op'>%</span> <span class='tab_width identifier id'>tab_width</span><span class='rparen token'>)</span><span class='rbrace token'>}</span>  <span class='andop op'>&amp;&amp;</span> <span class='$~ gvar id'>$~</span> <span class='comment val'>#`</span>
+      <span class='line identifier id'>line</span>
+    <span class='end end kw'>end</span> <span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='string val'>&quot;\n&quot;</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+  <span class='@content ivar id'>@content</span>   <span class='assign token'>=</span> <span class='content identifier id'>content</span>
+  <span class='@content ivar id'>@content</span> <span class='lshft op'>&lt;&lt;</span> <span class='string val'>&quot;\n&quot;</span> <span class='unless unless_mod kw'>unless</span> <span class='@content ivar id'>@content</span><span class='lbrack token'>[</span><span class='integer val'>-1</span><span class='comma token'>,</span><span class='integer val'>1</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='string val'>&quot;\n&quot;</span>
+  <span class='@size ivar id'>@size</span>      <span class='assign token'>=</span> <span class='@content ivar id'>@content</span><span class='dot token'>.</span><span class='size identifier id'>size</span>
+  <span class='@offset ivar id'>@offset</span>    <span class='assign token'>=</span> <span class='integer val'>0</span>
+  <span class='@hwm ivar id'>@hwm</span>       <span class='assign token'>=</span> <span class='integer val'>0</span>
+  <span class='@line_num ivar id'>@line_num</span>  <span class='assign token'>=</span> <span class='integer val'>1</span>
+  <span class='@read_back_offset ivar id'>@read_back_offset</span> <span class='assign token'>=</span> <span class='integer val'>0</span>
+  <span class='@last_newline ivar id'>@last_newline</span> <span class='assign token'>=</span> <span class='integer val'>0</span>
+  <span class='@newline_pending ivar id'>@newline_pending</span> <span class='assign token'>=</span> <span class='false false kw'>false</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#column-instance_method' title='#column'>#column</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#divert_read_from-instance_method' title='#divert_read_from'>#divert_read_from</a></span><span class='args'>(reserve)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#get_read-instance_method' title='#get_read'>#get_read</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#getc-instance_method' title='#getc'>#getc</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#getc_already_read-instance_method' title='#getc_already_read'>#getc_already_read</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#peek-instance_method' title='#peek'>#peek</a></span><span class='args'>(at)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#peek_equal-instance_method' title='#peek_equal'>#peek_equal</a></span><span class='args'>(str)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#ungetc-instance_method' title='#ungetc'>#ungetc</a></span><span class='args'>(ch)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>column</h3>
+</div><div id="column-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>column</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+350
+351
+352</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/yard/parser/ruby_lex.rb', line 350</span>
+
+<span class='def def kw'>def</span> <span class='column identifier id'>column</span>
+  <span class='@offset ivar id'>@offset</span> <span class='minus op'>-</span> <span class='@last_newline ivar id'>@last_newline</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>divert_read_from</h3>
+</div><div id="divert_read_from-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>divert_read_from</span><span class='args'>(reserve)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+404
+405
+406
+407</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/yard/parser/ruby_lex.rb', line 404</span>
+
+<span class='def def kw'>def</span> <span class='divert_read_from identifier id'>divert_read_from</span><span class='lparen token'>(</span><span class='reserve identifier id'>reserve</span><span class='rparen token'>)</span>
+  <span class='@content ivar id'>@content</span><span class='lbrack token'>[</span><span class='@offset ivar id'>@offset</span><span class='comma token'>,</span> <span class='integer val'>0</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='reserve identifier id'>reserve</span>
+  <span class='@size ivar id'>@size</span>      <span class='assign token'>=</span> <span class='@content ivar id'>@content</span><span class='dot token'>.</span><span class='size identifier id'>size</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>get_read</h3>
+</div><div id="get_read-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>get_read</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+385
+386
+387
+388
+389</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/yard/parser/ruby_lex.rb', line 385</span>
+
+<span class='def def kw'>def</span> <span class='get_read identifier id'>get_read</span>
+  <span class='res identifier id'>res</span> <span class='assign token'>=</span> <span class='@content ivar id'>@content</span><span class='lbrack token'>[</span><span class='@read_back_offset ivar id'>@read_back_offset</span><span class='dot3 op'>...</span><span class='@offset ivar id'>@offset</span><span class='rbrack token'>]</span>
+  <span class='@read_back_offset ivar id'>@read_back_offset</span> <span class='assign token'>=</span> <span class='@offset ivar id'>@offset</span>
+  <span class='res identifier id'>res</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>getc</h3>
+</div><div id="getc-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>getc</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/yard/parser/ruby_lex.rb', line 354</span>
+
+<span class='def def kw'>def</span> <span class='getc identifier id'>getc</span>
+  <span class='return return kw'>return</span> <span class='nil nil kw'>nil</span> <span class='if if_mod kw'>if</span> <span class='@offset ivar id'>@offset</span> <span class='geq op'>&gt;=</span> <span class='@size ivar id'>@size</span>
+  <span class='ch identifier id'>ch</span> <span class='assign token'>=</span> <span class='@content ivar id'>@content</span><span class='lbrack token'>[</span><span class='@offset ivar id'>@offset</span><span class='comma token'>,</span> <span class='integer val'>1</span><span class='rbrack token'>]</span>
+      
+  <span class='@offset ivar id'>@offset</span> <span class='opasgn op'>+=</span> <span class='integer val'>1</span>
+  <span class='@hwm ivar id'>@hwm</span> <span class='assign token'>=</span> <span class='@offset ivar id'>@offset</span> <span class='if if_mod kw'>if</span> <span class='@hwm ivar id'>@hwm</span> <span class='lt op'>&lt;</span> <span class='@offset ivar id'>@offset</span>
+      
+  <span class='if if kw'>if</span> <span class='@newline_pending ivar id'>@newline_pending</span>
+    <span class='@line_num ivar id'>@line_num</span> <span class='opasgn op'>+=</span> <span class='integer val'>1</span>
+    <span class='@last_newline ivar id'>@last_newline</span> <span class='assign token'>=</span> <span class='@offset ivar id'>@offset</span> <span class='minus op'>-</span> <span class='integer val'>1</span>
+    <span class='@newline_pending ivar id'>@newline_pending</span> <span class='assign token'>=</span> <span class='false false kw'>false</span>
+  <span class='end end kw'>end</span>
+      
+  <span class='if if kw'>if</span> <span class='ch identifier id'>ch</span> <span class='eq op'>==</span> <span class='string val'>&quot;\n&quot;</span>
+    <span class='@newline_pending ivar id'>@newline_pending</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+  <span class='end end kw'>end</span>
+  <span class='ch identifier id'>ch</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>getc_already_read</h3>
+</div><div id="getc_already_read-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>getc_already_read</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+373
+374
+375</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/yard/parser/ruby_lex.rb', line 373</span>
+
+<span class='def def kw'>def</span> <span class='getc_already_read identifier id'>getc_already_read</span>
+  <span class='getc identifier id'>getc</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>peek</h3>
+</div><div id="peek-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>peek</span><span class='args'>(at)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+391
+392
+393
+394
+395
+396
+397
+398</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/yard/parser/ruby_lex.rb', line 391</span>
+
+<span class='def def kw'>def</span> <span class='peek identifier id'>peek</span><span class='lparen token'>(</span><span class='at identifier id'>at</span><span class='rparen token'>)</span>
+  <span class='pos identifier id'>pos</span> <span class='assign token'>=</span> <span class='@offset ivar id'>@offset</span> <span class='plus op'>+</span> <span class='at identifier id'>at</span>
+  <span class='if if kw'>if</span> <span class='pos identifier id'>pos</span> <span class='geq op'>&gt;=</span> <span class='@size ivar id'>@size</span>
+    <span class='nil nil kw'>nil</span>
+  <span class='else else kw'>else</span>
+    <span class='@content ivar id'>@content</span><span class='lbrack token'>[</span><span class='pos identifier id'>pos</span><span class='comma token'>,</span> <span class='integer val'>1</span><span class='rbrack token'>]</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>peek_equal</h3>
+</div><div id="peek_equal-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>peek_equal</span><span class='args'>(str)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+400
+401
+402</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/yard/parser/ruby_lex.rb', line 400</span>
+
+<span class='def def kw'>def</span> <span class='peek_equal identifier id'>peek_equal</span><span class='lparen token'>(</span><span class='str identifier id'>str</span><span class='rparen token'>)</span>
+  <span class='@content ivar id'>@content</span><span class='lbrack token'>[</span><span class='@offset ivar id'>@offset</span><span class='comma token'>,</span> <span class='str identifier id'>str</span><span class='dot token'>.</span><span class='length identifier id'>length</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='str identifier id'>str</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>ungetc</h3>
+</div><div id="ungetc-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>ungetc</span><span class='args'>(ch)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+377
+378
+379
+380
+381
+382
+383</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/yard/parser/ruby_lex.rb', line 377</span>
+
+<span class='def def kw'>def</span> <span class='ungetc identifier id'>ungetc</span><span class='lparen token'>(</span><span class='ch identifier id'>ch</span><span class='rparen token'>)</span>
+  <span class='raise identifier id'>raise</span> <span class='string val'>&quot;unget past beginning of file&quot;</span> <span class='if if_mod kw'>if</span> <span class='@offset ivar id'>@offset</span> <span class='leq op'>&lt;=</span> <span class='integer val'>0</span>
+  <span class='@offset ivar id'>@offset</span> <span class='opasgn op'>-=</span> <span class='integer val'>1</span>
+  <span class='if if kw'>if</span> <span class='@content ivar id'>@content</span><span class='lbrack token'>[</span><span class='@offset ivar id'>@offset</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='integer val'>?\n</span>
+    <span class='@newline_pending ivar id'>@newline_pending</span> <span class='assign token'>=</span> <span class='false false kw'>false</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

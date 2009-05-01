@@ -1,0 +1,192 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: Nokogiri::XSLT</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module Nokogiri_XSLT">
+  <h1 class="title">Module: Nokogiri::XSLT</h1>
+  <div class="section docstring">
+  <p>
+See Nokogiri::XSLT::Stylesheet for creating and maniuplating Stylesheet
+object.
+</p>
+
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <h1>Public Class Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#parse-class_method' title='parse'>parse</a></span><span class='args'>string</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Parse the stylesheet in <tt>string</tt>.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#quote_params-class_method' title='quote_params'>quote_params</a></span><span class='args'>params</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Quote parameters in <tt>params</tt> for stylesheet safety.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails class public">
+  <h1>Public Class Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>parse</h3>
+</div><div id="parse-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>parse</span><span class='args'>string</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Parse the stylesheet in <tt>string</tt>
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+24
+25
+26</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/nokogiri/xslt.rb', line 24</span>
+
+<span class='def def kw'>def</span> <span class='parse identifier id'>parse</span> <span class='string identifier id'>string</span>
+  <span class='Stylesheet constant id'>Stylesheet</span><span class='dot token'>.</span><span class='parse_stylesheet_doc identifier id'>parse_stylesheet_doc</span><span class='lparen token'>(</span><span class='XML constant id'>XML</span><span class='dot token'>.</span><span class='parse identifier id'>parse</span><span class='lparen token'>(</span><span class='string identifier id'>string</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>quote_params</h3>
+</div><div id="quote_params-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>quote_params</span><span class='args'>params</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Quote parameters in <tt>params</tt> for stylesheet safety
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/nokogiri/xslt.rb', line 30</span>
+
+<span class='def def kw'>def</span> <span class='quote_params identifier id'>quote_params</span> <span class='params identifier id'>params</span>
+  <span class='parray identifier id'>parray</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='params identifier id'>params</span><span class='dot token'>.</span><span class='instance_of? fid id'>instance_of?</span><span class='lparen token'>(</span><span class='Hash constant id'>Hash</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='params identifier id'>params</span><span class='dot token'>.</span><span class='to_a identifier id'>to_a</span><span class='dot token'>.</span><span class='flatten identifier id'>flatten</span> <span class='colon op'>:</span> <span class='params identifier id'>params</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='dup identifier id'>dup</span>
+  <span class='parray identifier id'>parray</span><span class='dot token'>.</span><span class='each_with_index identifier id'>each_with_index</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='v identifier id'>v</span><span class='comma token'>,</span><span class='i identifier id'>i</span><span class='bitor op'>|</span>
+    <span class='if if kw'>if</span> <span class='i identifier id'>i</span> <span class='mod op'>%</span> <span class='integer val'>2</span> <span class='gt op'>&gt;</span> <span class='integer val'>0</span>
+      <span class='parray identifier id'>parray</span><span class='lbrack token'>[</span><span class='i identifier id'>i</span><span class='rbrack token'>]</span><span class='assign token'>=</span>
+        <span class='if if kw'>if</span> <span class='v identifier id'>v</span> <span class='match op'>=~</span> <span class='regexp val'>/'/</span>
+          <span class='dstring node'>&quot;concat('#{ v.gsub(/'/, %q{', &quot;'&quot;, '}) }')&quot;</span>
+        <span class='else else kw'>else</span>
+          <span class='dstring node'>&quot;'#{v}'&quot;</span><span class='semicolon token'>;</span>
+        <span class='end end kw'>end</span>
+    <span class='else else kw'>else</span>
+      <span class='parray identifier id'>parray</span><span class='lbrack token'>[</span><span class='i identifier id'>i</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='v identifier id'>v</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+  <span class='parray identifier id'>parray</span><span class='dot token'>.</span><span class='flatten identifier id'>flatten</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

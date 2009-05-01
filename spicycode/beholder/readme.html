@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <title>README</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section docstring readme">
+        <p>
+h1. Beholder
+</p>
+<p>
+An ancient beholder that watches your treasure, and deals with thiefs.
+</p>
+<p>
+h2. What does it do?
+</p>
+<p>
+Think autotest, but powered by fseventd.
+</p>
+<p>
+h2. Requirements
+</p>
+<p>
+# OSX 10.5 or higher # RubyCocoa # fsevents gem
+</p>
+<p>
+The default treasure map:
+</p>
+<p>
+map_for(:default_dungeon) do |wizard|
+</p>
+<pre class="code">
+  <span class='wizard identifier id'>wizard</span><span class='dot token'>.</span><span class='keep_a_watchful_eye_for identifier id'>keep_a_watchful_eye_for</span> <span class='string val'>'app'</span><span class='comma token'>,</span> <span class='string val'>'config'</span><span class='comma token'>,</span> <span class='string val'>'lib'</span><span class='comma token'>,</span> <span class='string val'>'examples'</span>
+
+  <span class='wizard identifier id'>wizard</span><span class='dot token'>.</span><span class='prepare_spell_for identifier id'>prepare_spell_for</span> <span class='regexp val'>/\/app\/(.*)\.rb/</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='spell_component identifier id'>spell_component</span><span class='bitor op'>|</span>
+    <span class='lbrack token'>[</span><span class='dstring node'>&quot;examples/#{spell_component[1]}.rb&quot;</span><span class='rbrack token'>]</span>
+  <span class='end end kw'>end</span>
+
+  <span class='wizard identifier id'>wizard</span><span class='dot token'>.</span><span class='prepare_spell_for identifier id'>prepare_spell_for</span> <span class='regexp val'>/\/lib\/(.*)\.rb/</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='spell_component identifier id'>spell_component</span><span class='bitor op'>|</span>
+    <span class='lbrack token'>[</span><span class='dstring node'>&quot;examples/lib/#{spell_component[1]}_example.rb&quot;</span><span class='rbrack token'>]</span>
+  <span class='end end kw'>end</span>
+
+  <span class='wizard identifier id'>wizard</span><span class='dot token'>.</span><span class='prepare_spell_for identifier id'>prepare_spell_for</span> <span class='regexp val'>/\/examples\/(.*)_example\.rb/</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='spell_component identifier id'>spell_component</span><span class='bitor op'>|</span>
+    <span class='lbrack token'>[</span><span class='dstring node'>&quot;examples/#{spell_component[1]}_example.rb&quot;</span><span class='rbrack token'>]</span>
+  <span class='end end kw'>end</span>
+
+  <span class='wizard identifier id'>wizard</span><span class='dot token'>.</span><span class='prepare_spell_for identifier id'>prepare_spell_for</span> <span class='regexp val'>/\/examples\/example_helper\.rb/</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='spell_component identifier id'>spell_component</span><span class='bitor op'>|</span>
+    <span class='Dir constant id'>Dir</span><span class='lbrack token'>[</span><span class='string val'>&quot;examples/**/*_example.rb&quot;</span><span class='rbrack token'>]</span>
+  <span class='end end kw'>end</span>
+
+  <span class='wizard identifier id'>wizard</span><span class='dot token'>.</span><span class='prepare_spell_for identifier id'>prepare_spell_for</span> <span class='regexp val'>/\/config/</span> <span class='do do kw'>do</span>
+    <span class='Dir constant id'>Dir</span><span class='lbrack token'>[</span><span class='string val'>&quot;examples/**/*_example.rb&quot;</span><span class='rbrack token'>]</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+end
+</p>
+<p>
+In your own treasure map (stored as treasure_map.rb, .treasure_map.rb, or
+config/treasure_map.rb) you could do:
+</p>
+<p>
+map_for(:beholders_lair) do |wizard|
+</p>
+<pre class="code">
+  <span class='comment val'># Clear all watched paths =&gt; wizard.paths_to_watch.clear</span>
+  <span class='comment val'># Add these paths to the paths to watch</span>
+  <span class='wizard identifier id'>wizard</span><span class='dot token'>.</span><span class='keep_a_watchful_eye_for identifier id'>keep_a_watchful_eye_for</span> <span class='string val'>'coverage'</span>
+
+  <span class='comment val'># Forget all other treasure maps loaded</span>
+  <span class='comment val'># wizard.clear_maps</span>
+
+  <span class='comment val'># Add your own rules</span>
+  <span class='comment val'># wizard.prepare_spell_for /\/foobar/ do</span>
+  <span class='comment val'>#   Dir[&quot;examples/foobar/*_example.rb&quot;]</span>
+  <span class='comment val'># end</span>
+
+  <span class='comment val'># You could set the list of all examples to be run after pressing ctrl-c once</span>
+  <span class='comment val'># it defaults to any files in examples, spec, and test</span>
+  <span class='wizard identifier id'>wizard</span><span class='dot token'>.</span><span class='all_examples identifier id'>all_examples</span> <span class='assign token'>=</span> <span class='Dir constant id'>Dir</span><span class='lbrack token'>[</span><span class='string val'>'your/path/**/*_here.rb'</span><span class='rbrack token'>]</span>
+</pre>
+<p>
+end
+</p>
+<p>
+Treasure maps are automatically reloaded when you change them, so you can
+fire up Beholder and start iterating on the config live.
+</p>
+
+      </div>
+    </div>
+  </body>
+</html>

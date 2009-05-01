@@ -1,0 +1,581 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: Prawn::Font::AFM</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class Prawn_Font_AFM">
+  <h1 class="title">Class: Prawn::Font::AFM</h1>
+  <div class="section inheritance">
+  <ul>
+  <li><a href='../Font.html' title='Prawn::Font'>Prawn::Font</a></li><ul><li>Prawn::Font::AFM</li>
+  </ul></ul>
+</div><div class="section attributes">
+  <h1>Attributes</h1>
+
+  
+    <div class="instance">
+      <h2>Instance Attributes</h2>
+      <table>
+      
+        <tr>
+          <th class="name">attributes</td>
+          <td class="readwrite">
+            [<span id='attributes-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>attributes</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+      </table>
+    </div>
+  
+</div><div class="section constants">
+  <div class="thisclass">
+  <h1>Constants</h1>
+  <dl>
+    
+      <dt id="BUILT_INS-constant">BUILT_INS</dt>
+      <dd>%w[ Courier Helvetica Times-Roman Symbol ZapfDingbats
+Courier-Bold Courier-Oblique Courier-BoldOblique
+Times-Bold Times-Italic Times-BoldItalic
+Helvetica-Bold Helvetica-Oblique Helvetica-BoldOblique ]</dd>
+    
+  </dl>
+</div>
+
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(document, name, options={})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/prawn/font/afm.rb', line 25</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='document identifier id'>document</span><span class='comma token'>,</span> <span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='unless unless kw'>unless</span> <span class='BUILT_INS constant id'>BUILT_INS</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='rparen token'>)</span>
+    <span class='raise identifier id'>raise</span> <span class='Prawn constant id'>Prawn</span><span class='colon2 op'>::</span><span class='Errors constant id'>Errors</span><span class='colon2 op'>::</span><span class='UnknownFont constant id'>UnknownFont</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{name} is not a known font.&quot;</span>
+  <span class='end end kw'>end</span>
+
+  <span class='super super kw'>super</span>
+
+  <span class='@attributes ivar id'>@attributes</span>     <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='@glyph_widths ivar id'>@glyph_widths</span>   <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='@bounding_boxes ivar id'>@bounding_boxes</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='@kern_pairs ivar id'>@kern_pairs</span>     <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+
+  <span class='file_name identifier id'>file_name</span> <span class='assign token'>=</span> <span class='@name ivar id'>@name</span><span class='dot token'>.</span><span class='dup identifier id'>dup</span>
+  <span class='file_name identifier id'>file_name</span> <span class='lshft op'>&lt;&lt;</span> <span class='string val'>&quot;.afm&quot;</span> <span class='unless unless_mod kw'>unless</span> <span class='file_name identifier id'>file_name</span> <span class='match op'>=~</span> <span class='regexp val'>/\.afm$/</span>
+  <span class='file_name identifier id'>file_name</span> <span class='assign token'>=</span> <span class='file_name identifier id'>file_name</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='integer val'>?/</span> <span class='question op'>?</span> <span class='file_name identifier id'>file_name</span> <span class='colon op'>:</span> <span class='find_font identifier id'>find_font</span><span class='lparen token'>(</span><span class='file_name identifier id'>file_name</span><span class='rparen token'>)</span>
+
+  <span class='parse_afm identifier id'>parse_afm</span><span class='lparen token'>(</span><span class='file_name identifier id'>file_name</span><span class='rparen token'>)</span>
+
+  <span class='@ascender ivar id'>@ascender</span>  <span class='assign token'>=</span> <span class='@attributes ivar id'>@attributes</span><span class='lbrack token'>[</span><span class='string val'>&quot;ascender&quot;</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span>
+  <span class='@descender ivar id'>@descender</span> <span class='assign token'>=</span> <span class='@attributes ivar id'>@attributes</span><span class='lbrack token'>[</span><span class='string val'>&quot;descender&quot;</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span>
+  <span class='@line_gap ivar id'>@line_gap</span>  <span class='assign token'>=</span> <span class='Float constant id'>Float</span><span class='lparen token'>(</span><span class='bbox identifier id'>bbox</span><span class='lbrack token'>[</span><span class='integer val'>3</span><span class='rbrack token'>]</span> <span class='minus op'>-</span> <span class='bbox identifier id'>bbox</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='minus op'>-</span> <span class='lparen token'>(</span><span class='@ascender ivar id'>@ascender</span> <span class='minus op'>-</span> <span class='@descender ivar id'>@descender</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <h1>Public Class Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#metrics_path-class_method' title='metrics_path'>metrics_path</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table><div class="inherited">
+  
+  <div>
+    <h1>Public Class Methods Inherited from <a href='../Font.html' title='Prawn::Font'>Prawn::Font</a></h1>
+    <p><span class='name'><a href='../Font.html#load-class_method' title='load'>load</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+  <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#bbox-instance_method' title='#bbox'>#bbox</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#compute_width_of-instance_method' title='#compute_width_of'>#compute_width_of</a></span><span class='args'>(string, options={})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+calculates the width of the supplied string.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#encode_text-instance_method' title='#encode_text'>#encode_text</a></span><span class='args'>(text, options={})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Perform any changes to the string that need to happen before it is rendered
+to the canvas.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#has_kerning_data%3F-instance_method' title='#has_kerning_data?'>#has_kerning_data?</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#normalize_encoding-instance_method' title='#normalize_encoding'>#normalize_encoding</a></span><span class='args'>(text)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+built-in fonts only work with winansi encoding, so translate the string.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table><div class="inherited">
+  
+  <div>
+    <h1>Public Instance Methods Inherited from <a href='../Font.html' title='Prawn::Font'>Prawn::Font</a></h1>
+    <p><span class='name'><a href='../Font.html#add_to_current_page-instance_method' title='add_to_current_page'>add_to_current_page</a></span>, <span class='name'><a href='../Font.html#ascender-instance_method' title='ascender'>ascender</a></span>, <span class='name'><a href='../Font.html#descender-instance_method' title='descender'>descender</a></span>, <span class='name'><a href='../Font.html#height-instance_method' title='height'>height</a></span>, <span class='name'><a href='../Font.html#height_at-instance_method' title='height_at'>height_at</a></span>, <span class='name'><a href='../Font.html#identifier_for-instance_method' title='identifier_for'>identifier_for</a></span>, <span class='name'><a href='../Font.html#inspect-instance_method' title='inspect'>inspect</a></span>, <span class='name'><a href='../Font.html#line_gap-instance_method' title='line_gap'>line_gap</a></span>, <span class='name'><a href='../Font.html#normalize_encoding%21-instance_method' title='normalize_encoding!'>normalize_encoding!</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails class public">
+  <h1>Public Class Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>metrics_path</h3>
+</div><div id="metrics_path-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>metrics_path</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/prawn/font/afm.rb', line 11</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='metrics_path identifier id'>metrics_path</span>
+  <span class='if if kw'>if</span> <span class='m identifier id'>m</span> <span class='assign token'>=</span> <span class='ENV constant id'>ENV</span><span class='lbrack token'>[</span><span class='string val'>'METRICS'</span><span class='rbrack token'>]</span>
+    <span class='@metrics_path ivar id'>@metrics_path</span> <span class='opasgn op'>||=</span> <span class='m identifier id'>m</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='string val'>':'</span><span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+    <span class='@metrics_path ivar id'>@metrics_path</span> <span class='opasgn op'>||=</span> <span class='lbrack token'>[</span>
+      <span class='string val'>&quot;.&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;/usr/lib/afm&quot;</span><span class='comma token'>,</span>
+      <span class='string val'>&quot;/usr/local/lib/afm&quot;</span><span class='comma token'>,</span>
+      <span class='string val'>&quot;/usr/openwin/lib/fonts/afm/&quot;</span><span class='comma token'>,</span>
+       <span class='Prawn constant id'>Prawn</span><span class='colon2 op'>::</span><span class='BASEDIR constant id'>BASEDIR</span><span class='plus op'>+</span><span class='string val'>'/data/fonts/'</span><span class='rbrack token'>]</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div><div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>bbox</h3>
+</div><div id="bbox-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>bbox</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+48
+49
+50</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/prawn/font/afm.rb', line 48</span>
+
+<span class='def def kw'>def</span> <span class='bbox identifier id'>bbox</span>
+  <span class='@bbox ivar id'>@bbox</span> <span class='opasgn op'>||=</span> <span class='@attributes ivar id'>@attributes</span><span class='lbrack token'>[</span><span class='string val'>'fontbbox'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='regexp val'>/\s+/</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='e identifier id'>e</span><span class='bitor op'>|</span> <span class='Integer constant id'>Integer</span><span class='lparen token'>(</span><span class='e identifier id'>e</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>compute_width_of</h3>
+</div><div id="compute_width_of-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>compute_width_of</span><span class='args'>(string, options={})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+calculates the width of the supplied string.
+</p>
+<p>
+String <b>must</b> be encoded as WinAnsi
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/prawn/font/afm.rb', line 56</span>
+
+<span class='def def kw'>def</span> <span class='compute_width_of identifier id'>compute_width_of</span><span class='lparen token'>(</span><span class='string identifier id'>string</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='scale identifier id'>scale</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:size</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='size identifier id'>size</span><span class='rparen token'>)</span> <span class='div op'>/</span> <span class='float val'>1000.0</span>
+
+  <span class='if if kw'>if</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='colon op'>:</span><span class='kerning identifier id'>kerning</span><span class='rbrack token'>]</span>
+    <span class='strings identifier id'>strings</span><span class='comma token'>,</span> <span class='numbers identifier id'>numbers</span> <span class='assign token'>=</span> <span class='kern identifier id'>kern</span><span class='lparen token'>(</span><span class='string identifier id'>string</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='partition identifier id'>partition</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='e identifier id'>e</span><span class='bitor op'>|</span> <span class='e identifier id'>e</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='String constant id'>String</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+    <span class='total_kerning_offset identifier id'>total_kerning_offset</span> <span class='assign token'>=</span> <span class='numbers identifier id'>numbers</span><span class='dot token'>.</span><span class='inject identifier id'>inject</span><span class='lparen token'>(</span><span class='integer val'>0</span><span class='integer val'>.0</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='s identifier id'>s</span><span class='comma token'>,</span><span class='r identifier id'>r</span><span class='bitor op'>|</span> <span class='s identifier id'>s</span> <span class='plus op'>+</span> <span class='r identifier id'>r</span> <span class='rbrace token'>}</span>
+    <span class='lparen token'>(</span><span class='unscaled_width_of identifier id'>unscaled_width_of</span><span class='lparen token'>(</span><span class='strings identifier id'>strings</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='rparen token'>)</span> <span class='minus op'>-</span> <span class='total_kerning_offset identifier id'>total_kerning_offset</span><span class='rparen token'>)</span> <span class='mult op'>*</span> <span class='scale identifier id'>scale</span>
+  <span class='else else kw'>else</span>
+    <span class='unscaled_width_of identifier id'>unscaled_width_of</span><span class='lparen token'>(</span><span class='string identifier id'>string</span><span class='rparen token'>)</span> <span class='mult op'>*</span> <span class='scale identifier id'>scale</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>encode_text</h3>
+</div><div id="encode_text-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>encode_text</span><span class='args'>(text, options={})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Perform any changes to the string that need to happen before it is rendered
+to the canvas. Returns an array of subset &quot;chunks&quot;, where each
+chunk is an array of two elements. The first element is the font subset
+number, and the second is either a string or an array (for kerned text).
+</p>
+<p>
+For Adobe fonts, there is only ever a single subset, so the first element
+of the array is &quot;0&quot;, and the second is the string itself (or an
+array, if kerning is performed).
+</p>
+<p>
+The <tt>text</tt> parameter must be in WinAnsi encoding (cp1252).
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+91
+92
+93</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/prawn/font/afm.rb', line 91</span>
+
+<span class='def def kw'>def</span> <span class='encode_text identifier id'>encode_text</span><span class='lparen token'>(</span><span class='text identifier id'>text</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='lbrack token'>[</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:kerning</span><span class='rbrack token'>]</span> <span class='question op'>?</span> <span class='kern identifier id'>kern</span><span class='lparen token'>(</span><span class='text identifier id'>text</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='text identifier id'>text</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>has_kerning_data?</h3>
+</div><div id="has_kerning_data%3F-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>has_kerning_data?</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+68
+69
+70</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/prawn/font/afm.rb', line 68</span>
+
+<span class='def def kw'>def</span> <span class='has_kerning_data? fid id'>has_kerning_data?</span>
+  <span class='@kern_pairs ivar id'>@kern_pairs</span><span class='dot token'>.</span><span class='any? fid id'>any?</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>normalize_encoding</h3>
+</div><div id="normalize_encoding-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>normalize_encoding</span><span class='args'>(text)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+built-in fonts only work with winansi encoding, so translate the string.
+Changes the encoding in-place, so the argument itself is replaced with a
+string in WinAnsi encoding.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+75
+76
+77
+78</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/prawn/font/afm.rb', line 75</span>
+
+<span class='def def kw'>def</span> <span class='normalize_encoding identifier id'>normalize_encoding</span><span class='lparen token'>(</span><span class='text identifier id'>text</span><span class='rparen token'>)</span>
+  <span class='enc identifier id'>enc</span> <span class='assign token'>=</span> <span class='Prawn constant id'>Prawn</span><span class='colon2 op'>::</span><span class='Encoding constant id'>Encoding</span><span class='colon2 op'>::</span><span class='WinAnsi constant id'>WinAnsi</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+  <span class='text identifier id'>text</span><span class='dot token'>.</span><span class='unpack identifier id'>unpack</span><span class='lparen token'>(</span><span class='string val'>&quot;U*&quot;</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='collect identifier id'>collect</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='i identifier id'>i</span><span class='bitor op'>|</span> <span class='enc identifier id'>enc</span><span class='lbrack token'>[</span><span class='i identifier id'>i</span><span class='rbrack token'>]</span> <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='pack identifier id'>pack</span><span class='lparen token'>(</span><span class='string val'>&quot;C*&quot;</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

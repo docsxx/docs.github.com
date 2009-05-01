@@ -1,0 +1,2474 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: Importer</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module Importer">
+  <h1 class="title">Module: Importer</h1>
+  <div class="section docstring">
+  <p>
+used by importer scripts in lib/workers
+</p>
+
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#create_new_item_from_record-instance_method' title='#create_new_item_from_record'>#create_new_item_from_record</a></span><span class='args'>(record, zoom_class, options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+override in your importer worker to customize expects an xml element of our
+record or a file with a simple record_hash TODO: add support for
+zoom_classes that may have attachments steal from past perfect importer
+record_hash has to have file key.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#do_work-instance_method' title='#do_work'>#do_work</a></span><span class='args'>(args = nil)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+override this in your importer worker if you need something more complex
+this is what we call from the importers controller for our particular
+importer worker create method per importer worker should do the setup
+specific to our type of importer most importantly the @xml_path_to_record.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#importer_add_image-instance_method' title='#importer_add_image'>#importer_add_image</a></span><span class='args'>(params, zoom_class)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#importer_add_still_image_to-instance_method' title='#importer_add_still_image_to'>#importer_add_still_image_to</a></span><span class='args'>(new_image_file, new_record, zoom_class)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#importer_create_related_topic-instance_method' title='#importer_create_related_topic'>#importer_create_related_topic</a></span><span class='args'>(topic_params)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#importer_extended_fields_replacement_params_hash-instance_method' title='#importer_extended_fields_replacement_params_hash'>#importer_extended_fields_replacement_params_hash</a></span><span class='args'>(options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+strip out raw extended_fields and create a valid params hash for
+new/create/update.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#importer_extended_fields_update_hash_for_item-instance_method' title='#importer_extended_fields_update_hash_for_item'>#importer_extended_fields_update_hash_for_item</a></span><span class='args'>(options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+populate extended_fields param with xml based on params from the form.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#importer_log_to_skipped_records-instance_method' title='#importer_log_to_skipped_records'>#importer_log_to_skipped_records</a></span><span class='args'>(identifier,reason_skipped)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+override in your importer worker to customize.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#importer_prepare_extended_field-instance_method' title='#importer_prepare_extended_field'>#importer_prepare_extended_field</a></span><span class='args'>(options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#importer_prepare_path_to_image_file-instance_method' title='#importer_prepare_path_to_image_file'>#importer_prepare_path_to_image_file</a></span><span class='args'>(image_file)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#importer_prepare_short_summary-instance_method' title='#importer_prepare_short_summary'>#importer_prepare_short_summary</a></span><span class='args'>(source_string, length = 25, end_string = '')</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#importer_process-instance_method' title='#importer_process'>#importer_process</a></span><span class='args'>(record, params)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+override in your importer worker to customize takes an xml element.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#importer_simple_setup-instance_method' title='#importer_simple_setup'>#importer_simple_setup</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#importer_trim_fat_from_xml_import_file-instance_method' title='#importer_trim_fat_from_xml_import_file'>#importer_trim_fat_from_xml_import_file</a></span><span class='args'>(path_to_original_file,path_to_output,accession = nil)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+override in your importer worker to customize takes a potentially huge xml
+file and strips out all the empty fields so it much more manageable output
+is to a tmp file has commented out code for replacing macronized vowels
+uncomment if you need them.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#importer_update_processing_vars_at_end-instance_method' title='#importer_update_processing_vars_at_end'>#importer_update_processing_vars_at_end</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#importer_update_processing_vars_if_rescue-instance_method' title='#importer_update_processing_vars_if_rescue'>#importer_update_processing_vars_if_rescue</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#importer_update_records_processed_vars-instance_method' title='#importer_update_records_processed_vars'>#importer_update_records_processed_vars</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#importer_xml_record_to_hash-instance_method' title='#importer_xml_record_to_hash'>#importer_xml_record_to_hash</a></span><span class='args'>(record, upcase = false)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+XPATH was proving too unreliable switching to pulling record to a hash and
+grabbing the specific fields we need to check.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#remove_non_unix_new_lines-instance_method' title='#remove_non_unix_new_lines'>#remove_non_unix_new_lines</a></span><span class='args'>(line)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+copied and modified from http://www.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#stop_worker-instance_method' title='#stop_worker'>#stop_worker</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>create_new_item_from_record</h3>
+</div><div id="create_new_item_from_record-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>create_new_item_from_record</span><span class='args'>(record, zoom_class, options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+override in your importer worker to customize expects an xml element of our
+record or a file with a simple record_hash TODO: add support for
+zoom_classes that may have attachments steal from past perfect importer
+record_hash has to have file key
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+502
+503
+504
+505
+506
+507
+508
+509
+510
+511
+512
+513
+514
+515
+516
+517
+518
+519
+520
+521
+522
+523
+524
+525
+526
+527
+528
+529
+530
+531
+532
+533
+534
+535
+536
+537
+538
+539
+540
+541
+542
+543
+544
+545
+546
+547
+548
+549
+550
+551
+552
+553
+554
+555
+556
+557
+558
+559
+560
+561
+562
+563
+564
+565
+566
+567
+568
+569
+570
+571
+572
+573
+574
+575
+576
+577
+578
+579
+580
+581
+582
+583
+584
+585
+586
+587
+588
+589
+590
+591
+592
+593
+594
+595
+596
+597
+598
+599
+600
+601
+602
+603
+604
+605
+606
+607
+608
+609
+610
+611
+612
+613
+614
+615
+616
+617
+618
+619
+620
+621
+622
+623
+624
+625
+626
+627
+628
+629
+630
+631
+632
+633
+634
+635
+636
+637
+638
+639
+640
+641
+642
+643
+644
+645
+646
+647
+648
+649
+650
+651
+652
+653
+654
+655
+656
+657
+658
+659
+660
+661
+662
+663
+664
+665
+666
+667
+668
+669
+670
+671
+672
+673
+674
+675
+676
+677
+678
+679
+680
+681
+682
+683
+684
+685
+686
+687
+688
+689
+690
+691
+692
+693
+694
+695
+696
+697
+698
+699
+700
+701
+702
+703
+704
+705
+706
+707
+708
+709
+710
+711
+712
+713
+714
+715
+716
+717
+718
+719
+720
+721</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/importer.rb', line 502</span>
+
+<span class='def def kw'>def</span> <span class='create_new_item_from_record identifier id'>create_new_item_from_record</span><span class='lparen token'>(</span><span class='record identifier id'>record</span><span class='comma token'>,</span> <span class='zoom_class identifier id'>zoom_class</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='zoom_class_for_params identifier id'>zoom_class_for_params</span> <span class='assign token'>=</span> <span class='zoom_class identifier id'>zoom_class</span><span class='dot token'>.</span><span class='tableize identifier id'>tableize</span><span class='dot token'>.</span><span class='singularize identifier id'>singularize</span>
+
+  <span class='params identifier id'>params</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:params</span><span class='rbrack token'>]</span>
+
+  <span class='comment val'># initialize the subhash in params</span>
+  <span class='comment val'># clears it out if it does already</span>
+  <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='zoom_class_for_params identifier id'>zoom_class_for_params</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='Hash constant id'>Hash</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+
+  <span class='if if kw'>if</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='colon op'>:</span><span class='basket_id identifier id'>basket_id</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+    <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='zoom_class_for_params identifier id'>zoom_class_for_params</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='symbol val'>:basket_id</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='@current_basket ivar id'>@current_basket</span><span class='dot token'>.</span><span class='id identifier id'>id</span>
+  <span class='else else kw'>else</span>
+    <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='zoom_class_for_params identifier id'>zoom_class_for_params</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='symbol val'>:basket_id</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:basket_id</span><span class='rbrack token'>]</span>
+  <span class='end end kw'>end</span>
+
+  <span class='comment val'># check extended_field.import_field_synonyms</span>
+  <span class='comment val'># for which extended field to map the import_field to</span>
+  <span class='comment val'># special cases for title, short_summary, and description</span>
+  <span class='record_hash identifier id'>record_hash</span> <span class='assign token'>=</span> <span class='Hash constant id'>Hash</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+  <span class='if if kw'>if</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='colon op'>:</span><span class='record_hash identifier id'>record_hash</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+    <span class='record_hash identifier id'>record_hash</span> <span class='assign token'>=</span> <span class='importer_xml_record_to_hash identifier id'>importer_xml_record_to_hash</span><span class='lparen token'>(</span><span class='record identifier id'>record</span><span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+    <span class='record_hash identifier id'>record_hash</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:record_hash</span><span class='rbrack token'>]</span>
+  <span class='end end kw'>end</span>
+
+  <span class='field_count identifier id'>field_count</span> <span class='assign token'>=</span> <span class='integer val'>1</span>
+  <span class='tag_list_array identifier id'>tag_list_array</span> <span class='assign token'>=</span> <span class='Array constant id'>Array</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+  <span class='comment val'># add support for all items during this import getting a set of tags</span>
+  <span class='comment val'># added to every item in addition to the specific ones for the item</span>
+  <span class='tag_list_array identifier id'>tag_list_array</span> <span class='assign token'>=</span> <span class='@import ivar id'>@import</span><span class='dot token'>.</span><span class='base_tags identifier id'>base_tags</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='string val'>&quot;,&quot;</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='notop op'>!</span><span class='@import ivar id'>@import</span><span class='dot token'>.</span><span class='base_tags identifier id'>base_tags</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span>
+
+  <span class='record_hash identifier id'>record_hash</span><span class='dot token'>.</span><span class='keys identifier id'>keys</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='record_field identifier id'>record_field</span><span class='bitor op'>|</span>
+    <span class='logger identifier id'>logger</span><span class='dot token'>.</span><span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='string val'>&quot;record_field &quot;</span> <span class='plus op'>+</span> <span class='record_field identifier id'>record_field</span><span class='dot token'>.</span><span class='inspect identifier id'>inspect</span><span class='rparen token'>)</span>
+    <span class='unless unless kw'>unless</span> <span class='IMPORT_FIELDS_TO_IGNORE constant id'>IMPORT_FIELDS_TO_IGNORE</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='record_field identifier id'>record_field</span><span class='rparen token'>)</span>
+      <span class='value identifier id'>value</span> <span class='assign token'>=</span> <span class='record_hash identifier id'>record_hash</span><span class='lbrack token'>[</span><span class='record_field identifier id'>record_field</span><span class='rbrack token'>]</span>
+      <span class='if if kw'>if</span> <span class='notop op'>!</span><span class='value identifier id'>value</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+        <span class='value identifier id'>value</span> <span class='assign token'>=</span> <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='strip identifier id'>strip</span>
+        <span class='comment val'># replace \r with \n</span>
+        <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='regexp val'>/\r/</span><span class='comma token'>,</span> <span class='string val'>&quot;\n&quot;</span><span class='rparen token'>)</span>
+      <span class='end end kw'>end</span>
+
+      <span class='if if kw'>if</span> <span class='notop op'>!</span><span class='value identifier id'>value</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span>
+        <span class='comment val'># if it's mapped to an extended field, params are updated</span>
+        <span class='params identifier id'>params</span> <span class='assign token'>=</span> <span class='importer_prepare_extended_field identifier id'>importer_prepare_extended_field</span><span class='lparen token'>(</span><span class='symbol val'>:value</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='value identifier id'>value</span><span class='comma token'>,</span>
+                                                 <span class='symbol val'>:field</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='record_field identifier id'>record_field</span><span class='comma token'>,</span>
+                                                 <span class='symbol val'>:zoom_class_for_params</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='zoom_class_for_params identifier id'>zoom_class_for_params</span><span class='comma token'>,</span>
+                                                 <span class='symbol val'>:params</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='params identifier id'>params</span><span class='rparen token'>)</span>
+
+        <span class='comment val'># the field may also be mapped to non-extended fields</span>
+        <span class='comment val'># such as tags, description, title</span>
+        <span class='comment val'># the value maybe used multiple times, so case isn't appropriate</span>
+        <span class='if if kw'>if</span> <span class='record_field identifier id'>record_field</span><span class='dot token'>.</span><span class='upcase identifier id'>upcase</span> <span class='eq op'>==</span> <span class='string val'>'TITLE'</span> <span class='orop op'>||</span> <span class='lparen token'>(</span><span class='notop op'>!</span><span class='TITLE_SYNONYMS constant id'>TITLE_SYNONYMS</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span> <span class='andop op'>&amp;&amp;</span> <span class='TITLE_SYNONYMS constant id'>TITLE_SYNONYMS</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='record_field identifier id'>record_field</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+          <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='zoom_class_for_params identifier id'>zoom_class_for_params</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='symbol val'>:title</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='value identifier id'>value</span>
+        <span class='end end kw'>end</span>
+
+        <span class='if if kw'>if</span> <span class='notop op'>!</span><span class='DESCRIPTION_SYNONYMS constant id'>DESCRIPTION_SYNONYMS</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span> <span class='andop op'>&amp;&amp;</span> <span class='DESCRIPTION_SYNONYMS constant id'>DESCRIPTION_SYNONYMS</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='record_field identifier id'>record_field</span><span class='rparen token'>)</span>
+          <span class='if if kw'>if</span> <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='zoom_class_for_params identifier id'>zoom_class_for_params</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='colon op'>:</span><span class='description identifier id'>description</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+            <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='zoom_class_for_params identifier id'>zoom_class_for_params</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='symbol val'>:description</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='value identifier id'>value</span>
+          <span class='else else kw'>else</span>
+            <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='zoom_class_for_params identifier id'>zoom_class_for_params</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='symbol val'>:description</span><span class='rbrack token'>]</span> <span class='opasgn op'>+=</span> <span class='string val'>&quot;\n\n&quot;</span> <span class='plus op'>+</span> <span class='value identifier id'>value</span>
+          <span class='end end kw'>end</span>
+        <span class='end end kw'>end</span>
+
+        <span class='if if kw'>if</span> <span class='notop op'>!</span><span class='SHORT_SUMMARY_SYNONYMS constant id'>SHORT_SUMMARY_SYNONYMS</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span> <span class='andop op'>&amp;&amp;</span> <span class='SHORT_SUMMARY_SYNONYMS constant id'>SHORT_SUMMARY_SYNONYMS</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='record_field identifier id'>record_field</span><span class='rparen token'>)</span>
+          <span class='if if kw'>if</span> <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='zoom_class_for_params identifier id'>zoom_class_for_params</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='colon op'>:</span><span class='short_summary identifier id'>short_summary</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+            <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='zoom_class_for_params identifier id'>zoom_class_for_params</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='symbol val'>:short_summary</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='value identifier id'>value</span>
+          <span class='else else kw'>else</span>
+            <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='zoom_class_for_params identifier id'>zoom_class_for_params</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='symbol val'>:short_summary</span><span class='rbrack token'>]</span> <span class='opasgn op'>+=</span> <span class='string val'>&quot;\n\n&quot;</span> <span class='plus op'>+</span> <span class='value identifier id'>value</span>
+          <span class='end end kw'>end</span>
+        <span class='end end kw'>end</span>
+
+        <span class='if if kw'>if</span> <span class='notop op'>!</span><span class='TAGS_SYNONYMS constant id'>TAGS_SYNONYMS</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span> <span class='andop op'>&amp;&amp;</span> <span class='TAGS_SYNONYMS constant id'>TAGS_SYNONYMS</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='record_field identifier id'>record_field</span><span class='rparen token'>)</span>
+          <span class='tag_list_array identifier id'>tag_list_array</span> <span class='lshft op'>&lt;&lt;</span> <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='string val'>&quot;\n&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot; &quot;</span><span class='rparen token'>)</span>
+        <span class='end end kw'>end</span>
+
+        <span class='comment val'># path_to_file is special case, we know we have an associated file that goes in uploaded_data</span>
+        <span class='if if kw'>if</span> <span class='record_field identifier id'>record_field</span> <span class='eq op'>==</span> <span class='string val'>'path_to_file'</span>
+          <span class='logger identifier id'>logger</span><span class='dot token'>.</span><span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='string val'>&quot;in path_to_file&quot;</span><span class='rparen token'>)</span>
+          <span class='if if kw'>if</span> <span class='colon3 op'>::</span><span class='Import constant id'>Import</span><span class='colon2 op'>::</span><span class='VALID_ARCHIVE_CLASSES constant id'>VALID_ARCHIVE_CLASSES</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='zoom_class identifier id'>zoom_class</span><span class='rparen token'>)</span>
+            <span class='comment val'># we do a check earlier in the script for imagefile</span>
+            <span class='comment val'># so we should have something to work with here</span>
+            <span class='upload_hash identifier id'>upload_hash</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span> <span class='symbol val'>:uploaded_data</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='copy_and_load_to_temp_file identifier id'>copy_and_load_to_temp_file</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+            <span class='if if kw'>if</span> <span class='zoom_class identifier id'>zoom_class</span> <span class='eq op'>==</span> <span class='string val'>'StillImage'</span>
+              <span class='logger identifier id'>logger</span><span class='dot token'>.</span><span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='string val'>&quot;in image&quot;</span><span class='rparen token'>)</span>
+              <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:image_file</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='upload_hash identifier id'>upload_hash</span>
+            <span class='else else kw'>else</span>
+              <span class='logger identifier id'>logger</span><span class='dot token'>.</span><span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='string val'>&quot;in not image&quot;</span><span class='rparen token'>)</span>
+              <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='zoom_class_for_params identifier id'>zoom_class_for_params</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='zoom_class_for_params identifier id'>zoom_class_for_params</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='upload_hash identifier id'>upload_hash</span><span class='rparen token'>)</span>
+            <span class='end end kw'>end</span>
+          <span class='end end kw'>end</span>
+        <span class='end end kw'>end</span>
+      <span class='end end kw'>end</span>
+      <span class='field_count identifier id'>field_count</span> <span class='opasgn op'>+=</span> <span class='integer val'>1</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+
+  <span class='logger identifier id'>logger</span><span class='dot token'>.</span><span class='info identifier id'>info</span><span class='lparen token'>(</span><span class='string val'>&quot;after fields&quot;</span><span class='rparen token'>)</span>
+
+  <span class='if if kw'>if</span> <span class='notop op'>!</span><span class='@import ivar id'>@import</span><span class='dot token'>.</span><span class='description_beginning_template identifier id'>description_beginning_template</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span>
+    <span class='comment val'># append the citation to the description field</span>
+    <span class='if if kw'>if</span> <span class='notop op'>!</span><span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='zoom_class_for_params identifier id'>zoom_class_for_params</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='colon op'>:</span><span class='description identifier id'>description</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+      <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='zoom_class_for_params identifier id'>zoom_class_for_params</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='symbol val'>:description</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='@import ivar id'>@import</span><span class='dot token'>.</span><span class='description_beginning_template identifier id'>description_beginning_template</span> <span class='plus op'>+</span> <span class='string val'>&quot;\n\n&quot;</span> <span class='plus op'>+</span> <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='zoom_class_for_params identifier id'>zoom_class_for_params</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='symbol val'>:description</span><span class='rbrack token'>]</span>
+    <span class='else else kw'>else</span>
+      <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='zoom_class_for_params identifier id'>zoom_class_for_params</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='symbol val'>:description</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='@import ivar id'>@import</span><span class='dot token'>.</span><span class='description_beginning_template identifier id'>description_beginning_template</span>
+    <span class='end end kw'>end</span>
+  <span class='elsif elsif kw'>elsif</span> <span class='notop op'>!</span><span class='DESCRIPTION_TEMPLATE constant id'>DESCRIPTION_TEMPLATE</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span>
+    <span class='if if kw'>if</span> <span class='notop op'>!</span><span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='zoom_class_for_params identifier id'>zoom_class_for_params</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='colon op'>:</span><span class='description identifier id'>description</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+      <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='zoom_class_for_params identifier id'>zoom_class_for_params</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='symbol val'>:description</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='DESCRIPTION_TEMPLATE constant id'>DESCRIPTION_TEMPLATE</span> <span class='plus op'>+</span> <span class='string val'>&quot;\n\n&quot;</span> <span class='plus op'>+</span> <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='zoom_class_for_params identifier id'>zoom_class_for_params</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='symbol val'>:description</span><span class='rbrack token'>]</span>
+    <span class='else else kw'>else</span>
+      <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='zoom_class_for_params identifier id'>zoom_class_for_params</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='symbol val'>:description</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='DESCRIPTION_TEMPLATE constant id'>DESCRIPTION_TEMPLATE</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+
+  <span class='if if kw'>if</span> <span class='notop op'>!</span><span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='colon op'>:</span><span class='description_end_template identifier id'>description_end_template</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+    <span class='comment val'># append the description_end_template to the description field</span>
+    <span class='if if kw'>if</span> <span class='notop op'>!</span><span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='zoom_class_for_params identifier id'>zoom_class_for_params</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='colon op'>:</span><span class='description identifier id'>description</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+      <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='zoom_class_for_params identifier id'>zoom_class_for_params</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='symbol val'>:description</span><span class='rbrack token'>]</span> <span class='opasgn op'>+=</span> <span class='string val'>&quot;\n\n&quot;</span> <span class='plus op'>+</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:description_end_template</span><span class='rbrack token'>]</span>
+    <span class='else else kw'>else</span>
+      <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='zoom_class_for_params identifier id'>zoom_class_for_params</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='symbol val'>:description</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:description_end_template</span><span class='rbrack token'>]</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+
+  <span class='description identifier id'>description</span> <span class='assign token'>=</span> <span class='String constant id'>String</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+  <span class='comment val'># used to give use better html output for descriptions</span>
+  <span class='if if kw'>if</span> <span class='notop op'>!</span><span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='zoom_class_for_params identifier id'>zoom_class_for_params</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='colon op'>:</span><span class='description identifier id'>description</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+    <span class='description identifier id'>description</span> <span class='assign token'>=</span> <span class='RedCloth constant id'>RedCloth</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='zoom_class_for_params identifier id'>zoom_class_for_params</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='symbol val'>:description</span><span class='rbrack token'>]</span>
+    <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='zoom_class_for_params identifier id'>zoom_class_for_params</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='symbol val'>:description</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='description identifier id'>description</span><span class='dot token'>.</span><span class='to_html identifier id'>to_html</span>
+  <span class='end end kw'>end</span>
+
+  <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='zoom_class_for_params identifier id'>zoom_class_for_params</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='symbol val'>:tag_list</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='tag_list_array identifier id'>tag_list_array</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='string val'>&quot;,&quot;</span><span class='rparen token'>)</span>
+  <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='zoom_class_for_params identifier id'>zoom_class_for_params</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='symbol val'>:raw_tag_list</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='zoom_class_for_params identifier id'>zoom_class_for_params</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='symbol val'>:tag_list</span><span class='rbrack token'>]</span>
+
+  <span class='comment val'># set the chosen privacy</span>
+  <span class='private_setting identifier id'>private_setting</span> <span class='assign token'>=</span> <span class='@import ivar id'>@import</span><span class='dot token'>.</span><span class='private identifier id'>private</span>
+  <span class='logger identifier id'>logger</span><span class='dot token'>.</span><span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='string val'>&quot;private = &quot;</span> <span class='plus op'>+</span> <span class='private_setting identifier id'>private_setting</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rparen token'>)</span>
+  <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='zoom_class_for_params identifier id'>zoom_class_for_params</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='symbol val'>:private</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='private_setting identifier id'>private_setting</span>
+
+  <span class='comment val'># add the uniform license chosen at import to this item</span>
+  <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='zoom_class_for_params identifier id'>zoom_class_for_params</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='symbol val'>:license_id</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='@import ivar id'>@import</span><span class='dot token'>.</span><span class='license identifier id'>license</span><span class='dot token'>.</span><span class='id identifier id'>id</span> <span class='if if_mod kw'>if</span> <span class='notop op'>!</span><span class='@import ivar id'>@import</span><span class='dot token'>.</span><span class='license identifier id'>license</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span>
+
+  <span class='comment val'># clear any lingering values for @fields</span>
+  <span class='comment val'># and instantiate it, in case we need it</span>
+  <span class='@fields ivar id'>@fields</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+
+  <span class='if if kw'>if</span> <span class='zoom_class identifier id'>zoom_class</span> <span class='eq op'>==</span> <span class='string val'>'Topic'</span>
+    <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='zoom_class_for_params identifier id'>zoom_class_for_params</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='symbol val'>:topic_type_id</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='@import_topic_type ivar id'>@import_topic_type</span><span class='dot token'>.</span><span class='id identifier id'>id</span>
+
+    <span class='@fields ivar id'>@fields</span> <span class='assign token'>=</span> <span class='@import_topic_type ivar id'>@import_topic_type</span><span class='dot token'>.</span><span class='topic_type_to_field_mappings identifier id'>topic_type_to_field_mappings</span>
+
+    <span class='ancestors identifier id'>ancestors</span> <span class='assign token'>=</span> <span class='TopicType constant id'>TopicType</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='@import_topic_type ivar id'>@import_topic_type</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='ancestors identifier id'>ancestors</span>
+
+    <span class='if if kw'>if</span> <span class='ancestors identifier id'>ancestors</span><span class='dot token'>.</span><span class='size identifier id'>size</span> <span class='gt op'>&gt;</span> <span class='integer val'>1</span>
+      <span class='ancestors identifier id'>ancestors</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='ancestor identifier id'>ancestor</span><span class='bitor op'>|</span>
+        <span class='@fields ivar id'>@fields</span> <span class='assign token'>=</span> <span class='@fields ivar id'>@fields</span> <span class='plus op'>+</span> <span class='ancestor identifier id'>ancestor</span><span class='dot token'>.</span><span class='topic_type_to_field_mappings identifier id'>topic_type_to_field_mappings</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+  <span class='else else kw'>else</span>
+    <span class='content_type identifier id'>content_type</span> <span class='assign token'>=</span> <span class='ContentType constant id'>ContentType</span><span class='dot token'>.</span><span class='find_by_class_name identifier id'>find_by_class_name</span><span class='lparen token'>(</span><span class='zoom_class identifier id'>zoom_class</span><span class='rparen token'>)</span>
+    <span class='@fields ivar id'>@fields</span> <span class='assign token'>=</span> <span class='content_type identifier id'>content_type</span><span class='dot token'>.</span><span class='content_type_to_field_mappings identifier id'>content_type_to_field_mappings</span>
+  <span class='end end kw'>end</span>
+
+  <span class='if if kw'>if</span> <span class='@fields ivar id'>@fields</span><span class='dot token'>.</span><span class='size identifier id'>size</span> <span class='gt op'>&gt;</span> <span class='integer val'>0</span>
+    <span class='logger identifier id'>logger</span><span class='dot token'>.</span><span class='info identifier id'>info</span><span class='lparen token'>(</span><span class='string val'>&quot;fields larger than 0&quot;</span><span class='rparen token'>)</span>
+
+    <span class='comment val'># we use our version of this method</span>
+    <span class='comment val'># that calls xml builder directly, rather than using partial template</span>
+    <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='zoom_class_for_params identifier id'>zoom_class_for_params</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='zoom_class_for_params identifier id'>zoom_class_for_params</span><span class='rbrack token'>]</span>
+    <span class='params identifier id'>params</span> <span class='assign token'>=</span> <span class='importer_extended_fields_update_hash_for_item identifier id'>importer_extended_fields_update_hash_for_item</span><span class='lparen token'>(</span><span class='symbol val'>:item_key</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='zoom_class_for_params identifier id'>zoom_class_for_params</span><span class='comma token'>,</span> <span class='symbol val'>:params</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='params identifier id'>params</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+
+  <span class='logger identifier id'>logger</span><span class='dot token'>.</span><span class='info identifier id'>info</span><span class='lparen token'>(</span><span class='string val'>&quot;after field set up&quot;</span><span class='rparen token'>)</span>
+
+  <span class='comment val'># replace with something that isn't reliant on params</span>
+  <span class='replacement_zoom_item_hash identifier id'>replacement_zoom_item_hash</span> <span class='assign token'>=</span> <span class='importer_extended_fields_replacement_params_hash identifier id'>importer_extended_fields_replacement_params_hash</span><span class='lparen token'>(</span><span class='symbol val'>:item_key</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='zoom_class_for_params identifier id'>zoom_class_for_params</span><span class='comma token'>,</span> <span class='symbol val'>:item_class</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='zoom_class identifier id'>zoom_class</span><span class='comma token'>,</span> <span class='symbol val'>:params</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='params identifier id'>params</span><span class='rparen token'>)</span>
+
+  <span class='new_record identifier id'>new_record</span> <span class='assign token'>=</span> <span class='Module constant id'>Module</span><span class='dot token'>.</span><span class='class_eval identifier id'>class_eval</span><span class='lparen token'>(</span><span class='zoom_class identifier id'>zoom_class</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='replacement_zoom_item_hash identifier id'>replacement_zoom_item_hash</span><span class='rparen token'>)</span>
+
+  <span class='comment val'># we need new_image_file's file, for our embedded metadata (if enabled)</span>
+  <span class='comment val'># thus we have to create it before the still image</span>
+  <span class='new_image_file identifier id'>new_image_file</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+  <span class='new_image_file identifier id'>new_image_file</span> <span class='assign token'>=</span> <span class='importer_add_image identifier id'>importer_add_image</span><span class='lparen token'>(</span><span class='params identifier id'>params</span><span class='comma token'>,</span> <span class='zoom_class identifier id'>zoom_class</span><span class='rparen token'>)</span> <span class='unless unless_mod kw'>unless</span> <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:image_file</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span>
+
+  <span class='comment val'># only necessary for still images, because attachment is in a child model</span>
+  <span class='comment val'># if we are allowing harvesting of embedded metadata from the image_file</span>
+  <span class='comment val'># we need to grab it from the image_file's file path</span>
+  <span class='if if kw'>if</span> <span class='ENABLE_EMBEDDED_SUPPORT constant id'>ENABLE_EMBEDDED_SUPPORT</span> <span class='andop op'>&amp;&amp;</span> <span class='notop op'>!</span><span class='new_image_file identifier id'>new_image_file</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span> <span class='andop op'>&amp;&amp;</span> <span class='zoom_class identifier id'>zoom_class</span> <span class='eq op'>==</span> <span class='string val'>'StillImage'</span>
+    <span class='new_record identifier id'>new_record</span><span class='dot token'>.</span><span class='populate_attributes_from_embedded_in identifier id'>populate_attributes_from_embedded_in</span><span class='lparen token'>(</span><span class='new_image_file identifier id'>new_image_file</span><span class='dot token'>.</span><span class='full_filename identifier id'>full_filename</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+
+  <span class='comment val'># handle special case where title is derived from filename</span>
+  <span class='if if kw'>if</span> <span class='new_record identifier id'>new_record</span><span class='dot token'>.</span><span class='title identifier id'>title</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span>
+    <span class='if if kw'>if</span> <span class='ENABLE_EMBEDDED_SUPPORT constant id'>ENABLE_EMBEDDED_SUPPORT</span> <span class='andop op'>&amp;&amp;</span> <span class='zoom_class identifier id'>zoom_class</span> <span class='neq op'>!=</span> <span class='string val'>'StillImage'</span> <span class='andop op'>&amp;&amp;</span> <span class='ATTACHABLE_CLASSES constant id'>ATTACHABLE_CLASSES</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='zoom_class identifier id'>zoom_class</span><span class='rparen token'>)</span>
+      <span class='new_record identifier id'>new_record</span><span class='dot token'>.</span><span class='title identifier id'>title</span> <span class='assign token'>=</span> <span class='string val'>'-replace-'</span> <span class='plus op'>+</span> <span class='record_hash identifier id'>record_hash</span><span class='lbrack token'>[</span><span class='string val'>'placeholder_title'</span><span class='rbrack token'>]</span>
+    <span class='else else kw'>else</span>
+      <span class='new_record identifier id'>new_record</span><span class='dot token'>.</span><span class='title identifier id'>title</span> <span class='assign token'>=</span> <span class='record_hash identifier id'>record_hash</span><span class='lbrack token'>[</span><span class='string val'>'placeholder_title'</span><span class='rbrack token'>]</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+
+  <span class='comment val'># if still image and new_image failed, fail</span>
+  <span class='new_record_added identifier id'>new_record_added</span> <span class='assign token'>=</span> <span class='false false kw'>false</span>
+  <span class='unless unless kw'>unless</span> <span class='zoom_class identifier id'>zoom_class</span> <span class='eq op'>==</span> <span class='string val'>'StillImage'</span>
+    <span class='new_record_added identifier id'>new_record_added</span> <span class='assign token'>=</span> <span class='new_record identifier id'>new_record</span><span class='dot token'>.</span><span class='save identifier id'>save</span>
+  <span class='else else kw'>else</span>
+    <span class='new_record_added identifier id'>new_record_added</span> <span class='assign token'>=</span> <span class='new_record identifier id'>new_record</span><span class='dot token'>.</span><span class='save identifier id'>save</span> <span class='unless unless_mod kw'>unless</span> <span class='new_image_file identifier id'>new_image_file</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+  <span class='end end kw'>end</span>
+
+  <span class='if if kw'>if</span> <span class='new_record_added identifier id'>new_record_added</span>
+    <span class='importer_add_still_image_to identifier id'>importer_add_still_image_to</span><span class='lparen token'>(</span><span class='new_image_file identifier id'>new_image_file</span><span class='comma token'>,</span> <span class='new_record identifier id'>new_record</span><span class='comma token'>,</span> <span class='zoom_class identifier id'>zoom_class</span><span class='rparen token'>)</span> <span class='unless unless_mod kw'>unless</span> <span class='new_image_file identifier id'>new_image_file</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+
+    <span class='new_record identifier id'>new_record</span><span class='dot token'>.</span><span class='creator identifier id'>creator</span> <span class='assign token'>=</span> <span class='@contributing_user ivar id'>@contributing_user</span>
+    <span class='logger identifier id'>logger</span><span class='dot token'>.</span><span class='info identifier id'>info</span><span class='lparen token'>(</span><span class='string val'>&quot;in topic creation made it past creator&quot;</span><span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+    <span class='comment val'># destroy images if the record wasn't added successfully</span>
+    <span class='new_image_file identifier id'>new_image_file</span><span class='dot token'>.</span><span class='destroy identifier id'>destroy</span> <span class='unless unless_mod kw'>unless</span> <span class='new_image_file identifier id'>new_image_file</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+
+    <span class='logger identifier id'>logger</span><span class='dot token'>.</span><span class='info identifier id'>info</span><span class='lparen token'>(</span><span class='string val'>&quot;what are errors on save of new record: &quot;</span> <span class='plus op'>+</span> <span class='new_record identifier id'>new_record</span><span class='dot token'>.</span><span class='errors identifier id'>errors</span><span class='dot token'>.</span><span class='inspect identifier id'>inspect</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+
+  <span class='return return kw'>return</span> <span class='new_record identifier id'>new_record</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>do_work</h3>
+</div><div id="do_work-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>do_work</span><span class='args'>(args = nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+override this in your importer worker if you need something more complex
+this is what we call from the importers controller for our particular
+importer worker create method per importer worker should do the setup
+specific to our type of importer most importantly the @xml_path_to_record
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/importer.rb', line 86</span>
+
+<span class='def def kw'>def</span> <span class='do_work identifier id'>do_work</span><span class='lparen token'>(</span><span class='args identifier id'>args</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='logger identifier id'>logger</span><span class='dot token'>.</span><span class='info identifier id'>info</span><span class='lparen token'>(</span><span class='string val'>'in work'</span><span class='rparen token'>)</span>
+  <span class='begin begin kw'>begin</span>
+    <span class='@zoom_class ivar id'>@zoom_class</span> <span class='assign token'>=</span> <span class='args identifier id'>args</span><span class='lbrack token'>[</span><span class='symbol val'>:zoom_class</span><span class='rbrack token'>]</span>
+    <span class='@import ivar id'>@import</span> <span class='assign token'>=</span> <span class='Import constant id'>Import</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='args identifier id'>args</span><span class='lbrack token'>[</span><span class='symbol val'>:import</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+    <span class='@import_type ivar id'>@import_type</span> <span class='assign token'>=</span> <span class='@import ivar id'>@import</span><span class='dot token'>.</span><span class='xml_type identifier id'>xml_type</span>
+    <span class='@import_dir_path ivar id'>@import_dir_path</span> <span class='assign token'>=</span> <span class='colon3 op'>::</span><span class='Import constant id'>Import</span><span class='colon2 op'>::</span><span class='IMPORTS_DIR constant id'>IMPORTS_DIR</span> <span class='plus op'>+</span> <span class='@import ivar id'>@import</span><span class='dot token'>.</span><span class='directory identifier id'>directory</span>
+    <span class='@contributing_user ivar id'>@contributing_user</span> <span class='assign token'>=</span> <span class='@import ivar id'>@import</span><span class='dot token'>.</span><span class='user identifier id'>user</span>
+    <span class='@import_request ivar id'>@import_request</span> <span class='assign token'>=</span> <span class='args identifier id'>args</span><span class='lbrack token'>[</span><span class='symbol val'>:import_request</span><span class='rbrack token'>]</span>
+    <span class='@description_end_templates ivar id'>@description_end_templates</span><span class='lbrack token'>[</span><span class='string val'>'default'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='@import ivar id'>@import</span><span class='dot token'>.</span><span class='default_description_end_template identifier id'>default_description_end_template</span>
+    <span class='@current_basket ivar id'>@current_basket</span> <span class='assign token'>=</span> <span class='@import ivar id'>@import</span><span class='dot token'>.</span><span class='basket identifier id'>basket</span>
+    <span class='logger identifier id'>logger</span><span class='dot token'>.</span><span class='info identifier id'>info</span><span class='lparen token'>(</span><span class='string val'>&quot;what is current basket: &quot;</span> <span class='plus op'>+</span> <span class='@current_basket ivar id'>@current_basket</span><span class='dot token'>.</span><span class='inspect identifier id'>inspect</span><span class='rparen token'>)</span>
+    <span class='@import_topic_type ivar id'>@import_topic_type</span> <span class='assign token'>=</span> <span class='@import ivar id'>@import</span><span class='dot token'>.</span><span class='topic_type identifier id'>topic_type</span>
+    <span class='@zoom_class_for_params ivar id'>@zoom_class_for_params</span> <span class='assign token'>=</span> <span class='@zoom_class ivar id'>@zoom_class</span><span class='dot token'>.</span><span class='tableize identifier id'>tableize</span><span class='dot token'>.</span><span class='singularize identifier id'>singularize</span>
+    <span class='@xml_path_to_record ivar id'>@xml_path_to_record</span> <span class='opasgn op'>||=</span> <span class='@import ivar id'>@import</span><span class='dot token'>.</span><span class='xml_path_to_record identifier id'>xml_path_to_record</span>
+    <span class='@record_interval ivar id'>@record_interval</span> <span class='assign token'>=</span> <span class='@import ivar id'>@import</span><span class='dot token'>.</span><span class='interval_between_records identifier id'>interval_between_records</span>
+
+    <span class='params identifier id'>params</span> <span class='assign token'>=</span> <span class='args identifier id'>args</span><span class='lbrack token'>[</span><span class='symbol val'>:params</span><span class='rbrack token'>]</span>
+
+    <span class='comment val'># trimming of file</span>
+    <span class='@path_to_trimmed_records ivar id'>@path_to_trimmed_records</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;#{@import_dir_path}/records_trimmed.xml&quot;</span>
+    <span class='@path_to_trimmed_records ivar id'>@path_to_trimmed_records</span> <span class='assign token'>=</span> <span class='importer_trim_fat_from_xml_import_file identifier id'>importer_trim_fat_from_xml_import_file</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{@import_dir_path}/records.xml&quot;</span><span class='comma token'>,</span><span class='@path_to_trimmed_records ivar id'>@path_to_trimmed_records</span><span class='rparen token'>)</span>
+    <span class='@import_records_xml ivar id'>@import_records_xml</span> <span class='assign token'>=</span> <span class='REXML constant id'>REXML</span><span class='colon2 op'>::</span><span class='Document constant id'>Document</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='open identifier id'>open</span><span class='lparen token'>(</span><span class='@path_to_trimmed_records ivar id'>@path_to_trimmed_records</span><span class='rparen token'>)</span>
+
+    <span class='comment val'># variables assigned, files good to go, we're started</span>
+    <span class='@import ivar id'>@import</span><span class='dot token'>.</span><span class='update_attributes identifier id'>update_attributes</span><span class='lparen token'>(</span><span class='symbol val'>:status</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'in progress'</span><span class='rparen token'>)</span>
+
+    <span class='comment val'># work through records and add topics for each</span>
+    <span class='comment val'># if they don't already exist</span>
+    <span class='@results ivar id'>@results</span><span class='lbrack token'>[</span><span class='symbol val'>:records_processed</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='integer val'>0</span>
+    <span class='cache identifier id'>cache</span><span class='lbrack token'>[</span><span class='symbol val'>:results</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='@results ivar id'>@results</span>
+    <span class='@import_records_xml ivar id'>@import_records_xml</span><span class='dot token'>.</span><span class='elements identifier id'>elements</span><span class='dot token'>.</span><span class='each identifier id'>each</span><span class='lparen token'>(</span><span class='@xml_path_to_record ivar id'>@xml_path_to_record</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='record identifier id'>record</span><span class='bitor op'>|</span>
+      <span class='importer_process identifier id'>importer_process</span><span class='lparen token'>(</span><span class='record identifier id'>record</span><span class='comma token'>,</span> <span class='params identifier id'>params</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+    <span class='importer_update_processing_vars_at_end identifier id'>importer_update_processing_vars_at_end</span>
+  <span class='rescue rescue kw'>rescue</span>
+    <span class='importer_update_processing_vars_if_rescue identifier id'>importer_update_processing_vars_if_rescue</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>importer_add_image</h3>
+</div><div id="importer_add_image-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>importer_add_image</span><span class='args'>(params, zoom_class)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+42
+43
+44
+45
+46
+47
+48
+49
+50</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/importer.rb', line 42</span>
+
+<span class='def def kw'>def</span> <span class='importer_add_image identifier id'>importer_add_image</span><span class='lparen token'>(</span><span class='params identifier id'>params</span><span class='comma token'>,</span> <span class='zoom_class identifier id'>zoom_class</span><span class='rparen token'>)</span>
+  <span class='comment val'># add the image file and then close it</span>
+  <span class='if if kw'>if</span> <span class='zoom_class identifier id'>zoom_class</span> <span class='eq op'>==</span> <span class='string val'>'StillImage'</span>
+    <span class='logger identifier id'>logger</span><span class='dot token'>.</span><span class='info identifier id'>info</span><span class='lparen token'>(</span><span class='string val'>&quot;what is params[:image_file]: &quot;</span> <span class='plus op'>+</span> <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:image_file</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rparen token'>)</span>
+    <span class='new_image_file identifier id'>new_image_file</span> <span class='assign token'>=</span> <span class='ImageFile constant id'>ImageFile</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:image_file</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+    <span class='new_image_file identifier id'>new_image_file</span><span class='dot token'>.</span><span class='save identifier id'>save</span>
+    <span class='return return kw'>return</span> <span class='new_image_file identifier id'>new_image_file</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>importer_add_still_image_to</h3>
+</div><div id="importer_add_still_image_to-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>importer_add_still_image_to</span><span class='args'>(new_image_file, new_record, zoom_class)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/importer.rb', line 52</span>
+
+<span class='def def kw'>def</span> <span class='importer_add_still_image_to identifier id'>importer_add_still_image_to</span><span class='lparen token'>(</span><span class='new_image_file identifier id'>new_image_file</span><span class='comma token'>,</span> <span class='new_record identifier id'>new_record</span><span class='comma token'>,</span> <span class='zoom_class identifier id'>zoom_class</span><span class='rparen token'>)</span>
+  <span class='comment val'># add the image file and then close it</span>
+  <span class='if if kw'>if</span> <span class='zoom_class identifier id'>zoom_class</span> <span class='eq op'>==</span> <span class='string val'>'StillImage'</span>
+    <span class='new_image_file identifier id'>new_image_file</span><span class='dot token'>.</span><span class='still_image_id identifier id'>still_image_id</span> <span class='assign token'>=</span> <span class='new_record identifier id'>new_record</span><span class='dot token'>.</span><span class='id identifier id'>id</span>
+    <span class='new_image_file identifier id'>new_image_file</span><span class='dot token'>.</span><span class='save identifier id'>save</span>
+    <span class='comment val'># attachment_fu doesn't insert our still_image_id into the thumbnails</span>
+    <span class='comment val'># automagically</span>
+    <span class='new_image_file identifier id'>new_image_file</span><span class='dot token'>.</span><span class='thumbnails identifier id'>thumbnails</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='thumb identifier id'>thumb</span><span class='bitor op'>|</span>
+      <span class='thumb identifier id'>thumb</span><span class='dot token'>.</span><span class='still_image_id identifier id'>still_image_id</span> <span class='assign token'>=</span> <span class='new_record identifier id'>new_record</span><span class='dot token'>.</span><span class='id identifier id'>id</span>
+      <span class='thumb identifier id'>thumb</span><span class='dot token'>.</span><span class='save! fid id'>save!</span>
+    <span class='end end kw'>end</span>
+    <span class='logger identifier id'>logger</span><span class='dot token'>.</span><span class='info identifier id'>info</span><span class='lparen token'>(</span><span class='string val'>&quot;images done&quot;</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>importer_create_related_topic</h3>
+</div><div id="importer_create_related_topic-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>importer_create_related_topic</span><span class='args'>(topic_params)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+728
+729
+730
+731
+732
+733
+734
+735
+736
+737
+738
+739
+740
+741
+742
+743
+744
+745
+746
+747
+748
+749
+750
+751
+752
+753
+754
+755
+756
+757
+758
+759
+760
+761
+762
+763
+764
+765
+766
+767
+768
+769
+770
+771
+772
+773
+774
+775
+776
+777
+778</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/importer.rb', line 728</span>
+
+<span class='def def kw'>def</span> <span class='importer_create_related_topic identifier id'>importer_create_related_topic</span><span class='lparen token'>(</span><span class='topic_params identifier id'>topic_params</span><span class='rparen token'>)</span>
+  <span class='comment val'># clear any lingering values for @fields</span>
+  <span class='comment val'># and instantiate it, in case we need it</span>
+  <span class='@fields ivar id'>@fields</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+
+  <span class='@fields ivar id'>@fields</span> <span class='assign token'>=</span> <span class='@related_topic_type ivar id'>@related_topic_type</span><span class='dot token'>.</span><span class='topic_type_to_field_mappings identifier id'>topic_type_to_field_mappings</span>
+
+  <span class='ancestors identifier id'>ancestors</span> <span class='assign token'>=</span> <span class='@related_topic_type ivar id'>@related_topic_type</span><span class='dot token'>.</span><span class='ancestors identifier id'>ancestors</span>
+
+  <span class='if if kw'>if</span> <span class='ancestors identifier id'>ancestors</span><span class='dot token'>.</span><span class='size identifier id'>size</span> <span class='gt op'>&gt;</span> <span class='integer val'>1</span>
+    <span class='ancestors identifier id'>ancestors</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='ancestor identifier id'>ancestor</span><span class='bitor op'>|</span>
+      <span class='@fields ivar id'>@fields</span> <span class='assign token'>=</span> <span class='@fields ivar id'>@fields</span> <span class='plus op'>+</span> <span class='ancestor identifier id'>ancestor</span><span class='dot token'>.</span><span class='topic_type_to_field_mappings identifier id'>topic_type_to_field_mappings</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+
+  <span class='comment val'># we use our version of this method</span>
+  <span class='comment val'># that calls xml builder directly, rather than using partial template</span>
+  <span class='comment val'># HACK, conflict with symbol vs string for hash key</span>
+  <span class='comment val'># duplicate</span>
+  <span class='temp_params identifier id'>temp_params</span> <span class='assign token'>=</span> <span class='Hash constant id'>Hash</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+  <span class='temp_params identifier id'>temp_params</span><span class='lbrack token'>[</span><span class='symbol val'>:topic</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='topic_params identifier id'>topic_params</span><span class='lbrack token'>[</span><span class='string val'>&quot;topic&quot;</span><span class='rbrack token'>]</span>
+  <span class='topic_params identifier id'>topic_params</span> <span class='assign token'>=</span> <span class='importer_extended_fields_update_hash_for_item identifier id'>importer_extended_fields_update_hash_for_item</span><span class='lparen token'>(</span><span class='symbol val'>:item_key</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'topic'</span><span class='comma token'>,</span> <span class='symbol val'>:params</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='temp_params identifier id'>temp_params</span><span class='rparen token'>)</span>
+
+  <span class='topic_params identifier id'>topic_params</span><span class='lbrack token'>[</span><span class='symbol val'>:topic</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='symbol val'>:basket_id</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='@current_basket ivar id'>@current_basket</span><span class='dot token'>.</span><span class='id identifier id'>id</span>
+
+  <span class='comment val'># add the uniform license chosen at import to this item</span>
+  <span class='if if kw'>if</span> <span class='notop op'>!</span><span class='@import ivar id'>@import</span><span class='dot token'>.</span><span class='license identifier id'>license</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span>
+    <span class='topic_params identifier id'>topic_params</span><span class='lbrack token'>[</span><span class='symbol val'>:topic</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='symbol val'>:license_id</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='@import ivar id'>@import</span><span class='dot token'>.</span><span class='license identifier id'>license</span><span class='dot token'>.</span><span class='id identifier id'>id</span>
+  <span class='else else kw'>else</span>
+    <span class='topic_params identifier id'>topic_params</span><span class='lbrack token'>[</span><span class='symbol val'>:topic</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='symbol val'>:license_id</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+  <span class='end end kw'>end</span>
+
+  <span class='comment val'># replace with something that isn't reliant on params</span>
+  <span class='comment val'># replacement_topic_hash = pp4_importer_extended_fields_replacement_params_hash(:item_key =&gt; &quot;topic&quot;, :item_class =&gt; 'Topic', :params =&gt; topic_params)</span>
+
+  <span class='comment val'># we set the virtual attribute, do_not_moderate to true</span>
+  <span class='comment val'># so that our imported topics go live right away</span>
+  <span class='comment val'># and thus can be found (since then they won't have blank attributes)</span>
+  <span class='related_topic identifier id'>related_topic</span> <span class='assign token'>=</span> <span class='Topic constant id'>Topic</span><span class='dot token'>.</span><span class='create! fid id'>create!</span><span class='lparen token'>(</span><span class='symbol val'>:title</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='topic_params identifier id'>topic_params</span><span class='lbrack token'>[</span><span class='symbol val'>:topic</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='symbol val'>:title</span><span class='rbrack token'>]</span><span class='comma token'>,</span>
+                                <span class='symbol val'>:description</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='topic_params identifier id'>topic_params</span><span class='lbrack token'>[</span><span class='symbol val'>:topic</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='symbol val'>:description</span><span class='rbrack token'>]</span><span class='comma token'>,</span>
+                                <span class='symbol val'>:short_summary</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='topic_params identifier id'>topic_params</span><span class='lbrack token'>[</span><span class='symbol val'>:topic</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='symbol val'>:short_summary</span><span class='rbrack token'>]</span><span class='comma token'>,</span>
+                                <span class='symbol val'>:extended_content</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='topic_params identifier id'>topic_params</span><span class='lbrack token'>[</span><span class='symbol val'>:topic</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='symbol val'>:extended_content</span><span class='rbrack token'>]</span><span class='comma token'>,</span>
+                                <span class='symbol val'>:basket_id</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='topic_params identifier id'>topic_params</span><span class='lbrack token'>[</span><span class='symbol val'>:topic</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='symbol val'>:basket_id</span><span class='rbrack token'>]</span><span class='comma token'>,</span>
+                                <span class='symbol val'>:license_id</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='topic_params identifier id'>topic_params</span><span class='lbrack token'>[</span><span class='symbol val'>:topic</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='symbol val'>:license_id</span><span class='rbrack token'>]</span><span class='comma token'>,</span>
+                                <span class='symbol val'>:topic_type_id</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='topic_params identifier id'>topic_params</span><span class='lbrack token'>[</span><span class='symbol val'>:topic</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='symbol val'>:topic_type_id</span><span class='rbrack token'>]</span><span class='comma token'>,</span>
+                                <span class='symbol val'>:do_not_moderate</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span>
+                                <span class='rparen token'>)</span>
+
+  <span class='related_topic identifier id'>related_topic</span><span class='dot token'>.</span><span class='creator identifier id'>creator</span> <span class='assign token'>=</span>  <span class='@contributing_user ivar id'>@contributing_user</span>
+  <span class='related_topic identifier id'>related_topic</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>importer_extended_fields_replacement_params_hash</h3>
+</div><div id="importer_extended_fields_replacement_params_hash-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>importer_extended_fields_replacement_params_hash</span><span class='args'>(options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+strip out raw extended_fields and create a valid params hash for
+new/create/update
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/importer.rb', line 217</span>
+
+<span class='def def kw'>def</span> <span class='importer_extended_fields_replacement_params_hash identifier id'>importer_extended_fields_replacement_params_hash</span><span class='lparen token'>(</span><span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='params identifier id'>params</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:params</span><span class='rbrack token'>]</span>
+  <span class='item_key identifier id'>item_key</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:item_key</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span>
+  <span class='item_class identifier id'>item_class</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:item_class</span><span class='rbrack token'>]</span>
+
+  <span class='extra_fields identifier id'>extra_fields</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:extra_fields</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='Array constant id'>Array</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+  <span class='extra_fields identifier id'>extra_fields</span> <span class='lshft op'>&lt;&lt;</span> <span class='string val'>'tag_list'</span>
+  <span class='extra_fields identifier id'>extra_fields</span> <span class='lshft op'>&lt;&lt;</span> <span class='string val'>'uploaded_data'</span>
+
+  <span class='replacement_hash identifier id'>replacement_hash</span> <span class='assign token'>=</span> <span class='Hash constant id'>Hash</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+
+  <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='item_key identifier id'>item_key</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='keys identifier id'>keys</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='field_key identifier id'>field_key</span><span class='bitor op'>|</span>
+    <span class='comment val'># we only want real topic columns, not pseudo ones that are handled by extended_content xml</span>
+    <span class='if if kw'>if</span> <span class='Module constant id'>Module</span><span class='dot token'>.</span><span class='class_eval identifier id'>class_eval</span><span class='lparen token'>(</span><span class='item_class identifier id'>item_class</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='column_names identifier id'>column_names</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='field_key identifier id'>field_key</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='extra_fields identifier id'>extra_fields</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='field_key identifier id'>field_key</span><span class='rparen token'>)</span>
+      <span class='replacement_hash identifier id'>replacement_hash</span> <span class='assign token'>=</span> <span class='replacement_hash identifier id'>replacement_hash</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='field_key identifier id'>field_key</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='item_key identifier id'>item_key</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='field_key identifier id'>field_key</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+
+  <span class='comment val'># imports aren't moderated, at least not for the time being</span>
+  <span class='replacement_hash identifier id'>replacement_hash</span><span class='lbrack token'>[</span><span class='symbol val'>:do_not_moderate</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+
+  <span class='return return kw'>return</span> <span class='replacement_hash identifier id'>replacement_hash</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>importer_extended_fields_update_hash_for_item</h3>
+</div><div id="importer_extended_fields_update_hash_for_item-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>importer_extended_fields_update_hash_for_item</span><span class='args'>(options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+populate extended_fields param with xml based on params from the form
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/importer.rb', line 172</span>
+
+<span class='def def kw'>def</span> <span class='importer_extended_fields_update_hash_for_item identifier id'>importer_extended_fields_update_hash_for_item</span><span class='lparen token'>(</span><span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='params identifier id'>params</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:params</span><span class='rbrack token'>]</span>
+  <span class='item_key identifier id'>item_key</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:item_key</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span>
+
+  <span class='xml identifier id'>xml</span> <span class='assign token'>=</span> <span class='Builder constant id'>Builder</span><span class='colon2 op'>::</span><span class='XmlMarkup constant id'>XmlMarkup</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+
+  <span class='@fields ivar id'>@fields</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='field_to_xml identifier id'>field_to_xml</span><span class='bitor op'>|</span>
+    <span class='field_name identifier id'>field_name</span> <span class='assign token'>=</span> <span class='field_to_xml identifier id'>field_to_xml</span><span class='dot token'>.</span><span class='extended_field_label identifier id'>extended_field_label</span><span class='dot token'>.</span><span class='downcase identifier id'>downcase</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='regexp val'>/ /</span><span class='comma token'>,</span> <span class='string val'>'_'</span><span class='rparen token'>)</span>
+    <span class='if if kw'>if</span> <span class='field_to_xml identifier id'>field_to_xml</span><span class='dot token'>.</span><span class='extended_field_multiple identifier id'>extended_field_multiple</span>
+      <span class='hash_of_values identifier id'>hash_of_values</span> <span class='assign token'>=</span> <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='item_key identifier id'>item_key</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='string val'>'extended_content_values'</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='field_name identifier id'>field_name</span><span class='rbrack token'>]</span> <span class='rescue rescue kw'>rescue</span> <span class='nil nil kw'>nil</span>
+      <span class='if if kw'>if</span> <span class='notop op'>!</span><span class='hash_of_values identifier id'>hash_of_values</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+        <span class='xml identifier id'>xml</span><span class='dot token'>.</span><span class='tag! fid id'>tag!</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{field_name}_multiple&quot;</span><span class='rparen token'>)</span> <span class='do do kw'>do</span>
+          <span class='hash_of_values identifier id'>hash_of_values</span><span class='dot token'>.</span><span class='keys identifier id'>keys</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='key identifier id'>key</span><span class='bitor op'>|</span>
+            <span class='xml identifier id'>xml</span><span class='dot token'>.</span><span class='tag! fid id'>tag!</span><span class='lparen token'>(</span><span class='key identifier id'>key</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rparen token'>)</span> <span class='do do kw'>do</span>
+              <span class='logger identifier id'>logger</span><span class='dot token'>.</span><span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='string val'>&quot;inside hash: key: &quot;</span> <span class='plus op'>+</span> <span class='key identifier id'>key</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rparen token'>)</span>
+              <span class='m_value identifier id'>m_value</span> <span class='assign token'>=</span> <span class='hash_of_values identifier id'>hash_of_values</span><span class='lbrack token'>[</span><span class='key identifier id'>key</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+              <span class='extended_content_field_xml_tag identifier id'>extended_content_field_xml_tag</span><span class='lparen token'>(</span><span class='symbol val'>:xml</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='xml identifier id'>xml</span><span class='comma token'>,</span>
+                                             <span class='symbol val'>:field</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='field_name identifier id'>field_name</span><span class='comma token'>,</span>
+                                             <span class='symbol val'>:value</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='m_value identifier id'>m_value</span><span class='comma token'>,</span>
+                                             <span class='symbol val'>:xml_element_name</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='field_to_xml identifier id'>field_to_xml</span><span class='dot token'>.</span><span class='extended_field_xml_element_name identifier id'>extended_field_xml_element_name</span><span class='comma token'>,</span>
+                                             <span class='symbol val'>:xsi_type</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='field_to_xml identifier id'>field_to_xml</span><span class='dot token'>.</span><span class='extended_field_xsi_type identifier id'>extended_field_xsi_type</span><span class='comma token'>,</span>
+                                             <span class='symbol val'>:ftype</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='field_to_xml identifier id'>field_to_xml</span><span class='dot token'>.</span><span class='extended_field_ftype identifier id'>extended_field_ftype</span><span class='comma token'>,</span>
+                                             <span class='symbol val'>:user_choice_addition</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='field_to_xml identifier id'>field_to_xml</span><span class='dot token'>.</span><span class='extended_field_user_choice_addition identifier id'>extended_field_user_choice_addition</span><span class='rparen token'>)</span>
+            <span class='end end kw'>end</span>
+          <span class='end end kw'>end</span>
+        <span class='end end kw'>end</span>
+      <span class='end end kw'>end</span>
+    <span class='else else kw'>else</span>
+      <span class='value identifier id'>value</span> <span class='assign token'>=</span> <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='item_key identifier id'>item_key</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='string val'>'extended_content_values'</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='field_name identifier id'>field_name</span><span class='rbrack token'>]</span> <span class='rescue rescue kw'>rescue</span> <span class='string val'>&quot;&quot;</span>
+      <span class='extended_content_field_xml_tag identifier id'>extended_content_field_xml_tag</span><span class='lparen token'>(</span><span class='symbol val'>:xml</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='xml identifier id'>xml</span><span class='comma token'>,</span>
+                                     <span class='symbol val'>:field</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='field_name identifier id'>field_name</span><span class='comma token'>,</span>
+                                     <span class='symbol val'>:value</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='value identifier id'>value</span><span class='comma token'>,</span>
+                                     <span class='symbol val'>:xml_element_name</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='field_to_xml identifier id'>field_to_xml</span><span class='dot token'>.</span><span class='extended_field_xml_element_name identifier id'>extended_field_xml_element_name</span><span class='comma token'>,</span>
+                                     <span class='symbol val'>:xsi_type</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='field_to_xml identifier id'>field_to_xml</span><span class='dot token'>.</span><span class='extended_field_xsi_type identifier id'>extended_field_xsi_type</span><span class='comma token'>,</span>
+                                     <span class='symbol val'>:ftype</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='field_to_xml identifier id'>field_to_xml</span><span class='dot token'>.</span><span class='extended_field_ftype identifier id'>extended_field_ftype</span><span class='comma token'>,</span>
+                                     <span class='symbol val'>:user_choice_addition</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='field_to_xml identifier id'>field_to_xml</span><span class='dot token'>.</span><span class='extended_field_user_choice_addition identifier id'>extended_field_user_choice_addition</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+
+  <span class='extended_content identifier id'>extended_content</span> <span class='assign token'>=</span> <span class='xml identifier id'>xml</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+  <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='item_key identifier id'>item_key</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='symbol val'>:extended_content</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='extended_content identifier id'>extended_content</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='string val'>&quot;&lt;to_s\/&gt;&quot;</span><span class='comma token'>,</span><span class='string val'>&quot;&quot;</span><span class='rparen token'>)</span>
+  <span class='return return kw'>return</span> <span class='params identifier id'>params</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>importer_log_to_skipped_records</h3>
+</div><div id="importer_log_to_skipped_records-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>importer_log_to_skipped_records</span><span class='args'>(identifier,reason_skipped)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+override in your importer worker to customize
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+724
+725
+726</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/importer.rb', line 724</span>
+
+<span class='def def kw'>def</span> <span class='importer_log_to_skipped_records identifier id'>importer_log_to_skipped_records</span><span class='lparen token'>(</span><span class='identifier identifier id'>identifier</span><span class='comma token'>,</span><span class='reason_skipped identifier id'>reason_skipped</span><span class='rparen token'>)</span>
+  <span class='logger identifier id'>logger</span><span class='dot token'>.</span><span class='info identifier id'>info</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{identifier}: #{reason_skipped}&quot;</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>importer_prepare_extended_field</h3>
+</div><div id="importer_prepare_extended_field-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>importer_prepare_extended_field</span><span class='args'>(options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/importer.rb', line 126</span>
+
+<span class='def def kw'>def</span> <span class='importer_prepare_extended_field identifier id'>importer_prepare_extended_field</span><span class='lparen token'>(</span><span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='params identifier id'>params</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:params</span><span class='rbrack token'>]</span>
+  <span class='field identifier id'>field</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:field</span><span class='rbrack token'>]</span>
+  <span class='value identifier id'>value</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:value</span><span class='rbrack token'>]</span>
+  <span class='zoom_class_for_params identifier id'>zoom_class_for_params</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:zoom_class_for_params</span><span class='rbrack token'>]</span>
+  <span class='if if kw'>if</span> <span class='notop op'>!</span><span class='value identifier id'>value</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span>
+    <span class='comment val'># look up the synonym for the field</span>
+    <span class='comment val'># check if it's been mapped locally</span>
+    <span class='extended_field identifier id'>extended_field</span> <span class='assign token'>=</span> <span class='string val'>''</span>
+    <span class='if if kw'>if</span> <span class='notop op'>!</span><span class='@import_field_to_extended_field_map ivar id'>@import_field_to_extended_field_map</span><span class='lbrack token'>[</span><span class='field identifier id'>field</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+      <span class='extended_field identifier id'>extended_field</span> <span class='assign token'>=</span> <span class='@import_field_to_extended_field_map ivar id'>@import_field_to_extended_field_map</span><span class='lbrack token'>[</span><span class='field identifier id'>field</span><span class='rbrack token'>]</span>
+    <span class='else else kw'>else</span>
+      <span class='extended_field identifier id'>extended_field</span> <span class='assign token'>=</span> <span class='ExtendedField constant id'>ExtendedField</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='symbol val'>:first</span><span class='comma token'>,</span>
+                                          <span class='symbol val'>:conditions</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='dstring node'>&quot;import_synonyms like \'%#{field}%\'&quot;</span><span class='rparen token'>)</span>
+      <span class='if if kw'>if</span> <span class='notop op'>!</span><span class='extended_field identifier id'>extended_field</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+        <span class='@import_field_to_extended_field_map ivar id'>@import_field_to_extended_field_map</span><span class='lbrack token'>[</span><span class='field identifier id'>field</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='extended_field identifier id'>extended_field</span>
+      <span class='else else kw'>else</span>
+        <span class='@import_field_to_extended_field_map ivar id'>@import_field_to_extended_field_map</span><span class='lbrack token'>[</span><span class='field identifier id'>field</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='string val'>'not available'</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+
+    <span class='if if kw'>if</span> <span class='notop op'>!</span><span class='extended_field identifier id'>extended_field</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span> <span class='and and kw'>and</span> <span class='extended_field identifier id'>extended_field</span> <span class='neq op'>!=</span> <span class='string val'>'not available'</span>
+      <span class='comment val'># add some smarts for handling fields that are multiple</span>
+      <span class='comment val'># assumes comma separated values</span>
+
+      <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='zoom_class_for_params identifier id'>zoom_class_for_params</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='string val'>'extended_content_values'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='Hash constant id'>Hash</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='if if_mod kw'>if</span> \
+        <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='zoom_class_for_params identifier id'>zoom_class_for_params</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='string val'>'extended_content_values'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+        
+      <span class='if if kw'>if</span> <span class='extended_field identifier id'>extended_field</span><span class='dot token'>.</span><span class='multiple identifier id'>multiple</span>
+        <span class='multiple_values identifier id'>multiple_values</span> <span class='assign token'>=</span> <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='string val'>&quot;,&quot;</span><span class='rparen token'>)</span>
+        <span class='m_field_count identifier id'>m_field_count</span> <span class='assign token'>=</span> <span class='integer val'>1</span>
+        <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='zoom_class_for_params identifier id'>zoom_class_for_params</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='string val'>'extended_content_values'</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='extended_field identifier id'>extended_field</span><span class='dot token'>.</span><span class='label_for_params identifier id'>label_for_params</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='Hash constant id'>Hash</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+        <span class='multiple_values identifier id'>multiple_values</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='m_field_value identifier id'>m_field_value</span><span class='bitor op'>|</span>
+          <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='zoom_class_for_params identifier id'>zoom_class_for_params</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='string val'>'extended_content_values'</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='extended_field identifier id'>extended_field</span><span class='dot token'>.</span><span class='label_for_params identifier id'>label_for_params</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='m_field_count identifier id'>m_field_count</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='m_field_value identifier id'>m_field_value</span><span class='dot token'>.</span><span class='strip identifier id'>strip</span>
+          <span class='m_field_count identifier id'>m_field_count</span> <span class='opasgn op'>+=</span> <span class='integer val'>1</span>
+        <span class='end end kw'>end</span>
+      <span class='else else kw'>else</span>
+        <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='zoom_class_for_params identifier id'>zoom_class_for_params</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='string val'>'extended_content_values'</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='extended_field identifier id'>extended_field</span><span class='dot token'>.</span><span class='label_for_params identifier id'>label_for_params</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='value identifier id'>value</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+  <span class='return return kw'>return</span> <span class='params identifier id'>params</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>importer_prepare_path_to_image_file</h3>
+</div><div id="importer_prepare_path_to_image_file-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>importer_prepare_path_to_image_file</span><span class='args'>(image_file)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/importer.rb', line 247</span>
+
+<span class='def def kw'>def</span> <span class='importer_prepare_path_to_image_file identifier id'>importer_prepare_path_to_image_file</span><span class='lparen token'>(</span><span class='image_file identifier id'>image_file</span><span class='rparen token'>)</span>
+  <span class='image_path_array identifier id'>image_path_array</span> <span class='assign token'>=</span> <span class='image_file identifier id'>image_file</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='string val'>&quot;\\&quot;</span><span class='rparen token'>)</span>
+
+  <span class='comment val'># prep alternative versions of the filename</span>
+  <span class='directories_up_to identifier id'>directories_up_to</span> <span class='assign token'>=</span> <span class='@import_parent_dir_for_image_dirs ivar id'>@import_parent_dir_for_image_dirs</span> <span class='plus op'>+</span> <span class='string val'>&quot;/&quot;</span> <span class='plus op'>+</span> <span class='image_path_array identifier id'>image_path_array</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span> <span class='plus op'>+</span> <span class='string val'>&quot;/&quot;</span>
+  <span class='the_file_name identifier id'>the_file_name</span> <span class='assign token'>=</span> <span class='image_path_array identifier id'>image_path_array</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span>
+
+  <span class='path_to_file_to_grab identifier id'>path_to_file_to_grab</span> <span class='assign token'>=</span> <span class='directories_up_to identifier id'>directories_up_to</span> <span class='plus op'>+</span> <span class='the_file_name identifier id'>the_file_name</span>
+
+  <span class='comment val'># if we can't find the file, try downcasing or upcasing the extension</span>
+  <span class='comment val'># also try escaping any spaces</span>
+
+  <span class='if if kw'>if</span> <span class='notop op'>!</span><span class='File constant id'>File</span><span class='dot token'>.</span><span class='exists? fid id'>exists?</span><span class='lparen token'>(</span><span class='path_to_file_to_grab identifier id'>path_to_file_to_grab</span><span class='rparen token'>)</span>
+    <span class='logger identifier id'>logger</span><span class='dot token'>.</span><span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='string val'>&quot;path_to_file_to_grab no match yet&quot;</span><span class='rparen token'>)</span>
+
+    <span class='file_name_array identifier id'>file_name_array</span> <span class='assign token'>=</span> <span class='the_file_name identifier id'>the_file_name</span><span class='dot token'>.</span><span class='scan identifier id'>scan</span><span class='lparen token'>(</span><span class='regexp val'>/(.+)(\.[^\d]+$)/</span><span class='rparen token'>)</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span>
+    <span class='file_name_no_extension identifier id'>file_name_no_extension</span> <span class='assign token'>=</span> <span class='file_name_array identifier id'>file_name_array</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span>
+    <span class='extension identifier id'>extension</span> <span class='assign token'>=</span> <span class='file_name_array identifier id'>file_name_array</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span>
+
+    <span class='downer identifier id'>downer</span> <span class='assign token'>=</span> <span class='directories_up_to identifier id'>directories_up_to</span> <span class='plus op'>+</span> <span class='file_name_no_extension identifier id'>file_name_no_extension</span> <span class='plus op'>+</span> <span class='extension identifier id'>extension</span><span class='dot token'>.</span><span class='downcase identifier id'>downcase</span>
+    <span class='upper identifier id'>upper</span> <span class='assign token'>=</span> <span class='directories_up_to identifier id'>directories_up_to</span> <span class='plus op'>+</span> <span class='file_name_no_extension identifier id'>file_name_no_extension</span> <span class='plus op'>+</span> <span class='extension identifier id'>extension</span><span class='dot token'>.</span><span class='upcase identifier id'>upcase</span>
+
+    <span class='if if kw'>if</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='exists? fid id'>exists?</span><span class='lparen token'>(</span><span class='downer identifier id'>downer</span><span class='rparen token'>)</span>
+      <span class='path_to_file_to_grab identifier id'>path_to_file_to_grab</span> <span class='assign token'>=</span> <span class='downer identifier id'>downer</span>
+      <span class='logger identifier id'>logger</span><span class='dot token'>.</span><span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='string val'>&quot;path_to_file_to_grab is downer: &quot;</span> <span class='plus op'>+</span> <span class='path_to_file_to_grab identifier id'>path_to_file_to_grab</span><span class='rparen token'>)</span>
+    <span class='elsif elsif kw'>elsif</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='exists? fid id'>exists?</span><span class='lparen token'>(</span><span class='upper identifier id'>upper</span><span class='rparen token'>)</span>
+      <span class='path_to_file_to_grab identifier id'>path_to_file_to_grab</span> <span class='assign token'>=</span> <span class='upper identifier id'>upper</span>
+      <span class='logger identifier id'>logger</span><span class='dot token'>.</span><span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='string val'>&quot;path_to_file_to_grab is upper: &quot;</span> <span class='plus op'>+</span> <span class='path_to_file_to_grab identifier id'>path_to_file_to_grab</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+
+  <span class='comment val'># make a copy of any files that have spaces in their name</span>
+  <span class='comment val'># a better formed name</span>
+  <span class='comment val'># to avoid problems later</span>
+  <span class='if if kw'>if</span> <span class='notop op'>!</span><span class='the_file_name identifier id'>the_file_name</span><span class='dot token'>.</span><span class='scan identifier id'>scan</span><span class='lparen token'>(</span><span class='string val'>&quot; &quot;</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span> <span class='and and kw'>and</span>  <span class='File constant id'>File</span><span class='dot token'>.</span><span class='exists? fid id'>exists?</span><span class='lparen token'>(</span><span class='path_to_file_to_grab identifier id'>path_to_file_to_grab</span><span class='rparen token'>)</span>
+    <span class='the_new_file_name identifier id'>the_new_file_name</span> <span class='assign token'>=</span> <span class='the_file_name identifier id'>the_file_name</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='string val'>&quot; &quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;\.&quot;</span><span class='rparen token'>)</span>
+    <span class='new_file_path identifier id'>new_file_path</span> <span class='assign token'>=</span> <span class='directories_up_to identifier id'>directories_up_to</span> <span class='plus op'>+</span> <span class='the_new_file_name identifier id'>the_new_file_name</span>
+
+    <span class='if if kw'>if</span> <span class='notop op'>!</span><span class='File constant id'>File</span><span class='dot token'>.</span><span class='exists? fid id'>exists?</span><span class='lparen token'>(</span><span class='new_file_path identifier id'>new_file_path</span><span class='rparen token'>)</span>
+      <span class='FileUtils constant id'>FileUtils</span><span class='dot token'>.</span><span class='copy_file identifier id'>copy_file</span> <span class='path_to_file_to_grab identifier id'>path_to_file_to_grab</span><span class='comma token'>,</span> <span class='new_file_path identifier id'>new_file_path</span>
+    <span class='end end kw'>end</span>
+    <span class='path_to_file_to_grab identifier id'>path_to_file_to_grab</span> <span class='assign token'>=</span> <span class='new_file_path identifier id'>new_file_path</span>
+  <span class='end end kw'>end</span>
+
+  <span class='return return kw'>return</span> <span class='path_to_file_to_grab identifier id'>path_to_file_to_grab</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>importer_prepare_short_summary</h3>
+</div><div id="importer_prepare_short_summary-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>importer_prepare_short_summary</span><span class='args'>(source_string, length = 25, end_string = '')</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+241
+242
+243
+244
+245</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/importer.rb', line 241</span>
+
+<span class='def def kw'>def</span> <span class='importer_prepare_short_summary identifier id'>importer_prepare_short_summary</span><span class='lparen token'>(</span><span class='source_string identifier id'>source_string</span><span class='comma token'>,</span> <span class='length identifier id'>length</span> <span class='assign token'>=</span> <span class='integer val'>25</span><span class='comma token'>,</span> <span class='end_string identifier id'>end_string</span> <span class='assign token'>=</span> <span class='string val'>''</span><span class='rparen token'>)</span>
+  <span class='comment val'># length is how many words, rather than characters</span>
+  <span class='words identifier id'>words</span> <span class='assign token'>=</span> <span class='source_string identifier id'>source_string</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='rparen token'>)</span>
+  <span class='words identifier id'>words</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='dot2 op'>..</span><span class='lparen token'>(</span><span class='length identifier id'>length</span><span class='minus op'>-</span><span class='integer val'>1</span><span class='rparen token'>)</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='string val'>' '</span><span class='rparen token'>)</span> <span class='plus op'>+</span> <span class='lparen token'>(</span><span class='words identifier id'>words</span><span class='dot token'>.</span><span class='length identifier id'>length</span> <span class='gt op'>&gt;</span> <span class='length identifier id'>length</span> <span class='integer val'>? </span><span class='end_string identifier id'>end_string</span> <span class='colon op'>:</span> <span class='string val'>''</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>importer_process</h3>
+</div><div id="importer_process-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>importer_process</span><span class='args'>(record, params)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+override in your importer worker to customize takes an xml element
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/importer.rb', line 333</span>
+
+<span class='def def kw'>def</span> <span class='importer_process identifier id'>importer_process</span><span class='lparen token'>(</span><span class='record identifier id'>record</span><span class='comma token'>,</span> <span class='params identifier id'>params</span><span class='rparen token'>)</span>
+  <span class='current_record identifier id'>current_record</span> <span class='assign token'>=</span> <span class='@results ivar id'>@results</span><span class='lbrack token'>[</span><span class='symbol val'>:records_processed</span><span class='rbrack token'>]</span> <span class='plus op'>+</span> <span class='integer val'>1</span>
+  <span class='logger identifier id'>logger</span><span class='dot token'>.</span><span class='info identifier id'>info</span><span class='lparen token'>(</span><span class='dstring node'>&quot;starting record #{current_record}&quot;</span><span class='rparen token'>)</span>
+
+  <span class='record_hash identifier id'>record_hash</span> <span class='assign token'>=</span> <span class='importer_xml_record_to_hash identifier id'>importer_xml_record_to_hash</span><span class='lparen token'>(</span><span class='record identifier id'>record</span><span class='rparen token'>)</span>
+  <span class='reason_skipped identifier id'>reason_skipped</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+
+  <span class='logger identifier id'>logger</span><span class='dot token'>.</span><span class='info identifier id'>info</span><span class='lparen token'>(</span><span class='dstring node'>&quot;record #{current_record} : looking for topic&quot;</span><span class='rparen token'>)</span>
+
+  <span class='comment val'># will only work with topics</span>
+  <span class='comment val'># we need a title attribute</span>
+  <span class='comment val'># if this is well set up there should only be one matching record_hash key</span>
+  <span class='comment val'># that is a title synonym, we go with last match just in case</span>
+  <span class='title identifier id'>title</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+  <span class='record_hash identifier id'>record_hash</span><span class='dot token'>.</span><span class='keys identifier id'>keys</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='field_name identifier id'>field_name</span><span class='bitor op'>|</span>
+    <span class='title identifier id'>title</span> <span class='assign token'>=</span> <span class='record_hash identifier id'>record_hash</span><span class='lbrack token'>[</span><span class='field_name identifier id'>field_name</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='strip identifier id'>strip</span> <span class='if if_mod kw'>if</span> <span class='TITLE_SYNONYMS constant id'>TITLE_SYNONYMS</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='field_name identifier id'>field_name</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+  <span class='existing_item identifier id'>existing_item</span> <span class='assign token'>=</span> <span class='@current_basket ivar id'>@current_basket</span><span class='dot token'>.</span><span class='topics identifier id'>topics</span><span class='dot token'>.</span><span class='find_by_title identifier id'>find_by_title</span><span class='lparen token'>(</span><span class='title identifier id'>title</span><span class='rparen token'>)</span>
+
+  <span class='new_record identifier id'>new_record</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+  <span class='if if kw'>if</span> <span class='existing_item identifier id'>existing_item</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+    <span class='description_end_template identifier id'>description_end_template</span> <span class='assign token'>=</span> <span class='@description_end_templates ivar id'>@description_end_templates</span><span class='lbrack token'>[</span><span class='string val'>'default'</span><span class='rbrack token'>]</span>
+    <span class='new_record identifier id'>new_record</span> <span class='assign token'>=</span> <span class='create_new_item_from_record identifier id'>create_new_item_from_record</span><span class='lparen token'>(</span><span class='record identifier id'>record</span><span class='comma token'>,</span> <span class='@zoom_class ivar id'>@zoom_class</span><span class='comma token'>,</span> <span class='lbrace token'>{</span><span class='symbol val'>:params</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='params identifier id'>params</span><span class='comma token'>,</span> <span class='symbol val'>:record_hash</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='record_hash identifier id'>record_hash</span><span class='comma token'>,</span> <span class='symbol val'>:description_end_template</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='description_end_template identifier id'>description_end_template</span> <span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+    <span class='logger identifier id'>logger</span><span class='dot token'>.</span><span class='info identifier id'>info</span><span class='lparen token'>(</span><span class='string val'>&quot;what is existing item: &quot;</span> <span class='plus op'>+</span> <span class='existing_item identifier id'>existing_item</span><span class='dot token'>.</span><span class='id identifier id'>id</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rparen token'>)</span>
+    <span class='comment val'># record exists in kete already</span>
+    <span class='reason_skipped identifier id'>reason_skipped</span> <span class='assign token'>=</span> <span class='string val'>'kete already has a copy of this record'</span>
+  <span class='end end kw'>end</span>
+
+  <span class='if if kw'>if</span> <span class='notop op'>!</span><span class='new_record identifier id'>new_record</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span> <span class='and and kw'>and</span> <span class='notop op'>!</span><span class='new_record identifier id'>new_record</span><span class='dot token'>.</span><span class='id identifier id'>id</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+    <span class='logger identifier id'>logger</span><span class='dot token'>.</span><span class='info identifier id'>info</span><span class='lparen token'>(</span><span class='string val'>&quot;new record succeeded for insert&quot;</span><span class='rparen token'>)</span>
+    <span class='importer_prepare_and_save_to_zoom identifier id'>importer_prepare_and_save_to_zoom</span><span class='lparen token'>(</span><span class='new_record identifier id'>new_record</span><span class='rparen token'>)</span>
+    <span class='importer_update_records_processed_vars identifier id'>importer_update_records_processed_vars</span>
+  <span class='end end kw'>end</span>
+
+  <span class='comment val'># if this record was skipped, add to skipped_records</span>
+  <span class='if if kw'>if</span> <span class='notop op'>!</span><span class='reason_skipped identifier id'>reason_skipped</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span>
+    <span class='importer_log_to_skipped_records identifier id'>importer_log_to_skipped_records</span><span class='lparen token'>(</span><span class='title identifier id'>title</span><span class='comma token'>,</span><span class='reason_skipped identifier id'>reason_skipped</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+  <span class='comment val'># will this help memory leaks</span>
+  <span class='record identifier id'>record</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+  <span class='comment val'># give zebra and our server a small break</span>
+  <span class='sleep identifier id'>sleep</span><span class='lparen token'>(</span><span class='@record_interval ivar id'>@record_interval</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='@record_interval ivar id'>@record_interval</span> <span class='gt op'>&gt;</span> <span class='integer val'>0</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>importer_simple_setup</h3>
+</div><div id="importer_simple_setup-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>importer_simple_setup</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/importer.rb', line 67</span>
+
+<span class='def def kw'>def</span> <span class='importer_simple_setup identifier id'>importer_simple_setup</span>
+  <span class='@successful ivar id'>@successful</span> <span class='assign token'>=</span> <span class='false false kw'>false</span>
+  <span class='@import_field_to_extended_field_map ivar id'>@import_field_to_extended_field_map</span> <span class='assign token'>=</span> <span class='Hash constant id'>Hash</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+  <span class='@description_end_templates ivar id'>@description_end_templates</span> <span class='assign token'>=</span> <span class='Hash constant id'>Hash</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+  <span class='@collections_to_skip ivar id'>@collections_to_skip</span> <span class='assign token'>=</span> <span class='Array constant id'>Array</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+  <span class='@results ivar id'>@results</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span> <span class='symbol val'>:do_work_time</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='Time constant id'>Time</span><span class='dot token'>.</span><span class='now identifier id'>now</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='comma token'>,</span>
+    <span class='symbol val'>:done_with_do_work</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='false false kw'>false</span><span class='comma token'>,</span>
+    <span class='symbol val'>:records_processed</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>0</span> <span class='rbrace token'>}</span>
+
+  <span class='cache identifier id'>cache</span><span class='lbrack token'>[</span><span class='symbol val'>:results</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='@results ivar id'>@results</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>importer_trim_fat_from_xml_import_file</h3>
+</div><div id="importer_trim_fat_from_xml_import_file-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>importer_trim_fat_from_xml_import_file</span><span class='args'>(path_to_original_file,path_to_output,accession = nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+override in your importer worker to customize takes a potentially huge xml
+file and strips out all the empty fields so it much more manageable output
+is to a tmp file has commented out code for replacing macronized vowels
+uncomment if you need them
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458
+459
+460
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477
+478
+479
+480
+481
+482
+483
+484
+485
+486
+487
+488
+489
+490
+491
+492
+493
+494
+495</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/importer.rb', line 419</span>
+
+<span class='def def kw'>def</span> <span class='importer_trim_fat_from_xml_import_file identifier id'>importer_trim_fat_from_xml_import_file</span><span class='lparen token'>(</span><span class='path_to_original_file identifier id'>path_to_original_file</span><span class='comma token'>,</span><span class='path_to_output identifier id'>path_to_output</span><span class='comma token'>,</span><span class='accession identifier id'>accession</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='fat_free_file identifier id'>fat_free_file</span> <span class='assign token'>=</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='path_to_output identifier id'>path_to_output</span><span class='comma token'>,</span><span class='string val'>'w+'</span><span class='rparen token'>)</span>
+
+  <span class='fatty_re identifier id'>fatty_re</span> <span class='assign token'>=</span> <span class='Regexp constant id'>Regexp</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;\/\&gt;.*&quot;</span><span class='rparen token'>)</span>
+
+  <span class='accessno_re identifier id'>accessno_re</span> <span class='assign token'>=</span> <span class='Regexp constant id'>Regexp</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='regexp val'>/ACCESSNO&gt;(.*)&lt;/i</span><span class='rparen token'>)</span>
+
+  <span class='IO constant id'>IO</span><span class='dot token'>.</span><span class='foreach identifier id'>foreach</span><span class='lparen token'>(</span><span class='path_to_original_file identifier id'>path_to_original_file</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='line identifier id'>line</span><span class='bitor op'>|</span>
+    <span class='line identifier id'>line</span> <span class='assign token'>=</span> <span class='remove_non_unix_new_lines identifier id'>remove_non_unix_new_lines</span><span class='lparen token'>(</span><span class='line identifier id'>line</span><span class='rparen token'>)</span>
+
+    <span class='comment val'># HACK to seriously trim down accession records</span>
+    <span class='comment val'># and make them in a form we can search easily</span>
+    <span class='comment val'># only add non-fat to our fat_free_file</span>
+    <span class='if if kw'>if</span> <span class='notop op'>!</span><span class='line identifier id'>line</span><span class='dot token'>.</span><span class='match identifier id'>match</span><span class='lparen token'>(</span><span class='fatty_re identifier id'>fatty_re</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='notop op'>!</span><span class='line identifier id'>line</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span>
+
+      <span class='if if kw'>if</span> <span class='accession identifier id'>accession</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+        <span class='comment val'># replace double dotted version of maori vowels</span>
+        <span class='comment val'># with macrons</span>
+        <span class='comment val'># replacements = { 'ä' =&gt; 'ā',</span>
+        <span class='comment val'>#               'ë' =&gt; 'ē',</span>
+        <span class='comment val'>#               'ï' =&gt; 'ī',</span>
+        <span class='comment val'>#               'ö' =&gt; 'ō',</span>
+        <span class='comment val'>#               'ü' =&gt; 'ū' }</span>
+
+        <span class='comment val'>#             replacements.each do |old_style_vowel, macronized|</span>
+        <span class='comment val'>#               line = line.gsub(old_style_vowel, macronized).gsub(old_style_vowel.upcase, macronized.upcase)</span>
+        <span class='comment val'>#             end</span>
+        <span class='fat_free_file identifier id'>fat_free_file</span> <span class='lshft op'>&lt;&lt;</span> <span class='line identifier id'>line</span>
+      <span class='else else kw'>else</span>
+        <span class='comment val'># we only keep accessno and descrip</span>
+        <span class='comment val'># and their containing elements</span>
+        <span class='comment val'># but we change accessno to an attribute of record</span>
+        <span class='comment val'># rather than an element</span>
+        <span class='comment val'># this relies on the accessno line coming before the descrip line</span>
+        <span class='comment val'># it tosses the original &lt;Record&gt; or &lt;export&gt; line, so that it can be replaced</span>
+        <span class='comment val'># putting in both styles of records</span>
+        <span class='if if kw'>if</span> <span class='line identifier id'>line</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='string val'>&quot;&lt;ACCESSNO&quot;</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='line identifier id'>line</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='string val'>&quot;&lt;accessno&quot;</span><span class='rparen token'>)</span> <span class='orop op'>||</span>
+            <span class='line identifier id'>line</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='string val'>&quot;&lt;DESCRIP&quot;</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='line identifier id'>line</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='string val'>&quot;&lt;descrip&quot;</span><span class='rparen token'>)</span> <span class='orop op'>||</span>
+            <span class='line identifier id'>line</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='string val'>&quot;&lt;\/DESCRIP&quot;</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='line identifier id'>line</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='string val'>&quot;&lt;\/descrip&quot;</span><span class='rparen token'>)</span> <span class='orop op'>||</span>
+            <span class='line identifier id'>line</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='string val'>&quot;&lt;\/Record&quot;</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='line identifier id'>line</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='string val'>&quot;&lt;\/export&quot;</span><span class='rparen token'>)</span> <span class='orop op'>||</span>
+            <span class='line identifier id'>line</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='string val'>&quot;&lt;Information&quot;</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='line identifier id'>line</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='string val'>&quot;&lt;\/Information&quot;</span><span class='rparen token'>)</span> <span class='orop op'>||</span>
+            <span class='line identifier id'>line</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='string val'>&quot;&lt;Root&quot;</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='line identifier id'>line</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='string val'>&quot;&lt;VFPData&quot;</span><span class='rparen token'>)</span> <span class='orop op'>||</span>
+            <span class='line identifier id'>line</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='string val'>&quot;&lt;\/Root&quot;</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='line identifier id'>line</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='string val'>&quot;&lt;\/VFPData&quot;</span><span class='rparen token'>)</span>
+
+          <span class='comment val'># we expect accessno to be on one line, this will break if not</span>
+          <span class='if if kw'>if</span> <span class='line identifier id'>line</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='string val'>&quot;&lt;accessno&quot;</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='line identifier id'>line</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='string val'>&quot;&lt;ACCESSNO&quot;</span><span class='rparen token'>)</span>
+            <span class='accessno_match_result identifier id'>accessno_match_result</span> <span class='assign token'>=</span> <span class='line identifier id'>line</span><span class='dot token'>.</span><span class='match identifier id'>match</span><span class='lparen token'>(</span><span class='accessno_re identifier id'>accessno_re</span><span class='rparen token'>)</span>
+            <span class='accessno identifier id'>accessno</span> <span class='assign token'>=</span> <span class='notop op'>!</span><span class='accessno_match_result identifier id'>accessno_match_result</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span> <span class='andop op'>&amp;&amp;</span> <span class='notop op'>!</span><span class='accessno_match_result identifier id'>accessno_match_result</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span> <span class='integer val'>? </span><span class='accessno_match_result identifier id'>accessno_match_result</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span> <span class='colon op'>:</span> <span class='nil nil kw'>nil</span>
+
+            <span class='new_start_record_line identifier id'>new_start_record_line</span> <span class='assign token'>=</span> <span class='string val'>&quot;&lt;&quot;</span>
+            <span class='comment val'># if accessno is empty, we just open the export or Record so we have valid xml</span>
+            <span class='comment val'># otherwise set as appropriate to the source xml file's format</span>
+            <span class='if if kw'>if</span> <span class='notop op'>!</span><span class='@root_element_name ivar id'>@root_element_name</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span> <span class='andop op'>&amp;&amp;</span> <span class='@root_element_name ivar id'>@root_element_name</span> <span class='eq op'>==</span> <span class='string val'>'Root'</span>
+              <span class='new_start_record_line identifier id'>new_start_record_line</span> <span class='opasgn op'>+=</span> <span class='string val'>&quot;Record&quot;</span>
+            <span class='else else kw'>else</span>
+              <span class='new_start_record_line identifier id'>new_start_record_line</span> <span class='opasgn op'>+=</span> <span class='string val'>&quot;export&quot;</span>
+            <span class='end end kw'>end</span>
+
+            <span class='unless unless kw'>unless</span> <span class='accessno identifier id'>accessno</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span>
+              <span class='new_start_record_line identifier id'>new_start_record_line</span> <span class='opasgn op'>+=</span> <span class='dstring node'>&quot; ACCESSNO=\'#{accessno}\'&quot;</span>
+            <span class='end end kw'>end</span>
+
+            <span class='fat_free_file identifier id'>fat_free_file</span> <span class='lshft op'>&lt;&lt;</span> <span class='new_start_record_line identifier id'>new_start_record_line</span> <span class='plus op'>+</span> <span class='string val'>&quot;&gt;\n&quot;</span>
+          <span class='else else kw'>else</span>
+            <span class='fat_free_file identifier id'>fat_free_file</span> <span class='lshft op'>&lt;&lt;</span> <span class='line identifier id'>line</span>
+          <span class='end end kw'>end</span>
+        <span class='end end kw'>end</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+
+  <span class='comment val'># add a blank line a the end</span>
+  <span class='fat_free_file identifier id'>fat_free_file</span> <span class='lshft op'>&lt;&lt;</span> <span class='string val'>&quot;&quot;</span>
+  <span class='fat_free_file identifier id'>fat_free_file</span><span class='dot token'>.</span><span class='close identifier id'>close</span>
+
+  <span class='return return kw'>return</span> <span class='path_to_output identifier id'>path_to_output</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>importer_update_processing_vars_at_end</h3>
+</div><div id="importer_update_processing_vars_at_end-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>importer_update_processing_vars_at_end</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/importer.rb', line 305</span>
+
+<span class='def def kw'>def</span> <span class='importer_update_processing_vars_at_end identifier id'>importer_update_processing_vars_at_end</span>
+  <span class='if if kw'>if</span> <span class='@successful ivar id'>@successful</span>
+    <span class='@results ivar id'>@results</span><span class='lbrack token'>[</span><span class='symbol val'>:notice</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='string val'>'Import was successful.'</span>
+    <span class='@results ivar id'>@results</span><span class='lbrack token'>[</span><span class='symbol val'>:done_with_do_work</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+    <span class='@import ivar id'>@import</span><span class='dot token'>.</span><span class='update_attributes identifier id'>update_attributes</span><span class='lparen token'>(</span><span class='symbol val'>:status</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'complete'</span><span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+    <span class='@results ivar id'>@results</span><span class='lbrack token'>[</span><span class='symbol val'>:notice</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='string val'>'Import failed. '</span>
+    <span class='if if kw'>if</span> <span class='notop op'>!</span><span class='@results ivar id'>@results</span><span class='lbrack token'>[</span><span class='colon op'>:</span><span class='error identifier id'>error</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+      <span class='logger identifier id'>logger</span><span class='dot token'>.</span><span class='info identifier id'>info</span><span class='lparen token'>(</span><span class='dstring node'>&quot;import error: #{@results[:error]}&quot;</span><span class='rparen token'>)</span>
+      <span class='@results ivar id'>@results</span><span class='lbrack token'>[</span><span class='symbol val'>:notice</span><span class='rbrack token'>]</span> <span class='opasgn op'>+=</span> <span class='@results ivar id'>@results</span><span class='lbrack token'>[</span><span class='symbol val'>:error</span><span class='rbrack token'>]</span>
+    <span class='end end kw'>end</span>
+    <span class='@results ivar id'>@results</span><span class='lbrack token'>[</span><span class='symbol val'>:done_with_do_work</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+    <span class='@import ivar id'>@import</span><span class='dot token'>.</span><span class='update_attributes identifier id'>update_attributes</span><span class='lparen token'>(</span><span class='symbol val'>:status</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'failed'</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+  <span class='cache identifier id'>cache</span><span class='lbrack token'>[</span><span class='symbol val'>:results</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='@results ivar id'>@results</span>
+  <span class='stop_worker identifier id'>stop_worker</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>importer_update_processing_vars_if_rescue</h3>
+</div><div id="importer_update_processing_vars_if_rescue-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>importer_update_processing_vars_if_rescue</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+323
+324
+325
+326
+327
+328
+329</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/importer.rb', line 323</span>
+
+<span class='def def kw'>def</span> <span class='importer_update_processing_vars_if_rescue identifier id'>importer_update_processing_vars_if_rescue</span>
+  <span class='@results ivar id'>@results</span><span class='lbrack token'>[</span><span class='symbol val'>:error</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='@successful ivar id'>@successful</span>  <span class='assign token'>=</span> <span class='$! gvar id'>$!</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='comma token'>,</span> <span class='false false kw'>false</span>
+  <span class='@results ivar id'>@results</span><span class='lbrack token'>[</span><span class='symbol val'>:done_with_do_work</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+  <span class='cache identifier id'>cache</span><span class='lbrack token'>[</span><span class='symbol val'>:results</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='@results ivar id'>@results</span>
+  <span class='@import ivar id'>@import</span><span class='dot token'>.</span><span class='update_attributes identifier id'>update_attributes</span><span class='lparen token'>(</span><span class='symbol val'>:status</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'failed'</span><span class='rparen token'>)</span>
+  <span class='stop_worker identifier id'>stop_worker</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>importer_update_records_processed_vars</h3>
+</div><div id="importer_update_records_processed_vars-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>importer_update_records_processed_vars</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+294
+295
+296
+297
+298
+299</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/importer.rb', line 294</span>
+
+<span class='def def kw'>def</span> <span class='importer_update_records_processed_vars identifier id'>importer_update_records_processed_vars</span>
+  <span class='@successful ivar id'>@successful</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+  <span class='@results ivar id'>@results</span><span class='lbrack token'>[</span><span class='symbol val'>:records_processed</span><span class='rbrack token'>]</span> <span class='opasgn op'>+=</span> <span class='integer val'>1</span>
+  <span class='cache identifier id'>cache</span><span class='lbrack token'>[</span><span class='symbol val'>:results</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='@results ivar id'>@results</span>
+  <span class='@import ivar id'>@import</span><span class='dot token'>.</span><span class='update_attributes identifier id'>update_attributes</span><span class='lparen token'>(</span><span class='symbol val'>:records_processed</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='@results ivar id'>@results</span><span class='lbrack token'>[</span><span class='symbol val'>:records_processed</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>importer_xml_record_to_hash</h3>
+</div><div id="importer_xml_record_to_hash-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>importer_xml_record_to_hash</span><span class='args'>(record, upcase = false)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+XPATH was proving too unreliable switching to pulling record to a hash and
+grabbing the specific fields we need to check
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/importer.rb', line 382</span>
+
+<span class='def def kw'>def</span> <span class='importer_xml_record_to_hash identifier id'>importer_xml_record_to_hash</span><span class='lparen token'>(</span><span class='record identifier id'>record</span><span class='comma token'>,</span> <span class='upcase identifier id'>upcase</span> <span class='assign token'>=</span> <span class='false false kw'>false</span><span class='rparen token'>)</span>
+  <span class='record_hash identifier id'>record_hash</span> <span class='assign token'>=</span> <span class='Hash constant id'>Hash</span><span class='dot token'>.</span><span class='from_xml identifier id'>from_xml</span><span class='lparen token'>(</span><span class='record identifier id'>record</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rparen token'>)</span>
+
+  <span class='comment val'># HACK to go down one more level</span>
+  <span class='record_hash identifier id'>record_hash</span><span class='dot token'>.</span><span class='keys identifier id'>keys</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='record_field identifier id'>record_field</span><span class='bitor op'>|</span>
+    <span class='record_hash identifier id'>record_hash</span> <span class='assign token'>=</span> <span class='record_hash identifier id'>record_hash</span><span class='lbrack token'>[</span><span class='record_field identifier id'>record_field</span><span class='rbrack token'>]</span>
+  <span class='end end kw'>end</span>
+
+  <span class='comment val'># move all hash keys to upcase</span>
+  <span class='comment val'># we use this to smooth some legacy code in past perfect import</span>
+  <span class='if if kw'>if</span> <span class='upcase identifier id'>upcase</span>
+    <span class='new_record_hash identifier id'>new_record_hash</span> <span class='assign token'>=</span> <span class='Hash constant id'>Hash</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+    <span class='record_hash identifier id'>record_hash</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='key identifier id'>key</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='bitor op'>|</span>
+      <span class='key identifier id'>key</span> <span class='assign token'>=</span> <span class='key identifier id'>key</span><span class='dot token'>.</span><span class='upcase identifier id'>upcase</span> <span class='if if_mod kw'>if</span> <span class='key identifier id'>key</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='String constant id'>String</span><span class='rparen token'>)</span>
+      <span class='new_record_hash identifier id'>new_record_hash</span><span class='lbrack token'>[</span><span class='key identifier id'>key</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='value identifier id'>value</span>
+    <span class='end end kw'>end</span>
+    <span class='record_hash identifier id'>record_hash</span> <span class='assign token'>=</span> <span class='new_record_hash identifier id'>new_record_hash</span>
+  <span class='end end kw'>end</span>
+
+  <span class='logger identifier id'>logger</span><span class='dot token'>.</span><span class='info identifier id'>info</span><span class='lparen token'>(</span><span class='string val'>&quot;record_hash inspect: &quot;</span> <span class='plus op'>+</span> <span class='record_hash identifier id'>record_hash</span><span class='dot token'>.</span><span class='inspect identifier id'>inspect</span><span class='rparen token'>)</span>
+  <span class='record_hash identifier id'>record_hash</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>remove_non_unix_new_lines</h3>
+</div><div id="remove_non_unix_new_lines-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>remove_non_unix_new_lines</span><span class='args'>(line)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+copied and modified from
+http://www.broobles.com/eml2mbox/eml2mboxscript.html (GPL 2 or later)
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+406
+407
+408
+409
+410
+411</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/importer.rb', line 406</span>
+
+<span class='def def kw'>def</span> <span class='remove_non_unix_new_lines identifier id'>remove_non_unix_new_lines</span><span class='lparen token'>(</span><span class='line identifier id'>line</span><span class='rparen token'>)</span>
+  <span class='line identifier id'>line</span> <span class='assign token'>=</span> <span class='line identifier id'>line</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='dot2 op'>..</span><span class='integer val'>-3</span><span class='rbrack token'>]</span> <span class='plus op'>+</span> <span class='line identifier id'>line</span><span class='lbrack token'>[</span><span class='float val'>-1</span><span class='dot2 op'>..</span><span class='integer val'>-1</span><span class='rbrack token'>]</span> <span class='if if_mod kw'>if</span> <span class='line identifier id'>line</span><span class='lbrack token'>[</span><span class='integer val'>-2</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='integer val'>0x</span><span class='D constant id'>D</span>
+  <span class='line identifier id'>line</span> <span class='assign token'>=</span> <span class='line identifier id'>line</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='dot2 op'>..</span><span class='integer val'>-2</span><span class='rbrack token'>]</span> <span class='if if_mod kw'>if</span> <span class='line identifier id'>line</span><span class='lbrack token'>[</span><span class='integer val'>-1</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='integer val'>0x</span><span class='A constant id'>A</span>
+  <span class='comment val'># add a unix newline if not already there</span>
+  <span class='line identifier id'>line</span> <span class='assign token'>=</span> <span class='line identifier id'>line</span> <span class='plus op'>+</span> <span class='string val'>&quot;\n&quot;</span> <span class='unless unless_mod kw'>unless</span> <span class='line identifier id'>line</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='string val'>&quot;\n&quot;</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>stop_worker</h3>
+</div><div id="stop_worker-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>stop_worker</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+301
+302
+303</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/importer.rb', line 301</span>
+
+<span class='def def kw'>def</span> <span class='stop_worker identifier id'>stop_worker</span>
+  <span class='exit identifier id'>exit</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

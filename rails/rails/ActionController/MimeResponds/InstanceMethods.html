@@ -1,0 +1,245 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: ActionController::MimeResponds::InstanceMethods</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module ActionController_MimeResponds_InstanceMethods">
+  <h1 class="title">Module: ActionController::MimeResponds::InstanceMethods</h1>
+  <div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#respond_to-instance_method' title='#respond_to'>#respond_to</a></span><span class='args'>(*types, &amp;block)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Without web-service support, an action which collects the data for
+displaying a list of people might look something like this:.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>respond_to</h3>
+</div><div id="respond_to-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>respond_to</span><span class='args'>(*types, &amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Without web-service support, an action which collects the data for
+displaying a list of people might look something like this:
+</p>
+<pre class="code">
+  <span class='def def kw'>def</span> <span class='index identifier id'>index</span>
+    <span class='@people ivar id'>@people</span> <span class='assign token'>=</span> <span class='Person constant id'>Person</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='symbol val'>:all</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+Here&#8217;s the same action, with web-service support baked in:
+</p>
+<pre class="code">
+  <span class='def def kw'>def</span> <span class='index identifier id'>index</span>
+    <span class='@people ivar id'>@people</span> <span class='assign token'>=</span> <span class='Person constant id'>Person</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='symbol val'>:all</span><span class='rparen token'>)</span>
+
+    <span class='respond_to identifier id'>respond_to</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='format identifier id'>format</span><span class='bitor op'>|</span>
+      <span class='format identifier id'>format</span><span class='dot token'>.</span><span class='html identifier id'>html</span>
+      <span class='format identifier id'>format</span><span class='dot token'>.</span><span class='xml identifier id'>xml</span> <span class='lbrace token'>{</span> <span class='render identifier id'>render</span> <span class='symbol val'>:xml</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='@people ivar id'>@people</span><span class='dot token'>.</span><span class='to_xml identifier id'>to_xml</span> <span class='rbrace token'>}</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+What that says is, &quot;if the client wants HTML in response to this
+action, just respond as we would have before, but if the client wants XML,
+return them the list of people in XML format.&quot; (Rails determines the
+desired response format from the HTTP Accept header submitted by the
+client.)
+</p>
+<p>
+Supposing you have an action that adds a new person, optionally creating
+their company (by name) if it does not already exist, without web-services,
+it might look like this:
+</p>
+<pre class="code">
+  <span class='def def kw'>def</span> <span class='create identifier id'>create</span>
+    <span class='@company ivar id'>@company</span> <span class='assign token'>=</span> <span class='Company constant id'>Company</span><span class='dot token'>.</span><span class='find_or_create_by_name identifier id'>find_or_create_by_name</span><span class='lparen token'>(</span><span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:company</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='symbol val'>:name</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+    <span class='@person ivar id'>@person</span>  <span class='assign token'>=</span> <span class='@company ivar id'>@company</span><span class='dot token'>.</span><span class='people identifier id'>people</span><span class='dot token'>.</span><span class='create identifier id'>create</span><span class='lparen token'>(</span><span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:person</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+
+    <span class='redirect_to identifier id'>redirect_to</span><span class='lparen token'>(</span><span class='person_list_url identifier id'>person_list_url</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+Here&#8217;s the same action, with web-service support baked in:
+</p>
+<pre class="code">
+  <span class='def def kw'>def</span> <span class='create identifier id'>create</span>
+    <span class='company identifier id'>company</span>  <span class='assign token'>=</span> <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:person</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:company</span><span class='rparen token'>)</span>
+    <span class='@company ivar id'>@company</span> <span class='assign token'>=</span> <span class='Company constant id'>Company</span><span class='dot token'>.</span><span class='find_or_create_by_name identifier id'>find_or_create_by_name</span><span class='lparen token'>(</span><span class='company identifier id'>company</span><span class='lbrack token'>[</span><span class='symbol val'>:name</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+    <span class='@person ivar id'>@person</span>  <span class='assign token'>=</span> <span class='@company ivar id'>@company</span><span class='dot token'>.</span><span class='people identifier id'>people</span><span class='dot token'>.</span><span class='create identifier id'>create</span><span class='lparen token'>(</span><span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:person</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+
+    <span class='respond_to identifier id'>respond_to</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='format identifier id'>format</span><span class='bitor op'>|</span>
+      <span class='format identifier id'>format</span><span class='dot token'>.</span><span class='html identifier id'>html</span> <span class='lbrace token'>{</span> <span class='redirect_to identifier id'>redirect_to</span><span class='lparen token'>(</span><span class='person_list_url identifier id'>person_list_url</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+      <span class='format identifier id'>format</span><span class='dot token'>.</span><span class='js identifier id'>js</span>
+      <span class='format identifier id'>format</span><span class='dot token'>.</span><span class='xml identifier id'>xml</span>  <span class='lbrace token'>{</span> <span class='render identifier id'>render</span> <span class='symbol val'>:xml</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='@person ivar id'>@person</span><span class='dot token'>.</span><span class='to_xml identifier id'>to_xml</span><span class='lparen token'>(</span><span class='symbol val'>:include</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='@company ivar id'>@company</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+If the client wants HTML, we just redirect them back to the person list. If
+they want Javascript (format.js), then it is an RJS request and we render
+the RJS template associated with this action. Lastly, if the client wants
+XML, we render the created person as XML, but with a twist: we also include
+the person&#8217;s company in the rendered XML, so you get something like
+this:
+</p>
+<pre class="code">
+  <span class='lt op'>&lt;</span><span class='person identifier id'>person</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='id identifier id'>id</span><span class='gt op'>&gt;</span><span class='dot3 op'>...</span><span class='lt op'>&lt;</span><span class='regexp val'>/id&gt;
+    ...
+    &lt;company&gt;
+      &lt;id&gt;...&lt;/i</span><span class='d identifier id'>d</span><span class='gt op'>&gt;</span>
+      <span class='lt op'>&lt;</span><span class='name identifier id'>name</span><span class='gt op'>&gt;</span><span class='dot3 op'>...</span><span class='lt op'>&lt;</span><span class='regexp val'>/name&gt;
+      ...
+    &lt;/</span><span class='company identifier id'>company</span><span class='gt op'>&gt;</span>
+  <span class='lt op'>&lt;</span><span class='regexp val'>/person&gt;
+</span></pre>
+<p>
+Note, however, the extra bit at the top of that action:
+</p>
+<pre class="code">
+  <span class='company identifier id'>company</span>  <span class='assign token'>=</span> <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:person</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:company</span><span class='rparen token'>)</span>
+  <span class='@company ivar id'>@company</span> <span class='assign token'>=</span> <span class='Company constant id'>Company</span><span class='dot token'>.</span><span class='find_or_create_by_name identifier id'>find_or_create_by_name</span><span class='lparen token'>(</span><span class='company identifier id'>company</span><span class='lbrack token'>[</span><span class='symbol val'>:name</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+</pre>
+<p>
+This is because the incoming XML document (if a web-service request is in
+process) can only contain a single root-node. So, we have to rearrange
+things so that the request looks like this (url-encoded):
+</p>
+<pre class="code">
+  <span class='person identifier id'>person</span><span class='lbrack token'>[</span><span class='name identifier id'>name</span><span class='rbrack token'>]</span><span class='assign token'>=</span><span class='dot3 op'>...</span><span class='bitand op'>&amp;</span><span class='person identifier id'>person</span><span class='lbrack token'>[</span><span class='company identifier id'>company</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='name identifier id'>name</span><span class='rbrack token'>]</span><span class='assign token'>=</span><span class='dot3 op'>...</span><span class='bitand op'>&amp;</span><span class='dot3 op'>...</span>
+</pre>
+<p>
+And, like this (xml-encoded):
+</p>
+<pre class="code">
+  <span class='lt op'>&lt;</span><span class='person identifier id'>person</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='name identifier id'>name</span><span class='gt op'>&gt;</span><span class='dot3 op'>...</span><span class='lt op'>&lt;</span><span class='regexp val'>/name&gt;
+    &lt;company&gt;
+      &lt;name&gt;...&lt;/n</span><span class='ame identifier id'>ame</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='regexp val'>/company&gt;
+  &lt;/</span><span class='person identifier id'>person</span><span class='gt op'>&gt;</span>
+</pre>
+<p>
+In other words, we make the request so that it operates on a single
+entity&#8217;s person. Then, in the action, we extract the company data
+from the request, find or create the company, and then create the new
+person with the remaining data.
+</p>
+<p>
+Note that you can define your own XML parameter parser which would allow
+you to describe multiple entities in a single request (i.e., by wrapping
+them all in a single root node), but if you just go with the flow and
+accept Rails&#8217; defaults, life will be much easier.
+</p>
+<p>
+If you need to use a MIME type which isn&#8217;t supported by default, you
+can register your own handlers in environment.rb as follows.
+</p>
+<pre class="code">
+  <span class='Mime constant id'>Mime</span><span class='colon2 op'>::</span><span class='Type constant id'>Type</span><span class='dot token'>.</span><span class='register identifier id'>register</span> <span class='string val'>&quot;image/jpg&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:jpg</span>
+</pre>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="raise">
+  <h3>Raises:</h3>
+  <dl>
+  
+    <dt>
+      
+        <span class='type'>[<tt>ArgumentError</tt>]</span>
+      
+      
+    </dt>
+    <dd>
+      <span class='desc'></span>
+    </dd>
+  
+  </dl>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+102
+103
+104
+105
+106
+107
+108</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'actionpack/lib/action_controller/base/mime_responds.rb', line 102</span>
+
+<span class='def def kw'>def</span> <span class='respond_to identifier id'>respond_to</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='types identifier id'>types</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='raise identifier id'>raise</span> <span class='ArgumentError constant id'>ArgumentError</span><span class='comma token'>,</span> <span class='string val'>&quot;respond_to takes either types or a block, never both&quot;</span> <span class='unless unless_mod kw'>unless</span> <span class='types identifier id'>types</span><span class='dot token'>.</span><span class='any? fid id'>any?</span> <span class='bitxor op'>^</span> <span class='block identifier id'>block</span>
+  <span class='block identifier id'>block</span> <span class='opasgn op'>||=</span> <span class='lambda identifier id'>lambda</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='responder identifier id'>responder</span><span class='bitor op'>|</span> <span class='types identifier id'>types</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='type identifier id'>type</span><span class='bitor op'>|</span> <span class='responder identifier id'>responder</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='type identifier id'>type</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span> <span class='rbrace token'>}</span>
+  <span class='responder identifier id'>responder</span> <span class='assign token'>=</span> <span class='Responder constant id'>Responder</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='rparen token'>)</span>
+  <span class='block identifier id'>block</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='responder identifier id'>responder</span><span class='rparen token'>)</span>
+  <span class='responder identifier id'>responder</span><span class='dot token'>.</span><span class='respond identifier id'>respond</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

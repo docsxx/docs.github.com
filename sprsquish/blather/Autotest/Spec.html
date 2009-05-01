@@ -1,0 +1,194 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: Autotest::Spec</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class Autotest_Spec">
+  <h1 class="title">Class: Autotest::Spec</h1>
+  <div class="section inheritance">
+  <ul>
+  <li>Autotest</li><ul><li>Autotest::Spec</li>
+  </ul></ul>
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#consolidate_failures-instance_method' title='#consolidate_failures'>#consolidate_failures</a></span><span class='args'>(failed)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns a hash mapping a file name to the known failures for that file.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#path_to_classname-instance_method' title='#path_to_classname'>#path_to_classname</a></span><span class='args'>(s)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>consolidate_failures</h3>
+</div><div id="consolidate_failures-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>consolidate_failures</span><span class='args'>(failed)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns a hash mapping a file name to the known failures for that file.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/autotest/spec.rb', line 42</span>
+
+<span class='def def kw'>def</span> <span class='consolidate_failures identifier id'>consolidate_failures</span><span class='lparen token'>(</span><span class='failed identifier id'>failed</span><span class='rparen token'>)</span>
+  <span class='filters identifier id'>filters</span> <span class='assign token'>=</span> <span class='new_hash_of_arrays identifier id'>new_hash_of_arrays</span>
+
+  <span class='class_map identifier id'>class_map</span> <span class='assign token'>=</span> <span class='Hash constant id'>Hash</span><span class='lbrack token'>[</span><span class='mult op'>*</span><span class='self self kw'>self</span><span class='dot token'>.</span><span class='find_order identifier id'>find_order</span><span class='dot token'>.</span><span class='grep identifier id'>grep</span><span class='lparen token'>(</span><span class='regexp val'>/^spec/</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='f identifier id'>f</span><span class='bitor op'>|</span> <span class='comment val'># TODO: ugly</span>
+                     <span class='lbrack token'>[</span><span class='path_to_classname identifier id'>path_to_classname</span><span class='lparen token'>(</span><span class='f identifier id'>f</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='f identifier id'>f</span><span class='rbrack token'>]</span>
+                   <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='flatten identifier id'>flatten</span><span class='rbrack token'>]</span>
+  <span class='class_map identifier id'>class_map</span><span class='dot token'>.</span><span class='merge! fid id'>merge!</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='dot token'>.</span><span class='extra_class_map identifier id'>extra_class_map</span><span class='rparen token'>)</span>
+
+  <span class='failed identifier id'>failed</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='method identifier id'>method</span><span class='comma token'>,</span> <span class='klass identifier id'>klass</span><span class='bitor op'>|</span>
+    <span class='if if kw'>if</span> <span class='class_map identifier id'>class_map</span><span class='dot token'>.</span><span class='has_key? fid id'>has_key?</span> <span class='klass identifier id'>klass</span> <span class='then then kw'>then</span>
+      <span class='filters identifier id'>filters</span><span class='lbrack token'>[</span><span class='class_map identifier id'>class_map</span><span class='lbrack token'>[</span><span class='klass identifier id'>klass</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span> <span class='lshft op'>&lt;&lt;</span> <span class='method identifier id'>method</span>
+    <span class='else else kw'>else</span>
+      <span class='output identifier id'>output</span><span class='dot token'>.</span><span class='puts identifier id'>puts</span> <span class='dstring node'>&quot;Unable to map class #{klass} to a file&quot;</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+
+  <span class='return return kw'>return</span> <span class='filters identifier id'>filters</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>path_to_classname</h3>
+</div><div id="path_to_classname-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>path_to_classname</span><span class='args'>(s)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+30
+31
+32
+33
+34
+35
+36</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/autotest/spec.rb', line 30</span>
+
+<span class='def def kw'>def</span> <span class='path_to_classname identifier id'>path_to_classname</span><span class='lparen token'>(</span><span class='s identifier id'>s</span><span class='rparen token'>)</span>
+  <span class='sep identifier id'>sep</span> <span class='assign token'>=</span> <span class='File constant id'>File</span><span class='colon2 op'>::</span><span class='SEPARATOR constant id'>SEPARATOR</span>
+  <span class='f identifier id'>f</span> <span class='assign token'>=</span> <span class='s identifier id'>s</span><span class='dot token'>.</span><span class='sub identifier id'>sub</span><span class='lparen token'>(</span><span class='dregexp node'>/spec#{sep}/</span><span class='comma token'>,</span> <span class='string val'>''</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='sub identifier id'>sub</span><span class='lparen token'>(</span><span class='regexp val'>/(spec)?\.rb$/</span><span class='comma token'>,</span> <span class='string val'>''</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='sep identifier id'>sep</span><span class='rparen token'>)</span>
+  <span class='f identifier id'>f</span> <span class='assign token'>=</span> <span class='f identifier id'>f</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='path identifier id'>path</span><span class='bitor op'>|</span> <span class='path identifier id'>path</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='regexp val'>/_|(\d+)/</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='seg identifier id'>seg</span><span class='bitor op'>|</span> <span class='seg identifier id'>seg</span><span class='dot token'>.</span><span class='capitalize identifier id'>capitalize</span> <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='join identifier id'>join</span> <span class='rbrace token'>}</span>
+  <span class='f identifier id'>f</span> <span class='assign token'>=</span> <span class='f identifier id'>f</span><span class='dot token'>.</span><span class='delete_if identifier id'>delete_if</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='path identifier id'>path</span><span class='bitor op'>|</span> <span class='path identifier id'>path</span> <span class='eq op'>==</span> <span class='string val'>'Core'</span> <span class='rbrace token'>}</span>
+  <span class='f identifier id'>f</span><span class='dot token'>.</span><span class='join identifier id'>join</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

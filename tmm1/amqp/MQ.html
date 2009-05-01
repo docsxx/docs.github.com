@@ -1,0 +1,2298 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: MQ</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class MQ">
+  <h1 class="title">Class: MQ</h1>
+  <div class="section mixins">
+  <h1>Included Modules</h1>
+  <p><a href='MQ/AMQP.html' title='AMQP'>AMQP</a>, EM::Deferrable</p>
+</div><div class="section docstring">
+  <p>
+&#8212; convenience wrapper (read: HACK) for thread-local MQ object
+</p>
+
+</div><div class="section attributes">
+  <h1>Attributes</h1>
+
+  
+    <div class="class">
+      <h2>Class Attributes</h2>
+      <table>
+      
+        <tr>
+          <th class="name">logging</td>
+          <td class="readwrite">
+            [<span id='logging-class_method'>R</span><span id='logging%3D-class_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>logging</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+      </table>
+    </div>
+  
+    <div class="instance">
+      <h2>Instance Attributes</h2>
+      <table>
+      
+        <tr>
+          <th class="name">channel</td>
+          <td class="readwrite">
+            [<span id='channel-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>channel</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">connection</td>
+          <td class="readwrite">
+            [<span id='connection-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>connection</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+      </table>
+    </div>
+  
+</div><div class="section constants">
+  <div class="included">
+  
+  <div>
+    <h1>Constants Included from <a href='MQ/AMQP.html' title='AMQP'>AMQP</a></h1>
+    <p><span class='name'><a href='AMQP.html#DIR-constant' title='DIR'>DIR</a></span>, <span class='name'><a href='AMQP.html#FIELDS-constant' title='FIELDS'>FIELDS</a></span>, <span class='name'><a href='AMQP.html#HEADER-constant' title='HEADER'>HEADER</a></span>, <span class='name'><a href='AMQP.html#PORT-constant' title='PORT'>PORT</a></span>, <span class='name'><a href='AMQP.html#RESPONSES-constant' title='RESPONSES'>RESPONSES</a></span>, <span class='name'><a href='AMQP.html#VERSION-constant' title='VERSION'>VERSION</a></span>, <span class='name'><a href='AMQP.html#VERSION_MAJOR-constant' title='VERSION_MAJOR'>VERSION_MAJOR</a></span>, <span class='name'><a href='AMQP.html#VERSION_MINOR-constant' title='VERSION_MINOR'>VERSION_MINOR</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>connection = nil</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns a new channel. A channel is a bidirectional virtual connection
+between the client and the AMQP server. Elsewhere in the library the
+channel is referred to in parameter lists as <tt>mq</tt>.
+</p>
+<p>
+Optionally takes the result from calling AMQP::connect.
+</p>
+<p>
+Rarely called directly by client code. This is implicitly called by most
+instance methods. See #method_missing.
+</p>
+<pre class="code">
+ <span class='EM constant id'>EM</span><span class='dot token'>.</span><span class='run identifier id'>run</span> <span class='do do kw'>do</span>
+   <span class='channel identifier id'>channel</span> <span class='assign token'>=</span> <span class='MQ constant id'>MQ</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+ <span class='end end kw'>end</span>
+
+ <span class='EM constant id'>EM</span><span class='dot token'>.</span><span class='run identifier id'>run</span> <span class='do do kw'>do</span>
+   <span class='channel identifier id'>channel</span> <span class='assign token'>=</span> <span class='MQ constant id'>MQ</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='AMQP constant id'>AMQP</span><span class='colon2 op'>::</span><span class='connect identifier id'>connect</span>
+ <span class='end end kw'>end</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/mq.rb', line 138</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span> <span class='connection identifier id'>connection</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+  <span class='raise identifier id'>raise</span> <span class='string val'>'MQ can only be used from within EM.run{}'</span> <span class='unless unless_mod kw'>unless</span> <span class='EM constant id'>EM</span><span class='dot token'>.</span><span class='reactor_running? fid id'>reactor_running?</span>
+
+  <span class='@connection ivar id'>@connection</span> <span class='assign token'>=</span> <span class='connection identifier id'>connection</span> <span class='orop op'>||</span> <span class='AMQP constant id'>AMQP</span><span class='dot token'>.</span><span class='start identifier id'>start</span>
+
+  <span class='conn identifier id'>conn</span><span class='dot token'>.</span><span class='callback identifier id'>callback</span><span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span>
+    <span class='@channel ivar id'>@channel</span> <span class='assign token'>=</span> <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='add_channel identifier id'>add_channel</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='rparen token'>)</span>
+    <span class='send identifier id'>send</span> <span class='Protocol constant id'>Protocol</span><span class='colon2 op'>::</span><span class='Channel constant id'>Channel</span><span class='colon2 op'>::</span><span class='Open constant id'>Open</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+  <span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <h1>Public Class Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#default-class_method' title='default'>default</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#error-class_method' title='error'>error</a></span><span class='args'>msg = nil, &amp;blk</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Define a message and callback block to be executed on all errors.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#id-class_method' title='id'>id</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+unique identifier.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#method_missing-class_method' title='method_missing'>method_missing</a></span><span class='args'>meth, *args, &amp;blk</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Allows for calls to all MQ instance methods.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table><div class="included">
+  
+  <div>
+    <h1>Public Class Methods Included from <a href='MQ/AMQP.html' title='AMQP'>AMQP</a></h1>
+    <p><span class='name'><a href='AMQP.html#client-class_method' title='client'>client</a></span>, <span class='name'><a href='AMQP.html#connect-class_method' title='connect'>connect</a></span>, <span class='name'><a href='AMQP.html#fork-class_method' title='fork'>fork</a></span>, <span class='name'><a href='AMQP.html#settings-class_method' title='settings'>settings</a></span>, <span class='name'><a href='AMQP.html#start-class_method' title='start'>start</a></span>, <span class='name'><a href='AMQP.html#stop-class_method' title='stop'>stop</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+  <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#close-instance_method' title='#close'>#close</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#consumers-instance_method' title='#consumers'>#consumers</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Queue objects keyed on their consumer tags.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#direct-instance_method' title='#direct'>#direct</a></span><span class='args'>name = 'amq.direct', opts = {}</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Defines, intializes and returns an Exchange to act as an ingress point for
+all published messages.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#exchanges-instance_method' title='#exchanges'>#exchanges</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns a hash of all the exchange proxy objects.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#fanout-instance_method' title='#fanout'>#fanout</a></span><span class='args'>name = 'amq.fanout', opts = {}</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Defines, intializes and returns an Exchange to act as an ingress point for
+all published messages.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#get_queue-instance_method' title='#get_queue'>#get_queue</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#headers-instance_method' title='#headers'>#headers</a></span><span class='args'>name = 'amq.match', opts = {}</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Defines, intializes and returns an Exchange to act as an ingress point for
+all published messages.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#prefetch-instance_method' title='#prefetch'>#prefetch</a></span><span class='args'>(size)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#process_frame-instance_method' title='#process_frame'>#process_frame</a></span><span class='args'>frame</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+May raise a MQ::Error exception when the frame payload contains a
+Protocol::Channel::Close object.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#queue-instance_method' title='#queue'>#queue</a></span><span class='args'>name, opts = {}</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Queues store and forward messages.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#queues-instance_method' title='#queues'>#queues</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns a hash of all the queue proxy objects.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#reset-instance_method' title='#reset'>#reset</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#rpc-instance_method' title='#rpc'>#rpc</a></span><span class='args'>name, obj = nil</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Takes a channel, queue and optional object.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#rpcs-instance_method' title='#rpcs'>#rpcs</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns a hash of all rpc proxy objects.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#send-instance_method' title='#send'>#send</a></span><span class='args'>*args</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#topic-instance_method' title='#topic'>#topic</a></span><span class='args'>name = 'amq.topic', opts = {}</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Defines, intializes and returns an Exchange to act as an ingress point for
+all published messages.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table><div class="included">
+  
+  <div>
+    <h1>Public Instance Methods Included from <a href='MQ/AMQP.html' title='AMQP'>AMQP</a></h1>
+    <p><span class='name'><a href='AMQP.html#_read-instance_method' title='_read'>_read</a></span>, <span class='name'><a href='AMQP.html#_write-instance_method' title='_write'>_write</a></span>, <span class='name'><a href='AMQP.html#extract-instance_method' title='extract'>extract</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails class public">
+  <h1>Public Class Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>default</h3>
+</div><div id="default-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>default</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+806
+807
+808
+809</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/mq.rb', line 806</span>
+
+<span class='def def kw'>def</span> <span class='MQ constant id'>MQ</span><span class='dot token'>.</span><span class='default identifier id'>default</span>
+  <span class='comment val'>#-- XXX clear this when connection is closed</span>
+  <span class='Thread constant id'>Thread</span><span class='dot token'>.</span><span class='current identifier id'>current</span><span class='lbrack token'>[</span><span class='symbol val'>:mq</span><span class='rbrack token'>]</span> <span class='opasgn op'>||=</span> <span class='MQ constant id'>MQ</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>error</h3>
+</div><div id="error-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>error</span><span class='args'>msg = nil, &amp;blk</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Define a message and callback block to be executed on all errors.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+727
+728
+729
+730
+731
+732
+733</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/mq.rb', line 727</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='error identifier id'>error</span> <span class='msg identifier id'>msg</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='blk identifier id'>blk</span>
+  <span class='if if kw'>if</span> <span class='blk identifier id'>blk</span>
+    <span class='@error_callback ivar id'>@error_callback</span> <span class='assign token'>=</span> <span class='blk identifier id'>blk</span>
+  <span class='else else kw'>else</span>
+    <span class='@error_callback ivar id'>@error_callback</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='msg identifier id'>msg</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='@error_callback ivar id'>@error_callback</span> <span class='and and kw'>and</span> <span class='msg identifier id'>msg</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>id</h3>
+</div><div id="id-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>id</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+unique identifier
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+820
+821
+822</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/mq.rb', line 820</span>
+
+<span class='def def kw'>def</span> <span class='MQ constant id'>MQ</span><span class='dot token'>.</span><span class='id identifier id'>id</span>
+  <span class='Thread constant id'>Thread</span><span class='dot token'>.</span><span class='current identifier id'>current</span><span class='lbrack token'>[</span><span class='symbol val'>:mq_id</span><span class='rbrack token'>]</span> <span class='opasgn op'>||=</span> <span class='dstring node'>&quot;#{`hostname`.strip}-#{Process.pid}-#{Thread.current.object_id}&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>method_missing</h3>
+</div><div id="method_missing-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>method_missing</span><span class='args'>meth, *args, &amp;blk</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Allows for calls to all MQ instance methods. This implicitly calls MQ.new
+so that a new channel is allocated for subsequent operations.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+813
+814
+815</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/mq.rb', line 813</span>
+
+<span class='def def kw'>def</span> <span class='MQ constant id'>MQ</span><span class='dot token'>.</span><span class='method_missing identifier id'>method_missing</span> <span class='meth identifier id'>meth</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='blk identifier id'>blk</span>
+  <span class='MQ constant id'>MQ</span><span class='dot token'>.</span><span class='default identifier id'>default</span><span class='dot token'>.</span><span class='__send__ identifier id'>__send__</span><span class='lparen token'>(</span><span class='meth identifier id'>meth</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='blk identifier id'>blk</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div><div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>close</h3>
+</div><div id="close-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>close</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+714
+715
+716
+717
+718
+719
+720
+721
+722
+723</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/mq.rb', line 714</span>
+
+<span class='def def kw'>def</span> <span class='close identifier id'>close</span>
+  <span class='if if kw'>if</span> <span class='@deferred_status ivar id'>@deferred_status</span> <span class='eq op'>==</span> <span class='colon op'>:</span><span class='succeeded identifier id'>succeeded</span>
+    <span class='send identifier id'>send</span> <span class='Protocol constant id'>Protocol</span><span class='colon2 op'>::</span><span class='Channel constant id'>Channel</span><span class='colon2 op'>::</span><span class='Close constant id'>Close</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='symbol val'>:reply_code</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>200</span><span class='comma token'>,</span>
+                                      <span class='symbol val'>:reply_text</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'bye'</span><span class='comma token'>,</span>
+                                      <span class='symbol val'>:method_id</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>0</span><span class='comma token'>,</span>
+                                      <span class='symbol val'>:class_id</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>0</span><span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+    <span class='@closing ivar id'>@closing</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>consumers</h3>
+</div><div id="consumers-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>consumers</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Queue objects keyed on their consumer tags.
+</p>
+<p>
+Not typically called by client code.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+771
+772
+773</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/mq.rb', line 771</span>
+
+<span class='def def kw'>def</span> <span class='consumers identifier id'>consumers</span>
+  <span class='@consumers ivar id'>@consumers</span> <span class='opasgn op'>||=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>direct</h3>
+</div><div id="direct-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>direct</span><span class='args'>name = 'amq.direct', opts = {}</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Defines, intializes and returns an Exchange to act as an ingress point for
+all published messages.
+</p>
+<h2>Direct</h2>
+<p>
+A direct exchange is useful for 1:1 communication between a publisher and
+subscriber. Messages are routed to the queue with a binding that shares the
+same name as the exchange. Alternately, the messages are routed to the
+bound queue that shares the same name as the routing key used for defining
+the exchange. This exchange type does not honor the +:key+ option when
+defining a new instance with a name. It <em>will</em> honor the +:key+
+option if the exchange name is the empty string. Allocating this exchange
+without a name <em>or</em> with the empty string will use the internal
+&#8216;amq.direct&#8217; exchange.
+</p>
+<p>
+Any published message, regardless of its persistence setting, is thrown
+away by the exchange when there are no queues bound to it.
+</p>
+<pre class="code">
+ <span class='comment val'># exchange is named 'foo'</span>
+ <span class='exchange identifier id'>exchange</span> <span class='assign token'>=</span> <span class='MQ constant id'>MQ</span><span class='dot token'>.</span><span class='direct identifier id'>direct</span><span class='lparen token'>(</span><span class='string val'>'foo'</span><span class='rparen token'>)</span>
+
+ <span class='comment val'># or, the exchange can use the default name (amq.direct) and perform</span>
+ <span class='comment val'># routing comparisons using the :key</span>
+ <span class='exchange identifier id'>exchange</span> <span class='assign token'>=</span> <span class='MQ constant id'>MQ</span><span class='dot token'>.</span><span class='direct identifier id'>direct</span><span class='lparen token'>(</span><span class='string val'>&quot;&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:key</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'foo'</span><span class='rparen token'>)</span>
+ <span class='exchange identifier id'>exchange</span><span class='dot token'>.</span><span class='publish identifier id'>publish</span><span class='lparen token'>(</span><span class='string val'>'some data'</span><span class='rparen token'>)</span> <span class='comment val'># will be delivered to queue bound to 'foo'</span>
+
+ <span class='queue identifier id'>queue</span> <span class='assign token'>=</span> <span class='MQ constant id'>MQ</span><span class='dot token'>.</span><span class='queue identifier id'>queue</span><span class='lparen token'>(</span><span class='string val'>'foo'</span><span class='rparen token'>)</span>
+ <span class='comment val'># can receive data since the queue name and the exchange key match exactly</span>
+ <span class='queue identifier id'>queue</span><span class='dot token'>.</span><span class='pop identifier id'>pop</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='data identifier id'>data</span><span class='bitor op'>|</span> <span class='puts identifier id'>puts</span> <span class='dstring node'>&quot;received data [#{data}]&quot;</span> <span class='rbrace token'>}</span>
+</pre>
+<h2>Options</h2>
+<ul>
+<li>:passive =&gt; true | false (default false)
+
+</li>
+</ul>
+<p>
+If set, the server will not create the exchange if it does not already
+exist. The client can use this to check whether an exchange exists without
+modifying the server state.
+</p>
+<ul>
+<li>:durable =&gt; true | false (default false)
+
+</li>
+</ul>
+<p>
+If set when creating a new exchange, the exchange will be marked as
+durable. Durable exchanges remain active when a server restarts.
+Non-durable exchanges (transient exchanges) are purged if/when a server
+restarts.
+</p>
+<p>
+A transient exchange (the default) is stored in memory-only. The exchange
+and all bindings will be lost on a server restart. It makes no sense to
+publish a persistent message to a transient exchange.
+</p>
+<p>
+Durable exchanges and their bindings are recreated upon a server restart.
+Any published messages not routed to a bound queue are lost.
+</p>
+<ul>
+<li>:auto_delete =&gt; true | false (default false)
+
+</li>
+</ul>
+<p>
+If set, the exchange is deleted when all queues have finished using it. The
+server waits for a short period of time before determining the exchange is
+unused to give time to the client code to bind a queue to it.
+</p>
+<p>
+If the exchange has been previously declared, this option is ignored on
+subsequent declarations.
+</p>
+<ul>
+<li>:internal =&gt; true | false (default false)
+
+</li>
+</ul>
+<p>
+If set, the exchange may not be used directly by publishers, but only when
+bound to other exchanges. Internal exchanges are used to construct wiring
+that is not visible to applications.
+</p>
+<ul>
+<li>:nowait =&gt; true | false (default true)
+
+</li>
+</ul>
+<p>
+If set, the server will not respond to the method. The client should not
+wait for a reply method. If the server could not complete the method it
+will raise a channel or connection exception.
+</p>
+<h2>Exceptions</h2>
+<p>
+Doing any of these activities are illegal and will raise MQ:Error.
+</p>
+<ul>
+<li>redeclare an already-declared exchange to a different type
+
+</li>
+<li>:passive =&gt; true and the exchange does not exist (NOT_FOUND)
+
+</li>
+</ul>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+322
+323
+324</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/mq.rb', line 322</span>
+
+<span class='def def kw'>def</span> <span class='direct identifier id'>direct</span> <span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='string val'>'amq.direct'</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='exchanges identifier id'>exchanges</span><span class='lbrack token'>[</span><span class='name identifier id'>name</span><span class='rbrack token'>]</span> <span class='opasgn op'>||=</span> <span class='Exchange constant id'>Exchange</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='symbol val'>:direct</span><span class='comma token'>,</span> <span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>exchanges</h3>
+</div><div id="exchanges-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>exchanges</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns a hash of all the exchange proxy objects.
+</p>
+<p>
+Not typically called by client code.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+742
+743
+744</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/mq.rb', line 742</span>
+
+<span class='def def kw'>def</span> <span class='exchanges identifier id'>exchanges</span>
+  <span class='@exchanges ivar id'>@exchanges</span> <span class='opasgn op'>||=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>fanout</h3>
+</div><div id="fanout-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>fanout</span><span class='args'>name = 'amq.fanout', opts = {}</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Defines, intializes and returns an Exchange to act as an ingress point for
+all published messages.
+</p>
+<h2>Fanout</h2>
+<p>
+A fanout exchange is useful for 1:N communication where one publisher feeds
+multiple subscribers. Like direct exchanges, messages published to a fanout
+exchange are delivered to queues whose name matches the exchange name (or
+are bound to that exchange name). Each queue gets its own copy of the
+message.
+</p>
+<p>
+Any published message, regardless of its persistence setting, is thrown
+away by the exchange when there are no queues bound to it.
+</p>
+<p>
+Like the direct exchange type, this exchange type does not honor the +:key+
+option when defining a new instance with a name. It <em>will</em> honor the
++:key+ option if the exchange name is the empty string. Allocating this
+exchange without a name <em>or</em> with the empty string will use the
+internal &#8216;amq.fanout&#8217; exchange.
+</p>
+<pre class="code">
+ <span class='EM constant id'>EM</span><span class='dot token'>.</span><span class='run identifier id'>run</span> <span class='do do kw'>do</span>
+   <span class='clock identifier id'>clock</span> <span class='assign token'>=</span> <span class='MQ constant id'>MQ</span><span class='dot token'>.</span><span class='fanout identifier id'>fanout</span><span class='lparen token'>(</span><span class='string val'>'clock'</span><span class='rparen token'>)</span>
+   <span class='EM constant id'>EM</span><span class='dot token'>.</span><span class='add_periodic_timer identifier id'>add_periodic_timer</span><span class='lparen token'>(</span><span class='integer val'>1</span><span class='rparen token'>)</span> <span class='do do kw'>do</span>
+     <span class='puts identifier id'>puts</span> <span class='dstring node'>&quot;\npublishing #{time = Time.now}&quot;</span>
+     <span class='clock identifier id'>clock</span><span class='dot token'>.</span><span class='publish identifier id'>publish</span><span class='lparen token'>(</span><span class='Marshal constant id'>Marshal</span><span class='dot token'>.</span><span class='dump identifier id'>dump</span><span class='lparen token'>(</span><span class='time identifier id'>time</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+   <span class='end end kw'>end</span>
+
+   <span class='amq identifier id'>amq</span> <span class='assign token'>=</span> <span class='MQ constant id'>MQ</span><span class='dot token'>.</span><span class='queue identifier id'>queue</span><span class='lparen token'>(</span><span class='string val'>'every second'</span><span class='rparen token'>)</span>
+   <span class='amq identifier id'>amq</span><span class='dot token'>.</span><span class='bind identifier id'>bind</span><span class='lparen token'>(</span><span class='MQ constant id'>MQ</span><span class='dot token'>.</span><span class='fanout identifier id'>fanout</span><span class='lparen token'>(</span><span class='string val'>'clock'</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='subscribe identifier id'>subscribe</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='time identifier id'>time</span><span class='bitor op'>|</span>
+     <span class='puts identifier id'>puts</span> <span class='dstring node'>&quot;every second received #{Marshal.load(time)}&quot;</span>
+   <span class='end end kw'>end</span>
+
+   <span class='comment val'># note the string passed to #bind</span>
+   <span class='MQ constant id'>MQ</span><span class='dot token'>.</span><span class='queue identifier id'>queue</span><span class='lparen token'>(</span><span class='string val'>'every 5 seconds'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='bind identifier id'>bind</span><span class='lparen token'>(</span><span class='string val'>'clock'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='subscribe identifier id'>subscribe</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='time identifier id'>time</span><span class='bitor op'>|</span>
+     <span class='time identifier id'>time</span> <span class='assign token'>=</span> <span class='Marshal constant id'>Marshal</span><span class='dot token'>.</span><span class='load identifier id'>load</span><span class='lparen token'>(</span><span class='time identifier id'>time</span><span class='rparen token'>)</span>
+     <span class='puts identifier id'>puts</span> <span class='dstring node'>&quot;every 5 seconds received #{time}&quot;</span> <span class='if if_mod kw'>if</span> <span class='time identifier id'>time</span><span class='dot token'>.</span><span class='strftime identifier id'>strftime</span><span class='lparen token'>(</span><span class='string val'>'%S'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span><span class='mod op'>%</span><span class='integer val'>5</span> <span class='eq op'>==</span> <span class='integer val'>0</span>
+   <span class='end end kw'>end</span>
+ <span class='end end kw'>end</span>
+</pre>
+<h2>Options</h2>
+<ul>
+<li>:passive =&gt; true | false (default false)
+
+</li>
+</ul>
+<p>
+If set, the server will not create the exchange if it does not already
+exist. The client can use this to check whether an exchange exists without
+modifying the server state.
+</p>
+<ul>
+<li>:durable =&gt; true | false (default false)
+
+</li>
+</ul>
+<p>
+If set when creating a new exchange, the exchange will be marked as
+durable. Durable exchanges remain active when a server restarts.
+Non-durable exchanges (transient exchanges) are purged if/when a server
+restarts.
+</p>
+<p>
+A transient exchange (the default) is stored in memory-only. The exchange
+and all bindings will be lost on a server restart. It makes no sense to
+publish a persistent message to a transient exchange.
+</p>
+<p>
+Durable exchanges and their bindings are recreated upon a server restart.
+Any published messages not routed to a bound queue are lost.
+</p>
+<ul>
+<li>:auto_delete =&gt; true | false (default false)
+
+</li>
+</ul>
+<p>
+If set, the exchange is deleted when all queues have finished using it. The
+server waits for a short period of time before determining the exchange is
+unused to give time to the client code to bind a queue to it.
+</p>
+<p>
+If the exchange has been previously declared, this option is ignored on
+subsequent declarations.
+</p>
+<ul>
+<li>:internal =&gt; true | false (default false)
+
+</li>
+</ul>
+<p>
+If set, the exchange may not be used directly by publishers, but only when
+bound to other exchanges. Internal exchanges are used to construct wiring
+that is not visible to applications.
+</p>
+<ul>
+<li>:nowait =&gt; true | false (default true)
+
+</li>
+</ul>
+<p>
+If set, the server will not respond to the method. The client should not
+wait for a reply method. If the server could not complete the method it
+will raise a channel or connection exception.
+</p>
+<h2>Exceptions</h2>
+<p>
+Doing any of these activities are illegal and will raise MQ:Error.
+</p>
+<ul>
+<li>redeclare an already-declared exchange to a different type
+
+</li>
+<li>:passive =&gt; true and the exchange does not exist (NOT_FOUND)
+
+</li>
+</ul>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+408
+409
+410</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/mq.rb', line 408</span>
+
+<span class='def def kw'>def</span> <span class='fanout identifier id'>fanout</span> <span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='string val'>'amq.fanout'</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='exchanges identifier id'>exchanges</span><span class='lbrack token'>[</span><span class='name identifier id'>name</span><span class='rbrack token'>]</span> <span class='opasgn op'>||=</span> <span class='Exchange constant id'>Exchange</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='symbol val'>:fanout</span><span class='comma token'>,</span> <span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>get_queue</h3>
+</div><div id="get_queue-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>get_queue</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+753
+754
+755
+756
+757
+758
+759</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/mq.rb', line 753</span>
+
+<span class='def def kw'>def</span> <span class='get_queue identifier id'>get_queue</span>
+  <span class='if if kw'>if</span> <span class='block_given? fid id'>block_given?</span>
+    <span class='lparen token'>(</span><span class='@get_queue_mutex ivar id'>@get_queue_mutex</span> <span class='opasgn op'>||=</span> <span class='Mutex constant id'>Mutex</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='synchronize identifier id'>synchronize</span><span class='lbrace token'>{</span>
+      <span class='yield yield kw'>yield</span><span class='lparen token'>(</span> <span class='@get_queue ivar id'>@get_queue</span> <span class='opasgn op'>||=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span> <span class='rparen token'>)</span>
+    <span class='rbrace token'>}</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>headers</h3>
+</div><div id="headers-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>headers</span><span class='args'>name = 'amq.match', opts = {}</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Defines, intializes and returns an Exchange to act as an ingress point for
+all published messages.
+</p>
+<h2>Headers</h2>
+<p>
+A headers exchange allows for messages to be published to an exchange
+</p>
+<p>
+Any published message, regardless of its persistence setting, is thrown
+away by the exchange when there are no queues bound to it.
+</p>
+<p>
+As part of the AMQP standard, each server <em>should</em> predeclare a
+headers exchange called &#8216;amq.match&#8217; (this is not required by
+the standard). Allocating this exchange without a name <em>or</em> with the
+empty string will use the internal &#8216;amq.match&#8217; exchange.
+</p>
+<p>
+TODO: The classic example is &#8230;
+</p>
+<p>
+When publishing data to the exchange, bound queues subscribing to the
+exchange indicate which data interests them by passing arguments for
+matching against the headers in published messages. The form of the
+matching can be controlled by the &#8216;x-match&#8217; argument, which may
+be &#8216;any&#8217; or &#8216;all&#8217;. If unspecified (in RabbitMQ at
+least), it defaults to &quot;all&quot;.
+</p>
+<p>
+A value of &#8216;all&#8217; for &#8216;x-match&#8217; implies that all
+values must match (i.e. it does an AND of the headers ), while a value of
+&#8216;any&#8217; implies that at least one should match (ie. it does an
+OR).
+</p>
+<p>
+TODO: document behavior when either the binding or the message is missing
+</p>
+<pre class="code">
+      <span class='a identifier id'>a</span> <span class='header identifier id'>header</span> <span class='present identifier id'>present</span> <span class='in in kw'>in</span> <span class='the identifier id'>the</span> <span class='other identifier id'>other</span>
+</pre>
+<p>
+TODO: insert example
+</p>
+<h2>Options</h2>
+<ul>
+<li>:passive =&gt; true | false (default false)
+
+</li>
+</ul>
+<p>
+If set, the server will not create the exchange if it does not already
+exist. The client can use this to check whether an exchange exists without
+modifying the server state.
+</p>
+<ul>
+<li>:durable =&gt; true | false (default false)
+
+</li>
+</ul>
+<p>
+If set when creating a new exchange, the exchange will be marked as
+durable. Durable exchanges remain active when a server restarts.
+Non-durable exchanges (transient exchanges) are purged if/when a server
+restarts.
+</p>
+<p>
+A transient exchange (the default) is stored in memory-only. The exchange
+and all bindings will be lost on a server restart. It makes no sense to
+publish a persistent message to a transient exchange.
+</p>
+<p>
+Durable exchanges and their bindings are recreated upon a server restart.
+Any published messages not routed to a bound queue are lost.
+</p>
+<ul>
+<li>:auto_delete =&gt; true | false (default false)
+
+</li>
+</ul>
+<p>
+If set, the exchange is deleted when all queues have finished using it. The
+server waits for a short period of time before determining the exchange is
+unused to give time to the client code to bind a queue to it.
+</p>
+<p>
+If the exchange has been previously declared, this option is ignored on
+subsequent declarations.
+</p>
+<ul>
+<li>:internal =&gt; true | false (default false)
+
+</li>
+</ul>
+<p>
+If set, the exchange may not be used directly by publishers, but only when
+bound to other exchanges. Internal exchanges are used to construct wiring
+that is not visible to applications.
+</p>
+<ul>
+<li>:nowait =&gt; true | false (default true)
+
+</li>
+</ul>
+<p>
+If set, the server will not respond to the method. The client should not
+wait for a reply method. If the server could not complete the method it
+will raise a channel or connection exception.
+</p>
+<h2>Exceptions</h2>
+<p>
+Doing any of these activities are illegal and will raise MQ:Error.
+</p>
+<ul>
+<li>redeclare an already-declared exchange to a different type
+
+</li>
+<li>:passive =&gt; true and the exchange does not exist (NOT_FOUND)
+
+</li>
+<li>using a value other than &quot;any&quot; or &quot;all&quot; for
+&quot;x-match&quot;
+
+</li>
+</ul>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+600
+601
+602</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/mq.rb', line 600</span>
+
+<span class='def def kw'>def</span> <span class='headers identifier id'>headers</span> <span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='string val'>'amq.match'</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='exchanges identifier id'>exchanges</span><span class='lbrack token'>[</span><span class='name identifier id'>name</span><span class='rbrack token'>]</span> <span class='opasgn op'>||=</span> <span class='Exchange constant id'>Exchange</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='symbol val'>:headers</span><span class='comma token'>,</span> <span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>prefetch</h3>
+</div><div id="prefetch-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>prefetch</span><span class='args'>(size)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+735
+736
+737</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/mq.rb', line 735</span>
+
+<span class='def def kw'>def</span> <span class='prefetch identifier id'>prefetch</span><span class='lparen token'>(</span><span class='size identifier id'>size</span><span class='rparen token'>)</span>
+  <span class='send identifier id'>send</span> <span class='Protocol constant id'>Protocol</span><span class='colon2 op'>::</span><span class='Basic constant id'>Basic</span><span class='colon2 op'>::</span><span class='Qos constant id'>Qos</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='symbol val'>:prefetch_size</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>0</span><span class='comma token'>,</span> <span class='symbol val'>:prefetch_count</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>1</span><span class='comma token'>,</span> <span class='symbol val'>:global</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='false false kw'>false</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>process_frame</h3>
+</div><div id="process_frame-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>process_frame</span><span class='args'>frame</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+May raise a MQ::Error exception when the frame payload contains a
+Protocol::Channel::Close object.
+</p>
+<p>
+This usually occurs when a client attempts to perform an illegal operation.
+A short, and incomplete, list of potential illegal operations follows:
+</p>
+<ul>
+<li>publish a message to a deleted exchange (NOT_FOUND)
+
+</li>
+<li>declare an exchange using the reserved &#8216;amq.&#8217; naming structure
+(ACCESS_REFUSED)
+
+</li>
+</ul>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/mq.rb', line 159</span>
+
+<span class='def def kw'>def</span> <span class='process_frame identifier id'>process_frame</span> <span class='frame identifier id'>frame</span>
+  <span class='log identifier id'>log</span> <span class='symbol val'>:received</span><span class='comma token'>,</span> <span class='frame identifier id'>frame</span>
+
+  <span class='case case kw'>case</span> <span class='frame identifier id'>frame</span>
+  <span class='when when kw'>when</span> <span class='Frame constant id'>Frame</span><span class='colon2 op'>::</span><span class='Header constant id'>Header</span>
+    <span class='@header ivar id'>@header</span> <span class='assign token'>=</span> <span class='frame identifier id'>frame</span><span class='dot token'>.</span><span class='payload identifier id'>payload</span>
+    <span class='@body ivar id'>@body</span> <span class='assign token'>=</span> <span class='string val'>''</span>
+
+  <span class='when when kw'>when</span> <span class='Frame constant id'>Frame</span><span class='colon2 op'>::</span><span class='Body constant id'>Body</span>
+    <span class='@body ivar id'>@body</span> <span class='lshft op'>&lt;&lt;</span> <span class='frame identifier id'>frame</span><span class='dot token'>.</span><span class='payload identifier id'>payload</span>
+    <span class='if if kw'>if</span> <span class='@body ivar id'>@body</span><span class='dot token'>.</span><span class='length identifier id'>length</span> <span class='geq op'>&gt;=</span> <span class='@header ivar id'>@header</span><span class='dot token'>.</span><span class='size identifier id'>size</span>
+      <span class='@header ivar id'>@header</span><span class='dot token'>.</span><span class='properties identifier id'>properties</span><span class='dot token'>.</span><span class='update identifier id'>update</span><span class='lparen token'>(</span><span class='@method ivar id'>@method</span><span class='dot token'>.</span><span class='arguments identifier id'>arguments</span><span class='rparen token'>)</span>
+      <span class='@consumer ivar id'>@consumer</span><span class='dot token'>.</span><span class='receive identifier id'>receive</span> <span class='@header ivar id'>@header</span><span class='comma token'>,</span> <span class='@body ivar id'>@body</span> <span class='if if_mod kw'>if</span> <span class='@consumer ivar id'>@consumer</span>
+      <span class='@body ivar id'>@body</span> <span class='assign token'>=</span> <span class='@header ivar id'>@header</span> <span class='assign token'>=</span> <span class='@consumer ivar id'>@consumer</span> <span class='assign token'>=</span> <span class='@method ivar id'>@method</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+    <span class='end end kw'>end</span>
+
+  <span class='when when kw'>when</span> <span class='Frame constant id'>Frame</span><span class='colon2 op'>::</span><span class='Method constant id'>Method</span>
+    <span class='case case kw'>case</span> <span class='method identifier id'>method</span> <span class='assign token'>=</span> <span class='frame identifier id'>frame</span><span class='dot token'>.</span><span class='payload identifier id'>payload</span>
+    <span class='when when kw'>when</span> <span class='Protocol constant id'>Protocol</span><span class='colon2 op'>::</span><span class='Channel constant id'>Channel</span><span class='colon2 op'>::</span><span class='OpenOk constant id'>OpenOk</span>
+      <span class='send identifier id'>send</span> <span class='Protocol constant id'>Protocol</span><span class='colon2 op'>::</span><span class='Access constant id'>Access</span><span class='colon2 op'>::</span><span class='Request constant id'>Request</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='symbol val'>:realm</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'/data'</span><span class='comma token'>,</span>
+                                         <span class='symbol val'>:read</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span><span class='comma token'>,</span>
+                                         <span class='symbol val'>:write</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span><span class='comma token'>,</span>
+                                         <span class='symbol val'>:active</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span><span class='comma token'>,</span>
+                                         <span class='symbol val'>:passive</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span><span class='rparen token'>)</span>
+
+    <span class='when when kw'>when</span> <span class='Protocol constant id'>Protocol</span><span class='colon2 op'>::</span><span class='Access constant id'>Access</span><span class='colon2 op'>::</span><span class='RequestOk constant id'>RequestOk</span>
+      <span class='@ticket ivar id'>@ticket</span> <span class='assign token'>=</span> <span class='method identifier id'>method</span><span class='dot token'>.</span><span class='ticket identifier id'>ticket</span>
+      <span class='callback identifier id'>callback</span><span class='lbrace token'>{</span>
+        <span class='send identifier id'>send</span> <span class='Protocol constant id'>Protocol</span><span class='colon2 op'>::</span><span class='Channel constant id'>Channel</span><span class='colon2 op'>::</span><span class='Close constant id'>Close</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='symbol val'>:reply_code</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>200</span><span class='comma token'>,</span>
+                                          <span class='symbol val'>:reply_text</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'bye'</span><span class='comma token'>,</span>
+                                          <span class='symbol val'>:method_id</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>0</span><span class='comma token'>,</span>
+                                          <span class='symbol val'>:class_id</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>0</span><span class='rparen token'>)</span>
+      <span class='rbrace token'>}</span> <span class='if if_mod kw'>if</span> <span class='@closing ivar id'>@closing</span>
+      <span class='succeed identifier id'>succeed</span>
+
+    <span class='when when kw'>when</span> <span class='Protocol constant id'>Protocol</span><span class='colon2 op'>::</span><span class='Basic constant id'>Basic</span><span class='colon2 op'>::</span><span class='CancelOk constant id'>CancelOk</span>
+      <span class='if if kw'>if</span> <span class='@consumer ivar id'>@consumer</span> <span class='assign token'>=</span> <span class='consumers identifier id'>consumers</span><span class='lbrack token'>[</span> <span class='method identifier id'>method</span><span class='dot token'>.</span><span class='consumer_tag identifier id'>consumer_tag</span> <span class='rbrack token'>]</span>
+        <span class='@consumer ivar id'>@consumer</span><span class='dot token'>.</span><span class='cancelled identifier id'>cancelled</span>
+      <span class='else else kw'>else</span>
+        <span class='MQ constant id'>MQ</span><span class='dot token'>.</span><span class='error identifier id'>error</span> <span class='dstring node'>&quot;Basic.CancelOk for invalid consumer tag: #{method.consumer_tag}&quot;</span>
+      <span class='end end kw'>end</span>
+
+    <span class='when when kw'>when</span> <span class='Protocol constant id'>Protocol</span><span class='colon2 op'>::</span><span class='Queue constant id'>Queue</span><span class='colon2 op'>::</span><span class='DeclareOk constant id'>DeclareOk</span>
+      <span class='queues identifier id'>queues</span><span class='lbrack token'>[</span> <span class='method identifier id'>method</span><span class='dot token'>.</span><span class='queue identifier id'>queue</span> <span class='rbrack token'>]</span><span class='dot token'>.</span><span class='recieve_status identifier id'>recieve_status</span> <span class='method identifier id'>method</span>
+
+    <span class='when when kw'>when</span> <span class='Protocol constant id'>Protocol</span><span class='colon2 op'>::</span><span class='Basic constant id'>Basic</span><span class='colon2 op'>::</span><span class='Deliver constant id'>Deliver</span><span class='comma token'>,</span> <span class='Protocol constant id'>Protocol</span><span class='colon2 op'>::</span><span class='Basic constant id'>Basic</span><span class='colon2 op'>::</span><span class='GetOk constant id'>GetOk</span>
+      <span class='@method ivar id'>@method</span> <span class='assign token'>=</span> <span class='method identifier id'>method</span>
+      <span class='@header ivar id'>@header</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+      <span class='@body ivar id'>@body</span> <span class='assign token'>=</span> <span class='string val'>''</span>
+
+      <span class='if if kw'>if</span> <span class='method identifier id'>method</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span> <span class='Protocol constant id'>Protocol</span><span class='colon2 op'>::</span><span class='Basic constant id'>Basic</span><span class='colon2 op'>::</span><span class='GetOk constant id'>GetOk</span>
+        <span class='@consumer ivar id'>@consumer</span> <span class='assign token'>=</span> <span class='get_queue identifier id'>get_queue</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='q identifier id'>q</span><span class='bitor op'>|</span> <span class='q identifier id'>q</span><span class='dot token'>.</span><span class='shift identifier id'>shift</span> <span class='rbrace token'>}</span>
+        <span class='MQ constant id'>MQ</span><span class='dot token'>.</span><span class='error identifier id'>error</span> <span class='string val'>&quot;No pending Basic.GetOk requests&quot;</span> <span class='unless unless_mod kw'>unless</span> <span class='@consumer ivar id'>@consumer</span>
+      <span class='else else kw'>else</span>
+        <span class='@consumer ivar id'>@consumer</span> <span class='assign token'>=</span> <span class='consumers identifier id'>consumers</span><span class='lbrack token'>[</span> <span class='method identifier id'>method</span><span class='dot token'>.</span><span class='consumer_tag identifier id'>consumer_tag</span> <span class='rbrack token'>]</span>
+        <span class='MQ constant id'>MQ</span><span class='dot token'>.</span><span class='error identifier id'>error</span> <span class='dstring node'>&quot;Basic.Deliver for invalid consumer tag: #{method.consumer_tag}&quot;</span> <span class='unless unless_mod kw'>unless</span> <span class='@consumer ivar id'>@consumer</span>
+      <span class='end end kw'>end</span>
+
+    <span class='when when kw'>when</span> <span class='Protocol constant id'>Protocol</span><span class='colon2 op'>::</span><span class='Basic constant id'>Basic</span><span class='colon2 op'>::</span><span class='GetEmpty constant id'>GetEmpty</span>
+      <span class='if if kw'>if</span> <span class='@consumer ivar id'>@consumer</span> <span class='assign token'>=</span> <span class='get_queue identifier id'>get_queue</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='q identifier id'>q</span><span class='bitor op'>|</span> <span class='q identifier id'>q</span><span class='dot token'>.</span><span class='shift identifier id'>shift</span> <span class='rbrace token'>}</span>
+        <span class='@consumer ivar id'>@consumer</span><span class='dot token'>.</span><span class='receive identifier id'>receive</span> <span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='nil nil kw'>nil</span>
+      <span class='else else kw'>else</span>
+        <span class='MQ constant id'>MQ</span><span class='dot token'>.</span><span class='error identifier id'>error</span> <span class='string val'>&quot;Basic.GetEmpty for invalid consumer&quot;</span>
+      <span class='end end kw'>end</span>
+
+    <span class='when when kw'>when</span> <span class='Protocol constant id'>Protocol</span><span class='colon2 op'>::</span><span class='Channel constant id'>Channel</span><span class='colon2 op'>::</span><span class='Close constant id'>Close</span>
+      <span class='raise identifier id'>raise</span> <span class='Error constant id'>Error</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{method.reply_text} in #{Protocol.classes[method.class_id].methods[method.method_id]} on #{@channel}&quot;</span>
+
+    <span class='when when kw'>when</span> <span class='Protocol constant id'>Protocol</span><span class='colon2 op'>::</span><span class='Channel constant id'>Channel</span><span class='colon2 op'>::</span><span class='CloseOk constant id'>CloseOk</span>
+      <span class='@closing ivar id'>@closing</span> <span class='assign token'>=</span> <span class='false false kw'>false</span>
+      <span class='conn identifier id'>conn</span><span class='dot token'>.</span><span class='callback identifier id'>callback</span><span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span>
+        <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='channels identifier id'>channels</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span> <span class='@channel ivar id'>@channel</span>
+        <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='close identifier id'>close</span> <span class='if if_mod kw'>if</span> <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='channels identifier id'>channels</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span>
+      <span class='rbrace token'>}</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>queue</h3>
+</div><div id="queue-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>queue</span><span class='args'>name, opts = {}</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Queues store and forward messages. Queues can be configured in the server
+or created at runtime. Queues must be attached to at least one exchange in
+order to receive messages from publishers.
+</p>
+<p>
+Like an Exchange, queue names starting with &#8216;amq.&#8217; are reserved
+for internal use. Attempts to create queue names in violation of this
+reservation will raise MQ:Error (ACCESS_REFUSED).
+</p>
+<p>
+It is not supported to create a queue without a name; some string (even the
+empty string) must be passed in the <tt>name</tt> parameter.
+</p>
+<h2>Options</h2>
+<ul>
+<li>:passive =&gt; true | false (default false)
+
+</li>
+</ul>
+<p>
+If set, the server will not create the exchange if it does not already
+exist. The client can use this to check whether an exchange exists without
+modifying the server state.
+</p>
+<ul>
+<li>:durable =&gt; true | false (default false)
+
+</li>
+</ul>
+<p>
+If set when creating a new queue, the queue will be marked as durable.
+Durable queues remain active when a server restarts. Non-durable queues
+(transient queues) are purged if/when a server restarts. Note that durable
+queues do not necessarily hold persistent messages, although it does not
+make sense to send persistent messages to a transient queue (though it is
+allowed).
+</p>
+<p>
+Again, note the durability property on a queue has no influence on the
+persistence of published messages. A durable queue containing transient
+messages will flush those messages on a restart.
+</p>
+<p>
+If the queue has already been declared, any redeclaration will ignore this
+setting. A queue may only be declared durable the first time when it is
+created.
+</p>
+<ul>
+<li>:exclusive =&gt; true | false (default false)
+
+</li>
+</ul>
+<p>
+Exclusive queues may only be consumed from by the current connection.
+Setting the &#8216;exclusive&#8217; flag always implies
+&#8216;auto-delete&#8217;. Only a single consumer is allowed to remove
+messages from this queue.
+</p>
+<p>
+The default is a shared queue. Multiple clients may consume messages from
+this queue.
+</p>
+<p>
+Attempting to redeclare an already-declared queue as :exclusive =&gt; true
+will raise MQ:Error.
+</p>
+<ul>
+<li>:auto_delete = true | false (default false)
+
+</li>
+</ul>
+<p>
+If set, the queue is deleted when all consumers have finished using it.
+Last consumer can be cancelled either explicitly or because its channel is
+closed. If there was no consumer ever on the queue, it won&#8217;t be
+deleted.
+</p>
+<p>
+The server waits for a short period of time before determining the queue is
+unused to give time to the client code to bind an exchange to it.
+</p>
+<p>
+If the queue has been previously declared, this option is ignored on
+subsequent declarations.
+</p>
+<p>
+Any remaining messages in the queue will be purged when the queue is
+deleted regardless of the message&#8217;s persistence setting.
+</p>
+<ul>
+<li>:nowait =&gt; true | false (default true)
+
+</li>
+</ul>
+<p>
+If set, the server will not respond to the method. The client should not
+wait for a reply method. If the server could not complete the method it
+will raise a channel or connection exception.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+670
+671
+672</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/mq.rb', line 670</span>
+
+<span class='def def kw'>def</span> <span class='queue identifier id'>queue</span> <span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='queues identifier id'>queues</span><span class='lbrack token'>[</span><span class='name identifier id'>name</span><span class='rbrack token'>]</span> <span class='opasgn op'>||=</span> <span class='Queue constant id'>Queue</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>queues</h3>
+</div><div id="queues-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>queues</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns a hash of all the queue proxy objects.
+</p>
+<p>
+Not typically called by client code.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+749
+750
+751</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/mq.rb', line 749</span>
+
+<span class='def def kw'>def</span> <span class='queues identifier id'>queues</span>
+  <span class='@queues ivar id'>@queues</span> <span class='opasgn op'>||=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>reset</h3>
+</div><div id="reset-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>reset</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+775
+776
+777
+778
+779
+780
+781
+782
+783
+784
+785
+786
+787
+788
+789</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/mq.rb', line 775</span>
+
+<span class='def def kw'>def</span> <span class='reset identifier id'>reset</span>
+  <span class='@deferred_status ivar id'>@deferred_status</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+  <span class='@channel ivar id'>@channel</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+  <span class='initialize identifier id'>initialize</span> <span class='@connection ivar id'>@connection</span>
+
+  <span class='@consumers ivar id'>@consumers</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+
+  <span class='exs identifier id'>exs</span> <span class='assign token'>=</span> <span class='@exchanges ivar id'>@exchanges</span>
+  <span class='@exchanges ivar id'>@exchanges</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='exs identifier id'>exs</span><span class='dot token'>.</span><span class='each identifier id'>each</span><span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='_ identifier id'>_</span><span class='comma token'>,</span><span class='e identifier id'>e</span><span class='bitor op'>|</span> <span class='e identifier id'>e</span><span class='dot token'>.</span><span class='reset identifier id'>reset</span> <span class='rbrace token'>}</span> <span class='if if_mod kw'>if</span> <span class='exs identifier id'>exs</span>
+
+  <span class='qus identifier id'>qus</span> <span class='assign token'>=</span> <span class='@queues ivar id'>@queues</span>
+  <span class='@queues ivar id'>@queues</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='qus identifier id'>qus</span><span class='dot token'>.</span><span class='each identifier id'>each</span><span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='_ identifier id'>_</span><span class='comma token'>,</span><span class='q identifier id'>q</span><span class='bitor op'>|</span> <span class='q identifier id'>q</span><span class='dot token'>.</span><span class='reset identifier id'>reset</span> <span class='rbrace token'>}</span> <span class='if if_mod kw'>if</span> <span class='qus identifier id'>qus</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>rpc</h3>
+</div><div id="rpc-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>rpc</span><span class='args'>name, obj = nil</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Takes a channel, queue and optional object.
+</p>
+<p>
+The optional object may be a class name, module name or object instance.
+When given a class or module name, the object is instantiated during this
+setup. The passed queue is automatically subscribed to so it passes all
+messages (and their arguments) to the object.
+</p>
+<p>
+Marshalling and unmarshalling the objects is handled internally. This
+marshalling is subject to the same restrictions as defined in the
+Marshal[http://ruby-doc.org/core/classes/Marshal.html] standard library.
+See that documentation for further reference.
+</p>
+<p>
+When the optional object is not passed, the returned rpc reference is used
+to send messages and arguments to the queue. See #method_missing which does
+all of the heavy lifting with the proxy. Some client elsewhere must call
+this method <b>with</b> the optional block so that there is a valid
+destination. Failure to do so will just enqueue marshalled messages that
+are never consumed.
+</p>
+<pre class="code">
+ <span class='EM constant id'>EM</span><span class='dot token'>.</span><span class='run identifier id'>run</span> <span class='do do kw'>do</span>
+   <span class='server identifier id'>server</span> <span class='assign token'>=</span> <span class='MQ constant id'>MQ</span><span class='dot token'>.</span><span class='rpc identifier id'>rpc</span><span class='lparen token'>(</span><span class='string val'>'hash table node'</span><span class='comma token'>,</span> <span class='Hash constant id'>Hash</span><span class='rparen token'>)</span>
+
+   <span class='client identifier id'>client</span> <span class='assign token'>=</span> <span class='MQ constant id'>MQ</span><span class='dot token'>.</span><span class='rpc identifier id'>rpc</span><span class='lparen token'>(</span><span class='string val'>'hash table node'</span><span class='rparen token'>)</span>
+   <span class='client identifier id'>client</span><span class='lbrack token'>[</span><span class='symbol val'>:now</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='Time constant id'>Time</span><span class='dot token'>.</span><span class='now identifier id'>now</span>
+   <span class='client identifier id'>client</span><span class='lbrack token'>[</span><span class='symbol val'>:one</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='integer val'>1</span>
+
+   <span class='client identifier id'>client</span><span class='dot token'>.</span><span class='values identifier id'>values</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='res identifier id'>res</span><span class='bitor op'>|</span>
+     <span class='p identifier id'>p</span> <span class='string val'>'client'</span><span class='comma token'>,</span> <span class='symbol val'>:values</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='res identifier id'>res</span>
+   <span class='end end kw'>end</span>
+
+   <span class='client identifier id'>client</span><span class='dot token'>.</span><span class='keys identifier id'>keys</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='res identifier id'>res</span><span class='bitor op'>|</span>
+     <span class='p identifier id'>p</span> <span class='string val'>'client'</span><span class='comma token'>,</span> <span class='symbol val'>:keys</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='res identifier id'>res</span>
+     <span class='EM constant id'>EM</span><span class='dot token'>.</span><span class='stop_event_loop identifier id'>stop_event_loop</span>
+   <span class='end end kw'>end</span>
+ <span class='end end kw'>end</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+710
+711
+712</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/mq.rb', line 710</span>
+
+<span class='def def kw'>def</span> <span class='rpc identifier id'>rpc</span> <span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='obj identifier id'>obj</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+  <span class='rpcs identifier id'>rpcs</span><span class='lbrack token'>[</span><span class='name identifier id'>name</span><span class='rbrack token'>]</span> <span class='opasgn op'>||=</span> <span class='RPC constant id'>RPC</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='obj identifier id'>obj</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>rpcs</h3>
+</div><div id="rpcs-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>rpcs</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns a hash of all rpc proxy objects.
+</p>
+<p>
+Not typically called by client code.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+764
+765
+766</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/mq.rb', line 764</span>
+
+<span class='def def kw'>def</span> <span class='rpcs identifier id'>rpcs</span>
+  <span class='@rcps ivar id'>@rcps</span> <span class='opasgn op'>||=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>send</h3>
+</div><div id="send-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>send</span><span class='args'>*args</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/mq.rb', line 237</span>
+
+<span class='def def kw'>def</span> <span class='send identifier id'>send</span> <span class='mult op'>*</span><span class='args identifier id'>args</span>
+  <span class='conn identifier id'>conn</span><span class='dot token'>.</span><span class='callback identifier id'>callback</span><span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span>
+    <span class='lparen token'>(</span><span class='@_send_mutex ivar id'>@_send_mutex</span> <span class='opasgn op'>||=</span> <span class='Mutex constant id'>Mutex</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='synchronize identifier id'>synchronize</span> <span class='do do kw'>do</span>
+      <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='data identifier id'>data</span><span class='bitor op'>|</span>
+        <span class='data identifier id'>data</span><span class='dot token'>.</span><span class='ticket identifier id'>ticket</span> <span class='assign token'>=</span> <span class='@ticket ivar id'>@ticket</span> <span class='if if_mod kw'>if</span> <span class='@ticket ivar id'>@ticket</span> <span class='and and kw'>and</span> <span class='data identifier id'>data</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span> <span class='symbol val'>:ticket=</span>
+        <span class='log identifier id'>log</span> <span class='symbol val'>:sending</span><span class='comma token'>,</span> <span class='data identifier id'>data</span>
+        <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='send identifier id'>send</span> <span class='data identifier id'>data</span><span class='comma token'>,</span> <span class='symbol val'>:channel</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='@channel ivar id'>@channel</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+  <span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>topic</h3>
+</div><div id="topic-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>topic</span><span class='args'>name = 'amq.topic', opts = {}</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Defines, intializes and returns an Exchange to act as an ingress point for
+all published messages.
+</p>
+<h2>Topic</h2>
+<p>
+A topic exchange allows for messages to be published to an exchange tagged
+with a specific routing key. The Exchange uses the routing key to determine
+which queues to deliver the message. Wildcard matching is allowed. The
+topic must be declared using dot notation to separate each subtopic.
+</p>
+<p>
+This is the only exchange type to honor the <tt>key</tt> hash key for all
+cases.
+</p>
+<p>
+Any published message, regardless of its persistence setting, is thrown
+away by the exchange when there are no queues bound to it.
+</p>
+<p>
+As part of the AMQP standard, each server <em>should</em> predeclare a
+topic exchange called &#8216;amq.topic&#8217; (this is not required by the
+standard). Allocating this exchange without a name <em>or</em> with the
+empty string will use the internal &#8216;amq.topic&#8217; exchange.
+</p>
+<p>
+The classic example is delivering market data. When publishing market data
+for stocks, we may subdivide the stream based on 2 characteristics: nation
+code and trading symbol. The topic tree for Apple Computer would look like:
+</p>
+<pre class="code">
+ <span class='string val'>'stock.us.aapl'</span>
+</pre>
+<p>
+For a foreign stock, it may look like:
+</p>
+<pre class="code">
+ <span class='string val'>'stock.de.dax'</span>
+</pre>
+<p>
+When publishing data to the exchange, bound queues subscribing to the
+exchange indicate which data interests them by passing a routing key for
+matching against the published routing key.
+</p>
+<pre class="code">
+ <span class='EM constant id'>EM</span><span class='dot token'>.</span><span class='run identifier id'>run</span> <span class='do do kw'>do</span>
+   <span class='exch identifier id'>exch</span> <span class='assign token'>=</span> <span class='MQ constant id'>MQ</span><span class='dot token'>.</span><span class='topic identifier id'>topic</span><span class='lparen token'>(</span><span class='string val'>&quot;stocks&quot;</span><span class='rparen token'>)</span>
+   <span class='keys identifier id'>keys</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='string val'>'stock.us.aapl'</span><span class='comma token'>,</span> <span class='string val'>'stock.de.dax'</span><span class='rbrack token'>]</span>
+
+   <span class='EM constant id'>EM</span><span class='dot token'>.</span><span class='add_periodic_timer identifier id'>add_periodic_timer</span><span class='lparen token'>(</span><span class='integer val'>1</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='comment val'># every second</span>
+     <span class='puts identifier id'>puts</span>
+     <span class='exch identifier id'>exch</span><span class='dot token'>.</span><span class='publish identifier id'>publish</span><span class='lparen token'>(</span><span class='integer val'>10</span><span class='plus op'>+</span><span class='rand identifier id'>rand</span><span class='lparen token'>(</span><span class='integer val'>10</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:routing_key</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='keys identifier id'>keys</span><span class='lbrack token'>[</span><span class='rand identifier id'>rand</span><span class='lparen token'>(</span><span class='integer val'>2</span><span class='rparen token'>)</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+   <span class='end end kw'>end</span>
+
+   <span class='comment val'># match against one dot-separated item</span>
+   <span class='MQ constant id'>MQ</span><span class='dot token'>.</span><span class='queue identifier id'>queue</span><span class='lparen token'>(</span><span class='string val'>'us stocks'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='bind identifier id'>bind</span><span class='lparen token'>(</span><span class='exch identifier id'>exch</span><span class='comma token'>,</span> <span class='symbol val'>:key</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'stock.us.*'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='subscribe identifier id'>subscribe</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='price identifier id'>price</span><span class='bitor op'>|</span>
+     <span class='puts identifier id'>puts</span> <span class='dstring node'>&quot;us stock price [#{price}]&quot;</span>
+   <span class='end end kw'>end</span>
+
+   <span class='comment val'># match against multiple dot-separated items</span>
+   <span class='MQ constant id'>MQ</span><span class='dot token'>.</span><span class='queue identifier id'>queue</span><span class='lparen token'>(</span><span class='string val'>'all stocks'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='bind identifier id'>bind</span><span class='lparen token'>(</span><span class='exch identifier id'>exch</span><span class='comma token'>,</span> <span class='symbol val'>:key</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'stock.#'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='subscribe identifier id'>subscribe</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='price identifier id'>price</span><span class='bitor op'>|</span>
+     <span class='puts identifier id'>puts</span> <span class='dstring node'>&quot;all stocks: price [#{price}]&quot;</span>
+   <span class='end end kw'>end</span>
+
+   <span class='comment val'># require exact match</span>
+   <span class='MQ constant id'>MQ</span><span class='dot token'>.</span><span class='queue identifier id'>queue</span><span class='lparen token'>(</span><span class='string val'>'only dax'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='bind identifier id'>bind</span><span class='lparen token'>(</span><span class='exch identifier id'>exch</span><span class='comma token'>,</span> <span class='symbol val'>:key</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'stock.de.dax'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='subscribe identifier id'>subscribe</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='price identifier id'>price</span><span class='bitor op'>|</span>
+     <span class='puts identifier id'>puts</span> <span class='dstring node'>&quot;dax price [#{price}]&quot;</span>
+   <span class='end end kw'>end</span>
+ <span class='end end kw'>end</span>
+</pre>
+<p>
+For matching, the &#8217;*&#8217; (asterisk) wildcard matches against one
+dot-separated item only. The &#8217;#&#8217; wildcard (hash or pound
+symbol) matches against 0 or more dot-separated items. If none of these
+symbols are used, the exchange performs a comparison looking for an exact
+match.
+</p>
+<h2>Options</h2>
+<ul>
+<li>:passive =&gt; true | false (default false)
+
+</li>
+</ul>
+<p>
+If set, the server will not create the exchange if it does not already
+exist. The client can use this to check whether an exchange exists without
+modifying the server state.
+</p>
+<ul>
+<li>:durable =&gt; true | false (default false)
+
+</li>
+</ul>
+<p>
+If set when creating a new exchange, the exchange will be marked as
+durable. Durable exchanges remain active when a server restarts.
+Non-durable exchanges (transient exchanges) are purged if/when a server
+restarts.
+</p>
+<p>
+A transient exchange (the default) is stored in memory-only. The exchange
+and all bindings will be lost on a server restart. It makes no sense to
+publish a persistent message to a transient exchange.
+</p>
+<p>
+Durable exchanges and their bindings are recreated upon a server restart.
+Any published messages not routed to a bound queue are lost.
+</p>
+<ul>
+<li>:auto_delete =&gt; true | false (default false)
+
+</li>
+</ul>
+<p>
+If set, the exchange is deleted when all queues have finished using it. The
+server waits for a short period of time before determining the exchange is
+unused to give time to the client code to bind a queue to it.
+</p>
+<p>
+If the exchange has been previously declared, this option is ignored on
+subsequent declarations.
+</p>
+<ul>
+<li>:internal =&gt; true | false (default false)
+
+</li>
+</ul>
+<p>
+If set, the exchange may not be used directly by publishers, but only when
+bound to other exchanges. Internal exchanges are used to construct wiring
+that is not visible to applications.
+</p>
+<ul>
+<li>:nowait =&gt; true | false (default true)
+
+</li>
+</ul>
+<p>
+If set, the server will not respond to the method. The client should not
+wait for a reply method. If the server could not complete the method it
+will raise a channel or connection exception.
+</p>
+<h2>Exceptions</h2>
+<p>
+Doing any of these activities are illegal and will raise MQ:Error.
+</p>
+<ul>
+<li>redeclare an already-declared exchange to a different type
+
+</li>
+<li>:passive =&gt; true and the exchange does not exist (NOT_FOUND)
+
+</li>
+</ul>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+520
+521
+522</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/mq.rb', line 520</span>
+
+<span class='def def kw'>def</span> <span class='topic identifier id'>topic</span> <span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='string val'>'amq.topic'</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='exchanges identifier id'>exchanges</span><span class='lbrack token'>[</span><span class='name identifier id'>name</span><span class='rbrack token'>]</span> <span class='opasgn op'>||=</span> <span class='Exchange constant id'>Exchange</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='symbol val'>:topic</span><span class='comma token'>,</span> <span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

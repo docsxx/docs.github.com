@@ -1,0 +1,309 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: Lokii::GsmProxy</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class Lokii_GsmProxy">
+  <h1 class="title">Class: Lokii::GsmProxy</h1>
+  <div class="section docstring">
+  <p>
+Messages come into the GsmModem based on its own set of intervals (or with
+another command for certain gsm modems). Because of that we need to proxy
+the callbacks and collect them on a per modem basis
+</p>
+
+</div><div class="section attributes">
+  <h1>Attributes</h1>
+
+  
+    <div class="instance">
+      <h2>Instance Attributes</h2>
+      <table>
+      
+        <tr>
+          <th class="name">modem</td>
+          <td class="readwrite">
+            [<span id='modem-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>modem</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">received</td>
+          <td class="readwrite">
+            [<span id='received-instance_method'>R</span><span id='received%3D-instance_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>received</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+      </table>
+    </div>
+  
+</div><div class="section constants">
+  
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(modem)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+14
+15
+16
+17</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/lokii/servers/gsm_proxy.rb', line 14</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='modem identifier id'>modem</span><span class='rparen token'>)</span>
+  <span class='@received ivar id'>@received</span> <span class='assign token'>=</span> <span class='Array constant id'>Array</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+  <span class='@modem ivar id'>@modem</span> <span class='assign token'>=</span> <span class='modem identifier id'>modem</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#incoming-instance_method' title='#incoming'>#incoming</a></span><span class='args'>(message)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#messages-instance_method' title='#messages'>#messages</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#outgoing-instance_method' title='#outgoing'>#outgoing</a></span><span class='args'>(number, text)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>incoming</h3>
+</div><div id="incoming-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>incoming</span><span class='args'>(message)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+19
+20
+21</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/lokii/servers/gsm_proxy.rb', line 19</span>
+
+<span class='def def kw'>def</span> <span class='incoming identifier id'>incoming</span><span class='lparen token'>(</span><span class='message identifier id'>message</span><span class='rparen token'>)</span>
+  <span class='@received ivar id'>@received</span> <span class='lshft op'>&lt;&lt;</span> <span class='message identifier id'>message</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>messages</h3>
+</div><div id="messages-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>messages</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/lokii/servers/gsm_proxy.rb', line 27</span>
+
+<span class='def def kw'>def</span> <span class='messages identifier id'>messages</span>
+  <span class='@modem ivar id'>@modem</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='lparen token'>(</span><span class='symbol val'>:incoming</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='current identifier id'>current</span> <span class='assign token'>=</span> <span class='@received ivar id'>@received</span><span class='dot token'>.</span><span class='dup identifier id'>dup</span> 
+  <span class='@received ivar id'>@received</span><span class='dot token'>.</span><span class='clear identifier id'>clear</span>
+  <span class='current identifier id'>current</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='m identifier id'>m</span><span class='bitor op'>|</span> 
+    <span class='lbrace token'>{</span><span class='symbol val'>:phone</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='m identifier id'>m</span><span class='dot token'>.</span><span class='device identifier id'>device</span><span class='comma token'>,</span>
+     <span class='symbol val'>:number</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='m identifier id'>m</span><span class='dot token'>.</span><span class='sender identifier id'>sender</span><span class='comma token'>,</span>
+     <span class='symbol val'>:text</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='m identifier id'>m</span><span class='dot token'>.</span><span class='text identifier id'>text</span><span class='comma token'>,</span>
+     <span class='symbol val'>:created_at</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='Time constant id'>Time</span><span class='dot token'>.</span><span class='parse identifier id'>parse</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{m.sent}&quot;</span><span class='rparen token'>)</span><span class='comma token'>,</span>
+     <span class='symbol val'>:processed_at</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='Time constant id'>Time</span><span class='dot token'>.</span><span class='parse identifier id'>parse</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{m.received}&quot;</span><span class='rparen token'>)</span><span class='rbrace token'>}</span>
+  <span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>outgoing</h3>
+</div><div id="outgoing-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>outgoing</span><span class='args'>(number, text)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+23
+24
+25</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/lokii/servers/gsm_proxy.rb', line 23</span>
+
+<span class='def def kw'>def</span> <span class='outgoing identifier id'>outgoing</span><span class='lparen token'>(</span><span class='number identifier id'>number</span><span class='comma token'>,</span> <span class='text identifier id'>text</span><span class='rparen token'>)</span>
+  <span class='@modem ivar id'>@modem</span><span class='dot token'>.</span><span class='send_sms identifier id'>send_sms</span><span class='lparen token'>(</span><span class='number identifier id'>number</span><span class='comma token'>,</span> <span class='text identifier id'>text</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

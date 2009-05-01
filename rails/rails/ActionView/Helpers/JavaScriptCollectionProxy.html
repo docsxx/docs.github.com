@@ -1,0 +1,536 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: ActionView::Helpers::JavaScriptCollectionProxy</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class ActionView_Helpers_JavaScriptCollectionProxy">
+  <h1 class="title">Class: ActionView::Helpers::JavaScriptCollectionProxy</h1>
+  <div class="section inheritance">
+  <ul>
+  <li>ActiveSupport::BasicObject</li><ul><li><a href='JavaScriptProxy.html' title='ActionView::Helpers::JavaScriptProxy'>ActionView::Helpers::JavaScriptProxy</a></li><ul><li>ActionView::Helpers::JavaScriptCollectionProxy</li>
+  </ul></ul></ul>
+</div><div class="section attributes">
+  <h1>Attributes</h1>
+
+  
+    <div class="instance">
+      <h2>Instance Attributes</h2>
+      <table>
+      
+        <tr>
+          <th class="name">generator</td>
+          <td class="readwrite">
+            [<span id='generator-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>generator</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+      </table>
+    </div>
+  
+</div><div class="section constants">
+  <div class="thisclass">
+  <h1>Constants</h1>
+  <dl>
+    
+      <dt id="ENUMERABLE_METHODS-constant">ENUMERABLE_METHODS</dt>
+      <dd>ENUMERABLE_METHODS_WITH_RETURN + [:each] unless defined? ENUMERABLE_METHODS</dd>
+    
+      <dt id="ENUMERABLE_METHODS_WITH_RETURN-constant">ENUMERABLE_METHODS_WITH_RETURN</dt>
+      <dd>[:all, :any, :collect, :map, :detect, :find, :find_all, :select, :max, :min, :partition, :reject, :sort_by, :in_groups_of, :each_slice] unless defined? ENUMERABLE_METHODS_WITH_RETURN</dd>
+    
+  </dl>
+</div>
+
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(generator, pattern)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+1205
+1206
+1207</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'actionpack/lib/action_view/helpers/prototype_helper.rb', line 1205</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='generator identifier id'>generator</span><span class='comma token'>,</span> <span class='pattern identifier id'>pattern</span><span class='rparen token'>)</span>
+  <span class='super super kw'>super</span><span class='lparen token'>(</span><span class='generator identifier id'>generator</span><span class='comma token'>,</span> <span class='@pattern ivar id'>@pattern</span> <span class='assign token'>=</span> <span class='pattern identifier id'>pattern</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div><div class="section methodmissing">
+  <h1>Dynamic Method Handling</h1>
+
+  <p class="note">
+    This class handles dynamic methods through the <tt>method_missing</tt> method
+    
+  </p>
+
+  <div id="method_missing-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>private</span>
+    <span class='return_types'></span>
+    <span class='name'>method_missing</span><span class='args'>(method, *arguments, &amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+1252
+1253
+1254
+1255
+1256
+1257
+1258
+1259
+1260</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'actionpack/lib/action_view/helpers/prototype_helper.rb', line 1252</span>
+
+<span class='def def kw'>def</span> <span class='method_missing identifier id'>method_missing</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='arguments identifier id'>arguments</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='ENUMERABLE_METHODS constant id'>ENUMERABLE_METHODS</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='rparen token'>)</span>
+    <span class='returnable identifier id'>returnable</span> <span class='assign token'>=</span> <span class='ENUMERABLE_METHODS_WITH_RETURN constant id'>ENUMERABLE_METHODS_WITH_RETURN</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='rparen token'>)</span>
+    <span class='variable identifier id'>variable</span>   <span class='assign token'>=</span> <span class='arguments identifier id'>arguments</span><span class='dot token'>.</span><span class='first identifier id'>first</span> <span class='if if_mod kw'>if</span> <span class='returnable identifier id'>returnable</span>
+    <span class='enumerate identifier id'>enumerate</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='comma token'>,</span> <span class='lbrace token'>{</span><span class='symbol val'>:variable</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lparen token'>(</span><span class='arguments identifier id'>arguments</span><span class='dot token'>.</span><span class='first identifier id'>first</span> <span class='if if_mod kw'>if</span> <span class='returnable identifier id'>returnable</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:return</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='returnable identifier id'>returnable</span><span class='comma token'>,</span> <span class='symbol val'>:yield_args</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='dstring node'>%w(value index)</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+    <span class='super super kw'>super</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#each_slice-instance_method' title='#each_slice'>#each_slice</a></span><span class='args'>(variable, number, &amp;block)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#grep-instance_method' title='#grep'>#grep</a></span><span class='args'>(variable, pattern, &amp;block)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#in_groups_of-instance_method' title='#in_groups_of'>#in_groups_of</a></span><span class='args'>(variable, number, fill_with = nil)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#inject-instance_method' title='#inject'>#inject</a></span><span class='args'>(variable, memo, &amp;block)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#pluck-instance_method' title='#pluck'>#pluck</a></span><span class='args'>(variable, property)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#zip-instance_method' title='#zip'>#zip</a></span><span class='args'>(variable, *arguments, &amp;block)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>each_slice</h3>
+</div><div id="each_slice-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>each_slice</span><span class='args'>(variable, number, &amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+1209
+1210
+1211
+1212
+1213
+1214
+1215
+1216</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'actionpack/lib/action_view/helpers/prototype_helper.rb', line 1209</span>
+
+<span class='def def kw'>def</span> <span class='each_slice identifier id'>each_slice</span><span class='lparen token'>(</span><span class='variable identifier id'>variable</span><span class='comma token'>,</span> <span class='number identifier id'>number</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='block identifier id'>block</span>
+    <span class='enumerate identifier id'>enumerate</span> <span class='symbol val'>:eachSlice</span><span class='comma token'>,</span> <span class='symbol val'>:variable</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='variable identifier id'>variable</span><span class='comma token'>,</span> <span class='symbol val'>:method_args</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='number identifier id'>number</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='symbol val'>:yield_args</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='dstring node'>%w(value index)</span><span class='comma token'>,</span> <span class='symbol val'>:return</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span>
+  <span class='else else kw'>else</span>
+    <span class='add_variable_assignment! fid id'>add_variable_assignment!</span><span class='lparen token'>(</span><span class='variable identifier id'>variable</span><span class='rparen token'>)</span>
+    <span class='append_enumerable_function! fid id'>append_enumerable_function!</span><span class='lparen token'>(</span><span class='dstring node'>&quot;eachSlice(#{number.to_json});&quot;</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>grep</h3>
+</div><div id="grep-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>grep</span><span class='args'>(variable, pattern, &amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+1218
+1219
+1220</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'actionpack/lib/action_view/helpers/prototype_helper.rb', line 1218</span>
+
+<span class='def def kw'>def</span> <span class='grep identifier id'>grep</span><span class='lparen token'>(</span><span class='variable identifier id'>variable</span><span class='comma token'>,</span> <span class='pattern identifier id'>pattern</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='enumerate identifier id'>enumerate</span> <span class='symbol val'>:grep</span><span class='comma token'>,</span> <span class='symbol val'>:variable</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='variable identifier id'>variable</span><span class='comma token'>,</span> <span class='symbol val'>:return</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span><span class='comma token'>,</span> <span class='symbol val'>:method_args</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='pattern identifier id'>pattern</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='symbol val'>:yield_args</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='dstring node'>%w(value index)</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>in_groups_of</h3>
+</div><div id="in_groups_of-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>in_groups_of</span><span class='args'>(variable, number, fill_with = nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+1222
+1223
+1224
+1225
+1226
+1227</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'actionpack/lib/action_view/helpers/prototype_helper.rb', line 1222</span>
+
+<span class='def def kw'>def</span> <span class='in_groups_of identifier id'>in_groups_of</span><span class='lparen token'>(</span><span class='variable identifier id'>variable</span><span class='comma token'>,</span> <span class='number identifier id'>number</span><span class='comma token'>,</span> <span class='fill_with identifier id'>fill_with</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='arguments identifier id'>arguments</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='number identifier id'>number</span><span class='rbrack token'>]</span>
+  <span class='arguments identifier id'>arguments</span> <span class='lshft op'>&lt;&lt;</span> <span class='fill_with identifier id'>fill_with</span> <span class='unless unless_mod kw'>unless</span> <span class='fill_with identifier id'>fill_with</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+  <span class='add_variable_assignment! fid id'>add_variable_assignment!</span><span class='lparen token'>(</span><span class='variable identifier id'>variable</span><span class='rparen token'>)</span>
+  <span class='append_enumerable_function! fid id'>append_enumerable_function!</span><span class='lparen token'>(</span><span class='dstring node'>&quot;inGroupsOf(#{arguments_for_call arguments});&quot;</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>inject</h3>
+</div><div id="inject-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>inject</span><span class='args'>(variable, memo, &amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+1229
+1230
+1231</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'actionpack/lib/action_view/helpers/prototype_helper.rb', line 1229</span>
+
+<span class='def def kw'>def</span> <span class='inject identifier id'>inject</span><span class='lparen token'>(</span><span class='variable identifier id'>variable</span><span class='comma token'>,</span> <span class='memo identifier id'>memo</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='enumerate identifier id'>enumerate</span> <span class='symbol val'>:inject</span><span class='comma token'>,</span> <span class='symbol val'>:variable</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='variable identifier id'>variable</span><span class='comma token'>,</span> <span class='symbol val'>:method_args</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='memo identifier id'>memo</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='symbol val'>:yield_args</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='dstring node'>%w(memo value index)</span><span class='comma token'>,</span> <span class='symbol val'>:return</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>pluck</h3>
+</div><div id="pluck-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>pluck</span><span class='args'>(variable, property)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+1233
+1234
+1235
+1236</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'actionpack/lib/action_view/helpers/prototype_helper.rb', line 1233</span>
+
+<span class='def def kw'>def</span> <span class='pluck identifier id'>pluck</span><span class='lparen token'>(</span><span class='variable identifier id'>variable</span><span class='comma token'>,</span> <span class='property identifier id'>property</span><span class='rparen token'>)</span>
+  <span class='add_variable_assignment! fid id'>add_variable_assignment!</span><span class='lparen token'>(</span><span class='variable identifier id'>variable</span><span class='rparen token'>)</span>
+  <span class='append_enumerable_function! fid id'>append_enumerable_function!</span><span class='lparen token'>(</span><span class='dstring node'>&quot;pluck(#{property.to_json});&quot;</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>zip</h3>
+</div><div id="zip-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>zip</span><span class='args'>(variable, *arguments, &amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+1238
+1239
+1240
+1241
+1242
+1243
+1244
+1245
+1246
+1247
+1248
+1249</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'actionpack/lib/action_view/helpers/prototype_helper.rb', line 1238</span>
+
+<span class='def def kw'>def</span> <span class='zip identifier id'>zip</span><span class='lparen token'>(</span><span class='variable identifier id'>variable</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='arguments identifier id'>arguments</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='add_variable_assignment! fid id'>add_variable_assignment!</span><span class='lparen token'>(</span><span class='variable identifier id'>variable</span><span class='rparen token'>)</span>
+  <span class='append_enumerable_function! fid id'>append_enumerable_function!</span><span class='lparen token'>(</span><span class='dstring node'>&quot;zip(#{arguments_for_call arguments}&quot;</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='block identifier id'>block</span>
+    <span class='function_chain identifier id'>function_chain</span><span class='lbrack token'>[</span><span class='integer val'>-1</span><span class='rbrack token'>]</span> <span class='opasgn op'>+=</span> <span class='string val'>&quot;, function(array) {&quot;</span>
+    <span class='yield yield kw'>yield</span> <span class='colon2 op'>::</span><span class='ActiveSupport constant id'>ActiveSupport</span><span class='colon2 op'>::</span><span class='JSON constant id'>JSON</span><span class='colon2 op'>::</span><span class='Variable constant id'>Variable</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'array'</span><span class='rparen token'>)</span>
+    <span class='add_return_statement! fid id'>add_return_statement!</span>
+    <span class='@generator ivar id'>@generator</span> <span class='lshft op'>&lt;&lt;</span> <span class='string val'>'});'</span>
+  <span class='else else kw'>else</span>
+    <span class='function_chain identifier id'>function_chain</span><span class='lbrack token'>[</span><span class='integer val'>-1</span><span class='rbrack token'>]</span> <span class='opasgn op'>+=</span> <span class='string val'>');'</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

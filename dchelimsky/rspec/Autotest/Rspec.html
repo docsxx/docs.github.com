@@ -1,0 +1,261 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: Autotest::Rspec</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class Autotest_Rspec">
+  <h1 class="title">Class: Autotest::Rspec</h1>
+  <div class="section inheritance">
+  <ul>
+  <li>Autotest</li><ul><li>Autotest::Rspec</li>
+  </ul></ul>
+</div><div class="section constants">
+  
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+22
+23
+24
+25
+26</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/autotest/rspec.rb', line 22</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span>
+  <span class='super super kw'>super</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='failed_results_re identifier id'>failed_results_re</span> <span class='assign token'>=</span> <span class='regexp val'>/^\d+\)\n(?:\e\[\d*m)?(?:.*?in )?'([^\n]*)'(?: FAILED)?(?:\e\[\d*m)?\n(.*?)\n\n/</span><span class='m identifier id'>m</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='completed_re identifier id'>completed_re</span> <span class='assign token'>=</span> <span class='regexp val'>/\n(?:\e\[\d*m)?\d* examples?/</span><span class='m identifier id'>m</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#add_options_if_present-instance_method' title='#add_options_if_present'>#add_options_if_present</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#consolidate_failures-instance_method' title='#consolidate_failures'>#consolidate_failures</a></span><span class='args'>(failed)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#make_test_cmd-instance_method' title='#make_test_cmd'>#make_test_cmd</a></span><span class='args'>(files_to_test)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>add_options_if_present</h3>
+</div><div id="add_options_if_present-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>add_options_if_present</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+44
+45
+46</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/autotest/rspec.rb', line 44</span>
+
+<span class='def def kw'>def</span> <span class='add_options_if_present identifier id'>add_options_if_present</span> 
+  <span class='File constant id'>File</span><span class='dot token'>.</span><span class='exist? fid id'>exist?</span><span class='lparen token'>(</span><span class='string val'>&quot;spec/spec.opts&quot;</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='string val'>&quot;-O spec/spec.opts &quot;</span> <span class='colon op'>:</span> <span class='string val'>&quot;&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>consolidate_failures</h3>
+</div><div id="consolidate_failures-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>consolidate_failures</span><span class='args'>(failed)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+28
+29
+30
+31
+32
+33
+34
+35
+36</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/autotest/rspec.rb', line 28</span>
+
+<span class='def def kw'>def</span> <span class='consolidate_failures identifier id'>consolidate_failures</span><span class='lparen token'>(</span><span class='failed identifier id'>failed</span><span class='rparen token'>)</span>
+  <span class='filters identifier id'>filters</span> <span class='assign token'>=</span> <span class='new_hash_of_arrays identifier id'>new_hash_of_arrays</span>
+  <span class='failed identifier id'>failed</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='spec identifier id'>spec</span><span class='comma token'>,</span> <span class='trace identifier id'>trace</span><span class='bitor op'>|</span>
+    <span class='if if kw'>if</span> <span class='trace identifier id'>trace</span> <span class='match op'>=~</span> <span class='regexp val'>/\n(\.\/)?(.*spec\.rb):[\d]+:/</span>
+      <span class='filters identifier id'>filters</span><span class='lbrack token'>[</span><span class='$2 nth_ref id'>$2</span><span class='rbrack token'>]</span> <span class='lshft op'>&lt;&lt;</span> <span class='spec identifier id'>spec</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+  <span class='return return kw'>return</span> <span class='filters identifier id'>filters</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>make_test_cmd</h3>
+</div><div id="make_test_cmd-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>make_test_cmd</span><span class='args'>(files_to_test)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+38
+39
+40
+41
+42</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/autotest/rspec.rb', line 38</span>
+
+<span class='def def kw'>def</span> <span class='make_test_cmd identifier id'>make_test_cmd</span><span class='lparen token'>(</span><span class='files_to_test identifier id'>files_to_test</span><span class='rparen token'>)</span>
+  <span class='return return kw'>return</span> <span class='string val'>''</span> <span class='if if_mod kw'>if</span> <span class='files_to_test identifier id'>files_to_test</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span>
+  <span class='spec_program identifier id'>spec_program</span> <span class='assign token'>=</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='expand_path identifier id'>expand_path</span><span class='lparen token'>(</span><span class='File constant id'>File</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='File constant id'>File</span><span class='dot token'>.</span><span class='dirname identifier id'>dirname</span><span class='lparen token'>(</span><span class='__FILE__ __file__ kw'>__FILE__</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='string val'>'..'</span><span class='comma token'>,</span> <span class='string val'>'..'</span><span class='comma token'>,</span> <span class='string val'>'bin'</span><span class='comma token'>,</span> <span class='string val'>'spec'</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='return return kw'>return</span> <span class='dstring node'>&quot;#{ruby} #{spec_program} --autospec #{files_to_test.keys.flatten.join(' ')} #{add_options_if_present}&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,454 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: Shoulda::ClassMethods</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module Shoulda_ClassMethods">
+  <h1 class="title">Module: Shoulda::ClassMethods</h1>
+  <div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#before_should-instance_method' title='#before_should'>#before_should</a></span><span class='args'>(name, &amp;blk)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <h2>Before statements.</h2>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#context-instance_method' title='#context'>#context</a></span><span class='args'>(name, &amp;blk)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <h2>Contexts.</h2>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#should-instance_method' title='#should'>#should</a></span><span class='args'>(name, options = {}, &amp;blk)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <h2>Should statements.</h2>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#should_eventually-instance_method' title='#should_eventually'>#should_eventually</a></span><span class='args'>(name, options = {}, &amp;blk)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Just like should, but never runs, and instead prints an &#8216;X&#8217; in
+the Test::Unit output.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>before_should</h3>
+</div><div id="before_should-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>before_should</span><span class='args'>(name, &amp;blk)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <h2>Before statements</h2>
+<p>
+Before statements are should statements that run before the current
+context&#8217;s setup. These are especially useful when setting
+expectations.
+</p>
+<h3>Example:</h3>
+<pre class="code">
+ <span class='class class kw'>class</span> <span class='UserControllerTest constant id'>UserControllerTest</span> <span class='lt op'>&lt;</span> <span class='Test constant id'>Test</span><span class='colon2 op'>::</span><span class='Unit constant id'>Unit</span><span class='colon2 op'>::</span><span class='TestCase constant id'>TestCase</span>
+   <span class='context identifier id'>context</span> <span class='string val'>&quot;the index action&quot;</span> <span class='do do kw'>do</span>
+     <span class='setup identifier id'>setup</span> <span class='do do kw'>do</span>
+       <span class='@users ivar id'>@users</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='Factory constant id'>Factory</span><span class='lparen token'>(</span><span class='symbol val'>:user</span><span class='rparen token'>)</span><span class='rbrack token'>]</span>
+       <span class='User constant id'>User</span><span class='dot token'>.</span><span class='stubs identifier id'>stubs</span><span class='lparen token'>(</span><span class='symbol val'>:find</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='returns identifier id'>returns</span><span class='lparen token'>(</span><span class='@users ivar id'>@users</span><span class='rparen token'>)</span>
+     <span class='end end kw'>end</span>
+
+     <span class='context identifier id'>context</span> <span class='string val'>&quot;on GET&quot;</span> <span class='do do kw'>do</span>
+       <span class='setup identifier id'>setup</span> <span class='lbrace token'>{</span> <span class='get identifier id'>get</span> <span class='symbol val'>:index</span> <span class='rbrace token'>}</span>
+
+       <span class='should_respond_with identifier id'>should_respond_with</span> <span class='symbol val'>:success</span>
+
+       <span class='comment val'># runs before &quot;get :index&quot;</span>
+       <span class='before_should identifier id'>before_should</span> <span class='string val'>&quot;find all users&quot;</span> <span class='do do kw'>do</span>
+         <span class='User constant id'>User</span><span class='dot token'>.</span><span class='expects identifier id'>expects</span><span class='lparen token'>(</span><span class='symbol val'>:find</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:all</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='returns identifier id'>returns</span><span class='lparen token'>(</span><span class='@users ivar id'>@users</span><span class='rparen token'>)</span>
+       <span class='end end kw'>end</span>
+     <span class='end end kw'>end</span>
+   <span class='end end kw'>end</span>
+ <span class='end end kw'>end</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+98
+99
+100</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/shoulda/context.rb', line 98</span>
+
+<span class='def def kw'>def</span> <span class='before_should identifier id'>before_should</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='blk identifier id'>blk</span><span class='rparen token'>)</span>
+  <span class='should identifier id'>should</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='symbol val'>:before</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='blk identifier id'>blk</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='assert identifier id'>assert</span> <span class='true true kw'>true</span> <span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>context</h3>
+</div><div id="context-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>context</span><span class='args'>(name, &amp;blk)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <h2>Contexts</h2>
+<p>
+A context block groups should statements under a common set of
+setup/teardown methods. Context blocks can be arbitrarily nested, and can
+do wonders for improving the maintainability and readability of your test
+code.
+</p>
+<p>
+A context block can contain setup, should, should_eventually, and teardown
+blocks.
+</p>
+<pre class="code">
+ <span class='class class kw'>class</span> <span class='UserTest constant id'>UserTest</span> <span class='lt op'>&lt;</span> <span class='Test constant id'>Test</span><span class='colon2 op'>::</span><span class='Unit constant id'>Unit</span><span class='colon2 op'>::</span><span class='TestCase constant id'>TestCase</span>
+   <span class='context identifier id'>context</span> <span class='string val'>&quot;A User instance&quot;</span> <span class='do do kw'>do</span>
+     <span class='setup identifier id'>setup</span> <span class='do do kw'>do</span>
+       <span class='@user ivar id'>@user</span> <span class='assign token'>=</span> <span class='User constant id'>User</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='symbol val'>:first</span><span class='rparen token'>)</span>
+     <span class='end end kw'>end</span>
+
+     <span class='should identifier id'>should</span> <span class='string val'>&quot;return its full name&quot;</span>
+       <span class='assert_equal identifier id'>assert_equal</span> <span class='string val'>'John Doe'</span><span class='comma token'>,</span> <span class='@user ivar id'>@user</span><span class='dot token'>.</span><span class='full_name identifier id'>full_name</span>
+     <span class='end end kw'>end</span>
+   <span class='end end kw'>end</span>
+ <span class='end end kw'>end</span>
+</pre>
+<p>
+This code will produce the method <tt>&quot;test: A User instance should
+return its full name. &quot;</tt>.
+</p>
+<p>
+Contexts may be nested. Nested contexts run their setup blocks from out to
+in before each should statement. They then run their teardown blocks from
+in to out after each should statement.
+</p>
+<pre class="code">
+ <span class='class class kw'>class</span> <span class='UserTest constant id'>UserTest</span> <span class='lt op'>&lt;</span> <span class='Test constant id'>Test</span><span class='colon2 op'>::</span><span class='Unit constant id'>Unit</span><span class='colon2 op'>::</span><span class='TestCase constant id'>TestCase</span>
+   <span class='context identifier id'>context</span> <span class='string val'>&quot;A User instance&quot;</span> <span class='do do kw'>do</span>
+     <span class='setup identifier id'>setup</span> <span class='do do kw'>do</span>
+       <span class='@user ivar id'>@user</span> <span class='assign token'>=</span> <span class='User constant id'>User</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='symbol val'>:first</span><span class='rparen token'>)</span>
+     <span class='end end kw'>end</span>
+
+     <span class='should identifier id'>should</span> <span class='string val'>&quot;return its full name&quot;</span>
+       <span class='assert_equal identifier id'>assert_equal</span> <span class='string val'>'John Doe'</span><span class='comma token'>,</span> <span class='@user ivar id'>@user</span><span class='dot token'>.</span><span class='full_name identifier id'>full_name</span>
+     <span class='end end kw'>end</span>
+
+     <span class='context identifier id'>context</span> <span class='string val'>&quot;with a profile&quot;</span> <span class='do do kw'>do</span>
+       <span class='setup identifier id'>setup</span> <span class='do do kw'>do</span>
+         <span class='@user ivar id'>@user</span><span class='dot token'>.</span><span class='profile identifier id'>profile</span> <span class='assign token'>=</span> <span class='Profile constant id'>Profile</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='symbol val'>:first</span><span class='rparen token'>)</span>
+       <span class='end end kw'>end</span>
+
+       <span class='should identifier id'>should</span> <span class='string val'>&quot;return true when sent :has_profile?&quot;</span>
+         <span class='assert identifier id'>assert</span> <span class='@user ivar id'>@user</span><span class='dot token'>.</span><span class='has_profile? fid id'>has_profile?</span>
+       <span class='end end kw'>end</span>
+     <span class='end end kw'>end</span>
+   <span class='end end kw'>end</span>
+ <span class='end end kw'>end</span>
+</pre>
+<p>
+This code will produce the following methods
+</p>
+<ul>
+<li><tt>&quot;test: A User instance should return its full name. &quot;</tt>
+
+</li>
+<li><tt>&quot;test: A User instance with a profile should return true when sent
+:has_profile?. &quot;</tt>
+
+</li>
+</ul>
+<p>
+<b>Just like should statements, a context block can exist next to normal
+<tt>def test_the_old_way; end</tt> tests</b>. This means you do not have to
+fully commit to the context/should syntax in a test file.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+165
+166
+167
+168
+169
+170
+171
+172</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/shoulda/context.rb', line 165</span>
+
+<span class='def def kw'>def</span> <span class='context identifier id'>context</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='blk identifier id'>blk</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='Shoulda constant id'>Shoulda</span><span class='dot token'>.</span><span class='current_context identifier id'>current_context</span>
+    <span class='Shoulda constant id'>Shoulda</span><span class='dot token'>.</span><span class='current_context identifier id'>current_context</span><span class='dot token'>.</span><span class='context identifier id'>context</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='blk identifier id'>blk</span><span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+    <span class='context identifier id'>context</span> <span class='assign token'>=</span> <span class='Shoulda constant id'>Shoulda</span><span class='colon2 op'>::</span><span class='Context constant id'>Context</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='self self kw'>self</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='blk identifier id'>blk</span><span class='rparen token'>)</span>
+    <span class='context identifier id'>context</span><span class='dot token'>.</span><span class='build identifier id'>build</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>should</h3>
+</div><div id="should-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>should</span><span class='args'>(name, options = {}, &amp;blk)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <h2>Should statements</h2>
+<p>
+Should statements are just syntactic sugar over normal Test::Unit test
+methods. A should block contains all the normal code and assertions
+you&#8217;re used to seeing, with the added benefit that they can be
+wrapped inside context blocks (see below).
+</p>
+<h3>Example:</h3>
+<pre class="code">
+ <span class='class class kw'>class</span> <span class='UserTest constant id'>UserTest</span> <span class='lt op'>&lt;</span> <span class='Test constant id'>Test</span><span class='colon2 op'>::</span><span class='Unit constant id'>Unit</span><span class='colon2 op'>::</span><span class='TestCase constant id'>TestCase</span>
+
+   <span class='def def kw'>def</span> <span class='setup identifier id'>setup</span>
+     <span class='@user ivar id'>@user</span> <span class='assign token'>=</span> <span class='User constant id'>User</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;John&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;Doe&quot;</span><span class='rparen token'>)</span>
+   <span class='end end kw'>end</span>
+
+   <span class='should identifier id'>should</span> <span class='string val'>&quot;return its full name&quot;</span>
+     <span class='assert_equal identifier id'>assert_equal</span> <span class='string val'>'John Doe'</span><span class='comma token'>,</span> <span class='@user ivar id'>@user</span><span class='dot token'>.</span><span class='full_name identifier id'>full_name</span>
+   <span class='end end kw'>end</span>
+
+ <span class='end end kw'>end</span>
+</pre>
+<p>
+&#8230;will produce the following test:
+</p>
+<ul>
+<li><tt>&quot;test: User should return its full name. &quot;</tt>
+
+</li>
+</ul>
+<p>
+Note: The part before <tt>should</tt> in the test name is gleamed from the
+name of the Test::Unit class.
+</p>
+<p>
+Should statements can also take a Proc as a <tt>:before </tt>option. This
+proc runs after any parent context&#8217;s setups but before the current
+context&#8217;s setup.
+</p>
+<h3>Example:</h3>
+<pre class="code">
+ <span class='context identifier id'>context</span> <span class='string val'>&quot;Some context&quot;</span> <span class='do do kw'>do</span>
+   <span class='setup identifier id'>setup</span> <span class='lbrace token'>{</span> <span class='puts identifier id'>puts</span><span class='lparen token'>(</span><span class='string val'>&quot;I run after the :before proc&quot;</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+
+   <span class='should identifier id'>should</span> <span class='string val'>&quot;run a :before proc&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:before</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lambda identifier id'>lambda</span> <span class='lbrace token'>{</span> <span class='puts identifier id'>puts</span><span class='lparen token'>(</span><span class='string val'>&quot;I run before the setup&quot;</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>  <span class='do do kw'>do</span>
+     <span class='assert identifier id'>assert</span> <span class='true true kw'>true</span>
+   <span class='end end kw'>end</span>
+ <span class='end end kw'>end</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/shoulda/context.rb', line 60</span>
+
+<span class='def def kw'>def</span> <span class='should identifier id'>should</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='blk identifier id'>blk</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='Shoulda constant id'>Shoulda</span><span class='dot token'>.</span><span class='current_context identifier id'>current_context</span>
+    <span class='block_given? fid id'>block_given?</span> <span class='integer val'>? </span><span class='Shoulda constant id'>Shoulda</span><span class='dot token'>.</span><span class='current_context identifier id'>current_context</span><span class='dot token'>.</span><span class='should identifier id'>should</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='blk identifier id'>blk</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='Should constant id'>Should</span><span class='dot token'>.</span><span class='current_context identifier id'>current_context</span><span class='dot token'>.</span><span class='should_eventually identifier id'>should_eventually</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+    <span class='context_name identifier id'>context_name</span> <span class='assign token'>=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='name identifier id'>name</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='regexp val'>/Test/</span><span class='comma token'>,</span> <span class='string val'>&quot;&quot;</span><span class='rparen token'>)</span>
+    <span class='context identifier id'>context</span> <span class='assign token'>=</span> <span class='Shoulda constant id'>Shoulda</span><span class='colon2 op'>::</span><span class='Context constant id'>Context</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='context_name identifier id'>context_name</span><span class='comma token'>,</span> <span class='self self kw'>self</span><span class='rparen token'>)</span> <span class='do do kw'>do</span>
+      <span class='block_given? fid id'>block_given?</span> <span class='integer val'>? </span><span class='should identifier id'>should</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='blk identifier id'>blk</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='should_eventually identifier id'>should_eventually</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+    <span class='context identifier id'>context</span><span class='dot token'>.</span><span class='build identifier id'>build</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>should_eventually</h3>
+</div><div id="should_eventually-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>should_eventually</span><span class='args'>(name, options = {}, &amp;blk)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Just like should, but never runs, and instead prints an &#8216;X&#8217; in
+the Test::Unit output.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+103
+104
+105
+106
+107
+108
+109</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/shoulda/context.rb', line 103</span>
+
+<span class='def def kw'>def</span> <span class='should_eventually identifier id'>should_eventually</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='blk identifier id'>blk</span><span class='rparen token'>)</span>
+  <span class='context_name identifier id'>context_name</span> <span class='assign token'>=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='name identifier id'>name</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='regexp val'>/Test/</span><span class='comma token'>,</span> <span class='string val'>&quot;&quot;</span><span class='rparen token'>)</span>
+  <span class='context identifier id'>context</span> <span class='assign token'>=</span> <span class='Shoulda constant id'>Shoulda</span><span class='colon2 op'>::</span><span class='Context constant id'>Context</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='context_name identifier id'>context_name</span><span class='comma token'>,</span> <span class='self self kw'>self</span><span class='rparen token'>)</span> <span class='do do kw'>do</span>
+    <span class='should_eventually identifier id'>should_eventually</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='blk identifier id'>blk</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+  <span class='context identifier id'>context</span><span class='dot token'>.</span><span class='build identifier id'>build</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

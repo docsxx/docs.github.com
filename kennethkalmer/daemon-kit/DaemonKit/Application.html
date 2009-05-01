@@ -1,0 +1,206 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: DaemonKit::Application</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class DaemonKit_Application">
+  <h1 class="title">Class: DaemonKit::Application</h1>
+  <div class="section docstring">
+  <p>
+Class responsible for making the daemons run and keep them running.
+</p>
+
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <h1>Public Class Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#run-class_method' title='run'>run</a></span><span class='args'>( file )</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Run the file as a daemon.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#running%21-class_method' title='running!'>running!</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Call this from inside a daemonized process to complete the initialization
+process.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails class public">
+  <h1>Public Class Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>run</h3>
+</div><div id="run-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>run</span><span class='args'>( file )</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Run the file as a daemon
+</p>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="raise">
+  <h3>Raises:</h3>
+  <dl>
+  
+    <dt>
+      
+        <span class='type'>[<tt>DaemonNotFound</tt>]</span>
+      
+      
+    </dt>
+    <dd>
+      <span class='desc'></span>
+    </dd>
+  
+  </dl>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/daemon_kit/application.rb', line 11</span>
+
+<span class='def def kw'>def</span> <span class='run identifier id'>run</span><span class='lparen token'>(</span> <span class='file identifier id'>file</span> <span class='rparen token'>)</span>
+  <span class='raise identifier id'>raise</span> <span class='DaemonNotFound constant id'>DaemonNotFound</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span> <span class='file identifier id'>file</span> <span class='rparen token'>)</span> <span class='unless unless_mod kw'>unless</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='exist? fid id'>exist?</span><span class='lparen token'>(</span> <span class='file identifier id'>file</span> <span class='rparen token'>)</span>
+
+  <span class='app_name identifier id'>app_name</span> <span class='assign token'>=</span> <span class='DaemonKit constant id'>DaemonKit</span><span class='dot token'>.</span><span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='daemon_name identifier id'>daemon_name</span> <span class='orop op'>||</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='basename identifier id'>basename</span><span class='lparen token'>(</span> <span class='file identifier id'>file</span> <span class='rparen token'>)</span>
+  <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span> <span class='symbol val'>:backtrace</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span><span class='comma token'>,</span> <span class='symbol val'>:log_output</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span><span class='comma token'>,</span> <span class='symbol val'>:app_name</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='app_name identifier id'>app_name</span> <span class='rbrace token'>}</span>
+
+  <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:dir_mode</span><span class='rbrack token'>]</span>        <span class='assign token'>=</span> <span class='DaemonKit constant id'>DaemonKit</span><span class='dot token'>.</span><span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='dir_mode identifier id'>dir_mode</span> <span class='orop op'>||</span> <span class='symbol val'>:normal</span>
+  <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:dir</span><span class='rbrack token'>]</span>             <span class='assign token'>=</span> <span class='DaemonKit constant id'>DaemonKit</span><span class='dot token'>.</span><span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='dir identifier id'>dir</span>      <span class='orop op'>||</span> <span class='string val'>&quot;log&quot;</span>
+  <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:multiple</span><span class='rbrack token'>]</span>        <span class='assign token'>=</span> <span class='DaemonKit constant id'>DaemonKit</span><span class='dot token'>.</span><span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='multiple identifier id'>multiple</span>
+  <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:force_kill_wait</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='DaemonKit constant id'>DaemonKit</span><span class='dot token'>.</span><span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='force_kill_wait identifier id'>force_kill_wait</span> <span class='if if_mod kw'>if</span> <span class='DaemonKit constant id'>DaemonKit</span><span class='dot token'>.</span><span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='force_kill_wait identifier id'>force_kill_wait</span>
+
+  <span class='Daemons constant id'>Daemons</span><span class='dot token'>.</span><span class='run identifier id'>run</span><span class='lparen token'>(</span> <span class='file identifier id'>file</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>running!</h3>
+</div><div id="running%21-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>running!</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Call this from inside a daemonized process to complete the initialization
+process
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+27
+28
+29</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/daemon_kit/application.rb', line 27</span>
+
+<span class='def def kw'>def</span> <span class='running! fid id'>running!</span>
+  <span class='DaemonKit constant id'>DaemonKit</span><span class='colon2 op'>::</span><span class='Initializer constant id'>Initializer</span><span class='dot token'>.</span><span class='continue! fid id'>continue!</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

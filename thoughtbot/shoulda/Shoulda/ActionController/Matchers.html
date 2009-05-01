@@ -1,0 +1,674 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: Shoulda::ActionController::Matchers</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module Shoulda_ActionController_Matchers">
+  <h1 class="title">Module: Shoulda::ActionController::Matchers</h1>
+  <div class="section docstring">
+  <p>
+By using the macro helpers you can quickly and easily create concise and
+easy to read test suites.
+</p>
+<p>
+This code segment:
+</p>
+<pre class="code">
+  <span class='describe identifier id'>describe</span> <span class='UsersController constant id'>UsersController</span><span class='comma token'>,</span> <span class='string val'>&quot;on GET to show with a valid id&quot;</span> <span class='do do kw'>do</span>
+    <span class='before identifier id'>before</span><span class='lparen token'>(</span><span class='symbol val'>:each</span><span class='rparen token'>)</span> <span class='do do kw'>do</span>
+      <span class='get identifier id'>get</span> <span class='symbol val'>:show</span><span class='comma token'>,</span> <span class='symbol val'>:id</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='User constant id'>User</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='dot token'>.</span><span class='to_param identifier id'>to_param</span>
+    <span class='end end kw'>end</span>
+
+    <span class='it identifier id'>it</span> <span class='lbrace token'>{</span> <span class='should identifier id'>should</span> <span class='assign_to identifier id'>assign_to</span><span class='lparen token'>(</span><span class='symbol val'>:user</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+    <span class='it identifier id'>it</span> <span class='lbrace token'>{</span> <span class='should identifier id'>should</span> <span class='respond_with identifier id'>respond_with</span><span class='lparen token'>(</span><span class='symbol val'>:success</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+    <span class='it identifier id'>it</span> <span class='lbrace token'>{</span> <span class='should identifier id'>should</span> <span class='render_template identifier id'>render_template</span><span class='lparen token'>(</span><span class='symbol val'>:show</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+    <span class='it identifier id'>it</span> <span class='lbrace token'>{</span> <span class='should identifier id'>should</span> <span class='not_set_the_flash identifier id'>not_set_the_flash</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+
+    <span class='it identifier id'>it</span> <span class='string val'>&quot;should do something else really cool&quot;</span> <span class='do do kw'>do</span>
+      <span class='assigns identifier id'>assigns</span><span class='lbrack token'>[</span><span class='symbol val'>:user</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='id identifier id'>id</span><span class='dot token'>.</span><span class='should identifier id'>should</span> <span class='eq op'>==</span> <span class='integer val'>1</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+Would produce 5 tests for the show action
+</p>
+
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#assign_to-instance_method' title='#assign_to'>#assign_to</a></span><span class='args'>(variable)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Ensures that the controller assigned to the named instance variable.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#filter_param-instance_method' title='#filter_param'>#filter_param</a></span><span class='args'>(key)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Ensures that filter_parameter_logging is set for the specified key.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#render_with_layout-instance_method' title='#render_with_layout'>#render_with_layout</a></span><span class='args'>(layout = nil)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Ensures that the controller rendered with the given layout.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#respond_with-instance_method' title='#respond_with'>#respond_with</a></span><span class='args'>(status)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Ensures a controller responded with expected &#8216;response&#8217; status
+code.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#respond_with_content_type-instance_method' title='#respond_with_content_type'>#respond_with_content_type</a></span><span class='args'>(content_type)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Ensures a controller responded with expected &#8216;response&#8217; content
+type.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#route-instance_method' title='#route'>#route</a></span><span class='args'>(method, path)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Ensures that requesting <tt>path</tt> using <tt>method</tt> routes to
+<tt>options</tt>.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#set_session-instance_method' title='#set_session'>#set_session</a></span><span class='args'>(key)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Ensures that a session key was set to the expected value.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#set_the_flash-instance_method' title='#set_the_flash'>#set_the_flash</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Ensures that the flash contains the given value.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>assign_to</h3>
+</div><div id="assign_to-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>assign_to</span><span class='args'>(variable)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Ensures that the controller assigned to the named instance variable.
+</p>
+<p>
+Options:
+</p>
+<ul>
+<li><tt>with_kind_of</tt> - The expected class of the instance variable being
+checked.
+
+</li>
+<li><tt>with</tt> - The value that should be assigned.
+
+</li>
+</ul>
+<p>
+Example:
+</p>
+<pre class="code">
+  <span class='it identifier id'>it</span> <span class='lbrace token'>{</span> <span class='should identifier id'>should</span> <span class='assign_to identifier id'>assign_to</span><span class='lparen token'>(</span><span class='symbol val'>:user</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  <span class='it identifier id'>it</span> <span class='lbrace token'>{</span> <span class='should_not identifier id'>should_not</span> <span class='assign_to identifier id'>assign_to</span><span class='lparen token'>(</span><span class='symbol val'>:user</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  <span class='it identifier id'>it</span> <span class='lbrace token'>{</span> <span class='should identifier id'>should</span> <span class='assign_to identifier id'>assign_to</span><span class='lparen token'>(</span><span class='symbol val'>:user</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='with_kind_of identifier id'>with_kind_of</span><span class='lparen token'>(</span><span class='User constant id'>User</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  <span class='it identifier id'>it</span> <span class='lbrace token'>{</span> <span class='should identifier id'>should</span> <span class='assign_to identifier id'>assign_to</span><span class='lparen token'>(</span><span class='symbol val'>:user</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='@user ivar id'>@user</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+18
+19
+20</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/shoulda/action_controller/matchers/assign_to_matcher.rb', line 18</span>
+
+<span class='def def kw'>def</span> <span class='assign_to identifier id'>assign_to</span><span class='lparen token'>(</span><span class='variable identifier id'>variable</span><span class='rparen token'>)</span>
+  <span class='AssignToMatcher constant id'>AssignToMatcher</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='variable identifier id'>variable</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>filter_param</h3>
+</div><div id="filter_param-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>filter_param</span><span class='args'>(key)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Ensures that filter_parameter_logging is set for the specified key.
+</p>
+<p>
+Example:
+</p>
+<pre class="code">
+  <span class='it identifier id'>it</span> <span class='lbrace token'>{</span> <span class='should identifier id'>should</span> <span class='filter_param identifier id'>filter_param</span><span class='lparen token'>(</span><span class='symbol val'>:password</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+10
+11
+12</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/shoulda/action_controller/matchers/filter_param_matcher.rb', line 10</span>
+
+<span class='def def kw'>def</span> <span class='filter_param identifier id'>filter_param</span><span class='lparen token'>(</span><span class='key identifier id'>key</span><span class='rparen token'>)</span>
+  <span class='FilterParamMatcher constant id'>FilterParamMatcher</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='key identifier id'>key</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>render_with_layout</h3>
+</div><div id="render_with_layout-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>render_with_layout</span><span class='args'>(layout = nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Ensures that the controller rendered with the given layout.
+</p>
+<p>
+Example:
+</p>
+<pre class="code">
+  <span class='it identifier id'>it</span> <span class='lbrace token'>{</span> <span class='should identifier id'>should</span> <span class='render_with_layout identifier id'>render_with_layout</span> <span class='rbrace token'>}</span>
+  <span class='it identifier id'>it</span> <span class='lbrace token'>{</span> <span class='should identifier id'>should</span> <span class='render_with_layout identifier id'>render_with_layout</span><span class='lparen token'>(</span><span class='symbol val'>:special</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  <span class='it identifier id'>it</span> <span class='lbrace token'>{</span> <span class='should_not identifier id'>should_not</span> <span class='render_with_layout identifier id'>render_with_layout</span> <span class='rbrace token'>}</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+12
+13
+14</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/shoulda/action_controller/matchers/render_with_layout_matcher.rb', line 12</span>
+
+<span class='def def kw'>def</span> <span class='render_with_layout identifier id'>render_with_layout</span><span class='lparen token'>(</span><span class='layout identifier id'>layout</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='RenderWithLayout constant id'>RenderWithLayout</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='layout identifier id'>layout</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>respond_with</h3>
+</div><div id="respond_with-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>respond_with</span><span class='args'>(status)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Ensures a controller responded with expected &#8216;response&#8217; status
+code.
+</p>
+<p>
+You can pass an explicit status number like 200, 301, 404, 500 or its
+symbolic equivalent :success, :redirect, :missing, :error. See
+ActionController::StatusCodes for a full list.
+</p>
+<p>
+Example:
+</p>
+<pre class="code">
+  <span class='it identifier id'>it</span> <span class='lbrace token'>{</span> <span class='should identifier id'>should</span> <span class='respond_with identifier id'>respond_with</span><span class='lparen token'>(</span><span class='symbol val'>:success</span><span class='rparen token'>)</span>  <span class='rbrace token'>}</span>
+  <span class='it identifier id'>it</span> <span class='lbrace token'>{</span> <span class='should identifier id'>should</span> <span class='respond_with identifier id'>respond_with</span><span class='lparen token'>(</span><span class='symbol val'>:redirect</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  <span class='it identifier id'>it</span> <span class='lbrace token'>{</span> <span class='should identifier id'>should</span> <span class='respond_with identifier id'>respond_with</span><span class='lparen token'>(</span><span class='symbol val'>:missing</span><span class='rparen token'>)</span>  <span class='rbrace token'>}</span>
+  <span class='it identifier id'>it</span> <span class='lbrace token'>{</span> <span class='should identifier id'>should</span> <span class='respond_with identifier id'>respond_with</span><span class='lparen token'>(</span><span class='symbol val'>:error</span><span class='rparen token'>)</span>    <span class='rbrace token'>}</span>
+  <span class='it identifier id'>it</span> <span class='lbrace token'>{</span> <span class='should identifier id'>should</span> <span class='respond_with identifier id'>respond_with</span><span class='lparen token'>(</span><span class='integer val'>501</span><span class='rparen token'>)</span>       <span class='rbrace token'>}</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+18
+19
+20</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/shoulda/action_controller/matchers/respond_with_matcher.rb', line 18</span>
+
+<span class='def def kw'>def</span> <span class='respond_with identifier id'>respond_with</span><span class='lparen token'>(</span><span class='status identifier id'>status</span><span class='rparen token'>)</span>
+  <span class='RespondWithMatcher constant id'>RespondWithMatcher</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='status identifier id'>status</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>respond_with_content_type</h3>
+</div><div id="respond_with_content_type-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>respond_with_content_type</span><span class='args'>(content_type)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Ensures a controller responded with expected &#8216;response&#8217; content
+type.
+</p>
+<p>
+You can pass an explicit content type such as
+&#8216;application/rss+xml&#8217; or its symbolic equivalent :rss or a
+regular expression such as /rss/
+</p>
+<p>
+Example:
+</p>
+<pre class="code">
+  <span class='it identifier id'>it</span> <span class='lbrace token'>{</span> <span class='should identifier id'>should</span> <span class='respond_with_content_type identifier id'>respond_with_content_type</span><span class='lparen token'>(</span><span class='symbol val'>:xml</span><span class='rparen token'>)</span>  <span class='rbrace token'>}</span>
+  <span class='it identifier id'>it</span> <span class='lbrace token'>{</span> <span class='should identifier id'>should</span> <span class='respond_with_content_type identifier id'>respond_with_content_type</span><span class='lparen token'>(</span><span class='symbol val'>:csv</span><span class='rparen token'>)</span>  <span class='rbrace token'>}</span>
+  <span class='it identifier id'>it</span> <span class='lbrace token'>{</span> <span class='should identifier id'>should</span> <span class='respond_with_content_type identifier id'>respond_with_content_type</span><span class='lparen token'>(</span><span class='symbol val'>:atom</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  <span class='it identifier id'>it</span> <span class='lbrace token'>{</span> <span class='should identifier id'>should</span> <span class='respond_with_content_type identifier id'>respond_with_content_type</span><span class='lparen token'>(</span><span class='symbol val'>:yaml</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  <span class='it identifier id'>it</span> <span class='lbrace token'>{</span> <span class='should identifier id'>should</span> <span class='respond_with_content_type identifier id'>respond_with_content_type</span><span class='lparen token'>(</span><span class='symbol val'>:text</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  <span class='it identifier id'>it</span> <span class='lbrace token'>{</span> <span class='should identifier id'>should</span> <span class='respond_with_content_type identifier id'>respond_with_content_type</span><span class='lparen token'>(</span><span class='string val'>'application/rss+xml'</span><span class='rparen token'>)</span>  <span class='rbrace token'>}</span>
+  <span class='it identifier id'>it</span> <span class='lbrace token'>{</span> <span class='should identifier id'>should</span> <span class='respond_with_content_type identifier id'>respond_with_content_type</span><span class='lparen token'>(</span><span class='regexp val'>/json/</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+20
+21
+22</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/shoulda/action_controller/matchers/respond_with_content_type_matcher.rb', line 20</span>
+
+<span class='def def kw'>def</span> <span class='respond_with_content_type identifier id'>respond_with_content_type</span><span class='lparen token'>(</span><span class='content_type identifier id'>content_type</span><span class='rparen token'>)</span>
+  <span class='RespondWithContentTypeMatcher constant id'>RespondWithContentTypeMatcher</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='content_type identifier id'>content_type</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>route</h3>
+</div><div id="route-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>route</span><span class='args'>(method, path)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Ensures that requesting <tt>path</tt> using <tt>method</tt> routes to
+<tt>options</tt>.
+</p>
+<p>
+If you don&#8217;t specify a controller, it will use the controller from
+the example group.
+</p>
+<p>
+<tt>to_param</tt> is called on the <tt>options</tt> given.
+</p>
+<p>
+Examples:
+</p>
+<pre class="code">
+  <span class='it identifier id'>it</span> <span class='lbrace token'>{</span> <span class='should identifier id'>should</span> <span class='route identifier id'>route</span><span class='lparen token'>(</span><span class='symbol val'>:get</span><span class='comma token'>,</span> <span class='string val'>&quot;/posts&quot;</span><span class='rparen token'>)</span><span class='dot token'>.</span>
+                <span class='to identifier id'>to</span><span class='lparen token'>(</span><span class='symbol val'>:controller</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:posts</span><span class='comma token'>,</span> <span class='symbol val'>:action</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:index</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  <span class='it identifier id'>it</span> <span class='lbrace token'>{</span> <span class='should identifier id'>should</span> <span class='route identifier id'>route</span><span class='lparen token'>(</span><span class='symbol val'>:get</span><span class='comma token'>,</span> <span class='string val'>&quot;/posts/new&quot;</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to identifier id'>to</span><span class='lparen token'>(</span><span class='symbol val'>:action</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:new</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  <span class='it identifier id'>it</span> <span class='lbrace token'>{</span> <span class='should identifier id'>should</span> <span class='route identifier id'>route</span><span class='lparen token'>(</span><span class='symbol val'>:post</span><span class='comma token'>,</span> <span class='string val'>&quot;/posts&quot;</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to identifier id'>to</span><span class='lparen token'>(</span><span class='symbol val'>:action</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:create</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  <span class='it identifier id'>it</span> <span class='lbrace token'>{</span> <span class='should identifier id'>should</span> <span class='route identifier id'>route</span><span class='lparen token'>(</span><span class='symbol val'>:get</span><span class='comma token'>,</span> <span class='string val'>&quot;/posts/1&quot;</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to identifier id'>to</span><span class='lparen token'>(</span><span class='symbol val'>:action</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:show</span><span class='comma token'>,</span> <span class='symbol val'>:id</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>1</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  <span class='it identifier id'>it</span> <span class='lbrace token'>{</span> <span class='should identifier id'>should</span> <span class='route identifier id'>route</span><span class='lparen token'>(</span><span class='symbol val'>:edit</span><span class='comma token'>,</span> <span class='string val'>&quot;/posts/1&quot;</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to identifier id'>to</span><span class='lparen token'>(</span><span class='symbol val'>:action</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:show</span><span class='comma token'>,</span> <span class='symbol val'>:id</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>1</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  <span class='it identifier id'>it</span> <span class='lbrace token'>{</span> <span class='should identifier id'>should</span> <span class='route identifier id'>route</span><span class='lparen token'>(</span><span class='symbol val'>:put</span><span class='comma token'>,</span> <span class='string val'>&quot;/posts/1&quot;</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to identifier id'>to</span><span class='lparen token'>(</span><span class='symbol val'>:action</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:update</span><span class='comma token'>,</span> <span class='symbol val'>:id</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>1</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  <span class='it identifier id'>it</span> <span class='lbrace token'>{</span> <span class='should identifier id'>should</span> <span class='route identifier id'>route</span><span class='lparen token'>(</span><span class='symbol val'>:delete</span><span class='comma token'>,</span> <span class='string val'>&quot;/posts/1&quot;</span><span class='rparen token'>)</span><span class='dot token'>.</span>
+                <span class='to identifier id'>to</span><span class='lparen token'>(</span><span class='symbol val'>:action</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:destroy</span><span class='comma token'>,</span> <span class='symbol val'>:id</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>1</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  <span class='it identifier id'>it</span> <span class='lbrace token'>{</span> <span class='should identifier id'>should</span> <span class='route identifier id'>route</span><span class='lparen token'>(</span><span class='symbol val'>:get</span><span class='comma token'>,</span> <span class='string val'>&quot;/users/1/posts/1&quot;</span><span class='rparen token'>)</span><span class='dot token'>.</span>
+                <span class='to identifier id'>to</span><span class='lparen token'>(</span><span class='symbol val'>:action</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:show</span><span class='comma token'>,</span> <span class='symbol val'>:id</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>1</span><span class='comma token'>,</span> <span class='symbol val'>:user_id</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>1</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+25
+26
+27</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/shoulda/action_controller/matchers/route_matcher.rb', line 25</span>
+
+<span class='def def kw'>def</span> <span class='route identifier id'>route</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='comma token'>,</span> <span class='path identifier id'>path</span><span class='rparen token'>)</span>
+  <span class='RouteMatcher constant id'>RouteMatcher</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='comma token'>,</span> <span class='path identifier id'>path</span><span class='comma token'>,</span> <span class='self self kw'>self</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>set_session</h3>
+</div><div id="set_session-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>set_session</span><span class='args'>(key)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Ensures that a session key was set to the expected value.
+</p>
+<p>
+Example:
+</p>
+<pre class="code">
+  <span class='it identifier id'>it</span> <span class='lbrace token'>{</span> <span class='should identifier id'>should</span> <span class='set_session identifier id'>set_session</span><span class='lparen token'>(</span><span class='symbol val'>:message</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  <span class='it identifier id'>it</span> <span class='lbrace token'>{</span> <span class='should identifier id'>should</span> <span class='set_session identifier id'>set_session</span><span class='lparen token'>(</span><span class='symbol val'>:user_id</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to identifier id'>to</span><span class='lparen token'>(</span><span class='@user ivar id'>@user</span><span class='dot token'>.</span><span class='id identifier id'>id</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  <span class='it identifier id'>it</span> <span class='lbrace token'>{</span> <span class='should_not identifier id'>should_not</span> <span class='set_session identifier id'>set_session</span><span class='lparen token'>(</span><span class='symbol val'>:user_id</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+12
+13
+14</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/shoulda/action_controller/matchers/set_session_matcher.rb', line 12</span>
+
+<span class='def def kw'>def</span> <span class='set_session identifier id'>set_session</span><span class='lparen token'>(</span><span class='key identifier id'>key</span><span class='rparen token'>)</span>
+  <span class='SetSessionMatcher constant id'>SetSessionMatcher</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='key identifier id'>key</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>set_the_flash</h3>
+</div><div id="set_the_flash-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>set_the_flash</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Ensures that the flash contains the given value. Can be a String, a Regexp,
+or nil (indicating that the flash should not be set).
+</p>
+<p>
+Example:
+</p>
+<pre class="code">
+  <span class='it identifier id'>it</span> <span class='lbrace token'>{</span> <span class='should identifier id'>should</span> <span class='set_the_flash identifier id'>set_the_flash</span> <span class='rbrace token'>}</span>
+  <span class='it identifier id'>it</span> <span class='lbrace token'>{</span> <span class='should identifier id'>should</span> <span class='set_the_flash identifier id'>set_the_flash</span><span class='dot token'>.</span><span class='to identifier id'>to</span><span class='lparen token'>(</span><span class='string val'>&quot;Thank you for placing this order.&quot;</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  <span class='it identifier id'>it</span> <span class='lbrace token'>{</span> <span class='should identifier id'>should</span> <span class='set_the_flash identifier id'>set_the_flash</span><span class='dot token'>.</span><span class='to identifier id'>to</span><span class='lparen token'>(</span><span class='regexp val'>/created/i</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  <span class='it identifier id'>it</span> <span class='lbrace token'>{</span> <span class='should_not identifier id'>should_not</span> <span class='set_the_flash identifier id'>set_the_flash</span> <span class='rbrace token'>}</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+14
+15
+16</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/shoulda/action_controller/matchers/set_the_flash_matcher.rb', line 14</span>
+
+<span class='def def kw'>def</span> <span class='set_the_flash identifier id'>set_the_flash</span>
+  <span class='SetTheFlashMatcher constant id'>SetTheFlashMatcher</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

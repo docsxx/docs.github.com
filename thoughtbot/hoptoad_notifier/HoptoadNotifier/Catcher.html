@@ -1,0 +1,326 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: HoptoadNotifier::Catcher</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module HoptoadNotifier_Catcher">
+  <h1 class="title">Module: HoptoadNotifier::Catcher</h1>
+  <div class="section docstring">
+  <p>
+Include this module in Controllers in which you want to be notified of
+errors.
+</p>
+
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <h1>Public Class Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#included-class_method' title='included'>included</a></span><span class='args'>(base)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+  <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#logger-instance_method' title='#logger'>#logger</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns the default logger or a logger that prints to STDOUT.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#notify_hoptoad-instance_method' title='#notify_hoptoad'>#notify_hoptoad</a></span><span class='args'>hash_or_exception</span>
+        <span class='block'></span>
+        
+          <span class='alias'>#inform_hoptoad</span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+This method should be used for sending manual notifications while you are
+still inside the controller.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#rescue_action_in_public_with_hoptoad-instance_method' title='#rescue_action_in_public_with_hoptoad'>#rescue_action_in_public_with_hoptoad</a></span><span class='args'>exception</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Overrides the rescue_action method in ActionController::Base, but does not
+inhibit any custom processing that is defined with Rails 2&#8217;s
+exception helpers.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails class public">
+  <h1>Public Class Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>included</h3>
+</div><div id="included-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>included</span><span class='args'>(base)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+170
+171
+172
+173
+174
+175</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/hoptoad_notifier.rb', line 170</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='included identifier id'>included</span><span class='lparen token'>(</span><span class='base identifier id'>base</span><span class='rparen token'>)</span> <span class='comment val'>#:nodoc:</span>
+  <span class='if if kw'>if</span> <span class='base identifier id'>base</span><span class='dot token'>.</span><span class='instance_methods identifier id'>instance_methods</span><span class='dot token'>.</span><span class='include? fid id'>include?</span> <span class='string val'>'rescue_action_in_public'</span> <span class='and and kw'>and</span> <span class='notop op'>!</span><span class='base identifier id'>base</span><span class='dot token'>.</span><span class='instance_methods identifier id'>instance_methods</span><span class='dot token'>.</span><span class='include? fid id'>include?</span> <span class='string val'>'rescue_action_in_public_without_hoptoad'</span>
+    <span class='base identifier id'>base</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='symbol val'>:alias_method</span><span class='comma token'>,</span> <span class='symbol val'>:rescue_action_in_public_without_hoptoad</span><span class='comma token'>,</span> <span class='symbol val'>:rescue_action_in_public</span><span class='rparen token'>)</span>
+    <span class='base identifier id'>base</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='symbol val'>:alias_method</span><span class='comma token'>,</span> <span class='symbol val'>:rescue_action_in_public</span><span class='comma token'>,</span> <span class='symbol val'>:rescue_action_in_public_with_hoptoad</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div><div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>logger</h3>
+</div><div id="logger-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>logger</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns the default logger or a logger that prints to STDOUT. Necessary for
+manual notifications outside of controllers.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+198
+199
+200
+201
+202</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/hoptoad_notifier.rb', line 198</span>
+
+<span class='def def kw'>def</span> <span class='logger identifier id'>logger</span>
+  <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='dot token'>.</span><span class='logger identifier id'>logger</span>
+<span class='rescue rescue kw'>rescue</span>
+  <span class='@logger ivar id'>@logger</span> <span class='opasgn op'>||=</span> <span class='Logger constant id'>Logger</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='STDERR constant id'>STDERR</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>notify_hoptoad</h3>
+</div><div id="notify_hoptoad-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>notify_hoptoad</span><span class='args'>hash_or_exception</span>
+    <span class='block'></span>
+  </tt>
+</div>
+<p class="aliases">
+  <span class="aka">Also known as:</span>
+  
+    <tt id="inform_hoptoad-instance_method">inform_hoptoad</tt>
+  
+</p>
+</div><div class="section docstring">
+  <p>
+This method should be used for sending manual notifications while you are
+still inside the controller. Otherwise it works like
+HoptoadNotifier.notify.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+186
+187
+188
+189
+190
+191
+192</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/hoptoad_notifier.rb', line 186</span>
+
+<span class='def def kw'>def</span> <span class='notify_hoptoad identifier id'>notify_hoptoad</span> <span class='hash_or_exception identifier id'>hash_or_exception</span>
+  <span class='if if kw'>if</span> <span class='public_environment? fid id'>public_environment?</span>
+    <span class='notice identifier id'>notice</span> <span class='assign token'>=</span> <span class='normalize_notice identifier id'>normalize_notice</span><span class='lparen token'>(</span><span class='hash_or_exception identifier id'>hash_or_exception</span><span class='rparen token'>)</span>
+    <span class='notice identifier id'>notice</span> <span class='assign token'>=</span> <span class='clean_notice identifier id'>clean_notice</span><span class='lparen token'>(</span><span class='notice identifier id'>notice</span><span class='rparen token'>)</span>
+    <span class='send_to_hoptoad identifier id'>send_to_hoptoad</span><span class='lparen token'>(</span><span class='symbol val'>:notice</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='notice identifier id'>notice</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>rescue_action_in_public_with_hoptoad</h3>
+</div><div id="rescue_action_in_public_with_hoptoad-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>rescue_action_in_public_with_hoptoad</span><span class='args'>exception</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Overrides the rescue_action method in ActionController::Base, but does not
+inhibit any custom processing that is defined with Rails 2&#8217;s
+exception helpers.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+179
+180
+181
+182</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/hoptoad_notifier.rb', line 179</span>
+
+<span class='def def kw'>def</span> <span class='rescue_action_in_public_with_hoptoad identifier id'>rescue_action_in_public_with_hoptoad</span> <span class='exception identifier id'>exception</span>
+  <span class='notify_hoptoad identifier id'>notify_hoptoad</span><span class='lparen token'>(</span><span class='exception identifier id'>exception</span><span class='rparen token'>)</span> <span class='unless unless_mod kw'>unless</span> <span class='ignore? fid id'>ignore?</span><span class='lparen token'>(</span><span class='exception identifier id'>exception</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='ignore_user_agent? fid id'>ignore_user_agent?</span>
+  <span class='rescue_action_in_public_without_hoptoad identifier id'>rescue_action_in_public_without_hoptoad</span><span class='lparen token'>(</span><span class='exception identifier id'>exception</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

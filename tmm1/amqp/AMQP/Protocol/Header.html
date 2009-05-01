@@ -1,0 +1,562 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: AMQP::Protocol::Header</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class AMQP_Protocol_Header">
+  <h1 class="title">Class: AMQP::Protocol::Header</h1>
+  <div class="section docstring">
+  <p>
+:startdoc:
+</p>
+<p>
+Contains a properties hash that holds some potentially interesting
+information.
+</p>
+<ul>
+<li>:delivery_mode
+
+</li>
+</ul>
+<p>
+1 equals transient. 2 equals persistent. Unconsumed persistent messages
+will survive a server restart when they are stored in a durable queue.
+</p>
+<ul>
+<li>:redelivered
+
+</li>
+</ul>
+<p>
+True or False
+</p>
+<ul>
+<li>:routing_key
+
+</li>
+</ul>
+<p>
+The routing string used for matching this message to this queue.
+</p>
+<ul>
+<li>:priority
+
+</li>
+</ul>
+<p>
+An integer in the range of 0 to 9 inclusive.
+</p>
+<ul>
+<li>:content_type
+
+</li>
+</ul>
+<p>
+Always &quot;application/octet-stream&quot; (byte stream)
+</p>
+<ul>
+<li>:exchange
+
+</li>
+</ul>
+<p>
+The source exchange which published this message.
+</p>
+<ul>
+<li>:message_count
+
+</li>
+</ul>
+<p>
+The number of unconsumed messages contained in the queue.
+</p>
+<ul>
+<li>:delivery_tag
+
+</li>
+</ul>
+<p>
+A monotonically increasing integer. This number should not be trusted as a
+sequence number. There is no guarantee it won&#8217;t get reset.
+</p>
+
+</div><div class="section attributes">
+  <h1>Attributes</h1>
+
+  
+    <div class="instance">
+      <h2>Instance Attributes</h2>
+      <table>
+      
+        <tr>
+          <th class="name">klass</td>
+          <td class="readwrite">
+            [<span id='klass-instance_method'>R</span><span id='klass%3D-instance_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>klass</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">properties</td>
+          <td class="readwrite">
+            [<span id='properties-instance_method'>R</span><span id='properties%3D-instance_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>properties</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">size</td>
+          <td class="readwrite">
+            [<span id='size-instance_method'>R</span><span id='size%3D-instance_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>size</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">weight</td>
+          <td class="readwrite">
+            [<span id='weight-instance_method'>R</span><span id='weight%3D-instance_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>weight</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+      </table>
+    </div>
+  
+</div><div class="section constants">
+  
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>*args</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/amqp/protocol.rb', line 92</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span> <span class='mult op'>*</span><span class='args identifier id'>args</span>
+  <span class='opts identifier id'>opts</span> <span class='assign token'>=</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='pop identifier id'>pop</span> <span class='if if_mod kw'>if</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='last identifier id'>last</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span> <span class='Hash constant id'>Hash</span>
+  <span class='opts identifier id'>opts</span> <span class='opasgn op'>||=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  
+  <span class='first identifier id'>first</span> <span class='assign token'>=</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='shift identifier id'>shift</span>
+  
+  <span class='if if kw'>if</span> <span class='first identifier id'>first</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span> <span class='colon3 op'>::</span><span class='Class constant id'>Class</span> <span class='and and kw'>and</span> <span class='first identifier id'>first</span><span class='dot token'>.</span><span class='ancestors identifier id'>ancestors</span><span class='dot token'>.</span><span class='include? fid id'>include?</span> <span class='Protocol constant id'>Protocol</span><span class='colon2 op'>::</span><span class='Class constant id'>Class</span>
+    <span class='@klass ivar id'>@klass</span> <span class='assign token'>=</span> <span class='first identifier id'>first</span>
+    <span class='@size ivar id'>@size</span> <span class='assign token'>=</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='shift identifier id'>shift</span> <span class='orop op'>||</span> <span class='integer val'>0</span>
+    <span class='@weight ivar id'>@weight</span> <span class='assign token'>=</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='shift identifier id'>shift</span> <span class='orop op'>||</span> <span class='integer val'>0</span>
+    <span class='@properties ivar id'>@properties</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span>
+
+  <span class='elsif elsif kw'>elsif</span> <span class='first identifier id'>first</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span> <span class='Buffer constant id'>Buffer</span> <span class='or or kw'>or</span> <span class='first identifier id'>first</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span> <span class='String constant id'>String</span>
+    <span class='buf identifier id'>buf</span> <span class='assign token'>=</span> <span class='first identifier id'>first</span>
+    <span class='buf identifier id'>buf</span> <span class='assign token'>=</span> <span class='Buffer constant id'>Buffer</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='buf identifier id'>buf</span><span class='rparen token'>)</span> <span class='unless unless_mod kw'>unless</span> <span class='buf identifier id'>buf</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span> <span class='Buffer constant id'>Buffer</span>
+    
+    <span class='@klass ivar id'>@klass</span> <span class='assign token'>=</span> <span class='Protocol constant id'>Protocol</span><span class='dot token'>.</span><span class='classes identifier id'>classes</span><span class='lbrack token'>[</span><span class='buf identifier id'>buf</span><span class='dot token'>.</span><span class='read identifier id'>read</span><span class='lparen token'>(</span><span class='symbol val'>:short</span><span class='rparen token'>)</span><span class='rbrack token'>]</span>
+    <span class='@weight ivar id'>@weight</span> <span class='assign token'>=</span> <span class='buf identifier id'>buf</span><span class='dot token'>.</span><span class='read identifier id'>read</span><span class='lparen token'>(</span><span class='symbol val'>:short</span><span class='rparen token'>)</span>
+    <span class='@size ivar id'>@size</span> <span class='assign token'>=</span> <span class='buf identifier id'>buf</span><span class='dot token'>.</span><span class='read identifier id'>read</span><span class='lparen token'>(</span><span class='symbol val'>:longlong</span><span class='rparen token'>)</span>
+
+    <span class='props identifier id'>props</span> <span class='assign token'>=</span> <span class='buf identifier id'>buf</span><span class='dot token'>.</span><span class='read identifier id'>read</span><span class='lparen token'>(</span><span class='symbol val'>:properties</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='klass identifier id'>klass</span><span class='dot token'>.</span><span class='properties identifier id'>properties</span><span class='dot token'>.</span><span class='map identifier id'>map</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='type identifier id'>type</span><span class='comma token'>,</span><span class='_ identifier id'>_</span><span class='bitor op'>|</span> <span class='type identifier id'>type</span> <span class='rbrace token'>}</span><span class='rparen token'>)</span>
+    <span class='@properties ivar id'>@properties</span> <span class='assign token'>=</span> <span class='Hash constant id'>Hash</span><span class='lbrack token'>[</span><span class='mult op'>*</span><span class='klass identifier id'>klass</span><span class='dot token'>.</span><span class='properties identifier id'>properties</span><span class='dot token'>.</span><span class='map identifier id'>map</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='_ identifier id'>_</span><span class='comma token'>,</span><span class='name identifier id'>name</span><span class='bitor op'>|</span> <span class='name identifier id'>name</span> <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='zip identifier id'>zip</span><span class='lparen token'>(</span><span class='props identifier id'>props</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='reject identifier id'>reject</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='k identifier id'>k</span><span class='comma token'>,</span><span class='v identifier id'>v</span><span class='bitor op'>|</span> <span class='v identifier id'>v</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span> <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='flatten identifier id'>flatten</span><span class='rbrack token'>]</span>
+
+  <span class='else else kw'>else</span>
+    <span class='raise identifier id'>raise</span> <span class='ArgumentError constant id'>ArgumentError</span><span class='comma token'>,</span> <span class='string val'>'Invalid argument'</span>
+  <span class='end end kw'>end</span>
+  
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div><div class="section methodmissing">
+  <h1>Dynamic Method Handling</h1>
+
+  <p class="note">
+    This class handles dynamic methods through the <tt>method_missing</tt> method
+    
+  </p>
+
+  <div id="method_missing-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>method_missing</span><span class='args'>meth, *args, &amp;blk</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+148
+149
+150
+151</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/amqp/protocol.rb', line 148</span>
+
+<span class='def def kw'>def</span> <span class='method_missing identifier id'>method_missing</span> <span class='meth identifier id'>meth</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='blk identifier id'>blk</span>
+  <span class='@properties ivar id'>@properties</span><span class='dot token'>.</span><span class='has_key? fid id'>has_key?</span><span class='lparen token'>(</span><span class='meth identifier id'>meth</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='@klass ivar id'>@klass</span><span class='dot token'>.</span><span class='properties identifier id'>properties</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='_ identifier id'>_</span><span class='comma token'>,</span><span class='name identifier id'>name</span><span class='bitor op'>|</span> <span class='name identifier id'>name</span> <span class='eq op'>==</span> <span class='meth identifier id'>meth</span> <span class='rbrace token'>}</span> <span class='question op'>?</span> <span class='@properties ivar id'>@properties</span><span class='lbrack token'>[</span><span class='meth identifier id'>meth</span><span class='rbrack token'>]</span> <span class='colon op'>:</span>
+                                                                                 <span class='super super kw'>super</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#%3D%3D-instance_method' title='#=='>#==</a></span><span class='args'>header</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#to_binary-instance_method' title='#to_binary'>#to_binary</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#to_frame-instance_method' title='#to_frame'>#to_frame</a></span><span class='args'>channel = 0</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#to_s-instance_method' title='#to_s'>#to_s</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>==</h3>
+</div><div id="%3D%3D-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>==</span><span class='args'>header</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+142
+143
+144
+145
+146</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/amqp/protocol.rb', line 142</span>
+
+<span class='def def kw'>def</span> <span class='eq op'>==</span> <span class='header identifier id'>header</span>
+  <span class='lbrack token'>[</span> <span class='symbol val'>:klass</span><span class='comma token'>,</span> <span class='symbol val'>:size</span><span class='comma token'>,</span> <span class='symbol val'>:weight</span><span class='comma token'>,</span> <span class='symbol val'>:properties</span> <span class='rbrack token'>]</span><span class='dot token'>.</span><span class='inject identifier id'>inject</span><span class='lparen token'>(</span><span class='true true kw'>true</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='eql identifier id'>eql</span><span class='comma token'>,</span> <span class='field identifier id'>field</span><span class='bitor op'>|</span>
+    <span class='eql identifier id'>eql</span> <span class='and and kw'>and</span> <span class='__send__ identifier id'>__send__</span><span class='lparen token'>(</span><span class='field identifier id'>field</span><span class='rparen token'>)</span> <span class='eq op'>==</span> <span class='header identifier id'>header</span><span class='dot token'>.</span><span class='__send__ identifier id'>__send__</span><span class='lparen token'>(</span><span class='field identifier id'>field</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>to_binary</h3>
+</div><div id="to_binary-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>to_binary</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/amqp/protocol.rb', line 122</span>
+
+<span class='def def kw'>def</span> <span class='to_binary identifier id'>to_binary</span>
+  <span class='buf identifier id'>buf</span> <span class='assign token'>=</span> <span class='Buffer constant id'>Buffer</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+  <span class='buf identifier id'>buf</span><span class='dot token'>.</span><span class='write identifier id'>write</span> <span class='symbol val'>:short</span><span class='comma token'>,</span> <span class='klass identifier id'>klass</span><span class='dot token'>.</span><span class='id identifier id'>id</span>
+  <span class='buf identifier id'>buf</span><span class='dot token'>.</span><span class='write identifier id'>write</span> <span class='symbol val'>:short</span><span class='comma token'>,</span> <span class='weight identifier id'>weight</span> <span class='comment val'># XXX rabbitmq only supports weight == 0</span>
+  <span class='buf identifier id'>buf</span><span class='dot token'>.</span><span class='write identifier id'>write</span> <span class='symbol val'>:longlong</span><span class='comma token'>,</span> <span class='size identifier id'>size</span>
+  <span class='buf identifier id'>buf</span><span class='dot token'>.</span><span class='write identifier id'>write</span> <span class='symbol val'>:properties</span><span class='comma token'>,</span> <span class='lparen token'>(</span><span class='klass identifier id'>klass</span><span class='dot token'>.</span><span class='properties identifier id'>properties</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='type identifier id'>type</span><span class='comma token'>,</span> <span class='name identifier id'>name</span><span class='bitor op'>|</span>
+                           <span class='lbrack token'>[</span> <span class='type identifier id'>type</span><span class='comma token'>,</span> <span class='properties identifier id'>properties</span><span class='lbrack token'>[</span><span class='name identifier id'>name</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='properties identifier id'>properties</span><span class='lbrack token'>[</span><span class='name identifier id'>name</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rbrack token'>]</span> <span class='rbrack token'>]</span>
+                         <span class='end end kw'>end</span><span class='rparen token'>)</span>
+  <span class='buf identifier id'>buf</span><span class='dot token'>.</span><span class='rewind identifier id'>rewind</span>
+  <span class='buf identifier id'>buf</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>to_frame</h3>
+</div><div id="to_frame-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>to_frame</span><span class='args'>channel = 0</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+138
+139
+140</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/amqp/protocol.rb', line 138</span>
+
+<span class='def def kw'>def</span> <span class='to_frame identifier id'>to_frame</span> <span class='channel identifier id'>channel</span> <span class='assign token'>=</span> <span class='integer val'>0</span>
+  <span class='Frame constant id'>Frame</span><span class='colon2 op'>::</span><span class='Header constant id'>Header</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='channel identifier id'>channel</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>to_s</h3>
+</div><div id="to_s-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>to_s</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+134
+135
+136</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/amqp/protocol.rb', line 134</span>
+
+<span class='def def kw'>def</span> <span class='to_s identifier id'>to_s</span>
+  <span class='to_binary identifier id'>to_binary</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

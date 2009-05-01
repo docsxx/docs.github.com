@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: Hash</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class Hash">
+  <h1 class="title">Class: Hash</h1>
+  <div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#extract%21-instance_method' title='#extract!'>#extract!</a></span><span class='args'>(*keys)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Extract the matching keys from the source hash and return a new hash with
+those keys:.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>extract!</h3>
+</div><div id="extract%21-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>extract!</span><span class='args'>(*keys)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Extract the matching keys from the source hash and return a new hash with
+those keys:
+</p>
+<pre class="code">
+  <span class='rshft op'>&gt;&gt;</span> <span class='h identifier id'>h</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='symbol val'>:a</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'b'</span><span class='comma token'>,</span> <span class='symbol val'>:c</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'d'</span><span class='rbrace token'>}</span>
+  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='symbol val'>:a=</span><span class='gt op'>&gt;</span><span class='string val'>&quot;b&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:c=</span><span class='gt op'>&gt;</span><span class='string val'>&quot;d&quot;</span><span class='rbrace token'>}</span>
+  <span class='rshft op'>&gt;&gt;</span> <span class='h identifier id'>h</span><span class='dot token'>.</span><span class='extract! fid id'>extract!</span><span class='lparen token'>(</span><span class='symbol val'>:a</span><span class='rparen token'>)</span>
+  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='symbol val'>:a=</span><span class='gt op'>&gt;</span><span class='string val'>&quot;b&quot;</span><span class='rbrace token'>}</span>
+  <span class='rshft op'>&gt;&gt;</span> <span class='h identifier id'>h</span>
+  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='symbol val'>:c=</span><span class='gt op'>&gt;</span><span class='string val'>&quot;d&quot;</span><span class='rbrace token'>}</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+13
+14
+15
+16
+17
+18
+19
+20</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/fleakr/core_ext/hash.rb', line 13</span>
+
+<span class='def def kw'>def</span> <span class='extract! fid id'>extract!</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='keys identifier id'>keys</span><span class='rparen token'>)</span>
+  <span class='value identifier id'>value</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  
+  <span class='keys identifier id'>keys</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='k identifier id'>k</span><span class='bitor op'>|</span> <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='merge! fid id'>merge!</span><span class='lparen token'>(</span><span class='lbrace token'>{</span><span class='k identifier id'>k</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='self self kw'>self</span><span class='lbrack token'>[</span><span class='k identifier id'>k</span><span class='rbrack token'>]</span><span class='rbrace token'>}</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='has_key? fid id'>has_key?</span><span class='lparen token'>(</span><span class='k identifier id'>k</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  <span class='keys identifier id'>keys</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='k identifier id'>k</span><span class='bitor op'>|</span> <span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='k identifier id'>k</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  
+  <span class='value identifier id'>value</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

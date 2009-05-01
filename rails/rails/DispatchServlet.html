@@ -1,0 +1,433 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: DispatchServlet</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class DispatchServlet">
+  <h1 class="title">Class: DispatchServlet</h1>
+  <div class="section inheritance">
+  <ul>
+  <li>WEBrick::HTTPServlet::AbstractServlet</li><ul><li>DispatchServlet</li>
+  </ul></ul>
+</div><div class="section docstring">
+  <p>
+A custom dispatch servlet for use with WEBrick. It dispatches requests
+(using the Rails Dispatcher) to the appropriate controller/action. By
+default, it restricts WEBrick to a managing a single Rails request at a
+time, but you can change this behavior by setting
+ActionController::Base.allow_concurrency to true.
+</p>
+
+</div><div class="section constants">
+  
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(server, options)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+63
+64
+65
+66
+67
+68
+69
+70</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'railties/lib/webrick_server.rb', line 63</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='server identifier id'>server</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span> <span class='comment val'>#:nodoc:</span>
+  <span class='@server_options ivar id'>@server_options</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span>
+  <span class='@file_handler ivar id'>@file_handler</span> <span class='assign token'>=</span> <span class='WEBrick constant id'>WEBrick</span><span class='colon2 op'>::</span><span class='HTTPServlet constant id'>HTTPServlet</span><span class='colon2 op'>::</span><span class='FileHandler constant id'>FileHandler</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='server identifier id'>server</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:server_root</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+  <span class='comment val'># Change to the RAILS_ROOT, since Webrick::Daemon.start does a Dir::cwd(&quot;/&quot;)</span>
+  <span class='comment val'># OPTIONS['working_directory'] is an absolute path of the RAILS_ROOT, set in railties/lib/commands/servers/webrick.rb</span>
+  <span class='Dir constant id'>Dir</span><span class='dot token'>.</span><span class='chdir identifier id'>chdir</span><span class='lparen token'>(</span><span class='OPTIONS constant id'>OPTIONS</span><span class='lbrack token'>[</span><span class='string val'>'working_directory'</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='defined? defined kw'>defined?</span><span class='lparen token'>(</span><span class='OPTIONS constant id'>OPTIONS</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='directory? fid id'>directory?</span><span class='lparen token'>(</span><span class='OPTIONS constant id'>OPTIONS</span><span class='lbrack token'>[</span><span class='string val'>'working_directory'</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+  <span class='super super kw'>super</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <h1>Public Class Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#dispatch-class_method' title='dispatch'>dispatch</a></span><span class='args'>(options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Start the WEBrick server with the given options, mounting the
+DispatchServlet at <tt>/</tt>.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+  <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#handle_dispatch-instance_method' title='#handle_dispatch'>#handle_dispatch</a></span><span class='args'>(req, res, origin = nil)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#handle_file-instance_method' title='#handle_file'>#handle_file</a></span><span class='args'>(req, res)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#service-instance_method' title='#service'>#service</a></span><span class='args'>(req, res)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails class public">
+  <h1>Public Class Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>dispatch</h3>
+</div><div id="dispatch-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>dispatch</span><span class='args'>(options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Start the WEBrick server with the given options, mounting the
+DispatchServlet at <tt>/</tt>.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'railties/lib/webrick_server.rb', line 48</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='dispatch identifier id'>dispatch</span><span class='lparen token'>(</span><span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='Socket constant id'>Socket</span><span class='dot token'>.</span><span class='do_not_reverse_lookup identifier id'>do_not_reverse_lookup</span> <span class='assign token'>=</span> <span class='true true kw'>true</span> <span class='comment val'># patch for OS X</span>
+
+  <span class='params identifier id'>params</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span> <span class='symbol val'>:Port</span>        <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:port</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span><span class='comma token'>,</span>
+             <span class='symbol val'>:ServerType</span>  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:server_type</span><span class='rbrack token'>]</span><span class='comma token'>,</span>
+             <span class='symbol val'>:BindAddress</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:ip</span><span class='rbrack token'>]</span> <span class='rbrace token'>}</span>
+  <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:MimeTypes</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:mime_types</span><span class='rbrack token'>]</span> <span class='if if_mod kw'>if</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:mime_types</span><span class='rbrack token'>]</span>
+
+  <span class='server identifier id'>server</span> <span class='assign token'>=</span> <span class='WEBrick constant id'>WEBrick</span><span class='colon2 op'>::</span><span class='HTTPServer constant id'>HTTPServer</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='params identifier id'>params</span><span class='rparen token'>)</span>
+  <span class='server identifier id'>server</span><span class='dot token'>.</span><span class='mount identifier id'>mount</span><span class='lparen token'>(</span><span class='string val'>'/'</span><span class='comma token'>,</span> <span class='DispatchServlet constant id'>DispatchServlet</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+
+  <span class='trap identifier id'>trap</span><span class='lparen token'>(</span><span class='string val'>&quot;INT&quot;</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='server identifier id'>server</span><span class='dot token'>.</span><span class='shutdown identifier id'>shutdown</span> <span class='rbrace token'>}</span>
+  <span class='server identifier id'>server</span><span class='dot token'>.</span><span class='start identifier id'>start</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div><div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>handle_dispatch</h3>
+</div><div id="handle_dispatch-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>handle_dispatch</span><span class='args'>(req, res, origin = nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'railties/lib/webrick_server.rb', line 101</span>
+
+<span class='def def kw'>def</span> <span class='handle_dispatch identifier id'>handle_dispatch</span><span class='lparen token'>(</span><span class='req identifier id'>req</span><span class='comma token'>,</span> <span class='res identifier id'>res</span><span class='comma token'>,</span> <span class='origin identifier id'>origin</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span> <span class='comment val'>#:nodoc:</span>
+  <span class='data identifier id'>data</span> <span class='assign token'>=</span> <span class='StringIO constant id'>StringIO</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+  <span class='Dispatcher constant id'>Dispatcher</span><span class='dot token'>.</span><span class='dispatch identifier id'>dispatch</span><span class='lparen token'>(</span>
+    <span class='CGI constant id'>CGI</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;query&quot;</span><span class='comma token'>,</span> <span class='create_env_table identifier id'>create_env_table</span><span class='lparen token'>(</span><span class='req identifier id'>req</span><span class='comma token'>,</span> <span class='origin identifier id'>origin</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='StringIO constant id'>StringIO</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='req identifier id'>req</span><span class='dot token'>.</span><span class='body identifier id'>body</span> <span class='orop op'>||</span> <span class='string val'>&quot;&quot;</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='comma token'>,</span> 
+    <span class='ActionController constant id'>ActionController</span><span class='colon2 op'>::</span><span class='CgiRequest constant id'>CgiRequest</span><span class='colon2 op'>::</span><span class='DEFAULT_SESSION_OPTIONS constant id'>DEFAULT_SESSION_OPTIONS</span><span class='comma token'>,</span> 
+    <span class='data identifier id'>data</span>
+  <span class='rparen token'>)</span>
+
+  <span class='header identifier id'>header</span><span class='comma token'>,</span> <span class='body identifier id'>body</span> <span class='assign token'>=</span> <span class='extract_header_and_body identifier id'>extract_header_and_body</span><span class='lparen token'>(</span><span class='data identifier id'>data</span><span class='rparen token'>)</span>
+
+  <span class='set_charset identifier id'>set_charset</span><span class='lparen token'>(</span><span class='header identifier id'>header</span><span class='rparen token'>)</span>
+  <span class='assign_status identifier id'>assign_status</span><span class='lparen token'>(</span><span class='res identifier id'>res</span><span class='comma token'>,</span> <span class='header identifier id'>header</span><span class='rparen token'>)</span>
+  <span class='res identifier id'>res</span><span class='dot token'>.</span><span class='cookies identifier id'>cookies</span><span class='dot token'>.</span><span class='concat identifier id'>concat</span><span class='lparen token'>(</span><span class='header identifier id'>header</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='string val'>'set-cookie'</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+  <span class='header identifier id'>header</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='key identifier id'>key</span><span class='comma token'>,</span> <span class='val identifier id'>val</span><span class='bitor op'>|</span> <span class='res identifier id'>res</span><span class='lbrack token'>[</span><span class='key identifier id'>key</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='val identifier id'>val</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='string val'>&quot;, &quot;</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  
+  <span class='res identifier id'>res</span><span class='dot token'>.</span><span class='body identifier id'>body</span> <span class='assign token'>=</span> <span class='body identifier id'>body</span>
+  <span class='return return kw'>return</span> <span class='true true kw'>true</span>
+<span class='rescue rescue kw'>rescue</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='err identifier id'>err</span>
+  <span class='p identifier id'>p</span> <span class='err identifier id'>err</span><span class='comma token'>,</span> <span class='err identifier id'>err</span><span class='dot token'>.</span><span class='backtrace identifier id'>backtrace</span>
+  <span class='return return kw'>return</span> <span class='false false kw'>false</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>handle_file</h3>
+</div><div id="handle_file-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>handle_file</span><span class='args'>(req, res)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'railties/lib/webrick_server.rb', line 80</span>
+
+<span class='def def kw'>def</span> <span class='handle_file identifier id'>handle_file</span><span class='lparen token'>(</span><span class='req identifier id'>req</span><span class='comma token'>,</span> <span class='res identifier id'>res</span><span class='rparen token'>)</span> <span class='comment val'>#:nodoc:</span>
+  <span class='begin begin kw'>begin</span>
+    <span class='req identifier id'>req</span> <span class='assign token'>=</span> <span class='req identifier id'>req</span><span class='dot token'>.</span><span class='dup identifier id'>dup</span>
+    <span class='path identifier id'>path</span> <span class='assign token'>=</span> <span class='req identifier id'>req</span><span class='dot token'>.</span><span class='path identifier id'>path</span><span class='dot token'>.</span><span class='dup identifier id'>dup</span>
+
+    <span class='comment val'># Add .html if the last path piece has no . in it</span>
+    <span class='path identifier id'>path</span> <span class='lshft op'>&lt;&lt;</span> <span class='string val'>'.html'</span> <span class='if if_mod kw'>if</span> <span class='path identifier id'>path</span> <span class='neq op'>!=</span> <span class='string val'>'/'</span> <span class='andop op'>&amp;&amp;</span> <span class='lparen token'>(</span><span class='regexp val'>%r{(^|/)[^./]+$}</span> <span class='match op'>=~</span> <span class='path identifier id'>path</span><span class='rparen token'>)</span> 
+    <span class='path identifier id'>path</span><span class='dot token'>.</span><span class='gsub! fid id'>gsub!</span><span class='lparen token'>(</span><span class='string val'>'+'</span><span class='comma token'>,</span> <span class='string val'>' '</span><span class='rparen token'>)</span> <span class='comment val'># Unescape + since FileHandler doesn't do so.</span>
+
+    <span class='req identifier id'>req</span><span class='dot token'>.</span><span class='instance_variable_set identifier id'>instance_variable_set</span><span class='lparen token'>(</span><span class='symbol val'>:@path_info</span><span class='comma token'>,</span> <span class='path identifier id'>path</span><span class='rparen token'>)</span> <span class='comment val'># Set the modified path...</span>
+
+    <span class='@file_handler ivar id'>@file_handler</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='symbol val'>:service</span><span class='comma token'>,</span> <span class='req identifier id'>req</span><span class='comma token'>,</span> <span class='res identifier id'>res</span><span class='rparen token'>)</span>      
+    <span class='return return kw'>return</span> <span class='true true kw'>true</span>
+  <span class='rescue rescue kw'>rescue</span> <span class='HTTPStatus constant id'>HTTPStatus</span><span class='colon2 op'>::</span><span class='PartialContent constant id'>PartialContent</span><span class='comma token'>,</span> <span class='HTTPStatus constant id'>HTTPStatus</span><span class='colon2 op'>::</span><span class='NotModified constant id'>NotModified</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='err identifier id'>err</span>
+    <span class='res identifier id'>res</span><span class='dot token'>.</span><span class='set_error identifier id'>set_error</span><span class='lparen token'>(</span><span class='err identifier id'>err</span><span class='rparen token'>)</span>
+    <span class='return return kw'>return</span> <span class='true true kw'>true</span>
+  <span class='rescue rescue kw'>rescue</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='err identifier id'>err</span>
+    <span class='return return kw'>return</span> <span class='false false kw'>false</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>service</h3>
+</div><div id="service-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>service</span><span class='args'>(req, res)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+72
+73
+74
+75
+76
+77
+78</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'railties/lib/webrick_server.rb', line 72</span>
+
+<span class='def def kw'>def</span> <span class='service identifier id'>service</span><span class='lparen token'>(</span><span class='req identifier id'>req</span><span class='comma token'>,</span> <span class='res identifier id'>res</span><span class='rparen token'>)</span> <span class='comment val'>#:nodoc:</span>
+  <span class='unless unless kw'>unless</span> <span class='handle_file identifier id'>handle_file</span><span class='lparen token'>(</span><span class='req identifier id'>req</span><span class='comma token'>,</span> <span class='res identifier id'>res</span><span class='rparen token'>)</span>
+    <span class='unless unless kw'>unless</span> <span class='handle_dispatch identifier id'>handle_dispatch</span><span class='lparen token'>(</span><span class='req identifier id'>req</span><span class='comma token'>,</span> <span class='res identifier id'>res</span><span class='rparen token'>)</span>
+      <span class='raise identifier id'>raise</span> <span class='WEBrick constant id'>WEBrick</span><span class='colon2 op'>::</span><span class='HTTPStatus constant id'>HTTPStatus</span><span class='colon2 op'>::</span><span class='NotFound constant id'>NotFound</span><span class='comma token'>,</span> <span class='dstring node'>&quot;`#{req.path}' not found.&quot;</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

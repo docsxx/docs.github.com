@@ -1,0 +1,347 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: FateSearch::SuffixArrayWriter</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class FateSearch_SuffixArrayWriter">
+  <h1 class="title">Class: FateSearch::SuffixArrayWriter</h1>
+  <div class="section mixins">
+  <h1>Included Modules</h1>
+  <p><a href='SuffixArrayWriter/InMemoryWriter.html' title='FateSearch::InMemoryWriter'>FateSearch::InMemoryWriter</a></p>
+</div><div class="section docstring">
+  <p>
+Class that allows you to append a list of suffixes to an array and write it
+to a specified file or in memory buffer.
+</p>
+
+</div><div class="section constants">
+  <div class="thisclass">
+  <h1>Constants</h1>
+  <dl>
+    
+      <dt id="DEFAULT_OPTIONS-constant">DEFAULT_OPTIONS</dt>
+      <dd>{      :block_size =&gt; 32,      :inline_suffix_size =&gt; 8    }</dd>
+    
+  </dl>
+</div>
+
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Create a new <tt>SuffixArrayWriter</tt> and pass in options. If you do not
+include specific options the defaults will be used.
+</p>
+<p>
+Valid options:
+</p>
+<dl>
+<dt><tt>:path</tt></dt><dd>The path of the stored suffixes array. If no path is included the array
+will use an in-memory buffer
+
+</dd>
+<dt><tt>:block_size</tt></dt><dd>The size of blocks for writing (default 32)
+
+</dd>
+<dt><tt>:inline_suffix_size</tt></dt><dd>The storage size for each suffix (default 8)
+
+</dd>
+</dl>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/suffix_array_writer.rb', line 25</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='options identifier id'>options</span>             <span class='assign token'>=</span> <span class='DEFAULT_OPTIONS constant id'>DEFAULT_OPTIONS</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='@path ivar id'>@path</span>               <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:path</span><span class='rbrack token'>]</span>
+  <span class='@suffixes ivar id'>@suffixes</span>           <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+  <span class='@block_size ivar id'>@block_size</span>         <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:block_size</span><span class='rbrack token'>]</span>
+  <span class='@inline_suffix_size ivar id'>@inline_suffix_size</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:inline_suffix_size</span><span class='rbrack token'>]</span>
+  <span class='@finished ivar id'>@finished</span>           <span class='assign token'>=</span> <span class='false false kw'>false</span>
+  <span class='@need_sort ivar id'>@need_sort</span>          <span class='assign token'>=</span> <span class='false false kw'>false</span>
+  <span class='initialize_in_memory_buffer identifier id'>initialize_in_memory_buffer</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#append_suffixes-instance_method' title='#append_suffixes'>#append_suffixes</a></span><span class='args'>(analyzer, data, offset, base_offset, index)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Add suffixes to the existing array.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#finish%21-instance_method' title='#finish!'>#finish!</a></span><span class='args'>(fulltext)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Sort and dump the suffixes to suffix file specified in the path or to the
+in memory buffer.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#merge-instance_method' title='#merge'>#merge</a></span><span class='args'>(suffix_array_reader)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Load the data from an existing suffix array prior to adding suffixes using
+<tt>merge</tt>.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table><div class="included">
+  
+  <div>
+    <h1>Public Instance Methods Included from <a href='SuffixArrayWriter/InMemoryWriter.html' title='FateSearch::InMemoryWriter'>FateSearch::InMemoryWriter</a></h1>
+    <p><span class='name'><a href='InMemoryWriter.html#data-instance_method' title='data'>data</a></span>, <span class='name'><a href='InMemoryWriter.html#initialize_in_memory_buffer-instance_method' title='initialize_in_memory_buffer'>initialize_in_memory_buffer</a></span>, <span class='name'><a href='InMemoryWriter.html#io-instance_method' title='io'>io</a></span>, <span class='name'><a href='InMemoryWriter.html#memory%3F-instance_method' title='memory?'>memory?</a></span>, <span class='name'><a href='InMemoryWriter.html#path-instance_method' title='path'>path</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>append_suffixes</h3>
+</div><div id="append_suffixes-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>append_suffixes</span><span class='args'>(analyzer, data, offset, base_offset, index)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Add suffixes to the existing array. The <tt>analyzer</tt> is used to parse
+the <tt>data</tt> to find the suffixes and append the offsets to the
+internal array. The <tt>offset</tt> is the starting offset of the
+<tt>data</tt> in the source text.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+49
+50
+51
+52</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/suffix_array_writer.rb', line 49</span>
+
+<span class='def def kw'>def</span> <span class='append_suffixes identifier id'>append_suffixes</span><span class='lparen token'>(</span><span class='analyzer identifier id'>analyzer</span><span class='comma token'>,</span> <span class='data identifier id'>data</span><span class='comma token'>,</span> <span class='offset identifier id'>offset</span><span class='comma token'>,</span> <span class='base_offset identifier id'>base_offset</span><span class='comma token'>,</span> <span class='index identifier id'>index</span><span class='rparen token'>)</span>
+  <span class='@need_sort ivar id'>@need_sort</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+  <span class='analyzer identifier id'>analyzer</span><span class='dot token'>.</span><span class='append_suffixes identifier id'>append_suffixes</span><span class='lparen token'>(</span><span class='@suffixes ivar id'>@suffixes</span><span class='comma token'>,</span> <span class='data identifier id'>data</span><span class='comma token'>,</span> <span class='offset identifier id'>offset</span><span class='comma token'>,</span> <span class='base_offset identifier id'>base_offset</span><span class='comma token'>,</span> <span class='index identifier id'>index</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>finish!</h3>
+</div><div id="finish%21-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>finish!</span><span class='args'>(fulltext)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Sort and dump the suffixes to suffix file specified in the path or to the
+in memory buffer. The <tt>fulltext</tt> will be used to dump the inline
+suffixes, and should match the data that was used in building the suffixes.
+It can be the output of the data method on a <tt>FulltextWriter</tt>. This
+method is usually called by a <tt>FragmentWriter</tt>.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+59
+60
+61
+62
+63
+64</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/suffix_array_writer.rb', line 59</span>
+
+<span class='def def kw'>def</span> <span class='finish! fid id'>finish!</span><span class='lparen token'>(</span><span class='fulltext identifier id'>fulltext</span><span class='rparen token'>)</span>
+  <span class='return return kw'>return</span> <span class='if if_mod kw'>if</span> <span class='@finished ivar id'>@finished</span>
+  <span class='sort! fid id'>sort!</span><span class='lparen token'>(</span><span class='fulltext identifier id'>fulltext</span><span class='rparen token'>)</span>
+  <span class='dump_suffixes identifier id'>dump_suffixes</span><span class='lparen token'>(</span><span class='fulltext identifier id'>fulltext</span><span class='rparen token'>)</span>
+  <span class='@finished ivar id'>@finished</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>merge</h3>
+</div><div id="merge-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>merge</span><span class='args'>(suffix_array_reader)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Load the data from an existing suffix array prior to adding suffixes using
+<tt>merge</tt>. You must pass in an existing <tt>SuffixArrayReader</tt> and
+the current <tt>SuffixArrayWriter</tt> cannot have any suffix information.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+39
+40
+41
+42
+43
+44</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/suffix_array_writer.rb', line 39</span>
+
+<span class='def def kw'>def</span> <span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='suffix_array_reader identifier id'>suffix_array_reader</span><span class='rparen token'>)</span>
+  <span class='raise identifier id'>raise</span> <span class='string val'>&quot;SuffixArrayWriter must be empty to merge data from another reader&quot;</span> <span class='unless unless_mod kw'>unless</span> <span class='@suffixes ivar id'>@suffixes</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span>
+  <span class='suffix_array_reader identifier id'>suffix_array_reader</span><span class='dot token'>.</span><span class='dump_data identifier id'>dump_data</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='partial_sarray identifier id'>partial_sarray</span><span class='bitor op'>|</span>
+    <span class='@suffixes ivar id'>@suffixes</span><span class='dot token'>.</span><span class='concat identifier id'>concat</span> <span class='partial_sarray identifier id'>partial_sarray</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

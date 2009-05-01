@@ -1,0 +1,546 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: Marvin::IRC::Client</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class Marvin_IRC_Client">
+  <h1 class="title">Class: Marvin::IRC::Client</h1>
+  <div class="section inheritance">
+  <ul>
+  <li><a href='../AbstractClient.html' title='Marvin::AbstractClient'>Marvin::AbstractClient</a></li><ul><li>Marvin::IRC::Client</li>
+  </ul></ul>
+</div><div class="section docstring">
+  <h2>Marvin::IRC::Client</h2>
+<p>
+An EventMachine protocol implementation built to serve as a basic, single
+server IRC client.
+</p>
+<p>
+Operates on the principal of Events as well as handlers.
+</p>
+<h3>Events</h3>
+<p>
+Events are things that can happen (e.g. an incoming message). All outgoing
+events are automatically handled from within the client class. Incoming
+events are currently based on regular expression based matches of incoming
+messages. the Client#register_event method takes either an instance of
+Marvin::IRC::Event or a set of arguments which will then be used in the
+constructor of a new Marvin::IRC::Event instance (see, for example, the
+source code for this class for examples).
+</p>
+<h3>Handlers</h3>
+<p>
+Handlers on the other hand do as the name suggests
+</p>
+<ul>
+<li>they listen for dispatched events and act accordingly.
+
+</li>
+</ul>
+<p>
+Handlers are simply objects which follow a certain set of guidelines.
+Typically, a handler will at minimum respond to #handle(event_name,
+details) where event_name is a symbol for the current event (e.g.
+:incoming_event) whilst details is a a hash of details about the current
+event (e.g. message target and the message itself).
+</p>
+<h4>Getting the current client instance</h4>
+<p>
+If the object responds to client=, The client will call it with the current
+instance of itself enabling the handler to do things such as respond. Also,
+if a method handle_[message_name] exists, it will be called instead of
+handle.
+</p>
+<h4>Adding handlers</h4>
+<p>
+To add an object as a handler, you simply call the class method,
+register_handler with the handler as the only argument.
+</p>
+
+</div><div class="section attributes">
+  <h1>Attributes</h1>
+
+  
+    <div class="instance">
+      <h2>Instance Attributes</h2>
+      <table>
+      
+        <tr>
+          <th class="name">em_connection</td>
+          <td class="readwrite">
+            [<span id='em_connection-instance_method'>R</span><span id='em_connection%3D-instance_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>em_connection</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+      </table>
+    </div>
+  
+</div><div class="section constants">
+  
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <p class="inherited_msg">
+    This class inherits a constructor from <a href='../AbstractClient.html#initialize-instance_method' title='Marvin::AbstractClient'>Marvin::AbstractClient</a>.
+  </p>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <h1>Public Class Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#add_reconnect-class_method' title='add_reconnect'>add_reconnect</a></span><span class='args'>(opts = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#connect-class_method' title='connect'>connect</a></span><span class='args'>(opts = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#run-class_method' title='run'>run</a></span><span class='args'>(force = false)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Client specific details Starts the EventMachine loop and hence starts up
+the actual networking portion of the IRC Client.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#stop-class_method' title='stop'>stop</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table><div class="inherited">
+  
+  <div>
+    <h1>Public Class Methods Inherited from <a href='../AbstractClient.html' title='Marvin::AbstractClient'>Marvin::AbstractClient</a></h1>
+    <p><span class='name'><a href='../AbstractClient.html#configuration-class_method' title='configuration'>configuration</a></span>, <span class='name'><a href='../AbstractClient.html#setup-class_method' title='setup'>setup</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+  <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#periodically-instance_method' title='#periodically'>#periodically</a></span><span class='args'>(timing, event_callback)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Registers a callback handle that will be periodically run.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#send_line-instance_method' title='#send_line'>#send_line</a></span><span class='args'>(*args)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table><div class="inherited">
+  
+  <div>
+    <h1>Public Instance Methods Inherited from <a href='../AbstractClient.html' title='Marvin::AbstractClient'>Marvin::AbstractClient</a></h1>
+    <p><span class='name'><a href='../AbstractClient.html#action-instance_method' title='action'>action</a></span>, <span class='name'><a href='../AbstractClient.html#command-instance_method' title='command'>command</a></span>, <span class='name'><a href='../AbstractClient.html#default_channels-instance_method' title='default_channels'>default_channels</a></span>, <span class='name'><a href='../AbstractClient.html#handle_client_connected-instance_method' title='handle_client_connected'>handle_client_connected</a></span>, <span class='name'><a href='../AbstractClient.html#handle_incoming_numeric-instance_method' title='handle_incoming_numeric'>handle_incoming_numeric</a></span>, <span class='name'><a href='../AbstractClient.html#handle_incoming_ping-instance_method' title='handle_incoming_ping'>handle_incoming_ping</a></span>, <span class='name'><a href='../AbstractClient.html#handle_nick_taken-instance_method' title='handle_nick_taken'>handle_nick_taken</a></span>, <span class='name'><a href='../AbstractClient.html#handle_welcome-instance_method' title='handle_welcome'>handle_welcome</a></span>, <span class='name'><a href='../AbstractClient.html#host_with_port-instance_method' title='host_with_port'>host_with_port</a></span>, <span class='name'><a href='../AbstractClient.html#join-instance_method' title='join'>join</a></span>, <span class='name'><a href='../AbstractClient.html#msg-instance_method' title='msg'>msg</a></span>, <span class='name'><a href='../AbstractClient.html#nick-instance_method' title='nick'>nick</a></span>, <span class='name'><a href='../AbstractClient.html#nicks-instance_method' title='nicks'>nicks</a></span>, <span class='name'><a href='../AbstractClient.html#part-instance_method' title='part'>part</a></span>, <span class='name'><a href='../AbstractClient.html#pong-instance_method' title='pong'>pong</a></span>, <span class='name'><a href='../AbstractClient.html#process_connect-instance_method' title='process_connect'>process_connect</a></span>, <span class='name'><a href='../AbstractClient.html#process_disconnect-instance_method' title='process_disconnect'>process_disconnect</a></span>, <span class='name'><a href='../AbstractClient.html#quit-instance_method' title='quit'>quit</a></span>, <span class='name'><a href='../AbstractClient.html#receive_line-instance_method' title='receive_line'>receive_line</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails class public">
+  <h1>Public Class Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>add_reconnect</h3>
+</div><div id="add_reconnect-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>add_reconnect</span><span class='args'>(opts = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+124
+125
+126
+127
+128
+129
+130</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/marvin/irc/client.rb', line 124</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='add_reconnect identifier id'>add_reconnect</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='Marvin constant id'>Marvin</span><span class='colon2 op'>::</span><span class='Logger constant id'>Logger</span><span class='dot token'>.</span><span class='warn identifier id'>warn</span> <span class='dstring node'>&quot;Adding entry to reconnect to #{opts[:server]}:#{opts[:port]} in 15 seconds&quot;</span>
+  <span class='EventMachine constant id'>EventMachine</span><span class='colon2 op'>::</span><span class='add_timer identifier id'>add_timer</span><span class='lparen token'>(</span><span class='integer val'>15</span><span class='rparen token'>)</span> <span class='do do kw'>do</span>
+    <span class='Marvin constant id'>Marvin</span><span class='colon2 op'>::</span><span class='Logger constant id'>Logger</span><span class='dot token'>.</span><span class='warn identifier id'>warn</span> <span class='dstring node'>&quot;Attempting to reconnect to #{opts[:server]}:#{opts[:port]}&quot;</span>
+    <span class='Marvin constant id'>Marvin</span><span class='colon2 op'>::</span><span class='IRC constant id'>IRC</span><span class='colon2 op'>::</span><span class='Client constant id'>Client</span><span class='dot token'>.</span><span class='connect identifier id'>connect</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>connect</h3>
+</div><div id="connect-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>connect</span><span class='args'>(opts = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+109
+110
+111
+112</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/marvin/irc/client.rb', line 109</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='connect identifier id'>connect</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='logger identifier id'>logger</span><span class='dot token'>.</span><span class='info identifier id'>info</span> <span class='dstring node'>&quot;Connecting to #{opts[:server]}:#{opts[:port]} - Channels: #{opts[:channels].join(&quot;, &quot;)}&quot;</span>
+  <span class='EventMachine constant id'>EventMachine</span><span class='colon2 op'>::</span><span class='connect identifier id'>connect</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:server</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:port</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='EMConnection constant id'>EMConnection</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>run</h3>
+</div><div id="run-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>run</span><span class='args'>(force = false)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Client specific details Starts the EventMachine loop and hence starts up
+the actual networking portion of the IRC Client.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/marvin/irc/client.rb', line 89</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='run identifier id'>run</span><span class='lparen token'>(</span><span class='force identifier id'>force</span> <span class='assign token'>=</span> <span class='false false kw'>false</span><span class='rparen token'>)</span>
+  <span class='return return kw'>return</span> <span class='if if_mod kw'>if</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='stopped identifier id'>stopped</span> <span class='andop op'>&amp;&amp;</span> <span class='notop op'>!</span><span class='force identifier id'>force</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='setup identifier id'>setup</span> <span class='comment val'># So we have options etc</span>
+  <span class='settings identifier id'>settings</span> <span class='assign token'>=</span> <span class='YAML constant id'>YAML</span><span class='dot token'>.</span><span class='load_file identifier id'>load_file</span><span class='lparen token'>(</span><span class='Marvin constant id'>Marvin</span><span class='colon2 op'>::</span><span class='Settings constant id'>Settings</span><span class='dot token'>.</span><span class='root identifier id'>root</span> <span class='div op'>/</span> <span class='string val'>&quot;config/connections.yml&quot;</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='settings identifier id'>settings</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Hash constant id'>Hash</span><span class='rparen token'>)</span>
+    <span class='comment val'># Use epoll if available</span>
+    <span class='EventMachine constant id'>EventMachine</span><span class='dot token'>.</span><span class='epoll identifier id'>epoll</span>
+    <span class='EventMachine constant id'>EventMachine</span><span class='colon2 op'>::</span><span class='run identifier id'>run</span> <span class='do do kw'>do</span>
+      <span class='settings identifier id'>settings</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='bitor op'>|</span>
+        <span class='settings identifier id'>settings</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='symbolize_keys! fid id'>symbolize_keys!</span>
+        <span class='settings identifier id'>settings</span><span class='lbrack token'>[</span><span class='symbol val'>:server</span><span class='rbrack token'>]</span> <span class='opasgn op'>||=</span> <span class='name identifier id'>name</span>
+        <span class='settings identifier id'>settings</span><span class='dot token'>.</span><span class='reverse_merge! fid id'>reverse_merge!</span><span class='lparen token'>(</span><span class='symbol val'>:port</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>6667</span><span class='comma token'>,</span> <span class='symbol val'>:channels</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+        <span class='connect identifier id'>connect</span> <span class='settings identifier id'>settings</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+  <span class='else else kw'>else</span>
+    <span class='logger identifier id'>logger</span><span class='dot token'>.</span><span class='fatal identifier id'>fatal</span> <span class='string val'>&quot;config/connections.yml couldn't be loaded. Exiting&quot;</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>stop</h3>
+</div><div id="stop-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>stop</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+114
+115
+116
+117
+118
+119
+120
+121
+122</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/marvin/irc/client.rb', line 114</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='stop identifier id'>stop</span>
+  <span class='return return kw'>return</span> <span class='if if_mod kw'>if</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='stopped identifier id'>stopped</span>
+  <span class='logger identifier id'>logger</span><span class='dot token'>.</span><span class='debug identifier id'>debug</span> <span class='string val'>&quot;Telling all connections to quit&quot;</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='connections identifier id'>connections</span><span class='dot token'>.</span><span class='dup identifier id'>dup</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='connection identifier id'>connection</span><span class='bitor op'>|</span> <span class='connection identifier id'>connection</span><span class='dot token'>.</span><span class='quit identifier id'>quit</span> <span class='rbrace token'>}</span>
+  <span class='logger identifier id'>logger</span><span class='dot token'>.</span><span class='debug identifier id'>debug</span> <span class='string val'>&quot;Telling Event Machine to Stop&quot;</span>
+  <span class='EventMachine constant id'>EventMachine</span><span class='colon2 op'>::</span><span class='stop_event_loop identifier id'>stop_event_loop</span>
+  <span class='logger identifier id'>logger</span><span class='dot token'>.</span><span class='debug identifier id'>debug</span> <span class='string val'>&quot;Stopped.&quot;</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='stopped identifier id'>stopped</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div><div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>periodically</h3>
+</div><div id="periodically-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>periodically</span><span class='args'>(timing, event_callback)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Registers a callback handle that will be periodically run.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+133
+134
+135
+136</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/marvin/irc/client.rb', line 133</span>
+
+<span class='def def kw'>def</span> <span class='periodically identifier id'>periodically</span><span class='lparen token'>(</span><span class='timing identifier id'>timing</span><span class='comma token'>,</span> <span class='event_callback identifier id'>event_callback</span><span class='rparen token'>)</span>
+  <span class='callback identifier id'>callback</span> <span class='assign token'>=</span> <span class='proc identifier id'>proc</span> <span class='lbrace token'>{</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='dispatch identifier id'>dispatch</span> <span class='event_callback identifier id'>event_callback</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span> <span class='rbrace token'>}</span>
+  <span class='EventMachine constant id'>EventMachine</span><span class='colon2 op'>::</span><span class='add_periodic_timer identifier id'>add_periodic_timer</span><span class='lparen token'>(</span><span class='timing identifier id'>timing</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='callback identifier id'>callback</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>send_line</h3>
+</div><div id="send_line-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>send_line</span><span class='args'>(*args)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+80
+81
+82
+83</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/marvin/irc/client.rb', line 80</span>
+
+<span class='def def kw'>def</span> <span class='send_line identifier id'>send_line</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='line identifier id'>line</span><span class='bitor op'>|</span> <span class='Marvin constant id'>Marvin</span><span class='colon2 op'>::</span><span class='Logger constant id'>Logger</span><span class='dot token'>.</span><span class='debug identifier id'>debug</span> <span class='dstring node'>&quot;&gt;&gt; #{line.strip}&quot;</span> <span class='rbrace token'>}</span>
+  <span class='em_connection identifier id'>em_connection</span><span class='dot token'>.</span><span class='send_data identifier id'>send_data</span> <span class='mult op'>*</span><span class='args identifier id'>args</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

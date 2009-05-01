@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: ActionView::Helpers::BenchmarkHelper</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module ActionView_Helpers_BenchmarkHelper">
+  <h1 class="title">Module: ActionView::Helpers::BenchmarkHelper</h1>
+  <div class="section docstring">
+  <p>
+This helper offers a method to measure the execution time of a block in a
+template.
+</p>
+
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#benchmark-instance_method' title='#benchmark'>#benchmark</a></span><span class='args'>(message = &quot;Benchmarking&quot;, options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Allows you to measure the execution time of a block in a template and
+records the result to the log.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>benchmark</h3>
+</div><div id="benchmark-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>benchmark</span><span class='args'>(message = &quot;Benchmarking&quot;, options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Allows you to measure the execution time of a block in a template and
+records the result to the log. Wrap this block around expensive operations
+or possible bottlenecks to get a time reading for the operation. For
+example, let&#8217;s say you thought your file processing method was taking
+too long; you could wrap it in a benchmark block.
+</p>
+<pre class="code">
+ <span class='lt op'>&lt;</span><span class='string val'>% benchmark </span><span class='string val'>&quot;Process data files&quot;</span> <span class='do do kw'>do</span> <span class='string val'>%&gt;
+   &lt;%= expensive_files_operation %&gt;</span>
+ <span class='lt op'>&lt;</span><span class='string val'>% end </span><span class='mod op'>%</span><span class='gt op'>&gt;</span>
+</pre>
+<p>
+That would add something like &quot;Process data files (345.2ms)&quot; to
+the log, which you can then use to compare timings when optimizing your
+code.
+</p>
+<p>
+You may give an optional logger level as the :level option. (:debug, :info,
+:warn, :error); the default value is :info.
+</p>
+<pre class="code">
+ <span class='lt op'>&lt;</span><span class='string val'>% benchmark </span><span class='string val'>&quot;Low-level files&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:level</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:debug</span> <span class='do do kw'>do</span> <span class='string val'>%&gt;
+   &lt;%= lowlevel_files_operation %&gt;</span>
+ <span class='lt op'>&lt;</span><span class='string val'>% end </span><span class='mod op'>%</span><span class='gt op'>&gt;</span>
+</pre>
+<p>
+Finally, you can pass true as the third argument to silence all log
+activity inside the block. This is great for boiling down a noisy block to
+just a single statement:
+</p>
+<pre class="code">
+ <span class='lt op'>&lt;</span><span class='string val'>% benchmark </span><span class='string val'>&quot;Process data files&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:level</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:info</span><span class='comma token'>,</span> <span class='symbol val'>:silence</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span> <span class='do do kw'>do</span> <span class='string val'>%&gt;
+   &lt;%= expensive_and_chatty_files_operation %&gt;</span>
+ <span class='lt op'>&lt;</span><span class='string val'>% end </span><span class='mod op'>%</span><span class='gt op'>&gt;</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'actionpack/lib/action_view/helpers/benchmark_helper.rb', line 34</span>
+
+<span class='def def kw'>def</span> <span class='benchmark identifier id'>benchmark</span><span class='lparen token'>(</span><span class='message identifier id'>message</span> <span class='assign token'>=</span> <span class='string val'>&quot;Benchmarking&quot;</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='controller identifier id'>controller</span><span class='dot token'>.</span><span class='logger identifier id'>logger</span>
+    <span class='if if kw'>if</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Symbol constant id'>Symbol</span><span class='rparen token'>)</span>
+      <span class='ActiveSupport constant id'>ActiveSupport</span><span class='colon2 op'>::</span><span class='Deprecation constant id'>Deprecation</span><span class='dot token'>.</span><span class='warn identifier id'>warn</span><span class='lparen token'>(</span><span class='dstring node'>&quot;use benchmark('#{message}', :level =&gt; :#{options}) instead&quot;</span><span class='comma token'>,</span> <span class='caller identifier id'>caller</span><span class='rparen token'>)</span>
+      <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span> <span class='symbol val'>:level</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='options identifier id'>options</span><span class='comma token'>,</span> <span class='symbol val'>:silence</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='false false kw'>false</span> <span class='rbrace token'>}</span>
+    <span class='else else kw'>else</span>
+      <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='assert_valid_keys identifier id'>assert_valid_keys</span><span class='lparen token'>(</span><span class='symbol val'>:level</span><span class='comma token'>,</span> <span class='symbol val'>:silence</span><span class='rparen token'>)</span>
+      <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:level</span><span class='rbrack token'>]</span> <span class='opasgn op'>||=</span> <span class='symbol val'>:info</span>
+    <span class='end end kw'>end</span>
+    
+    <span class='result identifier id'>result</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+    <span class='ms identifier id'>ms</span> <span class='assign token'>=</span> <span class='Benchmark constant id'>Benchmark</span><span class='dot token'>.</span><span class='ms identifier id'>ms</span> <span class='lbrace token'>{</span> <span class='result identifier id'>result</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:silence</span><span class='rbrack token'>]</span> <span class='question op'>?</span> <span class='controller identifier id'>controller</span><span class='dot token'>.</span><span class='logger identifier id'>logger</span><span class='dot token'>.</span><span class='silence identifier id'>silence</span> <span class='lbrace token'>{</span> <span class='yield yield kw'>yield</span> <span class='rbrace token'>}</span> <span class='colon op'>:</span> <span class='yield yield kw'>yield</span> <span class='rbrace token'>}</span>
+    <span class='controller identifier id'>controller</span><span class='dot token'>.</span><span class='logger identifier id'>logger</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:level</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='string val'>'%s (%.1fms)'</span> <span class='mod op'>%</span> <span class='lbrack token'>[</span> <span class='message identifier id'>message</span><span class='comma token'>,</span> <span class='ms identifier id'>ms</span> <span class='rbrack token'>]</span><span class='rparen token'>)</span>
+    <span class='result identifier id'>result</span>
+  <span class='else else kw'>else</span>
+    <span class='yield yield kw'>yield</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

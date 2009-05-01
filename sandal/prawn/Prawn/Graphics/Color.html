@@ -1,0 +1,344 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: Prawn::Graphics::Color</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module Prawn_Graphics_Color">
+  <h1 class="title">Module: Prawn::Graphics::Color</h1>
+  <div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#fill_color-instance_method' title='#fill_color'>#fill_color</a></span><span class='args'>(*color)</span>
+        <span class='block'></span>
+        
+          <span class='alias'>#fill_color=</span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Sets the fill color.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#hex2rgb-instance_method' title='#hex2rgb'>#hex2rgb</a></span><span class='args'>(hex)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Converts hex string into RGB value array:.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#rgb2hex-instance_method' title='#rgb2hex'>#rgb2hex</a></span><span class='args'>(rgb)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Converts RGB value array to hex string suitable for use with fill_color and
+stroke_color .
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#stroke_color-instance_method' title='#stroke_color'>#stroke_color</a></span><span class='args'>(*color)</span>
+        <span class='block'></span>
+        
+          <span class='alias'>#stroke_color=</span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Sets the line stroking color.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>fill_color</h3>
+</div><div id="fill_color-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>fill_color</span><span class='args'>(*color)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+<p class="aliases">
+  <span class="aka">Also known as:</span>
+  
+    <tt id="fill_color%3D-instance_method">fill_color=</tt>
+  
+</p>
+</div><div class="section docstring">
+  <p>
+Sets the fill color.
+</p>
+<p>
+If a single argument is provided, it should be a 6 digit HTML color code.
+</p>
+<pre class="code">
+  <span class='pdf identifier id'>pdf</span><span class='dot token'>.</span><span class='fill_color identifier id'>fill_color</span> <span class='string val'>&quot;f0ffc1&quot;</span>
+</pre>
+<p>
+If 4 arguments are provided, the color is assumed to be a CMYK value Values
+range from 0 - 100.
+</p>
+<pre class="code">
+  <span class='pdf identifier id'>pdf</span><span class='dot token'>.</span><span class='fill_color identifier id'>fill_color</span> <span class='integer val'>0</span><span class='comma token'>,</span> <span class='integer val'>99</span><span class='comma token'>,</span> <span class='integer val'>95</span><span class='comma token'>,</span> <span class='integer val'>0</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+25
+26
+27
+28
+29</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/prawn/graphics/color.rb', line 25</span>
+
+<span class='def def kw'>def</span> <span class='fill_color identifier id'>fill_color</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='color identifier id'>color</span><span class='rparen token'>)</span>  
+  <span class='return return kw'>return</span> <span class='@fill_color ivar id'>@fill_color</span> <span class='if if_mod kw'>if</span> <span class='color identifier id'>color</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span> 
+  <span class='@fill_color ivar id'>@fill_color</span> <span class='assign token'>=</span> <span class='process_color identifier id'>process_color</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='color identifier id'>color</span><span class='rparen token'>)</span> 
+  <span class='set_fill_color identifier id'>set_fill_color</span>
+<span class='end end kw'>end</span> 
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>hex2rgb</h3>
+</div><div id="hex2rgb-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>hex2rgb</span><span class='args'>(hex)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Converts hex string into RGB value array:
+</p>
+<pre class="code">
+ <span class='rshft op'>&gt;&gt;</span> <span class='Prawn constant id'>Prawn</span><span class='colon2 op'>::</span><span class='Graphics constant id'>Graphics</span><span class='colon2 op'>::</span><span class='Color constant id'>Color</span><span class='dot token'>.</span><span class='hex2rgb identifier id'>hex2rgb</span><span class='lparen token'>(</span><span class='string val'>&quot;ff7808&quot;</span><span class='rparen token'>)</span>
+ <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='integer val'>255</span><span class='comma token'>,</span> <span class='integer val'>120</span><span class='comma token'>,</span> <span class='integer val'>8</span><span class='rbrack token'>]</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+89
+90
+91
+92</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/prawn/graphics/color.rb', line 89</span>
+
+<span class='def def kw'>def</span> <span class='hex2rgb identifier id'>hex2rgb</span><span class='lparen token'>(</span><span class='hex identifier id'>hex</span><span class='rparen token'>)</span>
+  <span class='r identifier id'>r</span><span class='comma token'>,</span><span class='g identifier id'>g</span><span class='comma token'>,</span><span class='b identifier id'>b</span> <span class='assign token'>=</span> <span class='hex identifier id'>hex</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='dot2 op'>..</span><span class='integer val'>1</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='hex identifier id'>hex</span><span class='lbrack token'>[</span><span class='float val'>2</span><span class='dot2 op'>..</span><span class='integer val'>3</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='hex identifier id'>hex</span><span class='lbrack token'>[</span><span class='float val'>4</span><span class='dot2 op'>..</span><span class='integer val'>5</span><span class='rbrack token'>]</span>
+  <span class='lbrack token'>[</span><span class='r identifier id'>r</span><span class='comma token'>,</span><span class='g identifier id'>g</span><span class='comma token'>,</span><span class='b identifier id'>b</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='e identifier id'>e</span><span class='bitor op'>|</span> <span class='e identifier id'>e</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span><span class='lparen token'>(</span><span class='integer val'>16</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+<span class='end end kw'>end</span> 
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>rgb2hex</h3>
+</div><div id="rgb2hex-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>rgb2hex</span><span class='args'>(rgb)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Converts RGB value array to hex string suitable for use with fill_color and
+stroke_color
+</p>
+<pre class="code">
+  <span class='rshft op'>&gt;&gt;</span> <span class='Prawn constant id'>Prawn</span><span class='colon2 op'>::</span><span class='Graphics constant id'>Graphics</span><span class='colon2 op'>::</span><span class='Color constant id'>Color</span><span class='dot token'>.</span><span class='rgb2hex identifier id'>rgb2hex</span><span class='lparen token'>(</span><span class='lbrack token'>[</span><span class='integer val'>255</span><span class='comma token'>,</span><span class='integer val'>120</span><span class='comma token'>,</span><span class='integer val'>8</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;ff7808&quot;</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+80
+81
+82</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/prawn/graphics/color.rb', line 80</span>
+
+<span class='def def kw'>def</span> <span class='rgb2hex identifier id'>rgb2hex</span><span class='lparen token'>(</span><span class='rgb identifier id'>rgb</span><span class='rparen token'>)</span>
+  <span class='rgb identifier id'>rgb</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='e identifier id'>e</span><span class='bitor op'>|</span> <span class='string val'>&quot;%02x&quot;</span> <span class='mod op'>%</span> <span class='e identifier id'>e</span> <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='join identifier id'>join</span>
+<span class='end end kw'>end</span>  
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>stroke_color</h3>
+</div><div id="stroke_color-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>stroke_color</span><span class='args'>(*color)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+<p class="aliases">
+  <span class="aka">Also known as:</span>
+  
+    <tt id="stroke_color%3D-instance_method">stroke_color=</tt>
+  
+</p>
+</div><div class="section docstring">
+  <p>
+Sets the line stroking color. 6 digit HTML color codes are used.
+</p>
+<p>
+If a single argument is provided, it should be a 6 digit HTML color code.
+</p>
+<pre class="code">
+  <span class='pdf identifier id'>pdf</span><span class='dot token'>.</span><span class='stroke_color identifier id'>stroke_color</span> <span class='string val'>&quot;f0ffc1&quot;</span>
+</pre>
+<p>
+If 4 arguments are provided, the color is assumed to be a CMYK value Values
+range from 0 - 100.
+</p>
+<pre class="code">
+  <span class='pdf identifier id'>pdf</span><span class='dot token'>.</span><span class='stroke_color identifier id'>stroke_color</span> <span class='integer val'>0</span><span class='comma token'>,</span> <span class='integer val'>99</span><span class='comma token'>,</span> <span class='integer val'>95</span><span class='comma token'>,</span> <span class='integer val'>0</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+45
+46
+47
+48
+49</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/prawn/graphics/color.rb', line 45</span>
+
+<span class='def def kw'>def</span> <span class='stroke_color identifier id'>stroke_color</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='color identifier id'>color</span><span class='rparen token'>)</span>   
+  <span class='return return kw'>return</span> <span class='@stroke_color ivar id'>@stroke_color</span> <span class='if if_mod kw'>if</span> <span class='color identifier id'>color</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span>
+  <span class='@stroke_color ivar id'>@stroke_color</span> <span class='assign token'>=</span> <span class='process_color identifier id'>process_color</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='color identifier id'>color</span><span class='rparen token'>)</span>
+  <span class='set_stroke_color identifier id'>set_stroke_color</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

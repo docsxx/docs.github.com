@@ -1,0 +1,3173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: Sequel::Database</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class Sequel_Database">
+  <h1 class="title">Class: Sequel::Database</h1>
+  <div class="section mixins">
+  <h1>Included Modules</h1>
+  <p><a href='Database/Metaprogramming.html' title='Sequel::Metaprogramming'>Sequel::Metaprogramming</a></p>
+</div><div class="section docstring">
+  <p>
+A Database object represents a virtual connection to a database. The
+Database class is meant to be subclassed by database adapters in order to
+provide the functionality needed for executing queries.
+</p>
+
+</div><div class="section attributes">
+  <h1>Attributes</h1>
+
+  
+    <div class="instance">
+      <h2>Instance Attributes</h2>
+      <table>
+      
+        <tr>
+          <th class="name">default_schema</td>
+          <td class="readwrite">
+            [<span id='default_schema-instance_method'>R</span><span id='default_schema%3D-instance_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+The default schema to use, generally should be nil.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">loggers</td>
+          <td class="readwrite">
+            [<span id='loggers-instance_method'>R</span><span id='loggers%3D-instance_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Array of SQL loggers to use for this database.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">opts</td>
+          <td class="readwrite">
+            [<span id='opts-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+The options for this database.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">pool</td>
+          <td class="readwrite">
+            [<span id='pool-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+The connection pool for this database.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">prepared_statements</td>
+          <td class="readwrite">
+            [<span id='prepared_statements-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+The prepared statement objects for this database, keyed by name.
+</p>
+
+            
+          </td>
+        </tr>
+      
+      </table>
+    </div>
+  
+</div><div class="section constants">
+  <div class="thisclass">
+  <h1>Constants</h1>
+  <dl>
+    
+      <dt id="ADAPTERS-constant">ADAPTERS</dt>
+      <dd>%w'ado db2 dbi do firebird informix jdbc mysql odbc openbase oracle postgres sqlite'.collect{|x| x.to_sym}</dd>
+    
+      <dt id="SQL_BEGIN-constant">SQL_BEGIN</dt>
+      <dd>'BEGIN'.freeze</dd>
+    
+      <dt id="SQL_COMMIT-constant">SQL_COMMIT</dt>
+      <dd>'COMMIT'.freeze</dd>
+    
+      <dt id="SQL_ROLLBACK-constant">SQL_ROLLBACK</dt>
+      <dd>'ROLLBACK'.freeze</dd>
+    
+  </dl>
+</div>
+
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(opts = {}, &amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Constructs a new instance of a database connection with the specified
+options hash.
+</p>
+<p>
+Sequel::Database is an abstract class that is not useful by itself.
+</p>
+<p>
+Takes the following options:
+</p>
+<ul>
+<li>:default_schema : The default schema to use, should generally be nil
+
+</li>
+<li>:disconnection_proc: A proc used to disconnect the connection.
+
+</li>
+<li>:identifier_input_method: A string method symbol to call on identifiers
+going into the database
+
+</li>
+<li>:identifier_output_method: A string method symbol to call on identifiers
+coming from the database
+
+</li>
+<li>:loggers : An array of loggers to use.
+
+</li>
+<li>:quote_identifiers : Whether to quote identifiers
+
+</li>
+<li>:single_threaded : Whether to use a single-threaded connection pool
+
+</li>
+</ul>
+<p>
+All options given are also passed to the ConnectionPool. If a block is
+given, it is used as the connection_proc for the ConnectionPool.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/database.rb', line 69</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='@opts ivar id'>@opts</span> <span class='opasgn op'>||=</span> <span class='opts identifier id'>opts</span>
+  
+  <span class='@single_threaded ivar id'>@single_threaded</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='symbol val'>:single_threaded</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:single_threaded</span><span class='rbrack token'>]</span> <span class='colon op'>:</span> <span class='@@single_threaded ivar id'>@@single_threaded</span>
+  <span class='@schemas ivar id'>@schemas</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+  <span class='@default_schema ivar id'>@default_schema</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='symbol val'>:default_schema</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:default_schema</span><span class='rbrack token'>]</span> <span class='colon op'>:</span> <span class='default_schema_default identifier id'>default_schema_default</span>
+  <span class='@prepared_statements ivar id'>@prepared_statements</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='@transactions ivar id'>@transactions</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+  <span class='@identifier_input_method ivar id'>@identifier_input_method</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+  <span class='@identifier_output_method ivar id'>@identifier_output_method</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+  <span class='@quote_identifiers ivar id'>@quote_identifiers</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+  <span class='@pool ivar id'>@pool</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='@single_threaded ivar id'>@single_threaded</span> <span class='question op'>?</span> <span class='SingleThreadedPool constant id'>SingleThreadedPool</span> <span class='colon op'>:</span> <span class='ConnectionPool constant id'>ConnectionPool</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='connection_pool_default_options identifier id'>connection_pool_default_options</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='@pool ivar id'>@pool</span><span class='dot token'>.</span><span class='connection_proc identifier id'>connection_proc</span> <span class='assign token'>=</span> <span class='proc identifier id'>proc</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='server identifier id'>server</span><span class='bitor op'>|</span> <span class='connect identifier id'>connect</span><span class='lparen token'>(</span><span class='server identifier id'>server</span><span class='rparen token'>)</span><span class='rbrace token'>}</span> <span class='unless unless_mod kw'>unless</span> <span class='block identifier id'>block</span>
+  <span class='@pool ivar id'>@pool</span><span class='dot token'>.</span><span class='disconnection_proc identifier id'>disconnection_proc</span> <span class='assign token'>=</span> <span class='proc identifier id'>proc</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='conn identifier id'>conn</span><span class='bitor op'>|</span> <span class='disconnect_connection identifier id'>disconnect_connection</span><span class='lparen token'>(</span><span class='conn identifier id'>conn</span><span class='rparen token'>)</span><span class='rbrace token'>}</span> <span class='unless unless_mod kw'>unless</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:disconnection_proc</span><span class='rbrack token'>]</span>
+
+  <span class='@loggers ivar id'>@loggers</span> <span class='assign token'>=</span> <span class='Array constant id'>Array</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:logger</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='plus op'>+</span> <span class='Array constant id'>Array</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:loggers</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+  <span class='colon3 op'>::</span><span class='Sequel constant id'>Sequel</span><span class='colon2 op'>::</span><span class='DATABASES constant id'>DATABASES</span><span class='dot token'>.</span><span class='push identifier id'>push</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <h1>Public Class Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#adapter_class-class_method' title='adapter_class'>adapter_class</a></span><span class='args'>(scheme)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Class Methods ### The Database subclass for the given adapter scheme.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#adapter_scheme-class_method' title='adapter_scheme'>adapter_scheme</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns the scheme for the Database class.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#connect-class_method' title='connect'>connect</a></span><span class='args'>(conn_string, opts = {}, &amp;block)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Connects to a database.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#identifier_input_method-class_method' title='identifier_input_method'>identifier_input_method</a></span><span class='args'>=(v)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Set the method to call on identifiers going into the database See Sequel.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#identifier_output_method-class_method' title='identifier_output_method'>identifier_output_method</a></span><span class='args'>=(v)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Set the method to call on identifiers coming from the database See Sequel.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#quote_identifiers-class_method' title='quote_identifiers'>quote_identifiers</a></span><span class='args'>=(value)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Sets the default quote_identifiers mode for new databases.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#set_adapter_scheme-class_method' title='set_adapter_scheme'>set_adapter_scheme</a></span><span class='args'>(scheme)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Private Class Methods ### Sets the adapter scheme for the Database class.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#single_threaded-class_method' title='single_threaded'>single_threaded</a></span><span class='args'>=(value)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Sets the default single_threaded mode for new databases.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#uri_to_options-class_method' title='uri_to_options'>uri_to_options</a></span><span class='args'>(uri)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Converts a uri to an options hash.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+  <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#%3C%3C-instance_method' title='#&lt;&lt;'>#&lt;&lt;</a></span><span class='args'>(sql)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Instance Methods ### Executes the supplied SQL statement string.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#%5B%5D-instance_method' title='#[]'>#[]</a></span><span class='args'>(*args)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns a dataset from the database.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#call-instance_method' title='#call'>#call</a></span><span class='args'>(ps_name, hash={})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Call the prepared statement with the given name with the given hash of
+arguments.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#connect-instance_method' title='#connect'>#connect</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Connects to the database.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#dataset-instance_method' title='#dataset'>#dataset</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns a blank dataset for this database.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#disconnect-instance_method' title='#disconnect'>#disconnect</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Disconnects all available connections from the connection pool.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#execute-instance_method' title='#execute'>#execute</a></span><span class='args'>(sql, opts={})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Executes the given SQL on the database.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#execute_ddl-instance_method' title='#execute_ddl'>#execute_ddl</a></span><span class='args'>(sql, opts={}, &amp;block)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Method that should be used when submitting any DDL (Data Definition
+Language) SQL.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#execute_dui-instance_method' title='#execute_dui'>#execute_dui</a></span><span class='args'>(sql, opts={}, &amp;block)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Method that should be used when issuing a DELETE, UPDATE, or INSERT
+statement.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#execute_insert-instance_method' title='#execute_insert'>#execute_insert</a></span><span class='args'>(sql, opts={}, &amp;block)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Method that should be used when issuing a INSERT statement.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#fetch-instance_method' title='#fetch'>#fetch</a></span><span class='args'>(sql, *args, &amp;block)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Fetches records for an arbitrary SQL statement.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#from-instance_method' title='#from'>#from</a></span><span class='args'>(*args, &amp;block)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns a new dataset with the from method invoked.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#get-instance_method' title='#get'>#get</a></span><span class='args'>(*args, &amp;block)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns a single value from the database, e.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#identifier_input_method-instance_method' title='#identifier_input_method'>#identifier_input_method</a></span><span class='args'>=(v)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Set the method to call on identifiers going into the database.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#identifier_output_method-instance_method' title='#identifier_output_method'>#identifier_output_method</a></span><span class='args'>=(v)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Set the method to call on identifiers coming from the database.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#inspect-instance_method' title='#inspect'>#inspect</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns a string representation of the database object including the class
+name and the connection URI (or the opts if the URI cannot be constructed).
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#literal-instance_method' title='#literal'>#literal</a></span><span class='args'>(v)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Proxy the literal call to the dataset, used for default values.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#log_info-instance_method' title='#log_info'>#log_info</a></span><span class='args'>(message, args=nil)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Log a message at level info to all loggers.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#logger-instance_method' title='#logger'>#logger</a></span><span class='args'>=(logger)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Remove any existing loggers and just use the given logger.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#quote_identifiers-instance_method' title='#quote_identifiers'>#quote_identifiers</a></span><span class='args'>=(v)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Whether to quote identifiers (columns and tables) for this database.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#quote_identifiers%3F-instance_method' title='#quote_identifiers?'>#quote_identifiers?</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns true if the database quotes identifiers.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#schema-instance_method' title='#schema'>#schema</a></span><span class='args'>(table, opts={})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Parse the schema from the database.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#select-instance_method' title='#select'>#select</a></span><span class='args'>(*args, &amp;block)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns a new dataset with the select method invoked.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#single_threaded%3F-instance_method' title='#single_threaded?'>#single_threaded?</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns true if the database is using a single-threaded connection pool.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#synchronize-instance_method' title='#synchronize'>#synchronize</a></span><span class='args'>(server=nil, &amp;block)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Acquires a database connection, yielding it to the passed block.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#table_exists%3F-instance_method' title='#table_exists?'>#table_exists?</a></span><span class='args'>(name)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns true if a table with the given name exists.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#test_connection-instance_method' title='#test_connection'>#test_connection</a></span><span class='args'>(server=nil)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Attempts to acquire a database connection.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#transaction-instance_method' title='#transaction'>#transaction</a></span><span class='args'>(opts={})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+A simple implementation of SQL transactions.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#typecast_value-instance_method' title='#typecast_value'>#typecast_value</a></span><span class='args'>(column_type, value)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Typecast the value to the given column_type.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#uri-instance_method' title='#uri'>#uri</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns the URI identifying the database.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#url-instance_method' title='#url'>#url</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Explicit alias of uri for easier subclassing.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table><div class="included">
+  
+  <div>
+    <h1>Public Instance Methods Included from <a href='Database/Metaprogramming.html' title='Sequel::Metaprogramming'>Sequel::Metaprogramming</a></h1>
+    <p><span class='name'><a href='Metaprogramming.html#meta_def-instance_method' title='meta_def'>meta_def</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails class public">
+  <h1>Public Class Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>adapter_class</h3>
+</div><div id="adapter_class-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>adapter_class</span><span class='args'>(scheme)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Class Methods ### The Database subclass for the given adapter scheme.
+Raises Sequel::AdapterNotFound if the adapter could not be loaded.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/database.rb', line 93</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='adapter_class identifier id'>adapter_class</span><span class='lparen token'>(</span><span class='scheme identifier id'>scheme</span><span class='rparen token'>)</span>
+  <span class='scheme identifier id'>scheme</span> <span class='assign token'>=</span> <span class='scheme identifier id'>scheme</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='string val'>'-'</span><span class='comma token'>,</span> <span class='string val'>'_'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span>
+  
+  <span class='unless unless kw'>unless</span> <span class='klass identifier id'>klass</span> <span class='assign token'>=</span> <span class='ADAPTER_MAP constant id'>ADAPTER_MAP</span><span class='lbrack token'>[</span><span class='scheme identifier id'>scheme</span><span class='rbrack token'>]</span>
+    <span class='comment val'># attempt to load the adapter file</span>
+    <span class='begin begin kw'>begin</span>
+      <span class='Sequel constant id'>Sequel</span><span class='dot token'>.</span><span class='require identifier id'>require</span> <span class='dstring node'>&quot;adapters/#{scheme}&quot;</span>
+    <span class='rescue rescue kw'>rescue</span> <span class='LoadError constant id'>LoadError</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
+      <span class='raise identifier id'>raise</span> <span class='AdapterNotFound constant id'>AdapterNotFound</span><span class='comma token'>,</span> <span class='dstring node'>&quot;Could not load #{scheme} adapter:\n  #{e.message}&quot;</span>
+    <span class='end end kw'>end</span>
+    
+    <span class='comment val'># make sure we actually loaded the adapter</span>
+    <span class='unless unless kw'>unless</span> <span class='klass identifier id'>klass</span> <span class='assign token'>=</span> <span class='ADAPTER_MAP constant id'>ADAPTER_MAP</span><span class='lbrack token'>[</span><span class='scheme identifier id'>scheme</span><span class='rbrack token'>]</span>
+      <span class='raise identifier id'>raise</span> <span class='AdapterNotFound constant id'>AdapterNotFound</span><span class='comma token'>,</span> <span class='dstring node'>&quot;Could not load #{scheme} adapter&quot;</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+  <span class='klass identifier id'>klass</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>adapter_scheme</h3>
+</div><div id="adapter_scheme-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>adapter_scheme</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns the scheme for the Database class.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+113
+114
+115</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/database.rb', line 113</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='adapter_scheme identifier id'>adapter_scheme</span>
+  <span class='@scheme ivar id'>@scheme</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>connect</h3>
+</div><div id="connect-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>connect</span><span class='args'>(conn_string, opts = {}, &amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Connects to a database. See Sequel.connect.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/database.rb', line 118</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='connect identifier id'>connect</span><span class='lparen token'>(</span><span class='conn_string identifier id'>conn_string</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='conn_string identifier id'>conn_string</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='String constant id'>String</span><span class='rparen token'>)</span>
+    <span class='if if kw'>if</span> <span class='match identifier id'>match</span> <span class='assign token'>=</span> <span class='regexp val'>/\A(jdbc|do):/o</span><span class='dot token'>.</span><span class='match identifier id'>match</span><span class='lparen token'>(</span><span class='conn_string identifier id'>conn_string</span><span class='rparen token'>)</span>
+      <span class='c identifier id'>c</span> <span class='assign token'>=</span> <span class='adapter_class identifier id'>adapter_class</span><span class='lparen token'>(</span><span class='match identifier id'>match</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span><span class='rparen token'>)</span>
+      <span class='opts identifier id'>opts</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='symbol val'>:uri=</span><span class='gt op'>&gt;</span><span class='conn_string identifier id'>conn_string</span><span class='rbrace token'>}</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='rparen token'>)</span>
+    <span class='else else kw'>else</span>
+      <span class='uri identifier id'>uri</span> <span class='assign token'>=</span> <span class='URI constant id'>URI</span><span class='dot token'>.</span><span class='parse identifier id'>parse</span><span class='lparen token'>(</span><span class='conn_string identifier id'>conn_string</span><span class='rparen token'>)</span>
+      <span class='scheme identifier id'>scheme</span> <span class='assign token'>=</span> <span class='uri identifier id'>uri</span><span class='dot token'>.</span><span class='scheme identifier id'>scheme</span>
+      <span class='scheme identifier id'>scheme</span> <span class='assign token'>=</span> <span class='symbol val'>:dbi</span> <span class='if if_mod kw'>if</span> <span class='scheme identifier id'>scheme</span> <span class='match op'>=~</span> <span class='regexp val'>/\Adbi-/</span>
+      <span class='c identifier id'>c</span> <span class='assign token'>=</span> <span class='adapter_class identifier id'>adapter_class</span><span class='lparen token'>(</span><span class='scheme identifier id'>scheme</span><span class='rparen token'>)</span>
+      <span class='uri_options identifier id'>uri_options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+      <span class='uri identifier id'>uri</span><span class='dot token'>.</span><span class='query identifier id'>query</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='string val'>'&amp;'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='collect identifier id'>collect</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='s identifier id'>s</span><span class='bitor op'>|</span> <span class='s identifier id'>s</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='string val'>'='</span><span class='rparen token'>)</span><span class='rbrace token'>}</span><span class='dot token'>.</span><span class='each identifier id'>each</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='k identifier id'>k</span><span class='comma token'>,</span><span class='v identifier id'>v</span><span class='bitor op'>|</span> <span class='uri_options identifier id'>uri_options</span><span class='lbrack token'>[</span><span class='k identifier id'>k</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='v identifier id'>v</span><span class='rbrace token'>}</span> <span class='unless unless_mod kw'>unless</span> <span class='uri identifier id'>uri</span><span class='dot token'>.</span><span class='query identifier id'>query</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='strip identifier id'>strip</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span>
+      <span class='opts identifier id'>opts</span> <span class='assign token'>=</span> <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='symbol val'>:uri_to_options</span><span class='comma token'>,</span> <span class='uri identifier id'>uri</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='uri_options identifier id'>uri_options</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='else else kw'>else</span>
+    <span class='opts identifier id'>opts</span> <span class='assign token'>=</span> <span class='conn_string identifier id'>conn_string</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='rparen token'>)</span>
+    <span class='c identifier id'>c</span> <span class='assign token'>=</span> <span class='adapter_class identifier id'>adapter_class</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:adapter</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='string val'>'adapter'</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+  <span class='comment val'># process opts a bit</span>
+  <span class='opts identifier id'>opts</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='dot token'>.</span><span class='inject identifier id'>inject</span><span class='lparen token'>(</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='m identifier id'>m</span><span class='comma token'>,</span> <span class='kv identifier id'>kv</span><span class='bitor op'>|</span> <span class='k identifier id'>k</span><span class='comma token'>,</span> <span class='v identifier id'>v</span> <span class='assign token'>=</span> <span class='mult op'>*</span><span class='kv identifier id'>kv</span>
+    <span class='k identifier id'>k</span> <span class='assign token'>=</span> <span class='symbol val'>:user</span> <span class='if if_mod kw'>if</span> <span class='k identifier id'>k</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='eq op'>==</span> <span class='string val'>'username'</span>
+    <span class='m identifier id'>m</span><span class='lbrack token'>[</span><span class='k identifier id'>k</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='v identifier id'>v</span>
+    <span class='m identifier id'>m</span>
+  <span class='end end kw'>end</span>
+  <span class='if if kw'>if</span> <span class='block identifier id'>block</span>
+    <span class='begin begin kw'>begin</span>
+      <span class='yield yield kw'>yield</span><span class='lparen token'>(</span><span class='db identifier id'>db</span> <span class='assign token'>=</span> <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+    <span class='ensure ensure kw'>ensure</span>
+      <span class='db identifier id'>db</span><span class='dot token'>.</span><span class='disconnect identifier id'>disconnect</span> <span class='if if_mod kw'>if</span> <span class='db identifier id'>db</span>
+      <span class='colon3 op'>::</span><span class='Sequel constant id'>Sequel</span><span class='colon2 op'>::</span><span class='DATABASES constant id'>DATABASES</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='db identifier id'>db</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+    <span class='nil nil kw'>nil</span>
+  <span class='else else kw'>else</span>
+    <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>identifier_input_method</h3>
+</div><div id="identifier_input_method-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>identifier_input_method</span><span class='args'>=(v)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Set the method to call on identifiers going into the database See
+Sequel.identifier_input_method=.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+162
+163
+164</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/database.rb', line 162</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='identifier_input_method identifier id'>identifier_input_method</span><span class='assign token'>=</span><span class='lparen token'>(</span><span class='v identifier id'>v</span><span class='rparen token'>)</span>
+  <span class='@@identifier_input_method ivar id'>@@identifier_input_method</span> <span class='assign token'>=</span> <span class='v identifier id'>v</span> <span class='orop op'>||</span> <span class='string val'>&quot;&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>identifier_output_method</h3>
+</div><div id="identifier_output_method-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>identifier_output_method</span><span class='args'>=(v)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Set the method to call on identifiers coming from the database See
+Sequel.identifier_output_method=.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+173
+174
+175</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/database.rb', line 173</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='identifier_output_method identifier id'>identifier_output_method</span><span class='assign token'>=</span><span class='lparen token'>(</span><span class='v identifier id'>v</span><span class='rparen token'>)</span>
+  <span class='@@identifier_output_method ivar id'>@@identifier_output_method</span> <span class='assign token'>=</span> <span class='v identifier id'>v</span> <span class='orop op'>||</span> <span class='string val'>&quot;&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>quote_identifiers</h3>
+</div><div id="quote_identifiers-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>quote_identifiers</span><span class='args'>=(value)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Sets the default quote_identifiers mode for new databases. See
+Sequel.quote_identifiers=.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+179
+180
+181</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/database.rb', line 179</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='quote_identifiers identifier id'>quote_identifiers</span><span class='assign token'>=</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+  <span class='@@quote_identifiers ivar id'>@@quote_identifiers</span> <span class='assign token'>=</span> <span class='value identifier id'>value</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>set_adapter_scheme</h3>
+</div><div id="set_adapter_scheme-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>set_adapter_scheme</span><span class='args'>(scheme)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Private Class Methods ### Sets the adapter scheme for the Database class.
+Call this method in descendants of Database to allow connection using a
+URL. For example the following:
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='Sequel constant id'>Sequel</span><span class='colon2 op'>::</span><span class='MyDB constant id'>MyDB</span><span class='colon2 op'>::</span><span class='Database constant id'>Database</span> <span class='lt op'>&lt;</span> <span class='Sequel constant id'>Sequel</span><span class='colon2 op'>::</span><span class='Database constant id'>Database</span>
+    <span class='set_adapter_scheme identifier id'>set_adapter_scheme</span> <span class='symbol val'>:mydb</span>
+    <span class='dot3 op'>...</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+would allow connection using:
+</p>
+<pre class="code">
+  <span class='Sequel constant id'>Sequel</span><span class='dot token'>.</span><span class='connect identifier id'>connect</span><span class='lparen token'>(</span><span class='string val'>'mydb://user:password@dbserver/mydb'</span><span class='rparen token'>)</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+203
+204
+205
+206</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/database.rb', line 203</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='set_adapter_scheme identifier id'>set_adapter_scheme</span><span class='lparen token'>(</span><span class='scheme identifier id'>scheme</span><span class='rparen token'>)</span> <span class='comment val'># :nodoc:</span>
+  <span class='@scheme ivar id'>@scheme</span> <span class='assign token'>=</span> <span class='scheme identifier id'>scheme</span>
+  <span class='ADAPTER_MAP constant id'>ADAPTER_MAP</span><span class='lbrack token'>[</span><span class='scheme identifier id'>scheme</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='self self kw'>self</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>single_threaded</h3>
+</div><div id="single_threaded-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>single_threaded</span><span class='args'>=(value)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Sets the default single_threaded mode for new databases. See
+Sequel.single_threaded=.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+185
+186
+187</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/database.rb', line 185</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='single_threaded identifier id'>single_threaded</span><span class='assign token'>=</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+  <span class='@@single_threaded ivar id'>@@single_threaded</span> <span class='assign token'>=</span> <span class='value identifier id'>value</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>uri_to_options</h3>
+</div><div id="uri_to_options-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>uri_to_options</span><span class='args'>(uri)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Converts a uri to an options hash. These options are then passed to a newly
+created database object.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+210
+211
+212
+213
+214
+215
+216</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/database.rb', line 210</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='uri_to_options identifier id'>uri_to_options</span><span class='lparen token'>(</span><span class='uri identifier id'>uri</span><span class='rparen token'>)</span> <span class='comment val'># :nodoc:</span>
+  <span class='lbrace token'>{</span> <span class='symbol val'>:user</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='uri identifier id'>uri</span><span class='dot token'>.</span><span class='user identifier id'>user</span><span class='comma token'>,</span>
+    <span class='symbol val'>:password</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='uri identifier id'>uri</span><span class='dot token'>.</span><span class='password identifier id'>password</span><span class='comma token'>,</span>
+    <span class='symbol val'>:host</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='uri identifier id'>uri</span><span class='dot token'>.</span><span class='host identifier id'>host</span><span class='comma token'>,</span>
+    <span class='symbol val'>:port</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='uri identifier id'>uri</span><span class='dot token'>.</span><span class='port identifier id'>port</span><span class='comma token'>,</span>
+    <span class='symbol val'>:database</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lparen token'>(</span><span class='m identifier id'>m</span> <span class='assign token'>=</span> <span class='regexp val'>/\/(.*)/</span><span class='dot token'>.</span><span class='match identifier id'>match</span><span class='lparen token'>(</span><span class='uri identifier id'>uri</span><span class='dot token'>.</span><span class='path identifier id'>path</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='lparen token'>(</span><span class='m identifier id'>m</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div><div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>&lt;&lt;</h3>
+</div><div id="%3C%3C-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'><<</span><span class='args'>(sql)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Instance Methods ### Executes the supplied SQL statement string.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+223
+224
+225</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/database.rb', line 223</span>
+
+<span class='def def kw'>def</span> <span class='lshft op'>&lt;&lt;</span><span class='lparen token'>(</span><span class='sql identifier id'>sql</span><span class='rparen token'>)</span>
+  <span class='execute_ddl identifier id'>execute_ddl</span><span class='lparen token'>(</span><span class='sql identifier id'>sql</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>[]</h3>
+</div><div id="%5B%5D-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>[]</span><span class='args'>(*args)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns a dataset from the database. If the first argument is a string, the
+method acts as an alias for Database#fetch, returning a dataset for
+arbitrary SQL:
+</p>
+<pre class="code">
+  <span class='DB constant id'>DB</span><span class='lbrack token'>[</span><span class='string val'>'SELECT * FROM items WHERE name = ?'</span><span class='comma token'>,</span> <span class='my_name identifier id'>my_name</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='all identifier id'>all</span>
+</pre>
+<p>
+Otherwise, acts as an alias for Database#from, setting the primary table
+for the dataset:
+</p>
+<pre class="code">
+  <span class='DB constant id'>DB</span><span class='lbrack token'>[</span><span class='symbol val'>:items</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='sql identifier id'>sql</span> <span class='comment val'>#=&gt; &quot;SELECT * FROM items&quot;</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+237
+238
+239</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/database.rb', line 237</span>
+
+<span class='def def kw'>def</span> <span class='aref op'>[]</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='lparen token'>(</span><span class='String constant id'>String</span> <span class='eqq op'>===</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='from identifier id'>from</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>call</h3>
+</div><div id="call-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>call</span><span class='args'>(ps_name, hash={})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Call the prepared statement with the given name with the given hash of
+arguments.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+243
+244
+245</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/database.rb', line 243</span>
+
+<span class='def def kw'>def</span> <span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='ps_name identifier id'>ps_name</span><span class='comma token'>,</span> <span class='hash identifier id'>hash</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='prepared_statements identifier id'>prepared_statements</span><span class='lbrack token'>[</span><span class='ps_name identifier id'>ps_name</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='hash identifier id'>hash</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>connect</h3>
+</div><div id="connect-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>connect</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Connects to the database. This method should be overridden by descendants.
+</p>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="raise">
+  <h3>Raises:</h3>
+  <dl>
+  
+    <dt>
+      
+        <span class='type'>[<tt>NotImplementedError</tt>]</span>
+      
+      
+    </dt>
+    <dd>
+      <span class='desc'></span>
+    </dd>
+  
+  </dl>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+248
+249
+250</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/database.rb', line 248</span>
+
+<span class='def def kw'>def</span> <span class='connect identifier id'>connect</span>
+  <span class='raise identifier id'>raise</span> <span class='NotImplementedError constant id'>NotImplementedError</span><span class='comma token'>,</span> <span class='string val'>&quot;#connect should be overridden by adapters&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>dataset</h3>
+</div><div id="dataset-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>dataset</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns a blank dataset for this database
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+253
+254
+255</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/database.rb', line 253</span>
+
+<span class='def def kw'>def</span> <span class='dataset identifier id'>dataset</span>
+  <span class='ds identifier id'>ds</span> <span class='assign token'>=</span> <span class='Sequel constant id'>Sequel</span><span class='colon2 op'>::</span><span class='Dataset constant id'>Dataset</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>disconnect</h3>
+</div><div id="disconnect-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>disconnect</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Disconnects all available connections from the connection pool. Any
+connections currently in use will not be disconnected.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+259
+260
+261</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/database.rb', line 259</span>
+
+<span class='def def kw'>def</span> <span class='disconnect identifier id'>disconnect</span>
+  <span class='pool identifier id'>pool</span><span class='dot token'>.</span><span class='disconnect identifier id'>disconnect</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>execute</h3>
+</div><div id="execute-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>execute</span><span class='args'>(sql, opts={})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Executes the given SQL on the database. This method should be overridden in
+descendants. This method should not be called directly by user code.
+</p>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="raise">
+  <h3>Raises:</h3>
+  <dl>
+  
+    <dt>
+      
+        <span class='type'>[<tt>NotImplementedError</tt>]</span>
+      
+      
+    </dt>
+    <dd>
+      <span class='desc'></span>
+    </dd>
+  
+  </dl>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+265
+266
+267</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/database.rb', line 265</span>
+
+<span class='def def kw'>def</span> <span class='execute identifier id'>execute</span><span class='lparen token'>(</span><span class='sql identifier id'>sql</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='raise identifier id'>raise</span> <span class='NotImplementedError constant id'>NotImplementedError</span><span class='comma token'>,</span> <span class='string val'>&quot;#execute should be overridden by adapters&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>execute_ddl</h3>
+</div><div id="execute_ddl-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>execute_ddl</span><span class='args'>(sql, opts={}, &amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Method that should be used when submitting any DDL (Data Definition
+Language) SQL. By default, calls execute_dui. This method should not be
+called directly by user code.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+272
+273
+274</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/database.rb', line 272</span>
+
+<span class='def def kw'>def</span> <span class='execute_ddl identifier id'>execute_ddl</span><span class='lparen token'>(</span><span class='sql identifier id'>sql</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='execute_dui identifier id'>execute_dui</span><span class='lparen token'>(</span><span class='sql identifier id'>sql</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>execute_dui</h3>
+</div><div id="execute_dui-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>execute_dui</span><span class='args'>(sql, opts={}, &amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Method that should be used when issuing a DELETE, UPDATE, or INSERT
+statement. By default, calls execute. This method should not be called
+directly by user code.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+279
+280
+281</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/database.rb', line 279</span>
+
+<span class='def def kw'>def</span> <span class='execute_dui identifier id'>execute_dui</span><span class='lparen token'>(</span><span class='sql identifier id'>sql</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='execute identifier id'>execute</span><span class='lparen token'>(</span><span class='sql identifier id'>sql</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>execute_insert</h3>
+</div><div id="execute_insert-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>execute_insert</span><span class='args'>(sql, opts={}, &amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Method that should be used when issuing a INSERT statement. By default,
+calls execute_dui. This method should not be called directly by user code.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+286
+287
+288</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/database.rb', line 286</span>
+
+<span class='def def kw'>def</span> <span class='execute_insert identifier id'>execute_insert</span><span class='lparen token'>(</span><span class='sql identifier id'>sql</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='execute_dui identifier id'>execute_dui</span><span class='lparen token'>(</span><span class='sql identifier id'>sql</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>fetch</h3>
+</div><div id="fetch-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>fetch</span><span class='args'>(sql, *args, &amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Fetches records for an arbitrary SQL statement. If a block is given, it is
+used to iterate over the records:
+</p>
+<pre class="code">
+  <span class='DB constant id'>DB</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'SELECT * FROM items'</span><span class='rparen token'>)</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='r identifier id'>r</span><span class='bitor op'>|</span> <span class='p identifier id'>p</span> <span class='r identifier id'>r</span><span class='rbrace token'>}</span>
+</pre>
+<p>
+The method returns a dataset instance:
+</p>
+<pre class="code">
+  <span class='DB constant id'>DB</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'SELECT * FROM items'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='all identifier id'>all</span>
+</pre>
+<p>
+Fetch can also perform parameterized queries for protection against SQL
+injection:
+</p>
+<pre class="code">
+  <span class='DB constant id'>DB</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'SELECT * FROM items WHERE name = ?'</span><span class='comma token'>,</span> <span class='my_name identifier id'>my_name</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='all identifier id'>all</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+303
+304
+305
+306
+307</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/database.rb', line 303</span>
+
+<span class='def def kw'>def</span> <span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='sql identifier id'>sql</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='ds identifier id'>ds</span> <span class='assign token'>=</span> <span class='dataset identifier id'>dataset</span><span class='dot token'>.</span><span class='with_sql identifier id'>with_sql</span><span class='lparen token'>(</span><span class='sql identifier id'>sql</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='ds identifier id'>ds</span><span class='dot token'>.</span><span class='each identifier id'>each</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='block identifier id'>block</span>
+  <span class='ds identifier id'>ds</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>from</h3>
+</div><div id="from-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>from</span><span class='args'>(*args, &amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns a new dataset with the from method invoked. If a block is given, it
+is used as a filter on the dataset.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+311
+312
+313
+314</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/database.rb', line 311</span>
+
+<span class='def def kw'>def</span> <span class='from identifier id'>from</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='ds identifier id'>ds</span> <span class='assign token'>=</span> <span class='dataset identifier id'>dataset</span><span class='dot token'>.</span><span class='from identifier id'>from</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='block identifier id'>block</span> <span class='integer val'>? </span><span class='ds identifier id'>ds</span><span class='dot token'>.</span><span class='filter identifier id'>filter</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='ds identifier id'>ds</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>get</h3>
+</div><div id="get-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>get</span><span class='args'>(*args, &amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns a single value from the database, e.g.:
+</p>
+<pre class="code">
+  <span class='comment val'># SELECT 1</span>
+  <span class='DB constant id'>DB</span><span class='dot token'>.</span><span class='get identifier id'>get</span><span class='lparen token'>(</span><span class='integer val'>1</span><span class='rparen token'>)</span> <span class='comment val'>#=&gt; 1</span>
+
+  <span class='comment val'># SELECT version()</span>
+  <span class='DB constant id'>DB</span><span class='dot token'>.</span><span class='get identifier id'>get</span><span class='lparen token'>(</span><span class='symbol val'>:version</span><span class='dot token'>.</span><span class='sql_function identifier id'>sql_function</span><span class='rparen token'>)</span> <span class='comment val'>#=&gt; ...</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+323
+324
+325</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/database.rb', line 323</span>
+
+<span class='def def kw'>def</span> <span class='get identifier id'>get</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='dataset identifier id'>dataset</span><span class='dot token'>.</span><span class='get identifier id'>get</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>identifier_input_method</h3>
+</div><div id="identifier_input_method-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>identifier_input_method</span><span class='args'>=(v)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Set the method to call on identifiers going into the database
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+341
+342
+343
+344</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/database.rb', line 341</span>
+
+<span class='def def kw'>def</span> <span class='identifier_input_method= identifier id'>identifier_input_method=</span><span class='lparen token'>(</span><span class='v identifier id'>v</span><span class='rparen token'>)</span>
+  <span class='reset_schema_utility_dataset identifier id'>reset_schema_utility_dataset</span>
+  <span class='@identifier_input_method ivar id'>@identifier_input_method</span> <span class='assign token'>=</span> <span class='v identifier id'>v</span> <span class='orop op'>||</span> <span class='string val'>&quot;&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>identifier_output_method</h3>
+</div><div id="identifier_output_method-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>identifier_output_method</span><span class='args'>=(v)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Set the method to call on identifiers coming from the database
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+360
+361
+362
+363</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/database.rb', line 360</span>
+
+<span class='def def kw'>def</span> <span class='identifier_output_method= identifier id'>identifier_output_method=</span><span class='lparen token'>(</span><span class='v identifier id'>v</span><span class='rparen token'>)</span>
+  <span class='reset_schema_utility_dataset identifier id'>reset_schema_utility_dataset</span>
+  <span class='@identifier_output_method ivar id'>@identifier_output_method</span> <span class='assign token'>=</span> <span class='v identifier id'>v</span> <span class='orop op'>||</span> <span class='string val'>&quot;&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>inspect</h3>
+</div><div id="inspect-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>inspect</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns a string representation of the database object including the class
+name and the connection URI (or the opts if the URI cannot be constructed).
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+368
+369
+370</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/database.rb', line 368</span>
+
+<span class='def def kw'>def</span> <span class='inspect identifier id'>inspect</span>
+  <span class='dstring node'>&quot;#&lt;#{self.class}: #{(uri rescue opts).inspect}&gt;&quot;</span> 
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>literal</h3>
+</div><div id="literal-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>literal</span><span class='args'>(v)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Proxy the literal call to the dataset, used for default values.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+373
+374
+375</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/database.rb', line 373</span>
+
+<span class='def def kw'>def</span> <span class='literal identifier id'>literal</span><span class='lparen token'>(</span><span class='v identifier id'>v</span><span class='rparen token'>)</span>
+  <span class='schema_utility_dataset identifier id'>schema_utility_dataset</span><span class='dot token'>.</span><span class='literal identifier id'>literal</span><span class='lparen token'>(</span><span class='v identifier id'>v</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>log_info</h3>
+</div><div id="log_info-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>log_info</span><span class='args'>(message, args=nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Log a message at level info to all loggers. All SQL logging goes through
+this method.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+379
+380
+381
+382</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/database.rb', line 379</span>
+
+<span class='def def kw'>def</span> <span class='log_info identifier id'>log_info</span><span class='lparen token'>(</span><span class='message identifier id'>message</span><span class='comma token'>,</span> <span class='args identifier id'>args</span><span class='assign token'>=</span><span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='message identifier id'>message</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;#{message}; #{args.inspect}&quot;</span> <span class='if if_mod kw'>if</span> <span class='args identifier id'>args</span>
+  <span class='@loggers ivar id'>@loggers</span><span class='dot token'>.</span><span class='each identifier id'>each</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='logger identifier id'>logger</span><span class='bitor op'>|</span> <span class='logger identifier id'>logger</span><span class='dot token'>.</span><span class='info identifier id'>info</span><span class='lparen token'>(</span><span class='message identifier id'>message</span><span class='rparen token'>)</span><span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>logger</h3>
+</div><div id="logger-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>logger</span><span class='args'>=(logger)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Remove any existing loggers and just use the given logger.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+385
+386
+387</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/database.rb', line 385</span>
+
+<span class='def def kw'>def</span> <span class='logger= identifier id'>logger=</span><span class='lparen token'>(</span><span class='logger identifier id'>logger</span><span class='rparen token'>)</span>
+  <span class='@loggers ivar id'>@loggers</span> <span class='assign token'>=</span> <span class='Array constant id'>Array</span><span class='lparen token'>(</span><span class='logger identifier id'>logger</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>quote_identifiers</h3>
+</div><div id="quote_identifiers-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>quote_identifiers</span><span class='args'>=(v)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Whether to quote identifiers (columns and tables) for this database
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+390
+391
+392
+393</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/database.rb', line 390</span>
+
+<span class='def def kw'>def</span> <span class='quote_identifiers= identifier id'>quote_identifiers=</span><span class='lparen token'>(</span><span class='v identifier id'>v</span><span class='rparen token'>)</span>
+  <span class='reset_schema_utility_dataset identifier id'>reset_schema_utility_dataset</span>
+  <span class='@quote_identifiers ivar id'>@quote_identifiers</span> <span class='assign token'>=</span> <span class='v identifier id'>v</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>quote_identifiers?</h3>
+</div><div id="quote_identifiers%3F-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>quote_identifiers?</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns true if the database quotes identifiers.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+396
+397
+398
+399</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/database.rb', line 396</span>
+
+<span class='def def kw'>def</span> <span class='quote_identifiers? fid id'>quote_identifiers?</span>
+  <span class='return return kw'>return</span> <span class='@quote_identifiers ivar id'>@quote_identifiers</span> <span class='unless unless_mod kw'>unless</span> <span class='@quote_identifiers ivar id'>@quote_identifiers</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+  <span class='@quote_identifiers ivar id'>@quote_identifiers</span> <span class='assign token'>=</span> <span class='@opts ivar id'>@opts</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='symbol val'>:quote_identifiers</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='@opts ivar id'>@opts</span><span class='lbrack token'>[</span><span class='symbol val'>:quote_identifiers</span><span class='rbrack token'>]</span> <span class='colon op'>:</span> <span class='lparen token'>(</span><span class='@@quote_identifiers ivar id'>@@quote_identifiers</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span> <span class='integer val'>? </span><span class='quote_identifiers_default identifier id'>quote_identifiers_default</span> <span class='colon op'>:</span> <span class='@@quote_identifiers ivar id'>@@quote_identifiers</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>schema</h3>
+</div><div id="schema-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>schema</span><span class='args'>(table, opts={})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Parse the schema from the database. Returns the schema for the given table
+as an array with all members being arrays of length 2, the first member
+being the column name, and the second member being a hash of column
+information. Available options are:
+</p>
+<ul>
+<li>:reload - Get fresh information from the database, instead of using cached
+information. If table_name is blank, :reload should be used unless you are
+sure that schema has not been called before with a table_name, otherwise
+you may only getting the schemas for tables that have been requested
+explicitly.
+
+</li>
+<li>:schema - An explicit schema to use. It may also be implicitly provided via
+the table name.
+
+</li>
+</ul>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="raise">
+  <h3>Raises:</h3>
+  <dl>
+  
+    <dt>
+      
+        <span class='type'>[<tt><a href='Error.html' title='Error'>Error</a></tt>]</span>
+      
+      
+    </dt>
+    <dd>
+      <span class='desc'></span>
+    </dd>
+  
+  </dl>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/database.rb', line 418</span>
+
+<span class='def def kw'>def</span> <span class='schema identifier id'>schema</span><span class='lparen token'>(</span><span class='table identifier id'>table</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='raise identifier id'>raise</span><span class='lparen token'>(</span><span class='Error constant id'>Error</span><span class='comma token'>,</span> <span class='string val'>'schema parsing is not implemented on this database'</span><span class='rparen token'>)</span> <span class='unless unless_mod kw'>unless</span> <span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:schema_parse_table</span><span class='comma token'>,</span> <span class='true true kw'>true</span><span class='rparen token'>)</span>
+
+  <span class='sch identifier id'>sch</span><span class='comma token'>,</span> <span class='table_name identifier id'>table_name</span> <span class='assign token'>=</span> <span class='schema_and_table identifier id'>schema_and_table</span><span class='lparen token'>(</span><span class='table identifier id'>table</span><span class='rparen token'>)</span>
+  <span class='quoted_name identifier id'>quoted_name</span> <span class='assign token'>=</span> <span class='quote_schema_table identifier id'>quote_schema_table</span><span class='lparen token'>(</span><span class='table identifier id'>table</span><span class='rparen token'>)</span>
+  <span class='opts identifier id'>opts</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='symbol val'>:schema=</span><span class='gt op'>&gt;</span><span class='sch identifier id'>sch</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='sch identifier id'>sch</span> <span class='andop op'>&amp;&amp;</span> <span class='notop op'>!</span><span class='opts identifier id'>opts</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='symbol val'>:schema</span><span class='rparen token'>)</span>
+
+  <span class='@schemas ivar id'>@schemas</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='quoted_name identifier id'>quoted_name</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:reload</span><span class='rbrack token'>]</span> <span class='andop op'>&amp;&amp;</span> <span class='@schemas ivar id'>@schemas</span>
+  <span class='return return kw'>return</span> <span class='@schemas ivar id'>@schemas</span><span class='lbrack token'>[</span><span class='quoted_name identifier id'>quoted_name</span><span class='rbrack token'>]</span> <span class='if if_mod kw'>if</span> <span class='@schemas ivar id'>@schemas</span> <span class='andop op'>&amp;&amp;</span> <span class='@schemas ivar id'>@schemas</span><span class='lbrack token'>[</span><span class='quoted_name identifier id'>quoted_name</span><span class='rbrack token'>]</span>
+
+  <span class='@schemas ivar id'>@schemas</span> <span class='opasgn op'>||=</span> <span class='Hash constant id'>Hash</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='h identifier id'>h</span><span class='comma token'>,</span><span class='k identifier id'>k</span><span class='bitor op'>|</span>
+    <span class='quote_name identifier id'>quote_name</span> <span class='assign token'>=</span> <span class='quote_schema_table identifier id'>quote_schema_table</span><span class='lparen token'>(</span><span class='k identifier id'>k</span><span class='rparen token'>)</span>
+    <span class='h identifier id'>h</span><span class='lbrack token'>[</span><span class='quote_name identifier id'>quote_name</span><span class='rbrack token'>]</span> <span class='if if_mod kw'>if</span> <span class='h identifier id'>h</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='quote_name identifier id'>quote_name</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+
+  <span class='cols identifier id'>cols</span> <span class='assign token'>=</span> <span class='schema_parse_table identifier id'>schema_parse_table</span><span class='lparen token'>(</span><span class='table_name identifier id'>table_name</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='rparen token'>)</span>
+  <span class='raise identifier id'>raise</span><span class='lparen token'>(</span><span class='Error constant id'>Error</span><span class='comma token'>,</span> <span class='string val'>'schema parsing returned no columns, table probably doesn\'t exist'</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='cols identifier id'>cols</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span> <span class='orop op'>||</span> <span class='cols identifier id'>cols</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span>
+  <span class='@schemas ivar id'>@schemas</span><span class='lbrack token'>[</span><span class='quoted_name identifier id'>quoted_name</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='cols identifier id'>cols</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>select</h3>
+</div><div id="select-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>select</span><span class='args'>(*args, &amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns a new dataset with the select method invoked.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+402
+403
+404</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/database.rb', line 402</span>
+
+<span class='def def kw'>def</span> <span class='select identifier id'>select</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='dataset identifier id'>dataset</span><span class='dot token'>.</span><span class='select identifier id'>select</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>single_threaded?</h3>
+</div><div id="single_threaded%3F-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>single_threaded?</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns true if the database is using a single-threaded connection pool.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+439
+440
+441</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/database.rb', line 439</span>
+
+<span class='def def kw'>def</span> <span class='single_threaded? fid id'>single_threaded?</span>
+  <span class='@single_threaded ivar id'>@single_threaded</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>synchronize</h3>
+</div><div id="synchronize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>synchronize</span><span class='args'>(server=nil, &amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Acquires a database connection, yielding it to the passed block.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+444
+445
+446</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/database.rb', line 444</span>
+
+<span class='def def kw'>def</span> <span class='synchronize identifier id'>synchronize</span><span class='lparen token'>(</span><span class='server identifier id'>server</span><span class='assign token'>=</span><span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='@pool ivar id'>@pool</span><span class='dot token'>.</span><span class='hold identifier id'>hold</span><span class='lparen token'>(</span><span class='server identifier id'>server</span> <span class='orop op'>||</span> <span class='symbol val'>:default</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>table_exists?</h3>
+</div><div id="table_exists%3F-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>table_exists?</span><span class='args'>(name)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns true if a table with the given name exists. This requires a query
+to the database unless this database object already has the schema for the
+given table name.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+451
+452
+453
+454
+455
+456
+457
+458
+459
+460
+461
+462</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/database.rb', line 451</span>
+
+<span class='def def kw'>def</span> <span class='table_exists? fid id'>table_exists?</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='@schemas ivar id'>@schemas</span> <span class='andop op'>&amp;&amp;</span> <span class='@schemas ivar id'>@schemas</span><span class='lbrack token'>[</span><span class='name identifier id'>name</span><span class='rbrack token'>]</span>
+    <span class='true true kw'>true</span>
+  <span class='else else kw'>else</span>
+    <span class='begin begin kw'>begin</span> 
+      <span class='from identifier id'>from</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='first identifier id'>first</span>
+      <span class='true true kw'>true</span>
+    <span class='rescue rescue kw'>rescue</span>
+      <span class='false false kw'>false</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>test_connection</h3>
+</div><div id="test_connection-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>test_connection</span><span class='args'>(server=nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Attempts to acquire a database connection. Returns true if successful. Will
+probably raise an error if unsuccessful.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+466
+467
+468
+469</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/database.rb', line 466</span>
+
+<span class='def def kw'>def</span> <span class='test_connection identifier id'>test_connection</span><span class='lparen token'>(</span><span class='server identifier id'>server</span><span class='assign token'>=</span><span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='synchronize identifier id'>synchronize</span><span class='lparen token'>(</span><span class='server identifier id'>server</span><span class='rparen token'>)</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='conn identifier id'>conn</span><span class='bitor op'>|</span><span class='rbrace token'>}</span>
+  <span class='true true kw'>true</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>transaction</h3>
+</div><div id="transaction-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>transaction</span><span class='args'>(opts={})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+A simple implementation of SQL transactions. Nested transactions are not
+supported - calling #transaction within a transaction will reuse the
+current transaction. Should be overridden for databases that support nested
+transactions.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+475
+476
+477
+478
+479
+480
+481
+482
+483
+484
+485
+486
+487
+488
+489
+490
+491
+492
+493
+494
+495</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/database.rb', line 475</span>
+
+<span class='def def kw'>def</span> <span class='transaction identifier id'>transaction</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='synchronize identifier id'>synchronize</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:server</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='conn identifier id'>conn</span><span class='bitor op'>|</span>
+    <span class='return return kw'>return</span> <span class='yield yield kw'>yield</span><span class='lparen token'>(</span><span class='conn identifier id'>conn</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='@transactions ivar id'>@transactions</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='Thread constant id'>Thread</span><span class='dot token'>.</span><span class='current identifier id'>current</span><span class='rparen token'>)</span>
+    <span class='log_info identifier id'>log_info</span><span class='lparen token'>(</span><span class='begin_transaction_sql identifier id'>begin_transaction_sql</span><span class='rparen token'>)</span>
+    <span class='conn identifier id'>conn</span><span class='dot token'>.</span><span class='execute identifier id'>execute</span><span class='lparen token'>(</span><span class='begin_transaction_sql identifier id'>begin_transaction_sql</span><span class='rparen token'>)</span>
+    <span class='begin begin kw'>begin</span>
+      <span class='@transactions ivar id'>@transactions</span> <span class='lshft op'>&lt;&lt;</span> <span class='Thread constant id'>Thread</span><span class='dot token'>.</span><span class='current identifier id'>current</span>
+      <span class='yield yield kw'>yield</span><span class='lparen token'>(</span><span class='conn identifier id'>conn</span><span class='rparen token'>)</span>
+    <span class='rescue rescue kw'>rescue</span> <span class='Exception constant id'>Exception</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
+      <span class='log_info identifier id'>log_info</span><span class='lparen token'>(</span><span class='rollback_transaction_sql identifier id'>rollback_transaction_sql</span><span class='rparen token'>)</span>
+      <span class='conn identifier id'>conn</span><span class='dot token'>.</span><span class='execute identifier id'>execute</span><span class='lparen token'>(</span><span class='rollback_transaction_sql identifier id'>rollback_transaction_sql</span><span class='rparen token'>)</span>
+      <span class='transaction_error identifier id'>transaction_error</span><span class='lparen token'>(</span><span class='e identifier id'>e</span><span class='rparen token'>)</span>
+    <span class='ensure ensure kw'>ensure</span>
+      <span class='unless unless kw'>unless</span> <span class='e identifier id'>e</span>
+        <span class='log_info identifier id'>log_info</span><span class='lparen token'>(</span><span class='commit_transaction_sql identifier id'>commit_transaction_sql</span><span class='rparen token'>)</span>
+        <span class='conn identifier id'>conn</span><span class='dot token'>.</span><span class='execute identifier id'>execute</span><span class='lparen token'>(</span><span class='commit_transaction_sql identifier id'>commit_transaction_sql</span><span class='rparen token'>)</span>
+      <span class='end end kw'>end</span>
+      <span class='@transactions ivar id'>@transactions</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='Thread constant id'>Thread</span><span class='dot token'>.</span><span class='current identifier id'>current</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>typecast_value</h3>
+</div><div id="typecast_value-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>typecast_value</span><span class='args'>(column_type, value)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Typecast the value to the given column_type. Calls
+typecast_value_#{column_type} if the method exists, otherwise returns the
+value. This method should raise Sequel::InvalidValue if assigned value is
+invalid.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+502
+503
+504
+505
+506
+507
+508
+509
+510
+511
+512</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/database.rb', line 502</span>
+
+<span class='def def kw'>def</span> <span class='typecast_value identifier id'>typecast_value</span><span class='lparen token'>(</span><span class='column_type identifier id'>column_type</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='rparen token'>)</span>
+  <span class='return return kw'>return</span> <span class='nil nil kw'>nil</span> <span class='if if_mod kw'>if</span> <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+  <span class='meth identifier id'>meth</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;typecast_value_#{column_type}&quot;</span>
+  <span class='begin begin kw'>begin</span>
+    <span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='meth identifier id'>meth</span><span class='comma token'>,</span> <span class='true true kw'>true</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='meth identifier id'>meth</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='value identifier id'>value</span>
+  <span class='rescue rescue kw'>rescue</span> <span class='ArgumentError constant id'>ArgumentError</span><span class='comma token'>,</span> <span class='TypeError constant id'>TypeError</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='exp identifier id'>exp</span>
+    <span class='e identifier id'>e</span> <span class='assign token'>=</span> <span class='Sequel constant id'>Sequel</span><span class='colon2 op'>::</span><span class='InvalidValue constant id'>InvalidValue</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{exp.class} #{exp.message}&quot;</span><span class='rparen token'>)</span>
+    <span class='e identifier id'>e</span><span class='dot token'>.</span><span class='set_backtrace identifier id'>set_backtrace</span><span class='lparen token'>(</span><span class='exp identifier id'>exp</span><span class='dot token'>.</span><span class='backtrace identifier id'>backtrace</span><span class='rparen token'>)</span>
+    <span class='raise identifier id'>raise</span> <span class='e identifier id'>e</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>uri</h3>
+</div><div id="uri-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>uri</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns the URI identifying the database. This method can raise an error if
+the database used options instead of a connection string.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+517
+518
+519
+520
+521
+522
+523
+524
+525
+526
+527
+528
+529
+530
+531
+532</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/database.rb', line 517</span>
+
+<span class='def def kw'>def</span> <span class='uri identifier id'>uri</span>
+  <span class='uri identifier id'>uri</span> <span class='assign token'>=</span> <span class='URI constant id'>URI</span><span class='colon2 op'>::</span><span class='Generic constant id'>Generic</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span>
+    <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='adapter_scheme identifier id'>adapter_scheme</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='comma token'>,</span>
+    <span class='nil nil kw'>nil</span><span class='comma token'>,</span>
+    <span class='@opts ivar id'>@opts</span><span class='lbrack token'>[</span><span class='symbol val'>:host</span><span class='rbrack token'>]</span><span class='comma token'>,</span>
+    <span class='@opts ivar id'>@opts</span><span class='lbrack token'>[</span><span class='symbol val'>:port</span><span class='rbrack token'>]</span><span class='comma token'>,</span>
+    <span class='nil nil kw'>nil</span><span class='comma token'>,</span>
+    <span class='dstring node'>&quot;/#{@opts[:database]}&quot;</span><span class='comma token'>,</span>
+    <span class='nil nil kw'>nil</span><span class='comma token'>,</span>
+    <span class='nil nil kw'>nil</span><span class='comma token'>,</span>
+    <span class='nil nil kw'>nil</span>
+  <span class='rparen token'>)</span>
+  <span class='uri identifier id'>uri</span><span class='dot token'>.</span><span class='user identifier id'>user</span> <span class='assign token'>=</span> <span class='@opts ivar id'>@opts</span><span class='lbrack token'>[</span><span class='symbol val'>:user</span><span class='rbrack token'>]</span>
+  <span class='uri identifier id'>uri</span><span class='dot token'>.</span><span class='password identifier id'>password</span> <span class='assign token'>=</span> <span class='@opts ivar id'>@opts</span><span class='lbrack token'>[</span><span class='symbol val'>:password</span><span class='rbrack token'>]</span> <span class='if if_mod kw'>if</span> <span class='uri identifier id'>uri</span><span class='dot token'>.</span><span class='user identifier id'>user</span>
+  <span class='uri identifier id'>uri</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>url</h3>
+</div><div id="url-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>url</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Explicit alias of uri for easier subclassing.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+535
+536
+537</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/database.rb', line 535</span>
+
+<span class='def def kw'>def</span> <span class='url identifier id'>url</span>
+  <span class='uri identifier id'>uri</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

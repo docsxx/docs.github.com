@@ -1,0 +1,1544 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: ActiveMerchant::Billing::ExactGateway</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class ActiveMerchant_Billing_ExactGateway">
+  <h1 class="title">Class: ActiveMerchant::Billing::ExactGateway</h1>
+  <div class="section inheritance">
+  <ul>
+  <li><a href='Gateway.html' title='ActiveMerchant::Billing::Gateway'>ActiveMerchant::Billing::Gateway</a></li><ul><li>ActiveMerchant::Billing::ExactGateway</li>
+  </ul></ul>
+</div><div class="section constants">
+  <div class="thisclass">
+  <h1>Constants</h1>
+  <dl>
+    
+      <dt id="API_VERSION-constant">API_VERSION</dt>
+      <dd>&quot;8.5&quot;</dd>
+    
+      <dt id="ENVELOPE_NAMESPACES-constant">ENVELOPE_NAMESPACES</dt>
+      <dd>{ 'xmlns:xsd' =&gt; 'http://www.w3.org/2001/XMLSchema',                              'xmlns:env' =&gt; 'http://schemas.xmlsoap.org/soap/envelope/',                              'xmlns:xsi' =&gt; 'http://www.w3.org/2001/XMLSchema-instance'                            }</dd>
+    
+      <dt id="POST_HEADERS-constant">POST_HEADERS</dt>
+      <dd>{ 'soapAction' =&gt; &quot;http://secure2.e-xact.com/vplug-in/transaction/rpc-enc/SendAndCommit&quot;,                       'Content-Type' =&gt; 'text/xml'                      }</dd>
+    
+      <dt id="SEND_AND_COMMIT_ATTRIBUTES-constant">SEND_AND_COMMIT_ATTRIBUTES</dt>
+      <dd>{ 'xmlns:n1' =&gt; &quot;http://secure2.e-xact.com/vplug-in/transaction/rpc-enc/Request&quot;,                                     'env:encodingStyle' =&gt; 'http://schemas.xmlsoap.org/soap/encoding/'                                   }</dd>
+    
+      <dt id="SEND_AND_COMMIT_SOURCE_ATTRIBUTES-constant">SEND_AND_COMMIT_SOURCE_ATTRIBUTES</dt>
+      <dd>{ 'xmlns:n2' =&gt; 'http://secure2.e-xact.com/vplug-in/transaction/rpc-enc/encodedTypes',                                            'xsi:type' =&gt; 'n2:Transaction'                                          }</dd>
+    
+      <dt id="SENSITIVE_FIELDS-constant">SENSITIVE_FIELDS</dt>
+      <dd>[ :verification_str2, :expiry_date, :card_number ]</dd>
+    
+      <dt id="SUCCESS-constant">SUCCESS</dt>
+      <dd>&quot;true&quot;</dd>
+    
+      <dt id="TEST_LOGINS-constant">TEST_LOGINS</dt>
+      <dd>[ {:login =&gt; &quot;A00049-01&quot;, :password =&gt; &quot;test1&quot;},                      {:login =&gt; &quot;A00427-01&quot;, :password =&gt; &quot;testus&quot;} ]</dd>
+    
+      <dt id="TRANSACTIONS-constant">TRANSACTIONS</dt>
+      <dd>{ :sale          =&gt; &quot;00&quot;,                       :authorization =&gt; &quot;01&quot;,                       :capture       =&gt; &quot;32&quot;,                       :credit        =&gt; &quot;34&quot; }</dd>
+    
+      <dt id="URL-constant">URL</dt>
+      <dd>'https://secure2.e-xact.com/vplug-in/transaction/rpc-enc/service.asmx'</dd>
+    
+  </dl>
+</div>
+<div class="inherited">
+  
+  <div>
+    <h1>Constants Inherited from <a href='Gateway.html' title='ActiveMerchant::Billing::Gateway'>ActiveMerchant::Billing::Gateway</a></h1>
+    <p><span class='name'><a href='Gateway.html#DEBIT_CARDS-constant' title='DEBIT_CARDS'>DEBIT_CARDS</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/exact.rb', line 43</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='requires! fid id'>requires!</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='comma token'>,</span> <span class='symbol val'>:login</span><span class='comma token'>,</span> <span class='symbol val'>:password</span><span class='rparen token'>)</span>
+  <span class='@options ivar id'>@options</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span>
+  
+  <span class='if if kw'>if</span> <span class='TEST_LOGINS constant id'>TEST_LOGINS</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span> <span class='lbrace token'>{</span> <span class='colon op'>:</span><span class='login identifier id'>login</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='colon op'>:</span><span class='login identifier id'>login</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='symbol val'>:password</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:password</span><span class='rbrack token'>]</span> <span class='rbrace token'>}</span> <span class='rparen token'>)</span>
+    <span class='@test_mode ivar id'>@test_mode</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+  <span class='end end kw'>end</span>
+
+  <span class='super super kw'>super</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <div class="inherited">
+  
+  <div>
+    <h1>Public Class Methods Inherited from <a href='Gateway.html' title='ActiveMerchant::Billing::Gateway'>ActiveMerchant::Billing::Gateway</a></h1>
+    <p><span class='name'><a href='Gateway.html#card_brand-class_method' title='card_brand'>card_brand</a></span>, <span class='name'><a href='Gateway.html#inherited-class_method' title='inherited'>inherited</a></span>, <span class='name'><a href='Gateway.html#supports%3F-class_method' title='supports?'>supports?</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+  <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#add_address-instance_method' title='#add_address'>#add_address</a></span><span class='args'>(xml, options)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#add_amount-instance_method' title='#add_amount'>#add_amount</a></span><span class='args'>(xml, money)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#add_credentials-instance_method' title='#add_credentials'>#add_credentials</a></span><span class='args'>(xml)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#add_credit_card-instance_method' title='#add_credit_card'>#add_credit_card</a></span><span class='args'>(xml, credit_card)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#add_customer_data-instance_method' title='#add_customer_data'>#add_customer_data</a></span><span class='args'>(xml, options)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#add_identification-instance_method' title='#add_identification'>#add_identification</a></span><span class='args'>(xml, identification)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#add_invoice-instance_method' title='#add_invoice'>#add_invoice</a></span><span class='args'>(xml, options)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#add_transaction_type-instance_method' title='#add_transaction_type'>#add_transaction_type</a></span><span class='args'>(xml, action)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#authorization_from-instance_method' title='#authorization_from'>#authorization_from</a></span><span class='args'>(response)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#authorize-instance_method' title='#authorize'>#authorize</a></span><span class='args'>(money, credit_card, options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#build_capture_or_credit_request-instance_method' title='#build_capture_or_credit_request'>#build_capture_or_credit_request</a></span><span class='args'>(money, identification, options)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#build_request-instance_method' title='#build_request'>#build_request</a></span><span class='args'>(action, body)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#build_sale_or_authorization_request-instance_method' title='#build_sale_or_authorization_request'>#build_sale_or_authorization_request</a></span><span class='args'>(money, credit_card, options)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#capture-instance_method' title='#capture'>#capture</a></span><span class='args'>(money, authorization, options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#commit-instance_method' title='#commit'>#commit</a></span><span class='args'>(action, request)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#credit-instance_method' title='#credit'>#credit</a></span><span class='args'>(money, authorization, options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#expdate-instance_method' title='#expdate'>#expdate</a></span><span class='args'>(credit_card)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#message_from-instance_method' title='#message_from'>#message_from</a></span><span class='args'>(response)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#parse-instance_method' title='#parse'>#parse</a></span><span class='args'>(xml)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#parse_elements-instance_method' title='#parse_elements'>#parse_elements</a></span><span class='args'>(response, root)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#purchase-instance_method' title='#purchase'>#purchase</a></span><span class='args'>(money, credit_card, options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#successful%3F-instance_method' title='#successful?'>#successful?</a></span><span class='args'>(response)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#test%3F-instance_method' title='#test?'>#test?</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table><div class="inherited">
+  
+  <div>
+    <h1>Public Instance Methods Inherited from <a href='Gateway.html' title='ActiveMerchant::Billing::Gateway'>ActiveMerchant::Billing::Gateway</a></h1>
+    <p><span class='name'><a href='Gateway.html#amount-instance_method' title='amount'>amount</a></span>, <span class='name'><a href='Gateway.html#card_brand-instance_method' title='card_brand'>card_brand</a></span>, <span class='name'><a href='Gateway.html#currency-instance_method' title='currency'>currency</a></span>, <span class='name'><a href='Gateway.html#name-instance_method' title='name'>name</a></span>, <span class='name'><a href='Gateway.html#requires_start_date_or_issue_number%3F-instance_method' title='requires_start_date_or_issue_number?'>requires_start_date_or_issue_number?</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>add_address</h3>
+</div><div id="add_address-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>add_address</span><span class='args'>(xml, options)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+151
+152
+153
+154
+155</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/exact.rb', line 151</span>
+
+<span class='def def kw'>def</span> <span class='add_address identifier id'>add_address</span><span class='lparen token'>(</span><span class='xml identifier id'>xml</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='address identifier id'>address</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='colon op'>:</span><span class='billing_address identifier id'>billing_address</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='colon op'>:</span><span class='address identifier id'>address</span><span class='rbrack token'>]</span>
+    <span class='xml identifier id'>xml</span><span class='dot token'>.</span><span class='tag! fid id'>tag!</span> <span class='string val'>'ZipCode'</span><span class='comma token'>,</span> <span class='address identifier id'>address</span><span class='lbrack token'>[</span><span class='symbol val'>:zip</span><span class='rbrack token'>]</span>       
+  <span class='end end kw'>end</span>    
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>add_amount</h3>
+</div><div id="add_amount-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>add_amount</span><span class='args'>(xml, money)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+130
+131
+132</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/exact.rb', line 130</span>
+
+<span class='def def kw'>def</span> <span class='add_amount identifier id'>add_amount</span><span class='lparen token'>(</span><span class='xml identifier id'>xml</span><span class='comma token'>,</span> <span class='money identifier id'>money</span><span class='rparen token'>)</span>
+  <span class='xml identifier id'>xml</span><span class='dot token'>.</span><span class='tag! fid id'>tag!</span> <span class='string val'>'DollarAmount'</span><span class='comma token'>,</span> <span class='amount identifier id'>amount</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>add_credentials</h3>
+</div><div id="add_credentials-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>add_credentials</span><span class='args'>(xml)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+114
+115
+116
+117</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/exact.rb', line 114</span>
+
+<span class='def def kw'>def</span> <span class='add_credentials identifier id'>add_credentials</span><span class='lparen token'>(</span><span class='xml identifier id'>xml</span><span class='rparen token'>)</span>
+  <span class='xml identifier id'>xml</span><span class='dot token'>.</span><span class='tag! fid id'>tag!</span> <span class='string val'>'ExactID'</span><span class='comma token'>,</span> <span class='@options ivar id'>@options</span><span class='lbrack token'>[</span><span class='symbol val'>:login</span><span class='rbrack token'>]</span>
+  <span class='xml identifier id'>xml</span><span class='dot token'>.</span><span class='tag! fid id'>tag!</span> <span class='string val'>'Password'</span><span class='comma token'>,</span> <span class='@options ivar id'>@options</span><span class='lbrack token'>[</span><span class='symbol val'>:password</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>add_credit_card</h3>
+</div><div id="add_credit_card-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>add_credit_card</span><span class='args'>(xml, credit_card)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/exact.rb', line 134</span>
+
+<span class='def def kw'>def</span> <span class='add_credit_card identifier id'>add_credit_card</span><span class='lparen token'>(</span><span class='xml identifier id'>xml</span><span class='comma token'>,</span> <span class='credit_card identifier id'>credit_card</span><span class='rparen token'>)</span>
+  <span class='xml identifier id'>xml</span><span class='dot token'>.</span><span class='tag! fid id'>tag!</span> <span class='string val'>'Card_Number'</span><span class='comma token'>,</span> <span class='credit_card identifier id'>credit_card</span><span class='dot token'>.</span><span class='number identifier id'>number</span>
+  <span class='xml identifier id'>xml</span><span class='dot token'>.</span><span class='tag! fid id'>tag!</span> <span class='string val'>'Expiry_Date'</span><span class='comma token'>,</span> <span class='expdate identifier id'>expdate</span><span class='lparen token'>(</span><span class='credit_card identifier id'>credit_card</span><span class='rparen token'>)</span>
+  <span class='xml identifier id'>xml</span><span class='dot token'>.</span><span class='tag! fid id'>tag!</span> <span class='string val'>'CardHoldersName'</span><span class='comma token'>,</span> <span class='credit_card identifier id'>credit_card</span><span class='dot token'>.</span><span class='name identifier id'>name</span>
+  
+  <span class='if if kw'>if</span> <span class='credit_card identifier id'>credit_card</span><span class='dot token'>.</span><span class='verification_value? fid id'>verification_value?</span>
+    <span class='xml identifier id'>xml</span><span class='dot token'>.</span><span class='tag! fid id'>tag!</span> <span class='string val'>'CVD_Presence_Ind'</span><span class='comma token'>,</span> <span class='string val'>'1'</span>
+    <span class='xml identifier id'>xml</span><span class='dot token'>.</span><span class='tag! fid id'>tag!</span> <span class='string val'>'VerificationStr2'</span><span class='comma token'>,</span> <span class='credit_card identifier id'>credit_card</span><span class='dot token'>.</span><span class='verification_value identifier id'>verification_value</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>add_customer_data</h3>
+</div><div id="add_customer_data-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>add_customer_data</span><span class='args'>(xml, options)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+145
+146
+147
+148
+149</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/exact.rb', line 145</span>
+
+<span class='def def kw'>def</span> <span class='add_customer_data identifier id'>add_customer_data</span><span class='lparen token'>(</span><span class='xml identifier id'>xml</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='xml identifier id'>xml</span><span class='dot token'>.</span><span class='tag! fid id'>tag!</span> <span class='string val'>'Customer_Ref'</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:customer</span><span class='rbrack token'>]</span>
+  <span class='xml identifier id'>xml</span><span class='dot token'>.</span><span class='tag! fid id'>tag!</span> <span class='string val'>'Client_IP'</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:ip</span><span class='rbrack token'>]</span>
+  <span class='xml identifier id'>xml</span><span class='dot token'>.</span><span class='tag! fid id'>tag!</span> <span class='string val'>'Client_Email'</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:email</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>add_identification</h3>
+</div><div id="add_identification-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>add_identification</span><span class='args'>(xml, identification)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+123
+124
+125
+126
+127
+128</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/exact.rb', line 123</span>
+
+<span class='def def kw'>def</span> <span class='add_identification identifier id'>add_identification</span><span class='lparen token'>(</span><span class='xml identifier id'>xml</span><span class='comma token'>,</span> <span class='identification identifier id'>identification</span><span class='rparen token'>)</span>
+  <span class='authorization_num identifier id'>authorization_num</span><span class='comma token'>,</span> <span class='transaction_tag identifier id'>transaction_tag</span> <span class='assign token'>=</span> <span class='identification identifier id'>identification</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='string val'>';'</span><span class='rparen token'>)</span>
+ 
+  <span class='xml identifier id'>xml</span><span class='dot token'>.</span><span class='tag! fid id'>tag!</span> <span class='string val'>'Authorization_Num'</span><span class='comma token'>,</span> <span class='authorization_num identifier id'>authorization_num</span>
+  <span class='xml identifier id'>xml</span><span class='dot token'>.</span><span class='tag! fid id'>tag!</span> <span class='string val'>'Transaction_Tag'</span><span class='comma token'>,</span> <span class='transaction_tag identifier id'>transaction_tag</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>add_invoice</h3>
+</div><div id="add_invoice-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>add_invoice</span><span class='args'>(xml, options)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+157
+158
+159
+160</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/exact.rb', line 157</span>
+
+<span class='def def kw'>def</span> <span class='add_invoice identifier id'>add_invoice</span><span class='lparen token'>(</span><span class='xml identifier id'>xml</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='xml identifier id'>xml</span><span class='dot token'>.</span><span class='tag! fid id'>tag!</span> <span class='string val'>'Reference_No'</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:order_id</span><span class='rbrack token'>]</span>
+  <span class='xml identifier id'>xml</span><span class='dot token'>.</span><span class='tag! fid id'>tag!</span> <span class='string val'>'Reference_3'</span><span class='comma token'>,</span>  <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:description</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>add_transaction_type</h3>
+</div><div id="add_transaction_type-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>add_transaction_type</span><span class='args'>(xml, action)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+119
+120
+121</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/exact.rb', line 119</span>
+
+<span class='def def kw'>def</span> <span class='add_transaction_type identifier id'>add_transaction_type</span><span class='lparen token'>(</span><span class='xml identifier id'>xml</span><span class='comma token'>,</span> <span class='action identifier id'>action</span><span class='rparen token'>)</span>
+  <span class='xml identifier id'>xml</span><span class='dot token'>.</span><span class='tag! fid id'>tag!</span> <span class='string val'>'Transaction_Type'</span><span class='comma token'>,</span> <span class='TRANSACTIONS constant id'>TRANSACTIONS</span><span class='lbrack token'>[</span><span class='action identifier id'>action</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>authorization_from</h3>
+</div><div id="authorization_from-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>authorization_from</span><span class='args'>(response)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+181
+182
+183
+184
+185
+186
+187</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/exact.rb', line 181</span>
+
+<span class='def def kw'>def</span> <span class='authorization_from identifier id'>authorization_from</span><span class='lparen token'>(</span><span class='response identifier id'>response</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='response identifier id'>response</span><span class='lbrack token'>[</span><span class='colon op'>:</span><span class='authorization_num identifier id'>authorization_num</span><span class='rbrack token'>]</span> <span class='andop op'>&amp;&amp;</span> <span class='response identifier id'>response</span><span class='lbrack token'>[</span><span class='colon op'>:</span><span class='transaction_tag identifier id'>transaction_tag</span><span class='rbrack token'>]</span>
+     <span class='dstring node'>&quot;#{response[:authorization_num]};#{response[:transaction_tag]}&quot;</span>        
+  <span class='else else kw'>else</span>
+     <span class='string val'>''</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>authorize</h3>
+</div><div id="authorize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>authorize</span><span class='args'>(money, credit_card, options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+58
+59
+60</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/exact.rb', line 58</span>
+
+<span class='def def kw'>def</span> <span class='authorize identifier id'>authorize</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='comma token'>,</span> <span class='credit_card identifier id'>credit_card</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='commit identifier id'>commit</span><span class='lparen token'>(</span><span class='symbol val'>:authorization</span><span class='comma token'>,</span> <span class='build_sale_or_authorization_request identifier id'>build_sale_or_authorization_request</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='comma token'>,</span> <span class='credit_card identifier id'>credit_card</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>build_capture_or_credit_request</h3>
+</div><div id="build_capture_or_credit_request-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>build_capture_or_credit_request</span><span class='args'>(money, identification, options)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+104
+105
+106
+107
+108
+109
+110
+111
+112</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/exact.rb', line 104</span>
+
+<span class='def def kw'>def</span> <span class='build_capture_or_credit_request identifier id'>build_capture_or_credit_request</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='comma token'>,</span> <span class='identification identifier id'>identification</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='xml identifier id'>xml</span> <span class='assign token'>=</span> <span class='Builder constant id'>Builder</span><span class='colon2 op'>::</span><span class='XmlMarkup constant id'>XmlMarkup</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+  
+  <span class='add_identification identifier id'>add_identification</span><span class='lparen token'>(</span><span class='xml identifier id'>xml</span><span class='comma token'>,</span> <span class='identification identifier id'>identification</span><span class='rparen token'>)</span>
+  <span class='add_amount identifier id'>add_amount</span><span class='lparen token'>(</span><span class='xml identifier id'>xml</span><span class='comma token'>,</span> <span class='money identifier id'>money</span><span class='rparen token'>)</span>
+  <span class='add_customer_data identifier id'>add_customer_data</span><span class='lparen token'>(</span><span class='xml identifier id'>xml</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+    
+  <span class='xml identifier id'>xml</span><span class='dot token'>.</span><span class='target! fid id'>target!</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>build_request</h3>
+</div><div id="build_request-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>build_request</span><span class='args'>(action, body)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/exact.rb', line 75</span>
+
+<span class='def def kw'>def</span> <span class='build_request identifier id'>build_request</span><span class='lparen token'>(</span><span class='action identifier id'>action</span><span class='comma token'>,</span> <span class='body identifier id'>body</span><span class='rparen token'>)</span>
+  <span class='xml identifier id'>xml</span> <span class='assign token'>=</span> <span class='Builder constant id'>Builder</span><span class='colon2 op'>::</span><span class='XmlMarkup constant id'>XmlMarkup</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+  
+  <span class='xml identifier id'>xml</span><span class='dot token'>.</span><span class='instruct! fid id'>instruct!</span>
+  <span class='xml identifier id'>xml</span><span class='dot token'>.</span><span class='tag! fid id'>tag!</span> <span class='string val'>'env:Envelope'</span><span class='comma token'>,</span> <span class='ENVELOPE_NAMESPACES constant id'>ENVELOPE_NAMESPACES</span> <span class='do do kw'>do</span>
+    <span class='xml identifier id'>xml</span><span class='dot token'>.</span><span class='tag! fid id'>tag!</span> <span class='string val'>'env:Body'</span> <span class='do do kw'>do</span>
+      <span class='xml identifier id'>xml</span><span class='dot token'>.</span><span class='tag! fid id'>tag!</span> <span class='string val'>'n1:SendAndCommit'</span><span class='comma token'>,</span> <span class='SEND_AND_COMMIT_ATTRIBUTES constant id'>SEND_AND_COMMIT_ATTRIBUTES</span> <span class='do do kw'>do</span>
+        <span class='xml identifier id'>xml</span><span class='dot token'>.</span><span class='tag! fid id'>tag!</span> <span class='string val'>'SendAndCommitSource'</span><span class='comma token'>,</span> <span class='SEND_AND_COMMIT_SOURCE_ATTRIBUTES constant id'>SEND_AND_COMMIT_SOURCE_ATTRIBUTES</span> <span class='do do kw'>do</span>
+          <span class='add_credentials identifier id'>add_credentials</span><span class='lparen token'>(</span><span class='xml identifier id'>xml</span><span class='rparen token'>)</span>
+          <span class='add_transaction_type identifier id'>add_transaction_type</span><span class='lparen token'>(</span><span class='xml identifier id'>xml</span><span class='comma token'>,</span> <span class='action identifier id'>action</span><span class='rparen token'>)</span>
+          <span class='xml identifier id'>xml</span> <span class='lshft op'>&lt;&lt;</span> <span class='body identifier id'>body</span>
+        <span class='end end kw'>end</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+  <span class='xml identifier id'>xml</span><span class='dot token'>.</span><span class='target! fid id'>target!</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>build_sale_or_authorization_request</h3>
+</div><div id="build_sale_or_authorization_request-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>build_sale_or_authorization_request</span><span class='args'>(money, credit_card, options)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/exact.rb', line 93</span>
+
+<span class='def def kw'>def</span> <span class='build_sale_or_authorization_request identifier id'>build_sale_or_authorization_request</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='comma token'>,</span> <span class='credit_card identifier id'>credit_card</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='xml identifier id'>xml</span> <span class='assign token'>=</span> <span class='Builder constant id'>Builder</span><span class='colon2 op'>::</span><span class='XmlMarkup constant id'>XmlMarkup</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+ 
+  <span class='add_amount identifier id'>add_amount</span><span class='lparen token'>(</span><span class='xml identifier id'>xml</span><span class='comma token'>,</span> <span class='money identifier id'>money</span><span class='rparen token'>)</span>
+  <span class='add_credit_card identifier id'>add_credit_card</span><span class='lparen token'>(</span><span class='xml identifier id'>xml</span><span class='comma token'>,</span> <span class='credit_card identifier id'>credit_card</span><span class='rparen token'>)</span>
+  <span class='add_customer_data identifier id'>add_customer_data</span><span class='lparen token'>(</span><span class='xml identifier id'>xml</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='add_invoice identifier id'>add_invoice</span><span class='lparen token'>(</span><span class='xml identifier id'>xml</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  
+  <span class='xml identifier id'>xml</span><span class='dot token'>.</span><span class='target! fid id'>target!</span>        
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>capture</h3>
+</div><div id="capture-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>capture</span><span class='args'>(money, authorization, options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+66
+67
+68</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/exact.rb', line 66</span>
+
+<span class='def def kw'>def</span> <span class='capture identifier id'>capture</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='comma token'>,</span> <span class='authorization identifier id'>authorization</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='commit identifier id'>commit</span><span class='lparen token'>(</span><span class='symbol val'>:capture</span><span class='comma token'>,</span> <span class='build_capture_or_credit_request identifier id'>build_capture_or_credit_request</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='comma token'>,</span> <span class='authorization identifier id'>authorization</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>commit</h3>
+</div><div id="commit-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>commit</span><span class='args'>(action, request)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/exact.rb', line 166</span>
+
+<span class='def def kw'>def</span> <span class='commit identifier id'>commit</span><span class='lparen token'>(</span><span class='action identifier id'>action</span><span class='comma token'>,</span> <span class='request identifier id'>request</span><span class='rparen token'>)</span>
+   <span class='response identifier id'>response</span> <span class='assign token'>=</span> <span class='parse identifier id'>parse</span><span class='lparen token'>(</span><span class='ssl_post identifier id'>ssl_post</span><span class='lparen token'>(</span><span class='URL constant id'>URL</span><span class='comma token'>,</span> <span class='build_request identifier id'>build_request</span><span class='lparen token'>(</span><span class='action identifier id'>action</span><span class='comma token'>,</span> <span class='request identifier id'>request</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='POST_HEADERS constant id'>POST_HEADERS</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+
+   <span class='Response constant id'>Response</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='successful? fid id'>successful?</span><span class='lparen token'>(</span><span class='response identifier id'>response</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='message_from identifier id'>message_from</span><span class='lparen token'>(</span><span class='response identifier id'>response</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='response identifier id'>response</span><span class='comma token'>,</span>
+     <span class='symbol val'>:test</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='test? fid id'>test?</span><span class='comma token'>,</span>
+     <span class='symbol val'>:authorization</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='authorization_from identifier id'>authorization_from</span><span class='lparen token'>(</span><span class='response identifier id'>response</span><span class='rparen token'>)</span><span class='comma token'>,</span>
+     <span class='symbol val'>:avs_result</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span> <span class='symbol val'>:code</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='response identifier id'>response</span><span class='lbrack token'>[</span><span class='symbol val'>:avs</span><span class='rbrack token'>]</span> <span class='rbrace token'>}</span><span class='comma token'>,</span>
+     <span class='symbol val'>:cvv_result</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='response identifier id'>response</span><span class='lbrack token'>[</span><span class='symbol val'>:cvv2</span><span class='rbrack token'>]</span>
+   <span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>credit</h3>
+</div><div id="credit-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>credit</span><span class='args'>(money, authorization, options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+70
+71
+72</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/exact.rb', line 70</span>
+
+<span class='def def kw'>def</span> <span class='credit identifier id'>credit</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='comma token'>,</span> <span class='authorization identifier id'>authorization</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='commit identifier id'>commit</span><span class='lparen token'>(</span><span class='symbol val'>:credit</span><span class='comma token'>,</span> <span class='build_capture_or_credit_request identifier id'>build_capture_or_credit_request</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='comma token'>,</span> <span class='authorization identifier id'>authorization</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>expdate</h3>
+</div><div id="expdate-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>expdate</span><span class='args'>(credit_card)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+162
+163
+164</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/exact.rb', line 162</span>
+
+<span class='def def kw'>def</span> <span class='expdate identifier id'>expdate</span><span class='lparen token'>(</span><span class='credit_card identifier id'>credit_card</span><span class='rparen token'>)</span>
+  <span class='dstring node'>&quot;#{format(credit_card.month, :two_digits)}#{format(credit_card.year, :two_digits)}&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>message_from</h3>
+</div><div id="message_from-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>message_from</span><span class='args'>(response)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/exact.rb', line 189</span>
+
+<span class='def def kw'>def</span> <span class='message_from identifier id'>message_from</span><span class='lparen token'>(</span><span class='response identifier id'>response</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='response identifier id'>response</span><span class='lbrack token'>[</span><span class='colon op'>:</span><span class='faultcode identifier id'>faultcode</span><span class='rbrack token'>]</span> <span class='andop op'>&amp;&amp;</span> <span class='response identifier id'>response</span><span class='lbrack token'>[</span><span class='colon op'>:</span><span class='faultstring identifier id'>faultstring</span><span class='rbrack token'>]</span>
+    <span class='response identifier id'>response</span><span class='lbrack token'>[</span><span class='symbol val'>:faultstring</span><span class='rbrack token'>]</span>
+  <span class='elsif elsif kw'>elsif</span> <span class='response identifier id'>response</span><span class='lbrack token'>[</span><span class='symbol val'>:error_number</span><span class='rbrack token'>]</span> <span class='neq op'>!=</span> <span class='string val'>'0'</span>
+    <span class='response identifier id'>response</span><span class='lbrack token'>[</span><span class='symbol val'>:error_description</span><span class='rbrack token'>]</span>
+  <span class='else else kw'>else</span>
+    <span class='result identifier id'>result</span> <span class='assign token'>=</span> <span class='response identifier id'>response</span><span class='lbrack token'>[</span><span class='symbol val'>:exact_message</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='string val'>''</span>
+    <span class='result identifier id'>result</span> <span class='lshft op'>&lt;&lt;</span> <span class='dstring node'>&quot; - #{response[:bank_message]}&quot;</span> <span class='unless unless_mod kw'>unless</span> <span class='response identifier id'>response</span><span class='lbrack token'>[</span><span class='symbol val'>:bank_message</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span>
+    <span class='result identifier id'>result</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>parse</h3>
+</div><div id="parse-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>parse</span><span class='args'>(xml)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/exact.rb', line 201</span>
+
+<span class='def def kw'>def</span> <span class='parse identifier id'>parse</span><span class='lparen token'>(</span><span class='xml identifier id'>xml</span><span class='rparen token'>)</span>
+  <span class='response identifier id'>response</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='xml identifier id'>xml</span> <span class='assign token'>=</span> <span class='REXML constant id'>REXML</span><span class='colon2 op'>::</span><span class='Document constant id'>Document</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='xml identifier id'>xml</span><span class='rparen token'>)</span>
+  
+  <span class='if if kw'>if</span> <span class='root identifier id'>root</span> <span class='assign token'>=</span> <span class='REXML constant id'>REXML</span><span class='colon2 op'>::</span><span class='XPath constant id'>XPath</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='lparen token'>(</span><span class='xml identifier id'>xml</span><span class='comma token'>,</span> <span class='string val'>&quot;//types:TransactionResult&quot;</span><span class='rparen token'>)</span>
+    <span class='parse_elements identifier id'>parse_elements</span><span class='lparen token'>(</span><span class='response identifier id'>response</span><span class='comma token'>,</span> <span class='root identifier id'>root</span><span class='rparen token'>)</span>
+  <span class='elsif elsif kw'>elsif</span> <span class='root identifier id'>root</span> <span class='assign token'>=</span> <span class='REXML constant id'>REXML</span><span class='colon2 op'>::</span><span class='XPath constant id'>XPath</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='lparen token'>(</span><span class='xml identifier id'>xml</span><span class='comma token'>,</span> <span class='string val'>&quot;//soap:Fault&quot;</span><span class='rparen token'>)</span>
+    <span class='parse_elements identifier id'>parse_elements</span><span class='lparen token'>(</span><span class='response identifier id'>response</span><span class='comma token'>,</span> <span class='root identifier id'>root</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+
+  <span class='response identifier id'>response</span><span class='dot token'>.</span><span class='delete_if identifier id'>delete_if</span><span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='k identifier id'>k</span><span class='comma token'>,</span><span class='v identifier id'>v</span><span class='bitor op'>|</span> <span class='SENSITIVE_FIELDS constant id'>SENSITIVE_FIELDS</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='k identifier id'>k</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>parse_elements</h3>
+</div><div id="parse_elements-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>parse_elements</span><span class='args'>(response, root)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+214
+215
+216
+217
+218</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/exact.rb', line 214</span>
+
+<span class='def def kw'>def</span> <span class='parse_elements identifier id'>parse_elements</span><span class='lparen token'>(</span><span class='response identifier id'>response</span><span class='comma token'>,</span> <span class='root identifier id'>root</span><span class='rparen token'>)</span>
+  <span class='root identifier id'>root</span><span class='dot token'>.</span><span class='elements identifier id'>elements</span><span class='dot token'>.</span><span class='to_a identifier id'>to_a</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='node identifier id'>node</span><span class='bitor op'>|</span>
+    <span class='response identifier id'>response</span><span class='lbrack token'>[</span><span class='node identifier id'>node</span><span class='dot token'>.</span><span class='name identifier id'>name</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='regexp val'>/EXact/</span><span class='comma token'>,</span> <span class='string val'>'Exact'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='underscore identifier id'>underscore</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='node identifier id'>node</span><span class='dot token'>.</span><span class='text identifier id'>text</span> <span class='orop op'>||</span> <span class='string val'>''</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='strip identifier id'>strip</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>purchase</h3>
+</div><div id="purchase-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>purchase</span><span class='args'>(money, credit_card, options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+62
+63
+64</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/exact.rb', line 62</span>
+
+<span class='def def kw'>def</span> <span class='purchase identifier id'>purchase</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='comma token'>,</span> <span class='credit_card identifier id'>credit_card</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='commit identifier id'>commit</span><span class='lparen token'>(</span><span class='symbol val'>:sale</span><span class='comma token'>,</span> <span class='build_sale_or_authorization_request identifier id'>build_sale_or_authorization_request</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='comma token'>,</span> <span class='credit_card identifier id'>credit_card</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>successful?</h3>
+</div><div id="successful%3F-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>successful?</span><span class='args'>(response)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+177
+178
+179</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/exact.rb', line 177</span>
+
+<span class='def def kw'>def</span> <span class='successful? fid id'>successful?</span><span class='lparen token'>(</span><span class='response identifier id'>response</span><span class='rparen token'>)</span>
+  <span class='response identifier id'>response</span><span class='lbrack token'>[</span><span class='symbol val'>:transaction_approved</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='SUCCESS constant id'>SUCCESS</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>test?</h3>
+</div><div id="test%3F-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>test?</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+54
+55
+56</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/exact.rb', line 54</span>
+
+<span class='def def kw'>def</span> <span class='test? fid id'>test?</span>
+  <span class='@test_mode ivar id'>@test_mode</span> <span class='orop op'>||</span> <span class='Base constant id'>Base</span><span class='dot token'>.</span><span class='gateway_mode identifier id'>gateway_mode</span> <span class='eq op'>==</span> <span class='symbol val'>:test</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

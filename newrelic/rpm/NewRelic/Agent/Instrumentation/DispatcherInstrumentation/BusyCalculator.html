@@ -1,0 +1,317 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: NewRelic::Agent::Instrumentation::DispatcherInstrumentation::BusyCalculator</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module NewRelic_Agent_Instrumentation_DispatcherInstrumentation_BusyCalculator">
+  <h1 class="title">Module: NewRelic::Agent::Instrumentation::DispatcherInstrumentation::BusyCalculator</h1>
+  <div class="section docstring">
+  <p>
+This won&#8217;t work with Rails 2.2 multi-threading
+</p>
+
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#dispatcher_finish-instance_method' title='#dispatcher_finish'>#dispatcher_finish</a></span><span class='args'>(time)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#dispatcher_start-instance_method' title='#dispatcher_start'>#dispatcher_start</a></span><span class='args'>(time)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#harvest_busy-instance_method' title='#harvest_busy'>#harvest_busy</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#is_busy%3F-instance_method' title='#is_busy?'>#is_busy?</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>dispatcher_finish</h3>
+</div><div id="dispatcher_finish-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>dispatcher_finish</span><span class='args'>(time)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+64
+65
+66
+67
+68
+69
+70</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/new_relic/agent/instrumentation/dispatcher_instrumentation.rb', line 64</span>
+
+<span class='def def kw'>def</span> <span class='dispatcher_finish identifier id'>dispatcher_finish</span><span class='lparen token'>(</span><span class='time identifier id'>time</span><span class='rparen token'>)</span>
+  <span class='Thread constant id'>Thread</span><span class='dot token'>.</span><span class='critical identifier id'>critical</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+  <span class='@accumulator ivar id'>@accumulator</span> <span class='opasgn op'>+=</span> <span class='lparen token'>(</span><span class='time identifier id'>time</span> <span class='minus op'>-</span> <span class='@dispatcher_start ivar id'>@dispatcher_start</span><span class='rparen token'>)</span>
+  <span class='@dispatcher_start ivar id'>@dispatcher_start</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+  
+  <span class='Thread constant id'>Thread</span><span class='dot token'>.</span><span class='critical identifier id'>critical</span> <span class='assign token'>=</span> <span class='false false kw'>false</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>dispatcher_start</h3>
+</div><div id="dispatcher_start-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>dispatcher_start</span><span class='args'>(time)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+58
+59
+60
+61
+62</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/new_relic/agent/instrumentation/dispatcher_instrumentation.rb', line 58</span>
+
+<span class='def def kw'>def</span> <span class='dispatcher_start identifier id'>dispatcher_start</span><span class='lparen token'>(</span><span class='time identifier id'>time</span><span class='rparen token'>)</span>
+  <span class='Thread constant id'>Thread</span><span class='dot token'>.</span><span class='critical identifier id'>critical</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+  <span class='@dispatcher_start ivar id'>@dispatcher_start</span> <span class='assign token'>=</span> <span class='time identifier id'>time</span>      
+  <span class='Thread constant id'>Thread</span><span class='dot token'>.</span><span class='critical identifier id'>critical</span> <span class='assign token'>=</span> <span class='false false kw'>false</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>harvest_busy</h3>
+</div><div id="harvest_busy-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>harvest_busy</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/new_relic/agent/instrumentation/dispatcher_instrumentation.rb', line 76</span>
+
+<span class='def def kw'>def</span> <span class='harvest_busy identifier id'>harvest_busy</span>
+  <span class='Thread constant id'>Thread</span><span class='dot token'>.</span><span class='critical identifier id'>critical</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+  
+  <span class='busy identifier id'>busy</span> <span class='assign token'>=</span> <span class='@accumulator ivar id'>@accumulator</span>
+  <span class='@accumulator ivar id'>@accumulator</span> <span class='assign token'>=</span> <span class='integer val'>0</span>
+  
+  <span class='t0 identifier id'>t0</span> <span class='assign token'>=</span> <span class='Time constant id'>Time</span><span class='dot token'>.</span><span class='now identifier id'>now</span><span class='dot token'>.</span><span class='to_f identifier id'>to_f</span>
+  
+  <span class='if if kw'>if</span> <span class='@dispatcher_start ivar id'>@dispatcher_start</span>
+    <span class='busy identifier id'>busy</span> <span class='opasgn op'>+=</span> <span class='lparen token'>(</span><span class='t0 identifier id'>t0</span> <span class='minus op'>-</span> <span class='@dispatcher_start ivar id'>@dispatcher_start</span><span class='rparen token'>)</span>
+    <span class='@dispatcher_start ivar id'>@dispatcher_start</span> <span class='assign token'>=</span> <span class='t0 identifier id'>t0</span>
+  <span class='end end kw'>end</span>
+  
+  
+  <span class='Thread constant id'>Thread</span><span class='dot token'>.</span><span class='critical identifier id'>critical</span> <span class='assign token'>=</span> <span class='false false kw'>false</span>
+  
+  <span class='busy identifier id'>busy</span> <span class='assign token'>=</span> <span class='integer val'>0</span><span class='integer val'>.0</span> <span class='if if_mod kw'>if</span> <span class='busy identifier id'>busy</span> <span class='lt op'>&lt;</span> <span class='integer val'>0</span><span class='integer val'>.0</span> <span class='comment val'># don't go below 0%</span>
+  
+  <span class='time_window identifier id'>time_window</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='t0 identifier id'>t0</span> <span class='minus op'>-</span> <span class='@harvest_start ivar id'>@harvest_start</span><span class='rparen token'>)</span>
+  <span class='time_window identifier id'>time_window</span> <span class='assign token'>=</span> <span class='float val'>1.0</span> <span class='if if_mod kw'>if</span> <span class='time_window identifier id'>time_window</span> <span class='eq op'>==</span> <span class='integer val'>0</span><span class='integer val'>.0</span>  <span class='comment val'># protect against divide by zero</span>
+  
+  <span class='busy identifier id'>busy</span> <span class='assign token'>=</span> <span class='busy identifier id'>busy</span> <span class='div op'>/</span> <span class='time_window identifier id'>time_window</span>
+  
+  <span class='busy identifier id'>busy</span> <span class='assign token'>=</span> <span class='float val'>1.0</span> <span class='if if_mod kw'>if</span> <span class='busy identifier id'>busy</span> <span class='gt op'>&gt;</span> <span class='float val'>1.0</span>    <span class='comment val'># cap at 100%</span>
+  <span class='@instance_busy ivar id'>@instance_busy</span><span class='dot token'>.</span><span class='record_data_point identifier id'>record_data_point</span> <span class='busy identifier id'>busy</span>
+  <span class='@harvest_start ivar id'>@harvest_start</span> <span class='assign token'>=</span> <span class='t0 identifier id'>t0</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>is_busy?</h3>
+</div><div id="is_busy%3F-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>is_busy?</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+72
+73
+74</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/new_relic/agent/instrumentation/dispatcher_instrumentation.rb', line 72</span>
+
+<span class='def def kw'>def</span> <span class='is_busy? fid id'>is_busy?</span>
+  <span class='@dispatcher_start ivar id'>@dispatcher_start</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

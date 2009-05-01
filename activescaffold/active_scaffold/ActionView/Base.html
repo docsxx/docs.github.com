@@ -1,0 +1,350 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: ActionView::Base</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class ActionView_Base">
+  <h1 class="title">Class: ActionView::Base</h1>
+  <div class="section inheritance">
+  <ul>
+  <li><a href='../Object.html' title='Object'>Object</a></li><ul><li>ActionView::Base</li>
+  </ul></ul>
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#partial_pieces-instance_method' title='#partial_pieces'>#partial_pieces</a></span><span class='args'>(partial_path)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#render_with_active_scaffold-instance_method' title='#render_with_active_scaffold'>#render_with_active_scaffold</a></span><span class='args'>(*args, &amp;block)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Adds two rendering options.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#template_exists%3F-instance_method' title='#template_exists?'>#template_exists?</a></span><span class='args'>(template_name)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+This is the template finder logic, keep it updated with however we find
+stuff in rails currently this very similar to the logic in
+ActionBase::Base.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table><div class="inherited">
+  
+  <div>
+    <h1>Public Instance Methods Inherited from <a href='../Object.html' title='Object'>Object</a></h1>
+    <p><span class='name'><a href='../Object.html#as_-instance_method' title='as_'>as_</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>partial_pieces</h3>
+</div><div id="partial_pieces-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>partial_pieces</span><span class='args'>(partial_path)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+66
+67
+68
+69
+70
+71
+72</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/extensions/action_view_rendering.rb', line 66</span>
+
+<span class='def def kw'>def</span> <span class='partial_pieces identifier id'>partial_pieces</span><span class='lparen token'>(</span><span class='partial_path identifier id'>partial_path</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='partial_path identifier id'>partial_path</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='string val'>'/'</span><span class='rparen token'>)</span>
+    <span class='return return kw'>return</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='dirname identifier id'>dirname</span><span class='lparen token'>(</span><span class='partial_path identifier id'>partial_path</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='basename identifier id'>basename</span><span class='lparen token'>(</span><span class='partial_path identifier id'>partial_path</span><span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+    <span class='return return kw'>return</span> <span class='controller identifier id'>controller</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='controller_path identifier id'>controller_path</span><span class='comma token'>,</span> <span class='partial_path identifier id'>partial_path</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>render_with_active_scaffold</h3>
+</div><div id="render_with_active_scaffold-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>render_with_active_scaffold</span><span class='args'>(*args, &amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Adds two rendering options.
+</p>
+<h2>render :super</h2>
+<p>
+This syntax skips all template overrides and goes directly to the provided
+ActiveScaffold templates. Useful if you want to wrap an existing template.
+Just call super!
+</p>
+<h2>render :active_scaffold =&gt; #{controller.to_s}, options = {}+</h2>
+<p>
+Lets you embed an ActiveScaffold by referencing the controller where
+it&#8217;s configured.
+</p>
+<p>
+You may specify options[:constraints] for the embedded scaffold. These
+constraints have three effects:
+</p>
+<pre class="code">
+  <span class='mult op'>*</span> <span class='the identifier id'>the</span> <span class='scaffold identifier id'>scaffold</span><span class='string val'>'s only displays records matching the constraint
+  * all new records created will be assigned the constrained values
+  * constrained columns will be hidden (they'</span><span class='re identifier id'>re</span> <span class='pretty identifier id'>pretty</span> <span class='boring identifier id'>boring</span> <span class='at identifier id'>at</span> <span class='this identifier id'>this</span> <span class='point identifier id'>point</span><span class='rparen token'>)</span>
+</pre>
+<p>
+You may also specify options[:conditions] for the embedded scaffold. These
+only do 1/3 of what constraints do (they only limit search results). Any
+format accepted by ActiveRecord::Base.find is valid.
+</p>
+<p>
+Defining options[:label] lets you completely customize the list title for
+the embedded scaffold.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/extensions/action_view_rendering.rb', line 25</span>
+
+<span class='def def kw'>def</span> <span class='render_with_active_scaffold identifier id'>render_with_active_scaffold</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='first identifier id'>first</span> <span class='eq op'>==</span> <span class='colon op'>:</span><span class='super super kw'>super</span>
+    <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='args identifier id'>args</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+    <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:locals</span><span class='rbrack token'>]</span> <span class='opasgn op'>||=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+
+    <span class='known_extensions identifier id'>known_extensions</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='symbol val'>:erb</span><span class='comma token'>,</span> <span class='symbol val'>:rhtml</span><span class='comma token'>,</span> <span class='symbol val'>:rjs</span><span class='comma token'>,</span> <span class='symbol val'>:haml</span><span class='rbrack token'>]</span>
+    <span class='comment val'># search through call stack for a template file (normally matches on first caller)</span>
+    <span class='comment val'># note that we can't use split(':').first because windoze boxen may have an extra colon to specify the drive letter. the</span>
+    <span class='comment val'># solution is to count colons from the *right* of the string, not the left. see issue #299.</span>
+    <span class='template_path identifier id'>template_path</span> <span class='assign token'>=</span> <span class='caller identifier id'>caller</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span> <span class='known_extensions identifier id'>known_extensions</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='c identifier id'>c</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='string val'>':'</span><span class='rparen token'>)</span><span class='lbrack token'>[</span><span class='integer val'>-3</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='string val'>'.'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='last identifier id'>last</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+    <span class='template identifier id'>template</span> <span class='assign token'>=</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='basename identifier id'>basename</span><span class='lparen token'>(</span><span class='template_path identifier id'>template_path</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='string val'>':'</span><span class='rparen token'>)</span><span class='lbrack token'>[</span><span class='integer val'>-3</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+
+    <span class='comment val'># paths previous to current template_path must be ignored to avoid infinite loops when is called twice or more</span>
+    <span class='index identifier id'>index</span> <span class='assign token'>=</span> <span class='integer val'>0</span>
+    <span class='controller identifier id'>controller</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='active_scaffold_paths identifier id'>active_scaffold_paths</span><span class='dot token'>.</span><span class='each_with_index identifier id'>each_with_index</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='active_scaffold_template_path identifier id'>active_scaffold_template_path</span><span class='comma token'>,</span> <span class='i identifier id'>i</span><span class='bitor op'>|</span>
+      <span class='index identifier id'>index</span> <span class='assign token'>=</span> <span class='i identifier id'>i</span> <span class='plus op'>+</span> <span class='integer val'>1</span> <span class='and and kw'>and</span> <span class='break break kw'>break</span> <span class='if if_mod kw'>if</span> <span class='template_path identifier id'>template_path</span><span class='dot token'>.</span><span class='include? fid id'>include?</span> <span class='active_scaffold_template_path identifier id'>active_scaffold_template_path</span>
+    <span class='end end kw'>end</span>
+
+    <span class='controller identifier id'>controller</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='active_scaffold_paths identifier id'>active_scaffold_paths</span><span class='dot token'>.</span><span class='slice identifier id'>slice</span><span class='lparen token'>(</span><span class='index identifier id'>index</span><span class='dot2 op'>..</span><span class='integer val'>-1</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='active_scaffold_template_path identifier id'>active_scaffold_template_path</span><span class='bitor op'>|</span>
+      <span class='active_scaffold_template identifier id'>active_scaffold_template</span> <span class='assign token'>=</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='active_scaffold_template_path identifier id'>active_scaffold_template_path</span><span class='comma token'>,</span> <span class='template identifier id'>template</span><span class='rparen token'>)</span>
+      <span class='return return kw'>return</span> <span class='render identifier id'>render</span><span class='lparen token'>(</span><span class='symbol val'>:file</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='active_scaffold_template identifier id'>active_scaffold_template</span><span class='comma token'>,</span> <span class='symbol val'>:locals</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:locals</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='file? fid id'>file?</span> <span class='active_scaffold_template identifier id'>active_scaffold_template</span>
+    <span class='end end kw'>end</span>
+  <span class='elsif elsif kw'>elsif</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Hash constant id'>Hash</span><span class='rparen token'>)</span> <span class='and and kw'>and</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='lbrack token'>[</span><span class='symbol val'>:active_scaffold</span><span class='rbrack token'>]</span>
+    <span class='require identifier id'>require</span> <span class='string val'>'digest/md5'</span>
+    <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='first identifier id'>first</span>
+
+    <span class='remote_controller identifier id'>remote_controller</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:active_scaffold</span><span class='rbrack token'>]</span>
+    <span class='constraints identifier id'>constraints</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:constraints</span><span class='rbrack token'>]</span>
+    <span class='conditions identifier id'>conditions</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:conditions</span><span class='rbrack token'>]</span>
+    <span class='eid identifier id'>eid</span> <span class='assign token'>=</span> <span class='Digest constant id'>Digest</span><span class='colon2 op'>::</span><span class='MD5 constant id'>MD5</span><span class='dot token'>.</span><span class='hexdigest identifier id'>hexdigest</span><span class='lparen token'>(</span><span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:controller</span><span class='rbrack token'>]</span> <span class='plus op'>+</span> <span class='remote_controller identifier id'>remote_controller</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='plus op'>+</span> <span class='constraints identifier id'>constraints</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='plus op'>+</span> <span class='conditions identifier id'>conditions</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rparen token'>)</span>
+    <span class='session identifier id'>session</span><span class='lbrack token'>[</span><span class='dstring node'>&quot;as:#{eid}&quot;</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='symbol val'>:constraints</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='constraints identifier id'>constraints</span><span class='comma token'>,</span> <span class='symbol val'>:conditions</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='conditions identifier id'>conditions</span><span class='comma token'>,</span> <span class='symbol val'>:list</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='symbol val'>:label</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='lbrack token'>[</span><span class='symbol val'>:label</span><span class='rbrack token'>]</span><span class='rbrace token'>}</span><span class='rbrace token'>}</span>
+    <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:params</span><span class='rbrack token'>]</span> <span class='opasgn op'>||=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+    <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:params</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='merge! fid id'>merge!</span> <span class='symbol val'>:eid</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='eid identifier id'>eid</span>
+
+    <span class='render_component identifier id'>render_component</span> <span class='symbol val'>:controller</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='remote_controller identifier id'>remote_controller</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='comma token'>,</span> <span class='symbol val'>:action</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'table'</span><span class='comma token'>,</span> <span class='symbol val'>:params</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:params</span><span class='rbrack token'>]</span>
+  <span class='else else kw'>else</span>
+    <span class='render_without_active_scaffold identifier id'>render_without_active_scaffold</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>template_exists?</h3>
+</div><div id="template_exists%3F-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>template_exists?</span><span class='args'>(template_name)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+This is the template finder logic, keep it updated with however we find
+stuff in rails currently this very similar to the logic in
+ActionBase::Base.render for options file TODO: Work with rails core team to
+find a better way to check for this.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+77
+78
+79
+80
+81
+82
+83
+84</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/extensions/action_view_rendering.rb', line 77</span>
+
+<span class='def def kw'>def</span> <span class='template_exists? fid id'>template_exists?</span><span class='lparen token'>(</span><span class='template_name identifier id'>template_name</span><span class='rparen token'>)</span>
+  <span class='begin begin kw'>begin</span>
+    <span class='self self kw'>self</span><span class='dot token'>.</span><span class='view_paths identifier id'>view_paths</span><span class='dot token'>.</span><span class='find_template identifier id'>find_template</span><span class='lparen token'>(</span><span class='template_name identifier id'>template_name</span><span class='comma token'>,</span> <span class='@template_format ivar id'>@template_format</span><span class='rparen token'>)</span>
+    <span class='return return kw'>return</span> <span class='true true kw'>true</span>
+  <span class='rescue rescue kw'>rescue</span> <span class='ActionView constant id'>ActionView</span><span class='colon2 op'>::</span><span class='MissingTemplate constant id'>MissingTemplate</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
+    <span class='return return kw'>return</span> <span class='false false kw'>false</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

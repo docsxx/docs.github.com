@@ -1,0 +1,699 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: WithoutScope::ActsAsRevisable::Revision</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module WithoutScope_ActsAsRevisable_Revision">
+  <h1 class="title">Module: WithoutScope::ActsAsRevisable::Revision</h1>
+  <div class="section docstring">
+  <p>
+This module is mixed into the revision classes.
+</p>
+<h4>Callbacks</h4>
+<ul>
+<li><tt>before_restore</tt> is called on the revision class before it is
+restored as the current record.
+
+</li>
+<li><tt>after_restore</tt> is called on the revision class after it is restored
+as the current record.
+
+</li>
+</ul>
+
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <h1>Public Class Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#included-class_method' title='included'>included</a></span><span class='args'>(base)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+  <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#find_revision-instance_method' title='#find_revision'>#find_revision</a></span><span class='args'>(*args)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#from_revisable-instance_method' title='#from_revisable'>#from_revisable</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#grab_my_branches-instance_method' title='#grab_my_branches'>#grab_my_branches</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#next_revision-instance_method' title='#next_revision'>#next_revision</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Return the revision after this one.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#previous_revision-instance_method' title='#previous_revision'>#previous_revision</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Return the revision prior to this one.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#reverting_from-instance_method' title='#reverting_from'>#reverting_from</a></span><span class='args'>=(val)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#reverting_to-instance_method' title='#reverting_to'>#reverting_to</a></span><span class='args'>=(val)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#revision_name-instance_method' title='#revision_name'>#revision_name</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Accessor for revisable_name just to make external API more pleasant.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#revision_setup-instance_method' title='#revision_setup'>#revision_setup</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Sets some initial values for a new revision.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails class public">
+  <h1>Public Class Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>included</h3>
+</div><div id="included-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>included</span><span class='args'>(base)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/acts_as_revisable/acts/revision.rb', line 12</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='included identifier id'>included</span><span class='lparen token'>(</span><span class='base identifier id'>base</span><span class='rparen token'>)</span> <span class='comment val'>#:nodoc:</span>
+  <span class='base identifier id'>base</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='symbol val'>:extend</span><span class='comma token'>,</span> <span class='ClassMethods constant id'>ClassMethods</span><span class='rparen token'>)</span>
+  
+  <span class='class class kw'>class</span> <span class='lshft op'>&lt;&lt;</span> <span class='base identifier id'>base</span>
+    <span class='attr_accessor identifier id'>attr_accessor</span> <span class='symbol val'>:revisable_revisable_class</span><span class='comma token'>,</span> <span class='symbol val'>:revisable_cloned_associations</span>
+  <span class='end end kw'>end</span>
+  
+  <span class='base identifier id'>base</span><span class='dot token'>.</span><span class='instance_eval identifier id'>instance_eval</span> <span class='do do kw'>do</span>
+    <span class='set_table_name identifier id'>set_table_name</span><span class='lparen token'>(</span><span class='revisable_class identifier id'>revisable_class</span><span class='dot token'>.</span><span class='table_name identifier id'>table_name</span><span class='rparen token'>)</span>
+    <span class='default_scope identifier id'>default_scope</span> <span class='symbol val'>:conditions</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='symbol val'>:revisable_is_current</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='false false kw'>false</span><span class='rbrace token'>}</span>
+            
+    <span class='define_callbacks identifier id'>define_callbacks</span> <span class='symbol val'>:before_restore</span><span class='comma token'>,</span> <span class='symbol val'>:after_restore</span>
+    <span class='before_create identifier id'>before_create</span> <span class='symbol val'>:revision_setup</span>
+    <span class='after_create identifier id'>after_create</span> <span class='symbol val'>:grab_my_branches</span>
+    
+    <span class='named_scope identifier id'>named_scope</span> <span class='symbol val'>:deleted</span><span class='comma token'>,</span> <span class='symbol val'>:conditions</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='string val'>&quot;? is not null&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:revisable_deleted_at</span><span class='rbrack token'>]</span>
+    
+    <span class='lbrack token'>[</span><span class='symbol val'>:current_revision</span><span class='comma token'>,</span> <span class='revisable_association_name identifier id'>revisable_association_name</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='a identifier id'>a</span><span class='bitor op'>|</span>
+      <span class='belongs_to identifier id'>belongs_to</span> <span class='a identifier id'>a</span><span class='comma token'>,</span> <span class='symbol val'>:class_name</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='revisable_class_name identifier id'>revisable_class_name</span><span class='comma token'>,</span> <span class='symbol val'>:foreign_key</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:revisable_original_id</span>
+    <span class='end end kw'>end</span>
+    
+    <span class='lbrack token'>[</span><span class='lbrack token'>[</span><span class='symbol val'>:ancestors</span><span class='comma token'>,</span> <span class='string val'>&quot;&lt;&quot;</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='lbrack token'>[</span><span class='symbol val'>:descendants</span><span class='comma token'>,</span> <span class='string val'>&quot;&gt;&quot;</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='a identifier id'>a</span><span class='bitor op'>|</span>
+      <span class='comment val'># Jumping through hoops here to try and make sure the</span>
+      <span class='comment val'># :finder_sql is cross-database compatible. :finder_sql</span>
+      <span class='comment val'># in a plugin is evil but, I see no other option.</span>
+      <span class='has_many identifier id'>has_many</span> <span class='a identifier id'>a</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='comma token'>,</span> <span class='symbol val'>:class_name</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='revision_class_name identifier id'>revision_class_name</span><span class='comma token'>,</span> <span class='symbol val'>:finder_sql</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='dstring node'>&quot;select * from #{quoted_table_name} where #{quote_bound_value(:revisable_original_id)} = \#{revisable_original_id} and #{quote_bound_value(:revisable_number)} #{a.last} \#{revisable_number} and #{quote_bound_value(:revisable_is_current)} = #{quote_value(false)} order by #{quote_bound_value(:revisable_number)} #{(a.last.eql?(&quot;&lt;&quot;) ? &quot;DESC&quot; : &quot;ASC&quot;)}&quot;</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div><div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>find_revision</h3>
+</div><div id="find_revision-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>find_revision</span><span class='args'>(*args)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+42
+43
+44</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/acts_as_revisable/acts/revision.rb', line 42</span>
+
+<span class='def def kw'>def</span> <span class='find_revision identifier id'>find_revision</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='current_revision identifier id'>current_revision</span><span class='dot token'>.</span><span class='find_revision identifier id'>find_revision</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>from_revisable</h3>
+</div><div id="from_revisable-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>from_revisable</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+82
+83
+84</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/acts_as_revisable/acts/revision.rb', line 82</span>
+
+<span class='def def kw'>def</span> <span class='from_revisable identifier id'>from_revisable</span>
+  <span class='current_revision identifier id'>current_revision</span><span class='dot token'>.</span><span class='for_revision identifier id'>for_revision</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>grab_my_branches</h3>
+</div><div id="grab_my_branches-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>grab_my_branches</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+78
+79
+80</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/acts_as_revisable/acts/revision.rb', line 78</span>
+
+<span class='def def kw'>def</span> <span class='grab_my_branches identifier id'>grab_my_branches</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='revisable_class identifier id'>revisable_class</span><span class='dot token'>.</span><span class='update_all identifier id'>update_all</span><span class='lparen token'>(</span><span class='lbrack token'>[</span><span class='string val'>&quot;revisable_branched_from_id = ?&quot;</span><span class='comma token'>,</span> <span class='self self kw'>self</span><span class='lbrack token'>[</span><span class='symbol val'>:id</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='lbrack token'>[</span><span class='string val'>&quot;revisable_branched_from_id = ?&quot;</span><span class='comma token'>,</span> <span class='self self kw'>self</span><span class='lbrack token'>[</span><span class='symbol val'>:revisable_original_id</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>next_revision</h3>
+</div><div id="next_revision-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>next_revision</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Return the revision after this one.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+52
+53
+54</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/acts_as_revisable/acts/revision.rb', line 52</span>
+
+<span class='def def kw'>def</span> <span class='next_revision identifier id'>next_revision</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='symbol val'>:first</span><span class='comma token'>,</span> <span class='symbol val'>:conditions</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='symbol val'>:revisable_original_id</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='revisable_original_id identifier id'>revisable_original_id</span><span class='comma token'>,</span> <span class='symbol val'>:revisable_number</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='revisable_number identifier id'>revisable_number</span> <span class='plus op'>+</span> <span class='integer val'>1</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>previous_revision</h3>
+</div><div id="previous_revision-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>previous_revision</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Return the revision prior to this one.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+47
+48
+49</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/acts_as_revisable/acts/revision.rb', line 47</span>
+
+<span class='def def kw'>def</span> <span class='previous_revision identifier id'>previous_revision</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='symbol val'>:first</span><span class='comma token'>,</span> <span class='symbol val'>:conditions</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='symbol val'>:revisable_original_id</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='revisable_original_id identifier id'>revisable_original_id</span><span class='comma token'>,</span> <span class='symbol val'>:revisable_number</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='revisable_number identifier id'>revisable_number</span> <span class='minus op'>-</span> <span class='integer val'>1</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>reverting_from</h3>
+</div><div id="reverting_from-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>reverting_from</span><span class='args'>=(val)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+90
+91
+92</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/acts_as_revisable/acts/revision.rb', line 90</span>
+
+<span class='def def kw'>def</span> <span class='reverting_from= identifier id'>reverting_from=</span><span class='lparen token'>(</span><span class='val identifier id'>val</span><span class='rparen token'>)</span>
+  <span class='from_revisable identifier id'>from_revisable</span><span class='lbrack token'>[</span><span class='symbol val'>:reverting_from</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='val identifier id'>val</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>reverting_to</h3>
+</div><div id="reverting_to-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>reverting_to</span><span class='args'>=(val)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+98
+99
+100</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/acts_as_revisable/acts/revision.rb', line 98</span>
+
+<span class='def def kw'>def</span> <span class='reverting_to= identifier id'>reverting_to=</span><span class='lparen token'>(</span><span class='val identifier id'>val</span><span class='rparen token'>)</span>
+  <span class='from_revisable identifier id'>from_revisable</span><span class='lbrack token'>[</span><span class='symbol val'>:reverting_to</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='val identifier id'>val</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>revision_name</h3>
+</div><div id="revision_name-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>revision_name</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Accessor for revisable_name just to make external API more pleasant.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+62
+63
+64</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/acts_as_revisable/acts/revision.rb', line 62</span>
+
+<span class='def def kw'>def</span> <span class='revision_name identifier id'>revision_name</span> 
+  <span class='self self kw'>self</span><span class='lbrack token'>[</span><span class='symbol val'>:revisable_name</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>revision_setup</h3>
+</div><div id="revision_setup-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>revision_setup</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Sets some initial values for a new revision.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/acts_as_revisable/acts/revision.rb', line 67</span>
+
+<span class='def def kw'>def</span> <span class='revision_setup identifier id'>revision_setup</span> 
+  <span class='now identifier id'>now</span> <span class='assign token'>=</span> <span class='Time constant id'>Time</span><span class='dot token'>.</span><span class='now identifier id'>now</span>
+  <span class='prev identifier id'>prev</span> <span class='assign token'>=</span> <span class='current_revision identifier id'>current_revision</span><span class='dot token'>.</span><span class='revisions identifier id'>revisions</span><span class='dot token'>.</span><span class='first identifier id'>first</span>
+  <span class='prev identifier id'>prev</span><span class='dot token'>.</span><span class='update_attribute identifier id'>update_attribute</span><span class='lparen token'>(</span><span class='symbol val'>:revisable_revised_at</span><span class='comma token'>,</span> <span class='now identifier id'>now</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='prev identifier id'>prev</span>
+  <span class='self self kw'>self</span><span class='lbrack token'>[</span><span class='symbol val'>:revisable_current_at</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='now identifier id'>now</span> <span class='plus op'>+</span> <span class='float val'>1</span><span class='dot token'>.</span><span class='second identifier id'>second</span>
+  <span class='self self kw'>self</span><span class='lbrack token'>[</span><span class='symbol val'>:revisable_is_current</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='false false kw'>false</span>
+  <span class='self self kw'>self</span><span class='lbrack token'>[</span><span class='symbol val'>:revisable_branched_from_id</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='current_revision identifier id'>current_revision</span><span class='lbrack token'>[</span><span class='symbol val'>:revisable_branched_from_id</span><span class='rbrack token'>]</span>
+  <span class='self self kw'>self</span><span class='lbrack token'>[</span><span class='symbol val'>:revisable_type</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='current_revision identifier id'>current_revision</span><span class='lbrack token'>[</span><span class='symbol val'>:type</span><span class='rbrack token'>]</span>
+  <span class='self self kw'>self</span><span class='lbrack token'>[</span><span class='symbol val'>:revisable_number</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='maximum identifier id'>maximum</span><span class='lparen token'>(</span><span class='symbol val'>:revisable_number</span><span class='comma token'>,</span> <span class='symbol val'>:conditions</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='symbol val'>:revisable_original_id</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='self self kw'>self</span><span class='lbrack token'>[</span><span class='symbol val'>:revisable_original_id</span><span class='rbrack token'>]</span><span class='rbrace token'>}</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='integer val'>0</span><span class='rparen token'>)</span> <span class='plus op'>+</span> <span class='integer val'>1</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

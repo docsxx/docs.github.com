@@ -1,0 +1,754 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: EventMachine::HttpEncoding</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module EventMachine_HttpEncoding">
+  <h1 class="title">Module: EventMachine::HttpEncoding</h1>
+  <div class="section docstring">
+  <p>
+Methods for building HTTP requests
+</p>
+
+</div><div class="section constants">
+  <div class="thisclass">
+  <h1>Constants</h1>
+  <dl>
+    
+      <dt id="BASIC_AUTH_ENCODING-constant">BASIC_AUTH_ENCODING</dt>
+      <dd>&quot;%s: Basic %s\r\n&quot;</dd>
+    
+      <dt id="FIELD_ENCODING-constant">FIELD_ENCODING</dt>
+      <dd>&quot;%s: %s\r\n&quot;</dd>
+    
+      <dt id="HTTP_REQUEST_HEADER-constant">HTTP_REQUEST_HEADER</dt>
+      <dd>&quot;%s %s HTTP/1.1\r\n&quot;</dd>
+    
+  </dl>
+</div>
+
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#encode_basic_auth-instance_method' title='#encode_basic_auth'>#encode_basic_auth</a></span><span class='args'>(k,v)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Encode basic auth in an HTTP header.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#encode_cookies-instance_method' title='#encode_cookies'>#encode_cookies</a></span><span class='args'>(cookies)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#encode_field-instance_method' title='#encode_field'>#encode_field</a></span><span class='args'>(k, v)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Encode a field in an HTTP header.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#encode_headers-instance_method' title='#encode_headers'>#encode_headers</a></span><span class='args'>(head)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#encode_host-instance_method' title='#encode_host'>#encode_host</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+HTTP is kind of retarded that you have to specify a Host header, but if you
+include port 80 then further redirects will tack on the :80 which is
+annoying.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#encode_param-instance_method' title='#encode_param'>#encode_param</a></span><span class='args'>(k, v)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+URL encodes query parameters: single k=v, or a URL encoded array, if v is
+an array of values.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#encode_query-instance_method' title='#encode_query'>#encode_query</a></span><span class='args'>(path, query)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#encode_request-instance_method' title='#encode_request'>#encode_request</a></span><span class='args'>(method, path, query)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#escape-instance_method' title='#escape'>#escape</a></span><span class='args'>(s)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Escapes a URI.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#munge_header_keys-instance_method' title='#munge_header_keys'>#munge_header_keys</a></span><span class='args'>(head)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Map all header keys to a downcased string version.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#unescape-instance_method' title='#unescape'>#unescape</a></span><span class='args'>(s)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Unescapes a URI escaped string.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>encode_basic_auth</h3>
+</div><div id="encode_basic_auth-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>encode_basic_auth</span><span class='args'>(k,v)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Encode basic auth in an HTTP header
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+121
+122
+123</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/em-http/client.rb', line 121</span>
+
+<span class='def def kw'>def</span> <span class='encode_basic_auth identifier id'>encode_basic_auth</span><span class='lparen token'>(</span><span class='k identifier id'>k</span><span class='comma token'>,</span><span class='v identifier id'>v</span><span class='rparen token'>)</span>
+  <span class='BASIC_AUTH_ENCODING constant id'>BASIC_AUTH_ENCODING</span> <span class='mod op'>%</span> <span class='lbrack token'>[</span><span class='k identifier id'>k</span><span class='comma token'>,</span> <span class='Base64 constant id'>Base64</span><span class='dot token'>.</span><span class='encode64 identifier id'>encode64</span><span class='lparen token'>(</span><span class='v identifier id'>v</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='string val'>&quot;:&quot;</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='chomp identifier id'>chomp</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>encode_cookies</h3>
+</div><div id="encode_cookies-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>encode_cookies</span><span class='args'>(cookies)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+137
+138
+139</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/em-http/client.rb', line 137</span>
+
+<span class='def def kw'>def</span> <span class='encode_cookies identifier id'>encode_cookies</span><span class='lparen token'>(</span><span class='cookies identifier id'>cookies</span><span class='rparen token'>)</span>
+  <span class='cookies identifier id'>cookies</span><span class='dot token'>.</span><span class='inject identifier id'>inject</span><span class='lparen token'>(</span><span class='string val'>''</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='result identifier id'>result</span><span class='comma token'>,</span> <span class='lparen token'>(</span><span class='k identifier id'>k</span><span class='comma token'>,</span> <span class='v identifier id'>v</span><span class='rparen token'>)</span><span class='bitor op'>|</span> <span class='result identifier id'>result</span> <span class='lshft op'>&lt;&lt;</span> <span class='encode_field identifier id'>encode_field</span><span class='lparen token'>(</span><span class='string val'>'Cookie'</span><span class='comma token'>,</span> <span class='encode_param identifier id'>encode_param</span><span class='lparen token'>(</span><span class='k identifier id'>k</span><span class='comma token'>,</span> <span class='v identifier id'>v</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>encode_field</h3>
+</div><div id="encode_field-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>encode_field</span><span class='args'>(k, v)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Encode a field in an HTTP header
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+116
+117
+118</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/em-http/client.rb', line 116</span>
+
+<span class='def def kw'>def</span> <span class='encode_field identifier id'>encode_field</span><span class='lparen token'>(</span><span class='k identifier id'>k</span><span class='comma token'>,</span> <span class='v identifier id'>v</span><span class='rparen token'>)</span>
+  <span class='FIELD_ENCODING constant id'>FIELD_ENCODING</span> <span class='mod op'>%</span> <span class='lbrack token'>[</span><span class='k identifier id'>k</span><span class='comma token'>,</span> <span class='v identifier id'>v</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>encode_headers</h3>
+</div><div id="encode_headers-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>encode_headers</span><span class='args'>(head)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/em-http/client.rb', line 125</span>
+
+<span class='def def kw'>def</span> <span class='encode_headers identifier id'>encode_headers</span><span class='lparen token'>(</span><span class='head identifier id'>head</span><span class='rparen token'>)</span>
+  <span class='head identifier id'>head</span><span class='dot token'>.</span><span class='inject identifier id'>inject</span><span class='lparen token'>(</span><span class='string val'>''</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='result identifier id'>result</span><span class='comma token'>,</span> <span class='lparen token'>(</span><span class='key identifier id'>key</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='rparen token'>)</span><span class='bitor op'>|</span>
+    <span class='comment val'># Munge keys from foo-bar-baz to Foo-Bar-Baz</span>
+    <span class='key identifier id'>key</span> <span class='assign token'>=</span> <span class='key identifier id'>key</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='string val'>'-'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='k identifier id'>k</span><span class='bitor op'>|</span> <span class='k identifier id'>k</span><span class='dot token'>.</span><span class='capitalize identifier id'>capitalize</span> <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='string val'>'-'</span><span class='rparen token'>)</span>
+    <span class='unless unless kw'>unless</span> <span class='key identifier id'>key</span> <span class='eq op'>==</span> <span class='string val'>&quot;Authorization&quot;</span>
+      <span class='result identifier id'>result</span> <span class='lshft op'>&lt;&lt;</span> <span class='encode_field identifier id'>encode_field</span><span class='lparen token'>(</span><span class='key identifier id'>key</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='rparen token'>)</span>
+    <span class='else else kw'>else</span>
+      <span class='result identifier id'>result</span> <span class='lshft op'>&lt;&lt;</span> <span class='encode_basic_auth identifier id'>encode_basic_auth</span><span class='lparen token'>(</span><span class='key identifier id'>key</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>encode_host</h3>
+</div><div id="encode_host-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>encode_host</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+HTTP is kind of retarded that you have to specify a Host header, but if you
+include port 80 then further redirects will tack on the :80 which is
+annoying.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+88
+89
+90</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/em-http/client.rb', line 88</span>
+
+<span class='def def kw'>def</span> <span class='encode_host identifier id'>encode_host</span>
+  <span class='@uri ivar id'>@uri</span><span class='dot token'>.</span><span class='host identifier id'>host</span> <span class='plus op'>+</span> <span class='lparen token'>(</span><span class='@uri ivar id'>@uri</span><span class='dot token'>.</span><span class='port identifier id'>port</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span> <span class='neq op'>!=</span> <span class='integer val'>80</span> <span class='question op'>?</span> <span class='dstring node'>&quot;:#{@uri.port}&quot;</span> <span class='colon op'>:</span> <span class='string val'>&quot;&quot;</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>encode_param</h3>
+</div><div id="encode_param-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>encode_param</span><span class='args'>(k, v)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+URL encodes query parameters: single k=v, or a URL encoded array, if v is
+an array of values
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+107
+108
+109
+110
+111
+112
+113</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/em-http/client.rb', line 107</span>
+
+<span class='def def kw'>def</span> <span class='encode_param identifier id'>encode_param</span><span class='lparen token'>(</span><span class='k identifier id'>k</span><span class='comma token'>,</span> <span class='v identifier id'>v</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='v identifier id'>v</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Array constant id'>Array</span><span class='rparen token'>)</span>
+    <span class='v identifier id'>v</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='e identifier id'>e</span><span class='bitor op'>|</span> <span class='escape identifier id'>escape</span><span class='lparen token'>(</span><span class='k identifier id'>k</span><span class='rparen token'>)</span> <span class='plus op'>+</span> <span class='string val'>&quot;[]=&quot;</span> <span class='plus op'>+</span> <span class='escape identifier id'>escape</span><span class='lparen token'>(</span><span class='e identifier id'>e</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='string val'>&quot;&amp;&quot;</span><span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+    <span class='escape identifier id'>escape</span><span class='lparen token'>(</span><span class='k identifier id'>k</span><span class='rparen token'>)</span> <span class='plus op'>+</span> <span class='string val'>&quot;=&quot;</span> <span class='plus op'>+</span> <span class='escape identifier id'>escape</span><span class='lparen token'>(</span><span class='v identifier id'>v</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>encode_query</h3>
+</div><div id="encode_query-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>encode_query</span><span class='args'>(path, query)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+96
+97
+98
+99
+100
+101
+102
+103</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/em-http/client.rb', line 96</span>
+
+<span class='def def kw'>def</span> <span class='encode_query identifier id'>encode_query</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='comma token'>,</span> <span class='query identifier id'>query</span><span class='rparen token'>)</span>
+  <span class='return return kw'>return</span> <span class='path identifier id'>path</span> <span class='unless unless_mod kw'>unless</span> <span class='query identifier id'>query</span>
+  <span class='if if kw'>if</span> <span class='query identifier id'>query</span><span class='dot token'>.</span><span class='kind_of? fid id'>kind_of?</span> <span class='String constant id'>String</span>
+    <span class='return return kw'>return</span> <span class='dstring node'>&quot;#{path}?#{query}&quot;</span>
+  <span class='else else kw'>else</span>
+    <span class='return return kw'>return</span> <span class='path identifier id'>path</span> <span class='plus op'>+</span> <span class='string val'>&quot;?&quot;</span> <span class='plus op'>+</span> <span class='query identifier id'>query</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='k identifier id'>k</span><span class='comma token'>,</span> <span class='v identifier id'>v</span><span class='bitor op'>|</span> <span class='encode_param identifier id'>encode_param</span><span class='lparen token'>(</span><span class='k identifier id'>k</span><span class='comma token'>,</span> <span class='v identifier id'>v</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='string val'>'&amp;'</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>encode_request</h3>
+</div><div id="encode_request-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>encode_request</span><span class='args'>(method, path, query)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+92
+93
+94</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/em-http/client.rb', line 92</span>
+
+<span class='def def kw'>def</span> <span class='encode_request identifier id'>encode_request</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='comma token'>,</span> <span class='path identifier id'>path</span><span class='comma token'>,</span> <span class='query identifier id'>query</span><span class='rparen token'>)</span>
+  <span class='HTTP_REQUEST_HEADER constant id'>HTTP_REQUEST_HEADER</span> <span class='mod op'>%</span> <span class='lbrack token'>[</span><span class='method identifier id'>method</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='upcase identifier id'>upcase</span><span class='comma token'>,</span> <span class='encode_query identifier id'>encode_query</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='comma token'>,</span> <span class='query identifier id'>query</span><span class='rparen token'>)</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>escape</h3>
+</div><div id="escape-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>escape</span><span class='args'>(s)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Escapes a URI.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+67
+68
+69
+70
+71</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/em-http/client.rb', line 67</span>
+
+<span class='def def kw'>def</span> <span class='escape identifier id'>escape</span><span class='lparen token'>(</span><span class='s identifier id'>s</span><span class='rparen token'>)</span>
+  <span class='s identifier id'>s</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='regexp val'>/([^ a-zA-Z0-9_.-]+)/n</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span>
+    <span class='string val'>'%'</span><span class='plus op'>+</span><span class='$1 nth_ref id'>$1</span><span class='dot token'>.</span><span class='unpack identifier id'>unpack</span><span class='lparen token'>(</span><span class='string val'>'H2'</span><span class='mult op'>*</span><span class='$1 nth_ref id'>$1</span><span class='dot token'>.</span><span class='size identifier id'>size</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='string val'>'%'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='upcase identifier id'>upcase</span>
+  <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='tr identifier id'>tr</span><span class='lparen token'>(</span><span class='string val'>' '</span><span class='comma token'>,</span> <span class='string val'>'+'</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>munge_header_keys</h3>
+</div><div id="munge_header_keys-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>munge_header_keys</span><span class='args'>(head)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Map all header keys to a downcased string version
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+81
+82
+83</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/em-http/client.rb', line 81</span>
+
+<span class='def def kw'>def</span> <span class='munge_header_keys identifier id'>munge_header_keys</span><span class='lparen token'>(</span><span class='head identifier id'>head</span><span class='rparen token'>)</span>
+  <span class='head identifier id'>head</span><span class='dot token'>.</span><span class='inject identifier id'>inject</span><span class='lparen token'>(</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='h identifier id'>h</span><span class='comma token'>,</span> <span class='lparen token'>(</span><span class='k identifier id'>k</span><span class='comma token'>,</span> <span class='v identifier id'>v</span><span class='rparen token'>)</span><span class='bitor op'>|</span> <span class='h identifier id'>h</span><span class='lbrack token'>[</span><span class='k identifier id'>k</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='downcase identifier id'>downcase</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='v identifier id'>v</span><span class='semicolon token'>;</span> <span class='h identifier id'>h</span> <span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>unescape</h3>
+</div><div id="unescape-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>unescape</span><span class='args'>(s)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Unescapes a URI escaped string.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+74
+75
+76
+77
+78</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/em-http/client.rb', line 74</span>
+
+<span class='def def kw'>def</span> <span class='unescape identifier id'>unescape</span><span class='lparen token'>(</span><span class='s identifier id'>s</span><span class='rparen token'>)</span>
+  <span class='s identifier id'>s</span><span class='dot token'>.</span><span class='tr identifier id'>tr</span><span class='lparen token'>(</span><span class='string val'>'+'</span><span class='comma token'>,</span> <span class='string val'>' '</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='regexp val'>/((?:%[0-9a-fA-F]{2})+)/n</span><span class='rparen token'>)</span><span class='lbrace token'>{</span>
+    <span class='lbrack token'>[</span><span class='$1 nth_ref id'>$1</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='string val'>'%'</span><span class='rparen token'>)</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='pack identifier id'>pack</span><span class='lparen token'>(</span><span class='string val'>'H*'</span><span class='rparen token'>)</span>
+  <span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

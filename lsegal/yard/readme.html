@@ -1,0 +1,309 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <title>README</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section docstring readme">
+        <p>
+YARD Release 0.2.2 (June 16th 2008)
+</p>
+<h6>=============================</h6>
+<p>
+*<b>Homepage</b>*: [http://yard.rubyforge.org](http://yard.rubyforge.org)
+*<b>IRC</b>*: **Join us on IRC in #yard on irc.freenode.net!**
+*<b>Git</b>*:
+[http://github.com/lsegal/yard](http://github.com/lsegal/yard)
+*<b>Author</b>*: Loren Segal *<b>Copyright</b>*: 2007-2009
+</p>
+<p>
+SYNOPSIS
+</p>
+<hr size="6"></hr><p>
+YARD is a documentation generation tool for the Ruby programming
+language.  It enables the user to generate consistent, usable
+documentation that can be  exported to a number of formats very easily,
+and also supports extending for  custom Ruby constructs such as custom
+class level definitions. Below is a  summary of some of YARD&#8217;s
+notable features.
+</p>
+<p>
+FEATURE LIST
+</p>
+<hr size="10"></hr><ol>
+<li>**RDoc/SimpleMarkup Formatting Compatibility**: YARD is made to be
+compatible  with RDoc formatting. In fact, YARD does no processing on
+RDoc documentation  strings, and leaves this up to the output generation
+tool to decide how to  render the documentation. 
+
+</li>
+<li>**Yardoc Meta-tag Formatting Like Python, Java, Objective-C and other
+languages**:  YARD uses a &#8217;@tag&#8217; style definition syntax for
+meta tags alongside regular code  documentation. These tags should be
+able to happily sit side by side RDoc formatted  documentation, but
+provide a much more consistent and usable way to describe  important
+information about objects, such as what parameters they take and what types
+they are expected to be, what type a method should return, what
+exceptions it can raise, if it is deprecated, etc.. It also allows
+information to be better (and more consistently) organized during the
+output generation phase. Some of the main tags are listed below: 
+
+<p>
+#### Table 1. Meta-tags and their descriptions ####
+</p>
+<p>
+##### `@param [Types] name Description` #####
+</p>
+<pre class="code">
+  <span class='Allows constant id'>Allows</span> <span class='for for kw'>for</span> <span class='the identifier id'>the</span> <span class='definition identifier id'>definition</span> <span class='of identifier id'>of</span> <span class='a identifier id'>a</span> <span class='method identifier id'>method</span> <span class='parameter identifier id'>parameter</span> <span class='with identifier id'>with</span></pre>
+<p>
+##### `@yieldparam [Types] name Description` #####
+</p>
+<pre class="code">
+  <span class='Allows constant id'>Allows</span> <span class='for for kw'>for</span> <span class='the identifier id'>the</span> <span class='definition identifier id'>definition</span> <span class='of identifier id'>of</span> <span class='a identifier id'>a</span> <span class='method identifier id'>method</span> <span class='parameter identifier id'>parameter</span> <span class='to identifier id'>to</span> <span class='a identifier id'>a</span> <span class='yield yield kw'>yield</span> <span class='block identifier id'>block</span> <span class='with identifier id'>with</span> <span class='optional identifier id'>optional</span>
+  <span class='type identifier id'>type</span> <span class='information identifier id'>information</span><span class='dot token'>.</span>
+</pre>
+<p>
+##### `@yield [paramnames] Description` #####
+</p>
+<pre class="code">
+  <span class='Allows constant id'>Allows</span> <span class='the identifier id'>the</span> <span class='developer identifier id'>developer</span> <span class='to identifier id'>to</span> <span class='document identifier id'>document</span> <span class='the identifier id'>the</span> <span class='purpose identifier id'>purpose</span> <span class='of identifier id'>of</span> <span class='a identifier id'>a</span> <span class='yield yield kw'>yield</span> <span class='block identifier id'>block</span> <span class='in in kw'>in</span> <span class='a identifier id'>a</span> <span class='method identifier id'>method</span><span class='dot token'>.</span>
+</pre>
+<p>
+##### `@return [Types] Description` #####
+</p>
+<pre class="code">
+  <span class='Describes constant id'>Describes</span> <span class='what identifier id'>what</span> <span class='the identifier id'>the</span> <span class='method identifier id'>method</span> <span class='returns identifier id'>returns</span> <span class='with identifier id'>with</span> <span class='optional identifier id'>optional</span> <span class='type identifier id'>type</span> <span class='information identifier id'>information</span><span class='dot token'>.</span>
+</pre>
+<p>
+##### `@deprecated Description` #####
+</p>
+<pre class="code">
+  <span class='Informs constant id'>Informs</span> <span class='the identifier id'>the</span> <span class='developer identifier id'>developer</span> <span class='that identifier id'>that</span> <span class='a identifier id'>a</span> <span class='method identifier id'>method</span> <span class='is identifier id'>is</span> <span class='deprecated identifier id'>deprecated</span> <span class='and and kw'>and</span> <span class='should identifier id'>should</span> <span class='no identifier id'>no</span>
+  <span class='longer identifier id'>longer</span> <span class='be identifier id'>be</span> <span class='used identifier id'>used</span><span class='dot token'>.</span> <span class='The constant id'>The</span> <span class='description identifier id'>description</span> <span class='offers identifier id'>offers</span> <span class='the identifier id'>the</span> <span class='developer identifier id'>developer</span> <span class='an identifier id'>an</span> <span class='alternative identifier id'>alternative</span>
+  <span class='solution identifier id'>solution</span> <span class='or or kw'>or</span> <span class='method identifier id'>method</span> <span class='for for kw'>for</span> <span class='the identifier id'>the</span> <span class='problem identifier id'>problem</span><span class='dot token'>.</span>
+</pre>
+<p>
+##### `@raise [Class] Description` #####
+</p>
+<pre class="code">
+  <span class='Tells constant id'>Tells</span> <span class='the identifier id'>the</span> <span class='developer identifier id'>developer</span> <span class='that identifier id'>that</span> <span class='the identifier id'>the</span> <span class='method identifier id'>method</span> <span class='may identifier id'>may</span> <span class='raise identifier id'>raise</span> <span class='an identifier id'>an</span> <span class='exception identifier id'>exception</span> <span class='and and kw'>and</span> <span class='of identifier id'>of</span> <span class='what identifier id'>what</span> <span class='type identifier id'>type</span><span class='dot token'>.</span>
+</pre>
+<p>
+##### `@see name` #####
+</p>
+<pre class="code">
+  <span class='References constant id'>References</span> <span class='another identifier id'>another</span> <span class='object identifier id'>object</span><span class='comma token'>,</span> <span class='URL constant id'>URL</span><span class='comma token'>,</span> <span class='or or kw'>or</span> <span class='other identifier id'>other</span> <span class='for for kw'>for</span> <span class='extra identifier id'>extra</span> <span class='information identifier id'>information</span><span class='dot token'>.</span>
+</pre>
+<p>
+##### `@since number` #####
+</p>
+<pre class="code">
+  <span class='Lists constant id'>Lists</span> <span class='the identifier id'>the</span> <span class='version identifier id'>version</span> <span class='number identifier id'>number</span> <span class='in in kw'>in</span> <span class='which identifier id'>which</span> <span class='the identifier id'>the</span> <span class='object identifier id'>object</span> <span class='first identifier id'>first</span> <span class='appeared identifier id'>appeared</span><span class='dot token'>.</span>
+</pre>
+<p>
+##### `@version number` #####
+</p>
+<pre class="code">
+  <span class='Lists constant id'>Lists</span> <span class='the identifier id'>the</span> <span class='current identifier id'>current</span> <span class='version identifier id'>version</span> <span class='of identifier id'>of</span> <span class='the identifier id'>the</span> <span class='documentation identifier id'>documentation</span> <span class='for for kw'>for</span> <span class='the identifier id'>the</span> <span class='object identifier id'>object</span><span class='dot token'>.</span>
+</pre>
+<p>
+##### `@author name` #####
+</p>
+<pre class="code">
+  <span class='The constant id'>The</span> <span class='authors identifier id'>authors</span> <span class='responsible identifier id'>responsible</span> <span class='for for kw'>for</span> <span class='the identifier id'>the</span> <span class='module module kw'>module</span>
+</pre>
+<p>
+You might have noticed the optional &quot;types&quot; declarations for
+certain tags.  This allows the developer to document type signatures for
+ruby methods and  parameters in a non intrusive but helpful and
+consistent manner. Instead of  describing this data in the body of the
+description, a developer may formally  declare the parameter or return
+type(s) in a single line. Consider the  following Yardoc&#8217;d
+method: 
+</p>
+<pre class="code">
+      <span class='comment val'>##</span>
+      <span class='comment val'># Reverses the contents of a String or IO object.</span>
+      <span class='comment val'>#</span>
+      <span class='comment val'># @param [String, #read] contents the contents to reverse</span>
+      <span class='comment val'># @return [String] the contents reversed lexically</span>
+      <span class='def def kw'>def</span> <span class='reverse identifier id'>reverse</span><span class='lparen token'>(</span><span class='contents identifier id'>contents</span><span class='rparen token'>)</span>
+        <span class='contents identifier id'>contents</span> <span class='assign token'>=</span> <span class='contents identifier id'>contents</span><span class='dot token'>.</span><span class='read identifier id'>read</span> <span class='if if_mod kw'>if</span> <span class='respond_to? fid id'>respond_to?</span> <span class='symbol val'>:read</span>
+        <span class='contents identifier id'>contents</span><span class='dot token'>.</span><span class='reverse identifier id'>reverse</span>
+      <span class='end end kw'>end</span></pre>
+<p>
+With the above @param tag, we learn that the contents parameter can either
+be a String or any object that responds to the &#8216;read&#8217; method,
+which is more  powerful than the textual description, which says it
+should be an IO object.  This also informs the developer that they should
+expect to receive a String  object returned by the method, and although
+this may be obvious for a  &#8216;reverse&#8217; method, it becomes very
+useful when the method name may not be as  descriptive. 
+</p>
+</li>
+<li>**Custom Constructs and Extensibility of YARD**: Take for instance the
+example: 
+
+<pre class="code">
+      <span class='class class kw'>class</span> <span class='A constant id'>A</span>
+        <span class='class class kw'>class</span> <span class='lshft op'>&lt;&lt;</span> <span class='self self kw'>self</span>
+          <span class='def def kw'>def</span> <span class='define_name identifier id'>define_name</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='rparen token'>)</span>
+            <span class='class_eval identifier id'>class_eval</span> <span class='dstring node'>&quot;def #{name}; #{value.inspect} end&quot;</span>
+          <span class='end end kw'>end</span>
+        <span class='end end kw'>end</span>
+
+        <span class='comment val'># Documentation string for this name</span>
+        <span class='define_name identifier id'>define_name</span> <span class='symbol val'>:publisher</span><span class='comma token'>,</span> <span class='string val'>&quot;O'Reilly&quot;</span>
+      <span class='end end kw'>end</span>
+</pre>
+<p>
+This custom declaration provides dynamically generated code that is hard
+for a documentation tool to properly document without help from the
+developer. To  ease the pains of manually documenting the procedure, YARD
+can be extended by  the developer to handled the
+&#8216;define_name&#8217; construct and add the required  method to the
+defined methods of the class with its documentation. This makes 
+documenting external API&#8217;s, especially dynamic ones, a lot more
+consistent for consumption by the users. 
+</p>
+</li>
+<li>**Raw Data Output**: YARD also outputs documented objects as raw data
+(the  dumped Namespace) which can be reloaded to do generation at a later
+date, or  even auditing on code. This means that any developer can use
+the raw data to  perform output generation for any custom format, such as
+YAML, for instance.  While YARD plans to support XHTML style
+documentation output as well as  command line (text based) and possibly
+XML, this may still be useful for those who would like to reap the benefits
+of YARD&#8217;s processing in other forms, such  as throwing all the
+documentation into a database. Another useful way of  exploiting this raw
+data format would be to write tools that can auto generate test cases, for
+example, or show possible unhandled exceptions in code. 
+
+</li>
+</ol>
+<p>
+USAGE
+</p>
+<hr size="3"></hr><p>
+There are a couple of ways to use YARD. The first is via command-line, and
+the second is the Rake task. There are also the `yard-graph` and `yri`
+binaries to look at, if you want to poke around.
+</p>
+<ol>
+<li>**yardoc Command-line Tool**
+
+</li>
+</ol>
+<pre class="code">
+  <span class='The constant id'>The</span> <span class='most identifier id'>most</span> <span class='obvious identifier id'>obvious</span> <span class='way identifier id'>way</span> <span class='to identifier id'>to</span> <span class='run identifier id'>run</span> <span class='YARD constant id'>YARD</span> <span class='is identifier id'>is</span> <span class='to identifier id'>to</span> <span class='run identifier id'>run</span> <span class='the identifier id'>the</span> <span class='xstring val'>`yardoc`</span> <span class='binary identifier id'>binary</span> <span class='file identifier id'>file</span> <span class='that identifier id'>that</span> <span class='comes identifier id'>comes</span>
+  <span class='with identifier id'>with</span> <span class='YARD constant id'>YARD</span><span class='dot token'>.</span> <span class='This constant id'>This</span> <span class='will identifier id'>will</span><span class='comma token'>,</span> <span class='among identifier id'>among</span> <span class='other identifier id'>other</span> <span class='things identifier id'>things</span><span class='comma token'>,</span> <span class='generate identifier id'>generate</span> <span class='the identifier id'>the</span> <span class='HTML constant id'>HTML</span> <span class='documentation identifier id'>documentation</span> <span class='for for kw'>for</span>
+  <span class='your identifier id'>your</span> <span class='project identifier id'>project</span> <span class='code identifier id'>code</span><span class='dot token'>.</span> <span class='You constant id'>You</span> <span class='can identifier id'>can</span> <span class='type identifier id'>type</span> <span class='xstring val'>`yardoc --help`</span> <span class='to identifier id'>to</span> <span class='see identifier id'>see</span> <span class='the identifier id'>the</span> <span class='options identifier id'>options</span>
+  <span class='that identifier id'>that</span> <span class='YARD constant id'>YARD</span> <span class='provides identifier id'>provides</span><span class='comma token'>,</span> <span class='but identifier id'>but</span> <span class='the identifier id'>the</span> <span class='easiest identifier id'>easiest</span> <span class='way identifier id'>way</span> <span class='to identifier id'>to</span> <span class='generate identifier id'>generate</span> <span class='docs identifier id'>docs</span> <span class='for for kw'>for</span> <span class='your identifier id'>your</span> <span class='code identifier id'>code</span> <span class='is identifier id'>is</span> <span class='to identifier id'>to</span>
+  <span class='simply identifier id'>simply</span> <span class='type identifier id'>type</span> <span class='xstring val'>`yardoc`</span> <span class='in in kw'>in</span> <span class='your identifier id'>your</span> <span class='project identifier id'>project</span> <span class='root identifier id'>root</span><span class='dot token'>.</span> <span class='This constant id'>This</span> <span class='will identifier id'>will</span> <span class='assume identifier id'>assume</span> <span class='your identifier id'>your</span> <span class='files identifier id'>files</span> <span class='are identifier id'>are</span>
+  <span class='located identifier id'>located</span> <span class='in in kw'>in</span> <span class='the identifier id'>the</span> <span class='xstring val'>`lib/`</span> <span class='directory identifier id'>directory</span><span class='dot token'>.</span> <span class='If constant id'>If</span> <span class='they identifier id'>they</span> <span class='are identifier id'>are</span> <span class='located identifier id'>located</span> <span class='elsewhere identifier id'>elsewhere</span><span class='comma token'>,</span> <span class='you identifier id'>you</span> <span class='can identifier id'>can</span> <span class='specify identifier id'>specify</span>
+  <span class='paths identifier id'>paths</span> <span class='and and kw'>and</span> <span class='globs identifier id'>globs</span> <span class='from identifier id'>from</span> <span class='the identifier id'>the</span> <span class='commandline identifier id'>commandline</span> <span class='via identifier id'>via</span><span class='colon op'>:</span>
+
+        <span class='gt op'>&gt;</span> <span class='yardoc identifier id'>yardoc</span> <span class='string val'>'lib/**/*.rb'</span> <span class='string val'>'app/**/*.rb'</span> <span class='dot3 op'>...</span><span class='etc identifier id'>etc</span><span class='dot3 op'>...</span>
+
+  <span class='The constant id'>The</span> <span class='tool identifier id'>tool</span> <span class='will identifier id'>will</span> <span class='generate identifier id'>generate</span> <span class='a identifier id'>a</span> <span class='xstring val'>`.yardoc`</span> <span class='file identifier id'>file</span> <span class='which identifier id'>which</span> <span class='will identifier id'>will</span> <span class='store identifier id'>store</span> <span class='the identifier id'>the</span> <span class='cached identifier id'>cached</span> <span class='database identifier id'>database</span>
+  <span class='of identifier id'>of</span> <span class='your identifier id'>your</span> <span class='source identifier id'>source</span> <span class='code identifier id'>code</span> <span class='and and kw'>and</span> <span class='documentation identifier id'>documentation</span><span class='dot token'>.</span> <span class='If constant id'>If</span> <span class='you identifier id'>you</span> <span class='want identifier id'>want</span> <span class='to identifier id'>to</span> <span class='re identifier id'>re</span><span class='minus op'>-</span><span class='generate identifier id'>generate</span> <span class='your identifier id'>your</span> <span class='docs identifier id'>docs</span>
+  <span class='with identifier id'>with</span> <span class='another identifier id'>another</span> <span class='template identifier id'>template</span> <span class='you identifier id'>you</span> <span class='can identifier id'>can</span> <span class='simply identifier id'>simply</span> <span class='use identifier id'>use</span> <span class='the identifier id'>the</span> <span class='xstring val'>`--use-cache`</span> <span class='lparen token'>(</span><span class='or or kw'>or</span> <span class='minus op'>-</span><span class='c identifier id'>c</span><span class='rparen token'>)</span>
+  <span class='option identifier id'>option</span> <span class='to identifier id'>to</span> <span class='speed identifier id'>speed</span> <span class='up identifier id'>up</span> <span class='the identifier id'>the</span> <span class='generation identifier id'>generation</span> <span class='process identifier id'>process</span> <span class='by identifier id'>by</span> <span class='skipping identifier id'>skipping</span> <span class='source identifier id'>source</span> <span class='parsing identifier id'>parsing</span><span class='dot token'>.</span>
+
+  <span class='YARD constant id'>YARD</span> <span class='will identifier id'>will</span> <span class='by identifier id'>by</span> <span class='default identifier id'>default</span> <span class='only identifier id'>only</span> <span class='document identifier id'>document</span> <span class='code identifier id'>code</span> <span class='in in kw'>in</span> <span class='your identifier id'>your</span> <span class='public identifier id'>public</span> <span class='visibility identifier id'>visibility</span><span class='dot token'>.</span> <span class='You constant id'>You</span> <span class='can identifier id'>can</span>
+  <span class='document identifier id'>document</span> <span class='your identifier id'>your</span> <span class='protected identifier id'>protected</span> <span class='and and kw'>and</span> <span class='private identifier id'>private</span> <span class='code identifier id'>code</span> <span class='by identifier id'>by</span> <span class='adding identifier id'>adding</span> <span class='xstring val'>`--protected`</span> <span class='or or kw'>or</span>
+  <span class='xstring val'>`--private`</span> <span class='to identifier id'>to</span> <span class='the identifier id'>the</span> <span class='option identifier id'>option</span> <span class='switches identifier id'>switches</span><span class='dot token'>.</span>
+</pre>
+<ol>
+<li>**Rake Task**
+
+</li>
+</ol>
+<pre class="code">
+  <span class='The constant id'>The</span> <span class='second identifier id'>second</span> <span class='most identifier id'>most</span> <span class='obvious identifier id'>obvious</span> <span class='is identifier id'>is</span> <span class='to identifier id'>to</span> <span class='generate identifier id'>generate</span> <span class='docs identifier id'>docs</span> <span class='via identifier id'>via</span> <span class='a identifier id'>a</span> <span class='Rake constant id'>Rake</span> <span class='task identifier id'>task</span><span class='dot token'>.</span> <span class='You constant id'>You</span> <span class='can identifier id'>can</span> <span class='do do kw'>do</span> <span class='this identifier id'>this</span> <span class='by identifier id'>by</span>
+  <span class='adding identifier id'>adding</span> <span class='the identifier id'>the</span> <span class='following identifier id'>following</span> <span class='to identifier id'>to</span> <span class='your identifier id'>your</span> <span class='xstring val'>`Rakefile`</span><span class='colon op'>:</span>
+
+        <span class='YARD constant id'>YARD</span><span class='colon2 op'>::</span><span class='Rake constant id'>Rake</span><span class='colon2 op'>::</span><span class='YardocTask constant id'>YardocTask</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='t identifier id'>t</span><span class='bitor op'>|</span>
+          <span class='t identifier id'>t</span><span class='dot token'>.</span><span class='files identifier id'>files</span>   <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='string val'>'lib/**/*.rb'</span><span class='comma token'>,</span> <span class='OTHER_PATHS constant id'>OTHER_PATHS</span><span class='rbrack token'>]</span>   <span class='comment val'># optional</span>
+          <span class='t identifier id'>t</span><span class='dot token'>.</span><span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='string val'>'--any'</span><span class='comma token'>,</span> <span class='string val'>'--extra'</span><span class='comma token'>,</span> <span class='string val'>'--opts'</span><span class='rbrack token'>]</span> <span class='comment val'># optional</span>
+        <span class='end end kw'>end</span>
+
+  <span class='both identifier id'>both</span> <span class='the identifier id'>the</span> <span class='xstring val'>`files`</span> <span class='and and kw'>and</span> <span class='xstring val'>`options`</span> <span class='settings identifier id'>settings</span> <span class='are identifier id'>are</span> <span class='optional identifier id'>optional</span><span class='dot token'>.</span> <span class='xstring val'>`files`</span> <span class='will identifier id'>will</span> <span class='default identifier id'>default</span> <span class='to identifier id'>to</span>
+  <span class='xstring val'>`lib/**/*.rb`</span> <span class='and and kw'>and</span> <span class='xstring val'>`options`</span> <span class='will identifier id'>will</span> <span class='represents identifier id'>represents</span> <span class='any identifier id'>any</span> <span class='options identifier id'>options</span> <span class='you identifier id'>you</span> <span class='might identifier id'>might</span> <span class='want identifier id'>want</span>
+  <span class='to identifier id'>to</span> <span class='add identifier id'>add</span><span class='dot token'>.</span> <span class='Again constant id'>Again</span><span class='comma token'>,</span> <span class='a identifier id'>a</span> <span class='full identifier id'>full</span> <span class='list identifier id'>list</span> <span class='of identifier id'>of</span> <span class='options identifier id'>options</span> <span class='is identifier id'>is</span> <span class='available identifier id'>available</span> <span class='by identifier id'>by</span> <span class='typing identifier id'>typing</span> <span class='xstring val'>`yardoc --help`</span>
+  <span class='in in kw'>in</span> <span class='a identifier id'>a</span> <span class='shell identifier id'>shell</span><span class='dot token'>.</span> <span class='You constant id'>You</span> <span class='can identifier id'>can</span> <span class='also identifier id'>also</span> <span class='override identifier id'>override</span> <span class='the identifier id'>the</span> <span class='options identifier id'>options</span> <span class='at identifier id'>at</span> <span class='the identifier id'>the</span> <span class='Rake constant id'>Rake</span> <span class='command identifier id'>command</span><span class='minus op'>-</span><span class='line identifier id'>line</span> <span class='with identifier id'>with</span> <span class='the identifier id'>the</span>
+  <span class='OPTS constant id'>OPTS</span> <span class='environment identifier id'>environment</span> <span class='variable identifier id'>variable</span><span class='colon op'>:</span>
+
+        <span class='gt op'>&gt;</span> <span class='rake identifier id'>rake</span> <span class='yardoc identifier id'>yardoc</span> <span class='OPTS constant id'>OPTS</span><span class='assign token'>=</span><span class='string val'>'--any --extra --opts'</span>
+</pre>
+<ol>
+<li>**yri RI Implementation**
+
+</li>
+</ol>
+<pre class="code">
+  <span class='The constant id'>The</span> <span class='yri identifier id'>yri</span> <span class='binary identifier id'>binary</span> <span class='will identifier id'>will</span> <span class='use identifier id'>use</span> <span class='the identifier id'>the</span> <span class='cached identifier id'>cached</span> <span class='dot token'>.</span><span class='yardoc identifier id'>yardoc</span> <span class='database identifier id'>database</span> <span class='to identifier id'>to</span> <span class='give identifier id'>give</span> <span class='you identifier id'>you</span> <span class='quick identifier id'>quick</span> <span class='ri identifier id'>ri</span><span class='minus op'>-</span><span class='style identifier id'>style</span>
+  <span class='access identifier id'>access</span> <span class='to identifier id'>to</span> <span class='your identifier id'>your</span> <span class='documentation identifier id'>documentation</span><span class='dot token'>.</span> <span class='It constant id'>It</span><span class='string val'>'s way faster than ri but currently does not
+  work with the stdlib or core Ruby libraries, only the active project. Example:
+
+        &gt; yri YARD::Handlers::Base#register
+        &gt; yri File::relative_path
+</span></pre>
+<ol>
+<li>**yard-graph Graphviz Generator**
+
+</li>
+</ol>
+<pre class="code">
+  <span class='You constant id'>You</span> <span class='can identifier id'>can</span> <span class='use identifier id'>use</span> <span class='xstring val'>`yard-graph`</span> <span class='to identifier id'>to</span> <span class='generate identifier id'>generate</span> <span class='dot identifier id'>dot</span> <span class='graphs identifier id'>graphs</span> <span class='of identifier id'>of</span> <span class='your identifier id'>your</span> <span class='code identifier id'>code</span><span class='dot token'>.</span> <span class='This constant id'>This</span><span class='comma token'>,</span> <span class='of identifier id'>of</span> <span class='course identifier id'>course</span><span class='comma token'>,</span>
+  <span class='requires identifier id'>requires</span> <span class='lbrack token'>[</span><span class='Graphviz constant id'>Graphviz</span><span class='rbrack token'>]</span><span class='lparen token'>(</span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/www.graphviz.org) and the `dot` binary. By default
+  this will generate a graph of the classes and modules in the best UML2 notation
+  that Graphviz can support, but without any methods listed. With the `--full`
+  option, methods and attributes will be listed. There is also a `--dependencies`
+  option to show mixin inclusions. You can output to stdout or a file, or pipe directly
+  to `dot`. The same public, protected and private visibility rules apply to yard-graph.
+  More options can be seen by typing `yard-graph --help`, but here is an example:
+
+        &gt; yard-graph --protected --full --dependencies
+</span></pre>
+<p>
+CHANGELOG
+</p>
+<hr size="7"></hr><ul>
+<li>**Jun.16.08**: 0.2.2 release. This is the largest changset since
+yard&#8217;s conception and involves a complete overhaul of the parser and
+API to make it more robust and far easier to extend and use for the
+developer.
+
+</li>
+<li>**Feb.20.08**: 0.2.1 release.
+
+</li>
+<li>**Feb.24.07**: Released 0.1a experimental version for testing. The goal
+here is to get people testing YARD on their code because there are too many
+possible code styles to fit into a sane amount of test cases. It also
+demonstrates the power of YARD and what to expect from the syntax (Yardoc
+style meta tags).
+
+</li>
+</ul>
+<p>
+COPYRIGHT
+</p>
+<hr size="7"></hr><p>
+YARD was created in 2007-2008 by Loren Segal (lsegal -AT- soen -DOT- ca)
+and is licensed under the MIT license. Please see the LICENSE.txt for more
+information.
+</p>
+
+      </div>
+    </div>
+  </body>
+</html>

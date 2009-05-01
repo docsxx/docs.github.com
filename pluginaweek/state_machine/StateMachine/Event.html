@@ -1,0 +1,896 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: StateMachine::Event</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class StateMachine_Event">
+  <h1 class="title">Class: StateMachine::Event</h1>
+  <div class="section mixins">
+  <h1>Included Modules</h1>
+  <p><a href='Event/Assertions.html' title='StateMachine::Assertions'>StateMachine::Assertions</a>, <a href='Event/MatcherHelpers.html' title='StateMachine::MatcherHelpers'>StateMachine::MatcherHelpers</a></p>
+</div><div class="section docstring">
+  <p>
+An event defines an action that transitions an attribute from one state to
+another. The state that an attribute is transitioned to depends on the
+guards configured for the event.
+</p>
+
+</div><div class="section attributes">
+  <h1>Attributes</h1>
+
+  
+    <div class="instance">
+      <h2>Instance Attributes</h2>
+      <table>
+      
+        <tr>
+          <th class="name">guards</td>
+          <td class="readwrite">
+            [<span id='guards-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+The list of guards that determine what state this event transitions objects
+to when fired.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">known_states</td>
+          <td class="readwrite">
+            [<span id='known_states-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+A list of all of the states known to this event using the configured
+guards/transitions as the source.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">machine</td>
+          <td class="readwrite">
+            [<span id='machine-instance_method'>R</span><span id='machine%3D-instance_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+The state machine for which this event is defined.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">name</td>
+          <td class="readwrite">
+            [<span id='name-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+The name of the event.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">qualified_name</td>
+          <td class="readwrite">
+            [<span id='qualified_name-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+The fully-qualified name of the event, scoped by the machine&#8217;s
+namespace.
+</p>
+
+            
+          </td>
+        </tr>
+      
+      </table>
+    </div>
+  
+</div><div class="section constants">
+  
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(machine, name)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Creates a new event within the context of the given machine
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+36
+37
+38
+39
+40
+41
+42
+43
+44</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/state_machine/event.rb', line 36</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='machine identifier id'>machine</span><span class='comma token'>,</span> <span class='name identifier id'>name</span><span class='rparen token'>)</span> <span class='comment val'>#:nodoc:</span>
+  <span class='@machine ivar id'>@machine</span> <span class='assign token'>=</span> <span class='machine identifier id'>machine</span>
+  <span class='@name ivar id'>@name</span> <span class='assign token'>=</span> <span class='name identifier id'>name</span>
+  <span class='@qualified_name ivar id'>@qualified_name</span> <span class='assign token'>=</span> <span class='machine identifier id'>machine</span><span class='dot token'>.</span><span class='namespace identifier id'>namespace</span> <span class='integer val'>? </span><span class='symbol val'>:&quot;#{name}_#{machine.namespace}&quot;</span> <span class='colon op'>:</span> <span class='name identifier id'>name</span>
+  <span class='@guards ivar id'>@guards</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+  <span class='@known_states ivar id'>@known_states</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+  
+  <span class='add_actions identifier id'>add_actions</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#can_fire%3F-instance_method' title='#can_fire?'>#can_fire?</a></span><span class='args'>(object)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Determines whether any transitions can be performed for this event based on
+the current state of the given object.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#draw-instance_method' title='#draw'>#draw</a></span><span class='args'>(graph)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Draws a representation of this event on the given graph.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#fire-instance_method' title='#fire'>#fire</a></span><span class='args'>(object, *args)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Attempts to perform the next available transition on the given object.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#initialize_copy-instance_method' title='#initialize_copy'>#initialize_copy</a></span><span class='args'>(orig)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Creates a copy of this event in addition to the list of associated guards
+to prevent conflicts across events within a class hierarchy.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#inspect-instance_method' title='#inspect'>#inspect</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Generates a nicely formatted description of this events&#8217;s contents.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#transition-instance_method' title='#transition'>#transition</a></span><span class='args'>(options)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Creates a new transition that determines what to change the current state
+to when this event fires.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#transition_for-instance_method' title='#transition_for'>#transition_for</a></span><span class='args'>(object)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Finds and builds the next transition that can be performed on the given
+object.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table><div class="included">
+  
+  <div>
+    <h1>Public Instance Methods Included from <a href='Event/Assertions.html' title='StateMachine::Assertions'>StateMachine::Assertions</a></h1>
+    <p><span class='name'><a href='Assertions.html#assert_exclusive_keys-instance_method' title='assert_exclusive_keys'>assert_exclusive_keys</a></span>, <span class='name'><a href='Assertions.html#assert_valid_keys-instance_method' title='assert_valid_keys'>assert_valid_keys</a></span></p>
+  </div>
+  
+  <div>
+    <h1>Public Instance Methods Included from <a href='Event/MatcherHelpers.html' title='StateMachine::MatcherHelpers'>StateMachine::MatcherHelpers</a></h1>
+    <p><span class='name'><a href='MatcherHelpers.html#all-instance_method' title='all'>all</a></span>, <span class='name'><a href='MatcherHelpers.html#same-instance_method' title='same'>same</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>can_fire?</h3>
+</div><div id="can_fire%3F-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>can_fire?</span><span class='args'>(object)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Determines whether any transitions can be performed for this event based on
+the current state of the given object.
+</p>
+<p>
+If the event can&#8217;t be fired, then this will return false, otherwise
+true.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+159
+160
+161</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/state_machine/event.rb', line 159</span>
+
+<span class='def def kw'>def</span> <span class='can_fire? fid id'>can_fire?</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span>
+  <span class='notop op'>!</span><span class='transition_for identifier id'>transition_for</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>draw</h3>
+</div><div id="draw-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>draw</span><span class='args'>(graph)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Draws a representation of this event on the given graph. This will create 1
+or more edges on the graph for each guard (i.e. transition) configured.
+</p>
+<p>
+A collection of the generated edges will be returned.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+203
+204
+205
+206</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/state_machine/event.rb', line 203</span>
+
+<span class='def def kw'>def</span> <span class='draw identifier id'>draw</span><span class='lparen token'>(</span><span class='graph identifier id'>graph</span><span class='rparen token'>)</span>
+  <span class='valid_states identifier id'>valid_states</span> <span class='assign token'>=</span> <span class='machine identifier id'>machine</span><span class='dot token'>.</span><span class='states identifier id'>states</span><span class='dot token'>.</span><span class='by_priority identifier id'>by_priority</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='state identifier id'>state</span><span class='bitor op'>|</span> <span class='state identifier id'>state</span><span class='dot token'>.</span><span class='name identifier id'>name</span><span class='rbrace token'>}</span>
+  <span class='guards identifier id'>guards</span><span class='dot token'>.</span><span class='collect identifier id'>collect</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='guard identifier id'>guard</span><span class='bitor op'>|</span> <span class='guard identifier id'>guard</span><span class='dot token'>.</span><span class='draw identifier id'>draw</span><span class='lparen token'>(</span><span class='graph identifier id'>graph</span><span class='comma token'>,</span> <span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='valid_states identifier id'>valid_states</span><span class='rparen token'>)</span><span class='rbrace token'>}</span><span class='dot token'>.</span><span class='flatten identifier id'>flatten</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>fire</h3>
+</div><div id="fire-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>fire</span><span class='args'>(object, *args)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Attempts to perform the next available transition on the given object. If
+no transitions can be made, then this will return false, otherwise true.
+</p>
+<p>
+Any additional arguments are passed to the StateMachine::Transition#perform
+instance method.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/state_machine/event.rb', line 187</span>
+
+<span class='def def kw'>def</span> <span class='fire identifier id'>fire</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='machine identifier id'>machine</span><span class='dot token'>.</span><span class='reset identifier id'>reset</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span>
+  
+  <span class='if if kw'>if</span> <span class='transition identifier id'>transition</span> <span class='assign token'>=</span> <span class='transition_for identifier id'>transition_for</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span>
+    <span class='transition identifier id'>transition</span><span class='dot token'>.</span><span class='perform identifier id'>perform</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+    <span class='machine identifier id'>machine</span><span class='dot token'>.</span><span class='invalidate identifier id'>invalidate</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='comma token'>,</span> <span class='machine identifier id'>machine</span><span class='dot token'>.</span><span class='attribute identifier id'>attribute</span><span class='comma token'>,</span> <span class='symbol val'>:invalid_transition</span><span class='comma token'>,</span> <span class='lbrack token'>[</span><span class='lbrack token'>[</span><span class='symbol val'>:event</span><span class='comma token'>,</span> <span class='name identifier id'>name</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+    <span class='false false kw'>false</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>initialize_copy</h3>
+</div><div id="initialize_copy-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize_copy</span><span class='args'>(orig)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Creates a copy of this event in addition to the list of associated guards
+to prevent conflicts across events within a class hierarchy.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+48
+49
+50
+51
+52</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/state_machine/event.rb', line 48</span>
+
+<span class='def def kw'>def</span> <span class='initialize_copy identifier id'>initialize_copy</span><span class='lparen token'>(</span><span class='orig identifier id'>orig</span><span class='rparen token'>)</span> <span class='comment val'>#:nodoc:</span>
+  <span class='super super kw'>super</span>
+  <span class='@guards ivar id'>@guards</span> <span class='assign token'>=</span> <span class='@guards ivar id'>@guards</span><span class='dot token'>.</span><span class='dup identifier id'>dup</span>
+  <span class='@known_states ivar id'>@known_states</span> <span class='assign token'>=</span> <span class='@known_states ivar id'>@known_states</span><span class='dot token'>.</span><span class='dup identifier id'>dup</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>inspect</h3>
+</div><div id="inspect-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>inspect</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Generates a nicely formatted description of this events&#8217;s contents.
+</p>
+<p>
+For example,
+</p>
+<pre class="code">
+  <span class='event identifier id'>event</span> <span class='assign token'>=</span> <span class='StateMachine constant id'>StateMachine</span><span class='colon2 op'>::</span><span class='Event constant id'>Event</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='machine identifier id'>machine</span><span class='comma token'>,</span> <span class='symbol val'>:park</span><span class='rparen token'>)</span>
+  <span class='event identifier id'>event</span><span class='dot token'>.</span><span class='transition identifier id'>transition</span> <span class='all identifier id'>all</span> <span class='minus op'>-</span> <span class='symbol val'>:idling</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:parked</span><span class='comma token'>,</span> <span class='symbol val'>:idling</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='same identifier id'>same</span>
+  <span class='event identifier id'>event</span>   <span class='comment val'># =&gt; #&lt;StateMachine::Event name=:park transitions=[all - :idling =&gt; :parked, :idling =&gt; same]&gt;</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+215
+216
+217
+218
+219
+220
+221
+222
+223</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/state_machine/event.rb', line 215</span>
+
+<span class='def def kw'>def</span> <span class='inspect identifier id'>inspect</span>
+  <span class='transitions identifier id'>transitions</span> <span class='assign token'>=</span> <span class='guards identifier id'>guards</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='guard identifier id'>guard</span><span class='bitor op'>|</span>
+    <span class='guard identifier id'>guard</span><span class='dot token'>.</span><span class='state_requirements identifier id'>state_requirements</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='state_requirement identifier id'>state_requirement</span><span class='bitor op'>|</span>
+      <span class='dstring node'>&quot;#{state_requirement[:from].description} =&gt; #{state_requirement[:to].description}&quot;</span>
+    <span class='end end kw'>end</span> <span class='mult op'>*</span> <span class='string val'>', '</span>
+  <span class='end end kw'>end</span>
+  
+  <span class='dstring node'>&quot;#&lt;#{self.class} name=#{name.inspect} transitions=[#{transitions * ', '}]&gt;&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>transition</h3>
+</div><div id="transition-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>transition</span><span class='args'>(options)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Creates a new transition that determines what to change the current state
+to when this event fires.
+</p>
+<h2>Defining transitions</h2>
+<p>
+The options for a new transition uses the Hash syntax to map beginning
+states to ending states. For example,
+</p>
+<pre class="code">
+  <span class='transition identifier id'>transition</span> <span class='symbol val'>:parked</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:idling</span><span class='comma token'>,</span> <span class='symbol val'>:idling</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:first_gear</span>
+</pre>
+<p>
+In this case, when the event is fired, this transition will cause the state
+to be <tt>idling</tt> if it&#8217;s current state is <tt>parked</tt> or
+<tt>first_gear</tt> if it&#8217;s current state is <tt>idling</tt>.
+</p>
+<p>
+To help defining these implicit transitions, a set of helpers are available
+for defining slightly more complex matching:
+</p>
+<ul>
+<li><tt>all</tt> - Matches every state in the machine
+
+</li>
+<li><tt>all - [:parked, :idling, &#8230;]</tt> - Matches every state except
+those specified
+
+</li>
+<li><tt>any</tt> - An alias for <tt>all</tt> (matches every state in the
+machine)
+
+</li>
+<li><tt>same</tt> - Matches the same state being transitioned from
+
+</li>
+</ul>
+<p>
+See StateMachine::MatcherHelpers for more information.
+</p>
+<p>
+Examples:
+</p>
+<pre class="code">
+  <span class='transition identifier id'>transition</span> <span class='all identifier id'>all</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='nil nil kw'>nil</span>                               <span class='comment val'># Transitions to nil regardless of the current state</span>
+  <span class='transition identifier id'>transition</span> <span class='all identifier id'>all</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:idling</span>                           <span class='comment val'># Transitions to :idling regardless of the current state</span>
+  <span class='transition identifier id'>transition</span> <span class='all identifier id'>all</span> <span class='minus op'>-</span> <span class='lbrack token'>[</span><span class='symbol val'>:idling</span><span class='comma token'>,</span> <span class='symbol val'>:first_gear</span><span class='rbrack token'>]</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:idling</span>  <span class='comment val'># Transitions every state but :idling and :first_gear to :idling</span>
+  <span class='transition identifier id'>transition</span> <span class='nil nil kw'>nil</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:idling</span>                           <span class='comment val'># Transitions to :idling from the nil state</span>
+  <span class='transition identifier id'>transition</span> <span class='symbol val'>:parked</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:idling</span>                       <span class='comment val'># Transitions to :idling if :parked</span>
+  <span class='transition identifier id'>transition</span> <span class='lbrack token'>[</span><span class='symbol val'>:parked</span><span class='comma token'>,</span> <span class='symbol val'>:stalled</span><span class='rbrack token'>]</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:idling</span>           <span class='comment val'># Transitions to :idling if :parked or :stalled</span>
+
+  <span class='transition identifier id'>transition</span> <span class='symbol val'>:parked</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='same identifier id'>same</span>                          <span class='comment val'># Loops :parked back to :parked</span>
+  <span class='transition identifier id'>transition</span> <span class='lbrack token'>[</span><span class='symbol val'>:parked</span><span class='comma token'>,</span> <span class='symbol val'>:stalled</span><span class='rbrack token'>]</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='same identifier id'>same</span>              <span class='comment val'># Loops either :parked or :stalled back to the same state</span>
+  <span class='transition identifier id'>transition</span> <span class='all identifier id'>all</span> <span class='minus op'>-</span> <span class='symbol val'>:parked</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='same identifier id'>same</span>                    <span class='comment val'># Loops every state but :parked back to the same state</span>
+</pre>
+<h2>Verbose transitions</h2>
+<p>
+Transitions can also be defined use an explicit set of deprecated
+configuration options:
+</p>
+<ul>
+<li><tt>:from</tt> - A state or array of states that can be transitioned from.
+If not specified, then the transition can occur for <b>any</b> state.
+
+</li>
+<li><tt>:to</tt> - The state that&#8217;s being transitioned to. If not
+specified, then the transition will simply loop back (i.e. the state will
+not change).
+
+</li>
+<li><tt>:except_from</tt> - A state or array of states that <b>cannot</b> be
+transitioned from.
+
+</li>
+</ul>
+<p>
+Examples:
+</p>
+<pre class="code">
+  <span class='transition identifier id'>transition</span> <span class='symbol val'>:to</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='nil nil kw'>nil</span>
+  <span class='transition identifier id'>transition</span> <span class='symbol val'>:to</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:idling</span>
+  <span class='transition identifier id'>transition</span> <span class='symbol val'>:except_from</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='symbol val'>:idling</span><span class='comma token'>,</span> <span class='symbol val'>:first_gear</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='symbol val'>:to</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:idling</span>
+  <span class='transition identifier id'>transition</span> <span class='symbol val'>:from</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='symbol val'>:to</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:idling</span>
+  <span class='transition identifier id'>transition</span> <span class='symbol val'>:from</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='symbol val'>:parked</span><span class='comma token'>,</span> <span class='symbol val'>:stalled</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='symbol val'>:to</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:idling</span>
+
+  <span class='transition identifier id'>transition</span> <span class='symbol val'>:from</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:parked</span>
+  <span class='transition identifier id'>transition</span> <span class='symbol val'>:from</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='symbol val'>:parked</span><span class='comma token'>,</span> <span class='symbol val'>:stalled</span><span class='rbrack token'>]</span>
+  <span class='transition identifier id'>transition</span> <span class='symbol val'>:except_from</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:parked</span>
+</pre>
+<p>
+Notice that the above examples are the verbose equivalent of the examples
+described initially.
+</p>
+<h2>Conditions</h2>
+<p>
+In addition to the state requirements for each transition, a condition can
+also be defined to help determine whether that transition is available.
+These options will work on both the normal and verbose syntax.
+</p>
+<p>
+Configuration options:
+</p>
+<ul>
+<li><tt>:if</tt> - A method, proc or string to call to determine if the
+transition should occur (e.g. :if =&gt; :moving?, or :if =&gt; lambda
+{|vehicle| vehicle.speed &gt; 60}). The condition should return or evaluate
+to true or false.
+
+</li>
+<li><tt>:unless</tt> - A method, proc or string to call to determine if the
+transition should not occur (e.g. :unless =&gt; :stopped?, or :unless =&gt;
+lambda {|vehicle| vehicle.speed &lt;= 60}). The condition should return or
+evaluate to true or false.
+
+</li>
+</ul>
+<p>
+Examples:
+</p>
+<pre class="code">
+  <span class='transition identifier id'>transition</span> <span class='symbol val'>:parked</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:idling</span><span class='comma token'>,</span> <span class='symbol val'>:if</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:moving?</span>
+  <span class='transition identifier id'>transition</span> <span class='symbol val'>:parked</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:idling</span><span class='comma token'>,</span> <span class='symbol val'>:unless</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:stopped?</span>
+
+  <span class='transition identifier id'>transition</span> <span class='symbol val'>:from</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:parked</span><span class='comma token'>,</span> <span class='symbol val'>:to</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:idling</span><span class='comma token'>,</span> <span class='symbol val'>:if</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:moving?</span>
+  <span class='transition identifier id'>transition</span> <span class='symbol val'>:from</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:parked</span><span class='comma token'>,</span> <span class='symbol val'>:to</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:idling</span><span class='comma token'>,</span> <span class='symbol val'>:unless</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:stopped?</span>
+</pre>
+<h2>Order of operations</h2>
+<p>
+Transitions are evaluated in the order in which they&#8217;re defined. As a
+result, if more than one transition applies to a given object, then the
+first transition that matches will be performed.
+</p>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="raise">
+  <h3>Raises:</h3>
+  <dl>
+  
+    <dt>
+      
+        <span class='type'>[<tt>ArgumentError</tt>]</span>
+      
+      
+    </dt>
+    <dd>
+      <span class='desc'></span>
+    </dd>
+  
+  </dl>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/state_machine/event.rb', line 143</span>
+
+<span class='def def kw'>def</span> <span class='transition identifier id'>transition</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='raise identifier id'>raise</span> <span class='ArgumentError constant id'>ArgumentError</span><span class='comma token'>,</span> <span class='string val'>'Must specify as least one transition requirement'</span> <span class='if if_mod kw'>if</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span>
+  
+  <span class='comment val'># Only a certain subset of explicit options are allowed for transition</span>
+  <span class='comment val'># requirements</span>
+  <span class='assert_valid_keys identifier id'>assert_valid_keys</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='comma token'>,</span> <span class='symbol val'>:from</span><span class='comma token'>,</span> <span class='symbol val'>:to</span><span class='comma token'>,</span> <span class='symbol val'>:except_from</span><span class='comma token'>,</span> <span class='symbol val'>:if</span><span class='comma token'>,</span> <span class='symbol val'>:unless</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='dot token'>.</span><span class='keys identifier id'>keys</span> <span class='minus op'>-</span> <span class='lbrack token'>[</span><span class='symbol val'>:from</span><span class='comma token'>,</span> <span class='symbol val'>:to</span><span class='comma token'>,</span> <span class='symbol val'>:on</span><span class='comma token'>,</span> <span class='symbol val'>:except_from</span><span class='comma token'>,</span> <span class='symbol val'>:except_to</span><span class='comma token'>,</span> <span class='symbol val'>:except_on</span><span class='comma token'>,</span> <span class='symbol val'>:if</span><span class='comma token'>,</span> <span class='symbol val'>:unless</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span>
+  
+  <span class='guards identifier id'>guards</span> <span class='lshft op'>&lt;&lt;</span> <span class='guard identifier id'>guard</span> <span class='assign token'>=</span> <span class='Guard constant id'>Guard</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='@known_states ivar id'>@known_states</span> <span class='opasgn op'>|=</span> <span class='guard identifier id'>guard</span><span class='dot token'>.</span><span class='known_states identifier id'>known_states</span>
+  <span class='guard identifier id'>guard</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>transition_for</h3>
+</div><div id="transition_for-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>transition_for</span><span class='args'>(object)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Finds and builds the next transition that can be performed on the given
+object. If no transitions can be made, then this will return nil.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/state_machine/event.rb', line 165</span>
+
+<span class='def def kw'>def</span> <span class='transition_for identifier id'>transition_for</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span>
+  <span class='from identifier id'>from</span> <span class='assign token'>=</span> <span class='machine identifier id'>machine</span><span class='dot token'>.</span><span class='states identifier id'>states</span><span class='dot token'>.</span><span class='match identifier id'>match</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='name identifier id'>name</span>
+  
+  <span class='guards identifier id'>guards</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='guard identifier id'>guard</span><span class='bitor op'>|</span>
+    <span class='if if kw'>if</span> <span class='match identifier id'>match</span> <span class='assign token'>=</span> <span class='guard identifier id'>guard</span><span class='dot token'>.</span><span class='match identifier id'>match</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='comma token'>,</span> <span class='symbol val'>:from</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='from identifier id'>from</span><span class='rparen token'>)</span>
+      <span class='comment val'># Guard allows for the transition to occur</span>
+      <span class='to identifier id'>to</span> <span class='assign token'>=</span> <span class='match identifier id'>match</span><span class='lbrack token'>[</span><span class='symbol val'>:to</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='values identifier id'>values</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span> <span class='integer val'>? </span><span class='from identifier id'>from</span> <span class='colon op'>:</span> <span class='match identifier id'>match</span><span class='lbrack token'>[</span><span class='symbol val'>:to</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='values identifier id'>values</span><span class='dot token'>.</span><span class='first identifier id'>first</span>
+      
+      <span class='return return kw'>return</span> <span class='Transition constant id'>Transition</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='comma token'>,</span> <span class='machine identifier id'>machine</span><span class='comma token'>,</span> <span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='from identifier id'>from</span><span class='comma token'>,</span> <span class='to identifier id'>to</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+  
+  <span class='comment val'># No transition matched</span>
+  <span class='nil nil kw'>nil</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

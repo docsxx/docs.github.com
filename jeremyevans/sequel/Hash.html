@@ -1,0 +1,524 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: Hash</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class Hash">
+  <h1 class="title">Class: Hash</h1>
+  <div class="section docstring">
+  <p>
+Sequel extends the Hash class to add methods to implement the SQL DSL.
+</p>
+
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#%26-instance_method' title='#&amp;'>#&amp;</a></span><span class='args'>(ce)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Return a Sequel::SQL::BooleanExpression created from this hash, matching
+all of the conditions in this hash and the condition specified by the given
+argument.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#case-instance_method' title='#case'>#case</a></span><span class='args'>(default, expression = nil)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Return a Sequel::SQL::CaseExpression with this hash as the conditions and
+the given default value.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#sql_expr-instance_method' title='#sql_expr'>#sql_expr</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Return a Sequel::SQL::BooleanExpression created from this hash, matching
+all of the conditions.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#sql_negate-instance_method' title='#sql_negate'>#sql_negate</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Return a Sequel::SQL::BooleanExpression created from this hash, matching
+none of the conditions.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#sql_or-instance_method' title='#sql_or'>#sql_or</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Return a Sequel::SQL::BooleanExpression created from this hash, matching
+any of the conditions.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#%7C-instance_method' title='#|'>#|</a></span><span class='args'>(ce)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Return a Sequel::SQL::BooleanExpression created from this hash, matching
+all of the conditions in this hash or the condition specified by the given
+argument.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#%7E-instance_method' title='#~'>#~</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Return a Sequel::SQL::BooleanExpression created from this hash, not
+matching all of the conditions.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>&amp;</h3>
+</div><div id="%26-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>&</span><span class='args'>(ce)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Return a Sequel::SQL::BooleanExpression created from this hash, matching
+all of the conditions in this hash and the condition specified by the given
+argument.
+</p>
+<pre class="code">
+  <span class='lbrace token'>{</span><span class='symbol val'>:a=</span><span class='gt op'>&gt;</span><span class='integer val'>1</span><span class='rbrace token'>}</span> <span class='bitand op'>&amp;</span> <span class='symbol val'>:b</span> <span class='comment val'># SQL: a = 1 AND b</span>
+  <span class='lbrace token'>{</span><span class='symbol val'>:a=</span><span class='gt op'>&gt;</span><span class='true true kw'>true</span><span class='rbrace token'>}</span> <span class='bitand op'>&amp;</span> <span class='bitnot op'>~</span><span class='symbol val'>:b</span> <span class='comment val'># SQL: a IS TRUE AND NOT b</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+111
+112
+113</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/core_sql.rb', line 111</span>
+
+<span class='def def kw'>def</span> <span class='bitand op'>&amp;</span><span class='lparen token'>(</span><span class='ce identifier id'>ce</span><span class='rparen token'>)</span>
+  <span class='colon3 op'>::</span><span class='Sequel constant id'>Sequel</span><span class='colon2 op'>::</span><span class='SQL constant id'>SQL</span><span class='colon2 op'>::</span><span class='BooleanExpression constant id'>BooleanExpression</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='symbol val'>:AND</span><span class='comma token'>,</span> <span class='self self kw'>self</span><span class='comma token'>,</span> <span class='ce identifier id'>ce</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>case</h3>
+</div><div id="case-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>case</span><span class='args'>(default, expression = nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Return a Sequel::SQL::CaseExpression with this hash as the conditions and
+the given default value. Note that the order of the conditions will be
+arbitrary, so all conditions should be orthogonal.
+</p>
+<pre class="code">
+  <span class='lbrace token'>{</span><span class='lbrace token'>{</span><span class='symbol val'>:a=</span><span class='gt op'>&gt;</span><span class='lbrack token'>[</span><span class='integer val'>2</span><span class='comma token'>,</span><span class='integer val'>3</span><span class='rbrack token'>]</span><span class='rbrace token'>}</span><span class='assign token'>=</span><span class='gt op'>&gt;</span><span class='integer val'>1</span><span class='rbrace token'>}</span><span class='dot token'>.</span><span class='case identifier id'>case</span><span class='lparen token'>(</span><span class='integer val'>0</span><span class='rparen token'>)</span> <span class='comment val'># SQL: CASE WHEN a IN (2, 3) THEN 1 ELSE 0 END</span>
+  <span class='lbrace token'>{</span><span class='symbol val'>:a=</span><span class='gt op'>&gt;</span><span class='integer val'>1</span><span class='comma token'>,</span> <span class='lbrace token'>{</span><span class='symbol val'>:b=</span><span class='gt op'>&gt;</span><span class='integer val'>2</span><span class='rbrace token'>}</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='case identifier id'>case</span><span class='lparen token'>(</span><span class='symbol val'>:d</span><span class='comma token'>,</span> <span class='symbol val'>:c</span><span class='rparen token'>)</span> <span class='comment val'># SQL: CASE c WHEN a THEN 1 WHEN b THEN 2 ELSE d END</span>
+                                <span class='comment val'>#  or: CASE c WHEN b THEN 2 WHEN a THEN 1 ELSE d END</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+141
+142
+143</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/core_sql.rb', line 141</span>
+
+<span class='def def kw'>def</span> <span class='case case kw'>case</span><span class='lparen token'>(</span><span class='default identifier id'>default</span><span class='comma token'>,</span> <span class='expression identifier id'>expression</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='colon3 op'>::</span><span class='Sequel constant id'>Sequel</span><span class='colon2 op'>::</span><span class='SQL constant id'>SQL</span><span class='colon2 op'>::</span><span class='CaseExpression constant id'>CaseExpression</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='to_a identifier id'>to_a</span><span class='comma token'>,</span> <span class='default identifier id'>default</span><span class='comma token'>,</span> <span class='expression identifier id'>expression</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>sql_expr</h3>
+</div><div id="sql_expr-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>sql_expr</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Return a Sequel::SQL::BooleanExpression created from this hash, matching
+all of the conditions. Rarely do you need to call this explicitly, as
+Sequel generally assumes that hashes specify this type of condition.
+</p>
+<pre class="code">
+  <span class='lbrace token'>{</span><span class='symbol val'>:a=</span><span class='gt op'>&gt;</span><span class='true true kw'>true</span><span class='rbrace token'>}</span><span class='dot token'>.</span><span class='sql_expr identifier id'>sql_expr</span> <span class='comment val'># SQL: a IS TRUE</span>
+  <span class='lbrace token'>{</span><span class='symbol val'>:a=</span><span class='gt op'>&gt;</span><span class='integer val'>1</span><span class='comma token'>,</span> <span class='symbol val'>:b=</span><span class='gt op'>&gt;</span><span class='lbrack token'>[</span><span class='integer val'>2</span><span class='comma token'>,</span> <span class='integer val'>3</span><span class='rbrack token'>]</span><span class='rbrace token'>}</span><span class='dot token'>.</span><span class='sql_expr identifier id'>sql_expr</span> <span class='comment val'># SQL: a = 1 AND b IN (2, 3)</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+151
+152
+153</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/core_sql.rb', line 151</span>
+
+<span class='def def kw'>def</span> <span class='sql_expr identifier id'>sql_expr</span>
+  <span class='colon3 op'>::</span><span class='Sequel constant id'>Sequel</span><span class='colon2 op'>::</span><span class='SQL constant id'>SQL</span><span class='colon2 op'>::</span><span class='BooleanExpression constant id'>BooleanExpression</span><span class='dot token'>.</span><span class='from_value_pairs identifier id'>from_value_pairs</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>sql_negate</h3>
+</div><div id="sql_negate-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>sql_negate</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Return a Sequel::SQL::BooleanExpression created from this hash, matching
+none of the conditions.
+</p>
+<pre class="code">
+  <span class='lbrace token'>{</span><span class='symbol val'>:a=</span><span class='gt op'>&gt;</span><span class='true true kw'>true</span><span class='rbrace token'>}</span><span class='dot token'>.</span><span class='sql_negate identifier id'>sql_negate</span> <span class='comment val'># SQL: a IS NOT TRUE</span>
+  <span class='lbrace token'>{</span><span class='symbol val'>:a=</span><span class='gt op'>&gt;</span><span class='integer val'>1</span><span class='comma token'>,</span> <span class='symbol val'>:b=</span><span class='gt op'>&gt;</span><span class='lbrack token'>[</span><span class='integer val'>2</span><span class='comma token'>,</span> <span class='integer val'>3</span><span class='rbrack token'>]</span><span class='rbrace token'>}</span><span class='dot token'>.</span><span class='sql_negate identifier id'>sql_negate</span> <span class='comment val'># SQL: a != 1 AND b NOT IN (2, 3)</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+160
+161
+162</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/core_sql.rb', line 160</span>
+
+<span class='def def kw'>def</span> <span class='sql_negate identifier id'>sql_negate</span>
+  <span class='colon3 op'>::</span><span class='Sequel constant id'>Sequel</span><span class='colon2 op'>::</span><span class='SQL constant id'>SQL</span><span class='colon2 op'>::</span><span class='BooleanExpression constant id'>BooleanExpression</span><span class='dot token'>.</span><span class='from_value_pairs identifier id'>from_value_pairs</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='symbol val'>:AND</span><span class='comma token'>,</span> <span class='true true kw'>true</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>sql_or</h3>
+</div><div id="sql_or-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>sql_or</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Return a Sequel::SQL::BooleanExpression created from this hash, matching
+any of the conditions.
+</p>
+<pre class="code">
+  <span class='lbrace token'>{</span><span class='symbol val'>:a=</span><span class='gt op'>&gt;</span><span class='true true kw'>true</span><span class='rbrace token'>}</span><span class='dot token'>.</span><span class='sql_or identifier id'>sql_or</span> <span class='comment val'># SQL: a IS TRUE</span>
+  <span class='lbrace token'>{</span><span class='symbol val'>:a=</span><span class='gt op'>&gt;</span><span class='integer val'>1</span><span class='comma token'>,</span> <span class='symbol val'>:b=</span><span class='gt op'>&gt;</span><span class='lbrack token'>[</span><span class='integer val'>2</span><span class='comma token'>,</span> <span class='integer val'>3</span><span class='rbrack token'>]</span><span class='rbrace token'>}</span><span class='dot token'>.</span><span class='sql_or identifier id'>sql_or</span> <span class='comment val'># SQL: a = 1 OR b IN (2, 3)</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+169
+170
+171</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/core_sql.rb', line 169</span>
+
+<span class='def def kw'>def</span> <span class='sql_or identifier id'>sql_or</span>
+  <span class='colon3 op'>::</span><span class='Sequel constant id'>Sequel</span><span class='colon2 op'>::</span><span class='SQL constant id'>SQL</span><span class='colon2 op'>::</span><span class='BooleanExpression constant id'>BooleanExpression</span><span class='dot token'>.</span><span class='from_value_pairs identifier id'>from_value_pairs</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='symbol val'>:OR</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>|</h3>
+</div><div id="%7C-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>|</span><span class='args'>(ce)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Return a Sequel::SQL::BooleanExpression created from this hash, matching
+all of the conditions in this hash or the condition specified by the given
+argument.
+</p>
+<pre class="code">
+  <span class='lbrace token'>{</span><span class='symbol val'>:a=</span><span class='gt op'>&gt;</span><span class='integer val'>1</span><span class='rbrace token'>}</span> <span class='bitor op'>|</span> <span class='symbol val'>:b</span> <span class='comment val'># SQL: a = 1 OR b</span>
+  <span class='lbrace token'>{</span><span class='symbol val'>:a=</span><span class='gt op'>&gt;</span><span class='true true kw'>true</span><span class='rbrace token'>}</span> <span class='bitor op'>|</span> <span class='bitnot op'>~</span><span class='symbol val'>:b</span> <span class='comment val'># SQL: a IS TRUE OR NOT b</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+121
+122
+123</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/core_sql.rb', line 121</span>
+
+<span class='def def kw'>def</span> <span class='bitor op'>|</span><span class='lparen token'>(</span><span class='ce identifier id'>ce</span><span class='rparen token'>)</span>
+  <span class='colon3 op'>::</span><span class='Sequel constant id'>Sequel</span><span class='colon2 op'>::</span><span class='SQL constant id'>SQL</span><span class='colon2 op'>::</span><span class='BooleanExpression constant id'>BooleanExpression</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='symbol val'>:OR</span><span class='comma token'>,</span> <span class='self self kw'>self</span><span class='comma token'>,</span> <span class='ce identifier id'>ce</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>~</h3>
+</div><div id="%7E-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>~</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Return a Sequel::SQL::BooleanExpression created from this hash, not
+matching all of the conditions.
+</p>
+<pre class="code">
+  <span class='bitnot op'>~</span><span class='lbrace token'>{</span><span class='symbol val'>:a=</span><span class='gt op'>&gt;</span><span class='true true kw'>true</span><span class='rbrace token'>}</span> <span class='comment val'># SQL: a IS NOT TRUE</span>
+  <span class='bitnot op'>~</span><span class='lbrace token'>{</span><span class='symbol val'>:a=</span><span class='gt op'>&gt;</span><span class='integer val'>1</span><span class='comma token'>,</span> <span class='symbol val'>:b=</span><span class='gt op'>&gt;</span><span class='lbrack token'>[</span><span class='integer val'>2</span><span class='comma token'>,</span> <span class='integer val'>3</span><span class='rbrack token'>]</span><span class='rbrace token'>}</span> <span class='comment val'># SQL: a != 1 OR b NOT IN (2, 3)</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+130
+131
+132</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sequel/core_sql.rb', line 130</span>
+
+<span class='def def kw'>def</span> <span class='bitnot op'>~</span>
+  <span class='colon3 op'>::</span><span class='Sequel constant id'>Sequel</span><span class='colon2 op'>::</span><span class='SQL constant id'>SQL</span><span class='colon2 op'>::</span><span class='BooleanExpression constant id'>BooleanExpression</span><span class='dot token'>.</span><span class='from_value_pairs identifier id'>from_value_pairs</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='symbol val'>:OR</span><span class='comma token'>,</span> <span class='true true kw'>true</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

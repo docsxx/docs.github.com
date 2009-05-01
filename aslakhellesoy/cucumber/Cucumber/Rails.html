@@ -1,0 +1,214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: Cucumber::Rails</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module Cucumber_Rails">
+  <h1 class="title">Module: Cucumber::Rails</h1>
+  <div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <h1>Public Class Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#bypass_rescue-class_method' title='bypass_rescue'>bypass_rescue</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#use_transactional_fixtures-class_method' title='use_transactional_fixtures'>use_transactional_fixtures</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails class public">
+  <h1>Public Class Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>bypass_rescue</h3>
+</div><div id="bypass_rescue-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>bypass_rescue</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/cucumber/rails/world.rb', line 69</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='bypass_rescue identifier id'>bypass_rescue</span>
+  <span class='ActionController constant id'>ActionController</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='dot token'>.</span><span class='class_eval identifier id'>class_eval</span> <span class='do do kw'>do</span>
+    <span class='def def kw'>def</span> <span class='rescue_action identifier id'>rescue_action</span><span class='lparen token'>(</span><span class='exception identifier id'>exception</span><span class='rparen token'>)</span>
+      <span class='raise identifier id'>raise</span> <span class='exception identifier id'>exception</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+  <span class='ActionController constant id'>ActionController</span><span class='colon2 op'>::</span><span class='Dispatcher constant id'>Dispatcher</span><span class='dot token'>.</span><span class='class_eval identifier id'>class_eval</span> <span class='do do kw'>do</span>
+    <span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='failsafe_response identifier id'>failsafe_response</span><span class='lparen token'>(</span><span class='output identifier id'>output</span><span class='comma token'>,</span> <span class='status identifier id'>status</span><span class='comma token'>,</span> <span class='exception identifier id'>exception</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+      <span class='raise identifier id'>raise</span> <span class='exception identifier id'>exception</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>use_transactional_fixtures</h3>
+</div><div id="use_transactional_fixtures-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>use_transactional_fixtures</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/cucumber/rails/world.rb', line 39</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='use_transactional_fixtures identifier id'>use_transactional_fixtures</span>
+
+  <span class='unless unless kw'>unless</span> <span class='colon3 op'>::</span><span class='Rails constant id'>Rails</span><span class='dot token'>.</span><span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='cache_classes identifier id'>cache_classes</span>
+    <span class='warn identifier id'>warn</span> <span class='string val'>&quot;WARNING: You have set Rails' config.cache_classes to false (most likely in config/environments/test.rb).  This setting is known to break Cucumber's use_transactional_fixtures method. Set config.cache_classes to true if you want to use transactional fixtures.  For more information see https://rspec.lighthouseapp.com/projects/16211/tickets/165.&quot;</span>
+  <span class='end end kw'>end</span>
+
+  <span class='World constant id'>World</span><span class='dot token'>.</span><span class='use_transactional_fixtures identifier id'>use_transactional_fixtures</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+  <span class='if if kw'>if</span> <span class='defined? defined kw'>defined?</span><span class='lparen token'>(</span><span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='rparen token'>)</span>
+    <span class='$_ gvar id'>$_</span><span class='_cucumber_toplevel identifier id'>_cucumber_toplevel</span><span class='dot token'>.</span><span class='Before constant id'>Before</span> <span class='do do kw'>do</span>
+      <span class='@__cucumber_ar_connection ivar id'>@__cucumber_ar_connection</span> <span class='assign token'>=</span> <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='dot token'>.</span><span class='connection identifier id'>connection</span>
+      <span class='if if kw'>if</span> <span class='@__cucumber_ar_connection ivar id'>@__cucumber_ar_connection</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='colon op'>:</span><span class='increment_open_transactions identifier id'>increment_open_transactions</span><span class='rparen token'>)</span>
+        <span class='@__cucumber_ar_connection ivar id'>@__cucumber_ar_connection</span><span class='dot token'>.</span><span class='increment_open_transactions identifier id'>increment_open_transactions</span>
+      <span class='else else kw'>else</span>
+        <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='dot token'>.</span><span class='__send__ identifier id'>__send__</span><span class='lparen token'>(</span><span class='symbol val'>:increment_open_transactions</span><span class='rparen token'>)</span>
+      <span class='end end kw'>end</span>
+      <span class='@__cucumber_ar_connection ivar id'>@__cucumber_ar_connection</span><span class='dot token'>.</span><span class='begin_db_transaction identifier id'>begin_db_transaction</span>
+      <span class='ActionMailer constant id'>ActionMailer</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='dot token'>.</span><span class='deliveries identifier id'>deliveries</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span> <span class='if if_mod kw'>if</span> <span class='defined? defined kw'>defined?</span><span class='lparen token'>(</span><span class='ActionMailer constant id'>ActionMailer</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+    
+    <span class='$_ gvar id'>$_</span><span class='_cucumber_toplevel identifier id'>_cucumber_toplevel</span><span class='dot token'>.</span><span class='After constant id'>After</span> <span class='do do kw'>do</span>
+      <span class='@__cucumber_ar_connection ivar id'>@__cucumber_ar_connection</span><span class='dot token'>.</span><span class='rollback_db_transaction identifier id'>rollback_db_transaction</span>
+      <span class='if if kw'>if</span> <span class='@__cucumber_ar_connection ivar id'>@__cucumber_ar_connection</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='colon op'>:</span><span class='decrement_open_transactions identifier id'>decrement_open_transactions</span><span class='rparen token'>)</span>
+        <span class='@__cucumber_ar_connection ivar id'>@__cucumber_ar_connection</span><span class='dot token'>.</span><span class='decrement_open_transactions identifier id'>decrement_open_transactions</span>
+      <span class='else else kw'>else</span>
+        <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='dot token'>.</span><span class='__send__ identifier id'>__send__</span><span class='lparen token'>(</span><span class='symbol val'>:decrement_open_transactions</span><span class='rparen token'>)</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,878 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: ActionController::Routing::RouteBuilder</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class ActionController_Routing_RouteBuilder">
+  <h1 class="title">Class: ActionController::Routing::RouteBuilder</h1>
+  <div class="section inheritance">
+  <ul>
+  <li><a href='../../Object.html' title='Object'>Object</a></li><ul><li>ActionController::Routing::RouteBuilder</li>
+  </ul></ul>
+</div><div class="section attributes">
+  <h1>Attributes</h1>
+
+  
+    <div class="instance">
+      <h2>Instance Attributes</h2>
+      <table>
+      
+        <tr>
+          <th class="name">interval_regexp</td>
+          <td class="readwrite">
+            [<span id='interval_regexp-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>interval_regexp</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">nonseparator_regexp</td>
+          <td class="readwrite">
+            [<span id='nonseparator_regexp-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>nonseparator_regexp</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">optional_separators</td>
+          <td class="readwrite">
+            [<span id='optional_separators-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>optional_separators</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">separator_regexp</td>
+          <td class="readwrite">
+            [<span id='separator_regexp-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>separator_regexp</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">separators</td>
+          <td class="readwrite">
+            [<span id='separators-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>separators</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+      </table>
+    </div>
+  
+</div><div class="section constants">
+  
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+7
+8
+9
+10
+11
+12
+13
+14</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'actionpack/lib/action_controller/routing/builder.rb', line 7</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span>
+  <span class='@separators ivar id'>@separators</span> <span class='assign token'>=</span> <span class='Routing constant id'>Routing</span><span class='colon2 op'>::</span><span class='SEPARATORS constant id'>SEPARATORS</span>
+  <span class='@optional_separators ivar id'>@optional_separators</span> <span class='assign token'>=</span> <span class='dstring node'>%w( / )</span>
+
+  <span class='@separator_regexp ivar id'>@separator_regexp</span> <span class='assign token'>=</span> <span class='dregexp node'>/[#{Regexp.escape(separators.join)}]/</span>
+  <span class='@nonseparator_regexp ivar id'>@nonseparator_regexp</span> <span class='assign token'>=</span> <span class='dregexp node'>/\A([^#{Regexp.escape(separators.join)}]+)/</span>
+  <span class='@interval_regexp ivar id'>@interval_regexp</span> <span class='assign token'>=</span> <span class='dregexp node'>/(.*?)(#{separator_regexp}|$)/</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#assign_default_route_options-instance_method' title='#assign_default_route_options'>#assign_default_route_options</a></span><span class='args'>(segments)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Assign default options, such as &#8216;index&#8217; as a default for
+<tt>:action</tt>.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#assign_route_options-instance_method' title='#assign_route_options'>#assign_route_options</a></span><span class='args'>(segments, defaults, requirements)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Takes a hash of defaults and a hash of requirements, and assigns them to
+the segments.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#build-instance_method' title='#build'>#build</a></span><span class='args'>(path, options)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Construct and return a route with the given path and options.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#divide_route_options-instance_method' title='#divide_route_options'>#divide_route_options</a></span><span class='args'>(segments, options)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Split the given hash of options into requirement and default hashes.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#ensure_required_segments-instance_method' title='#ensure_required_segments'>#ensure_required_segments</a></span><span class='args'>(segments)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Makes sure that there are no optional segments that precede a required
+segment.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#segment_for-instance_method' title='#segment_for'>#segment_for</a></span><span class='args'>(string)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+A factory method that returns a new segment instance appropriate for the
+format of the given string.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#segments_for_route_path-instance_method' title='#segments_for_route_path'>#segments_for_route_path</a></span><span class='args'>(path)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Accepts a &quot;route path&quot; (a string defining a route), and returns
+the array of segments that corresponds to it.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table><div class="inherited">
+  
+  <div>
+    <h1>Public Instance Methods Inherited from <a href='../../Object.html' title='Object'>Object</a></h1>
+    <p><span class='name'><a href='../../Object.html#blank%3F-instance_method' title='blank?'>blank?</a></span>, <span class='name'><a href='../../Object.html#duplicable%3F-instance_method' title='duplicable?'>duplicable?</a></span>, <span class='name'><a href='../../Object.html#present%3F-instance_method' title='present?'>present?</a></span>, <span class='name'><a href='../../Object.html#to_param-instance_method' title='to_param'>to_param</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>assign_default_route_options</h3>
+</div><div id="assign_default_route_options-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>assign_default_route_options</span><span class='args'>(segments)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Assign default options, such as &#8216;index&#8217; as a default for
+<tt>:action</tt>. This method must be run <b>after</b> user supplied
+requirements and defaults have been applied to the segments.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'actionpack/lib/action_controller/routing/builder.rb', line 120</span>
+
+<span class='def def kw'>def</span> <span class='assign_default_route_options identifier id'>assign_default_route_options</span><span class='lparen token'>(</span><span class='segments identifier id'>segments</span><span class='rparen token'>)</span>
+  <span class='segments identifier id'>segments</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='segment identifier id'>segment</span><span class='bitor op'>|</span>
+    <span class='next next kw'>next</span> <span class='unless unless_mod kw'>unless</span> <span class='segment identifier id'>segment</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span> <span class='DynamicSegment constant id'>DynamicSegment</span>
+    <span class='case case kw'>case</span> <span class='segment identifier id'>segment</span><span class='dot token'>.</span><span class='key identifier id'>key</span>
+      <span class='when when kw'>when</span> <span class='symbol val'>:action</span>
+        <span class='if if kw'>if</span> <span class='segment identifier id'>segment</span><span class='dot token'>.</span><span class='regexp identifier id'>regexp</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span> <span class='orop op'>||</span> <span class='segment identifier id'>segment</span><span class='dot token'>.</span><span class='regexp identifier id'>regexp</span><span class='dot token'>.</span><span class='match identifier id'>match</span><span class='lparen token'>(</span><span class='string val'>'index'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='eq op'>==</span> <span class='string val'>'index'</span>
+          <span class='segment identifier id'>segment</span><span class='dot token'>.</span><span class='default identifier id'>default</span> <span class='opasgn op'>||=</span> <span class='string val'>'index'</span>
+          <span class='segment identifier id'>segment</span><span class='dot token'>.</span><span class='is_optional identifier id'>is_optional</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+        <span class='end end kw'>end</span>
+      <span class='when when kw'>when</span> <span class='symbol val'>:id</span>
+        <span class='if if kw'>if</span> <span class='segment identifier id'>segment</span><span class='dot token'>.</span><span class='default identifier id'>default</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span> <span class='andop op'>&amp;&amp;</span> <span class='segment identifier id'>segment</span><span class='dot token'>.</span><span class='regexp identifier id'>regexp</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span> <span class='orop op'>||</span> <span class='segment identifier id'>segment</span><span class='dot token'>.</span><span class='regexp identifier id'>regexp</span> <span class='match op'>=~</span> <span class='string val'>''</span>
+          <span class='segment identifier id'>segment</span><span class='dot token'>.</span><span class='is_optional identifier id'>is_optional</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+        <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>assign_route_options</h3>
+</div><div id="assign_route_options-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>assign_route_options</span><span class='args'>(segments, defaults, requirements)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Takes a hash of defaults and a hash of requirements, and assigns them to
+the segments. Any unused requirements (which do not correspond to a
+segment) are returned as a hash.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'actionpack/lib/action_controller/routing/builder.rb', line 82</span>
+
+<span class='def def kw'>def</span> <span class='assign_route_options identifier id'>assign_route_options</span><span class='lparen token'>(</span><span class='segments identifier id'>segments</span><span class='comma token'>,</span> <span class='defaults identifier id'>defaults</span><span class='comma token'>,</span> <span class='requirements identifier id'>requirements</span><span class='rparen token'>)</span>
+  <span class='route_requirements identifier id'>route_requirements</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span> <span class='comment val'># Requirements that do not belong to a segment</span>
+
+  <span class='segment_named identifier id'>segment_named</span> <span class='assign token'>=</span> <span class='Proc constant id'>Proc</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='key identifier id'>key</span><span class='bitor op'>|</span>
+    <span class='segments identifier id'>segments</span><span class='dot token'>.</span><span class='detect identifier id'>detect</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='segment identifier id'>segment</span><span class='bitor op'>|</span> <span class='segment identifier id'>segment</span><span class='dot token'>.</span><span class='key identifier id'>key</span> <span class='eq op'>==</span> <span class='key identifier id'>key</span> <span class='if if_mod kw'>if</span> <span class='segment identifier id'>segment</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:key</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  <span class='end end kw'>end</span>
+
+  <span class='requirements identifier id'>requirements</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='key identifier id'>key</span><span class='comma token'>,</span> <span class='requirement identifier id'>requirement</span><span class='bitor op'>|</span>
+    <span class='segment identifier id'>segment</span> <span class='assign token'>=</span> <span class='segment_named identifier id'>segment_named</span><span class='lbrack token'>[</span><span class='key identifier id'>key</span><span class='rbrack token'>]</span>
+    <span class='if if kw'>if</span> <span class='segment identifier id'>segment</span>
+      <span class='raise identifier id'>raise</span> <span class='TypeError constant id'>TypeError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{key}: requirements on a path segment must be regular expressions&quot;</span> <span class='unless unless_mod kw'>unless</span> <span class='requirement identifier id'>requirement</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Regexp constant id'>Regexp</span><span class='rparen token'>)</span>
+      <span class='if if kw'>if</span> <span class='requirement identifier id'>requirement</span><span class='dot token'>.</span><span class='source identifier id'>source</span> <span class='match op'>=~</span> <span class='regexp val'>%r{\A(\\A|\^)|(\\Z|\\z|\$)\Z}</span>
+        <span class='raise identifier id'>raise</span> <span class='ArgumentError constant id'>ArgumentError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;Regexp anchor characters are not allowed in routing requirements: #{requirement.inspect}&quot;</span>
+      <span class='end end kw'>end</span>
+      <span class='if if kw'>if</span> <span class='requirement identifier id'>requirement</span><span class='dot token'>.</span><span class='multiline? fid id'>multiline?</span>
+        <span class='raise identifier id'>raise</span> <span class='ArgumentError constant id'>ArgumentError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;Regexp multiline option not allowed in routing requirements: #{requirement.inspect}&quot;</span>
+      <span class='end end kw'>end</span>
+      <span class='segment identifier id'>segment</span><span class='dot token'>.</span><span class='regexp identifier id'>regexp</span> <span class='assign token'>=</span> <span class='requirement identifier id'>requirement</span>
+    <span class='else else kw'>else</span>
+      <span class='route_requirements identifier id'>route_requirements</span><span class='lbrack token'>[</span><span class='key identifier id'>key</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='requirement identifier id'>requirement</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+
+  <span class='defaults identifier id'>defaults</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='key identifier id'>key</span><span class='comma token'>,</span> <span class='default identifier id'>default</span><span class='bitor op'>|</span>
+    <span class='segment identifier id'>segment</span> <span class='assign token'>=</span> <span class='segment_named identifier id'>segment_named</span><span class='lbrack token'>[</span><span class='key identifier id'>key</span><span class='rbrack token'>]</span>
+    <span class='raise identifier id'>raise</span> <span class='ArgumentError constant id'>ArgumentError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{key}: No matching segment exists; cannot assign default&quot;</span> <span class='unless unless_mod kw'>unless</span> <span class='segment identifier id'>segment</span>
+    <span class='segment identifier id'>segment</span><span class='dot token'>.</span><span class='is_optional identifier id'>is_optional</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+    <span class='segment identifier id'>segment</span><span class='dot token'>.</span><span class='default identifier id'>default</span> <span class='assign token'>=</span> <span class='default identifier id'>default</span><span class='dot token'>.</span><span class='to_param identifier id'>to_param</span> <span class='if if_mod kw'>if</span> <span class='default identifier id'>default</span>
+  <span class='end end kw'>end</span>
+
+  <span class='assign_default_route_options identifier id'>assign_default_route_options</span><span class='lparen token'>(</span><span class='segments identifier id'>segments</span><span class='rparen token'>)</span>
+  <span class='ensure_required_segments identifier id'>ensure_required_segments</span><span class='lparen token'>(</span><span class='segments identifier id'>segments</span><span class='rparen token'>)</span>
+  <span class='route_requirements identifier id'>route_requirements</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>build</h3>
+</div><div id="build-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>build</span><span class='args'>(path, options)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Construct and return a route with the given path and options.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'actionpack/lib/action_controller/routing/builder.rb', line 157</span>
+
+<span class='def def kw'>def</span> <span class='build identifier id'>build</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='comment val'># Wrap the path with slashes</span>
+  <span class='path identifier id'>path</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;/#{path}&quot;</span> <span class='unless unless_mod kw'>unless</span> <span class='path identifier id'>path</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='integer val'>?/</span>
+  <span class='path identifier id'>path</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;#{path}/&quot;</span> <span class='unless unless_mod kw'>unless</span> <span class='path identifier id'>path</span><span class='lbrack token'>[</span><span class='integer val'>-1</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='integer val'>?/</span>
+
+  <span class='prefix identifier id'>prefix</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:path_prefix</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='regexp val'>/^\//</span><span class='comma token'>,</span><span class='string val'>''</span><span class='rparen token'>)</span>
+  <span class='path identifier id'>path</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;/#{prefix}#{path}&quot;</span> <span class='unless unless_mod kw'>unless</span> <span class='prefix identifier id'>prefix</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span>
+
+  <span class='segments identifier id'>segments</span> <span class='assign token'>=</span> <span class='segments_for_route_path identifier id'>segments_for_route_path</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='rparen token'>)</span>
+  <span class='defaults identifier id'>defaults</span><span class='comma token'>,</span> <span class='requirements identifier id'>requirements</span><span class='comma token'>,</span> <span class='conditions identifier id'>conditions</span> <span class='assign token'>=</span> <span class='divide_route_options identifier id'>divide_route_options</span><span class='lparen token'>(</span><span class='segments identifier id'>segments</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='requirements identifier id'>requirements</span> <span class='assign token'>=</span> <span class='assign_route_options identifier id'>assign_route_options</span><span class='lparen token'>(</span><span class='segments identifier id'>segments</span><span class='comma token'>,</span> <span class='defaults identifier id'>defaults</span><span class='comma token'>,</span> <span class='requirements identifier id'>requirements</span><span class='rparen token'>)</span>
+
+  <span class='comment val'># TODO: Segments should be frozen on initialize</span>
+  <span class='segments identifier id'>segments</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='segment identifier id'>segment</span><span class='bitor op'>|</span> <span class='segment identifier id'>segment</span><span class='dot token'>.</span><span class='freeze identifier id'>freeze</span> <span class='rbrace token'>}</span>
+
+  <span class='route identifier id'>route</span> <span class='assign token'>=</span> <span class='Route constant id'>Route</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='segments identifier id'>segments</span><span class='comma token'>,</span> <span class='requirements identifier id'>requirements</span><span class='comma token'>,</span> <span class='conditions identifier id'>conditions</span><span class='rparen token'>)</span>
+
+  <span class='if if kw'>if</span> <span class='notop op'>!</span><span class='route identifier id'>route</span><span class='dot token'>.</span><span class='significant_keys identifier id'>significant_keys</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='colon op'>:</span><span class='controller identifier id'>controller</span><span class='rparen token'>)</span>
+    <span class='raise identifier id'>raise</span> <span class='ArgumentError constant id'>ArgumentError</span><span class='comma token'>,</span> <span class='string val'>&quot;Illegal route: the :controller must be specified!&quot;</span>
+  <span class='end end kw'>end</span>
+
+  <span class='route identifier id'>route</span><span class='dot token'>.</span><span class='freeze identifier id'>freeze</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>divide_route_options</h3>
+</div><div id="divide_route_options-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>divide_route_options</span><span class='args'>(segments, options)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Split the given hash of options into requirement and default hashes. The
+segments are passed alongside in order to distinguish between default
+values and requirements.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'actionpack/lib/action_controller/routing/builder.rb', line 57</span>
+
+<span class='def def kw'>def</span> <span class='divide_route_options identifier id'>divide_route_options</span><span class='lparen token'>(</span><span class='segments identifier id'>segments</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='except identifier id'>except</span><span class='lparen token'>(</span><span class='symbol val'>:path_prefix</span><span class='comma token'>,</span> <span class='symbol val'>:name_prefix</span><span class='rparen token'>)</span>
+
+  <span class='if if kw'>if</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='colon op'>:</span><span class='namespace identifier id'>namespace</span><span class='rbrack token'>]</span>
+    <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:controller</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;#{options.delete(:namespace).sub(/\/$/, '')}/#{options[:controller]}&quot;</span>
+  <span class='end end kw'>end</span>
+
+  <span class='requirements identifier id'>requirements</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:requirements</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='dup identifier id'>dup</span>
+  <span class='defaults identifier id'>defaults</span>     <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:defaults</span><span class='rparen token'>)</span>     <span class='orop op'>||</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='dup identifier id'>dup</span>
+  <span class='conditions identifier id'>conditions</span>   <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:conditions</span><span class='rparen token'>)</span>   <span class='orop op'>||</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='dup identifier id'>dup</span>
+
+  <span class='validate_route_conditions identifier id'>validate_route_conditions</span><span class='lparen token'>(</span><span class='conditions identifier id'>conditions</span><span class='rparen token'>)</span>
+
+  <span class='path_keys identifier id'>path_keys</span> <span class='assign token'>=</span> <span class='segments identifier id'>segments</span><span class='dot token'>.</span><span class='collect identifier id'>collect</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='segment identifier id'>segment</span><span class='bitor op'>|</span> <span class='segment identifier id'>segment</span><span class='dot token'>.</span><span class='key identifier id'>key</span> <span class='if if_mod kw'>if</span> <span class='segment identifier id'>segment</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:key</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='compact identifier id'>compact</span>
+  <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='key identifier id'>key</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='bitor op'>|</span>
+    <span class='hash identifier id'>hash</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='path_keys identifier id'>path_keys</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='key identifier id'>key</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='notop op'>!</span> <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Regexp constant id'>Regexp</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='defaults identifier id'>defaults</span> <span class='colon op'>:</span> <span class='requirements identifier id'>requirements</span>
+    <span class='hash identifier id'>hash</span><span class='lbrack token'>[</span><span class='key identifier id'>key</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='value identifier id'>value</span>
+  <span class='end end kw'>end</span>
+
+  <span class='lbrack token'>[</span><span class='defaults identifier id'>defaults</span><span class='comma token'>,</span> <span class='requirements identifier id'>requirements</span><span class='comma token'>,</span> <span class='conditions identifier id'>conditions</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>ensure_required_segments</h3>
+</div><div id="ensure_required_segments-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>ensure_required_segments</span><span class='args'>(segments)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Makes sure that there are no optional segments that precede a required
+segment. If any are found that precede a required segment, they are made
+required.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'actionpack/lib/action_controller/routing/builder.rb', line 140</span>
+
+<span class='def def kw'>def</span> <span class='ensure_required_segments identifier id'>ensure_required_segments</span><span class='lparen token'>(</span><span class='segments identifier id'>segments</span><span class='rparen token'>)</span>
+  <span class='allow_optional identifier id'>allow_optional</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+  <span class='segments identifier id'>segments</span><span class='dot token'>.</span><span class='reverse_each identifier id'>reverse_each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='segment identifier id'>segment</span><span class='bitor op'>|</span>
+    <span class='allow_optional identifier id'>allow_optional</span> <span class='opasgn op'>&amp;&amp;=</span> <span class='segment identifier id'>segment</span><span class='dot token'>.</span><span class='optional? fid id'>optional?</span>
+    <span class='if if kw'>if</span> <span class='notop op'>!</span><span class='allow_optional identifier id'>allow_optional</span> <span class='andop op'>&amp;&amp;</span> <span class='segment identifier id'>segment</span><span class='dot token'>.</span><span class='optional? fid id'>optional?</span>
+      <span class='unless unless kw'>unless</span> <span class='segment identifier id'>segment</span><span class='dot token'>.</span><span class='optionality_implied? fid id'>optionality_implied?</span>
+        <span class='warn identifier id'>warn</span> <span class='dstring node'>&quot;Route segment \&quot;#{segment.to_s}\&quot; cannot be optional because it precedes a required segment. This segment will be required.&quot;</span>
+      <span class='end end kw'>end</span>
+      <span class='segment identifier id'>segment</span><span class='dot token'>.</span><span class='is_optional identifier id'>is_optional</span> <span class='assign token'>=</span> <span class='false false kw'>false</span>
+    <span class='elsif elsif kw'>elsif</span> <span class='allow_optional identifier id'>allow_optional</span> <span class='andop op'>&amp;&amp;</span> <span class='segment identifier id'>segment</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:default</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='segment identifier id'>segment</span><span class='dot token'>.</span><span class='default identifier id'>default</span>
+      <span class='comment val'># if a segment has a default, then it is optional</span>
+      <span class='segment identifier id'>segment</span><span class='dot token'>.</span><span class='is_optional identifier id'>is_optional</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>segment_for</h3>
+</div><div id="segment_for-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>segment_for</span><span class='args'>(string)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+A factory method that returns a new segment instance appropriate for the
+format of the given string.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'actionpack/lib/action_controller/routing/builder.rb', line 34</span>
+
+<span class='def def kw'>def</span> <span class='segment_for identifier id'>segment_for</span><span class='lparen token'>(</span><span class='string identifier id'>string</span><span class='rparen token'>)</span>
+  <span class='segment identifier id'>segment</span> <span class='assign token'>=</span>
+    <span class='case case kw'>case</span> <span class='string identifier id'>string</span>
+      <span class='when when kw'>when</span>  <span class='regexp val'>/\A\.(:format)?\//</span> 
+        <span class='OptionalFormatSegment constant id'>OptionalFormatSegment</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+      <span class='when when kw'>when</span> <span class='regexp val'>/\A:(\w+)/</span>
+        <span class='key identifier id'>key</span> <span class='assign token'>=</span> <span class='$1 nth_ref id'>$1</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span>
+        <span class='key identifier id'>key</span> <span class='eq op'>==</span> <span class='symbol val'>:controller</span> <span class='question op'>?</span> <span class='ControllerSegment constant id'>ControllerSegment</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='key identifier id'>key</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='DynamicSegment constant id'>DynamicSegment</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='key identifier id'>key</span><span class='rparen token'>)</span>
+      <span class='when when kw'>when</span> <span class='regexp val'>/\A\*(\w+)/</span>
+        <span class='PathSegment constant id'>PathSegment</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='$1 nth_ref id'>$1</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span><span class='comma token'>,</span> <span class='symbol val'>:optional</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span><span class='rparen token'>)</span>
+      <span class='when when kw'>when</span> <span class='regexp val'>/\A\?(.*?)\?/</span>
+        <span class='StaticSegment constant id'>StaticSegment</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='$1 nth_ref id'>$1</span><span class='comma token'>,</span> <span class='symbol val'>:optional</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span><span class='rparen token'>)</span>
+      <span class='when when kw'>when</span> <span class='nonseparator_regexp identifier id'>nonseparator_regexp</span>
+        <span class='StaticSegment constant id'>StaticSegment</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='$1 nth_ref id'>$1</span><span class='rparen token'>)</span>
+      <span class='when when kw'>when</span> <span class='separator_regexp identifier id'>separator_regexp</span>
+        <span class='DividerSegment constant id'>DividerSegment</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='$&amp; back_ref id'>$&amp;</span><span class='comma token'>,</span> <span class='symbol val'>:optional</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='optional_separators identifier id'>optional_separators</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='$&amp; back_ref id'>$&amp;</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='lbrack token'>[</span><span class='segment identifier id'>segment</span><span class='comma token'>,</span> <span class='$~ gvar id'>$~</span><span class='dot token'>.</span><span class='post_match identifier id'>post_match</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>segments_for_route_path</h3>
+</div><div id="segments_for_route_path-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>segments_for_route_path</span><span class='args'>(path)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Accepts a &quot;route path&quot; (a string defining a route), and returns
+the array of segments that corresponds to it. Note that the segment array
+is only partially initialized&#8212;the defaults and requirements, for
+instance, need to be set separately, via the <tt>assign_route_options</tt>
+method, and the <tt>optional?</tt> method for each segment will not be
+reliable until after <tt>assign_route_options</tt> is called, as well.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+22
+23
+24
+25
+26
+27
+28
+29
+30</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'actionpack/lib/action_controller/routing/builder.rb', line 22</span>
+
+<span class='def def kw'>def</span> <span class='segments_for_route_path identifier id'>segments_for_route_path</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='rparen token'>)</span>
+  <span class='rest identifier id'>rest</span><span class='comma token'>,</span> <span class='segments identifier id'>segments</span> <span class='assign token'>=</span> <span class='path identifier id'>path</span><span class='comma token'>,</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+
+  <span class='until until kw'>until</span> <span class='rest identifier id'>rest</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span>
+    <span class='segment identifier id'>segment</span><span class='comma token'>,</span> <span class='rest identifier id'>rest</span> <span class='assign token'>=</span> <span class='segment_for identifier id'>segment_for</span><span class='lparen token'>(</span><span class='rest identifier id'>rest</span><span class='rparen token'>)</span>
+    <span class='segments identifier id'>segments</span> <span class='lshft op'>&lt;&lt;</span> <span class='segment identifier id'>segment</span>
+  <span class='end end kw'>end</span>
+  <span class='segments identifier id'>segments</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

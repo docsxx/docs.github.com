@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <title>README</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section docstring readme">
+        <h1>AASM - Ruby state machines</h1>
+<p>
+This package contains AASM, a library for adding finite state machines to
+Ruby classes.
+</p>
+<p>
+AASM started as the acts_as_state_machine plugin but has evolved into a
+more generic library that no longer targets only ActiveRecord models.
+</p>
+<p>
+AASM has the following features:
+</p>
+<ul>
+<li>States
+
+</li>
+<li>Machines
+
+</li>
+<li>Events
+
+</li>
+<li>Transitions
+
+</li>
+</ul>
+<h2>Download</h2>
+<p>
+The latest AASM can currently be pulled from the git repository on github.
+</p>
+<ul>
+<li>http://github.com/rubyist/aasm/tree/master
+
+</li>
+</ul>
+<p>
+A release and a gem are forthcoming.
+</p>
+<h2>Installation</h2>
+<h3>From GitHub hosted gems</h3>
+<pre class="code">
+  <span class='string val'>% sudo </span><span class='gem identifier id'>gem</span> <span class='sources identifier id'>sources</span> <span class='minus op'>-</span><span class='a identifier id'>a</span> <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/gems.github.com # (you only need to do this once)
+  % sudo gem install rubyist-aasm
+</span></pre>
+<h3>Building your own gems</h3>
+<pre class="code">
+  <span class='string val'>% rake </span><span class='gem identifier id'>gem</span>
+  <span class='string val'>% sudo </span><span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='pkg identifier id'>pkg</span><span class='div op'>/</span><span class='aasm identifier id'>aasm</span><span class='minus op'>-</span><span class='float val'>2.0</span><span class='float val'>.1</span><span class='dot token'>.</span><span class='gem identifier id'>gem</span>
+</pre>
+<h2>Simple Example</h2>
+<p>
+Here&#8217;s a quick example highlighting some of the features.
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='Conversation constant id'>Conversation</span>
+    <span class='include identifier id'>include</span> <span class='AASM constant id'>AASM</span>
+
+    <span class='aasm_initial_state identifier id'>aasm_initial_state</span> <span class='symbol val'>:unread</span>
+
+    <span class='aasm_state identifier id'>aasm_state</span> <span class='symbol val'>:unread</span>
+    <span class='aasm_state identifier id'>aasm_state</span> <span class='symbol val'>:read</span>
+    <span class='aasm_state identifier id'>aasm_state</span> <span class='symbol val'>:closed</span>
+
+    <span class='aasm_event identifier id'>aasm_event</span> <span class='symbol val'>:view</span> <span class='do do kw'>do</span>
+      <span class='transitions identifier id'>transitions</span> <span class='symbol val'>:to</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:read</span><span class='comma token'>,</span> <span class='symbol val'>:from</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='symbol val'>:unread</span><span class='rbrack token'>]</span>
+    <span class='end end kw'>end</span>
+
+    <span class='aasm_event identifier id'>aasm_event</span> <span class='symbol val'>:close</span> <span class='do do kw'>do</span>
+      <span class='transitions identifier id'>transitions</span> <span class='symbol val'>:to</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:closed</span><span class='comma token'>,</span> <span class='symbol val'>:from</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='symbol val'>:read</span><span class='comma token'>,</span> <span class='symbol val'>:unread</span><span class='rbrack token'>]</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+</pre>
+<h1>Other Stuff</h1>
+<table>
+<tr><td valign="top">Author:</td><td>Scott Barron &lt;scott at elitists dot net&gt;
+
+</td></tr>
+<tr><td valign="top">License:</td><td>Copyright 2006, 2007, 2008 by Scott Barron. Released under an MIT-style
+license. See the LICENSE file included in the distribution.
+
+</td></tr>
+<tr><td valign="top">Bugs:</td><td>http://rubyist.lighthouseapp.com/projects/13207-aasm/
+
+</td></tr>
+<tr><td valign="top">GitHub:</td><td>http://github.com/rubyist/aasm/tree/master
+
+</td></tr>
+</table>
+<h2>Warranty</h2>
+<p>
+This software is provided &quot;as is&quot; and without any express or
+implied warranties, including, without limitation, the implied warranties
+of merchantibility and fitness for a particular purpose.
+</p>
+
+      </div>
+    </div>
+  </body>
+</html>

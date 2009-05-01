@@ -1,0 +1,1181 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: ActionView::Helpers::FormOptionsHelper</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module ActionView_Helpers_FormOptionsHelper">
+  <h1 class="title">Module: ActionView::Helpers::FormOptionsHelper</h1>
+  <div class="section mixins">
+  <h1>Included Modules</h1>
+  <p><a href='../../ERB/Util.html' title='ERB::Util'>ERB::Util</a></p>
+</div><div class="section docstring">
+  <p>
+Provides a number of methods for turning different kinds of containers into
+a set of option tags.
+</p>
+<h2>Options</h2>
+<p>
+The <tt>collection_select</tt>, <tt>select</tt> and
+<tt>time_zone_select</tt> methods take an <tt>options</tt> parameter, a
+hash:
+</p>
+<ul>
+<li><tt>:include_blank</tt> - set to true or a prompt string if the first
+option element of the select element is a blank. Useful if there is not a
+default value required for the select element.
+
+</li>
+</ul>
+<p>
+For example,
+</p>
+<pre class="code">
+  <span class='select identifier id'>select</span><span class='lparen token'>(</span><span class='string val'>&quot;post&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;category&quot;</span><span class='comma token'>,</span> <span class='Post constant id'>Post</span><span class='colon2 op'>::</span><span class='CATEGORIES constant id'>CATEGORIES</span><span class='comma token'>,</span> <span class='lbrace token'>{</span><span class='symbol val'>:include_blank</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+</pre>
+<p>
+could become:
+</p>
+<pre class="code">
+  <span class='lt op'>&lt;</span><span class='select identifier id'>select</span> <span class='name identifier id'>name</span><span class='assign token'>=</span><span class='string val'>&quot;post[category]&quot;</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='option identifier id'>option</span><span class='gt op'>&gt;</span><span class='lt op'>&lt;</span><span class='regexp val'>/option&gt;
+    &lt;option&gt;joke&lt;/o</span><span class='ption identifier id'>ption</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='option identifier id'>option</span><span class='gt op'>&gt;</span><span class='poem identifier id'>poem</span><span class='lt op'>&lt;</span><span class='regexp val'>/option&gt;
+  &lt;/s</span><span class='elect identifier id'>elect</span><span class='gt op'>&gt;</span>
+</pre>
+<p>
+Another common case is a select tag for an <tt>belongs_to</tt>-associated
+object.
+</p>
+<p>
+Example with @post.person_id =&gt; 2:
+</p>
+<pre class="code">
+  <span class='select identifier id'>select</span><span class='lparen token'>(</span><span class='string val'>&quot;post&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;person_id&quot;</span><span class='comma token'>,</span> <span class='Person constant id'>Person</span><span class='dot token'>.</span><span class='all identifier id'>all</span><span class='dot token'>.</span><span class='collect identifier id'>collect</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='p identifier id'>p</span><span class='bitor op'>|</span> <span class='lbrack token'>[</span> <span class='p identifier id'>p</span><span class='dot token'>.</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='p identifier id'>p</span><span class='dot token'>.</span><span class='id identifier id'>id</span> <span class='rbrack token'>]</span> <span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='lbrace token'>{</span><span class='symbol val'>:include_blank</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'None'</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+</pre>
+<p>
+could become:
+</p>
+<pre class="code">
+  <span class='lt op'>&lt;</span><span class='select identifier id'>select</span> <span class='name identifier id'>name</span><span class='assign token'>=</span><span class='string val'>&quot;post[person_id]&quot;</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='option identifier id'>option</span> <span class='value identifier id'>value</span><span class='assign token'>=</span><span class='string val'>&quot;&quot;</span><span class='gt op'>&gt;</span><span class='None constant id'>None</span><span class='lt op'>&lt;</span><span class='regexp val'>/option&gt;
+    &lt;option value=&quot;1&quot;&gt;David&lt;/o</span><span class='ption identifier id'>ption</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='option identifier id'>option</span> <span class='value identifier id'>value</span><span class='assign token'>=</span><span class='string val'>&quot;2&quot;</span> <span class='selected identifier id'>selected</span><span class='assign token'>=</span><span class='string val'>&quot;selected&quot;</span><span class='gt op'>&gt;</span><span class='Sam constant id'>Sam</span><span class='lt op'>&lt;</span><span class='regexp val'>/option&gt;
+    &lt;option value=&quot;3&quot;&gt;Tobias&lt;/o</span><span class='ption identifier id'>ption</span><span class='gt op'>&gt;</span>
+  <span class='lt op'>&lt;</span><span class='regexp val'>/select&gt;
+</span></pre>
+<ul>
+<li><tt>:prompt</tt> - set to true or a prompt string. When the select element
+doesn&#8217;t have a value yet, this prepends an option with a generic
+prompt &#8212; &quot;Please select&quot; &#8212; or the given prompt
+string.
+
+</li>
+</ul>
+<p>
+Example:
+</p>
+<pre class="code">
+  <span class='select identifier id'>select</span><span class='lparen token'>(</span><span class='string val'>&quot;post&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;person_id&quot;</span><span class='comma token'>,</span> <span class='Person constant id'>Person</span><span class='dot token'>.</span><span class='all identifier id'>all</span><span class='dot token'>.</span><span class='collect identifier id'>collect</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='p identifier id'>p</span><span class='bitor op'>|</span> <span class='lbrack token'>[</span> <span class='p identifier id'>p</span><span class='dot token'>.</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='p identifier id'>p</span><span class='dot token'>.</span><span class='id identifier id'>id</span> <span class='rbrack token'>]</span> <span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='lbrace token'>{</span><span class='symbol val'>:prompt</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'Select Person'</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+</pre>
+<p>
+could become:
+</p>
+<pre class="code">
+  <span class='lt op'>&lt;</span><span class='select identifier id'>select</span> <span class='name identifier id'>name</span><span class='assign token'>=</span><span class='string val'>&quot;post[person_id]&quot;</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='option identifier id'>option</span> <span class='value identifier id'>value</span><span class='assign token'>=</span><span class='string val'>&quot;&quot;</span><span class='gt op'>&gt;</span><span class='Select constant id'>Select</span> <span class='Person constant id'>Person</span><span class='lt op'>&lt;</span><span class='regexp val'>/option&gt;
+    &lt;option value=&quot;1&quot;&gt;David&lt;/o</span><span class='ption identifier id'>ption</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='option identifier id'>option</span> <span class='value identifier id'>value</span><span class='assign token'>=</span><span class='string val'>&quot;2&quot;</span><span class='gt op'>&gt;</span><span class='Sam constant id'>Sam</span><span class='lt op'>&lt;</span><span class='regexp val'>/option&gt;
+    &lt;option value=&quot;3&quot;&gt;Tobias&lt;/o</span><span class='ption identifier id'>ption</span><span class='gt op'>&gt;</span>
+  <span class='lt op'>&lt;</span><span class='regexp val'>/select&gt;
+</span></pre>
+<p>
+Like the other form helpers, <tt>select</tt> can accept an <tt>:index</tt>
+option to manually set the ID used in the resulting output. Unlike other
+helpers, <tt>select</tt> expects this option to be in the
+<tt>html_options</tt> parameter.
+</p>
+<p>
+Example:
+</p>
+<pre class="code">
+  <span class='select identifier id'>select</span><span class='lparen token'>(</span><span class='string val'>&quot;album[]&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;genre&quot;</span><span class='comma token'>,</span> <span class='dstring node'>%w[rap rock country]</span><span class='comma token'>,</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='lbrace token'>{</span> <span class='symbol val'>:index</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='nil nil kw'>nil</span> <span class='rbrace token'>}</span><span class='rparen token'>)</span>
+</pre>
+<p>
+becomes:
+</p>
+<pre class="code">
+  <span class='lt op'>&lt;</span><span class='select identifier id'>select</span> <span class='name identifier id'>name</span><span class='assign token'>=</span><span class='string val'>&quot;album[][genre]&quot;</span> <span class='id identifier id'>id</span><span class='assign token'>=</span><span class='string val'>&quot;album__genre&quot;</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='option identifier id'>option</span> <span class='value identifier id'>value</span><span class='assign token'>=</span><span class='string val'>&quot;rap&quot;</span><span class='gt op'>&gt;</span><span class='rap identifier id'>rap</span><span class='lt op'>&lt;</span><span class='regexp val'>/option&gt;
+    &lt;option value=&quot;rock&quot;&gt;rock&lt;/o</span><span class='ption identifier id'>ption</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='option identifier id'>option</span> <span class='value identifier id'>value</span><span class='assign token'>=</span><span class='string val'>&quot;country&quot;</span><span class='gt op'>&gt;</span><span class='country identifier id'>country</span><span class='lt op'>&lt;</span><span class='regexp val'>/option&gt;
+  &lt;/s</span><span class='elect identifier id'>elect</span><span class='gt op'>&gt;</span>
+</pre>
+<ul>
+<li><tt>:disabled</tt> - can be a single value or an array of values that will
+be disabled options in the final output.
+
+</li>
+</ul>
+<p>
+Example:
+</p>
+<pre class="code">
+  <span class='select identifier id'>select</span><span class='lparen token'>(</span><span class='string val'>&quot;post&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;category&quot;</span><span class='comma token'>,</span> <span class='Post constant id'>Post</span><span class='colon2 op'>::</span><span class='CATEGORIES constant id'>CATEGORIES</span><span class='comma token'>,</span> <span class='lbrace token'>{</span><span class='symbol val'>:disabled</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'restricted'</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+</pre>
+<p>
+could become:
+</p>
+<pre class="code">
+  <span class='lt op'>&lt;</span><span class='select identifier id'>select</span> <span class='name identifier id'>name</span><span class='assign token'>=</span><span class='string val'>&quot;post[category]&quot;</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='option identifier id'>option</span><span class='gt op'>&gt;</span><span class='lt op'>&lt;</span><span class='regexp val'>/option&gt;
+    &lt;option&gt;joke&lt;/o</span><span class='ption identifier id'>ption</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='option identifier id'>option</span><span class='gt op'>&gt;</span><span class='poem identifier id'>poem</span><span class='lt op'>&lt;</span><span class='regexp val'>/option&gt;
+    &lt;option disabled=&quot;disabled&quot;&gt;restricted&lt;/o</span><span class='ption identifier id'>ption</span><span class='gt op'>&gt;</span>
+  <span class='lt op'>&lt;</span><span class='regexp val'>/select&gt;
+</span></pre>
+<p>
+When used with the <tt>collection_select</tt> helper, <tt>:disabled</tt>
+can also be a Proc that identifies those options that should be disabled.
+</p>
+<p>
+Example:
+</p>
+<pre class="code">
+  <span class='collection_select identifier id'>collection_select</span><span class='lparen token'>(</span><span class='symbol val'>:post</span><span class='comma token'>,</span> <span class='symbol val'>:category_id</span><span class='comma token'>,</span> <span class='Category constant id'>Category</span><span class='dot token'>.</span><span class='all identifier id'>all</span><span class='comma token'>,</span> <span class='symbol val'>:id</span><span class='comma token'>,</span> <span class='symbol val'>:name</span><span class='comma token'>,</span> <span class='lbrace token'>{</span><span class='symbol val'>:disabled</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lambda identifier id'>lambda</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='category identifier id'>category</span><span class='bitor op'>|</span> <span class='category identifier id'>category</span><span class='dot token'>.</span><span class='archived? fid id'>archived?</span> <span class='rbrace token'>}</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+</pre>
+<p>
+If the categories &quot;2008 stuff&quot; and &quot;Christmas&quot; return
+true when the method <tt>archived?</tt> is called, this would return:
+</p>
+<pre class="code">
+  <span class='lt op'>&lt;</span><span class='select identifier id'>select</span> <span class='name identifier id'>name</span><span class='assign token'>=</span><span class='string val'>&quot;post[category_id]&quot;</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='option identifier id'>option</span> <span class='value identifier id'>value</span><span class='assign token'>=</span><span class='string val'>&quot;1&quot;</span> <span class='disabled identifier id'>disabled</span><span class='assign token'>=</span><span class='string val'>&quot;disabled&quot;</span><span class='gt op'>&gt;</span><span class='integer val'>2008</span> <span class='stuff identifier id'>stuff</span><span class='lt op'>&lt;</span><span class='regexp val'>/option&gt;
+    &lt;option value=&quot;2&quot; disabled=&quot;disabled&quot;&gt;Christmas&lt;/o</span><span class='ption identifier id'>ption</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='option identifier id'>option</span> <span class='value identifier id'>value</span><span class='assign token'>=</span><span class='string val'>&quot;3&quot;</span><span class='gt op'>&gt;</span><span class='Jokes constant id'>Jokes</span><span class='lt op'>&lt;</span><span class='regexp val'>/option&gt;
+    &lt;option value=&quot;4&quot;&gt;Poems&lt;/o</span><span class='ption identifier id'>ption</span><span class='gt op'>&gt;</span>
+  <span class='lt op'>&lt;</span><span class='regexp val'>/select&gt;
+</span></pre>
+
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#collection_select-instance_method' title='#collection_select'>#collection_select</a></span><span class='args'>(object, method, collection, value_method, text_method, options = {}, html_options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns <tt>&lt;select&gt;</tt> and <tt>&lt;option&gt;</tt> tags for the
+collection of existing return values of <tt>method</tt> for
+<tt>object</tt>&#8217;s class.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#grouped_options_for_select-instance_method' title='#grouped_options_for_select'>#grouped_options_for_select</a></span><span class='args'>(grouped_options, selected_key = nil, prompt = nil)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns a string of <tt>&lt;option&gt;</tt> tags, like
+<tt>options_for_select</tt>, but wraps them with <tt>&lt;optgroup&gt;</tt>
+tags.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#option_groups_from_collection_for_select-instance_method' title='#option_groups_from_collection_for_select'>#option_groups_from_collection_for_select</a></span><span class='args'>(collection, group_method, group_label_method, option_key_method, option_value_method, selected_key = nil)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns a string of <tt>&lt;option&gt;</tt> tags, like
+<tt>options_from_collection_for_select</tt>, but groups them by
+<tt>&lt;optgroup&gt;</tt> tags based on the object relationships of the
+arguments.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#options_for_select-instance_method' title='#options_for_select'>#options_for_select</a></span><span class='args'>(container, selected = nil)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Accepts a container (hash, array, enumerable, your type) and returns a
+string of option tags.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#options_from_collection_for_select-instance_method' title='#options_from_collection_for_select'>#options_from_collection_for_select</a></span><span class='args'>(collection, value_method, text_method, selected = nil)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns a string of option tags that have been compiled by iterating over
+the <tt>collection</tt> and assigning the the result of a call to the
+<tt>value_method</tt> as the option value and the <tt>text_method</tt> as
+the option text.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#select-instance_method' title='#select'>#select</a></span><span class='args'>(object, method, choices, options = {}, html_options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Create a select tag and a series of contained option tags for the provided
+object and method.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#time_zone_options_for_select-instance_method' title='#time_zone_options_for_select'>#time_zone_options_for_select</a></span><span class='args'>(selected = nil, priority_zones = nil, model = ::ActiveSupport::TimeZone)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns a string of option tags for pretty much any time zone in the world.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#time_zone_select-instance_method' title='#time_zone_select'>#time_zone_select</a></span><span class='args'>(object, method, priority_zones = nil, options = {}, html_options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Return select and option tags for the given object and method, using
+#time_zone_options_for_select to generate the list of option tags.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table><div class="included">
+  
+  <div>
+    <h1>Public Instance Methods Included from <a href='../../ERB/Util.html' title='ERB::Util'>ERB::Util</a></h1>
+    <p><span class='name'><a href='../../ERB/Util.html#html_escape-instance_method' title='html_escape'>html_escape</a></span>, <span class='name'><a href='../../ERB/Util.html#json_escape-instance_method' title='json_escape'>json_escape</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>collection_select</h3>
+</div><div id="collection_select-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>collection_select</span><span class='args'>(object, method, collection, value_method, text_method, options = {}, html_options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns <tt>&lt;select&gt;</tt> and <tt>&lt;option&gt;</tt> tags for the
+collection of existing return values of <tt>method</tt> for
+<tt>object</tt>&#8217;s class. The value returned from calling
+<tt>method</tt> on the instance <tt>object</tt> will be selected. If
+calling <tt>method</tt> returns <tt>nil</tt>, no selection is made without
+including <tt>:prompt</tt> or <tt>:include_blank</tt> in the
+<tt>options</tt> hash.
+</p>
+<p>
+The <tt>:value_method</tt> and <tt>:text_method</tt> parameters are methods
+to be called on each member of <tt>collection</tt>. The return values are
+used as the <tt>value</tt> attribute and contents of each
+<tt>&lt;option&gt;</tt> tag, respectively.
+</p>
+<p>
+Example object structure for use with this method:
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='Post constant id'>Post</span> <span class='lt op'>&lt;</span> <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
+    <span class='belongs_to identifier id'>belongs_to</span> <span class='symbol val'>:author</span>
+  <span class='end end kw'>end</span>
+  <span class='class class kw'>class</span> <span class='Author constant id'>Author</span> <span class='lt op'>&lt;</span> <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
+    <span class='has_many identifier id'>has_many</span> <span class='symbol val'>:posts</span>
+    <span class='def def kw'>def</span> <span class='name_with_initial identifier id'>name_with_initial</span>
+      <span class='dstring node'>&quot;#{first_name.first}. #{last_name}&quot;</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+Sample usage (selecting the associated Author for an instance of Post,
+<tt>@post</tt>):
+</p>
+<pre class="code">
+  <span class='collection_select identifier id'>collection_select</span><span class='lparen token'>(</span><span class='symbol val'>:post</span><span class='comma token'>,</span> <span class='symbol val'>:author_id</span><span class='comma token'>,</span> <span class='Author constant id'>Author</span><span class='dot token'>.</span><span class='all identifier id'>all</span><span class='comma token'>,</span> <span class='symbol val'>:id</span><span class='comma token'>,</span> <span class='symbol val'>:name_with_initial</span><span class='comma token'>,</span> <span class='lbrace token'>{</span><span class='symbol val'>:prompt</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+</pre>
+<p>
+If <tt>@post.author_id</tt> is already <tt>1</tt>, this would return:
+</p>
+<pre class="code">
+  <span class='lt op'>&lt;</span><span class='select identifier id'>select</span> <span class='name identifier id'>name</span><span class='assign token'>=</span><span class='string val'>&quot;post[author_id]&quot;</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='option identifier id'>option</span> <span class='value identifier id'>value</span><span class='assign token'>=</span><span class='string val'>&quot;&quot;</span><span class='gt op'>&gt;</span><span class='Please constant id'>Please</span> <span class='select identifier id'>select</span><span class='lt op'>&lt;</span><span class='regexp val'>/option&gt;
+    &lt;option value=&quot;1&quot; selected=&quot;selected&quot;&gt;D. Heinemeier Hansson&lt;/o</span><span class='ption identifier id'>ption</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='option identifier id'>option</span> <span class='value identifier id'>value</span><span class='assign token'>=</span><span class='string val'>&quot;2&quot;</span><span class='gt op'>&gt;</span><span class='D constant id'>D</span><span class='dot token'>.</span> <span class='Thomas constant id'>Thomas</span><span class='lt op'>&lt;</span><span class='regexp val'>/option&gt;
+    &lt;option value=&quot;3&quot;&gt;M. Clark&lt;/o</span><span class='ption identifier id'>ption</span><span class='gt op'>&gt;</span>
+  <span class='lt op'>&lt;</span><span class='regexp val'>/select&gt;
+</span></pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+161
+162
+163</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'actionpack/lib/action_view/helpers/form_options_helper.rb', line 161</span>
+
+<span class='def def kw'>def</span> <span class='collection_select identifier id'>collection_select</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='comma token'>,</span> <span class='method identifier id'>method</span><span class='comma token'>,</span> <span class='collection identifier id'>collection</span><span class='comma token'>,</span> <span class='value_method identifier id'>value_method</span><span class='comma token'>,</span> <span class='text_method identifier id'>text_method</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='html_options identifier id'>html_options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='InstanceTag constant id'>InstanceTag</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='comma token'>,</span> <span class='method identifier id'>method</span><span class='comma token'>,</span> <span class='self self kw'>self</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:object</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_collection_select_tag identifier id'>to_collection_select_tag</span><span class='lparen token'>(</span><span class='collection identifier id'>collection</span><span class='comma token'>,</span> <span class='value_method identifier id'>value_method</span><span class='comma token'>,</span> <span class='text_method identifier id'>text_method</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='comma token'>,</span> <span class='html_options identifier id'>html_options</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>grouped_options_for_select</h3>
+</div><div id="grouped_options_for_select-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>grouped_options_for_select</span><span class='args'>(grouped_options, selected_key = nil, prompt = nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns a string of <tt>&lt;option&gt;</tt> tags, like
+<tt>options_for_select</tt>, but wraps them with <tt>&lt;optgroup&gt;</tt>
+tags.
+</p>
+<p>
+Parameters:
+</p>
+<ul>
+<li><tt>grouped_options</tt> - Accepts a nested array or hash of strings. The
+first value serves as the <tt>&lt;optgroup&gt;</tt> label while the second
+value must be an array of options. The second value can be a nested array
+of text-value pairs. See <tt>options_for_select</tt> for more info.
+
+<pre class="code">
+ <span class='Ex constant id'>Ex</span><span class='dot token'>.</span> <span class='lbrack token'>[</span><span class='string val'>&quot;North America&quot;</span><span class='comma token'>,</span><span class='lbrack token'>[</span><span class='lbrack token'>[</span><span class='string val'>&quot;United States&quot;</span><span class='comma token'>,</span><span class='string val'>&quot;US&quot;</span><span class='rbrack token'>]</span><span class='comma token'>,</span><span class='lbrack token'>[</span><span class='string val'>&quot;Canada&quot;</span><span class='comma token'>,</span><span class='string val'>&quot;CA&quot;</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span>
+</pre>
+</li>
+<li><tt>selected_key</tt> - A value equal to the <tt>value</tt> attribute for
+one of the <tt>&lt;option&gt;</tt> tags, which will have the
+<tt>selected</tt> attribute set. Note: It is possible for this value to
+match multiple options as you might have the same option in multiple
+groups. Each will then get <tt>selected=&quot;selected&quot;</tt>.
+
+</li>
+<li><tt>prompt</tt> - set to true or a prompt string. When the select element
+doesn’t have a value yet, this prepends an option with a generic prompt
+— &quot;Please select&quot; — or the given prompt string.
+
+</li>
+</ul>
+<p>
+Sample usage (Array):
+</p>
+<pre class="code">
+  <span class='grouped_options identifier id'>grouped_options</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span>
+   <span class='lbrack token'>[</span><span class='string val'>'North America'</span><span class='comma token'>,</span>
+     <span class='lbrack token'>[</span><span class='lbrack token'>[</span><span class='string val'>'United States'</span><span class='comma token'>,</span><span class='string val'>'US'</span><span class='rbrack token'>]</span><span class='comma token'>,</span><span class='string val'>'Canada'</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span><span class='comma token'>,</span>
+   <span class='lbrack token'>[</span><span class='string val'>'Europe'</span><span class='comma token'>,</span>
+     <span class='lbrack token'>[</span><span class='string val'>'Denmark'</span><span class='comma token'>,</span><span class='string val'>'Germany'</span><span class='comma token'>,</span><span class='string val'>'France'</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span>
+  <span class='rbrack token'>]</span>
+  <span class='grouped_options_for_select identifier id'>grouped_options_for_select</span><span class='lparen token'>(</span><span class='grouped_options identifier id'>grouped_options</span><span class='rparen token'>)</span>
+</pre>
+<p>
+Sample usage (Hash):
+</p>
+<pre class="code">
+  <span class='grouped_options identifier id'>grouped_options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span>
+   <span class='string val'>'North America'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='lbrack token'>[</span><span class='string val'>'United States'</span><span class='comma token'>,</span><span class='string val'>'US], '</span><span class='Canada constant id'>Canada</span><span class='string val'>'],
+   '</span><span class='Europe constant id'>Europe</span><span class='string val'>' =&gt; ['</span><span class='Denmark constant id'>Denmark</span><span class='string val'>','</span><span class='Germany constant id'>Germany</span><span class='string val'>','</span><span class='France constant id'>France</span><span class='string val'>']
+  }
+  grouped_options_for_select(grouped_options)
+</span></pre>
+<p>
+Possible output:
+</p>
+<pre class="code">
+  <span class='lt op'>&lt;</span><span class='optgroup identifier id'>optgroup</span> <span class='label identifier id'>label</span><span class='assign token'>=</span><span class='string val'>&quot;Europe&quot;</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='option identifier id'>option</span> <span class='value identifier id'>value</span><span class='assign token'>=</span><span class='string val'>&quot;Denmark&quot;</span><span class='gt op'>&gt;</span><span class='Denmark constant id'>Denmark</span><span class='lt op'>&lt;</span><span class='regexp val'>/option&gt;
+    &lt;option value=&quot;Germany&quot;&gt;Germany&lt;/o</span><span class='ption identifier id'>ption</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='option identifier id'>option</span> <span class='value identifier id'>value</span><span class='assign token'>=</span><span class='string val'>&quot;France&quot;</span><span class='gt op'>&gt;</span><span class='France constant id'>France</span><span class='lt op'>&lt;</span><span class='regexp val'>/option&gt;
+  &lt;/o</span><span class='ptgroup identifier id'>ptgroup</span><span class='gt op'>&gt;</span>
+  <span class='lt op'>&lt;</span><span class='optgroup identifier id'>optgroup</span> <span class='label identifier id'>label</span><span class='assign token'>=</span><span class='string val'>&quot;North America&quot;</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='option identifier id'>option</span> <span class='value identifier id'>value</span><span class='assign token'>=</span><span class='string val'>&quot;US&quot;</span><span class='gt op'>&gt;</span><span class='United constant id'>United</span> <span class='States constant id'>States</span><span class='lt op'>&lt;</span><span class='regexp val'>/option&gt;
+    &lt;option value=&quot;Canada&quot;&gt;Canada&lt;/o</span><span class='ption identifier id'>ption</span><span class='gt op'>&gt;</span>
+  <span class='lt op'>&lt;</span><span class='regexp val'>/optgroup&gt;
+</span></pre>
+<p>
+<b>Note:</b> Only the <tt>&lt;optgroup&gt;</tt> and <tt>&lt;option&gt;</tt>
+tags are returned, so you still have to wrap the output in an appropriate
+<tt>&lt;select&gt;</tt> tag.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'actionpack/lib/action_view/helpers/form_options_helper.rb', line 380</span>
+
+<span class='def def kw'>def</span> <span class='grouped_options_for_select identifier id'>grouped_options_for_select</span><span class='lparen token'>(</span><span class='grouped_options identifier id'>grouped_options</span><span class='comma token'>,</span> <span class='selected_key identifier id'>selected_key</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='prompt identifier id'>prompt</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='body identifier id'>body</span> <span class='assign token'>=</span> <span class='string val'>''</span>
+  <span class='body identifier id'>body</span> <span class='lshft op'>&lt;&lt;</span> <span class='content_tag identifier id'>content_tag</span><span class='lparen token'>(</span><span class='symbol val'>:option</span><span class='comma token'>,</span> <span class='prompt identifier id'>prompt</span><span class='comma token'>,</span> <span class='symbol val'>:value</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;&quot;</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='prompt identifier id'>prompt</span>
+
+  <span class='grouped_options identifier id'>grouped_options</span> <span class='assign token'>=</span> <span class='grouped_options identifier id'>grouped_options</span><span class='dot token'>.</span><span class='sort identifier id'>sort</span> <span class='if if_mod kw'>if</span> <span class='grouped_options identifier id'>grouped_options</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Hash constant id'>Hash</span><span class='rparen token'>)</span>
+
+  <span class='grouped_options identifier id'>grouped_options</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='group identifier id'>group</span><span class='bitor op'>|</span>
+    <span class='body identifier id'>body</span> <span class='lshft op'>&lt;&lt;</span> <span class='content_tag identifier id'>content_tag</span><span class='lparen token'>(</span><span class='symbol val'>:optgroup</span><span class='comma token'>,</span> <span class='options_for_select identifier id'>options_for_select</span><span class='lparen token'>(</span><span class='group identifier id'>group</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='selected_key identifier id'>selected_key</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:label</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='group identifier id'>group</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+
+  <span class='body identifier id'>body</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>option_groups_from_collection_for_select</h3>
+</div><div id="option_groups_from_collection_for_select-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>option_groups_from_collection_for_select</span><span class='args'>(collection, group_method, group_label_method, option_key_method, option_value_method, selected_key = nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns a string of <tt>&lt;option&gt;</tt> tags, like
+<tt>options_from_collection_for_select</tt>, but groups them by
+<tt>&lt;optgroup&gt;</tt> tags based on the object relationships of the
+arguments.
+</p>
+<p>
+Parameters:
+</p>
+<ul>
+<li><tt>collection</tt> - An array of objects representing the
+<tt>&lt;optgroup&gt;</tt> tags.
+
+</li>
+<li><tt>group_method</tt> - The name of a method which, when called on a member
+of <tt>collection</tt>, returns an array of child objects representing the
+<tt>&lt;option&gt;</tt> tags.
+
+</li>
+<li>group_label_method+ - The name of a method which, when called on a member
+of <tt>collection</tt>, returns a string to be used as the <tt>label</tt>
+attribute for its <tt>&lt;optgroup&gt;</tt> tag.
+
+</li>
+<li><tt>option_key_method</tt> - The name of a method which, when called on a
+child object of a member of <tt>collection</tt>, returns a value to be used
+as the <tt>value</tt> attribute for its <tt>&lt;option&gt;</tt> tag.
+
+</li>
+<li><tt>option_value_method</tt> - The name of a method which, when called on a
+child object of a member of <tt>collection</tt>, returns a value to be used
+as the contents of its <tt>&lt;option&gt;</tt> tag.
+
+</li>
+<li><tt>selected_key</tt> - A value equal to the <tt>value</tt> attribute for
+one of the <tt>&lt;option&gt;</tt> tags, which will have the
+<tt>selected</tt> attribute set. Corresponds to the return value of one of
+the calls to <tt>option_key_method</tt>. If <tt>nil</tt>, no selection is
+made. Can also be a hash if disabled values are to be specified.
+
+</li>
+</ul>
+<p>
+Example object structure for use with this method:
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='Continent constant id'>Continent</span> <span class='lt op'>&lt;</span> <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
+    <span class='has_many identifier id'>has_many</span> <span class='symbol val'>:countries</span>
+    <span class='comment val'># attribs: id, name</span>
+  <span class='end end kw'>end</span>
+  <span class='class class kw'>class</span> <span class='Country constant id'>Country</span> <span class='lt op'>&lt;</span> <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
+    <span class='belongs_to identifier id'>belongs_to</span> <span class='symbol val'>:continent</span>
+    <span class='comment val'># attribs: id, name, continent_id</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+Sample usage:
+</p>
+<pre class="code">
+  <span class='option_groups_from_collection_for_select identifier id'>option_groups_from_collection_for_select</span><span class='lparen token'>(</span><span class='@continents ivar id'>@continents</span><span class='comma token'>,</span> <span class='symbol val'>:countries</span><span class='comma token'>,</span> <span class='symbol val'>:name</span><span class='comma token'>,</span> <span class='symbol val'>:id</span><span class='comma token'>,</span> <span class='symbol val'>:name</span><span class='comma token'>,</span> <span class='integer val'>3</span><span class='rparen token'>)</span>
+</pre>
+<p>
+Possible output:
+</p>
+<pre class="code">
+  <span class='lt op'>&lt;</span><span class='optgroup identifier id'>optgroup</span> <span class='label identifier id'>label</span><span class='assign token'>=</span><span class='string val'>&quot;Africa&quot;</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='option identifier id'>option</span> <span class='value identifier id'>value</span><span class='assign token'>=</span><span class='string val'>&quot;1&quot;</span><span class='gt op'>&gt;</span><span class='Egypt constant id'>Egypt</span><span class='lt op'>&lt;</span><span class='regexp val'>/option&gt;
+    &lt;option value=&quot;4&quot;&gt;Rwanda&lt;/o</span><span class='ption identifier id'>ption</span><span class='gt op'>&gt;</span>
+    <span class='dot3 op'>...</span>
+  <span class='lt op'>&lt;</span><span class='regexp val'>/optgroup&gt;
+  &lt;optgroup label=&quot;Asia&quot;&gt;
+    &lt;option value=&quot;3&quot; selected=&quot;selected&quot;&gt;China&lt;/o</span><span class='ption identifier id'>ption</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='option identifier id'>option</span> <span class='value identifier id'>value</span><span class='assign token'>=</span><span class='string val'>&quot;12&quot;</span><span class='gt op'>&gt;</span><span class='India constant id'>India</span><span class='lt op'>&lt;</span><span class='regexp val'>/option&gt;
+    &lt;option value=&quot;5&quot;&gt;Japan&lt;/o</span><span class='ption identifier id'>ption</span><span class='gt op'>&gt;</span>
+    <span class='dot3 op'>...</span>
+  <span class='lt op'>&lt;</span><span class='regexp val'>/optgroup&gt;
+</span></pre>
+<p>
+<b>Note:</b> Only the <tt>&lt;optgroup&gt;</tt> and <tt>&lt;option&gt;</tt>
+tags are returned, so you still have to wrap the output in an appropriate
+<tt>&lt;select&gt;</tt> tag.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+328
+329
+330
+331
+332
+333
+334
+335</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'actionpack/lib/action_view/helpers/form_options_helper.rb', line 328</span>
+
+<span class='def def kw'>def</span> <span class='option_groups_from_collection_for_select identifier id'>option_groups_from_collection_for_select</span><span class='lparen token'>(</span><span class='collection identifier id'>collection</span><span class='comma token'>,</span> <span class='group_method identifier id'>group_method</span><span class='comma token'>,</span> <span class='group_label_method identifier id'>group_label_method</span><span class='comma token'>,</span> <span class='option_key_method identifier id'>option_key_method</span><span class='comma token'>,</span> <span class='option_value_method identifier id'>option_value_method</span><span class='comma token'>,</span> <span class='selected_key identifier id'>selected_key</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='collection identifier id'>collection</span><span class='dot token'>.</span><span class='inject identifier id'>inject</span><span class='lparen token'>(</span><span class='string val'>&quot;&quot;</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='options_for_select identifier id'>options_for_select</span><span class='comma token'>,</span> <span class='group identifier id'>group</span><span class='bitor op'>|</span>
+    <span class='group_label_string identifier id'>group_label_string</span> <span class='assign token'>=</span> <span class='eval identifier id'>eval</span><span class='lparen token'>(</span><span class='dstring node'>&quot;group.#{group_label_method}&quot;</span><span class='rparen token'>)</span>
+    <span class='options_for_select identifier id'>options_for_select</span> <span class='opasgn op'>+=</span> <span class='dstring node'>&quot;&lt;optgroup label=\&quot;#{html_escape(group_label_string)}\&quot;&gt;&quot;</span>
+    <span class='options_for_select identifier id'>options_for_select</span> <span class='opasgn op'>+=</span> <span class='options_from_collection_for_select identifier id'>options_from_collection_for_select</span><span class='lparen token'>(</span><span class='eval identifier id'>eval</span><span class='lparen token'>(</span><span class='dstring node'>&quot;group.#{group_method}&quot;</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='option_key_method identifier id'>option_key_method</span><span class='comma token'>,</span> <span class='option_value_method identifier id'>option_value_method</span><span class='comma token'>,</span> <span class='selected_key identifier id'>selected_key</span><span class='rparen token'>)</span>
+    <span class='options_for_select identifier id'>options_for_select</span> <span class='opasgn op'>+=</span> <span class='string val'>'&lt;/optgroup&gt;'</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>options_for_select</h3>
+</div><div id="options_for_select-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>options_for_select</span><span class='args'>(container, selected = nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Accepts a container (hash, array, enumerable, your type) and returns a
+string of option tags. Given a container where the elements respond to
+first and last (such as a two-element array), the &quot;lasts&quot; serve
+as option values and the &quot;firsts&quot; as option text. Hashes are
+turned into this form automatically, so the keys become &quot;firsts&quot;
+and values become lasts. If <tt>selected</tt> is specified, the matching
+&quot;last&quot; or element will get the selected option-tag.
+<tt>selected</tt> may also be an array of values to be selected when using
+a multiple select.
+</p>
+<p>
+Examples (call, result):
+</p>
+<pre class="code">
+  <span class='options_for_select identifier id'>options_for_select</span><span class='lparen token'>(</span><span class='lbrack token'>[</span><span class='lbrack token'>[</span><span class='string val'>&quot;Dollar&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;$&quot;</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='lbrack token'>[</span><span class='string val'>&quot;Kroner&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;DKK&quot;</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+    <span class='lt op'>&lt;</span><span class='option identifier id'>option</span> <span class='value identifier id'>value</span><span class='assign token'>=</span><span class='string val'>&quot;$&quot;</span><span class='gt op'>&gt;</span><span class='Dollar constant id'>Dollar</span><span class='lt op'>&lt;</span><span class='regexp val'>/option&gt;\n&lt;option value=&quot;DKK&quot;&gt;Kroner&lt;/o</span><span class='ption identifier id'>ption</span><span class='gt op'>&gt;</span>
+
+  <span class='options_for_select identifier id'>options_for_select</span><span class='lparen token'>(</span><span class='lbrack token'>[</span> <span class='string val'>&quot;VISA&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;MasterCard&quot;</span> <span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='string val'>&quot;MasterCard&quot;</span><span class='rparen token'>)</span>
+    <span class='lt op'>&lt;</span><span class='option identifier id'>option</span><span class='gt op'>&gt;</span><span class='VISA constant id'>VISA</span><span class='lt op'>&lt;</span><span class='regexp val'>/option&gt;\n&lt;option selected=&quot;selected&quot;&gt;MasterCard&lt;/o</span><span class='ption identifier id'>ption</span><span class='gt op'>&gt;</span>
+
+  <span class='options_for_select identifier id'>options_for_select</span><span class='lparen token'>(</span><span class='lbrace token'>{</span> <span class='string val'>&quot;Basic&quot;</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;$20&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;Plus&quot;</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;$40&quot;</span> <span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='string val'>&quot;$40&quot;</span><span class='rparen token'>)</span>
+    <span class='lt op'>&lt;</span><span class='option identifier id'>option</span> <span class='value identifier id'>value</span><span class='assign token'>=</span><span class='string val'>&quot;$20&quot;</span><span class='gt op'>&gt;</span><span class='Basic constant id'>Basic</span><span class='lt op'>&lt;</span><span class='regexp val'>/option&gt;\n&lt;option value=&quot;$40&quot; selected=&quot;selected&quot;&gt;Plus&lt;/o</span><span class='ption identifier id'>ption</span><span class='gt op'>&gt;</span>
+
+  <span class='options_for_select identifier id'>options_for_select</span><span class='lparen token'>(</span><span class='lbrack token'>[</span> <span class='string val'>&quot;VISA&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;MasterCard&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;Discover&quot;</span> <span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='lbrack token'>[</span><span class='string val'>&quot;VISA&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;Discover&quot;</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+    <span class='lt op'>&lt;</span><span class='option identifier id'>option</span> <span class='selected identifier id'>selected</span><span class='assign token'>=</span><span class='string val'>&quot;selected&quot;</span><span class='gt op'>&gt;</span><span class='VISA constant id'>VISA</span><span class='lt op'>&lt;</span><span class='regexp val'>/option&gt;\n&lt;option&gt;MasterCard&lt;/o</span><span class='ption identifier id'>ption</span><span class='gt op'>&gt;</span>\<span class='n identifier id'>n</span><span class='lt op'>&lt;</span><span class='option identifier id'>option</span> <span class='selected identifier id'>selected</span><span class='assign token'>=</span><span class='string val'>&quot;selected&quot;</span><span class='gt op'>&gt;</span><span class='Discover constant id'>Discover</span><span class='lt op'>&lt;</span><span class='regexp val'>/option&gt;
+</span></pre>
+<p>
+If you wish to specify disabled option tags, set <tt>selected</tt> to be a
+hash, with <tt>:disabled</tt> being either a value or array of values to be
+disabled. In this case, you can use <tt>:selected</tt> to specify selected
+option tags.
+</p>
+<p>
+Examples:
+</p>
+<pre class="code">
+  <span class='options_for_select identifier id'>options_for_select</span><span class='lparen token'>(</span><span class='lbrack token'>[</span><span class='string val'>&quot;Free&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;Basic&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;Advanced&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;Super Platinum&quot;</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='symbol val'>:disabled</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;Super Platinum&quot;</span><span class='rparen token'>)</span>
+    <span class='lt op'>&lt;</span><span class='option identifier id'>option</span> <span class='value identifier id'>value</span><span class='assign token'>=</span><span class='string val'>&quot;Free&quot;</span><span class='gt op'>&gt;</span><span class='Free constant id'>Free</span><span class='lt op'>&lt;</span><span class='regexp val'>/option&gt;\n&lt;option value=&quot;Basic&quot;&gt;Basic&lt;/o</span><span class='ption identifier id'>ption</span><span class='gt op'>&gt;</span>\<span class='n identifier id'>n</span><span class='lt op'>&lt;</span><span class='option identifier id'>option</span> <span class='value identifier id'>value</span><span class='assign token'>=</span><span class='string val'>&quot;Advanced&quot;</span><span class='gt op'>&gt;</span><span class='Advanced constant id'>Advanced</span><span class='lt op'>&lt;</span><span class='regexp val'>/option&gt;\n&lt;option value=&quot;Super Platinum&quot; disabled=&quot;disabled&quot;&gt;Super Platinum&lt;/o</span><span class='ption identifier id'>ption</span><span class='gt op'>&gt;</span>
+
+  <span class='options_for_select identifier id'>options_for_select</span><span class='lparen token'>(</span><span class='lbrack token'>[</span><span class='string val'>&quot;Free&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;Basic&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;Advanced&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;Super Platinum&quot;</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='symbol val'>:disabled</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='string val'>&quot;Advanced&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;Super Platinum&quot;</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+    <span class='lt op'>&lt;</span><span class='option identifier id'>option</span> <span class='value identifier id'>value</span><span class='assign token'>=</span><span class='string val'>&quot;Free&quot;</span><span class='gt op'>&gt;</span><span class='Free constant id'>Free</span><span class='lt op'>&lt;</span><span class='regexp val'>/option&gt;\n&lt;option value=&quot;Basic&quot;&gt;Basic&lt;/o</span><span class='ption identifier id'>ption</span><span class='gt op'>&gt;</span>\<span class='n identifier id'>n</span><span class='lt op'>&lt;</span><span class='option identifier id'>option</span> <span class='value identifier id'>value</span><span class='assign token'>=</span><span class='string val'>&quot;Advanced&quot;</span> <span class='disabled identifier id'>disabled</span><span class='assign token'>=</span><span class='string val'>&quot;disabled&quot;</span><span class='gt op'>&gt;</span><span class='Advanced constant id'>Advanced</span><span class='lt op'>&lt;</span><span class='regexp val'>/option&gt;\n&lt;option value=&quot;Super Platinum&quot; disabled=&quot;disabled&quot;&gt;Super Platinum&lt;/o</span><span class='ption identifier id'>ption</span><span class='gt op'>&gt;</span>
+
+  <span class='options_for_select identifier id'>options_for_select</span><span class='lparen token'>(</span><span class='lbrack token'>[</span><span class='string val'>&quot;Free&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;Basic&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;Advanced&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;Super Platinum&quot;</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='symbol val'>:selected</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;Free&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:disabled</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;Super Platinum&quot;</span><span class='rparen token'>)</span>
+    <span class='lt op'>&lt;</span><span class='option identifier id'>option</span> <span class='value identifier id'>value</span><span class='assign token'>=</span><span class='string val'>&quot;Free&quot;</span> <span class='selected identifier id'>selected</span><span class='assign token'>=</span><span class='string val'>&quot;selected&quot;</span><span class='gt op'>&gt;</span><span class='Free constant id'>Free</span><span class='lt op'>&lt;</span><span class='regexp val'>/option&gt;\n&lt;option value=&quot;Basic&quot;&gt;Basic&lt;/o</span><span class='ption identifier id'>ption</span><span class='gt op'>&gt;</span>\<span class='n identifier id'>n</span><span class='lt op'>&lt;</span><span class='option identifier id'>option</span> <span class='value identifier id'>value</span><span class='assign token'>=</span><span class='string val'>&quot;Advanced&quot;</span><span class='gt op'>&gt;</span><span class='Advanced constant id'>Advanced</span><span class='lt op'>&lt;</span><span class='regexp val'>/option&gt;\n&lt;option value=&quot;Super Platinum&quot; disabled=&quot;disabled&quot;&gt;Super Platinum&lt;/o</span><span class='ption identifier id'>ption</span><span class='gt op'>&gt;</span>
+</pre>
+<p>
+NOTE: Only the option tags are returned, you have to wrap this call in a
+regular HTML select tag.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'actionpack/lib/action_view/helpers/form_options_helper.rb', line 232</span>
+
+<span class='def def kw'>def</span> <span class='options_for_select identifier id'>options_for_select</span><span class='lparen token'>(</span><span class='container identifier id'>container</span><span class='comma token'>,</span> <span class='selected identifier id'>selected</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='container identifier id'>container</span> <span class='assign token'>=</span> <span class='container identifier id'>container</span><span class='dot token'>.</span><span class='to_a identifier id'>to_a</span> <span class='if if_mod kw'>if</span> <span class='Hash constant id'>Hash</span> <span class='eqq op'>===</span> <span class='container identifier id'>container</span>
+  <span class='selected identifier id'>selected</span><span class='comma token'>,</span> <span class='disabled identifier id'>disabled</span> <span class='assign token'>=</span> <span class='extract_selected_and_disabled identifier id'>extract_selected_and_disabled</span><span class='lparen token'>(</span><span class='selected identifier id'>selected</span><span class='rparen token'>)</span>
+
+  <span class='options_for_select identifier id'>options_for_select</span> <span class='assign token'>=</span> <span class='container identifier id'>container</span><span class='dot token'>.</span><span class='inject identifier id'>inject</span><span class='lparen token'>(</span><span class='lbrack token'>[</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='options identifier id'>options</span><span class='comma token'>,</span> <span class='element identifier id'>element</span><span class='bitor op'>|</span>
+    <span class='text identifier id'>text</span><span class='comma token'>,</span> <span class='value identifier id'>value</span> <span class='assign token'>=</span> <span class='option_text_and_value identifier id'>option_text_and_value</span><span class='lparen token'>(</span><span class='element identifier id'>element</span><span class='rparen token'>)</span>
+    <span class='selected_attribute identifier id'>selected_attribute</span> <span class='assign token'>=</span> <span class='string val'>' selected=&quot;selected&quot;'</span> <span class='if if_mod kw'>if</span> <span class='option_value_selected? fid id'>option_value_selected?</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='comma token'>,</span> <span class='selected identifier id'>selected</span><span class='rparen token'>)</span>
+    <span class='disabled_attribute identifier id'>disabled_attribute</span> <span class='assign token'>=</span> <span class='string val'>' disabled=&quot;disabled&quot;'</span> <span class='if if_mod kw'>if</span> <span class='disabled identifier id'>disabled</span> <span class='andop op'>&amp;&amp;</span> <span class='option_value_selected? fid id'>option_value_selected?</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='comma token'>,</span> <span class='disabled identifier id'>disabled</span><span class='rparen token'>)</span>
+    <span class='options identifier id'>options</span> <span class='lshft op'>&lt;&lt;</span> <span class='dstring node'>%(&lt;option value=&quot;#{html_escape(value.to_s)}&quot;#{selected_attribute}#{disabled_attribute}&gt;#{html_escape(text.to_s)}&lt;/option&gt;)</span>
+  <span class='end end kw'>end</span>
+
+  <span class='options_for_select identifier id'>options_for_select</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='string val'>&quot;\n&quot;</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>options_from_collection_for_select</h3>
+</div><div id="options_from_collection_for_select-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>options_from_collection_for_select</span><span class='args'>(collection, value_method, text_method, selected = nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns a string of option tags that have been compiled by iterating over
+the <tt>collection</tt> and assigning the the result of a call to the
+<tt>value_method</tt> as the option value and the <tt>text_method</tt> as
+the option text. Example:
+</p>
+<pre class="code">
+  <span class='options_from_collection_for_select identifier id'>options_from_collection_for_select</span><span class='lparen token'>(</span><span class='@people ivar id'>@people</span><span class='comma token'>,</span> <span class='string val'>'id'</span><span class='comma token'>,</span> <span class='string val'>'name'</span><span class='rparen token'>)</span>
+</pre>
+<p>
+This will output the same HTML as if you did this:
+</p>
+<pre class="code">
+  <span class='lt op'>&lt;</span><span class='option identifier id'>option</span> <span class='value identifier id'>value</span><span class='assign token'>=</span><span class='dstring node'>&quot;#{person.id}&quot;</span><span class='gt op'>&gt;</span><span class='comment val'>#{person.name}&lt;/option&gt;</span>
+</pre>
+<p>
+This is more often than not used inside a #select_tag like this example:
+</p>
+<pre class="code">
+  <span class='select_tag identifier id'>select_tag</span> <span class='string val'>'person'</span><span class='comma token'>,</span> <span class='options_from_collection_for_select identifier id'>options_from_collection_for_select</span><span class='lparen token'>(</span><span class='@people ivar id'>@people</span><span class='comma token'>,</span> <span class='string val'>'id'</span><span class='comma token'>,</span> <span class='string val'>'name'</span><span class='rparen token'>)</span>
+</pre>
+<p>
+If <tt>selected</tt> is specified as a value or array of values, the
+element(s) returning a match on <tt>value_method</tt> will be selected
+option tag(s).
+</p>
+<p>
+If <tt>selected</tt> is specified as a Proc, those members of the
+collection that return true for the anonymous function are the selected
+values.
+</p>
+<p>
+<tt>selected</tt> can also be a hash, specifying both <tt>:selected</tt>
+and/or <tt>:disabled</tt> values as required.
+</p>
+<p>
+Be sure to specify the same class as the <tt>value_method</tt> when
+specifying selected or disabled options. Failure to do this will produce
+undesired results. Example:
+</p>
+<pre class="code">
+  <span class='options_from_collection_for_select identifier id'>options_from_collection_for_select</span><span class='lparen token'>(</span><span class='@people ivar id'>@people</span><span class='comma token'>,</span> <span class='string val'>'id'</span><span class='comma token'>,</span> <span class='string val'>'name'</span><span class='comma token'>,</span> <span class='string val'>'1'</span><span class='rparen token'>)</span>
+</pre>
+<p>
+Will not select a person with the id of 1 because 1 (an Integer) is not the
+same as &#8216;1&#8217; (a string)
+</p>
+<pre class="code">
+  <span class='options_from_collection_for_select identifier id'>options_from_collection_for_select</span><span class='lparen token'>(</span><span class='@people ivar id'>@people</span><span class='comma token'>,</span> <span class='string val'>'id'</span><span class='comma token'>,</span> <span class='string val'>'name'</span><span class='comma token'>,</span> <span class='integer val'>1</span><span class='rparen token'>)</span>
+</pre>
+<p>
+should produce the desired results.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'actionpack/lib/action_view/helpers/form_options_helper.rb', line 270</span>
+
+<span class='def def kw'>def</span> <span class='options_from_collection_for_select identifier id'>options_from_collection_for_select</span><span class='lparen token'>(</span><span class='collection identifier id'>collection</span><span class='comma token'>,</span> <span class='value_method identifier id'>value_method</span><span class='comma token'>,</span> <span class='text_method identifier id'>text_method</span><span class='comma token'>,</span> <span class='selected identifier id'>selected</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='collection identifier id'>collection</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='element identifier id'>element</span><span class='bitor op'>|</span>
+    <span class='lbrack token'>[</span><span class='element identifier id'>element</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='text_method identifier id'>text_method</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='element identifier id'>element</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='value_method identifier id'>value_method</span><span class='rparen token'>)</span><span class='rbrack token'>]</span>
+  <span class='end end kw'>end</span>
+  <span class='selected identifier id'>selected</span><span class='comma token'>,</span> <span class='disabled identifier id'>disabled</span> <span class='assign token'>=</span> <span class='extract_selected_and_disabled identifier id'>extract_selected_and_disabled</span><span class='lparen token'>(</span><span class='selected identifier id'>selected</span><span class='rparen token'>)</span>
+  <span class='select_deselect identifier id'>select_deselect</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='select_deselect identifier id'>select_deselect</span><span class='lbrack token'>[</span><span class='symbol val'>:selected</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='extract_values_from_collection identifier id'>extract_values_from_collection</span><span class='lparen token'>(</span><span class='collection identifier id'>collection</span><span class='comma token'>,</span> <span class='value_method identifier id'>value_method</span><span class='comma token'>,</span> <span class='selected identifier id'>selected</span><span class='rparen token'>)</span>
+  <span class='select_deselect identifier id'>select_deselect</span><span class='lbrack token'>[</span><span class='symbol val'>:disabled</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='extract_values_from_collection identifier id'>extract_values_from_collection</span><span class='lparen token'>(</span><span class='collection identifier id'>collection</span><span class='comma token'>,</span> <span class='value_method identifier id'>value_method</span><span class='comma token'>,</span> <span class='disabled identifier id'>disabled</span><span class='rparen token'>)</span>
+
+  <span class='options_for_select identifier id'>options_for_select</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='comma token'>,</span> <span class='select_deselect identifier id'>select_deselect</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>select</h3>
+</div><div id="select-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>select</span><span class='args'>(object, method, choices, options = {}, html_options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Create a select tag and a series of contained option tags for the provided
+object and method. The option currently held by the object will be
+selected, provided that the object is available. See options_for_select for
+the required format of the choices parameter.
+</p>
+<p>
+Example with @post.person_id =&gt; 1:
+</p>
+<pre class="code">
+  <span class='select identifier id'>select</span><span class='lparen token'>(</span><span class='string val'>&quot;post&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;person_id&quot;</span><span class='comma token'>,</span> <span class='Person constant id'>Person</span><span class='dot token'>.</span><span class='all identifier id'>all</span><span class='dot token'>.</span><span class='collect identifier id'>collect</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='p identifier id'>p</span><span class='bitor op'>|</span> <span class='lbrack token'>[</span> <span class='p identifier id'>p</span><span class='dot token'>.</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='p identifier id'>p</span><span class='dot token'>.</span><span class='id identifier id'>id</span> <span class='rbrack token'>]</span> <span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='lbrace token'>{</span> <span class='symbol val'>:include_blank</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span> <span class='rbrace token'>}</span><span class='rparen token'>)</span>
+</pre>
+<p>
+could become:
+</p>
+<pre class="code">
+  <span class='lt op'>&lt;</span><span class='select identifier id'>select</span> <span class='name identifier id'>name</span><span class='assign token'>=</span><span class='string val'>&quot;post[person_id]&quot;</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='option identifier id'>option</span> <span class='value identifier id'>value</span><span class='assign token'>=</span><span class='string val'>&quot;&quot;</span><span class='gt op'>&gt;</span><span class='lt op'>&lt;</span><span class='regexp val'>/option&gt;
+    &lt;option value=&quot;1&quot; selected=&quot;selected&quot;&gt;David&lt;/o</span><span class='ption identifier id'>ption</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='option identifier id'>option</span> <span class='value identifier id'>value</span><span class='assign token'>=</span><span class='string val'>&quot;2&quot;</span><span class='gt op'>&gt;</span><span class='Sam constant id'>Sam</span><span class='lt op'>&lt;</span><span class='regexp val'>/option&gt;
+    &lt;option value=&quot;3&quot;&gt;Tobias&lt;/o</span><span class='ption identifier id'>ption</span><span class='gt op'>&gt;</span>
+  <span class='lt op'>&lt;</span><span class='regexp val'>/select&gt;
+</span></pre>
+<p>
+This can be used to provide a default set of options in the standard way:
+before rendering the create form, a new model instance is assigned the
+default options and bound to @model_name. Usually this model is not saved
+to the database. Instead, a second model object is created when the create
+request is received. This allows the user to submit a form page more than
+once with the expected results of creating multiple records. In addition,
+this allows a single partial to be used to generate form inputs for both
+edit and create forms.
+</p>
+<p>
+By default, <tt>post.person_id</tt> is the selected option. Specify
+<tt>:selected =&gt; value</tt> to use a different selection or
+<tt>:selected =&gt; nil</tt> to leave all options unselected. Similarly,
+you can specify values to be disabled in the option tags by specifying the
+<tt>:disabled</tt> option. This can either be a single value or an array of
+values to be disabled.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+127
+128
+129</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'actionpack/lib/action_view/helpers/form_options_helper.rb', line 127</span>
+
+<span class='def def kw'>def</span> <span class='select identifier id'>select</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='comma token'>,</span> <span class='method identifier id'>method</span><span class='comma token'>,</span> <span class='choices identifier id'>choices</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='html_options identifier id'>html_options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='InstanceTag constant id'>InstanceTag</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='comma token'>,</span> <span class='method identifier id'>method</span><span class='comma token'>,</span> <span class='self self kw'>self</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:object</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_select_tag identifier id'>to_select_tag</span><span class='lparen token'>(</span><span class='choices identifier id'>choices</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='comma token'>,</span> <span class='html_options identifier id'>html_options</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>time_zone_options_for_select</h3>
+</div><div id="time_zone_options_for_select-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>time_zone_options_for_select</span><span class='args'>(selected = nil, priority_zones = nil, model = ::ActiveSupport::TimeZone)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns a string of option tags for pretty much any time zone in the world.
+Supply a TimeZone name as <tt>selected</tt> to have it marked as the
+selected option tag. You can also supply an array of TimeZone objects as
+<tt>priority_zones</tt>, so that they will be listed above the rest of the
+(long) list. (You can use TimeZone.us_zones as a convenience for obtaining
+a list of the US time zones, or a Regexp to select the zones of your
+choice)
+</p>
+<p>
+The <tt>selected</tt> parameter must be either <tt>nil</tt>, or a string
+that names a TimeZone.
+</p>
+<p>
+By default, <tt>model</tt> is the TimeZone constant (which can be obtained
+in Active Record as a value object). The only requirement is that the
+<tt>model</tt> parameter be an object that responds to <tt>all</tt>, and
+returns an array of objects that represent time zones.
+</p>
+<p>
+NOTE: Only the option tags are returned, you have to wrap this call in a
+regular HTML select tag.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'actionpack/lib/action_view/helpers/form_options_helper.rb', line 411</span>
+
+<span class='def def kw'>def</span> <span class='time_zone_options_for_select identifier id'>time_zone_options_for_select</span><span class='lparen token'>(</span><span class='selected identifier id'>selected</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='priority_zones identifier id'>priority_zones</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='model identifier id'>model</span> <span class='assign token'>=</span> <span class='colon3 op'>::</span><span class='ActiveSupport constant id'>ActiveSupport</span><span class='colon2 op'>::</span><span class='TimeZone constant id'>TimeZone</span><span class='rparen token'>)</span>
+  <span class='zone_options identifier id'>zone_options</span> <span class='assign token'>=</span> <span class='string val'>&quot;&quot;</span>
+
+  <span class='zones identifier id'>zones</span> <span class='assign token'>=</span> <span class='model identifier id'>model</span><span class='dot token'>.</span><span class='all identifier id'>all</span>
+  <span class='convert_zones identifier id'>convert_zones</span> <span class='assign token'>=</span> <span class='lambda identifier id'>lambda</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='list identifier id'>list</span><span class='bitor op'>|</span> <span class='list identifier id'>list</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='z identifier id'>z</span><span class='bitor op'>|</span> <span class='lbrack token'>[</span> <span class='z identifier id'>z</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='comma token'>,</span> <span class='z identifier id'>z</span><span class='dot token'>.</span><span class='name identifier id'>name</span> <span class='rbrack token'>]</span> <span class='rbrace token'>}</span> <span class='rbrace token'>}</span>
+
+  <span class='if if kw'>if</span> <span class='priority_zones identifier id'>priority_zones</span>
+    <span class='if if kw'>if</span> <span class='priority_zones identifier id'>priority_zones</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Regexp constant id'>Regexp</span><span class='rparen token'>)</span>
+      <span class='priority_zones identifier id'>priority_zones</span> <span class='assign token'>=</span> <span class='model identifier id'>model</span><span class='dot token'>.</span><span class='all identifier id'>all</span><span class='dot token'>.</span><span class='find_all identifier id'>find_all</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='z identifier id'>z</span><span class='bitor op'>|</span> <span class='z identifier id'>z</span> <span class='match op'>=~</span> <span class='priority_zones identifier id'>priority_zones</span><span class='rbrace token'>}</span>
+    <span class='end end kw'>end</span>
+    <span class='zone_options identifier id'>zone_options</span> <span class='opasgn op'>+=</span> <span class='options_for_select identifier id'>options_for_select</span><span class='lparen token'>(</span><span class='convert_zones identifier id'>convert_zones</span><span class='lbrack token'>[</span><span class='priority_zones identifier id'>priority_zones</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='selected identifier id'>selected</span><span class='rparen token'>)</span>
+    <span class='zone_options identifier id'>zone_options</span> <span class='opasgn op'>+=</span> <span class='string val'>&quot;&lt;option value=\&quot;\&quot; disabled=\&quot;disabled\&quot;&gt;-------------&lt;/option&gt;\n&quot;</span>
+
+    <span class='zones identifier id'>zones</span> <span class='assign token'>=</span> <span class='zones identifier id'>zones</span><span class='dot token'>.</span><span class='reject identifier id'>reject</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='z identifier id'>z</span><span class='bitor op'>|</span> <span class='priority_zones identifier id'>priority_zones</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span> <span class='z identifier id'>z</span> <span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  <span class='end end kw'>end</span>
+
+  <span class='zone_options identifier id'>zone_options</span> <span class='opasgn op'>+=</span> <span class='options_for_select identifier id'>options_for_select</span><span class='lparen token'>(</span><span class='convert_zones identifier id'>convert_zones</span><span class='lbrack token'>[</span><span class='zones identifier id'>zones</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='selected identifier id'>selected</span><span class='rparen token'>)</span>
+  <span class='zone_options identifier id'>zone_options</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>time_zone_select</h3>
+</div><div id="time_zone_select-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>time_zone_select</span><span class='args'>(object, method, priority_zones = nil, options = {}, html_options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Return select and option tags for the given object and method, using
+#time_zone_options_for_select to generate the list of option tags.
+</p>
+<p>
+In addition to the <tt>:include_blank</tt> option documented above, this
+method also supports a <tt>:model</tt> option, which defaults to TimeZone.
+This may be used by users to specify a different time zone model object.
+(See <tt>time_zone_options_for_select</tt> for more information.)
+</p>
+<p>
+You can also supply an array of TimeZone objects as
+<tt>priority_zones</tt>, so that they will be listed above the rest of the
+(long) list. (You can use TimeZone.us_zones as a convenience for obtaining
+a list of the US time zones, or a Regexp to select the zones of your
+choice)
+</p>
+<p>
+Finally, this method supports a <tt>:default</tt> option, which selects a
+default TimeZone if the object&#8217;s time zone is <tt>nil</tt>.
+</p>
+<p>
+Examples:
+</p>
+<pre class="code">
+  <span class='time_zone_select identifier id'>time_zone_select</span><span class='lparen token'>(</span> <span class='string val'>&quot;user&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;time_zone&quot;</span><span class='comma token'>,</span> <span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='symbol val'>:include_blank</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span><span class='rparen token'>)</span>
+
+  <span class='time_zone_select identifier id'>time_zone_select</span><span class='lparen token'>(</span> <span class='string val'>&quot;user&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;time_zone&quot;</span><span class='comma token'>,</span> <span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='symbol val'>:default</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;Pacific Time (US &amp; Canada)&quot;</span> <span class='rparen token'>)</span>
+
+  <span class='time_zone_select identifier id'>time_zone_select</span><span class='lparen token'>(</span> <span class='string val'>&quot;user&quot;</span><span class='comma token'>,</span> <span class='string val'>'time_zone'</span><span class='comma token'>,</span> <span class='TimeZone constant id'>TimeZone</span><span class='dot token'>.</span><span class='us_zones identifier id'>us_zones</span><span class='comma token'>,</span> <span class='symbol val'>:default</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;Pacific Time (US &amp; Canada)&quot;</span><span class='rparen token'>)</span>
+
+  <span class='time_zone_select identifier id'>time_zone_select</span><span class='lparen token'>(</span> <span class='string val'>&quot;user&quot;</span><span class='comma token'>,</span> <span class='string val'>'time_zone'</span><span class='comma token'>,</span> <span class='lbrack token'>[</span> <span class='TimeZone constant id'>TimeZone</span><span class='lbrack token'>[</span><span class='string val'>'Alaska'</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='TimeZone constant id'>TimeZone</span><span class='lbrack token'>[</span><span class='string val'>'Hawaii'</span><span class='rbrack token'>]</span> <span class='rbrack token'>]</span><span class='rparen token'>)</span>
+
+  <span class='time_zone_select identifier id'>time_zone_select</span><span class='lparen token'>(</span> <span class='string val'>&quot;user&quot;</span><span class='comma token'>,</span> <span class='string val'>'time_zone'</span><span class='comma token'>,</span> <span class='regexp val'>/Australia/</span><span class='rparen token'>)</span>
+
+  <span class='time_zone_select identifier id'>time_zone_select</span><span class='lparen token'>(</span> <span class='string val'>&quot;user&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;time_zone&quot;</span><span class='comma token'>,</span> <span class='TZInfo constant id'>TZInfo</span><span class='colon2 op'>::</span><span class='Timezone constant id'>Timezone</span><span class='dot token'>.</span><span class='all identifier id'>all</span><span class='dot token'>.</span><span class='sort identifier id'>sort</span><span class='comma token'>,</span> <span class='symbol val'>:model</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='TZInfo constant id'>TZInfo</span><span class='colon2 op'>::</span><span class='Timezone constant id'>Timezone</span><span class='rparen token'>)</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+195
+196
+197</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'actionpack/lib/action_view/helpers/form_options_helper.rb', line 195</span>
+
+<span class='def def kw'>def</span> <span class='time_zone_select identifier id'>time_zone_select</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='comma token'>,</span> <span class='method identifier id'>method</span><span class='comma token'>,</span> <span class='priority_zones identifier id'>priority_zones</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='html_options identifier id'>html_options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='InstanceTag constant id'>InstanceTag</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='comma token'>,</span> <span class='method identifier id'>method</span><span class='comma token'>,</span> <span class='self self kw'>self</span><span class='comma token'>,</span>  <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:object</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_time_zone_select_tag identifier id'>to_time_zone_select_tag</span><span class='lparen token'>(</span><span class='priority_zones identifier id'>priority_zones</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='comma token'>,</span> <span class='html_options identifier id'>html_options</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: ResourceController::Helpers</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module ResourceController_Helpers">
+  <h1 class="title">Module: ResourceController::Helpers</h1>
+  <div class="section mixins">
+  <h1>Included Modules</h1>
+  <p>ResourceController::Helpers::Urls, ResourceController::Helpers::Internal, ResourceController::Helpers::Nested, ResourceController::Helpers::CurrentObjects</p>
+</div><div class="section docstring">
+  <h2>ResourceController::Helpers</h2>
+<p>
+Included in Base.
+</p>
+<p>
+These helpers are used internally to manage objects, generate urls, and
+manage parent resource associations.
+</p>
+<p>
+If you want to customize certain controller behaviour, like member-object,
+and collection fetching, overriding these methods is all it takes.
+</p>
+<p>
+See the docs below, and the README for examples
+</p>
+<p>
+*Please Note: many of these helpers build on top of each other, and require
+that behaviour to be maintained, in order for other functionality to work
+properly.*
+</p>
+<p>
+e.g. All fetching must be done on top of the method
+end_of_association_chain, or else parent resources (including polymorphic
+ones) won&#8217;t function correctly.
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='PostsController constant id'>PostsController</span> <span class='lt op'>&lt;</span> <span class='ResourceController constant id'>ResourceController</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
+  <span class='private identifier id'>private</span>
+    <span class='def def kw'>def</span> <span class='object identifier id'>object</span>
+      <span class='@object ivar id'>@object</span> <span class='opasgn op'>||=</span> <span class='end_of_association_chain identifier id'>end_of_association_chain</span><span class='dot token'>.</span><span class='find_by_permalink identifier id'>find_by_permalink</span><span class='lparen token'>(</span><span class='param identifier id'>param</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+</pre>
+
+</div><div class="section constants">
+  
+</div>
+</div>
+    </div>
+  </body>
+</html>

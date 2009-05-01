@@ -1,0 +1,318 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: ActiveScaffold::Actions::LiveSearch</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module ActiveScaffold_Actions_LiveSearch">
+  <h1 class="title">Module: ActiveScaffold::Actions::LiveSearch</h1>
+  <div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <h1>Public Class Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#included-class_method' title='included'>included</a></span><span class='args'>(base)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+  <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#do_search-instance_method' title='#do_search'>#do_search</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#live_search_authorized%3F-instance_method' title='#live_search_authorized?'>#live_search_authorized?</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+The default security delegates to ActiveRecordPermissions.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#show_search-instance_method' title='#show_search'>#show_search</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails class public">
+  <h1>Public Class Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>included</h3>
+</div><div id="included-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>included</span><span class='args'>(base)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+3
+4
+5
+6</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_scaffold/actions/live_search.rb', line 3</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='included identifier id'>included</span><span class='lparen token'>(</span><span class='base identifier id'>base</span><span class='rparen token'>)</span>
+  <span class='base identifier id'>base</span><span class='dot token'>.</span><span class='before_filter identifier id'>before_filter</span> <span class='symbol val'>:live_search_authorized?</span><span class='comma token'>,</span> <span class='symbol val'>:only</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:show_search</span>
+  <span class='base identifier id'>base</span><span class='dot token'>.</span><span class='before_filter identifier id'>before_filter</span> <span class='symbol val'>:do_search</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div><div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>do_search</h3>
+</div><div id="do_search-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>do_search</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_scaffold/actions/live_search.rb', line 24</span>
+
+<span class='def def kw'>def</span> <span class='do_search identifier id'>do_search</span>
+  <span class='@query ivar id'>@query</span> <span class='assign token'>=</span> <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:search</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='strip identifier id'>strip</span> <span class='rescue rescue kw'>rescue</span> <span class='string val'>''</span>
+
+  <span class='unless unless kw'>unless</span> <span class='@query ivar id'>@query</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span>
+    <span class='columns identifier id'>columns</span> <span class='assign token'>=</span> <span class='active_scaffold_config identifier id'>active_scaffold_config</span><span class='dot token'>.</span><span class='live_search identifier id'>live_search</span><span class='dot token'>.</span><span class='columns identifier id'>columns</span>
+    <span class='like_pattern identifier id'>like_pattern</span> <span class='assign token'>=</span> <span class='active_scaffold_config identifier id'>active_scaffold_config</span><span class='dot token'>.</span><span class='live_search identifier id'>live_search</span><span class='dot token'>.</span><span class='full_text_search? fid id'>full_text_search?</span> <span class='integer val'>? </span><span class='string val'>'%?%'</span> <span class='colon op'>:</span> <span class='string val'>'?%'</span>
+    <span class='search_conditions identifier id'>search_conditions</span> <span class='assign token'>=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='create_conditions_for_columns identifier id'>create_conditions_for_columns</span><span class='lparen token'>(</span><span class='@query ivar id'>@query</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='string val'>' '</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='columns identifier id'>columns</span><span class='comma token'>,</span> <span class='like_pattern identifier id'>like_pattern</span><span class='rparen token'>)</span>
+    <span class='self self kw'>self</span><span class='dot token'>.</span><span class='active_scaffold_conditions identifier id'>active_scaffold_conditions</span> <span class='assign token'>=</span> <span class='merge_conditions identifier id'>merge_conditions</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='dot token'>.</span><span class='active_scaffold_conditions identifier id'>active_scaffold_conditions</span><span class='comma token'>,</span> <span class='search_conditions identifier id'>search_conditions</span><span class='rparen token'>)</span>
+    <span class='@filtered ivar id'>@filtered</span> <span class='assign token'>=</span> <span class='notop op'>!</span><span class='search_conditions identifier id'>search_conditions</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span>
+
+    <span class='includes_for_search_columns identifier id'>includes_for_search_columns</span> <span class='assign token'>=</span> <span class='columns identifier id'>columns</span><span class='dot token'>.</span><span class='collect identifier id'>collect</span><span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='column identifier id'>column</span><span class='bitor op'>|</span> <span class='column identifier id'>column</span><span class='dot token'>.</span><span class='includes identifier id'>includes</span><span class='rbrace token'>}</span><span class='dot token'>.</span><span class='flatten identifier id'>flatten</span><span class='dot token'>.</span><span class='uniq identifier id'>uniq</span><span class='dot token'>.</span><span class='compact identifier id'>compact</span>
+    <span class='self self kw'>self</span><span class='dot token'>.</span><span class='active_scaffold_joins identifier id'>active_scaffold_joins</span><span class='dot token'>.</span><span class='concat identifier id'>concat</span> <span class='includes_for_search_columns identifier id'>includes_for_search_columns</span>
+
+    <span class='active_scaffold_config identifier id'>active_scaffold_config</span><span class='dot token'>.</span><span class='list identifier id'>list</span><span class='dot token'>.</span><span class='user identifier id'>user</span><span class='dot token'>.</span><span class='page identifier id'>page</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>live_search_authorized?</h3>
+</div><div id="live_search_authorized%3F-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>live_search_authorized?</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+The default security delegates to ActiveRecordPermissions. You may override
+the method to customize.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+43
+44
+45</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_scaffold/actions/live_search.rb', line 43</span>
+
+<span class='def def kw'>def</span> <span class='live_search_authorized? fid id'>live_search_authorized?</span>
+  <span class='authorized_for? fid id'>authorized_for?</span><span class='lparen token'>(</span><span class='symbol val'>:action</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:read</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>show_search</h3>
+</div><div id="show_search-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>show_search</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_scaffold/actions/live_search.rb', line 8</span>
+
+<span class='def def kw'>def</span> <span class='show_search identifier id'>show_search</span>
+  <span class='respond_to identifier id'>respond_to</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='type identifier id'>type</span><span class='bitor op'>|</span>
+    <span class='type identifier id'>type</span><span class='dot token'>.</span><span class='html identifier id'>html</span> <span class='do do kw'>do</span>
+      <span class='if if kw'>if</span> <span class='successful? fid id'>successful?</span>
+        <span class='render identifier id'>render</span><span class='lparen token'>(</span><span class='symbol val'>:partial</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;live_search&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:layout</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span><span class='rparen token'>)</span>
+      <span class='else else kw'>else</span>
+        <span class='return_to_main identifier id'>return_to_main</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+    <span class='type identifier id'>type</span><span class='dot token'>.</span><span class='js identifier id'>js</span> <span class='lbrace token'>{</span> <span class='render identifier id'>render</span><span class='lparen token'>(</span><span class='symbol val'>:partial</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;live_search&quot;</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+    <span class='show_search_respond_to identifier id'>show_search_respond_to</span> <span class='type identifier id'>type</span> <span class='if if_mod kw'>if</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span> <span class='symbol val'>:show_search_respond_to</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

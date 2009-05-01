@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: Hash</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class Hash">
+  <h1 class="title">Class: Hash</h1>
+  <div class="section inheritance">
+  <ul>
+  <li><a href='Object.html' title='Object'>Object</a></li><ul><li>Hash</li>
+  </ul></ul>
+</div><div class="section docstring">
+  <p>
+&#8212; Ronin - A Ruby platform designed for information security and data
+exploration tasks.
+</p>
+<p>
+Copyright &#169; 2006-2009 Hal Brodigan (postmodern.mod3 at gmail.com)
+</p>
+<p>
+This program is free software; you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the Free
+Software Foundation; either version 2 of the License, or (at your option)
+any later version.
+</p>
+<p>
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+more details.
+</p>
+<p>
+You should have received a copy of the GNU General Public License along
+with this program; if not, write to the Free Software Foundation, Inc., 51
+Franklin St, Fifth Floor, Boston, MA 02110-1301 USA ++
+</p>
+
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#explode-instance_method' title='#explode'>#explode</a></span><span class='args'>(value,options={},&amp;block)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Explodes the hash into a Hash of hashes using the given <em>options</em>,
+where each Hash has the value of one key replaced with the specified
+<em>value</em>.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table><div class="inherited">
+  
+  <div>
+    <h1>Public Instance Methods Inherited from <a href='Object.html' title='Object'>Object</a></h1>
+    <p><span class='name'><a href='Object.html#class_def-instance_method' title='class_def'>class_def</a></span>, <span class='name'><a href='Object.html#meta_def-instance_method' title='meta_def'>meta_def</a></span>, <span class='name'><a href='Object.html#meta_eval-instance_method' title='meta_eval'>meta_eval</a></span>, <span class='name'><a href='Object.html#metaclass-instance_method' title='metaclass'>metaclass</a></span>, <span class='name'><a href='Object.html#metaclass_def-instance_method' title='metaclass_def'>metaclass_def</a></span>, <span class='name'><a href='Object.html#metaclass_eval-instance_method' title='metaclass_eval'>metaclass_eval</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>explode</h3>
+</div><div id="explode-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>explode</span><span class='args'>(value,options={},&amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Explodes the hash into a Hash of hashes using the given <em>options</em>,
+where each Hash has the value of one key replaced with the specified
+<em>value</em>. If a <em>block</em> is given, it will be passed each key
+that was replaced and the resulting Hash.
+</p>
+<p>
+<em>options</em> may contain the following keys:
+</p>
+<table>
+<tr><td valign="top"><tt>:included</tt>:</td><td>The keys whos values are to be replaced.
+
+</td></tr>
+<tr><td valign="top"><tt>:excluded</tt>:</td><td>The keys whos values will not be replaced.
+
+</td></tr>
+</table>
+<pre class="code">
+  <span class='hash identifier id'>hash</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='symbol val'>:a</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>1</span><span class='comma token'>,</span> <span class='symbol val'>:b</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>2</span><span class='rbrace token'>}</span>
+  <span class='hash identifier id'>hash</span><span class='dot token'>.</span><span class='explode identifier id'>explode</span><span class='lparen token'>(</span><span class='string val'>'z'</span><span class='rparen token'>)</span>
+  <span class='comment val'># =&gt; {:a=&gt;{:a=&gt;&quot;z&quot;, :b=&gt;2}, :b=&gt;{:a=&gt;1, :b=&gt;&quot;z&quot;}}</span>
+
+  <span class='hash identifier id'>hash</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='symbol val'>:a</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>1</span><span class='comma token'>,</span> <span class='symbol val'>:b</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>2</span><span class='comma token'>,</span> <span class='symbol val'>:c</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>3</span><span class='rbrace token'>}</span>
+  <span class='hash identifier id'>hash</span><span class='dot token'>.</span><span class='explode identifier id'>explode</span><span class='lparen token'>(</span><span class='string val'>'z'</span><span class='comma token'>,</span> <span class='symbol val'>:excluded</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='symbol val'>:b</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+  <span class='comment val'># =&gt; {:c=&gt;{:c=&gt;&quot;z&quot;, :a=&gt;1, :b=&gt;2}, :a=&gt;{:c=&gt;3, :a=&gt;&quot;z&quot;, :b=&gt;2}}</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/ronin/extensions/hash.rb', line 44</span>
+
+<span class='def def kw'>def</span> <span class='explode identifier id'>explode</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='comma token'>,</span><span class='options identifier id'>options</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='included identifier id'>included</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:included</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='keys identifier id'>keys</span><span class='rparen token'>)</span>
+  <span class='excluded identifier id'>excluded</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:excluded</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+  <span class='selected_keys identifier id'>selected_keys</span> <span class='assign token'>=</span> <span class='included identifier id'>included</span> <span class='minus op'>-</span> <span class='excluded identifier id'>excluded</span>
+
+  <span class='hashes identifier id'>hashes</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+
+  <span class='selected_keys identifier id'>selected_keys</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='key identifier id'>key</span><span class='bitor op'>|</span>
+    <span class='new_hash identifier id'>new_hash</span> <span class='assign token'>=</span> <span class='clone identifier id'>clone</span>
+    <span class='new_hash identifier id'>new_hash</span><span class='lbrack token'>[</span><span class='key identifier id'>key</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='value identifier id'>value</span>
+
+    <span class='block identifier id'>block</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='key identifier id'>key</span><span class='comma token'>,</span><span class='new_hash identifier id'>new_hash</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='block identifier id'>block</span>
+    <span class='hashes identifier id'>hashes</span><span class='lbrack token'>[</span><span class='key identifier id'>key</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='new_hash identifier id'>new_hash</span>
+  <span class='end end kw'>end</span>
+
+  <span class='return return kw'>return</span> <span class='hashes identifier id'>hashes</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

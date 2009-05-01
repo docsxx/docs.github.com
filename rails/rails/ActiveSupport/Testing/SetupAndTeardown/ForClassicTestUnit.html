@@ -1,0 +1,193 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: ActiveSupport::Testing::SetupAndTeardown::ForClassicTestUnit</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module ActiveSupport_Testing_SetupAndTeardown_ForClassicTestUnit">
+  <h1 class="title">Module: ActiveSupport::Testing::SetupAndTeardown::ForClassicTestUnit</h1>
+  <div class="section constants">
+  <div class="thisclass">
+  <h1>Constants</h1>
+  <dl>
+    
+      <dt id="PASSTHROUGH_EXCEPTIONS-constant">PASSTHROUGH_EXCEPTIONS</dt>
+      <dd>Test::Unit::TestCase::PASSTHROUGH_EXCEPTIONS rescue [NoMemoryError, SignalException, Interrupt, SystemExit]</dd>
+    
+  </dl>
+</div>
+
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#run-instance_method' title='#run'>#run</a></span><span class='args'>(result)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+This redefinition is unfortunate but test/unit shows us no alternative.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>run</h3>
+</div><div id="run-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>run</span><span class='args'>(result)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+This redefinition is unfortunate but test/unit shows us no alternative.
+Doubly unfortunate: hax to support Mocha&#8217;s hax.
+</p>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'activesupport/lib/active_support/testing/setup_and_teardown.rb', line 46</span>
+
+<span class='def def kw'>def</span> <span class='run identifier id'>run</span><span class='lparen token'>(</span><span class='result identifier id'>result</span><span class='rparen token'>)</span>
+  <span class='return return kw'>return</span> <span class='if if_mod kw'>if</span> <span class='@method_name ivar id'>@method_name</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='eq op'>==</span> <span class='string val'>&quot;default_test&quot;</span>
+
+  <span class='if if kw'>if</span> <span class='using_mocha identifier id'>using_mocha</span> <span class='assign token'>=</span> <span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='colon op'>:</span><span class='mocha_verify identifier id'>mocha_verify</span><span class='rparen token'>)</span>
+    <span class='assertion_counter_klass identifier id'>assertion_counter_klass</span> <span class='assign token'>=</span> <span class='if if kw'>if</span> <span class='defined? defined kw'>defined?</span><span class='lparen token'>(</span><span class='Mocha constant id'>Mocha</span><span class='colon2 op'>::</span><span class='TestCaseAdapter constant id'>TestCaseAdapter</span><span class='colon2 op'>::</span><span class='AssertionCounter constant id'>AssertionCounter</span><span class='rparen token'>)</span>
+                                <span class='Mocha constant id'>Mocha</span><span class='colon2 op'>::</span><span class='TestCaseAdapter constant id'>TestCaseAdapter</span><span class='colon2 op'>::</span><span class='AssertionCounter constant id'>AssertionCounter</span>
+                              <span class='else else kw'>else</span>
+                                <span class='Mocha constant id'>Mocha</span><span class='colon2 op'>::</span><span class='Integration constant id'>Integration</span><span class='colon2 op'>::</span><span class='TestUnit constant id'>TestUnit</span><span class='colon2 op'>::</span><span class='AssertionCounter constant id'>AssertionCounter</span>
+                              <span class='end end kw'>end</span>
+    <span class='assertion_counter identifier id'>assertion_counter</span> <span class='assign token'>=</span> <span class='assertion_counter_klass identifier id'>assertion_counter_klass</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='result identifier id'>result</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+
+  <span class='yield yield kw'>yield</span><span class='lparen token'>(</span><span class='Test constant id'>Test</span><span class='colon2 op'>::</span><span class='Unit constant id'>Unit</span><span class='colon2 op'>::</span><span class='TestCase constant id'>TestCase</span><span class='colon2 op'>::</span><span class='STARTED constant id'>STARTED</span><span class='comma token'>,</span> <span class='name identifier id'>name</span><span class='rparen token'>)</span>
+  <span class='@_result ivar id'>@_result</span> <span class='assign token'>=</span> <span class='result identifier id'>result</span>
+  <span class='begin begin kw'>begin</span>
+    <span class='begin begin kw'>begin</span>
+      <span class='run_callbacks identifier id'>run_callbacks</span> <span class='symbol val'>:setup</span>
+      <span class='setup identifier id'>setup</span>
+      <span class='__send__ identifier id'>__send__</span><span class='lparen token'>(</span><span class='@method_name ivar id'>@method_name</span><span class='rparen token'>)</span>
+      <span class='mocha_verify identifier id'>mocha_verify</span><span class='lparen token'>(</span><span class='assertion_counter identifier id'>assertion_counter</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='using_mocha identifier id'>using_mocha</span>
+    <span class='rescue rescue kw'>rescue</span> <span class='Mocha constant id'>Mocha</span><span class='colon2 op'>::</span><span class='ExpectationError constant id'>ExpectationError</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
+      <span class='add_failure identifier id'>add_failure</span><span class='lparen token'>(</span><span class='e identifier id'>e</span><span class='dot token'>.</span><span class='message identifier id'>message</span><span class='comma token'>,</span> <span class='e identifier id'>e</span><span class='dot token'>.</span><span class='backtrace identifier id'>backtrace</span><span class='rparen token'>)</span>
+    <span class='rescue rescue kw'>rescue</span> <span class='Test constant id'>Test</span><span class='colon2 op'>::</span><span class='Unit constant id'>Unit</span><span class='colon2 op'>::</span><span class='AssertionFailedError constant id'>AssertionFailedError</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
+      <span class='add_failure identifier id'>add_failure</span><span class='lparen token'>(</span><span class='e identifier id'>e</span><span class='dot token'>.</span><span class='message identifier id'>message</span><span class='comma token'>,</span> <span class='e identifier id'>e</span><span class='dot token'>.</span><span class='backtrace identifier id'>backtrace</span><span class='rparen token'>)</span>
+    <span class='rescue rescue kw'>rescue</span> <span class='Exception constant id'>Exception</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
+      <span class='raise identifier id'>raise</span> <span class='if if_mod kw'>if</span> <span class='PASSTHROUGH_EXCEPTIONS constant id'>PASSTHROUGH_EXCEPTIONS</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='e identifier id'>e</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='rparen token'>)</span>
+      <span class='add_error identifier id'>add_error</span><span class='lparen token'>(</span><span class='e identifier id'>e</span><span class='rparen token'>)</span>
+    <span class='ensure ensure kw'>ensure</span>
+      <span class='begin begin kw'>begin</span>
+        <span class='teardown identifier id'>teardown</span>
+        <span class='run_callbacks identifier id'>run_callbacks</span> <span class='symbol val'>:teardown</span><span class='comma token'>,</span> <span class='symbol val'>:enumerator</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:reverse_each</span>
+      <span class='rescue rescue kw'>rescue</span> <span class='Test constant id'>Test</span><span class='colon2 op'>::</span><span class='Unit constant id'>Unit</span><span class='colon2 op'>::</span><span class='AssertionFailedError constant id'>AssertionFailedError</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
+        <span class='add_failure identifier id'>add_failure</span><span class='lparen token'>(</span><span class='e identifier id'>e</span><span class='dot token'>.</span><span class='message identifier id'>message</span><span class='comma token'>,</span> <span class='e identifier id'>e</span><span class='dot token'>.</span><span class='backtrace identifier id'>backtrace</span><span class='rparen token'>)</span>
+      <span class='rescue rescue kw'>rescue</span> <span class='Exception constant id'>Exception</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
+        <span class='raise identifier id'>raise</span> <span class='if if_mod kw'>if</span> <span class='PASSTHROUGH_EXCEPTIONS constant id'>PASSTHROUGH_EXCEPTIONS</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='e identifier id'>e</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='rparen token'>)</span>
+        <span class='add_error identifier id'>add_error</span><span class='lparen token'>(</span><span class='e identifier id'>e</span><span class='rparen token'>)</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+  <span class='ensure ensure kw'>ensure</span>
+    <span class='mocha_teardown identifier id'>mocha_teardown</span> <span class='if if_mod kw'>if</span> <span class='using_mocha identifier id'>using_mocha</span>
+  <span class='end end kw'>end</span>
+  <span class='result identifier id'>result</span><span class='dot token'>.</span><span class='add_run identifier id'>add_run</span>
+  <span class='yield yield kw'>yield</span><span class='lparen token'>(</span><span class='Test constant id'>Test</span><span class='colon2 op'>::</span><span class='Unit constant id'>Unit</span><span class='colon2 op'>::</span><span class='TestCase constant id'>TestCase</span><span class='colon2 op'>::</span><span class='FINISHED constant id'>FINISHED</span><span class='comma token'>,</span> <span class='name identifier id'>name</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

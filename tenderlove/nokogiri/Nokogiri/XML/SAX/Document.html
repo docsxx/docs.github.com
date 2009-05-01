@@ -1,0 +1,610 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: Nokogiri::XML::SAX::Document</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class Nokogiri_XML_SAX_Document">
+  <h1 class="title">Class: Nokogiri::XML::SAX::Document</h1>
+  <div class="section docstring">
+  <p>
+This class is used for registering types of events you are interested in
+handling. All of the methods on this class are available as possible events
+while parsing an XML document. To register for any particular event, just
+subclass this class and implement the methods you are interested in knowing
+about.
+</p>
+<p>
+To only be notified about start and end element events, write a class like
+this:
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='MyDocument constant id'>MyDocument</span> <span class='lt op'>&lt;</span> <span class='Nokogiri constant id'>Nokogiri</span><span class='colon2 op'>::</span><span class='XML constant id'>XML</span><span class='colon2 op'>::</span><span class='SAX constant id'>SAX</span><span class='colon2 op'>::</span><span class='Document constant id'>Document</span>
+    <span class='def def kw'>def</span> <span class='start_element identifier id'>start_element</span> <span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='attrs identifier id'>attrs</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+      <span class='puts identifier id'>puts</span> <span class='dstring node'>&quot;#{name} started!&quot;</span>
+    <span class='end end kw'>end</span>
+
+    <span class='def def kw'>def</span> <span class='end_element identifier id'>end_element</span> <span class='name identifier id'>name</span>
+      <span class='puts identifier id'>puts</span> <span class='dstring node'>&quot;#{name} ended&quot;</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+You can use this event handler for any SAX style parser included with
+Nokogiri. See Nokogiri::XML::SAX, and Nokogiri::HTML::SAX.
+</p>
+
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#cdata_block-instance_method' title='#cdata_block'>#cdata_block</a></span><span class='args'>string</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Called when cdata blocks are found <tt>string</tt> contains the cdata
+content.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#characters-instance_method' title='#characters'>#characters</a></span><span class='args'>string</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Characters read between a tag <tt>string</tt> contains the character data.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#comment-instance_method' title='#comment'>#comment</a></span><span class='args'>string</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Called when comments are encountered <tt>string</tt> contains the comment
+data.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#end_document-instance_method' title='#end_document'>#end_document</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Called when document ends parsing.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#end_element-instance_method' title='#end_element'>#end_element</a></span><span class='args'>name</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Called at the end of an element <tt>name</tt> is the tag name.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#error-instance_method' title='#error'>#error</a></span><span class='args'>string</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Called on document errors <tt>string</tt> contains the error.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#start_document-instance_method' title='#start_document'>#start_document</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Called when document starts parsing.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#start_element-instance_method' title='#start_element'>#start_element</a></span><span class='args'>name, attrs = []</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Called at the beginning of an element <tt>name</tt> is the name of the tag
+with <tt>attrs</tt> as attributes.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#warning-instance_method' title='#warning'>#warning</a></span><span class='args'>string</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Called on document warnings <tt>string</tt> contains the warning.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>cdata_block</h3>
+</div><div id="cdata_block-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>cdata_block</span><span class='args'>string</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Called when cdata blocks are found <tt>string</tt> contains the cdata
+content
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+120
+121</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/nokogiri/xml/sax/document.rb', line 120</span>
+
+<span class='def def kw'>def</span> <span class='cdata_block identifier id'>cdata_block</span> <span class='string identifier id'>string</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>characters</h3>
+</div><div id="characters-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>characters</span><span class='args'>string</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Characters read between a tag <tt>string</tt> contains the character data
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+96
+97</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/nokogiri/xml/sax/document.rb', line 96</span>
+
+<span class='def def kw'>def</span> <span class='characters identifier id'>characters</span> <span class='string identifier id'>string</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>comment</h3>
+</div><div id="comment-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>comment</span><span class='args'>string</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Called when comments are encountered <tt>string</tt> contains the comment
+data
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+102
+103</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/nokogiri/xml/sax/document.rb', line 102</span>
+
+<span class='def def kw'>def</span> <span class='comment identifier id'>comment</span> <span class='string identifier id'>string</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>end_document</h3>
+</div><div id="end_document-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>end_document</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Called when document ends parsing
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+78
+79</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/nokogiri/xml/sax/document.rb', line 78</span>
+
+<span class='def def kw'>def</span> <span class='end_document identifier id'>end_document</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>end_element</h3>
+</div><div id="end_element-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>end_element</span><span class='args'>name</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Called at the end of an element <tt>name</tt> is the tag name
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+90
+91</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/nokogiri/xml/sax/document.rb', line 90</span>
+
+<span class='def def kw'>def</span> <span class='end_element identifier id'>end_element</span> <span class='name identifier id'>name</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>error</h3>
+</div><div id="error-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>error</span><span class='args'>string</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Called on document errors <tt>string</tt> contains the error
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+114
+115</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/nokogiri/xml/sax/document.rb', line 114</span>
+
+<span class='def def kw'>def</span> <span class='error identifier id'>error</span> <span class='string identifier id'>string</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>start_document</h3>
+</div><div id="start_document-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>start_document</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Called when document starts parsing
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+73
+74</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/nokogiri/xml/sax/document.rb', line 73</span>
+
+<span class='def def kw'>def</span> <span class='start_document identifier id'>start_document</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>start_element</h3>
+</div><div id="start_element-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>start_element</span><span class='args'>name, attrs = []</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Called at the beginning of an element <tt>name</tt> is the name of the tag
+with <tt>attrs</tt> as attributes
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+84
+85</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/nokogiri/xml/sax/document.rb', line 84</span>
+
+<span class='def def kw'>def</span> <span class='start_element identifier id'>start_element</span> <span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='attrs identifier id'>attrs</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>warning</h3>
+</div><div id="warning-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>warning</span><span class='args'>string</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Called on document warnings <tt>string</tt> contains the warning
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+108
+109</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/nokogiri/xml/sax/document.rb', line 108</span>
+
+<span class='def def kw'>def</span> <span class='warning identifier id'>warning</span> <span class='string identifier id'>string</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

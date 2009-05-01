@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <title>README</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section docstring readme">
+        <h1>JavaScript Fu Rails Plugin</h1>
+<p>
+This plugin adds helpers, rake tasks, and rspec matchers for JavaScript
+development.
+</p>
+<h2>Installation</h2>
+<pre class="code">
+  <span class='git identifier id'>git</span> <span class='clone identifier id'>clone</span> <span class='git identifier id'>git</span><span class='symbol val'>:/</span><span class='regexp val'>/github.com/o</span><span class='steele identifier id'>steele</span><span class='div op'>/</span><span class='javascript_fu identifier id'>javascript_fu</span><span class='dot token'>.</span><span class='git identifier id'>git</span> <span class='vendor identifier id'>vendor</span><span class='div op'>/</span><span class='plugins identifier id'>plugins</span><span class='div op'>/</span><span class='javascript_fu identifier id'>javascript_fu</span>
+</pre>
+<h2>Extended Rake Tasks</h2>
+<p>
+The existing <tt>notes</tt> and <tt>statistics</tt> tasks are extended to
+compass the public/javascript directory:
+</p>
+<pre class="code">
+  <span class='rake identifier id'>rake</span> <span class='statistics identifier id'>statistics</span>
+  <span class='rake identifier id'>rake</span> <span class='notes identifier id'>notes</span>
+</pre>
+<h2>New View Helper</h2>
+<p>
+The new <tt>onload</tt> generator method generates code that executes the
+content of the block upon the completion of page load.
+</p>
+<pre class="code">
+  <span class='page identifier id'>page</span><span class='dot token'>.</span><span class='onload identifier id'>onload</span> <span class='do do kw'>do</span>
+    <span class='page identifier id'>page</span><span class='dot token'>.</span><span class='call identifier id'>call</span> <span class='alert identifier id'>alert</span><span class='string val'>', '</span><span class='page identifier id'>page</span> <span class='loaded! fid id'>loaded!</span><span class='string val'>'
+  end
+</span></pre>
+<p>
+generates
+</p>
+<pre class="code">
+  <span class='Event constant id'>Event</span><span class='dot token'>.</span><span class='observe identifier id'>observe</span><span class='lparen token'>(</span><span class='string val'>&quot;window&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;load&quot;</span><span class='comma token'>,</span> <span class='function identifier id'>function</span><span class='lparen token'>(</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='alert identifier id'>alert</span><span class='lparen token'>(</span><span class='string val'>&quot;page loaded!&quot;</span><span class='rparen token'>)</span><span class='semicolon token'>;</span> <span class='rbrace token'>}</span><span class='rparen token'>)</span><span class='semicolon token'>;</span>
+</pre>
+<p>
+or
+</p>
+<pre class="code">
+  $<span class='lparen token'>(</span><span class='document identifier id'>document</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='ready identifier id'>ready</span><span class='lparen token'>(</span><span class='function identifier id'>function</span><span class='lparen token'>(</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='alert identifier id'>alert</span><span class='lparen token'>(</span><span class='string val'>&quot;page loaded!&quot;</span><span class='rparen token'>)</span><span class='semicolon token'>;</span> <span class='rbrace token'>}</span><span class='rparen token'>)</span><span class='semicolon token'>;</span>
+</pre>
+<h2>New RSpec Matcher</h2>
+<p>
+Use these in your specs to verify that a view is calling a JavaScript
+function:
+</p>
+<pre class="code">
+  <span class='response identifier id'>response</span><span class='dot token'>.</span><span class='should identifier id'>should</span> <span class='call_js identifier id'>call_js</span><span class='lparen token'>(</span><span class='string val'>'fn'</span><span class='rparen token'>)</span>
+  <span class='response identifier id'>response</span><span class='dot token'>.</span><span class='should identifier id'>should</span> <span class='call_js identifier id'>call_js</span><span class='lparen token'>(</span><span class='string val'>'fn(true)'</span><span class='rparen token'>)</span>
+  <span class='response identifier id'>response</span><span class='dot token'>.</span><span class='should identifier id'>should</span> <span class='call_js identifier id'>call_js</span><span class='lparen token'>(</span><span class='string val'>'gApp.setup'</span><span class='rparen token'>)</span>
+</pre>
+<p>
+If there is a body, the arguments to the call are parsed (as JSON) and
+passed to it:
+</p>
+<pre class="code">
+  <span class='comment val'># response includes &lt;script&gt;...fn('string', 2)...&lt;/script&gt;</span>
+  <span class='response identifier id'>response</span><span class='dot token'>.</span><span class='should identifier id'>should</span> <span class='call_js identifier id'>call_js</span><span class='lparen token'>(</span><span class='fn identifier id'>fn</span><span class='string val'>') do |args|
+    args.should == ['</span><span class='string identifier id'>string</span><span class='string val'>', 2]
+  end
+</span></pre>
+<p>
+If the &quot;JCON&quot;[http://jcon.rubyforge.org/] gem is installed, you
+can use this to test arguments values against ECMAScript 4.0 types:
+</p>
+<pre class="code">
+  <span class='string val'>'&lt;script&gt;fn(&quot;id&quot;, {x:1, y:2}, true)&lt;/script&gt;'</span><span class='dot token'>.</span><span class='should identifier id'>should</span> <span class='call_js identifier id'>call_js</span><span class='lparen token'>(</span><span class='string val'>'fn'</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='args identifier id'>args</span><span class='bitor op'>|</span>
+    <span class='args identifier id'>args</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='should identifier id'>should</span> <span class='conform_to_js identifier id'>conform_to_js</span><span class='lparen token'>(</span><span class='string val'>'string'</span><span class='rparen token'>)</span>
+    <span class='args identifier id'>args</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='should identifier id'>should</span> <span class='conform_to_js identifier id'>conform_to_js</span><span class='lparen token'>(</span><span class='string val'>'{x:int, y:int}'</span><span class='rparen token'>)</span>
+    <span class='args identifier id'>args</span><span class='lbrack token'>[</span><span class='integer val'>2</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='should identifier id'>should</span> <span class='conform_to_js identifier id'>conform_to_js</span><span class='lparen token'>(</span><span class='string val'>'boolean'</span><span class='rparen token'>)</span>
+    <span class='comment val'># or:</span>
+    <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='should identifier id'>should</span> <span class='conform_to_js identifier id'>conform_to_js</span><span class='lparen token'>(</span><span class='string val'>'[string, {x:int, y:int}, boolean]'</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+</pre>
+<h1>License</h1>
+<p>
+Copyright 2008 by {Oliver
+Steele}[http://workingwithrails.com/person/12359-oliver-steele]. All rights
+reserved. Released under the MIT License.
+</p>
+
+      </div>
+    </div>
+  </body>
+</html>

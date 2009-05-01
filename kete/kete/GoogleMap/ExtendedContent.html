@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: GoogleMap::ExtendedContent</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module GoogleMap_ExtendedContent">
+  <h1 class="title">Module: GoogleMap::ExtendedContent</h1>
+  <div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#validate_extended_map_field_content-instance_method' title='#validate_extended_map_field_content'>#validate_extended_map_field_content</a></span><span class='args'>(extended_field_mapping, values)</span>
+        <span class='block'></span>
+        
+          <span class='alias'>#validate_extended_map_address_field_content</span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>validate_extended_map_field_content</h3>
+</div><div id="validate_extended_map_field_content-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>validate_extended_map_field_content</span><span class='args'>(extended_field_mapping, values)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+<p class="aliases">
+  <span class="aka">Also known as:</span>
+  
+    <tt id="validate_extended_map_address_field_content-instance_method">validate_extended_map_address_field_content</tt>
+  
+</p>
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/google_map.rb', line 180</span>
+
+<span class='def def kw'>def</span> <span class='validate_extended_map_field_content identifier id'>validate_extended_map_field_content</span><span class='lparen token'>(</span><span class='extended_field_mapping identifier id'>extended_field_mapping</span><span class='comma token'>,</span> <span class='values identifier id'>values</span><span class='rparen token'>)</span>
+  <span class='comment val'># Allow nil values. If this is required, the nil value will be caught earlier.</span>
+  <span class='return return kw'>return</span> <span class='nil nil kw'>nil</span> <span class='if if_mod kw'>if</span> <span class='values identifier id'>values</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span> <span class='orop op'>||</span> <span class='lparen token'>(</span><span class='values identifier id'>values</span><span class='lbrack token'>[</span><span class='string val'>'no_map'</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='string val'>&quot;1&quot;</span><span class='rparen token'>)</span>
+  <span class='comment val'># the values passed in should form an array</span>
+  <span class='return return kw'>return</span> <span class='dstring node'>&quot;is not an hash containing zoom_lvl, no_map, coords, and optional address. Currently #{values.class.name} #{values.inspect}. Why?&quot;</span> <span class='unless unless_mod kw'>unless</span> <span class='values identifier id'>values</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Hash constant id'>Hash</span><span class='rparen token'>)</span>
+  <span class='comment val'># check if this field is required and not set</span>
+  <span class='if if kw'>if</span> <span class='values identifier id'>values</span><span class='lbrack token'>[</span><span class='string val'>'coords'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span> <span class='orop op'>||</span> <span class='values identifier id'>values</span><span class='lbrack token'>[</span><span class='string val'>'zoom_lvl'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+    <span class='if if kw'>if</span> <span class='extended_field_mapping identifier id'>extended_field_mapping</span><span class='dot token'>.</span><span class='required identifier id'>required</span>
+      <span class='return return kw'>return</span> <span class='string val'>&quot;is not present. This field is required so you must enter something before saving.&quot;</span>
+    <span class='else else kw'>else</span>
+      <span class='return return kw'>return</span> <span class='string val'>&quot;is not present. If you don't want to include one, select 'don't record a location'.&quot;</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+  <span class='comment val'># check here that [0] is the zoom, [1] is the coords, [2] is the hide/no map option, and [3] is the address</span>
+  <span class='wrong_format identifier id'>wrong_format</span> <span class='assign token'>=</span> <span class='false false kw'>false</span>
+  <span class='begin begin kw'>begin</span>
+    <span class='wrong_format identifier id'>wrong_format</span> <span class='assign token'>=</span> <span class='true true kw'>true</span> <span class='unless unless_mod kw'>unless</span> <span class='lparen token'>(</span><span class='values identifier id'>values</span><span class='lbrack token'>[</span><span class='string val'>'zoom_lvl'</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='string val'>'0'</span> <span class='orop op'>||</span> <span class='values identifier id'>values</span><span class='lbrack token'>[</span><span class='string val'>'zoom_lvl'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span> <span class='gt op'>&gt;</span> <span class='integer val'>0</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span>
+                              <span class='lparen token'>(</span><span class='values identifier id'>values</span><span class='lbrack token'>[</span><span class='string val'>'coords'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='string val'>','</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='size identifier id'>size</span> <span class='eq op'>==</span> <span class='integer val'>2</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span>
+                              <span class='lparen token'>(</span><span class='lbrack token'>[</span><span class='string val'>'0'</span><span class='comma token'>,</span><span class='string val'>'1'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='values identifier id'>values</span><span class='lbrack token'>[</span><span class='string val'>'no_map'</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span>
+                              <span class='lparen token'>(</span><span class='values identifier id'>values</span><span class='lbrack token'>[</span><span class='string val'>'address'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span> <span class='orop op'>||</span> <span class='values identifier id'>values</span><span class='lbrack token'>[</span><span class='string val'>'address'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='String constant id'>String</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='rescue rescue kw'>rescue</span>
+    <span class='wrong_format identifier id'>wrong_format</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+  <span class='end end kw'>end</span>
+  <span class='return return kw'>return</span> <span class='dstring node'>&quot;is not in the right format (zoom (&gt;=0), coords (lat,lng), no_map (0|1), address (string)). Currenty #{values.class.name} #{values.inspect}. Why?&quot;</span> <span class='if if_mod kw'>if</span> <span class='wrong_format identifier id'>wrong_format</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

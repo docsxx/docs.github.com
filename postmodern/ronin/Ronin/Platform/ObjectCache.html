@@ -1,0 +1,405 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: Ronin::Platform::ObjectCache</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module Ronin_Platform_ObjectCache">
+  <h1 class="title">Module: Ronin::Platform::ObjectCache</h1>
+  <div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <h1>Public Class Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#cache-class_method' title='cache'>cache</a></span><span class='args'>(directory)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Cache all objects loaded from the paths within the specified
+<em>directory</em>.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#clean-class_method' title='clean'>clean</a></span><span class='args'>(directory)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Deletes all cached objects that existed in the specified
+<em>directory</em>.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#each-class_method' title='each'>each</a></span><span class='args'>(directory=nil,&amp;block)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Finds all cached objects, passing each to the given <em>block</em>.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#paths-class_method' title='paths'>paths</a></span><span class='args'>(directory)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns all paths within the specified <em>directory</em> pointing to
+object files.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#sync-class_method' title='sync'>sync</a></span><span class='args'>(directory)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Syncs all objects that were previously cached from paths within the
+specified <em>directory</em>.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails class public">
+  <h1>Public Class Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>cache</h3>
+</div><div id="cache-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>cache</span><span class='args'>(directory)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Cache all objects loaded from the paths within the specified
+<em>directory</em>.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+58
+59
+60
+61
+62
+63
+64</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/ronin/platform/object_cache.rb', line 58</span>
+
+<span class='def def kw'>def</span> <span class='ObjectCache constant id'>ObjectCache</span><span class='dot token'>.</span><span class='cache identifier id'>cache</span><span class='lparen token'>(</span><span class='directory identifier id'>directory</span><span class='rparen token'>)</span>
+  <span class='ObjectCache constant id'>ObjectCache</span><span class='dot token'>.</span><span class='paths identifier id'>paths</span><span class='lparen token'>(</span><span class='directory identifier id'>directory</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='path identifier id'>path</span><span class='bitor op'>|</span>
+    <span class='Cacheable constant id'>Cacheable</span><span class='dot token'>.</span><span class='cache identifier id'>cache</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+
+  <span class='return return kw'>return</span> <span class='true true kw'>true</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>clean</h3>
+</div><div id="clean-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>clean</span><span class='args'>(directory)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Deletes all cached objects that existed in the specified
+<em>directory</em>.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+89
+90
+91
+92</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/ronin/platform/object_cache.rb', line 89</span>
+
+<span class='def def kw'>def</span> <span class='ObjectCache constant id'>ObjectCache</span><span class='dot token'>.</span><span class='clean identifier id'>clean</span><span class='lparen token'>(</span><span class='directory identifier id'>directory</span><span class='rparen token'>)</span>
+  <span class='ObjectCache constant id'>ObjectCache</span><span class='dot token'>.</span><span class='each identifier id'>each</span><span class='lparen token'>(</span><span class='directory identifier id'>directory</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='obj identifier id'>obj</span><span class='bitor op'>|</span> <span class='obj identifier id'>obj</span><span class='dot token'>.</span><span class='destroy identifier id'>destroy</span> <span class='rbrace token'>}</span>
+  <span class='return return kw'>return</span> <span class='true true kw'>true</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>each</h3>
+</div><div id="each-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>each</span><span class='args'>(directory=nil,&amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Finds all cached objects, passing each to the given <em>block</em>.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/ronin/platform/object_cache.rb', line 40</span>
+
+<span class='def def kw'>def</span> <span class='ObjectCache constant id'>ObjectCache</span><span class='dot token'>.</span><span class='each identifier id'>each</span><span class='lparen token'>(</span><span class='directory identifier id'>directory</span><span class='assign token'>=</span><span class='nil nil kw'>nil</span><span class='comma token'>,</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='attributes identifier id'>attributes</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+
+  <span class='if if kw'>if</span> <span class='directory identifier id'>directory</span>
+    <span class='attributes identifier id'>attributes</span><span class='dot token'>.</span><span class='merge! fid id'>merge!</span><span class='lparen token'>(</span><span class='symbol val'>:cached_path</span><span class='dot token'>.</span><span class='like identifier id'>like</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='directory identifier id'>directory</span><span class='comma token'>,</span><span class='string val'>'%'</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+
+  <span class='Cacheable constant id'>Cacheable</span><span class='dot token'>.</span><span class='models identifier id'>models</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='base identifier id'>base</span><span class='bitor op'>|</span>
+    <span class='base identifier id'>base</span><span class='dot token'>.</span><span class='all identifier id'>all</span><span class='lparen token'>(</span><span class='attributes identifier id'>attributes</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='each identifier id'>each</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+
+  <span class='return return kw'>return</span> <span class='true true kw'>true</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>paths</h3>
+</div><div id="paths-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>paths</span><span class='args'>(directory)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns all paths within the specified <em>directory</em> pointing to
+object files.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+33
+34
+35</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/ronin/platform/object_cache.rb', line 33</span>
+
+<span class='def def kw'>def</span> <span class='ObjectCache constant id'>ObjectCache</span><span class='dot token'>.</span><span class='paths identifier id'>paths</span><span class='lparen token'>(</span><span class='directory identifier id'>directory</span><span class='rparen token'>)</span>
+  <span class='Dir constant id'>Dir</span><span class='lbrack token'>[</span><span class='File constant id'>File</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='File constant id'>File</span><span class='dot token'>.</span><span class='expand_path identifier id'>expand_path</span><span class='lparen token'>(</span><span class='directory identifier id'>directory</span><span class='rparen token'>)</span><span class='comma token'>,</span><span class='string val'>'**'</span><span class='comma token'>,</span><span class='string val'>'*.rb'</span><span class='rparen token'>)</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>sync</h3>
+</div><div id="sync-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>sync</span><span class='args'>(directory)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Syncs all objects that were previously cached from paths within the
+specified <em>directory</em>. Also cache objects which have yet to be
+cached.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/ronin/platform/object_cache.rb', line 71</span>
+
+<span class='def def kw'>def</span> <span class='ObjectCache constant id'>ObjectCache</span><span class='dot token'>.</span><span class='sync identifier id'>sync</span><span class='lparen token'>(</span><span class='directory identifier id'>directory</span><span class='rparen token'>)</span>
+  <span class='new_paths identifier id'>new_paths</span> <span class='assign token'>=</span> <span class='ObjectCache constant id'>ObjectCache</span><span class='dot token'>.</span><span class='paths identifier id'>paths</span><span class='lparen token'>(</span><span class='directory identifier id'>directory</span><span class='rparen token'>)</span>
+
+  <span class='ObjectCache constant id'>ObjectCache</span><span class='dot token'>.</span><span class='each identifier id'>each</span><span class='lparen token'>(</span><span class='directory identifier id'>directory</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='obj identifier id'>obj</span><span class='bitor op'>|</span>
+    <span class='new_paths identifier id'>new_paths</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='obj identifier id'>obj</span><span class='dot token'>.</span><span class='cached_path identifier id'>cached_path</span><span class='rparen token'>)</span>
+
+    <span class='obj identifier id'>obj</span><span class='dot token'>.</span><span class='sync! fid id'>sync!</span>
+  <span class='end end kw'>end</span>
+
+  <span class='comment val'># cache the remaining new paths</span>
+  <span class='new_paths identifier id'>new_paths</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='path identifier id'>path</span><span class='bitor op'>|</span> <span class='Cacheable constant id'>Cacheable</span><span class='dot token'>.</span><span class='cache identifier id'>cache</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  <span class='return return kw'>return</span> <span class='true true kw'>true</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

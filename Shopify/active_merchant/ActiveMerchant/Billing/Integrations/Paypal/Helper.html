@@ -1,0 +1,328 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: ActiveMerchant::Billing::Integrations::Paypal::Helper</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class ActiveMerchant_Billing_Integrations_Paypal_Helper">
+  <h1 class="title">Class: ActiveMerchant::Billing::Integrations::Paypal::Helper</h1>
+  <div class="section inheritance">
+  <ul>
+  <li><a href='../Helper.html' title='ActiveMerchant::Billing::Integrations::Helper'>ActiveMerchant::Billing::Integrations::Helper</a></li><ul><li>ActiveMerchant::Billing::Integrations::Paypal::Helper</li>
+  </ul></ul>
+</div><div class="section constants">
+  <div class="thisclass">
+  <h1>Constants</h1>
+  <dl>
+    
+      <dt id="CANADIAN_PROVINCES-constant">CANADIAN_PROVINCES</dt>
+      <dd>{  'AB' =&gt; 'Alberta',                                 'BC' =&gt; 'British Columbia',                                 'MB' =&gt; 'Manitoba',                                 'NB' =&gt; 'New Brunswick',                                 'NL' =&gt; 'Newfoundland',                                 'NS' =&gt; 'Nova Scotia',                                 'NU' =&gt; 'Nunavut',                                 'NT' =&gt; 'Northwest Territories',                                 'ON' =&gt; 'Ontario',                                 'PE' =&gt; 'Prince Edward Island',                                 'QC' =&gt; 'Quebec',                                 'SK' =&gt; 'Saskatchewan',                                 'YT' =&gt; 'Yukon'                               } </dd>
+    
+  </dl>
+</div>
+
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(order, account, options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/integrations/paypal/helper.rb', line 23</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='order identifier id'>order</span><span class='comma token'>,</span> <span class='account identifier id'>account</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='super super kw'>super</span>
+  <span class='add_field identifier id'>add_field</span><span class='lparen token'>(</span><span class='string val'>'cmd'</span><span class='comma token'>,</span> <span class='string val'>'_ext-enter'</span><span class='rparen token'>)</span>
+  <span class='add_field identifier id'>add_field</span><span class='lparen token'>(</span><span class='string val'>'redirect_cmd'</span><span class='comma token'>,</span> <span class='string val'>'_xclick'</span><span class='rparen token'>)</span>
+  <span class='add_field identifier id'>add_field</span><span class='lparen token'>(</span><span class='string val'>'quantity'</span><span class='comma token'>,</span> <span class='integer val'>1</span><span class='rparen token'>)</span>
+  <span class='add_field identifier id'>add_field</span><span class='lparen token'>(</span><span class='string val'>'item_name'</span><span class='comma token'>,</span> <span class='string val'>'Store purchase'</span><span class='rparen token'>)</span>
+  <span class='add_field identifier id'>add_field</span><span class='lparen token'>(</span><span class='string val'>'no_shipping'</span><span class='comma token'>,</span> <span class='string val'>'1'</span><span class='rparen token'>)</span>
+  <span class='add_field identifier id'>add_field</span><span class='lparen token'>(</span><span class='string val'>'no_note'</span><span class='comma token'>,</span> <span class='string val'>'1'</span><span class='rparen token'>)</span>
+  <span class='add_field identifier id'>add_field</span><span class='lparen token'>(</span><span class='string val'>'charset'</span><span class='comma token'>,</span> <span class='string val'>'utf-8'</span><span class='rparen token'>)</span>
+  <span class='add_field identifier id'>add_field</span><span class='lparen token'>(</span><span class='string val'>'address_override'</span><span class='comma token'>,</span> <span class='string val'>'0'</span><span class='rparen token'>)</span>
+  <span class='add_field identifier id'>add_field</span><span class='lparen token'>(</span><span class='string val'>'bn'</span><span class='comma token'>,</span> <span class='application_id identifier id'>application_id</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='slice identifier id'>slice</span><span class='lparen token'>(</span><span class='integer val'>0</span><span class='comma token'>,</span><span class='integer val'>32</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='unless unless_mod kw'>unless</span> <span class='application_id identifier id'>application_id</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div><div class="section methodmissing">
+  <h1>Dynamic Method Handling</h1>
+
+  <p class="note">
+    This class handles dynamic methods through the <tt>method_missing</tt> method
+    
+      in the class <a href='../Helper.html' title='ActiveMerchant::Billing::Integrations::Helper'>ActiveMerchant::Billing::Integrations::Helper</a>
+    
+  </p>
+
+  <div id="method_missing-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>private</span>
+    <span class='return_types'></span>
+    <span class='name'>method_missing</span><span class='args'>(method_id, *args)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/integrations/helper.rb', line 71</span>
+
+<span class='def def kw'>def</span> <span class='method_missing identifier id'>method_missing</span><span class='lparen token'>(</span><span class='method_id identifier id'>method_id</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='method_id identifier id'>method_id</span> <span class='assign token'>=</span> <span class='method_id identifier id'>method_id</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='regexp val'>/=$/</span><span class='comma token'>,</span> <span class='string val'>''</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span>
+  <span class='comment val'># Return and do nothing if the mapping was not found. This allows </span>
+  <span class='comment val'># For easy substitution of the different integrations</span>
+  <span class='return return kw'>return</span> <span class='if if_mod kw'>if</span> <span class='mappings identifier id'>mappings</span><span class='lbrack token'>[</span><span class='method_id identifier id'>method_id</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+
+  <span class='mapping identifier id'>mapping</span> <span class='assign token'>=</span> <span class='mappings identifier id'>mappings</span><span class='lbrack token'>[</span><span class='method_id identifier id'>method_id</span><span class='rbrack token'>]</span>
+
+  <span class='case case kw'>case</span> <span class='mapping identifier id'>mapping</span>
+  <span class='when when kw'>when</span> <span class='Array constant id'>Array</span>
+    <span class='mapping identifier id'>mapping</span><span class='dot token'>.</span><span class='each identifier id'>each</span><span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='field identifier id'>field</span><span class='bitor op'>|</span> <span class='add_field identifier id'>add_field</span><span class='lparen token'>(</span><span class='field identifier id'>field</span><span class='comma token'>,</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='last identifier id'>last</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  <span class='when when kw'>when</span> <span class='Hash constant id'>Hash</span>
+    <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='last identifier id'>last</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Hash constant id'>Hash</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='pop identifier id'>pop</span> <span class='colon op'>:</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+
+    <span class='mapping identifier id'>mapping</span><span class='dot token'>.</span><span class='each identifier id'>each</span><span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='key identifier id'>key</span><span class='comma token'>,</span> <span class='field identifier id'>field</span><span class='bitor op'>|</span> <span class='add_field identifier id'>add_field</span><span class='lparen token'>(</span><span class='field identifier id'>field</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='key identifier id'>key</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  <span class='else else kw'>else</span>
+    <span class='add_field identifier id'>add_field</span><span class='lparen token'>(</span><span class='mapping identifier id'>mapping</span><span class='comma token'>,</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='last identifier id'>last</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <div class="inherited">
+  
+  <div>
+    <h1>Public Class Methods Inherited from <a href='../Helper.html' title='ActiveMerchant::Billing::Integrations::Helper'>ActiveMerchant::Billing::Integrations::Helper</a></h1>
+    <p><span class='name'><a href='../Helper.html#mapping-class_method' title='mapping'>mapping</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+  <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#shipping_address-instance_method' title='#shipping_address'>#shipping_address</a></span><span class='args'>(params = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table><div class="inherited">
+  
+  <div>
+    <h1>Public Instance Methods Inherited from <a href='../Helper.html' title='ActiveMerchant::Billing::Integrations::Helper'>ActiveMerchant::Billing::Integrations::Helper</a></h1>
+    <p><span class='name'><a href='../Helper.html#add_field-instance_method' title='add_field'>add_field</a></span>, <span class='name'><a href='../Helper.html#add_fields-instance_method' title='add_fields'>add_fields</a></span>, <span class='name'><a href='../Helper.html#billing_address-instance_method' title='billing_address'>billing_address</a></span>, <span class='name'><a href='../Helper.html#form_fields-instance_method' title='form_fields'>form_fields</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>shipping_address</h3>
+</div><div id="shipping_address-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>shipping_address</span><span class='args'>(params = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/integrations/paypal/helper.rb', line 62</span>
+
+<span class='def def kw'>def</span> <span class='shipping_address identifier id'>shipping_address</span><span class='lparen token'>(</span><span class='params identifier id'>params</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  
+  <span class='if if kw'>if</span> <span class='params identifier id'>params</span><span class='dot token'>.</span><span class='has_key? fid id'>has_key?</span><span class='lparen token'>(</span><span class='colon op'>:</span><span class='phone identifier id'>phone</span><span class='rparen token'>)</span>
+    <span class='phone identifier id'>phone</span> <span class='assign token'>=</span> <span class='params identifier id'>params</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:phone</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+
+    <span class='comment val'># Whipe all non digits</span>
+    <span class='phone identifier id'>phone</span><span class='dot token'>.</span><span class='gsub! fid id'>gsub!</span><span class='lparen token'>(</span><span class='regexp val'>/\D+/</span><span class='comma token'>,</span> <span class='string val'>''</span><span class='rparen token'>)</span>
+
+    <span class='comment val'># Parse in the us style (555 555 5555) which seems to be the only format paypal supports. Ignore anything before this. </span>
+    <span class='if if kw'>if</span> <span class='phone identifier id'>phone</span> <span class='match op'>=~</span> <span class='regexp val'>/(\d{3})(\d{3})(\d{4})$/</span>
+      <span class='add_field identifier id'>add_field</span><span class='lparen token'>(</span><span class='string val'>'night_phone_a'</span><span class='comma token'>,</span> <span class='$1 nth_ref id'>$1</span><span class='rparen token'>)</span> 
+      <span class='add_field identifier id'>add_field</span><span class='lparen token'>(</span><span class='string val'>'night_phone_b'</span><span class='comma token'>,</span> <span class='$2 nth_ref id'>$2</span><span class='rparen token'>)</span> 
+      <span class='add_field identifier id'>add_field</span><span class='lparen token'>(</span><span class='string val'>'night_phone_c'</span><span class='comma token'>,</span> <span class='$3 nth_ref id'>$3</span><span class='rparen token'>)</span> 
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+  
+  <span class='comment val'># Get the country code in the correct format</span>
+  <span class='comment val'># Use what we were given if we can't find anything</span>
+  <span class='country_code identifier id'>country_code</span> <span class='assign token'>=</span> <span class='lookup_country_code identifier id'>lookup_country_code</span><span class='lparen token'>(</span><span class='params identifier id'>params</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:country</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='add_field identifier id'>add_field</span><span class='lparen token'>(</span><span class='mappings identifier id'>mappings</span><span class='lbrack token'>[</span><span class='symbol val'>:shipping_address</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='symbol val'>:country</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='country_code identifier id'>country_code</span><span class='rparen token'>)</span>
+    
+  <span class='province_code identifier id'>province_code</span> <span class='assign token'>=</span> <span class='params identifier id'>params</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:state</span><span class='rparen token'>)</span>
+             
+  <span class='case case kw'>case</span> <span class='country_code identifier id'>country_code</span>
+  <span class='when when kw'>when</span> <span class='string val'>'CA'</span>
+    <span class='add_field identifier id'>add_field</span><span class='lparen token'>(</span><span class='mappings identifier id'>mappings</span><span class='lbrack token'>[</span><span class='symbol val'>:shipping_address</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='symbol val'>:state</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='CANADIAN_PROVINCES constant id'>CANADIAN_PROVINCES</span><span class='lbrack token'>[</span><span class='province_code identifier id'>province_code</span><span class='dot token'>.</span><span class='upcase identifier id'>upcase</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='unless unless_mod kw'>unless</span> <span class='province_code identifier id'>province_code</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+  <span class='when when kw'>when</span> <span class='string val'>'US'</span>
+    <span class='add_field identifier id'>add_field</span><span class='lparen token'>(</span><span class='mappings identifier id'>mappings</span><span class='lbrack token'>[</span><span class='symbol val'>:shipping_address</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='symbol val'>:state</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='province_code identifier id'>province_code</span><span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+    <span class='add_field identifier id'>add_field</span><span class='lparen token'>(</span><span class='mappings identifier id'>mappings</span><span class='lbrack token'>[</span><span class='symbol val'>:shipping_address</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='symbol val'>:state</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='province_code identifier id'>province_code</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span> <span class='integer val'>? </span><span class='string val'>'N/A'</span> <span class='colon op'>:</span> <span class='province_code identifier id'>province_code</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+    
+  <span class='comment val'># Everything else </span>
+  <span class='params identifier id'>params</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='k identifier id'>k</span><span class='comma token'>,</span> <span class='v identifier id'>v</span><span class='bitor op'>|</span>
+    <span class='field identifier id'>field</span> <span class='assign token'>=</span> <span class='mappings identifier id'>mappings</span><span class='lbrack token'>[</span><span class='symbol val'>:shipping_address</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='k identifier id'>k</span><span class='rbrack token'>]</span>
+    <span class='add_field identifier id'>add_field</span><span class='lparen token'>(</span><span class='field identifier id'>field</span><span class='comma token'>,</span> <span class='v identifier id'>v</span><span class='rparen token'>)</span> <span class='unless unless_mod kw'>unless</span> <span class='field identifier id'>field</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

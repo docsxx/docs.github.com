@@ -1,0 +1,409 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: ActionView::Helpers::TagHelper</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module ActionView_Helpers_TagHelper">
+  <h1 class="title">Module: ActionView::Helpers::TagHelper</h1>
+  <div class="section mixins">
+  <h1>Included Modules</h1>
+  <p><a href='../../ERB/Util.html' title='ERB::Util'>ERB::Util</a></p>
+</div><div class="section docstring">
+  <p>
+Provides methods to generate HTML tags programmatically when you
+can&#8217;t use a Builder. By default, they output XHTML compliant tags.
+</p>
+
+</div><div class="section constants">
+  <div class="thisclass">
+  <h1>Constants</h1>
+  <dl>
+    
+      <dt id="BOOLEAN_ATTRIBUTES-constant">BOOLEAN_ATTRIBUTES</dt>
+      <dd>%w(disabled readonly multiple checked).to_set</dd>
+    
+  </dl>
+</div>
+
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#cdata_section-instance_method' title='#cdata_section'>#cdata_section</a></span><span class='args'>(content)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns a CDATA section with the given <tt>content</tt>.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#content_tag-instance_method' title='#content_tag'>#content_tag</a></span><span class='args'>(name, content_or_options_with_block = nil, options = nil, escape = true, &amp;block)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns an HTML block tag of type <tt>name</tt> surrounding the
+<tt>content</tt>.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#escape_once-instance_method' title='#escape_once'>#escape_once</a></span><span class='args'>(html)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns an escaped version of <tt>html</tt> without affecting existing
+escaped entities.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#tag-instance_method' title='#tag'>#tag</a></span><span class='args'>(name, options = nil, open = false, escape = true)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns an empty HTML tag of type <tt>name</tt> which by default is XHTML
+compliant.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table><div class="included">
+  
+  <div>
+    <h1>Public Instance Methods Included from <a href='../../ERB/Util.html' title='ERB::Util'>ERB::Util</a></h1>
+    <p><span class='name'><a href='../../ERB/Util.html#html_escape-instance_method' title='html_escape'>html_escape</a></span>, <span class='name'><a href='../../ERB/Util.html#json_escape-instance_method' title='json_escape'>json_escape</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>cdata_section</h3>
+</div><div id="cdata_section-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>cdata_section</span><span class='args'>(content)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns a CDATA section with the given <tt>content</tt>. CDATA sections are
+used to escape blocks of text containing characters which would otherwise
+be recognized as markup. CDATA sections begin with the string
+<tt>&lt;![CDATA[</tt> and end with (and may not contain) the string
+<tt>]]&gt;</tt>.
+</p>
+<h4>Examples</h4>
+<pre class="code">
+  <span class='cdata_section identifier id'>cdata_section</span><span class='lparen token'>(</span><span class='string val'>&quot;&lt;hello world&gt;&quot;</span><span class='rparen token'>)</span>
+  <span class='comment val'># =&gt; &lt;![CDATA[&lt;hello world&gt;]]&gt;</span>
+
+  <span class='cdata_section identifier id'>cdata_section</span><span class='lparen token'>(</span><span class='File constant id'>File</span><span class='dot token'>.</span><span class='read identifier id'>read</span><span class='lparen token'>(</span><span class='string val'>&quot;hello_world.txt&quot;</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='comment val'># =&gt; &lt;![CDATA[&lt;hello from a text file]]&gt;</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+93
+94
+95</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'actionpack/lib/action_view/helpers/tag_helper.rb', line 93</span>
+
+<span class='def def kw'>def</span> <span class='cdata_section identifier id'>cdata_section</span><span class='lparen token'>(</span><span class='content identifier id'>content</span><span class='rparen token'>)</span>
+  <span class='dstring node'>&quot;&lt;![CDATA[#{content}]]&gt;&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>content_tag</h3>
+</div><div id="content_tag-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>content_tag</span><span class='args'>(name, content_or_options_with_block = nil, options = nil, escape = true, &amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns an HTML block tag of type <tt>name</tt> surrounding the
+<tt>content</tt>. Add HTML attributes by passing an attributes hash to
+<tt>options</tt>. Instead of passing the content as an argument, you can
+also use a block in which case, you pass your <tt>options</tt> as the
+second parameter. Set escape to false to disable attribute value escaping.
+</p>
+<h4>Options</h4>
+<p>
+The <tt>options</tt> hash is used with attributes with no value like
+(<tt>disabled</tt> and <tt>readonly</tt>), which you can give a value of
+true in the <tt>options</tt> hash. You can use symbols or strings for the
+attribute names.
+</p>
+<h4>Examples</h4>
+<pre class="code">
+  <span class='content_tag identifier id'>content_tag</span><span class='lparen token'>(</span><span class='symbol val'>:p</span><span class='comma token'>,</span> <span class='string val'>&quot;Hello world!&quot;</span><span class='rparen token'>)</span>
+   <span class='comment val'># =&gt; &lt;p&gt;Hello world!&lt;/p&gt;</span>
+  <span class='content_tag identifier id'>content_tag</span><span class='lparen token'>(</span><span class='symbol val'>:div</span><span class='comma token'>,</span> <span class='content_tag identifier id'>content_tag</span><span class='lparen token'>(</span><span class='symbol val'>:p</span><span class='comma token'>,</span> <span class='string val'>&quot;Hello world!&quot;</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:class</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;strong&quot;</span><span class='rparen token'>)</span>
+   <span class='comment val'># =&gt; &lt;div class=&quot;strong&quot;&gt;&lt;p&gt;Hello world!&lt;/p&gt;&lt;/div&gt;</span>
+  <span class='content_tag identifier id'>content_tag</span><span class='lparen token'>(</span><span class='string val'>&quot;select&quot;</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='comma token'>,</span> <span class='symbol val'>:multiple</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span><span class='rparen token'>)</span>
+   <span class='comment val'># =&gt; &lt;select multiple=&quot;multiple&quot;&gt;...options...&lt;/select&gt;</span>
+
+  <span class='lt op'>&lt;</span><span class='string val'>% content_tag </span><span class='symbol val'>:div</span><span class='comma token'>,</span> <span class='symbol val'>:class</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;strong&quot;</span> <span class='do do kw'>do</span> <span class='minus op'>-</span><span class='string val'>%&gt;
+    Hello world!
+  &lt;% end -%&gt;</span>
+   <span class='comment val'># =&gt; &lt;div class=&quot;strong&quot;&gt;Hello world!&lt;/div&gt;</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'actionpack/lib/action_view/helpers/tag_helper.rb', line 67</span>
+
+<span class='def def kw'>def</span> <span class='content_tag identifier id'>content_tag</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='content_or_options_with_block identifier id'>content_or_options_with_block</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='escape identifier id'>escape</span> <span class='assign token'>=</span> <span class='true true kw'>true</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='block_given? fid id'>block_given?</span>
+    <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='content_or_options_with_block identifier id'>content_or_options_with_block</span> <span class='if if_mod kw'>if</span> <span class='content_or_options_with_block identifier id'>content_or_options_with_block</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Hash constant id'>Hash</span><span class='rparen token'>)</span>
+    <span class='content_tag identifier id'>content_tag</span> <span class='assign token'>=</span> <span class='content_tag_string identifier id'>content_tag_string</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='capture identifier id'>capture</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='comma token'>,</span> <span class='escape identifier id'>escape</span><span class='rparen token'>)</span>
+
+    <span class='if if kw'>if</span> <span class='block_called_from_erb? fid id'>block_called_from_erb?</span><span class='lparen token'>(</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+      <span class='concat identifier id'>concat</span><span class='lparen token'>(</span><span class='content_tag identifier id'>content_tag</span><span class='rparen token'>)</span>
+    <span class='else else kw'>else</span>
+      <span class='content_tag identifier id'>content_tag</span>
+    <span class='end end kw'>end</span>
+  <span class='else else kw'>else</span>
+    <span class='content_tag_string identifier id'>content_tag_string</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='content_or_options_with_block identifier id'>content_or_options_with_block</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='comma token'>,</span> <span class='escape identifier id'>escape</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>escape_once</h3>
+</div><div id="escape_once-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>escape_once</span><span class='args'>(html)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns an escaped version of <tt>html</tt> without affecting existing
+escaped entities.
+</p>
+<h4>Examples</h4>
+<pre class="code">
+  <span class='escape_once identifier id'>escape_once</span><span class='lparen token'>(</span><span class='string val'>&quot;1 &lt; 2 &amp;amp; 3&quot;</span><span class='rparen token'>)</span>
+  <span class='comment val'># =&gt; &quot;1 &amp;lt; 2 &amp;amp; 3&quot;</span>
+
+  <span class='escape_once identifier id'>escape_once</span><span class='lparen token'>(</span><span class='string val'>&quot;&amp;lt;&amp;lt; Accept &amp; Checkout&quot;</span><span class='rparen token'>)</span>
+  <span class='comment val'># =&gt; &quot;&amp;lt;&amp;lt; Accept &amp;amp; Checkout&quot;</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+105
+106
+107</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'actionpack/lib/action_view/helpers/tag_helper.rb', line 105</span>
+
+<span class='def def kw'>def</span> <span class='escape_once identifier id'>escape_once</span><span class='lparen token'>(</span><span class='html identifier id'>html</span><span class='rparen token'>)</span>
+  <span class='html identifier id'>html</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='regexp val'>/[\&quot;&gt;&lt;]|&amp;(?!([a-zA-Z]+|(#\d+));)/</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='special identifier id'>special</span><span class='bitor op'>|</span> <span class='ERB constant id'>ERB</span><span class='colon2 op'>::</span><span class='Util constant id'>Util</span><span class='colon2 op'>::</span><span class='HTML_ESCAPE constant id'>HTML_ESCAPE</span><span class='lbrack token'>[</span><span class='special identifier id'>special</span><span class='rbrack token'>]</span> <span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>tag</h3>
+</div><div id="tag-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>tag</span><span class='args'>(name, options = nil, open = false, escape = true)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns an empty HTML tag of type <tt>name</tt> which by default is XHTML
+compliant. Set <tt>open</tt> to true to create an open tag compatible with
+HTML 4.0 and below. Add HTML attributes by passing an attributes hash to
+<tt>options</tt>. Set <tt>escape</tt> to false to disable attribute value
+escaping.
+</p>
+<h4>Options</h4>
+<p>
+The <tt>options</tt> hash is used with attributes with no value like
+(<tt>disabled</tt> and <tt>readonly</tt>), which you can give a value of
+true in the <tt>options</tt> hash. You can use symbols or strings for the
+attribute names.
+</p>
+<h4>Examples</h4>
+<pre class="code">
+  <span class='tag identifier id'>tag</span><span class='lparen token'>(</span><span class='string val'>&quot;br&quot;</span><span class='rparen token'>)</span>
+  <span class='comment val'># =&gt; &lt;br /&gt;</span>
+
+  <span class='tag identifier id'>tag</span><span class='lparen token'>(</span><span class='string val'>&quot;br&quot;</span><span class='comma token'>,</span> <span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='true true kw'>true</span><span class='rparen token'>)</span>
+  <span class='comment val'># =&gt; &lt;br&gt;</span>
+
+  <span class='tag identifier id'>tag</span><span class='lparen token'>(</span><span class='string val'>&quot;input&quot;</span><span class='comma token'>,</span> <span class='lbrace token'>{</span> <span class='symbol val'>:type</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'text'</span><span class='comma token'>,</span> <span class='symbol val'>:disabled</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span> <span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='comment val'># =&gt; &lt;input type=&quot;text&quot; disabled=&quot;disabled&quot; /&gt;</span>
+
+  <span class='tag identifier id'>tag</span><span class='lparen token'>(</span><span class='string val'>&quot;img&quot;</span><span class='comma token'>,</span> <span class='lbrace token'>{</span> <span class='symbol val'>:src</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;open &amp; shut.png&quot;</span> <span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='comment val'># =&gt; &lt;img src=&quot;open &amp;amp; shut.png&quot; /&gt;</span>
+
+  <span class='tag identifier id'>tag</span><span class='lparen token'>(</span><span class='string val'>&quot;img&quot;</span><span class='comma token'>,</span> <span class='lbrace token'>{</span> <span class='symbol val'>:src</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;open &amp;amp; shut.png&quot;</span> <span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='false false kw'>false</span><span class='comma token'>,</span> <span class='false false kw'>false</span><span class='rparen token'>)</span>
+  <span class='comment val'># =&gt; &lt;img src=&quot;open &amp;amp; shut.png&quot; /&gt;</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+40
+41
+42</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'actionpack/lib/action_view/helpers/tag_helper.rb', line 40</span>
+
+<span class='def def kw'>def</span> <span class='tag identifier id'>tag</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='open identifier id'>open</span> <span class='assign token'>=</span> <span class='false false kw'>false</span><span class='comma token'>,</span> <span class='escape identifier id'>escape</span> <span class='assign token'>=</span> <span class='true true kw'>true</span><span class='rparen token'>)</span>
+  <span class='dstring node'>&quot;&lt;#{name}#{tag_options(options, escape) if options}#{open ? &quot;&gt;&quot; : &quot; /&gt;&quot;}&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

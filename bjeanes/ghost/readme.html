@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <title>README</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section docstring readme">
+        <p>
+Ghost
+</p>
+<h5></h5>
+<p>
+A gem that allows you to create, list, and modify local hostnames with ease
+in linux and OS (more to come)&#8230;
+</p>
+<p>
+Requirements
+</p>
+<h6>======</h6>
+<p>
+Unix-based OS (for now)
+</p>
+<p>
+Intended Usage
+</p>
+<h6>========</h6>
+<p>
+This gem is designed primarily for web developers who need to add and
+modify hostnames to their system for virtual hosts on their local/remote
+web server. However, it could be of use to other people who would otherwise
+modify their `/etc/hosts` file manually and flush the cache.
+</p>
+<p>
+Command
+</p>
+<hr size="5"></hr><pre class="code">
+    $ <span class='ghost identifier id'>ghost</span> <span class='add identifier id'>add</span> <span class='mydevsite identifier id'>mydevsite</span><span class='dot token'>.</span><span class='local identifier id'>local</span>
+      <span class='lbrack token'>[</span><span class='Adding constant id'>Adding</span><span class='rbrack token'>]</span> <span class='mydevsite identifier id'>mydevsite</span><span class='dot token'>.</span><span class='local identifier id'>local</span> <span class='minus op'>-</span><span class='gt op'>&gt;</span> <span class='float val'>127.0</span><span class='float val'>.0.1</span>
+
+    $ <span class='ghost identifier id'>ghost</span> <span class='add identifier id'>add</span> <span class='staging identifier id'>staging</span><span class='minus op'>-</span><span class='server identifier id'>server</span><span class='dot token'>.</span><span class='local identifier id'>local</span> <span class='float val'>67.207</span><span class='float val'>.136.164</span>
+      <span class='lbrack token'>[</span><span class='Adding constant id'>Adding</span><span class='rbrack token'>]</span> <span class='staging identifier id'>staging</span><span class='minus op'>-</span><span class='server identifier id'>server</span><span class='dot token'>.</span><span class='local identifier id'>local</span> <span class='minus op'>-</span><span class='gt op'>&gt;</span> <span class='float val'>67.207</span><span class='float val'>.136.164</span>
+
+    $ <span class='ghost identifier id'>ghost</span> <span class='list identifier id'>list</span>
+    <span class='Listing constant id'>Listing</span> <span class='integer val'>2</span> <span class='host identifier id'>host</span><span class='lparen token'>(</span><span class='s identifier id'>s</span><span class='rparen token'>)</span><span class='colon op'>:</span>
+      <span class='mydevsite identifier id'>mydevsite</span><span class='dot token'>.</span><span class='local identifier id'>local</span>      <span class='minus op'>-</span><span class='gt op'>&gt;</span> <span class='float val'>127.0</span><span class='float val'>.0.1</span>
+      <span class='staging identifier id'>staging</span><span class='minus op'>-</span><span class='server identifier id'>server</span><span class='dot token'>.</span><span class='local identifier id'>local</span> <span class='minus op'>-</span><span class='gt op'>&gt;</span> <span class='float val'>67.207</span><span class='float val'>.136.164</span>
+
+    $ <span class='ghost identifier id'>ghost</span> <span class='delete identifier id'>delete</span> <span class='mydevsite identifier id'>mydevsite</span><span class='dot token'>.</span><span class='local identifier id'>local</span>
+      <span class='lbrack token'>[</span><span class='Deleting constant id'>Deleting</span><span class='rbrack token'>]</span> <span class='mydevsite identifier id'>mydevsite</span><span class='dot token'>.</span><span class='local identifier id'>local</span>
+
+    $ <span class='ghost identifier id'>ghost</span> <span class='list identifier id'>list</span>
+    <span class='Listing constant id'>Listing</span> <span class='integer val'>1</span> <span class='host identifier id'>host</span><span class='lparen token'>(</span><span class='s identifier id'>s</span><span class='rparen token'>)</span><span class='colon op'>:</span>
+      <span class='staging identifier id'>staging</span><span class='minus op'>-</span><span class='server identifier id'>server</span><span class='dot token'>.</span><span class='local identifier id'>local</span> <span class='minus op'>-</span><span class='gt op'>&gt;</span> <span class='float val'>67.207</span><span class='float val'>.136.164</span>
+
+    $ <span class='ghost identifier id'>ghost</span> <span class='modify identifier id'>modify</span> <span class='staging identifier id'>staging</span><span class='minus op'>-</span><span class='server identifier id'>server</span><span class='dot token'>.</span><span class='local identifier id'>local</span> <span class='float val'>64.233</span><span class='float val'>.167.99</span>
+      <span class='lbrack token'>[</span><span class='Modifying constant id'>Modifying</span><span class='rbrack token'>]</span> <span class='staging identifier id'>staging</span><span class='minus op'>-</span><span class='server identifier id'>server</span><span class='dot token'>.</span><span class='local identifier id'>local</span> <span class='minus op'>-</span><span class='gt op'>&gt;</span> <span class='float val'>64.233</span><span class='float val'>.167.99</span>
+
+    $ <span class='ghost identifier id'>ghost</span> <span class='list identifier id'>list</span>
+    <span class='Listing constant id'>Listing</span> <span class='integer val'>1</span> <span class='host identifier id'>host</span><span class='lparen token'>(</span><span class='s identifier id'>s</span><span class='rparen token'>)</span><span class='colon op'>:</span>
+      <span class='staging identifier id'>staging</span><span class='minus op'>-</span><span class='server identifier id'>server</span><span class='dot token'>.</span><span class='local identifier id'>local</span> <span class='minus op'>-</span><span class='gt op'>&gt;</span> <span class='float val'>64.233</span><span class='float val'>.167.99</span>
+
+    $ <span class='ghost identifier id'>ghost</span> <span class='empty identifier id'>empty</span>
+      <span class='lbrack token'>[</span><span class='Emptying constant id'>Emptying</span><span class='rbrack token'>]</span> <span class='Done constant id'>Done</span><span class='dot token'>.</span>
+
+    $ <span class='ghost identifier id'>ghost</span> <span class='list identifier id'>list</span>
+    <span class='Listing constant id'>Listing</span> <span class='integer val'>0</span> <span class='host identifier id'>host</span><span class='lparen token'>(</span><span class='s identifier id'>s</span><span class='rparen token'>)</span><span class='colon op'>:</span>
+</pre>
+<p>
+Library
+</p>
+<hr size="5"></hr><p>
+There is also a library that can be used in Ruby scripts. The `ghost`
+command is a wrapper for the library. View the source of `bin/ghost` to see
+how to use the library.
+</p>
+<p>
+Installation
+</p>
+<h6>======</h6>
+<pre class="code">
+    <span class='sudo identifier id'>sudo</span> <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='ghost identifier id'>ghost</span>
+</pre>
+<p>
+Contributors
+</p>
+<h6>======</h6>
+<ul>
+<li>[Bodaniel Jeanes](http://github.com/bjeanes)
+
+</li>
+<li>[Mitchell V Riley](http://github.com/mitchellvriley)
+
+</li>
+</ul>
+<p>
+Legal Stuff
+</p>
+<h6>=====</h6>
+<p>
+Copyright &#169; 2008 Bodaniel Jeanes
+</p>
+<p>
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the
+&quot;Software&quot;), to deal in the Software without restriction,
+including without limitation the rights to use, copy, modify, merge,
+publish, distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to the
+following conditions:
+</p>
+<p>
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+</p>
+<p>
+THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+USE OR OTHER DEALINGS IN THE SOFTWARE.
+</p>
+
+      </div>
+    </div>
+  </body>
+</html>

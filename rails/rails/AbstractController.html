@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: AbstractController</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module AbstractController">
+  <h1 class="title">Module: AbstractController</h1>
+  <div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#_default_layout-instance_method' title='#_default_layout'>#_default_layout</a></span><span class='args'>(require_layout = false)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#_layout_for_name-instance_method' title='#_layout_for_name'>#_layout_for_name</a></span><span class='args'>(name)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>_default_layout</h3>
+</div><div id="_default_layout-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>_default_layout</span><span class='args'>(require_layout = false)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'actionpack/lib/action_controller/abstract/layouts.rb', line 68</span>
+
+<span class='def def kw'>def</span> <span class='_default_layout identifier id'>_default_layout</span><span class='lparen token'>(</span><span class='require_layout identifier id'>require_layout</span> <span class='assign token'>=</span> <span class='false false kw'>false</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='require_layout identifier id'>require_layout</span> <span class='andop op'>&amp;&amp;</span> <span class='notop op'>!</span><span class='_layout identifier id'>_layout</span>
+    <span class='raise identifier id'>raise</span> <span class='ArgumentError constant id'>ArgumentError</span><span class='comma token'>,</span> 
+      <span class='dstring node'>&quot;There was no default layout for #{self.class} in #{view_paths.inspect}&quot;</span>
+  <span class='end end kw'>end</span>
+    
+  <span class='begin begin kw'>begin</span>
+    <span class='layout identifier id'>layout</span> <span class='assign token'>=</span> <span class='_layout_for_name identifier id'>_layout_for_name</span><span class='lparen token'>(</span><span class='_layout identifier id'>_layout</span><span class='rparen token'>)</span>
+  <span class='rescue rescue kw'>rescue</span> <span class='NameError constant id'>NameError</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
+    <span class='raise identifier id'>raise</span> <span class='NoMethodError constant id'>NoMethodError</span><span class='comma token'>,</span> 
+      <span class='dstring node'>&quot;You specified #{@_layout.inspect} as the layout, but no such method was found&quot;</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>_layout_for_name</h3>
+</div><div id="_layout_for_name-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>_layout_for_name</span><span class='args'>(name)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+60
+61
+62
+63
+64
+65
+66</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'actionpack/lib/action_controller/abstract/layouts.rb', line 60</span>
+
+<span class='def def kw'>def</span> <span class='_layout_for_name identifier id'>_layout_for_name</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='rparen token'>)</span>
+  <span class='unless unless kw'>unless</span> <span class='lbrack token'>[</span><span class='String constant id'>String</span><span class='comma token'>,</span> <span class='FalseClass constant id'>FalseClass</span><span class='comma token'>,</span> <span class='NilClass constant id'>NilClass</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='rparen token'>)</span>
+    <span class='raise identifier id'>raise</span> <span class='ArgumentError constant id'>ArgumentError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;String, false, or nil expected; you passed #{name.inspect}&quot;</span>
+  <span class='end end kw'>end</span>
+  
+  <span class='name identifier id'>name</span> <span class='andop op'>&amp;&amp;</span> <span class='view_paths identifier id'>view_paths</span><span class='dot token'>.</span><span class='find_by_parts identifier id'>find_by_parts</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='formats identifier id'>formats</span><span class='comma token'>,</span> <span class='string val'>&quot;layouts&quot;</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

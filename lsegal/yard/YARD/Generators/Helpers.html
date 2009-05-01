@@ -1,0 +1,220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: YARD::Generators::Helpers</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module YARD_Generators_Helpers">
+  <h1 class="title">Module: YARD::Generators::Helpers</h1>
+  <div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#html_syntax_highlight-instance_method' title='#html_syntax_highlight'>#html_syntax_highlight</a></span><span class='args'>(source)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#url_for-instance_method' title='#url_for'>#url_for</a></span><span class='args'>(object, anchor = nil, relative = true)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>html_syntax_highlight</h3>
+</div><div id="html_syntax_highlight-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>html_syntax_highlight</span><span class='args'>(source)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/yard/generators/helpers/html_helper.rb', line 179</span>
+
+<span class='def def kw'>def</span> <span class='html_syntax_highlight identifier id'>html_syntax_highlight</span><span class='lparen token'>(</span><span class='source identifier id'>source</span><span class='rparen token'>)</span>
+  <span class='tokenlist identifier id'>tokenlist</span> <span class='assign token'>=</span> <span class='Parser constant id'>Parser</span><span class='colon2 op'>::</span><span class='TokenList constant id'>TokenList</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='source identifier id'>source</span><span class='rparen token'>)</span>
+  <span class='tokenlist identifier id'>tokenlist</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='s identifier id'>s</span><span class='bitor op'>|</span> 
+    <span class='prettyclass identifier id'>prettyclass</span> <span class='assign token'>=</span> <span class='s identifier id'>s</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='class_name identifier id'>class_name</span><span class='dot token'>.</span><span class='sub identifier id'>sub</span><span class='lparen token'>(</span><span class='regexp val'>/^Tk/</span><span class='comma token'>,</span> <span class='string val'>''</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='downcase identifier id'>downcase</span>
+    <span class='prettysuper identifier id'>prettysuper</span> <span class='assign token'>=</span> <span class='s identifier id'>s</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='superclass identifier id'>superclass</span><span class='dot token'>.</span><span class='class_name identifier id'>class_name</span><span class='dot token'>.</span><span class='sub identifier id'>sub</span><span class='lparen token'>(</span><span class='regexp val'>/^Tk/</span><span class='comma token'>,</span> <span class='string val'>''</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='downcase identifier id'>downcase</span>
+
+    <span class='case case kw'>case</span> <span class='s identifier id'>s</span>
+    <span class='when when kw'>when</span> <span class='Parser constant id'>Parser</span><span class='colon2 op'>::</span><span class='RubyToken constant id'>RubyToken</span><span class='colon2 op'>::</span><span class='TkWhitespace constant id'>TkWhitespace</span><span class='comma token'>,</span> <span class='Parser constant id'>Parser</span><span class='colon2 op'>::</span><span class='RubyToken constant id'>RubyToken</span><span class='colon2 op'>::</span><span class='TkUnknownChar constant id'>TkUnknownChar</span>
+      <span class='h identifier id'>h</span> <span class='s identifier id'>s</span><span class='dot token'>.</span><span class='text identifier id'>text</span>
+    <span class='when when kw'>when</span> <span class='Parser constant id'>Parser</span><span class='colon2 op'>::</span><span class='RubyToken constant id'>RubyToken</span><span class='colon2 op'>::</span><span class='TkId constant id'>TkId</span>
+      <span class='prettyval identifier id'>prettyval</span> <span class='assign token'>=</span> <span class='h identifier id'>h</span><span class='lparen token'>(</span><span class='s identifier id'>s</span><span class='dot token'>.</span><span class='text identifier id'>text</span><span class='rparen token'>)</span>
+      <span class='dstring node'>&quot;&lt;span class='#{prettyval} #{prettyclass} #{prettysuper}'&gt;#{prettyval}&lt;/span&gt;&quot;</span>
+    <span class='else else kw'>else</span>
+      <span class='dstring node'>&quot;&lt;span class='#{prettyclass} #{prettysuper}'&gt;#{h s.text}&lt;/span&gt;&quot;</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span><span class='dot token'>.</span><span class='join identifier id'>join</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>url_for</h3>
+</div><div id="url_for-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>url_for</span><span class='args'>(object, anchor = nil, relative = true)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/yard/generators/helpers/html_helper.rb', line 151</span>
+
+<span class='def def kw'>def</span> <span class='url_for identifier id'>url_for</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='comma token'>,</span> <span class='anchor identifier id'>anchor</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='relative identifier id'>relative</span> <span class='assign token'>=</span> <span class='true true kw'>true</span><span class='rparen token'>)</span>
+  <span class='link identifier id'>link</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+  <span class='return return kw'>return</span> <span class='link identifier id'>link</span> <span class='unless unless_mod kw'>unless</span> <span class='serializer identifier id'>serializer</span>
+  
+  <span class='if if kw'>if</span> <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='CodeObjects constant id'>CodeObjects</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='notop op'>!</span><span class='object identifier id'>object</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='CodeObjects constant id'>CodeObjects</span><span class='colon2 op'>::</span><span class='NamespaceObject constant id'>NamespaceObject</span><span class='rparen token'>)</span>
+    <span class='comment val'># If the object is not a namespace object make it the anchor.</span>
+    <span class='anchor identifier id'>anchor</span><span class='comma token'>,</span> <span class='object identifier id'>object</span> <span class='assign token'>=</span> <span class='object identifier id'>object</span><span class='comma token'>,</span> <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='namespace identifier id'>namespace</span>
+  <span class='end end kw'>end</span>
+  
+  <span class='objpath identifier id'>objpath</span> <span class='assign token'>=</span> <span class='serializer identifier id'>serializer</span><span class='dot token'>.</span><span class='serialized_path identifier id'>serialized_path</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span>
+  <span class='return return kw'>return</span> <span class='link identifier id'>link</span> <span class='unless unless_mod kw'>unless</span> <span class='objpath identifier id'>objpath</span>
+
+  <span class='if if kw'>if</span> <span class='relative identifier id'>relative</span>
+    <span class='fromobj identifier id'>fromobj</span> <span class='assign token'>=</span> <span class='current_object identifier id'>current_object</span>
+    <span class='if if kw'>if</span> <span class='current_object identifier id'>current_object</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='CodeObjects constant id'>CodeObjects</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> 
+        <span class='notop op'>!</span><span class='current_object identifier id'>current_object</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='CodeObjects constant id'>CodeObjects</span><span class='colon2 op'>::</span><span class='NamespaceObject constant id'>NamespaceObject</span><span class='rparen token'>)</span>
+      <span class='fromobj identifier id'>fromobj</span> <span class='assign token'>=</span> <span class='fromobj identifier id'>fromobj</span><span class='dot token'>.</span><span class='namespace identifier id'>namespace</span>
+    <span class='end end kw'>end</span>
+
+    <span class='from identifier id'>from</span>  <span class='assign token'>=</span> <span class='serializer identifier id'>serializer</span><span class='dot token'>.</span><span class='serialized_path identifier id'>serialized_path</span><span class='lparen token'>(</span><span class='fromobj identifier id'>fromobj</span><span class='rparen token'>)</span>
+    <span class='link identifier id'>link</span>  <span class='assign token'>=</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='relative_path identifier id'>relative_path</span><span class='lparen token'>(</span><span class='from identifier id'>from</span><span class='comma token'>,</span> <span class='objpath identifier id'>objpath</span><span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+    <span class='link identifier id'>link</span> <span class='assign token'>=</span> <span class='objpath identifier id'>objpath</span>
+  <span class='end end kw'>end</span>
+
+  <span class='link identifier id'>link</span> <span class='plus op'>+</span> <span class='lparen token'>(</span><span class='anchor identifier id'>anchor</span> <span class='integer val'>? </span><span class='string val'>'#'</span> <span class='plus op'>+</span> <span class='anchor_for identifier id'>anchor_for</span><span class='lparen token'>(</span><span class='anchor identifier id'>anchor</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='string val'>''</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

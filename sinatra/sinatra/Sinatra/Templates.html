@@ -1,0 +1,287 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: Sinatra::Templates</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module Sinatra_Templates">
+  <h1 class="title">Module: Sinatra::Templates</h1>
+  <div class="section docstring">
+  <p>
+Template rendering methods. Each method takes a the name of a template to
+render as a Symbol and returns a String with the rendered output, as well
+as an optional hash with additional options.
+</p>
+<p>
+`template` is either the name or path of the template as symbol (Use
+`:&#8217;subdir/myview&#8217;` for views in subdirectories), or a string
+that will be rendered.
+</p>
+<p>
+Possible options are:
+</p>
+<pre class="code">
+  <span class='symbol val'>:layout</span>       <span class='If constant id'>If</span> <span class='set identifier id'>set</span> <span class='to identifier id'>to</span> <span class='false false kw'>false</span><span class='comma token'>,</span> <span class='no identifier id'>no</span> <span class='layout identifier id'>layout</span> <span class='is identifier id'>is</span> <span class='rendered identifier id'>rendered</span><span class='comma token'>,</span> <span class='otherwise identifier id'>otherwise</span>
+                <span class='the identifier id'>the</span> <span class='specified identifier id'>specified</span> <span class='layout identifier id'>layout</span> <span class='is identifier id'>is</span> <span class='used identifier id'>used</span> <span class='lparen token'>(</span><span class='Ignored constant id'>Ignored</span> <span class='for for kw'>for</span> <span class='xstring val'>`sass`</span><span class='rparen token'>)</span>
+  <span class='symbol val'>:locals</span>       <span class='A constant id'>A</span> <span class='hash identifier id'>hash</span> <span class='with identifier id'>with</span> <span class='local identifier id'>local</span> <span class='variables identifier id'>variables</span> <span class='that identifier id'>that</span> <span class='should identifier id'>should</span> <span class='be identifier id'>be</span> <span class='available identifier id'>available</span>
+                <span class='in in kw'>in</span> <span class='the identifier id'>the</span> <span class='template identifier id'>template</span>
+</pre>
+
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#builder-instance_method' title='#builder'>#builder</a></span><span class='args'>(template=nil, options={}, locals={}, &amp;block)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#erb-instance_method' title='#erb'>#erb</a></span><span class='args'>(template, options={}, locals={})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#haml-instance_method' title='#haml'>#haml</a></span><span class='args'>(template, options={}, locals={})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#sass-instance_method' title='#sass'>#sass</a></span><span class='args'>(template, options={}, locals={})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>builder</h3>
+</div><div id="builder-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>builder</span><span class='args'>(template=nil, options={}, locals={}, &amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+251
+252
+253
+254
+255
+256</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sinatra/base.rb', line 251</span>
+
+<span class='def def kw'>def</span> <span class='builder identifier id'>builder</span><span class='lparen token'>(</span><span class='template identifier id'>template</span><span class='assign token'>=</span><span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='locals identifier id'>locals</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='require identifier id'>require</span> <span class='string val'>'builder'</span> <span class='unless unless_mod kw'>unless</span> <span class='defined? defined kw'>defined?</span> <span class='colon2 op'>::</span><span class='Builder constant id'>Builder</span>
+  <span class='options identifier id'>options</span><span class='comma token'>,</span> <span class='template identifier id'>template</span> <span class='assign token'>=</span> <span class='template identifier id'>template</span><span class='comma token'>,</span> <span class='nil nil kw'>nil</span> <span class='if if_mod kw'>if</span> <span class='template identifier id'>template</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Hash constant id'>Hash</span><span class='rparen token'>)</span>
+  <span class='template identifier id'>template</span> <span class='assign token'>=</span> <span class='lambda identifier id'>lambda</span> <span class='lbrace token'>{</span> <span class='block identifier id'>block</span> <span class='rbrace token'>}</span> <span class='if if_mod kw'>if</span> <span class='template identifier id'>template</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+  <span class='render identifier id'>render</span> <span class='symbol val'>:builder</span><span class='comma token'>,</span> <span class='template identifier id'>template</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='comma token'>,</span> <span class='locals identifier id'>locals</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>erb</h3>
+</div><div id="erb-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>erb</span><span class='args'>(template, options={}, locals={})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+235
+236
+237
+238</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sinatra/base.rb', line 235</span>
+
+<span class='def def kw'>def</span> <span class='erb identifier id'>erb</span><span class='lparen token'>(</span><span class='template identifier id'>template</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='locals identifier id'>locals</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='require identifier id'>require</span> <span class='string val'>'erb'</span> <span class='unless unless_mod kw'>unless</span> <span class='defined? defined kw'>defined?</span> <span class='colon2 op'>::</span><span class='ERB constant id'>ERB</span>
+  <span class='render identifier id'>render</span> <span class='symbol val'>:erb</span><span class='comma token'>,</span> <span class='template identifier id'>template</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='comma token'>,</span> <span class='locals identifier id'>locals</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>haml</h3>
+</div><div id="haml-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>haml</span><span class='args'>(template, options={}, locals={})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+240
+241
+242
+243</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sinatra/base.rb', line 240</span>
+
+<span class='def def kw'>def</span> <span class='haml identifier id'>haml</span><span class='lparen token'>(</span><span class='template identifier id'>template</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='locals identifier id'>locals</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='require identifier id'>require</span> <span class='string val'>'haml'</span> <span class='unless unless_mod kw'>unless</span> <span class='defined? defined kw'>defined?</span> <span class='colon2 op'>::</span><span class='Haml constant id'>Haml</span><span class='colon2 op'>::</span><span class='Engine constant id'>Engine</span>
+  <span class='render identifier id'>render</span> <span class='symbol val'>:haml</span><span class='comma token'>,</span> <span class='template identifier id'>template</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='comma token'>,</span> <span class='locals identifier id'>locals</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>sass</h3>
+</div><div id="sass-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>sass</span><span class='args'>(template, options={}, locals={})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+245
+246
+247
+248
+249</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/sinatra/base.rb', line 245</span>
+
+<span class='def def kw'>def</span> <span class='sass identifier id'>sass</span><span class='lparen token'>(</span><span class='template identifier id'>template</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='locals identifier id'>locals</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='require identifier id'>require</span> <span class='string val'>'sass'</span> <span class='unless unless_mod kw'>unless</span> <span class='defined? defined kw'>defined?</span> <span class='colon2 op'>::</span><span class='Sass constant id'>Sass</span><span class='colon2 op'>::</span><span class='Engine constant id'>Engine</span>
+  <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:layout</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='false false kw'>false</span>
+  <span class='render identifier id'>render</span> <span class='symbol val'>:sass</span><span class='comma token'>,</span> <span class='template identifier id'>template</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='comma token'>,</span> <span class='locals identifier id'>locals</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

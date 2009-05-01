@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <title>README</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section docstring readme">
+        <p>
+h1. Clearance
+</p>
+<p>
+Rails authentication with email &amp; password.
+</p>
+<p>
+&quot;We have clearance,
+Clarence.&quot;:http://www.youtube.com/v/mNRXJEE3Nz8
+</p>
+<p>
+h2. Wiki
+</p>
+<p>
+Most information regarding Clearance is on the &quot;Github
+Wiki&quot;:http://wiki.github.com/thoughtbot/clearance.
+</p>
+<p>
+h2. Integration with Suspenders
+</p>
+<p>
+Clearance is based on the same conventions and tools as
+&quot;Suspenders&quot;:http://github.com/thoughtbot/suspenders If you use
+it, you already have some configuration mentioned below.
+</p>
+<p>
+h2. Gem installation (Rails 2.1+)
+</p>
+<p>
+In config/environment.rb:
+</p>
+<pre class="code">
+    <span class='config identifier id'>config</span><span class='dot token'>.</span><span class='gem identifier id'>gem</span> <span class='string val'>&quot;thoughtbot-clearance&quot;</span><span class='comma token'>,</span>
+      <span class='symbol val'>:lib</span>     <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'clearance'</span><span class='comma token'>,</span>
+      <span class='symbol val'>:source</span>  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'http://gems.github.com'</span><span class='comma token'>,</span>
+      <span class='symbol val'>:version</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'0.5.5'</span>
+</pre>
+<p>
+In config/environments/test.rb:
+</p>
+<pre class="code">
+    <span class='config identifier id'>config</span><span class='dot token'>.</span><span class='gem identifier id'>gem</span> <span class='string val'>'thoughtbot-shoulda'</span><span class='comma token'>,</span>
+      <span class='symbol val'>:lib</span>     <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'shoulda'</span><span class='comma token'>,</span>
+      <span class='symbol val'>:source</span>  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;http://gems.github.com&quot;</span><span class='comma token'>,</span>
+      <span class='symbol val'>:version</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'2.10.0'</span>
+    <span class='config identifier id'>config</span><span class='dot token'>.</span><span class='gem identifier id'>gem</span> <span class='string val'>'thoughtbot-factory_girl'</span><span class='comma token'>,</span>
+      <span class='symbol val'>:lib</span>     <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'factory_girl'</span><span class='comma token'>,</span>
+      <span class='symbol val'>:source</span>  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;http://gems.github.com&quot;</span><span class='comma token'>,</span>
+      <span class='symbol val'>:version</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'1.2.0'</span>
+</pre>
+<p>
+Then:
+</p>
+<pre class="code">
+    <span class='rake identifier id'>rake</span> <span class='gems identifier id'>gems</span><span class='symbol val'>:install</span>
+    <span class='rake identifier id'>rake</span> <span class='gems identifier id'>gems</span><span class='symbol val'>:unpack</span>
+    <span class='rake identifier id'>rake</span> <span class='gems identifier id'>gems</span><span class='symbol val'>:install</span> <span class='RAILS_ENV constant id'>RAILS_ENV</span><span class='assign token'>=</span><span class='test identifier id'>test</span>
+    <span class='rake identifier id'>rake</span> <span class='gems identifier id'>gems</span><span class='symbol val'>:unpack</span>  <span class='RAILS_ENV constant id'>RAILS_ENV</span><span class='assign token'>=</span><span class='test identifier id'>test</span>
+</pre>
+<p>
+h2. The generator
+</p>
+<p>
+Make sure the development database exists and run the generator:
+</p>
+<pre class="code">
+    <span class='script identifier id'>script</span><span class='div op'>/</span><span class='generate identifier id'>generate</span> <span class='clearance identifier id'>clearance</span>
+</pre>
+<p>
+A number of files will be created and instructions will be printed.
+</p>
+<p>
+You may already have some of these files. Don&#8217;t worry. You&#8217;ll
+be asked if you want to overwrite them.
+</p>
+<p>
+h2. Features
+</p>
+<p>
+If you are using Cucumber on your application Clearance comes with a
+feature generator:
+</p>
+<pre class="code">
+    <span class='script identifier id'>script</span><span class='div op'>/</span><span class='generate identifier id'>generate</span> <span class='clearance_features identifier id'>clearance_features</span>
+</pre>
+<p>
+All of the files generated should be new with the exception of the
+features/support/paths.rb file. If you have not modified your paths.rb then
+you will be okay to replace it with this one. If you need to keep your
+paths.rb file then you will need to add these locations in your paths.rb
+manually:
+</p>
+<pre class="code">
+    <span class='def def kw'>def</span> <span class='path_to identifier id'>path_to</span><span class='lparen token'>(</span><span class='page_name identifier id'>page_name</span><span class='rparen token'>)</span>
+      <span class='case case kw'>case</span> <span class='page_name identifier id'>page_name</span>
+       <span class='dot3 op'>...</span>
+      <span class='when when kw'>when</span> <span class='regexp val'>/the sign up page/i</span>
+       <span class='new_user_path identifier id'>new_user_path</span>
+      <span class='when when kw'>when</span> <span class='regexp val'>/the sign in page/i</span>
+       <span class='new_session_path identifier id'>new_session_path</span>
+      <span class='when when kw'>when</span> <span class='regexp val'>/the password reset request page/i</span>
+       <span class='new_password_path identifier id'>new_password_path</span>
+      <span class='dot3 op'>...</span>
+    <span class='end end kw'>end</span>
+</pre>
+<p>
+h2. Authors
+</p>
+<p>
+Clearance was extracted out of &quot;Hoptoad&quot;:http://hoptoadapp.com.
+We merged the authentication code from two of thoughtbot&#8217;s
+client&#8217;s Rails apps. The following people have made significant
+contributions, suggestions, and generally improved the library. Thank you!
+</p>
+<p>
+Dan Croak, Mike Burns, Jason Morrison, Joe Ferris, Eugene Bolshakov, Josh
+Nichols, Mike Breen, Marcel Görner, Bence Nagy, Ben Mabey, Eloy Duran, Tim
+Pope, Mihai Anca, &amp; Mark Cornick.
+</p>
+
+      </div>
+    </div>
+  </body>
+</html>

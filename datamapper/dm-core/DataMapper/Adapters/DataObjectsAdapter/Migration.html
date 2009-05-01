@@ -1,0 +1,342 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: DataMapper::Adapters::DataObjectsAdapter::Migration</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module DataMapper_Adapters_DataObjectsAdapter_Migration">
+  <h1 class="title">Module: DataMapper::Adapters::DataObjectsAdapter::Migration</h1>
+  <div class="section mixins">
+  <h1>Included Modules</h1>
+  <p><a href='Migration/SQL.html' title='DataMapper::Adapters::DataObjectsAdapter::Migration::SQL'>DataMapper::Adapters::DataObjectsAdapter::Migration::SQL</a></p>
+</div><div class="section docstring">
+  <p>
+TODO: move to dm-more/dm-migrations
+</p>
+
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#create_model_storage-instance_method' title='#create_model_storage'>#create_model_storage</a></span><span class='args'>(repository, model)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+TODO: move to dm-more/dm-migrations.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#destroy_model_storage-instance_method' title='#destroy_model_storage'>#destroy_model_storage</a></span><span class='args'>(repository, model)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+TODO: move to dm-more/dm-migrations.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#transaction_primitive-instance_method' title='#transaction_primitive'>#transaction_primitive</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+TODO: move to dm-more/dm-transactions.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#upgrade_model_storage-instance_method' title='#upgrade_model_storage'>#upgrade_model_storage</a></span><span class='args'>(repository, model)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+TODO: move to dm-more/dm-migrations.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>create_model_storage</h3>
+</div><div id="create_model_storage-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>create_model_storage</span><span class='args'>(repository, model)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+TODO: move to dm-more/dm-migrations
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/adapters/data_objects_adapter.rb', line 461</span>
+
+<span class='def def kw'>def</span> <span class='create_model_storage identifier id'>create_model_storage</span><span class='lparen token'>(</span><span class='repository identifier id'>repository</span><span class='comma token'>,</span> <span class='model identifier id'>model</span><span class='rparen token'>)</span>
+  <span class='return return kw'>return</span> <span class='false false kw'>false</span> <span class='if if_mod kw'>if</span> <span class='storage_exists? fid id'>storage_exists?</span><span class='lparen token'>(</span><span class='model identifier id'>model</span><span class='dot token'>.</span><span class='storage_name identifier id'>storage_name</span><span class='lparen token'>(</span><span class='repository identifier id'>repository</span><span class='dot token'>.</span><span class='name identifier id'>name</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+
+  <span class='execute identifier id'>execute</span><span class='lparen token'>(</span><span class='create_table_statement identifier id'>create_table_statement</span><span class='lparen token'>(</span><span class='repository identifier id'>repository</span><span class='comma token'>,</span> <span class='model identifier id'>model</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+
+  <span class='lparen token'>(</span><span class='create_index_statements identifier id'>create_index_statements</span><span class='lparen token'>(</span><span class='repository identifier id'>repository</span><span class='comma token'>,</span> <span class='model identifier id'>model</span><span class='rparen token'>)</span> <span class='plus op'>+</span> <span class='create_unique_index_statements identifier id'>create_unique_index_statements</span><span class='lparen token'>(</span><span class='repository identifier id'>repository</span><span class='comma token'>,</span> <span class='model identifier id'>model</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='sql identifier id'>sql</span><span class='bitor op'>|</span>
+    <span class='execute identifier id'>execute</span><span class='lparen token'>(</span><span class='sql identifier id'>sql</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+
+  <span class='true true kw'>true</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>destroy_model_storage</h3>
+</div><div id="destroy_model_storage-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>destroy_model_storage</span><span class='args'>(repository, model)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+TODO: move to dm-more/dm-migrations
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+474
+475
+476
+477</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/adapters/data_objects_adapter.rb', line 474</span>
+
+<span class='def def kw'>def</span> <span class='destroy_model_storage identifier id'>destroy_model_storage</span><span class='lparen token'>(</span><span class='repository identifier id'>repository</span><span class='comma token'>,</span> <span class='model identifier id'>model</span><span class='rparen token'>)</span>
+  <span class='execute identifier id'>execute</span><span class='lparen token'>(</span><span class='drop_table_statement identifier id'>drop_table_statement</span><span class='lparen token'>(</span><span class='repository identifier id'>repository</span><span class='comma token'>,</span> <span class='model identifier id'>model</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='true true kw'>true</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>transaction_primitive</h3>
+</div><div id="transaction_primitive-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>transaction_primitive</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+TODO: move to dm-more/dm-transactions
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+480
+481
+482</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/adapters/data_objects_adapter.rb', line 480</span>
+
+<span class='def def kw'>def</span> <span class='transaction_primitive identifier id'>transaction_primitive</span>
+  <span class='DataObjects constant id'>DataObjects</span><span class='colon2 op'>::</span><span class='Transaction constant id'>Transaction</span><span class='dot token'>.</span><span class='create_for_uri identifier id'>create_for_uri</span><span class='lparen token'>(</span><span class='@uri ivar id'>@uri</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>upgrade_model_storage</h3>
+</div><div id="upgrade_model_storage-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>upgrade_model_storage</span><span class='args'>(repository, model)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+TODO: move to dm-more/dm-migrations
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/adapters/data_objects_adapter.rb', line 440</span>
+
+<span class='def def kw'>def</span> <span class='upgrade_model_storage identifier id'>upgrade_model_storage</span><span class='lparen token'>(</span><span class='repository identifier id'>repository</span><span class='comma token'>,</span> <span class='model identifier id'>model</span><span class='rparen token'>)</span>
+  <span class='table_name identifier id'>table_name</span> <span class='assign token'>=</span> <span class='model identifier id'>model</span><span class='dot token'>.</span><span class='storage_name identifier id'>storage_name</span><span class='lparen token'>(</span><span class='repository identifier id'>repository</span><span class='dot token'>.</span><span class='name identifier id'>name</span><span class='rparen token'>)</span>
+
+  <span class='if if kw'>if</span> <span class='success identifier id'>success</span> <span class='assign token'>=</span> <span class='create_model_storage identifier id'>create_model_storage</span><span class='lparen token'>(</span><span class='repository identifier id'>repository</span><span class='comma token'>,</span> <span class='model identifier id'>model</span><span class='rparen token'>)</span>
+    <span class='return return kw'>return</span> <span class='model identifier id'>model</span><span class='dot token'>.</span><span class='properties identifier id'>properties</span><span class='lparen token'>(</span><span class='repository identifier id'>repository</span><span class='dot token'>.</span><span class='name identifier id'>name</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+
+  <span class='properties identifier id'>properties</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+
+  <span class='model identifier id'>model</span><span class='dot token'>.</span><span class='properties identifier id'>properties</span><span class='lparen token'>(</span><span class='repository identifier id'>repository</span><span class='dot token'>.</span><span class='name identifier id'>name</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='property identifier id'>property</span><span class='bitor op'>|</span>
+    <span class='schema_hash identifier id'>schema_hash</span> <span class='assign token'>=</span> <span class='property_schema_hash identifier id'>property_schema_hash</span><span class='lparen token'>(</span><span class='repository identifier id'>repository</span><span class='comma token'>,</span> <span class='property identifier id'>property</span><span class='rparen token'>)</span>
+    <span class='next next kw'>next</span> <span class='if if_mod kw'>if</span> <span class='field_exists? fid id'>field_exists?</span><span class='lparen token'>(</span><span class='table_name identifier id'>table_name</span><span class='comma token'>,</span> <span class='schema_hash identifier id'>schema_hash</span><span class='lbrack token'>[</span><span class='symbol val'>:name</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+    <span class='statement identifier id'>statement</span> <span class='assign token'>=</span> <span class='alter_table_add_column_statement identifier id'>alter_table_add_column_statement</span><span class='lparen token'>(</span><span class='table_name identifier id'>table_name</span><span class='comma token'>,</span> <span class='schema_hash identifier id'>schema_hash</span><span class='rparen token'>)</span>
+    <span class='execute identifier id'>execute</span><span class='lparen token'>(</span><span class='statement identifier id'>statement</span><span class='rparen token'>)</span>
+    <span class='properties identifier id'>properties</span> <span class='lshft op'>&lt;&lt;</span> <span class='property identifier id'>property</span>
+  <span class='end end kw'>end</span>
+
+  <span class='properties identifier id'>properties</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

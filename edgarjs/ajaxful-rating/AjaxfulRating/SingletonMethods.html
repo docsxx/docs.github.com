@@ -1,0 +1,566 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: AjaxfulRating::SingletonMethods</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module AjaxfulRating_SingletonMethods">
+  <h1 class="title">Module: AjaxfulRating::SingletonMethods</h1>
+  <div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#caching_average%3F-instance_method' title='#caching_average?'>#caching_average?</a></span><span class='args'>(dimension = nil)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Indicates if the rateable model is able to cache the rate average.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#caching_column_name-instance_method' title='#caching_column_name'>#caching_column_name</a></span><span class='args'>(dimension = nil)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns the name of the cache column for the passed dimension.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#find_less_popular-instance_method' title='#find_less_popular'>#find_less_popular</a></span><span class='args'>(dimension = nil)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Finds the rateable object with the lowest rate average.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#find_most_popular-instance_method' title='#find_most_popular'>#find_most_popular</a></span><span class='args'>(dimension = nil)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Finds the rateable object with the highest rate average.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#find_rated_by-instance_method' title='#find_rated_by'>#find_rated_by</a></span><span class='args'>(user)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Finds all rateable objects rated by the <tt>user</tt>.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#find_rated_with-instance_method' title='#find_rated_with'>#find_rated_with</a></span><span class='args'>(stars)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Finds all rateable objects rated with <tt>stars</tt>.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#find_statement-instance_method' title='#find_statement'>#find_statement</a></span><span class='args'>(attr_name, attr_value)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Finds rateable objects by Rate&#8217;s attribute.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#user_class_name-instance_method' title='#user_class_name'>#user_class_name</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Name of the class for the user model.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>caching_average?</h3>
+</div><div id="caching_average%3F-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>caching_average?</span><span class='args'>(dimension = nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Indicates if the rateable model is able to cache the rate average.
+</p>
+<p>
+Include a column named <tt>rating_average</tt> in your rateable model with
+default null, as decimal:
+</p>
+<pre class="code">
+  <span class='t identifier id'>t</span><span class='dot token'>.</span><span class='decimal identifier id'>decimal</span> <span class='symbol val'>:rating_average</span><span class='comma token'>,</span> <span class='symbol val'>:precision</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>3</span><span class='comma token'>,</span> <span class='symbol val'>:scale</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>1</span><span class='comma token'>,</span> <span class='symbol val'>:default</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>0</span>
+</pre>
+<p>
+To customize the name of the column specify the option
+<tt>:cache_column</tt> to ajaxful_rateable
+</p>
+<pre class="code">
+  <span class='ajaxful_rateable identifier id'>ajaxful_rateable</span> <span class='symbol val'>:cache_column</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:my_custom_column</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+208
+209
+210</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/ajaxful_rating.rb', line 208</span>
+
+<span class='def def kw'>def</span> <span class='caching_average? fid id'>caching_average?</span><span class='lparen token'>(</span><span class='dimension identifier id'>dimension</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='column_names identifier id'>column_names</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='caching_column_name identifier id'>caching_column_name</span><span class='lparen token'>(</span><span class='dimension identifier id'>dimension</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>caching_column_name</h3>
+</div><div id="caching_column_name-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>caching_column_name</span><span class='args'>(dimension = nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns the name of the cache column for the passed dimension.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+213
+214
+215
+216
+217</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/ajaxful_rating.rb', line 213</span>
+
+<span class='def def kw'>def</span> <span class='caching_column_name identifier id'>caching_column_name</span><span class='lparen token'>(</span><span class='dimension identifier id'>dimension</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:cache_column</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+  <span class='name identifier id'>name</span> <span class='opasgn op'>+=</span> <span class='dstring node'>&quot;_#{dimension.to_s.underscore}&quot;</span> <span class='unless unless_mod kw'>unless</span> <span class='dimension identifier id'>dimension</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span>
+  <span class='name identifier id'>name</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>find_less_popular</h3>
+</div><div id="find_less_popular-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>find_less_popular</span><span class='args'>(dimension = nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Finds the rateable object with the lowest rate average.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+183
+184
+185</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/ajaxful_rating.rb', line 183</span>
+
+<span class='def def kw'>def</span> <span class='find_less_popular identifier id'>find_less_popular</span><span class='lparen token'>(</span><span class='dimension identifier id'>dimension</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='all identifier id'>all</span><span class='dot token'>.</span><span class='sort_by identifier id'>sort_by</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='o identifier id'>o</span><span class='bitor op'>|</span> <span class='o identifier id'>o</span><span class='dot token'>.</span><span class='rate_average identifier id'>rate_average</span><span class='lparen token'>(</span><span class='true true kw'>true</span><span class='comma token'>,</span> <span class='dimension identifier id'>dimension</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='first identifier id'>first</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>find_most_popular</h3>
+</div><div id="find_most_popular-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>find_most_popular</span><span class='args'>(dimension = nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Finds the rateable object with the highest rate average.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+178
+179
+180</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/ajaxful_rating.rb', line 178</span>
+
+<span class='def def kw'>def</span> <span class='find_most_popular identifier id'>find_most_popular</span><span class='lparen token'>(</span><span class='dimension identifier id'>dimension</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='all identifier id'>all</span><span class='dot token'>.</span><span class='sort_by identifier id'>sort_by</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='o identifier id'>o</span><span class='bitor op'>|</span> <span class='o identifier id'>o</span><span class='dot token'>.</span><span class='rate_average identifier id'>rate_average</span><span class='lparen token'>(</span><span class='true true kw'>true</span><span class='comma token'>,</span> <span class='dimension identifier id'>dimension</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='last identifier id'>last</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>find_rated_by</h3>
+</div><div id="find_rated_by-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>find_rated_by</span><span class='args'>(user)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Finds all rateable objects rated by the <tt>user</tt>.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+168
+169
+170</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/ajaxful_rating.rb', line 168</span>
+
+<span class='def def kw'>def</span> <span class='find_rated_by identifier id'>find_rated_by</span><span class='lparen token'>(</span><span class='user identifier id'>user</span><span class='rparen token'>)</span>
+  <span class='find_statement identifier id'>find_statement</span><span class='lparen token'>(</span><span class='symbol val'>:user_id</span><span class='comma token'>,</span> <span class='user identifier id'>user</span><span class='dot token'>.</span><span class='id identifier id'>id</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>find_rated_with</h3>
+</div><div id="find_rated_with-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>find_rated_with</span><span class='args'>(stars)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Finds all rateable objects rated with <tt>stars</tt>.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+173
+174
+175</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/ajaxful_rating.rb', line 173</span>
+
+<span class='def def kw'>def</span> <span class='find_rated_with identifier id'>find_rated_with</span><span class='lparen token'>(</span><span class='stars identifier id'>stars</span><span class='rparen token'>)</span>
+  <span class='find_statement identifier id'>find_statement</span><span class='lparen token'>(</span><span class='symbol val'>:stars</span><span class='comma token'>,</span> <span class='stars identifier id'>stars</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>find_statement</h3>
+</div><div id="find_statement-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>find_statement</span><span class='args'>(attr_name, attr_value)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Finds rateable objects by Rate&#8217;s attribute.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+188
+189
+190
+191
+192
+193
+194
+195</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/ajaxful_rating.rb', line 188</span>
+
+<span class='def def kw'>def</span> <span class='find_statement identifier id'>find_statement</span><span class='lparen token'>(</span><span class='attr_name identifier id'>attr_name</span><span class='comma token'>,</span> <span class='attr_value identifier id'>attr_value</span><span class='rparen token'>)</span>
+  <span class='rateable identifier id'>rateable</span> <span class='assign token'>=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='base_class identifier id'>base_class</span><span class='dot token'>.</span><span class='name identifier id'>name</span>
+  <span class='sql identifier id'>sql</span> <span class='assign token'>=</span> <span class='sanitize_sql identifier id'>sanitize_sql</span><span class='lparen token'>(</span><span class='lbrack token'>[</span><span class='string val'>&quot;SELECT DISTINCT r2.* FROM rates r1 INNER JOIN &quot;</span> <span class='plus op'>+</span>
+        <span class='dstring node'>&quot;#{rateable.constantize.table_name} r2 ON r1.rateable_id = r2.id &quot;</span> <span class='plus op'>+</span>
+        <span class='dstring node'>&quot;WHERE (r1.[rateable_type] = ? AND r1.[#{attr_name}] = ?)&quot;</span><span class='comma token'>,</span>
+      <span class='rateable identifier id'>rateable</span><span class='comma token'>,</span> <span class='attr_value identifier id'>attr_value</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+  <span class='find_by_sql identifier id'>find_by_sql</span><span class='lparen token'>(</span><span class='sql identifier id'>sql</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>user_class_name</h3>
+</div><div id="user_class_name-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>user_class_name</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Name of the class for the user model.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+160
+161
+162
+163
+164
+165</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/ajaxful_rating.rb', line 160</span>
+
+<span class='def def kw'>def</span> <span class='user_class_name identifier id'>user_class_name</span>
+  <span class='@@user_class_name ivar id'>@@user_class_name</span> <span class='opasgn op'>||=</span> <span class='Rate constant id'>Rate</span><span class='dot token'>.</span><span class='column_names identifier id'>column_names</span><span class='dot token'>.</span><span class='find identifier id'>find</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span>
+    <span class='u identifier id'>u</span> <span class='assign token'>=</span> <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='scan identifier id'>scan</span><span class='lparen token'>(</span><span class='regexp val'>/(\w+)_id$/</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='flatten identifier id'>flatten</span><span class='dot token'>.</span><span class='first identifier id'>first</span>
+    <span class='break break kw'>break</span> <span class='u identifier id'>u</span> <span class='if if_mod kw'>if</span> <span class='u identifier id'>u</span> <span class='andop op'>&amp;&amp;</span> <span class='u identifier id'>u</span> <span class='neq op'>!=</span> <span class='string val'>'rateable'</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

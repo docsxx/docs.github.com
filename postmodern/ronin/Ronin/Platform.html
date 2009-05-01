@@ -1,0 +1,904 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: Ronin::Platform</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module Ronin_Platform">
+  <h1 class="title">Module: Ronin::Platform</h1>
+  <div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <h1>Public Class Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#add-class_method' title='add'>add</a></span><span class='args'>(options={},&amp;block)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Adds a new Overlay with the given <em>options</em>.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#extension-class_method' title='extension'>extension</a></span><span class='args'>(name,&amp;block)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Loads the extension with the specified <em>name</em>.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#extension_names-class_method' title='extension_names'>extension_names</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns the names of all extensions within the overlay cache.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#extensions-class_method' title='extensions'>extensions</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns a <tt>Hash</tt> of all loaded extensions.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#has_extension%3F-class_method' title='has_extension?'>has_extension?</a></span><span class='args'>(name)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns <tt>true</tt> if the cache has the extension with the matching
+<em>name</em>, returns <tt>false</tt> otherwise.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#install-class_method' title='install'>install</a></span><span class='args'>(options={},&amp;block)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Installs an Overlay specified by <em>options</em> into the
+OverlayCache::CACHE_DIR.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#load_overlays-class_method' title='load_overlays'>load_overlays</a></span><span class='args'>(path)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Load the overlay cache from the given <em>path</em>.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#overlays-class_method' title='overlays'>overlays</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns the current overlay cache, or loads the default overlay cache if
+not already loaded.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#remove-class_method' title='remove'>remove</a></span><span class='args'>(name,&amp;block)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Removes the overlay with the specified <em>name</em>.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#uninstall-class_method' title='uninstall'>uninstall</a></span><span class='args'>(name,&amp;block)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Uninstalls the overlay with the specified <em>name</em>.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#update-class_method' title='update'>update</a></span><span class='args'>(&amp;block)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Updates all previously installed overlays.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails class public">
+  <h1>Public Class Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>add</h3>
+</div><div id="add-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>add</span><span class='args'>(options={},&amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Adds a new Overlay with the given <em>options</em>. If a <em>block</em> is
+given it will be passed the newly added overlay.
+</p>
+<p>
+<em>options</em> must contain the following key:
+</p>
+<table>
+<tr><td valign="top"><tt>:path</tt>:</td><td>The path of the overlay.
+
+</td></tr>
+</table>
+<p>
+<em>options</em> may contain the following key:
+</p>
+<table>
+<tr><td valign="top"><tt>:media</tt>:</td><td>The media of the overlay.
+
+</td></tr>
+<tr><td valign="top"><tt>:uri</tt>:</td><td>The URI of the overlay.
+
+</td></tr>
+</table>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/ronin/platform/platform.rb', line 61</span>
+
+<span class='def def kw'>def</span> <span class='Platform constant id'>Platform</span><span class='dot token'>.</span><span class='add identifier id'>add</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='path identifier id'>path</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:path</span><span class='rbrack token'>]</span>
+
+  <span class='unless unless kw'>unless</span> <span class='path identifier id'>path</span>
+    <span class='raise identifier id'>raise</span><span class='lparen token'>(</span><span class='ArgumentError constant id'>ArgumentError</span><span class='comma token'>,</span><span class='string val'>&quot;:path must be passed to Platform.add&quot;</span><span class='comma token'>,</span><span class='caller identifier id'>caller</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+
+  <span class='path identifier id'>path</span> <span class='assign token'>=</span> <span class='path identifier id'>path</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+
+  <span class='unless unless kw'>unless</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='directory? fid id'>directory?</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='rparen token'>)</span>
+    <span class='raise identifier id'>raise</span><span class='lparen token'>(</span><span class='OverlayNotFound constant id'>OverlayNotFound</span><span class='comma token'>,</span><span class='dstring node'>&quot;overlay #{path.dump} cannot be found&quot;</span><span class='comma token'>,</span><span class='caller identifier id'>caller</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+
+  <span class='media identifier id'>media</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:media</span><span class='rbrack token'>]</span>
+  <span class='uri identifier id'>uri</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:uri</span><span class='rbrack token'>]</span>
+
+  <span class='overlay identifier id'>overlay</span> <span class='assign token'>=</span> <span class='Overlay constant id'>Overlay</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='comma token'>,</span><span class='media identifier id'>media</span><span class='comma token'>,</span><span class='uri identifier id'>uri</span><span class='rparen token'>)</span>
+
+  <span class='Platform constant id'>Platform</span><span class='dot token'>.</span><span class='overlays identifier id'>overlays</span><span class='dot token'>.</span><span class='add identifier id'>add</span><span class='lparen token'>(</span><span class='overlay identifier id'>overlay</span><span class='rparen token'>)</span> <span class='do do kw'>do</span>
+    <span class='ObjectCache constant id'>ObjectCache</span><span class='dot token'>.</span><span class='cache identifier id'>cache</span><span class='lparen token'>(</span><span class='overlay identifier id'>overlay</span><span class='dot token'>.</span><span class='objects_dir identifier id'>objects_dir</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+
+  <span class='return return kw'>return</span> <span class='overlay identifier id'>overlay</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>extension</h3>
+</div><div id="extension-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>extension</span><span class='args'>(name,&amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Loads the extension with the specified <em>name</em>. If a <em>block</em>
+is given it will be passed the loaded extension. If the extension cannot be
+loaded, an ExtensionNotFound exception will be raised.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+199
+200
+201
+202
+203
+204</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/ronin/platform/platform.rb', line 199</span>
+
+<span class='def def kw'>def</span> <span class='Platform constant id'>Platform</span><span class='dot token'>.</span><span class='extension identifier id'>extension</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='ext identifier id'>ext</span> <span class='assign token'>=</span> <span class='Platform constant id'>Platform</span><span class='dot token'>.</span><span class='extensions identifier id'>extensions</span><span class='lbrack token'>[</span><span class='name identifier id'>name</span><span class='rbrack token'>]</span>
+
+  <span class='block identifier id'>block</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='ext identifier id'>ext</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='block identifier id'>block</span>
+  <span class='return return kw'>return</span> <span class='ext identifier id'>ext</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>extension_names</h3>
+</div><div id="extension_names-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>extension_names</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns the names of all extensions within the overlay cache.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/ronin/platform/platform.rb', line 159</span>
+
+<span class='def def kw'>def</span> <span class='Platform constant id'>Platform</span><span class='dot token'>.</span><span class='extension_names identifier id'>extension_names</span>
+  <span class='names identifier id'>names</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+
+  <span class='Platform constant id'>Platform</span><span class='dot token'>.</span><span class='overlays identifier id'>overlays</span><span class='dot token'>.</span><span class='each_overlay identifier id'>each_overlay</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='overlay identifier id'>overlay</span><span class='bitor op'>|</span>
+    <span class='overlay identifier id'>overlay</span><span class='dot token'>.</span><span class='extensions identifier id'>extensions</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='name identifier id'>name</span><span class='bitor op'>|</span>
+      <span class='names identifier id'>names</span> <span class='lshft op'>&lt;&lt;</span> <span class='name identifier id'>name</span> <span class='unless unless_mod kw'>unless</span> <span class='names identifier id'>names</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+
+  <span class='return return kw'>return</span> <span class='names identifier id'>names</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>extensions</h3>
+</div><div id="extensions-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>extensions</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns a <tt>Hash</tt> of all loaded extensions. Extensions can be loaded
+on-the-fly by accessing the <tt>Hash</tt>.
+</p>
+<pre class="code">
+  <span class='Platform constant id'>Platform</span><span class='dot token'>.</span><span class='extensions identifier id'>extensions</span><span class='lbrack token'>[</span><span class='string val'>'shellcode'</span><span class='rbrack token'>]</span>
+  <span class='comment val'># =&gt; #&lt;Ronin::Platform::Extension: ...&gt;</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+190
+191
+192</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/ronin/platform/platform.rb', line 190</span>
+
+<span class='def def kw'>def</span> <span class='Platform constant id'>Platform</span><span class='dot token'>.</span><span class='extensions identifier id'>extensions</span>
+  <span class='@@ronin_extension_cache ivar id'>@@ronin_extension_cache</span> <span class='opasgn op'>||=</span> <span class='ExtensionCache constant id'>ExtensionCache</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>has_extension?</h3>
+</div><div id="has_extension%3F-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>has_extension?</span><span class='args'>(name)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns <tt>true</tt> if the cache has the extension with the matching
+<em>name</em>, returns <tt>false</tt> otherwise.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+175
+176
+177
+178
+179
+180
+181</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/ronin/platform/platform.rb', line 175</span>
+
+<span class='def def kw'>def</span> <span class='Platform constant id'>Platform</span><span class='dot token'>.</span><span class='has_extension? fid id'>has_extension?</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='rparen token'>)</span>
+  <span class='Platform constant id'>Platform</span><span class='dot token'>.</span><span class='overlays identifier id'>overlays</span><span class='dot token'>.</span><span class='each_overlay identifier id'>each_overlay</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='overlay identifier id'>overlay</span><span class='bitor op'>|</span>
+    <span class='return return kw'>return</span> <span class='true true kw'>true</span> <span class='if if_mod kw'>if</span> <span class='overlay identifier id'>overlay</span><span class='dot token'>.</span><span class='has_extension? fid id'>has_extension?</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+
+  <span class='return return kw'>return</span> <span class='false false kw'>false</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>install</h3>
+</div><div id="install-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>install</span><span class='args'>(options={},&amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Installs an Overlay specified by <em>options</em> into the
+OverlayCache::CACHE_DIR. If a <em>block</em> is given, it will be passed
+the newly created overlay after it has been added to the overlay cache.
+</p>
+<p>
+<em>options</em> must contain the following key:
+</p>
+<table>
+<tr><td valign="top"><tt>:uri</tt>:</td><td>The URI of the overlay.
+
+</td></tr>
+</table>
+<p>
+<em>options</em> may contain the following key:
+</p>
+<table>
+<tr><td valign="top"><tt>:media</tt>:</td><td>The media of the overlay.
+
+</td></tr>
+</table>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/ronin/platform/platform.rb', line 98</span>
+
+<span class='def def kw'>def</span> <span class='Platform constant id'>Platform</span><span class='dot token'>.</span><span class='install identifier id'>install</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='unless unless kw'>unless</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='colon op'>:</span><span class='uri identifier id'>uri</span><span class='rbrack token'>]</span>
+    <span class='raise identifier id'>raise</span><span class='lparen token'>(</span><span class='ArgumentError constant id'>ArgumentError</span><span class='comma token'>,</span><span class='string val'>&quot;:uri must be passed to Platform.install&quot;</span><span class='comma token'>,</span><span class='caller identifier id'>caller</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+
+  <span class='uri identifier id'>uri</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:uri</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+  <span class='host identifier id'>host</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='uri identifier id'>uri</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='host identifier id'>host</span> <span class='orop op'>||</span> <span class='string val'>'localhost'</span><span class='rparen token'>)</span>
+  <span class='host_dir identifier id'>host_dir</span> <span class='assign token'>=</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='OverlayCache constant id'>OverlayCache</span><span class='colon2 op'>::</span><span class='CACHE_DIR constant id'>CACHE_DIR</span><span class='comma token'>,</span><span class='host identifier id'>host</span><span class='rparen token'>)</span>
+  <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='symbol val'>:into</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='host_dir identifier id'>host_dir</span><span class='rparen token'>)</span>
+
+  <span class='Repertoire constant id'>Repertoire</span><span class='dot token'>.</span><span class='checkout identifier id'>checkout</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='repo identifier id'>repo</span><span class='bitor op'>|</span>
+    <span class='return return kw'>return</span> <span class='Platform constant id'>Platform</span><span class='dot token'>.</span><span class='add identifier id'>add</span><span class='lparen token'>(</span>
+      <span class='symbol val'>:path</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='repo identifier id'>repo</span><span class='dot token'>.</span><span class='path identifier id'>path</span><span class='comma token'>,</span>
+      <span class='symbol val'>:media</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='repo identifier id'>repo</span><span class='dot token'>.</span><span class='media_name identifier id'>media_name</span><span class='comma token'>,</span>
+      <span class='symbol val'>:uri</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='uri identifier id'>uri</span>
+    <span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>load_overlays</h3>
+</div><div id="load_overlays-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>load_overlays</span><span class='args'>(path)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Load the overlay cache from the given <em>path</em>. If a <em>block</em> is
+given it will be passed the current overlay cache.
+</p>
+<pre class="code">
+  <span class='Overlay constant id'>Overlay</span><span class='dot token'>.</span><span class='load_overlays identifier id'>load_overlays</span><span class='lparen token'>(</span><span class='string val'>'/custom/overlays/cache.yaml'</span><span class='rparen token'>)</span>
+  <span class='comment val'># =&gt; #&lt;Ronin::Platform::OverlayCache: ...&gt;</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+38
+39
+40</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/ronin/platform/platform.rb', line 38</span>
+
+<span class='def def kw'>def</span> <span class='Platform constant id'>Platform</span><span class='dot token'>.</span><span class='load_overlays identifier id'>load_overlays</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='rparen token'>)</span>
+  <span class='@@ronin_overlay_cache ivar id'>@@ronin_overlay_cache</span> <span class='assign token'>=</span> <span class='OverlayCache constant id'>OverlayCache</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>overlays</h3>
+</div><div id="overlays-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>overlays</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns the current overlay cache, or loads the default overlay cache if
+not already loaded.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+46
+47
+48</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/ronin/platform/platform.rb', line 46</span>
+
+<span class='def def kw'>def</span> <span class='Platform constant id'>Platform</span><span class='dot token'>.</span><span class='overlays identifier id'>overlays</span>
+  <span class='@@ronin_overlay_cache ivar id'>@@ronin_overlay_cache</span> <span class='opasgn op'>||=</span> <span class='OverlayCache constant id'>OverlayCache</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>remove</h3>
+</div><div id="remove-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>remove</span><span class='args'>(name,&amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Removes the overlay with the specified <em>name</em>. If no overlay has the
+specified <em>name</em>, an OverlayNotFound exception will be raised. If a
+<em>block</em> is given, it will be called after the overlay has been
+removed.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+136
+137
+138
+139</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/ronin/platform/platform.rb', line 136</span>
+
+<span class='def def kw'>def</span> <span class='Platform constant id'>Platform</span><span class='dot token'>.</span><span class='remove identifier id'>remove</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='Platform constant id'>Platform</span><span class='dot token'>.</span><span class='overlays identifier id'>overlays</span><span class='dot token'>.</span><span class='remove identifier id'>remove</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='return return kw'>return</span> <span class='nil nil kw'>nil</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>uninstall</h3>
+</div><div id="uninstall-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>uninstall</span><span class='args'>(name,&amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Uninstalls the overlay with the specified <em>name</em>. If no overlay has
+the specified <em>name</em>, an OverlayNotFound exception will be raised.
+If a <em>block</em> is given, it will be called after the overlay has been
+uninstalled.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+147
+148
+149
+150
+151
+152
+153
+154</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/ronin/platform/platform.rb', line 147</span>
+
+<span class='def def kw'>def</span> <span class='Platform constant id'>Platform</span><span class='dot token'>.</span><span class='uninstall identifier id'>uninstall</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='Platform constant id'>Platform</span><span class='dot token'>.</span><span class='remove identifier id'>remove</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='overlay identifier id'>overlay</span><span class='bitor op'>|</span>
+    <span class='ObjectCache constant id'>ObjectCache</span><span class='dot token'>.</span><span class='expunge identifier id'>expunge</span><span class='lparen token'>(</span><span class='overlay identifier id'>overlay</span><span class='dot token'>.</span><span class='objects_dir identifier id'>objects_dir</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+
+  <span class='block identifier id'>block</span><span class='dot token'>.</span><span class='call identifier id'>call</span> <span class='if if_mod kw'>if</span> <span class='block identifier id'>block</span>
+  <span class='return return kw'>return</span> <span class='nil nil kw'>nil</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>update</h3>
+</div><div id="update-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>update</span><span class='args'>(&amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Updates all previously installed overlays. If a <em>block</em> is given it
+will be called after the overlays have been updated.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+121
+122
+123
+124
+125
+126
+127
+128</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/ronin/platform/platform.rb', line 121</span>
+
+<span class='def def kw'>def</span> <span class='Platform constant id'>Platform</span><span class='dot token'>.</span><span class='update identifier id'>update</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='Platform constant id'>Platform</span><span class='dot token'>.</span><span class='overlays identifier id'>overlays</span><span class='dot token'>.</span><span class='update identifier id'>update</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='overlay identifier id'>overlay</span><span class='bitor op'>|</span>
+    <span class='ObjectCache constant id'>ObjectCache</span><span class='dot token'>.</span><span class='mirror identifier id'>mirror</span><span class='lparen token'>(</span><span class='overlay identifier id'>overlay</span><span class='dot token'>.</span><span class='objects_dir identifier id'>objects_dir</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+
+  <span class='block identifier id'>block</span><span class='dot token'>.</span><span class='call identifier id'>call</span> <span class='if if_mod kw'>if</span> <span class='block identifier id'>block</span>
+  <span class='return return kw'>return</span> <span class='nil nil kw'>nil</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

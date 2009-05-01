@@ -1,0 +1,192 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <title>README</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section docstring readme">
+        <p>
+Copyright (C) 2006 Mauricio Fernandez &lt;mfp@acm.org&gt;&lt;br/&gt;
+Copyright (C) 2007 Jeff Rafter &lt;jeff@jeffrafter.com&gt; (additions,
+revisions)
+</p>
+<p>
+Fate Search is based on FTSearch by Mauricio Fernandez which can be found
+at http://www.eigenclass.org/
+</p>
+<p>
+Fate Search uses a suffix-array, so if you look for e.g. &quot;fa&quot;,
+it&#8217;ll match faq, fat, fat_entry, &#8230;, making it equivalent to
+looking for &quot;fa%&quot;. It does phrasal search naturally, if
+you&#8217;re lookup for &quot;big array&quot;, just enter it (without the
+quotes); with ferret-lookup.rb, you <b>have</b> to surround the phrase with
+quotes.
+</p>
+<p>
+TRY IT OUT
+</p>
+<hr size="8"></hr><p>
+You can test things out using the rake tasks. Indexing:
+</p>
+<p>
+&lt;pre&gt;&lt;code&gt;
+</p>
+<pre class="code">
+  $ <span class='rake identifier id'>rake</span> <span class='fates identifier id'>fates</span><span class='symbol val'>:index</span>
+  <span class='lparen token'>(</span><span class='in in kw'>in</span> <span class='regexp val'>/Users/n</span><span class='jero identifier id'>jero</span><span class='div op'>/</span><span class='Projects constant id'>Projects</span><span class='div op'>/</span><span class='Web constant id'>Web</span><span class='div op'>/</span><span class='fates identifier id'>fates</span><span class='rparen token'>)</span>
+  <span class='Removing constant id'>Removing</span> <span class='the identifier id'>the</span> <span class='current identifier id'>current</span> <span class='index identifier id'>index</span> <span class='for for kw'>for</span> <span class='contacts identifier id'>contacts</span>
+  <span class='Preparing constant id'>Preparing</span> <span class='fields identifier id'>fields</span>
+  <span class='Reading constant id'>Reading</span> <span class='contacts identifier id'>contacts</span>
+  <span class='Indexing constant id'>Indexing</span> <span class='contacts identifier id'>contacts</span>
+  <span class='Writing constant id'>Writing</span> <span class='indexes identifier id'>indexes</span>
+  <span class='Done constant id'>Done</span>
+  <span class='Needed constant id'>Needed</span> <span class='integer val'>0</span><span class='integer val'>.015277</span> <span class='to identifier id'>to</span> <span class='remove identifier id'>remove</span> <span class='the identifier id'>the</span> <span class='current identifier id'>current</span> <span class='indexes identifier id'>indexes</span><span class='dot token'>.</span>
+  <span class='Needed constant id'>Needed</span> <span class='float val'>1.611284</span> <span class='to identifier id'>to</span> <span class='read identifier id'>read</span> <span class='the identifier id'>the</span> <span class='contacts identifier id'>contacts</span> <span class='file identifier id'>file</span><span class='dot token'>.</span>
+  <span class='Needed constant id'>Needed</span> <span class='float val'>3.864082</span> <span class='to identifier id'>to</span> <span class='index identifier id'>index</span> <span class='the identifier id'>the</span> <span class='contacts identifier id'>contacts</span><span class='dot token'>.</span>
+  <span class='Needed constant id'>Needed</span> <span class='integer val'>0</span><span class='integer val'>.962226</span> <span class='to identifier id'>to</span> <span class='write identifier id'>write</span> <span class='the identifier id'>the</span> <span class='indexes identifier id'>indexes</span><span class='dot token'>.</span>
+  <span class='Total constant id'>Total</span> <span class='time identifier id'>time</span><span class='colon op'>:</span> <span class='float val'>6.453019</span>
+  <span class='Total constant id'>Total</span> <span class='records identifier id'>records</span><span class='colon op'>:</span> <span class='integer val'>50000</span>
+</pre>
+<p>
+&lt;/code&gt;&lt;/pre&gt;
+</p>
+<p>
+Searching:
+</p>
+<p>
+&lt;pre&gt;&lt;code&gt;
+</p>
+<pre class="code">
+  $ <span class='rake identifier id'>rake</span> <span class='fates identifier id'>fates</span><span class='symbol val'>:search</span> <span class='QUERY constant id'>QUERY</span><span class='assign token'>=</span><span class='string val'>'Smith'</span>
+  <span class='lparen token'>(</span><span class='in in kw'>in</span> <span class='regexp val'>/Users/n</span><span class='jero identifier id'>jero</span><span class='div op'>/</span><span class='Projects constant id'>Projects</span><span class='div op'>/</span><span class='Web constant id'>Web</span><span class='div op'>/</span><span class='fates identifier id'>fates</span><span class='rparen token'>)</span>
+  <span class='Loading constant id'>Loading</span> <span class='the identifier id'>the</span> <span class='index identifier id'>index</span> <span class='files identifier id'>files</span>
+  <span class='Counting constant id'>Counting</span> <span class='the identifier id'>the</span> <span class='number identifier id'>number</span> <span class='of identifier id'>of</span> <span class='hits identifier id'>hits</span>
+  <span class='Total constant id'>Total</span> <span class='hits identifier id'>hits</span><span class='colon op'>:</span> <span class='integer val'>4370</span> <span class='lparen token'>(</span><span class='integer val'>0</span><span class='integer val'>.000325</span><span class='rparen token'>)</span>
+  <span class='Looking constant id'>Looking</span> <span class='up identifier id'>up</span> <span class='all identifier id'>all</span> <span class='matches identifier id'>matches</span>
+  <span class='Showing constant id'>Showing</span> <span class='top identifier id'>top</span> <span class='integer val'>10</span> <span class='matches identifier id'>matches</span> <span class='of identifier id'>of</span> <span class='integer val'>4370</span><span class='colon op'>:</span>
+  <span class='string val'>&quot;3499: Smith Dan&quot;</span>
+  <span class='string val'>&quot;37110: Smith Dan&quot;</span>
+  <span class='string val'>&quot;1193: Smith Dan&quot;</span>
+  <span class='string val'>&quot;45769: Smith Deb&quot;</span>
+  <span class='string val'>&quot;6702: Smith Deb&quot;</span>
+  <span class='string val'>&quot;48737: Smith Deb&quot;</span>
+  <span class='string val'>&quot;25339: Smith Den&quot;</span>
+  <span class='string val'>&quot;5754: Smith Den&quot;</span>
+  <span class='string val'>&quot;1029: Smith Den&quot;</span>
+  <span class='string val'>&quot;42762: Smith Eve&quot;</span>
+  <span class='string val'>&quot;32002: Smith Fae&quot;</span>
+  <span class='minus op'>-</span><span class='minus op'>-</span><span class='minus op'>-</span><span class='minus op'>-</span>
+  <span class='Needed constant id'>Needed</span> <span class='to identifier id'>to</span> <span class='load identifier id'>load</span> <span class='cache identifier id'>cache</span> <span class='lparen token'>(</span><span class='integer val'>0</span><span class='integer val'>.002848</span><span class='rparen token'>)</span>
+  <span class='Needed constant id'>Needed</span> <span class='to identifier id'>to</span> <span class='find identifier id'>find</span> <span class='all identifier id'>all</span> <span class='matches identifier id'>matches</span> <span class='lparen token'>(</span><span class='integer val'>0</span><span class='integer val'>.000266</span><span class='rparen token'>)</span>
+  <span class='Needed constant id'>Needed</span> <span class='to identifier id'>to</span> <span class='print identifier id'>print</span> <span class='matches identifier id'>matches</span> <span class='lparen token'>(</span><span class='integer val'>0</span><span class='integer val'>.000598</span><span class='rparen token'>)</span>
+  <span class='Total constant id'>Total</span> <span class='time identifier id'>time</span> <span class='lparen token'>(</span><span class='integer val'>0</span><span class='integer val'>.00376</span><span class='rparen token'>)</span>
+</pre>
+<p>
+&lt;/code&gt;&lt;/pre&gt;
+</p>
+<p>
+Searching with sorting and probabalistic ranking:
+</p>
+<p>
+&lt;pre&gt;&lt;code&gt;
+</p>
+<pre class="code">
+  $ <span class='rake identifier id'>rake</span> <span class='fates identifier id'>fates</span><span class='symbol val'>:search</span> <span class='QUERY constant id'>QUERY</span><span class='assign token'>=</span><span class='string val'>'Smith'</span> <span class='SORT constant id'>SORT</span><span class='assign token'>=</span><span class='string val'>'y'</span>
+  <span class='lparen token'>(</span><span class='in in kw'>in</span> <span class='regexp val'>/Users/n</span><span class='jero identifier id'>jero</span><span class='div op'>/</span><span class='Projects constant id'>Projects</span><span class='div op'>/</span><span class='Web constant id'>Web</span><span class='div op'>/</span><span class='fates identifier id'>fates</span><span class='rparen token'>)</span>
+  <span class='Loading constant id'>Loading</span> <span class='the identifier id'>the</span> <span class='index identifier id'>index</span> <span class='files identifier id'>files</span>
+  <span class='Counting constant id'>Counting</span> <span class='the identifier id'>the</span> <span class='number identifier id'>number</span> <span class='of identifier id'>of</span> <span class='hits identifier id'>hits</span>
+  <span class='Total constant id'>Total</span> <span class='hits identifier id'>hits</span><span class='colon op'>:</span> <span class='integer val'>4370</span> <span class='lparen token'>(</span><span class='integer val'>0</span><span class='integer val'>.000385</span><span class='rparen token'>)</span>
+  <span class='Looking constant id'>Looking</span> <span class='up identifier id'>up</span> <span class='all identifier id'>all</span> <span class='matches identifier id'>matches</span>
+  <span class='Showing constant id'>Showing</span> <span class='all identifier id'>all</span> <span class='matches identifier id'>matches</span> <span class='of identifier id'>of</span> <span class='integer val'>10</span><span class='colon op'>:</span>
+  <span class='string val'>&quot;3499: Smith Dan, (20004370.0)&quot;</span>
+  <span class='string val'>&quot;37110: Smith Dan, (20004369.0)&quot;</span>
+  <span class='string val'>&quot;1193: Smith Dan, (20004368.0)&quot;</span>
+  <span class='string val'>&quot;45769: Smith Deb, (20004367.0)&quot;</span>
+  <span class='string val'>&quot;6702: Smith Deb, (20004366.0)&quot;</span>
+  <span class='string val'>&quot;48737: Smith Deb, (20004365.0)&quot;</span>
+  <span class='string val'>&quot;25339: Smith Den, (20004364.0)&quot;</span>
+  <span class='string val'>&quot;5754: Smith Den, (20004363.0)&quot;</span>
+  <span class='string val'>&quot;1029: Smith Den, (20004362.0)&quot;</span>
+  <span class='string val'>&quot;42762: Smith Eve, (20004361.0)&quot;</span>
+  <span class='minus op'>-</span><span class='minus op'>-</span><span class='minus op'>-</span><span class='minus op'>-</span>
+  <span class='Needed constant id'>Needed</span> <span class='to identifier id'>to</span> <span class='load identifier id'>load</span> <span class='cache identifier id'>cache</span> <span class='lparen token'>(</span><span class='integer val'>0</span><span class='integer val'>.003019</span><span class='rparen token'>)</span>
+  <span class='Needed constant id'>Needed</span> <span class='to identifier id'>to</span> <span class='find identifier id'>find</span> <span class='all identifier id'>all</span> <span class='matches identifier id'>matches</span> <span class='lparen token'>(</span><span class='integer val'>0</span><span class='integer val'>.000359</span><span class='rparen token'>)</span>
+  <span class='Needed constant id'>Needed</span> <span class='to identifier id'>to</span> <span class='print identifier id'>print</span> <span class='matches identifier id'>matches</span> <span class='lparen token'>(</span><span class='integer val'>0</span><span class='integer val'>.060236</span><span class='rparen token'>)</span>
+  <span class='Total constant id'>Total</span> <span class='time identifier id'>time</span> <span class='lparen token'>(</span><span class='integer val'>0</span><span class='integer val'>.063915</span><span class='rparen token'>)</span>
+</pre>
+<p>
+&lt;/code&gt;&lt;/pre&gt;
+</p>
+<p>
+If you apply sorting the results will be sorted and ranked but the printing
+(tree navigation) will take considerably longer. In the above example the
+print time was 0.060236 versus 0.000598.
+</p>
+<p>
+Note: currently merged (delta) indexes are not supported. Search allows you
+to look for names from the spec/samples/contacts.csv file.
+</p>
+<p>
+Gemify this with Jeweler. Consider some native extensions (based on the
+FTSearch native extensions). In general lots of profiling was done around
+the sorting and initial indexing but as always you can still optimize.
+</p>
+<p>
+I originally built ActiveRecord extensions for fates, but have removed them
+as they would need additional work. As a sample though, you can still
+install the library as a plugin:
+</p>
+<p>
+&lt;pre&gt;<tt>script/plugin install git://github.com/jeffrafter/fates.git
+</tt>&lt;/pre&gt;
+</p>
+<p>
+Next you need to build the index. If you are just focused on names then you
+can cheat and reuse the existing search rake tasks (which already handle
+ranking and timing). Next you need to build the index. In the following I
+build an index for the PersonName model:
+</p>
+<p>
+&lt;pre&gt;&lt;code&gt;white_space =
+FateSearch::Analysis::WhitespaceAnalyzer.new analyzers = [white_space,
+white_space] fragment = FateSearch::FragmentWriter.new(
+</p>
+<pre class="code">
+  <span class='symbol val'>:path</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;/tmp/index/fates/names-0000000&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:analyzers</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='analyzers identifier id'>analyzers</span><span class='rparen token'>)</span>
+</pre>
+<p>
+names = PersonName.find(:all) names.each {|name| fragment.add(name.id,
+[name.given_name, name.family_name])} fragment.finish!
+&lt;/code&gt;&lt;/pre&gt;
+</p>
+<p>
+Save this file in the lib folder of your rails application as
+&quot;index.rb&quot;. Run the following (from your rails root). If you get
+an error about the directory not being empty then you will need to move the
+current indexes away.
+</p>
+<p>
+&lt;pre&gt;<tt>script/runner lib/index.rb </tt>&lt;/pre&gt;
+</p>
+<p>
+You should now be able to run full text searches:
+</p>
+<p>
+&lt;pre&gt;<tt>rake fates:search
+BASE_PATH=&#8217;/tmp/index/fates/names&#8217; QUERY=&#8217;banda&#8217;
+</tt>&lt;/pre&gt;
+</p>
+<p>
+Distribution and modification subject to the same terms as Ruby.
+</p>
+
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,3065 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: Rails::Initializer</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class Rails_Initializer">
+  <h1 class="title">Class: Rails::Initializer</h1>
+  <div class="section inheritance">
+  <ul>
+  <li><a href='../Object.html' title='Object'>Object</a></li><ul><li>Rails::Initializer</li>
+  </ul></ul>
+</div><div class="section docstring">
+  <p>
+The Initializer is responsible for processing the Rails configuration, such
+as setting the $LOAD_PATH, requiring the right frameworks, initializing
+logging, and more. It can be run either as a single command that&#8217;ll
+just use the default configuration, like this:
+</p>
+<pre class="code">
+  <span class='Rails constant id'>Rails</span><span class='colon2 op'>::</span><span class='Initializer constant id'>Initializer</span><span class='dot token'>.</span><span class='run identifier id'>run</span>
+</pre>
+<p>
+But normally it&#8217;s more interesting to pass in a custom configuration
+through the block running:
+</p>
+<pre class="code">
+  <span class='Rails constant id'>Rails</span><span class='colon2 op'>::</span><span class='Initializer constant id'>Initializer</span><span class='dot token'>.</span><span class='run identifier id'>run</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='config identifier id'>config</span><span class='bitor op'>|</span>
+    <span class='config identifier id'>config</span><span class='dot token'>.</span><span class='frameworks identifier id'>frameworks</span> <span class='opasgn op'>-=</span> <span class='lbrack token'>[</span> <span class='symbol val'>:action_mailer</span> <span class='rbrack token'>]</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+This will use the default configuration options from Rails::Configuration,
+but allow for overwriting on select areas.
+</p>
+
+</div><div class="section attributes">
+  <h1>Attributes</h1>
+
+  
+    <div class="instance">
+      <h2>Instance Attributes</h2>
+      <table>
+      
+        <tr>
+          <th class="name">configuration</td>
+          <td class="readwrite">
+            [<span id='configuration-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+The Configuration instance used by this Initializer instance.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">gems_dependencies_loaded</td>
+          <td class="readwrite">
+            [<span id='gems_dependencies_loaded-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Whether or not all the gem dependencies have been met.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">loaded_plugins</td>
+          <td class="readwrite">
+            [<span id='loaded_plugins-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+The set of loaded plugins.
+</p>
+
+            
+          </td>
+        </tr>
+      
+      </table>
+    </div>
+  
+</div><div class="section constants">
+  
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(configuration)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Create a new Initializer instance that references the given Configuration
+instance.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+119
+120
+121
+122</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'railties/lib/initializer.rb', line 119</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='configuration identifier id'>configuration</span><span class='rparen token'>)</span>
+  <span class='@configuration ivar id'>@configuration</span> <span class='assign token'>=</span> <span class='configuration identifier id'>configuration</span>
+  <span class='@loaded_plugins ivar id'>@loaded_plugins</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <h1>Public Class Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#run-class_method' title='run'>run</a></span><span class='args'>(command = :process, configuration = Configuration.new)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Runs the initializer.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+  <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#add_gem_load_paths-instance_method' title='#add_gem_load_paths'>#add_gem_load_paths</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#add_plugin_load_paths-instance_method' title='#add_plugin_load_paths'>#add_plugin_load_paths</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Adds all load paths from plugins to the global set of load paths, so that
+code from plugins can be required (explicitly or automatically via
+ActiveSupport::Dependencies).
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#add_support_load_paths-instance_method' title='#add_support_load_paths'>#add_support_load_paths</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Add the load paths used by support functions such as the info controller.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#after_initialize-instance_method' title='#after_initialize'>#after_initialize</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Fires the user-supplied after_initialize block
+(Configuration#after_initialize).
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#check_gem_dependencies-instance_method' title='#check_gem_dependencies'>#check_gem_dependencies</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#check_ruby_version-instance_method' title='#check_ruby_version'>#check_ruby_version</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Check for valid Ruby version This is done in an external file, so we can
+use it from the `rails` program as well without duplication.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#disable_dependency_loading-instance_method' title='#disable_dependency_loading'>#disable_dependency_loading</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#initialize_cache-instance_method' title='#initialize_cache'>#initialize_cache</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#initialize_database-instance_method' title='#initialize_database'>#initialize_database</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+This initialization routine does nothing unless <tt>:active_record</tt> is
+one of the frameworks to load (Configuration#frameworks).
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#initialize_database_middleware-instance_method' title='#initialize_database_middleware'>#initialize_database_middleware</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#initialize_dependency_mechanism-instance_method' title='#initialize_dependency_mechanism'>#initialize_dependency_mechanism</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Sets the dependency loading mechanism based on the value of
+Configuration#cache_classes.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#initialize_encoding-instance_method' title='#initialize_encoding'>#initialize_encoding</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+For Ruby 1.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#initialize_framework_caches-instance_method' title='#initialize_framework_caches'>#initialize_framework_caches</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#initialize_framework_logging-instance_method' title='#initialize_framework_logging'>#initialize_framework_logging</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Sets the logger for Active Record, Action Controller, and Action Mailer
+(but only for those frameworks that are to be loaded).
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#initialize_framework_settings-instance_method' title='#initialize_framework_settings'>#initialize_framework_settings</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Initializes framework-specific settings for each of the loaded frameworks
+(Configuration#frameworks).
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#initialize_framework_views-instance_method' title='#initialize_framework_views'>#initialize_framework_views</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Sets +ActionController::Base#view_paths+ and
++ActionMailer::Base#template_root+ (but only for those frameworks that are
+to be loaded).
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#initialize_i18n-instance_method' title='#initialize_i18n'>#initialize_i18n</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Set the i18n configuration from config.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#initialize_logger-instance_method' title='#initialize_logger'>#initialize_logger</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+If the RAILS_DEFAULT_LOGGER constant is already set, this initialization
+routine does nothing.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#initialize_metal-instance_method' title='#initialize_metal'>#initialize_metal</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#initialize_routing-instance_method' title='#initialize_routing'>#initialize_routing</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+If Action Controller is not one of the loaded frameworks
+(Configuration#frameworks) this does nothing.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#initialize_time_zone-instance_method' title='#initialize_time_zone'>#initialize_time_zone</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Sets the default value for Time.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#initialize_whiny_nils-instance_method' title='#initialize_whiny_nils'>#initialize_whiny_nils</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Loads support for &quot;whiny nil&quot; (noisy warnings when methods are
+invoked on <tt>nil</tt> values) if Configuration#whiny_nils is true.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#install_gem_spec_stubs-instance_method' title='#install_gem_spec_stubs'>#install_gem_spec_stubs</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+If Rails is vendored and RubyGems is available, install stub GemSpecs for
+Rails, Active Support, Active Record, Action Pack, Action Mailer, and
+Active Resource.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#load_application_classes-instance_method' title='#load_application_classes'>#load_application_classes</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Eager load application classes.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#load_application_initializers-instance_method' title='#load_application_initializers'>#load_application_initializers</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#load_environment-instance_method' title='#load_environment'>#load_environment</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Loads the environment specified by Configuration#environment_path, which is
+typically one of development, test, or production.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#load_gems-instance_method' title='#load_gems'>#load_gems</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#load_observers-instance_method' title='#load_observers'>#load_observers</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#load_plugins-instance_method' title='#load_plugins'>#load_plugins</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Loads all plugins in &lt;tt&gt;config.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#load_view_paths-instance_method' title='#load_view_paths'>#load_view_paths</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#plugin_loader-instance_method' title='#plugin_loader'>#plugin_loader</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#preload_frameworks-instance_method' title='#preload_frameworks'>#preload_frameworks</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Preload all frameworks specified by the Configuration#frameworks.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#prepare_dispatcher-instance_method' title='#prepare_dispatcher'>#prepare_dispatcher</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#process-instance_method' title='#process'>#process</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Sequentially step through all of the available initialization routines, in
+order (view execution order in source).
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#require_frameworks-instance_method' title='#require_frameworks'>#require_frameworks</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Requires all frameworks specified by the Configuration#frameworks list.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#set_autoload_paths-instance_method' title='#set_autoload_paths'>#set_autoload_paths</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Set the paths from which Rails will automatically load source files, and
+the load_once paths.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#set_load_path-instance_method' title='#set_load_path'>#set_load_path</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Set the <tt>$LOAD_PATH</tt> based on the value of Configuration#load_paths.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table><div class="inherited">
+  
+  <div>
+    <h1>Public Instance Methods Inherited from <a href='../Object.html' title='Object'>Object</a></h1>
+    <p><span class='name'><a href='../Object.html#blank%3F-instance_method' title='blank?'>blank?</a></span>, <span class='name'><a href='../Object.html#duplicable%3F-instance_method' title='duplicable?'>duplicable?</a></span>, <span class='name'><a href='../Object.html#present%3F-instance_method' title='present?'>present?</a></span>, <span class='name'><a href='../Object.html#to_param-instance_method' title='to_param'>to_param</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails class public">
+  <h1>Public Class Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>run</h3>
+</div><div id="run-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>run</span><span class='args'>(command = :process, configuration = Configuration.new)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Runs the initializer. By default, this will invoke the #process method,
+which simply executes all of the initialization routines. Alternately, you
+can specify explicitly which initialization routine you want:
+</p>
+<pre class="code">
+  <span class='Rails constant id'>Rails</span><span class='colon2 op'>::</span><span class='Initializer constant id'>Initializer</span><span class='dot token'>.</span><span class='run identifier id'>run</span><span class='lparen token'>(</span><span class='symbol val'>:set_load_path</span><span class='rparen token'>)</span>
+</pre>
+<p>
+This is useful if you only want the load path initialized, without
+incurring the overhead of completely loading the entire environment.
+</p>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+110
+111
+112
+113
+114
+115</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'railties/lib/initializer.rb', line 110</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='run identifier id'>run</span><span class='lparen token'>(</span><span class='command identifier id'>command</span> <span class='assign token'>=</span> <span class='symbol val'>:process</span><span class='comma token'>,</span> <span class='configuration identifier id'>configuration</span> <span class='assign token'>=</span> <span class='Configuration constant id'>Configuration</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='rparen token'>)</span>
+  <span class='yield yield kw'>yield</span> <span class='configuration identifier id'>configuration</span> <span class='if if_mod kw'>if</span> <span class='block_given? fid id'>block_given?</span>
+  <span class='initializer identifier id'>initializer</span> <span class='assign token'>=</span> <span class='new identifier id'>new</span> <span class='configuration identifier id'>configuration</span>
+  <span class='initializer identifier id'>initializer</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='command identifier id'>command</span><span class='rparen token'>)</span>
+  <span class='initializer identifier id'>initializer</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div><div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>add_gem_load_paths</h3>
+</div><div id="add_gem_load_paths-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>add_gem_load_paths</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+296
+297
+298
+299
+300
+301
+302</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'railties/lib/initializer.rb', line 296</span>
+
+<span class='def def kw'>def</span> <span class='add_gem_load_paths identifier id'>add_gem_load_paths</span>
+  <span class='Rails constant id'>Rails</span><span class='colon2 op'>::</span><span class='GemDependency constant id'>GemDependency</span><span class='dot token'>.</span><span class='add_frozen_gem_path identifier id'>add_frozen_gem_path</span>
+  <span class='unless unless kw'>unless</span> <span class='@configuration ivar id'>@configuration</span><span class='dot token'>.</span><span class='gems identifier id'>gems</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span>
+    <span class='require identifier id'>require</span> <span class='string val'>&quot;rubygems&quot;</span>
+    <span class='@configuration ivar id'>@configuration</span><span class='dot token'>.</span><span class='gems identifier id'>gems</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='gem identifier id'>gem</span><span class='bitor op'>|</span> <span class='gem identifier id'>gem</span><span class='dot token'>.</span><span class='add_load_paths identifier id'>add_load_paths</span> <span class='rbrace token'>}</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>add_plugin_load_paths</h3>
+</div><div id="add_plugin_load_paths-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>add_plugin_load_paths</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Adds all load paths from plugins to the global set of load paths, so that
+code from plugins can be required (explicitly or automatically via
+ActiveSupport::Dependencies).
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+292
+293
+294</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'railties/lib/initializer.rb', line 292</span>
+
+<span class='def def kw'>def</span> <span class='add_plugin_load_paths identifier id'>add_plugin_load_paths</span>
+  <span class='plugin_loader identifier id'>plugin_loader</span><span class='dot token'>.</span><span class='add_plugin_load_paths identifier id'>add_plugin_load_paths</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>add_support_load_paths</h3>
+</div><div id="add_support_load_paths-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>add_support_load_paths</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Add the load paths used by support functions such as the info controller
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+287
+288</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'railties/lib/initializer.rb', line 287</span>
+
+<span class='def def kw'>def</span> <span class='add_support_load_paths identifier id'>add_support_load_paths</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>after_initialize</h3>
+</div><div id="after_initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>after_initialize</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Fires the user-supplied after_initialize block
+(Configuration#after_initialize)
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+594
+595
+596
+597
+598
+599
+600</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'railties/lib/initializer.rb', line 594</span>
+
+<span class='def def kw'>def</span> <span class='after_initialize identifier id'>after_initialize</span>
+  <span class='if if kw'>if</span> <span class='gems_dependencies_loaded identifier id'>gems_dependencies_loaded</span>
+    <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='after_initialize_blocks identifier id'>after_initialize_blocks</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='block identifier id'>block</span><span class='bitor op'>|</span>
+      <span class='block identifier id'>block</span><span class='dot token'>.</span><span class='call identifier id'>call</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>check_gem_dependencies</h3>
+</div><div id="check_gem_dependencies-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>check_gem_dependencies</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'railties/lib/initializer.rb', line 310</span>
+
+<span class='def def kw'>def</span> <span class='check_gem_dependencies identifier id'>check_gem_dependencies</span>
+  <span class='unloaded_gems identifier id'>unloaded_gems</span> <span class='assign token'>=</span> <span class='@configuration ivar id'>@configuration</span><span class='dot token'>.</span><span class='gems identifier id'>gems</span><span class='dot token'>.</span><span class='reject identifier id'>reject</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='g identifier id'>g</span><span class='bitor op'>|</span> <span class='g identifier id'>g</span><span class='dot token'>.</span><span class='loaded? fid id'>loaded?</span> <span class='rbrace token'>}</span>
+  <span class='if if kw'>if</span> <span class='unloaded_gems identifier id'>unloaded_gems</span><span class='dot token'>.</span><span class='size identifier id'>size</span> <span class='gt op'>&gt;</span> <span class='integer val'>0</span>
+    <span class='@gems_dependencies_loaded ivar id'>@gems_dependencies_loaded</span> <span class='assign token'>=</span> <span class='false false kw'>false</span>
+    <span class='comment val'># don't print if the gems rake tasks are being run</span>
+    <span class='unless unless kw'>unless</span> <span class='$gems_rake_task gvar id'>$gems_rake_task</span>
+      <span class='abort identifier id'>abort</span> <span class='string val'>&quot;Missing these required gems:\n\#{unloaded_gems.map { |gem| \&quot;\#{gem.name}  \#{gem.requirement}\&quot; } * \&quot;\\n  \&quot;}\n\nYou're running:\nruby \#{Gem.ruby_version} at \#{Gem.ruby}\nrubygems \#{Gem::RubyGemsVersion} at \#{Gem.path * ', '}\n\nRun `rake gems:install` to install the missing gems.\n&quot;</span>
+    <span class='end end kw'>end</span>
+  <span class='else else kw'>else</span>
+    <span class='@gems_dependencies_loaded ivar id'>@gems_dependencies_loaded</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>check_ruby_version</h3>
+</div><div id="check_ruby_version-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>check_ruby_version</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Check for valid Ruby version This is done in an external file, so we can
+use it from the `rails` program as well without duplication.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+207
+208
+209</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'railties/lib/initializer.rb', line 207</span>
+
+<span class='def def kw'>def</span> <span class='check_ruby_version identifier id'>check_ruby_version</span>
+  <span class='require identifier id'>require</span> <span class='string val'>'ruby_version_check'</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>disable_dependency_loading</h3>
+</div><div id="disable_dependency_loading-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>disable_dependency_loading</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+617
+618
+619
+620
+621</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'railties/lib/initializer.rb', line 617</span>
+
+<span class='def def kw'>def</span> <span class='disable_dependency_loading identifier id'>disable_dependency_loading</span>
+  <span class='if if kw'>if</span> <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='cache_classes identifier id'>cache_classes</span> <span class='andop op'>&amp;&amp;</span> <span class='notop op'>!</span><span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='dependency_loading identifier id'>dependency_loading</span>
+    <span class='ActiveSupport constant id'>ActiveSupport</span><span class='colon2 op'>::</span><span class='Dependencies constant id'>Dependencies</span><span class='dot token'>.</span><span class='unhook! fid id'>unhook!</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>initialize_cache</h3>
+</div><div id="initialize_cache-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize_cache</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'railties/lib/initializer.rb', line 438</span>
+
+<span class='def def kw'>def</span> <span class='initialize_cache identifier id'>initialize_cache</span>
+  <span class='unless unless kw'>unless</span> <span class='defined? defined kw'>defined?</span><span class='lparen token'>(</span><span class='RAILS_CACHE constant id'>RAILS_CACHE</span><span class='rparen token'>)</span>
+    <span class='silence_warnings identifier id'>silence_warnings</span> <span class='lbrace token'>{</span> <span class='Object constant id'>Object</span><span class='dot token'>.</span><span class='const_set identifier id'>const_set</span> <span class='string val'>&quot;RAILS_CACHE&quot;</span><span class='comma token'>,</span> <span class='ActiveSupport constant id'>ActiveSupport</span><span class='colon2 op'>::</span><span class='Cache constant id'>Cache</span><span class='dot token'>.</span><span class='lookup_store identifier id'>lookup_store</span><span class='lparen token'>(</span><span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='cache_store identifier id'>cache_store</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+
+    <span class='if if kw'>if</span> <span class='RAILS_CACHE constant id'>RAILS_CACHE</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='colon op'>:</span><span class='middleware identifier id'>middleware</span><span class='rparen token'>)</span>
+      <span class='comment val'># Insert middleware to setup and teardown local cache for each request</span>
+      <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='middleware identifier id'>middleware</span><span class='dot token'>.</span><span class='insert_after identifier id'>insert_after</span><span class='lparen token'>(</span><span class='symbol val'>:&quot;ActionController::Failsafe&quot;</span><span class='comma token'>,</span> <span class='RAILS_CACHE constant id'>RAILS_CACHE</span><span class='dot token'>.</span><span class='middleware identifier id'>middleware</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>initialize_database</h3>
+</div><div id="initialize_database-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize_database</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+This initialization routine does nothing unless <tt>:active_record</tt> is
+one of the frameworks to load (Configuration#frameworks). If it is, this
+sets the database configuration from Configuration#database_configuration
+and then establishes the connection.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+419
+420
+421
+422
+423
+424</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'railties/lib/initializer.rb', line 419</span>
+
+<span class='def def kw'>def</span> <span class='initialize_database identifier id'>initialize_database</span>
+  <span class='if if kw'>if</span> <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='frameworks identifier id'>frameworks</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='colon op'>:</span><span class='active_record identifier id'>active_record</span><span class='rparen token'>)</span>
+    <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='dot token'>.</span><span class='configurations identifier id'>configurations</span> <span class='assign token'>=</span> <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='database_configuration identifier id'>database_configuration</span>
+    <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='dot token'>.</span><span class='establish_connection identifier id'>establish_connection</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>initialize_database_middleware</h3>
+</div><div id="initialize_database_middleware-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize_database_middleware</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'railties/lib/initializer.rb', line 426</span>
+
+<span class='def def kw'>def</span> <span class='initialize_database_middleware identifier id'>initialize_database_middleware</span>
+  <span class='if if kw'>if</span> <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='frameworks identifier id'>frameworks</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='colon op'>:</span><span class='active_record identifier id'>active_record</span><span class='rparen token'>)</span>
+    <span class='if if kw'>if</span> <span class='ActionController constant id'>ActionController</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='dot token'>.</span><span class='session_store identifier id'>session_store</span> <span class='eq op'>==</span> <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='SessionStore constant id'>SessionStore</span>
+      <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='middleware identifier id'>middleware</span><span class='dot token'>.</span><span class='insert_before identifier id'>insert_before</span> <span class='symbol val'>:&quot;ActiveRecord::SessionStore&quot;</span><span class='comma token'>,</span> <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='ConnectionAdapters constant id'>ConnectionAdapters</span><span class='colon2 op'>::</span><span class='ConnectionManagement constant id'>ConnectionManagement</span>
+      <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='middleware identifier id'>middleware</span><span class='dot token'>.</span><span class='insert_before identifier id'>insert_before</span> <span class='symbol val'>:&quot;ActiveRecord::SessionStore&quot;</span><span class='comma token'>,</span> <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='QueryCache constant id'>QueryCache</span>
+    <span class='else else kw'>else</span>
+      <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='middleware identifier id'>middleware</span><span class='dot token'>.</span><span class='use identifier id'>use</span> <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='ConnectionAdapters constant id'>ConnectionAdapters</span><span class='colon2 op'>::</span><span class='ConnectionManagement constant id'>ConnectionManagement</span>
+      <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='middleware identifier id'>middleware</span><span class='dot token'>.</span><span class='use identifier id'>use</span> <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='QueryCache constant id'>QueryCache</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>initialize_dependency_mechanism</h3>
+</div><div id="initialize_dependency_mechanism-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize_dependency_mechanism</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Sets the dependency loading mechanism based on the value of
+Configuration#cache_classes.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+525
+526
+527</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'railties/lib/initializer.rb', line 525</span>
+
+<span class='def def kw'>def</span> <span class='initialize_dependency_mechanism identifier id'>initialize_dependency_mechanism</span>
+  <span class='ActiveSupport constant id'>ActiveSupport</span><span class='colon2 op'>::</span><span class='Dependencies constant id'>Dependencies</span><span class='dot token'>.</span><span class='mechanism identifier id'>mechanism</span> <span class='assign token'>=</span> <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='cache_classes identifier id'>cache_classes</span> <span class='integer val'>? </span><span class='symbol val'>:require</span> <span class='colon op'>:</span> <span class='symbol val'>:load</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>initialize_encoding</h3>
+</div><div id="initialize_encoding-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize_encoding</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+For Ruby 1.8, this initialization sets $KCODE to &#8216;u&#8217; to enable
+the multibyte safe operations. Plugin authors supporting other encodings
+should override this behaviour and set the relevant
+<tt>default_charset</tt> on ActionController::Base.
+</p>
+<p>
+For Ruby 1.9, this does nothing. Specify the default encoding in the Ruby
+shebang line if you don&#8217;t want UTF-8.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+411
+412
+413</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'railties/lib/initializer.rb', line 411</span>
+
+<span class='def def kw'>def</span> <span class='initialize_encoding identifier id'>initialize_encoding</span>
+  <span class='$KCODE gvar id'>$KCODE</span><span class='assign token'>=</span><span class='string val'>'u'</span> <span class='if if_mod kw'>if</span> <span class='RUBY_VERSION constant id'>RUBY_VERSION</span> <span class='lt op'>&lt;</span> <span class='string val'>'1.9'</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>initialize_framework_caches</h3>
+</div><div id="initialize_framework_caches-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize_framework_caches</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+449
+450
+451
+452
+453</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'railties/lib/initializer.rb', line 449</span>
+
+<span class='def def kw'>def</span> <span class='initialize_framework_caches identifier id'>initialize_framework_caches</span>
+  <span class='if if kw'>if</span> <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='frameworks identifier id'>frameworks</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='colon op'>:</span><span class='action_controller identifier id'>action_controller</span><span class='rparen token'>)</span>
+    <span class='ActionController constant id'>ActionController</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='dot token'>.</span><span class='cache_store identifier id'>cache_store</span> <span class='opasgn op'>||=</span> <span class='RAILS_CACHE constant id'>RAILS_CACHE</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>initialize_framework_logging</h3>
+</div><div id="initialize_framework_logging-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize_framework_logging</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Sets the logger for Active Record, Action Controller, and Action Mailer
+(but only for those frameworks that are to be loaded). If the
+framework&#8217;s logger is already set, it is not changed, otherwise it is
+set to use RAILS_DEFAULT_LOGGER.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+491
+492
+493
+494
+495
+496
+497
+498</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'railties/lib/initializer.rb', line 491</span>
+
+<span class='def def kw'>def</span> <span class='initialize_framework_logging identifier id'>initialize_framework_logging</span>
+  <span class='for for kw'>for</span> <span class='framework identifier id'>framework</span> <span class='in in kw'>in</span> <span class='lparen token'>(</span><span class='lbrack token'>[</span> <span class='colon op'>:</span><span class='active_record identifier id'>active_record</span><span class='comma token'>,</span> <span class='symbol val'>:action_controller</span><span class='comma token'>,</span> <span class='symbol val'>:action_mailer</span> <span class='rbrack token'>]</span> <span class='bitand op'>&amp;</span> <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='frameworks identifier id'>frameworks</span><span class='rparen token'>)</span>
+    <span class='framework identifier id'>framework</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='camelize identifier id'>camelize</span><span class='dot token'>.</span><span class='constantize identifier id'>constantize</span><span class='dot token'>.</span><span class='const_get identifier id'>const_get</span><span class='lparen token'>(</span><span class='string val'>&quot;Base&quot;</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='logger identifier id'>logger</span> <span class='opasgn op'>||=</span> <span class='Rails constant id'>Rails</span><span class='dot token'>.</span><span class='logger identifier id'>logger</span>
+  <span class='end end kw'>end</span>
+
+  <span class='ActiveSupport constant id'>ActiveSupport</span><span class='colon2 op'>::</span><span class='Dependencies constant id'>Dependencies</span><span class='dot token'>.</span><span class='logger identifier id'>logger</span> <span class='opasgn op'>||=</span> <span class='Rails constant id'>Rails</span><span class='dot token'>.</span><span class='logger identifier id'>logger</span>
+  <span class='Rails constant id'>Rails</span><span class='dot token'>.</span><span class='cache identifier id'>cache</span><span class='dot token'>.</span><span class='logger identifier id'>logger</span> <span class='opasgn op'>||=</span> <span class='Rails constant id'>Rails</span><span class='dot token'>.</span><span class='logger identifier id'>logger</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>initialize_framework_settings</h3>
+</div><div id="initialize_framework_settings-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize_framework_settings</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Initializes framework-specific settings for each of the loaded frameworks
+(Configuration#frameworks). The available settings map to the accessors on
+each of the corresponding Base classes.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+580
+581
+582
+583
+584
+585
+586
+587
+588
+589
+590
+591</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'railties/lib/initializer.rb', line 580</span>
+
+<span class='def def kw'>def</span> <span class='initialize_framework_settings identifier id'>initialize_framework_settings</span>
+  <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='frameworks identifier id'>frameworks</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='framework identifier id'>framework</span><span class='bitor op'>|</span>
+    <span class='base_class identifier id'>base_class</span> <span class='assign token'>=</span> <span class='framework identifier id'>framework</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='camelize identifier id'>camelize</span><span class='dot token'>.</span><span class='constantize identifier id'>constantize</span><span class='dot token'>.</span><span class='const_get identifier id'>const_get</span><span class='lparen token'>(</span><span class='string val'>&quot;Base&quot;</span><span class='rparen token'>)</span>
+
+    <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='framework identifier id'>framework</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='setting identifier id'>setting</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='bitor op'>|</span>
+      <span class='base_class identifier id'>base_class</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{setting}=&quot;</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+  <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='active_support identifier id'>active_support</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='setting identifier id'>setting</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='bitor op'>|</span>
+    <span class='ActiveSupport constant id'>ActiveSupport</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{setting}=&quot;</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>initialize_framework_views</h3>
+</div><div id="initialize_framework_views-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize_framework_views</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Sets +ActionController::Base#view_paths+ and
++ActionMailer::Base#template_root+ (but only for those frameworks that are
+to be loaded). If the framework&#8217;s paths have already been set, it is
+not changed, otherwise it is set to use Configuration#view_path.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+504
+505
+506
+507
+508
+509
+510</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'railties/lib/initializer.rb', line 504</span>
+
+<span class='def def kw'>def</span> <span class='initialize_framework_views identifier id'>initialize_framework_views</span>
+  <span class='if if kw'>if</span> <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='frameworks identifier id'>frameworks</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='colon op'>:</span><span class='action_view identifier id'>action_view</span><span class='rparen token'>)</span>
+    <span class='view_path identifier id'>view_path</span> <span class='assign token'>=</span> <span class='ActionView constant id'>ActionView</span><span class='colon2 op'>::</span><span class='PathSet constant id'>PathSet</span><span class='dot token'>.</span><span class='type_cast identifier id'>type_cast</span><span class='lparen token'>(</span><span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='view_path identifier id'>view_path</span><span class='rparen token'>)</span>
+    <span class='ActionMailer constant id'>ActionMailer</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='dot token'>.</span><span class='template_root identifier id'>template_root</span>  <span class='assign token'>=</span> <span class='view_path identifier id'>view_path</span> <span class='if if_mod kw'>if</span> <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='frameworks identifier id'>frameworks</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='symbol val'>:action_mailer</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='ActionMailer constant id'>ActionMailer</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='dot token'>.</span><span class='view_paths identifier id'>view_paths</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span>
+    <span class='ActionController constant id'>ActionController</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='dot token'>.</span><span class='view_paths identifier id'>view_paths</span> <span class='assign token'>=</span> <span class='view_path identifier id'>view_path</span> <span class='if if_mod kw'>if</span> <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='frameworks identifier id'>frameworks</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='symbol val'>:action_controller</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='ActionController constant id'>ActionController</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='dot token'>.</span><span class='view_paths identifier id'>view_paths</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>initialize_i18n</h3>
+</div><div id="initialize_i18n-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize_i18n</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Set the i18n configuration from config.i18n but special-case for the
+load_path which should be appended to what&#8217;s already set instead of
+overwritten.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+558
+559
+560
+561
+562
+563
+564
+565
+566</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'railties/lib/initializer.rb', line 558</span>
+
+<span class='def def kw'>def</span> <span class='initialize_i18n identifier id'>initialize_i18n</span>
+  <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='i18n identifier id'>i18n</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='setting identifier id'>setting</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='bitor op'>|</span>
+    <span class='if if kw'>if</span> <span class='setting identifier id'>setting</span> <span class='eq op'>==</span> <span class='colon op'>:</span><span class='load_path identifier id'>load_path</span>
+      <span class='I18n constant id'>I18n</span><span class='dot token'>.</span><span class='load_path identifier id'>load_path</span> <span class='opasgn op'>+=</span> <span class='value identifier id'>value</span>
+    <span class='else else kw'>else</span>
+      <span class='I18n constant id'>I18n</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{setting}=&quot;</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>initialize_logger</h3>
+</div><div id="initialize_logger-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize_logger</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+If the RAILS_DEFAULT_LOGGER constant is already set, this initialization
+routine does nothing. If the constant is not set, and Configuration#logger
+is not <tt>nil</tt>, this also does nothing. Otherwise, a new logger
+instance is created at Configuration#log_path, with a default log level of
+Configuration#log_level.
+</p>
+<p>
+If the log could not be created, the log will be set to output to
+<tt>STDERR</tt>, with a log level of <tt>WARN</tt>.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+463
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477
+478
+479
+480
+481
+482
+483
+484
+485</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'railties/lib/initializer.rb', line 463</span>
+
+<span class='def def kw'>def</span> <span class='initialize_logger identifier id'>initialize_logger</span>
+  <span class='comment val'># if the environment has explicitly defined a logger, use it</span>
+  <span class='return return kw'>return</span> <span class='if if_mod kw'>if</span> <span class='Rails constant id'>Rails</span><span class='dot token'>.</span><span class='logger identifier id'>logger</span>
+
+  <span class='unless unless kw'>unless</span> <span class='logger identifier id'>logger</span> <span class='assign token'>=</span> <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='logger identifier id'>logger</span>
+    <span class='begin begin kw'>begin</span>
+      <span class='logger identifier id'>logger</span> <span class='assign token'>=</span> <span class='ActiveSupport constant id'>ActiveSupport</span><span class='colon2 op'>::</span><span class='BufferedLogger constant id'>BufferedLogger</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='log_path identifier id'>log_path</span><span class='rparen token'>)</span>
+      <span class='logger identifier id'>logger</span><span class='dot token'>.</span><span class='level identifier id'>level</span> <span class='assign token'>=</span> <span class='ActiveSupport constant id'>ActiveSupport</span><span class='colon2 op'>::</span><span class='BufferedLogger constant id'>BufferedLogger</span><span class='dot token'>.</span><span class='const_get identifier id'>const_get</span><span class='lparen token'>(</span><span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='log_level identifier id'>log_level</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='upcase identifier id'>upcase</span><span class='rparen token'>)</span>
+      <span class='if if kw'>if</span> <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='environment identifier id'>environment</span> <span class='eq op'>==</span> <span class='string val'>&quot;production&quot;</span>
+        <span class='logger identifier id'>logger</span><span class='dot token'>.</span><span class='auto_flushing identifier id'>auto_flushing</span> <span class='assign token'>=</span> <span class='false false kw'>false</span>
+      <span class='end end kw'>end</span>
+    <span class='rescue rescue kw'>rescue</span> <span class='StandardError constant id'>StandardError</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
+      <span class='logger identifier id'>logger</span> <span class='assign token'>=</span> <span class='ActiveSupport constant id'>ActiveSupport</span><span class='colon2 op'>::</span><span class='BufferedLogger constant id'>BufferedLogger</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='STDERR constant id'>STDERR</span><span class='rparen token'>)</span>
+      <span class='logger identifier id'>logger</span><span class='dot token'>.</span><span class='level identifier id'>level</span> <span class='assign token'>=</span> <span class='ActiveSupport constant id'>ActiveSupport</span><span class='colon2 op'>::</span><span class='BufferedLogger constant id'>BufferedLogger</span><span class='colon2 op'>::</span><span class='WARN constant id'>WARN</span>
+      <span class='logger identifier id'>logger</span><span class='dot token'>.</span><span class='warn identifier id'>warn</span><span class='lparen token'>(</span>
+        <span class='dstring node'>&quot;Rails Error: Unable to access log file. Please ensure that #{configuration.log_path} exists and is chmod 0666. &quot;</span> <span class='plus op'>+</span>
+        <span class='string val'>&quot;The log level has been raised to WARN and the output directed to STDERR until the problem is fixed.&quot;</span>
+      <span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+
+  <span class='silence_warnings identifier id'>silence_warnings</span> <span class='lbrace token'>{</span> <span class='Object constant id'>Object</span><span class='dot token'>.</span><span class='const_set identifier id'>const_set</span> <span class='string val'>&quot;RAILS_DEFAULT_LOGGER&quot;</span><span class='comma token'>,</span> <span class='logger identifier id'>logger</span> <span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>initialize_metal</h3>
+</div><div id="initialize_metal-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize_metal</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+568
+569
+570
+571
+572
+573
+574
+575</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'railties/lib/initializer.rb', line 568</span>
+
+<span class='def def kw'>def</span> <span class='initialize_metal identifier id'>initialize_metal</span>
+  <span class='Rails constant id'>Rails</span><span class='colon2 op'>::</span><span class='Rack constant id'>Rack</span><span class='colon2 op'>::</span><span class='Metal constant id'>Metal</span><span class='dot token'>.</span><span class='requested_metals identifier id'>requested_metals</span> <span class='assign token'>=</span> <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='metals identifier id'>metals</span>
+  <span class='Rails constant id'>Rails</span><span class='colon2 op'>::</span><span class='Rack constant id'>Rack</span><span class='colon2 op'>::</span><span class='Metal constant id'>Metal</span><span class='dot token'>.</span><span class='metal_paths identifier id'>metal_paths</span> <span class='opasgn op'>+=</span> <span class='plugin_loader identifier id'>plugin_loader</span><span class='dot token'>.</span><span class='engine_metal_paths identifier id'>engine_metal_paths</span>
+
+  <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='middleware identifier id'>middleware</span><span class='dot token'>.</span><span class='insert_before identifier id'>insert_before</span><span class='lparen token'>(</span>
+    <span class='symbol val'>:&quot;ActionDispatch::RewindableInput&quot;</span><span class='comma token'>,</span>
+    <span class='Rails constant id'>Rails</span><span class='colon2 op'>::</span><span class='Rack constant id'>Rack</span><span class='colon2 op'>::</span><span class='Metal constant id'>Metal</span><span class='comma token'>,</span> <span class='symbol val'>:if</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='Rails constant id'>Rails</span><span class='colon2 op'>::</span><span class='Rack constant id'>Rack</span><span class='colon2 op'>::</span><span class='Metal constant id'>Metal</span><span class='dot token'>.</span><span class='metals identifier id'>metals</span><span class='dot token'>.</span><span class='any? fid id'>any?</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>initialize_routing</h3>
+</div><div id="initialize_routing-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize_routing</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+If Action Controller is not one of the loaded frameworks
+(Configuration#frameworks) this does nothing. Otherwise, it loads the
+routing definitions and sets up loading module used to lazily load
+controllers (Configuration#controller_paths).
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+515
+516
+517
+518
+519
+520
+521</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'railties/lib/initializer.rb', line 515</span>
+
+<span class='def def kw'>def</span> <span class='initialize_routing identifier id'>initialize_routing</span>
+  <span class='return return kw'>return</span> <span class='unless unless_mod kw'>unless</span> <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='frameworks identifier id'>frameworks</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='symbol val'>:action_controller</span><span class='rparen token'>)</span>
+
+  <span class='ActionController constant id'>ActionController</span><span class='colon2 op'>::</span><span class='Routing constant id'>Routing</span><span class='dot token'>.</span><span class='controller_paths identifier id'>controller_paths</span> <span class='opasgn op'>+=</span> <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='controller_paths identifier id'>controller_paths</span>
+  <span class='ActionController constant id'>ActionController</span><span class='colon2 op'>::</span><span class='Routing constant id'>Routing</span><span class='colon2 op'>::</span><span class='Routes constant id'>Routes</span><span class='dot token'>.</span><span class='add_configuration_file identifier id'>add_configuration_file</span><span class='lparen token'>(</span><span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='routes_configuration_file identifier id'>routes_configuration_file</span><span class='rparen token'>)</span>
+  <span class='ActionController constant id'>ActionController</span><span class='colon2 op'>::</span><span class='Routing constant id'>Routing</span><span class='colon2 op'>::</span><span class='Routes constant id'>Routes</span><span class='dot token'>.</span><span class='reload! fid id'>reload!</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>initialize_time_zone</h3>
+</div><div id="initialize_time_zone-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize_time_zone</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Sets the default value for Time.zone, and turns on
+ActiveRecord::Base#time_zone_aware_attributes. If assigned value cannot be
+matched to a TimeZone, an exception will be raised.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+537
+538
+539
+540
+541
+542
+543
+544
+545
+546
+547
+548
+549
+550
+551
+552
+553
+554</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'railties/lib/initializer.rb', line 537</span>
+
+<span class='def def kw'>def</span> <span class='initialize_time_zone identifier id'>initialize_time_zone</span>
+  <span class='if if kw'>if</span> <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='time_zone identifier id'>time_zone</span>
+    <span class='zone_default identifier id'>zone_default</span> <span class='assign token'>=</span> <span class='Time constant id'>Time</span><span class='dot token'>.</span><span class='__send__ identifier id'>__send__</span><span class='lparen token'>(</span><span class='symbol val'>:get_zone</span><span class='comma token'>,</span> <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='time_zone identifier id'>time_zone</span><span class='rparen token'>)</span>
+
+    <span class='unless unless kw'>unless</span> <span class='zone_default identifier id'>zone_default</span>
+      <span class='raise identifier id'>raise</span> \
+        <span class='string val'>'Value assigned to config.time_zone not recognized.'</span> <span class='plus op'>+</span>
+        <span class='string val'>'Run &quot;rake -D time&quot; for a list of tasks for finding appropriate time zone names.'</span>
+    <span class='end end kw'>end</span>
+
+    <span class='Time constant id'>Time</span><span class='dot token'>.</span><span class='zone_default identifier id'>zone_default</span> <span class='assign token'>=</span> <span class='zone_default identifier id'>zone_default</span>
+
+    <span class='if if kw'>if</span> <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='frameworks identifier id'>frameworks</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='colon op'>:</span><span class='active_record identifier id'>active_record</span><span class='rparen token'>)</span>
+      <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='dot token'>.</span><span class='time_zone_aware_attributes identifier id'>time_zone_aware_attributes</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+      <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='dot token'>.</span><span class='default_timezone identifier id'>default_timezone</span> <span class='assign token'>=</span> <span class='symbol val'>:utc</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>initialize_whiny_nils</h3>
+</div><div id="initialize_whiny_nils-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize_whiny_nils</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Loads support for &quot;whiny nil&quot; (noisy warnings when methods are
+invoked on <tt>nil</tt> values) if Configuration#whiny_nils is true.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+531
+532
+533</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'railties/lib/initializer.rb', line 531</span>
+
+<span class='def def kw'>def</span> <span class='initialize_whiny_nils identifier id'>initialize_whiny_nils</span>
+  <span class='require identifier id'>require</span><span class='lparen token'>(</span><span class='string val'>'active_support/whiny_nil'</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='whiny_nils identifier id'>whiny_nils</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>install_gem_spec_stubs</h3>
+</div><div id="install_gem_spec_stubs-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>install_gem_spec_stubs</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+If Rails is vendored and RubyGems is available, install stub GemSpecs for
+Rails, Active Support, Active Record, Action Pack, Action Mailer, and
+Active Resource. This allows Gem plugins to depend on Rails even when the
+Gem version of Rails shouldn&#8217;t be loaded.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'railties/lib/initializer.rb', line 215</span>
+
+<span class='def def kw'>def</span> <span class='install_gem_spec_stubs identifier id'>install_gem_spec_stubs</span>
+  <span class='unless unless kw'>unless</span> <span class='Rails constant id'>Rails</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='colon op'>:</span><span class='vendor_rails? fid id'>vendor_rails?</span><span class='rparen token'>)</span>
+    <span class='abort identifier id'>abort</span> <span class='string val'>%{Your config/boot.rb is outdated: Run &quot;rake rails:update&quot;.}</span>
+  <span class='end end kw'>end</span>
+
+  <span class='if if kw'>if</span> <span class='Rails constant id'>Rails</span><span class='dot token'>.</span><span class='vendor_rails? fid id'>vendor_rails?</span>
+    <span class='begin begin kw'>begin</span><span class='semicolon token'>;</span> <span class='require identifier id'>require</span> <span class='string val'>&quot;rubygems&quot;</span><span class='semicolon token'>;</span> <span class='rescue rescue kw'>rescue</span> <span class='LoadError constant id'>LoadError</span><span class='semicolon token'>;</span> <span class='return return kw'>return</span><span class='semicolon token'>;</span> <span class='end end kw'>end</span>
+
+    <span class='stubs identifier id'>stubs</span> <span class='assign token'>=</span> <span class='dstring node'>%w(rails activesupport activerecord actionpack actionmailer activeresource)</span>
+    <span class='stubs identifier id'>stubs</span><span class='dot token'>.</span><span class='reject! fid id'>reject!</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='s identifier id'>s</span><span class='bitor op'>|</span> <span class='Gem constant id'>Gem</span><span class='dot token'>.</span><span class='loaded_specs identifier id'>loaded_specs</span><span class='dot token'>.</span><span class='key? fid id'>key?</span><span class='lparen token'>(</span><span class='s identifier id'>s</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+
+    <span class='stubs identifier id'>stubs</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='stub identifier id'>stub</span><span class='bitor op'>|</span>
+      <span class='Gem constant id'>Gem</span><span class='dot token'>.</span><span class='loaded_specs identifier id'>loaded_specs</span><span class='lbrack token'>[</span><span class='stub identifier id'>stub</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='Gem constant id'>Gem</span><span class='colon2 op'>::</span><span class='Specification constant id'>Specification</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='s identifier id'>s</span><span class='bitor op'>|</span>
+        <span class='s identifier id'>s</span><span class='dot token'>.</span><span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='stub identifier id'>stub</span>
+        <span class='s identifier id'>s</span><span class='dot token'>.</span><span class='version identifier id'>version</span> <span class='assign token'>=</span> <span class='Rails constant id'>Rails</span><span class='colon2 op'>::</span><span class='VERSION constant id'>VERSION</span><span class='colon2 op'>::</span><span class='STRING constant id'>STRING</span>
+        <span class='s identifier id'>s</span><span class='dot token'>.</span><span class='loaded_from identifier id'>loaded_from</span> <span class='assign token'>=</span> <span class='string val'>&quot;&quot;</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>load_application_classes</h3>
+</div><div id="load_application_classes-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>load_application_classes</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Eager load application classes
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'railties/lib/initializer.rb', line 392</span>
+
+<span class='def def kw'>def</span> <span class='load_application_classes identifier id'>load_application_classes</span>
+  <span class='return return kw'>return</span> <span class='if if_mod kw'>if</span> <span class='$rails_rake_task gvar id'>$rails_rake_task</span>
+  <span class='if if kw'>if</span> <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='cache_classes identifier id'>cache_classes</span>
+    <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='eager_load_paths identifier id'>eager_load_paths</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='load_path identifier id'>load_path</span><span class='bitor op'>|</span>
+      <span class='matcher identifier id'>matcher</span> <span class='assign token'>=</span> <span class='dregexp node'>/\A#{Regexp.escape(load_path)}(.*)\.rb\Z/</span>
+      <span class='Dir constant id'>Dir</span><span class='dot token'>.</span><span class='glob identifier id'>glob</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{load_path}/**/*.rb&quot;</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='sort identifier id'>sort</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='file identifier id'>file</span><span class='bitor op'>|</span>
+        <span class='require_dependency identifier id'>require_dependency</span> <span class='file identifier id'>file</span><span class='dot token'>.</span><span class='sub identifier id'>sub</span><span class='lparen token'>(</span><span class='matcher identifier id'>matcher</span><span class='comma token'>,</span> <span class='string val'>'\1'</span><span class='rparen token'>)</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>load_application_initializers</h3>
+</div><div id="load_application_initializers-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>load_application_initializers</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+602
+603
+604
+605
+606
+607
+608</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'railties/lib/initializer.rb', line 602</span>
+
+<span class='def def kw'>def</span> <span class='load_application_initializers identifier id'>load_application_initializers</span>
+  <span class='if if kw'>if</span> <span class='gems_dependencies_loaded identifier id'>gems_dependencies_loaded</span>
+    <span class='Dir constant id'>Dir</span><span class='lbrack token'>[</span><span class='dstring node'>&quot;#{configuration.root_path}/config/initializers/**/*.rb&quot;</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='sort identifier id'>sort</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='initializer identifier id'>initializer</span><span class='bitor op'>|</span>
+      <span class='load identifier id'>load</span><span class='lparen token'>(</span><span class='initializer identifier id'>initializer</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>load_environment</h3>
+</div><div id="load_environment-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>load_environment</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Loads the environment specified by Configuration#environment_path, which is
+typically one of development, test, or production.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'railties/lib/initializer.rb', line 359</span>
+
+<span class='def def kw'>def</span> <span class='load_environment identifier id'>load_environment</span>
+  <span class='silence_warnings identifier id'>silence_warnings</span> <span class='do do kw'>do</span>
+    <span class='return return kw'>return</span> <span class='if if_mod kw'>if</span> <span class='@environment_loaded ivar id'>@environment_loaded</span>
+    <span class='@environment_loaded ivar id'>@environment_loaded</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+
+    <span class='config identifier id'>config</span> <span class='assign token'>=</span> <span class='configuration identifier id'>configuration</span>
+    <span class='constants identifier id'>constants</span> <span class='assign token'>=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='constants identifier id'>constants</span>
+
+    <span class='eval identifier id'>eval</span><span class='lparen token'>(</span><span class='IO constant id'>IO</span><span class='dot token'>.</span><span class='read identifier id'>read</span><span class='lparen token'>(</span><span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='environment_path identifier id'>environment_path</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='binding identifier id'>binding</span><span class='comma token'>,</span> <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='environment_path identifier id'>environment_path</span><span class='rparen token'>)</span>
+
+    <span class='lparen token'>(</span><span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='constants identifier id'>constants</span> <span class='minus op'>-</span> <span class='constants identifier id'>constants</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='const identifier id'>const</span><span class='bitor op'>|</span>
+      <span class='Object constant id'>Object</span><span class='dot token'>.</span><span class='const_set identifier id'>const_set</span><span class='lparen token'>(</span><span class='const identifier id'>const</span><span class='comma token'>,</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='const_get identifier id'>const_get</span><span class='lparen token'>(</span><span class='const identifier id'>const</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>load_gems</h3>
+</div><div id="load_gems-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>load_gems</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+304
+305
+306
+307
+308</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'railties/lib/initializer.rb', line 304</span>
+
+<span class='def def kw'>def</span> <span class='load_gems identifier id'>load_gems</span>
+  <span class='unless unless kw'>unless</span> <span class='$gems_build_rake_task gvar id'>$gems_build_rake_task</span>
+    <span class='@configuration ivar id'>@configuration</span><span class='dot token'>.</span><span class='gems identifier id'>gems</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='gem identifier id'>gem</span><span class='bitor op'>|</span> <span class='gem identifier id'>gem</span><span class='dot token'>.</span><span class='load identifier id'>load</span> <span class='rbrace token'>}</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>load_observers</h3>
+</div><div id="load_observers-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>load_observers</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+375
+376
+377
+378
+379</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'railties/lib/initializer.rb', line 375</span>
+
+<span class='def def kw'>def</span> <span class='load_observers identifier id'>load_observers</span>
+  <span class='if if kw'>if</span> <span class='gems_dependencies_loaded identifier id'>gems_dependencies_loaded</span> <span class='andop op'>&amp;&amp;</span> <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='frameworks identifier id'>frameworks</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='colon op'>:</span><span class='active_record identifier id'>active_record</span><span class='rparen token'>)</span>
+    <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='dot token'>.</span><span class='instantiate_observers identifier id'>instantiate_observers</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>load_plugins</h3>
+</div><div id="load_plugins-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>load_plugins</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Loads all plugins in <tt>config.plugin_paths</tt>. <tt>plugin_paths</tt>
+defaults to <tt>vendor/plugins</tt> but may also be set to a list of paths,
+such as
+</p>
+<pre class="code">
+  <span class='config identifier id'>config</span><span class='dot token'>.</span><span class='plugin_paths identifier id'>plugin_paths</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='dstring node'>&quot;#{RAILS_ROOT}/lib/plugins&quot;</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{RAILS_ROOT}/vendor/plugins&quot;</span><span class='rbrack token'>]</span>
+</pre>
+<p>
+In the default implementation, as each plugin discovered in
+<tt>plugin_paths</tt> is initialized:
+</p>
+<ul>
+<li>its <tt>lib</tt> directory, if present, is added to the load path
+(immediately after the applications lib directory)
+
+</li>
+<li><tt>init.rb</tt> is evaluated, if present
+
+</li>
+</ul>
+<p>
+After all plugins are loaded, duplicates are removed from the load path. If
+an array of plugin names is specified in config.plugins, only those plugins
+will be loaded and they plugins will be loaded in that order. Otherwise,
+plugins are loaded in alphabetical order.
+</p>
+<p>
+if config.plugins ends contains :all then the named plugins will be loaded
+in the given order and all other plugins will be loaded in alphabetical
+order
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+349
+350
+351</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'railties/lib/initializer.rb', line 349</span>
+
+<span class='def def kw'>def</span> <span class='load_plugins identifier id'>load_plugins</span>
+  <span class='plugin_loader identifier id'>plugin_loader</span><span class='dot token'>.</span><span class='load_plugins identifier id'>load_plugins</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>load_view_paths</h3>
+</div><div id="load_view_paths-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>load_view_paths</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+381
+382
+383
+384
+385
+386
+387
+388
+389</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'railties/lib/initializer.rb', line 381</span>
+
+<span class='def def kw'>def</span> <span class='load_view_paths identifier id'>load_view_paths</span>
+  <span class='if if kw'>if</span> <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='frameworks identifier id'>frameworks</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='colon op'>:</span><span class='action_view identifier id'>action_view</span><span class='rparen token'>)</span>
+    <span class='if if kw'>if</span> <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='cache_classes identifier id'>cache_classes</span>
+      <span class='view_path identifier id'>view_path</span> <span class='assign token'>=</span> <span class='ActionView constant id'>ActionView</span><span class='colon2 op'>::</span><span class='Template constant id'>Template</span><span class='colon2 op'>::</span><span class='FileSystemPath constant id'>FileSystemPath</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='view_path identifier id'>view_path</span><span class='rparen token'>)</span>
+      <span class='ActionController constant id'>ActionController</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='dot token'>.</span><span class='view_paths identifier id'>view_paths</span> <span class='assign token'>=</span> <span class='view_path identifier id'>view_path</span> <span class='if if_mod kw'>if</span> <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='frameworks identifier id'>frameworks</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='symbol val'>:action_controller</span><span class='rparen token'>)</span>
+      <span class='ActionMailer constant id'>ActionMailer</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='dot token'>.</span><span class='template_root identifier id'>template_root</span> <span class='assign token'>=</span> <span class='view_path identifier id'>view_path</span> <span class='if if_mod kw'>if</span> <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='frameworks identifier id'>frameworks</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='symbol val'>:action_mailer</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>plugin_loader</h3>
+</div><div id="plugin_loader-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>plugin_loader</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+353
+354
+355</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'railties/lib/initializer.rb', line 353</span>
+
+<span class='def def kw'>def</span> <span class='plugin_loader identifier id'>plugin_loader</span>
+  <span class='@plugin_loader ivar id'>@plugin_loader</span> <span class='opasgn op'>||=</span> <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='plugin_loader identifier id'>plugin_loader</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>preload_frameworks</h3>
+</div><div id="preload_frameworks-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>preload_frameworks</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Preload all frameworks specified by the Configuration#frameworks. Used by
+Passenger to ensure everything&#8217;s loaded before forking and to avoid
+autoload race conditions in JRuby.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+276
+277
+278
+279
+280
+281
+282
+283
+284</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'railties/lib/initializer.rb', line 276</span>
+
+<span class='def def kw'>def</span> <span class='preload_frameworks identifier id'>preload_frameworks</span>
+  <span class='if if kw'>if</span> <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='preload_frameworks identifier id'>preload_frameworks</span>
+    <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='frameworks identifier id'>frameworks</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='framework identifier id'>framework</span><span class='bitor op'>|</span>
+      <span class='comment val'># String#classify and #constantize aren't available yet.</span>
+      <span class='toplevel identifier id'>toplevel</span> <span class='assign token'>=</span> <span class='Object constant id'>Object</span><span class='dot token'>.</span><span class='const_get identifier id'>const_get</span><span class='lparen token'>(</span><span class='framework identifier id'>framework</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='regexp val'>/(?:^|_)(.)/</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='$1 nth_ref id'>$1</span><span class='dot token'>.</span><span class='upcase identifier id'>upcase</span> <span class='rbrace token'>}</span><span class='rparen token'>)</span>
+      <span class='toplevel identifier id'>toplevel</span><span class='dot token'>.</span><span class='load_all! fid id'>load_all!</span> <span class='if if_mod kw'>if</span> <span class='toplevel identifier id'>toplevel</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:load_all!</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>prepare_dispatcher</h3>
+</div><div id="prepare_dispatcher-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>prepare_dispatcher</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+610
+611
+612
+613
+614
+615</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'railties/lib/initializer.rb', line 610</span>
+
+<span class='def def kw'>def</span> <span class='prepare_dispatcher identifier id'>prepare_dispatcher</span>
+  <span class='return return kw'>return</span> <span class='unless unless_mod kw'>unless</span> <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='frameworks identifier id'>frameworks</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='symbol val'>:action_controller</span><span class='rparen token'>)</span>
+  <span class='require identifier id'>require</span> <span class='string val'>'dispatcher'</span> <span class='unless unless_mod kw'>unless</span> <span class='defined? defined kw'>defined?</span><span class='lparen token'>(</span><span class='colon3 op'>::</span><span class='Dispatcher constant id'>Dispatcher</span><span class='rparen token'>)</span>
+  <span class='Dispatcher constant id'>Dispatcher</span><span class='dot token'>.</span><span class='define_dispatcher_callbacks identifier id'>define_dispatcher_callbacks</span><span class='lparen token'>(</span><span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='cache_classes identifier id'>cache_classes</span><span class='rparen token'>)</span>
+  <span class='Dispatcher constant id'>Dispatcher</span><span class='dot token'>.</span><span class='run_prepare_callbacks identifier id'>run_prepare_callbacks</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>process</h3>
+</div><div id="process-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>process</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Sequentially step through all of the available initialization routines, in
+order (view execution order in source).
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'railties/lib/initializer.rb', line 126</span>
+
+<span class='def def kw'>def</span> <span class='process identifier id'>process</span>
+  <span class='Rails constant id'>Rails</span><span class='dot token'>.</span><span class='configuration identifier id'>configuration</span> <span class='assign token'>=</span> <span class='configuration identifier id'>configuration</span>
+
+  <span class='check_ruby_version identifier id'>check_ruby_version</span>
+  <span class='install_gem_spec_stubs identifier id'>install_gem_spec_stubs</span>
+  <span class='set_load_path identifier id'>set_load_path</span>
+  <span class='add_gem_load_paths identifier id'>add_gem_load_paths</span>
+
+  <span class='require_frameworks identifier id'>require_frameworks</span>
+  <span class='set_autoload_paths identifier id'>set_autoload_paths</span>
+  <span class='add_plugin_load_paths identifier id'>add_plugin_load_paths</span>
+  <span class='load_environment identifier id'>load_environment</span>
+  <span class='preload_frameworks identifier id'>preload_frameworks</span>
+
+  <span class='initialize_encoding identifier id'>initialize_encoding</span>
+  <span class='initialize_database identifier id'>initialize_database</span>
+
+  <span class='initialize_cache identifier id'>initialize_cache</span>
+  <span class='initialize_framework_caches identifier id'>initialize_framework_caches</span>
+
+  <span class='initialize_logger identifier id'>initialize_logger</span>
+  <span class='initialize_framework_logging identifier id'>initialize_framework_logging</span>
+
+  <span class='initialize_dependency_mechanism identifier id'>initialize_dependency_mechanism</span>
+  <span class='initialize_whiny_nils identifier id'>initialize_whiny_nils</span>
+
+  <span class='initialize_time_zone identifier id'>initialize_time_zone</span>
+  <span class='initialize_i18n identifier id'>initialize_i18n</span>
+
+  <span class='initialize_framework_settings identifier id'>initialize_framework_settings</span>
+  <span class='initialize_framework_views identifier id'>initialize_framework_views</span>
+
+  <span class='initialize_metal identifier id'>initialize_metal</span>
+
+  <span class='add_support_load_paths identifier id'>add_support_load_paths</span>
+
+  <span class='load_gems identifier id'>load_gems</span>
+  <span class='load_plugins identifier id'>load_plugins</span>
+
+  <span class='comment val'># pick up any gems that plugins depend on</span>
+  <span class='add_gem_load_paths identifier id'>add_gem_load_paths</span>
+  <span class='load_gems identifier id'>load_gems</span>
+  <span class='check_gem_dependencies identifier id'>check_gem_dependencies</span>
+
+  <span class='comment val'># bail out if gems are missing - note that check_gem_dependencies will have</span>
+  <span class='comment val'># already called abort() unless $gems_rake_task is set</span>
+  <span class='return return kw'>return</span> <span class='unless unless_mod kw'>unless</span> <span class='gems_dependencies_loaded identifier id'>gems_dependencies_loaded</span>
+
+  <span class='load_application_initializers identifier id'>load_application_initializers</span>
+
+  <span class='comment val'># the framework is now fully initialized</span>
+  <span class='after_initialize identifier id'>after_initialize</span>
+
+  <span class='comment val'># Setup database middleware after initializers have run</span>
+  <span class='initialize_database_middleware identifier id'>initialize_database_middleware</span>
+
+  <span class='comment val'># Prepare dispatcher callbacks and run 'prepare' callbacks</span>
+  <span class='prepare_dispatcher identifier id'>prepare_dispatcher</span>
+
+  <span class='comment val'># Routing must be initialized after plugins to allow the former to extend the routes</span>
+  <span class='initialize_routing identifier id'>initialize_routing</span>
+
+  <span class='comment val'># Observers are loaded after plugins in case Observers or observed models are modified by plugins.</span>
+  <span class='load_observers identifier id'>load_observers</span>
+
+  <span class='comment val'># Load view path cache</span>
+  <span class='load_view_paths identifier id'>load_view_paths</span>
+
+  <span class='comment val'># Load application classes</span>
+  <span class='load_application_classes identifier id'>load_application_classes</span>
+
+  <span class='comment val'># Disable dependency loading during request cycle</span>
+  <span class='disable_dependency_loading identifier id'>disable_dependency_loading</span>
+
+  <span class='comment val'># Flag initialized</span>
+  <span class='Rails constant id'>Rails</span><span class='dot token'>.</span><span class='initialized identifier id'>initialized</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>require_frameworks</h3>
+</div><div id="require_frameworks-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>require_frameworks</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Requires all frameworks specified by the Configuration#frameworks list. By
+default, all frameworks (Active Record, Active Support, Action Pack, Action
+Mailer, and Active Resource) are loaded.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+266
+267
+268
+269
+270
+271</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'railties/lib/initializer.rb', line 266</span>
+
+<span class='def def kw'>def</span> <span class='require_frameworks identifier id'>require_frameworks</span>
+  <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='frameworks identifier id'>frameworks</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='framework identifier id'>framework</span><span class='bitor op'>|</span> <span class='require identifier id'>require</span><span class='lparen token'>(</span><span class='framework identifier id'>framework</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+<span class='rescue rescue kw'>rescue</span> <span class='LoadError constant id'>LoadError</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
+  <span class='comment val'># Re-raise as RuntimeError because Mongrel would swallow LoadError.</span>
+  <span class='raise identifier id'>raise</span> <span class='e identifier id'>e</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>set_autoload_paths</h3>
+</div><div id="set_autoload_paths-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>set_autoload_paths</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Set the paths from which Rails will automatically load source files, and
+the load_once paths.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'railties/lib/initializer.rb', line 246</span>
+
+<span class='def def kw'>def</span> <span class='set_autoload_paths identifier id'>set_autoload_paths</span>
+  <span class='ActiveSupport constant id'>ActiveSupport</span><span class='colon2 op'>::</span><span class='Dependencies constant id'>Dependencies</span><span class='dot token'>.</span><span class='load_paths identifier id'>load_paths</span> <span class='assign token'>=</span> <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='load_paths identifier id'>load_paths</span><span class='dot token'>.</span><span class='uniq identifier id'>uniq</span>
+  <span class='ActiveSupport constant id'>ActiveSupport</span><span class='colon2 op'>::</span><span class='Dependencies constant id'>Dependencies</span><span class='dot token'>.</span><span class='load_once_paths identifier id'>load_once_paths</span> <span class='assign token'>=</span> <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='load_once_paths identifier id'>load_once_paths</span><span class='dot token'>.</span><span class='uniq identifier id'>uniq</span>
+
+  <span class='extra identifier id'>extra</span> <span class='assign token'>=</span> <span class='ActiveSupport constant id'>ActiveSupport</span><span class='colon2 op'>::</span><span class='Dependencies constant id'>Dependencies</span><span class='dot token'>.</span><span class='load_once_paths identifier id'>load_once_paths</span> <span class='minus op'>-</span> <span class='ActiveSupport constant id'>ActiveSupport</span><span class='colon2 op'>::</span><span class='Dependencies constant id'>Dependencies</span><span class='dot token'>.</span><span class='load_paths identifier id'>load_paths</span>
+  <span class='unless unless kw'>unless</span> <span class='extra identifier id'>extra</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span>
+    <span class='abort identifier id'>abort</span> <span class='string val'>&quot;load_once_paths must be a subset of the load_paths.\nExtra items in load_once_paths: \#{extra * ','}\n&quot;</span>
+  <span class='end end kw'>end</span>
+
+  <span class='comment val'># Freeze the arrays so future modifications will fail rather than do nothing mysteriously</span>
+  <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='load_once_paths identifier id'>load_once_paths</span><span class='dot token'>.</span><span class='freeze identifier id'>freeze</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>set_load_path</h3>
+</div><div id="set_load_path-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>set_load_path</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Set the <tt>$LOAD_PATH</tt> based on the value of Configuration#load_paths.
+Duplicates are removed.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+238
+239
+240
+241
+242</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'railties/lib/initializer.rb', line 238</span>
+
+<span class='def def kw'>def</span> <span class='set_load_path identifier id'>set_load_path</span>
+  <span class='load_paths identifier id'>load_paths</span> <span class='assign token'>=</span> <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='load_paths identifier id'>load_paths</span> <span class='plus op'>+</span> <span class='configuration identifier id'>configuration</span><span class='dot token'>.</span><span class='framework_paths identifier id'>framework_paths</span>
+  <span class='load_paths identifier id'>load_paths</span><span class='dot token'>.</span><span class='reverse_each identifier id'>reverse_each</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='dir identifier id'>dir</span><span class='bitor op'>|</span> <span class='$LOAD_PATH gvar id'>$LOAD_PATH</span><span class='dot token'>.</span><span class='unshift identifier id'>unshift</span><span class='lparen token'>(</span><span class='dir identifier id'>dir</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='directory? fid id'>directory?</span><span class='lparen token'>(</span><span class='dir identifier id'>dir</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  <span class='$LOAD_PATH gvar id'>$LOAD_PATH</span><span class='dot token'>.</span><span class='uniq! fid id'>uniq!</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

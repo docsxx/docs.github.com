@@ -1,0 +1,434 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: Jekyll::Filters</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module Jekyll_Filters">
+  <h1 class="title">Module: Jekyll::Filters</h1>
+  <div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#array_to_sentence_string-instance_method' title='#array_to_sentence_string'>#array_to_sentence_string</a></span><span class='args'>(array)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#date_to_long_string-instance_method' title='#date_to_long_string'>#date_to_long_string</a></span><span class='args'>(date)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#date_to_string-instance_method' title='#date_to_string'>#date_to_string</a></span><span class='args'>(date)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#date_to_xmlschema-instance_method' title='#date_to_xmlschema'>#date_to_xmlschema</a></span><span class='args'>(date)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#number_of_words-instance_method' title='#number_of_words'>#number_of_words</a></span><span class='args'>(input)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#textilize-instance_method' title='#textilize'>#textilize</a></span><span class='args'>(input)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#xml_escape-instance_method' title='#xml_escape'>#xml_escape</a></span><span class='args'>(input)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>array_to_sentence_string</h3>
+</div><div id="array_to_sentence_string-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>array_to_sentence_string</span><span class='args'>(array)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/jekyll/filters.rb', line 28</span>
+
+<span class='def def kw'>def</span> <span class='array_to_sentence_string identifier id'>array_to_sentence_string</span><span class='lparen token'>(</span><span class='array identifier id'>array</span><span class='rparen token'>)</span>
+  <span class='connector identifier id'>connector</span> <span class='assign token'>=</span> <span class='string val'>&quot;and&quot;</span>
+  <span class='case case kw'>case</span> <span class='array identifier id'>array</span><span class='dot token'>.</span><span class='length identifier id'>length</span>
+  <span class='when when kw'>when</span> <span class='integer val'>0</span>
+    <span class='string val'>&quot;&quot;</span>
+  <span class='when when kw'>when</span> <span class='integer val'>1</span>
+    <span class='array identifier id'>array</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+  <span class='when when kw'>when</span> <span class='integer val'>2</span>
+    <span class='dstring node'>&quot;#{array[0]} #{connector} #{array[1]}&quot;</span>
+  <span class='else else kw'>else</span>
+    <span class='dstring node'>&quot;#{array[0...-1].join(', ')}, #{connector} #{array[-1]}&quot;</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>date_to_long_string</h3>
+</div><div id="date_to_long_string-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>date_to_long_string</span><span class='args'>(date)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+12
+13
+14</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/jekyll/filters.rb', line 12</span>
+
+<span class='def def kw'>def</span> <span class='date_to_long_string identifier id'>date_to_long_string</span><span class='lparen token'>(</span><span class='date identifier id'>date</span><span class='rparen token'>)</span>
+  <span class='date identifier id'>date</span><span class='dot token'>.</span><span class='strftime identifier id'>strftime</span><span class='lparen token'>(</span><span class='string val'>&quot;%d %B %Y&quot;</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>date_to_string</h3>
+</div><div id="date_to_string-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>date_to_string</span><span class='args'>(date)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+8
+9
+10</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/jekyll/filters.rb', line 8</span>
+
+<span class='def def kw'>def</span> <span class='date_to_string identifier id'>date_to_string</span><span class='lparen token'>(</span><span class='date identifier id'>date</span><span class='rparen token'>)</span>
+  <span class='date identifier id'>date</span><span class='dot token'>.</span><span class='strftime identifier id'>strftime</span><span class='lparen token'>(</span><span class='string val'>&quot;%d %b %Y&quot;</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>date_to_xmlschema</h3>
+</div><div id="date_to_xmlschema-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>date_to_xmlschema</span><span class='args'>(date)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+16
+17
+18</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/jekyll/filters.rb', line 16</span>
+
+<span class='def def kw'>def</span> <span class='date_to_xmlschema identifier id'>date_to_xmlschema</span><span class='lparen token'>(</span><span class='date identifier id'>date</span><span class='rparen token'>)</span>
+  <span class='date identifier id'>date</span><span class='dot token'>.</span><span class='xmlschema identifier id'>xmlschema</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>number_of_words</h3>
+</div><div id="number_of_words-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>number_of_words</span><span class='args'>(input)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+24
+25
+26</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/jekyll/filters.rb', line 24</span>
+
+<span class='def def kw'>def</span> <span class='number_of_words identifier id'>number_of_words</span><span class='lparen token'>(</span><span class='input identifier id'>input</span><span class='rparen token'>)</span>
+  <span class='input identifier id'>input</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='dot token'>.</span><span class='length identifier id'>length</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>textilize</h3>
+</div><div id="textilize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>textilize</span><span class='args'>(input)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+4
+5
+6</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/jekyll/filters.rb', line 4</span>
+
+<span class='def def kw'>def</span> <span class='textilize identifier id'>textilize</span><span class='lparen token'>(</span><span class='input identifier id'>input</span><span class='rparen token'>)</span>
+  <span class='RedCloth constant id'>RedCloth</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='input identifier id'>input</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_html identifier id'>to_html</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>xml_escape</h3>
+</div><div id="xml_escape-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>xml_escape</span><span class='args'>(input)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+20
+21
+22</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/jekyll/filters.rb', line 20</span>
+
+<span class='def def kw'>def</span> <span class='xml_escape identifier id'>xml_escape</span><span class='lparen token'>(</span><span class='input identifier id'>input</span><span class='rparen token'>)</span>
+  <span class='input identifier id'>input</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='string val'>&quot;&amp;&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;&amp;amp;&quot;</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='string val'>&quot;&lt;&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;&amp;lt;&quot;</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='string val'>&quot;&gt;&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;&amp;gt;&quot;</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,349 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: Nokogiri::XML::Schema</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class Nokogiri_XML_Schema">
+  <h1 class="title">Class: Nokogiri::XML::Schema</h1>
+  <div class="section docstring">
+  <p>
+Nokogiri::XML::Schema is used for validating XML against a schema (usually
+from an xsd file).
+</p>
+<h2>Synopsis</h2>
+<p>
+Validate an XML document against a Schema. Loop over the errors that are
+returned and print them out:
+</p>
+<pre class="code">
+  <span class='xsd identifier id'>xsd</span> <span class='assign token'>=</span> <span class='Nokogiri constant id'>Nokogiri</span><span class='colon2 op'>::</span><span class='XML constant id'>XML</span><span class='colon2 op'>::</span><span class='Schema constant id'>Schema</span><span class='lparen token'>(</span><span class='File constant id'>File</span><span class='dot token'>.</span><span class='read identifier id'>read</span><span class='lparen token'>(</span><span class='PO_SCHEMA_FILE constant id'>PO_SCHEMA_FILE</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='doc identifier id'>doc</span> <span class='assign token'>=</span> <span class='Nokogiri constant id'>Nokogiri</span><span class='colon2 op'>::</span><span class='XML constant id'>XML</span><span class='lparen token'>(</span><span class='File constant id'>File</span><span class='dot token'>.</span><span class='read identifier id'>read</span><span class='lparen token'>(</span><span class='PO_XML_FILE constant id'>PO_XML_FILE</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+
+  <span class='xsd identifier id'>xsd</span><span class='dot token'>.</span><span class='validate identifier id'>validate</span><span class='lparen token'>(</span><span class='doc identifier id'>doc</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='error identifier id'>error</span><span class='bitor op'>|</span>
+    <span class='puts identifier id'>puts</span> <span class='error identifier id'>error</span><span class='dot token'>.</span><span class='message identifier id'>message</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+The list of errors are Nokogiri::XML::SyntaxError objects.
+</p>
+
+</div><div class="section attributes">
+  <h1>Attributes</h1>
+
+  
+    <div class="instance">
+      <h2>Instance Attributes</h2>
+      <table>
+      
+        <tr>
+          <th class="name">cstruct</td>
+          <td class="readwrite">
+            [<span id='cstruct-instance_method'>R</span><span id='cstruct%3D-instance_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>cstruct</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">errors</td>
+          <td class="readwrite">
+            [<span id='errors-instance_method'>R</span><span id='errors%3D-instance_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Errors while parsing the schema file.
+</p>
+
+            
+          </td>
+        </tr>
+      
+      </table>
+    </div>
+  
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <h1>Public Class Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#read_memory-class_method' title='read_memory'>read_memory</a></span><span class='args'>(content)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+  <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#valid%3F-instance_method' title='#valid?'>#valid?</a></span><span class='args'>thing</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns true if <tt>thing</tt> is a valid Nokogiri::XML::Document or file.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#validate-instance_method' title='#validate'>#validate</a></span><span class='args'>thing</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Validate <tt>thing</tt> against this schema.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails class public">
+  <h1>Public Class Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>read_memory</h3>
+</div><div id="read_memory-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>read_memory</span><span class='args'>(content)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/nokogiri/ffi/xml/schema.rb', line 24</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='read_memory identifier id'>read_memory</span><span class='lparen token'>(</span><span class='content identifier id'>content</span><span class='rparen token'>)</span>
+  <span class='ctx identifier id'>ctx</span> <span class='assign token'>=</span> <span class='LibXML constant id'>LibXML</span><span class='dot token'>.</span><span class='xmlSchemaNewMemParserCtxt identifier id'>xmlSchemaNewMemParserCtxt</span><span class='lparen token'>(</span><span class='content identifier id'>content</span><span class='comma token'>,</span> <span class='content identifier id'>content</span><span class='dot token'>.</span><span class='length identifier id'>length</span><span class='rparen token'>)</span>
+
+  <span class='errors identifier id'>errors</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+
+  <span class='LibXML constant id'>LibXML</span><span class='dot token'>.</span><span class='xmlSetStructuredErrorFunc identifier id'>xmlSetStructuredErrorFunc</span><span class='lparen token'>(</span><span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='SyntaxError constant id'>SyntaxError</span><span class='dot token'>.</span><span class='error_array_pusher identifier id'>error_array_pusher</span><span class='lparen token'>(</span><span class='errors identifier id'>errors</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='LibXML constant id'>LibXML</span><span class='dot token'>.</span><span class='xmlSchemaSetParserStructuredErrors identifier id'>xmlSchemaSetParserStructuredErrors</span><span class='lparen token'>(</span><span class='ctx identifier id'>ctx</span><span class='comma token'>,</span> <span class='SyntaxError constant id'>SyntaxError</span><span class='dot token'>.</span><span class='error_array_pusher identifier id'>error_array_pusher</span><span class='lparen token'>(</span><span class='errors identifier id'>errors</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span> <span class='unless unless_mod kw'>unless</span> <span class='Nokogiri constant id'>Nokogiri</span><span class='dot token'>.</span><span class='is_2_6_16? fid id'>is_2_6_16?</span>
+
+  <span class='schema_ptr identifier id'>schema_ptr</span> <span class='assign token'>=</span> <span class='LibXML constant id'>LibXML</span><span class='dot token'>.</span><span class='xmlSchemaParse identifier id'>xmlSchemaParse</span><span class='lparen token'>(</span><span class='ctx identifier id'>ctx</span><span class='rparen token'>)</span>
+
+  <span class='LibXML constant id'>LibXML</span><span class='dot token'>.</span><span class='xmlSetStructuredErrorFunc identifier id'>xmlSetStructuredErrorFunc</span><span class='lparen token'>(</span><span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='LibXML constant id'>LibXML</span><span class='dot token'>.</span><span class='xmlSchemaFreeParserCtxt identifier id'>xmlSchemaFreeParserCtxt</span><span class='lparen token'>(</span><span class='ctx identifier id'>ctx</span><span class='rparen token'>)</span>
+
+  <span class='if if kw'>if</span> <span class='schema_ptr identifier id'>schema_ptr</span><span class='dot token'>.</span><span class='null? fid id'>null?</span>
+    <span class='error identifier id'>error</span> <span class='assign token'>=</span> <span class='LibXML constant id'>LibXML</span><span class='dot token'>.</span><span class='xmlGetLastError identifier id'>xmlGetLastError</span>
+    <span class='if if kw'>if</span> <span class='error identifier id'>error</span>
+      <span class='raise identifier id'>raise</span> <span class='SyntaxError constant id'>SyntaxError</span><span class='dot token'>.</span><span class='wrap identifier id'>wrap</span><span class='lparen token'>(</span><span class='error identifier id'>error</span><span class='rparen token'>)</span>
+    <span class='else else kw'>else</span>
+      <span class='raise identifier id'>raise</span> <span class='RuntimeError constant id'>RuntimeError</span><span class='comma token'>,</span> <span class='string val'>&quot;Could not parse document&quot;</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+
+  <span class='schema identifier id'>schema</span> <span class='assign token'>=</span> <span class='allocate identifier id'>allocate</span>
+  <span class='schema identifier id'>schema</span><span class='dot token'>.</span><span class='cstruct identifier id'>cstruct</span> <span class='assign token'>=</span> <span class='LibXML constant id'>LibXML</span><span class='colon2 op'>::</span><span class='XmlSchema constant id'>XmlSchema</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='schema_ptr identifier id'>schema_ptr</span>
+  <span class='schema identifier id'>schema</span><span class='dot token'>.</span><span class='errors identifier id'>errors</span> <span class='assign token'>=</span> <span class='errors identifier id'>errors</span>
+  <span class='schema identifier id'>schema</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div><div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>valid?</h3>
+</div><div id="valid%3F-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>valid?</span><span class='args'>thing</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns true if <tt>thing</tt> is a valid Nokogiri::XML::Document or file.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+60
+61
+62</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/nokogiri/xml/schema.rb', line 60</span>
+
+<span class='def def kw'>def</span> <span class='valid? fid id'>valid?</span> <span class='thing identifier id'>thing</span>
+  <span class='validate identifier id'>validate</span><span class='lparen token'>(</span><span class='thing identifier id'>thing</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='length identifier id'>length</span> <span class='eq op'>==</span> <span class='integer val'>0</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>validate</h3>
+</div><div id="validate-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>validate</span><span class='args'>thing</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Validate <tt>thing</tt> against this schema. <tt>thing</tt> can be a
+Nokogiri::XML::Document object, or a filename. An Array of
+Nokogiri::XML::SyntaxError objects found while validating the
+<tt>thing</tt> is returned.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+49
+50
+51
+52
+53
+54
+55</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/nokogiri/xml/schema.rb', line 49</span>
+
+<span class='def def kw'>def</span> <span class='validate identifier id'>validate</span> <span class='thing identifier id'>thing</span>
+  <span class='return return kw'>return</span> <span class='validate_document identifier id'>validate_document</span><span class='lparen token'>(</span><span class='thing identifier id'>thing</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='thing identifier id'>thing</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Nokogiri constant id'>Nokogiri</span><span class='colon2 op'>::</span><span class='XML constant id'>XML</span><span class='colon2 op'>::</span><span class='Document constant id'>Document</span><span class='rparen token'>)</span>
+
+  <span class='comment val'># FIXME libxml2 has an api for validating files.  We should switch</span>
+  <span class='comment val'># to that because it will probably save memory.</span>
+  <span class='validate_document identifier id'>validate_document</span><span class='lparen token'>(</span><span class='Nokogiri constant id'>Nokogiri</span><span class='colon2 op'>::</span><span class='XML constant id'>XML</span><span class='lparen token'>(</span><span class='File constant id'>File</span><span class='dot token'>.</span><span class='read identifier id'>read</span><span class='lparen token'>(</span><span class='thing identifier id'>thing</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

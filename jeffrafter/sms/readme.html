@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <title>README</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section docstring readme">
+        <p>
+ABOUT
+</p>
+<h6>===</h6>
+<p>
+SMS interface for GSM modems (cell-phones plugged into your computer) that
+uses the Win32 API for serial communications on windows so that it does not
+need to be compiled and does not rely on additional gems. On Linux and BSD
+it relies on the serialport gem.
+</p>
+<pre class="code">
+  <span class='sudo identifier id'>sudo</span> <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='toholio identifier id'>toholio</span><span class='minus op'>-</span><span class='serialport identifier id'>serialport</span> <span class='minus op'>-</span><span class='s identifier id'>s</span> <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/gems.github.com
+</span></pre>
+<p>
+SAMPLE
+</p>
+<h6></h6>
+<p>
+Here are the basics. Note, when you call process it will call
+fetch_and_delete_stored_messages which will fetch all of the messages off
+of your main mailbox and delete them. Permanently.
+</p>
+<pre class="code">
+  <span class='require identifier id'>require</span> <span class='string val'>'sms'</span>
+  <span class='comment val'># On Windows send &quot;COM1&quot;, on OSX send something like &quot;/dev/tty.usbmodem1a21&quot;</span>
+  <span class='modem identifier id'>modem</span> <span class='assign token'>=</span> <span class='Sms constant id'>Sms</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;COM5&quot;</span><span class='rparen token'>)</span>
+  <span class='modem identifier id'>modem</span><span class='dot token'>.</span><span class='sms identifier id'>sms</span> <span class='string val'>&quot;+19519020972&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;Hi Jeff, I am testing your gem&quot;</span>
+  <span class='messages identifier id'>messages</span> <span class='assign token'>=</span> <span class='modem identifier id'>modem</span><span class='dot token'>.</span><span class='process identifier id'>process</span>
+</pre>
+<p>
+COPYRIGHT
+</p>
+<h6>===</h6>
+<p>
+Copyright &#169; 2009 Jeff Rafter. See LICENSE for details.
+</p>
+<p>
+Based heavily on Adam McKaig&#8217;s RubyGSM and the Gnokii AT interface
+</p>
+
+      </div>
+    </div>
+  </body>
+</html>

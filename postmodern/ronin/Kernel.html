@@ -1,0 +1,200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: Kernel</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module Kernel">
+  <h1 class="title">Module: Kernel</h1>
+  <div class="section docstring">
+  <p>
+&#8212; Ronin - A Ruby platform designed for information security and data
+exploration tasks.
+</p>
+<p>
+Copyright &#169; 2006-2009 Hal Brodigan (postmodern.mod3 at gmail.com)
+</p>
+<p>
+This program is free software; you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the Free
+Software Foundation; either version 2 of the License, or (at your option)
+any later version.
+</p>
+<p>
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+more details.
+</p>
+<p>
+You should have received a copy of the GNU General Public License along
+with this program; if not, write to the Free Software Foundation, Inc., 51
+Franklin St, Fifth Floor, Boston, MA 02110-1301 USA ++
+</p>
+
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#hexdump-instance_method' title='#hexdump'>#hexdump</a></span><span class='args'>(object,output=STDOUT)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Hexdumps the specified <em>object</em> to the given <em>output</em> stream.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#try-instance_method' title='#try'>#try</a></span><span class='args'>(&amp;block)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Calls the given <em>block</em> and ignores any raised exceptions.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>hexdump</h3>
+</div><div id="hexdump-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>hexdump</span><span class='args'>(object,output=STDOUT)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Hexdumps the specified <em>object</em> to the given <em>output</em> stream.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+30
+31
+32</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/ronin/ui/hexdump/extensions/kernel.rb', line 30</span>
+
+<span class='def def kw'>def</span> <span class='hexdump identifier id'>hexdump</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='comma token'>,</span><span class='output identifier id'>output</span><span class='assign token'>=</span><span class='STDOUT constant id'>STDOUT</span><span class='rparen token'>)</span>
+  <span class='Ronin constant id'>Ronin</span><span class='colon2 op'>::</span><span class='UI constant id'>UI</span><span class='colon2 op'>::</span><span class='Hexdump constant id'>Hexdump</span><span class='dot token'>.</span><span class='dump identifier id'>dump</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='comma token'>,</span><span class='output identifier id'>output</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>try</h3>
+</div><div id="try-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>try</span><span class='args'>(&amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Calls the given <em>block</em> and ignores any raised exceptions. If an
+exception is raised, <tt>nil</tt> will be returned.
+</p>
+<pre class="code">
+  <span class='try identifier id'>try</span> <span class='do do kw'>do</span>
+    <span class='Resolv constant id'>Resolv</span><span class='dot token'>.</span><span class='getaddress identifier id'>getaddress</span><span class='lparen token'>(</span><span class='string val'>'might.not.exist.com'</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+33
+34
+35
+36
+37
+38
+39</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/ronin/extensions/kernel.rb', line 33</span>
+
+<span class='def def kw'>def</span> <span class='try identifier id'>try</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='begin begin kw'>begin</span>
+    <span class='block identifier id'>block</span><span class='dot token'>.</span><span class='call identifier id'>call</span> <span class='if if_mod kw'>if</span> <span class='block identifier id'>block</span>
+  <span class='rescue rescue kw'>rescue</span>
+    <span class='return return kw'>return</span> <span class='nil nil kw'>nil</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

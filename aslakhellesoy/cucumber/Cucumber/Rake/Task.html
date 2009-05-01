@@ -1,0 +1,779 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: Cucumber::Rake::Task</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class Cucumber_Rake_Task">
+  <h1 class="title">Class: Cucumber::Rake::Task</h1>
+  <div class="section inheritance">
+  <ul>
+  <li><a href='../../Object.html' title='Object'>Object</a></li><ul><li>Cucumber::Rake::Task</li>
+  </ul></ul>
+</div><div class="section docstring">
+  <p>
+Defines a Rake task for running features.
+</p>
+<p>
+The simplest use of it goes something like:
+</p>
+<pre class="code">
+  <span class='Cucumber constant id'>Cucumber</span><span class='colon2 op'>::</span><span class='Rake constant id'>Rake</span><span class='colon2 op'>::</span><span class='Task constant id'>Task</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+</pre>
+<p>
+This will create a task named &#8216;features&#8217; described as
+&#8216;Run Features with Cucumber&#8217;. It will use steps from
+&#8216;features/**/*.rb&#8217; and features in
+&#8216;features/**/*.feature&#8217;.
+</p>
+<p>
+To further configure the task, you can pass a block:
+</p>
+<pre class="code">
+  <span class='Cucumber constant id'>Cucumber</span><span class='colon2 op'>::</span><span class='Rake constant id'>Rake</span><span class='colon2 op'>::</span><span class='Task constant id'>Task</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='t identifier id'>t</span><span class='bitor op'>|</span>
+    <span class='t identifier id'>t</span><span class='dot token'>.</span><span class='cucumber_opts identifier id'>cucumber_opts</span> <span class='assign token'>=</span> <span class='string val'>&quot;--format progress&quot;</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+This task can also be configured to be run with RCov:
+</p>
+<pre class="code">
+  <span class='Cucumber constant id'>Cucumber</span><span class='colon2 op'>::</span><span class='Rake constant id'>Rake</span><span class='colon2 op'>::</span><span class='Task constant id'>Task</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='t identifier id'>t</span><span class='bitor op'>|</span>
+    <span class='t identifier id'>t</span><span class='dot token'>.</span><span class='rcov identifier id'>rcov</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+See the attributes for additional configuration possibilities.
+</p>
+
+</div><div class="section attributes">
+  <h1>Attributes</h1>
+
+  
+    <div class="instance">
+      <h2>Instance Attributes</h2>
+      <table>
+      
+        <tr>
+          <th class="name">binary</td>
+          <td class="readwrite">
+            [<span id='binary-instance_method'>R</span><span id='binary%3D-instance_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Name of the cucumber binary to use for running features.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">cucumber_opts</td>
+          <td class="readwrite">
+            [<span id='cucumber_opts-instance_method'>R</span><span id='cucumber_opts%3D-instance_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Extra options to pass to the cucumber binary.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">libs</td>
+          <td class="readwrite">
+            [<span id='libs-instance_method'>R</span><span id='libs%3D-instance_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Directories to add to the Ruby $LOAD_PATH.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">profile</td>
+          <td class="readwrite">
+            [RW] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>profile</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">rcov_opts</td>
+          <td class="readwrite">
+            [<span id='rcov_opts-instance_method'>R</span><span id='rcov_opts%3D-instance_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Extra options to pass to rcov.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">rcov</td>
+          <td class="readwrite">
+            [<span id='rcov-instance_method'>R</span><span id='rcov%3D-instance_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Run cucumber with RCov?.
+</p>
+
+            
+          </td>
+        </tr>
+      
+      </table>
+    </div>
+  
+</div><div class="section constants">
+  <div class="thisclass">
+  <h1>Constants</h1>
+  <dl>
+    
+      <dt id="LIB-constant">LIB</dt>
+      <dd>File.expand_path(File.dirname(__FILE__) + '/../..') </dd>
+    
+  </dl>
+</div>
+
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(task_name = &quot;features&quot;, desc = &quot;Run Features with Cucumber&quot;)</span>
+    <span class='block'>{|_self| ... }</span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Define a Rake
+</p>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="yieldparam">
+  <h3>Yield Parameters:</h3>
+  <dl>
+  
+    <dt>
+      
+        <span class='type'>[<tt><a href='' title='Cucumber::Rake::Task'>Cucumber::Rake::Task</a></tt>]</span>
+      
+      
+        <span class='name'>_self</span>
+      
+    </dt>
+    <dd>
+      <span class='desc'><p>
+the object that the method was called on
+</p>
+</span>
+    </dd>
+  
+  </dl>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/cucumber/rake/task.rb', line 74</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='task_name identifier id'>task_name</span> <span class='assign token'>=</span> <span class='string val'>&quot;features&quot;</span><span class='comma token'>,</span> <span class='desc identifier id'>desc</span> <span class='assign token'>=</span> <span class='string val'>&quot;Run Features with Cucumber&quot;</span><span class='rparen token'>)</span>
+  <span class='@task_name ivar id'>@task_name</span><span class='comma token'>,</span> <span class='@desc ivar id'>@desc</span> <span class='assign token'>=</span> <span class='task_name identifier id'>task_name</span><span class='comma token'>,</span> <span class='desc identifier id'>desc</span>
+  <span class='@libs ivar id'>@libs</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='string val'>'lib'</span><span class='rbrack token'>]</span>
+  <span class='@rcov_opts ivar id'>@rcov_opts</span> <span class='assign token'>=</span> <span class='dstring node'>%w{--rails --exclude osx\/objc,gems\/}</span>
+
+  <span class='yield yield kw'>yield</span> <span class='self self kw'>self</span> <span class='if if_mod kw'>if</span> <span class='block_given? fid id'>block_given?</span>
+
+  <span class='@feature_pattern ivar id'>@feature_pattern</span> <span class='assign token'>=</span> <span class='string val'>&quot;features/**/*.feature&quot;</span> <span class='if if_mod kw'>if</span> <span class='feature_pattern identifier id'>feature_pattern</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span> <span class='andop op'>&amp;&amp;</span> <span class='feature_list identifier id'>feature_list</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+  <span class='@step_pattern ivar id'>@step_pattern</span>    <span class='assign token'>=</span> <span class='string val'>&quot;features/**/*.rb&quot;</span>      <span class='if if_mod kw'>if</span> <span class='step_pattern identifier id'>step_pattern</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span> <span class='andop op'>&amp;&amp;</span> <span class='step_list identifier id'>step_list</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+
+  <span class='@binary ivar id'>@binary</span> <span class='assign token'>=</span> <span class='binary identifier id'>binary</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span> <span class='integer val'>? </span><span class='Cucumber constant id'>Cucumber</span><span class='colon2 op'>::</span><span class='BINARY constant id'>BINARY</span> <span class='colon op'>:</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='expand_path identifier id'>expand_path</span><span class='lparen token'>(</span><span class='binary identifier id'>binary</span><span class='rparen token'>)</span>
+  <span class='@libs ivar id'>@libs</span><span class='dot token'>.</span><span class='insert identifier id'>insert</span><span class='lparen token'>(</span><span class='integer val'>0</span><span class='comma token'>,</span> <span class='LIB constant id'>LIB</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='binary identifier id'>binary</span> <span class='eq op'>==</span> <span class='Cucumber constant id'>Cucumber</span><span class='colon2 op'>::</span><span class='BINARY constant id'>BINARY</span>
+
+  <span class='define_task identifier id'>define_task</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <h1>Public Class Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#deprecate_accessor-class_method' title='deprecate_accessor'>deprecate_accessor</a></span><span class='args'>(attribute)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+TODO: remove depreated accessors for 0.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+  <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#arguments_for_ruby_execution-instance_method' title='#arguments_for_ruby_execution'>#arguments_for_ruby_execution</a></span><span class='args'>(task_args = nil)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#cucumber_opts_with_profile-instance_method' title='#cucumber_opts_with_profile'>#cucumber_opts_with_profile</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#define_task-instance_method' title='#define_task'>#define_task</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#feature_files-instance_method' title='#feature_files'>#feature_files</a></span><span class='args'>(task_args = nil)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#profile-instance_method' title='#profile'>#profile</a></span><span class='args'>=(profile)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns the value of attribute <tt>profile</tt>..
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#step_files-instance_method' title='#step_files'>#step_files</a></span><span class='args'>(task_args = nil)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table><div class="inherited">
+  
+  <div>
+    <h1>Public Instance Methods Inherited from <a href='../../Object.html' title='Object'>Object</a></h1>
+    <p><span class='name'><a href='../../Object.html#cucumber_arity-instance_method' title='cucumber_arity'>cucumber_arity</a></span>, <span class='name'><a href='../../Object.html#cucumber_compatible_arity%3F-instance_method' title='cucumber_compatible_arity?'>cucumber_compatible_arity?</a></span>, <span class='name'><a href='../../Object.html#cucumber_instance_exec-instance_method' title='cucumber_instance_exec'>cucumber_instance_exec</a></span>, <span class='name'><a href='../../Object.html#cucumber_run_with_backtrace_filtering-instance_method' title='cucumber_run_with_backtrace_filtering'>cucumber_run_with_backtrace_filtering</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails class public">
+  <h1>Public Class Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>deprecate_accessor</h3>
+</div><div id="deprecate_accessor-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>deprecate_accessor</span><span class='args'>(attribute)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+TODO: remove depreated accessors for 0.4.0
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+31
+32
+33
+34</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/cucumber/rake/task.rb', line 31</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='deprecate_accessor identifier id'>deprecate_accessor</span><span class='lparen token'>(</span><span class='attribute identifier id'>attribute</span><span class='rparen token'>)</span> <span class='comment val'># :nodoc:</span>
+  <span class='attr_reader identifier id'>attr_reader</span> <span class='attribute identifier id'>attribute</span>
+  <span class='class_eval identifier id'>class_eval</span> <span class='string val'>&quot;def \#{attribute}=(value)\n@\#{attribute} = value\nwarn(\&quot;Cucumber::Rake::Task#\#{attribute} is deprecated and will be removed in 0.4.0.  Please use profiles for complex settings: http://wiki.github.com/aslakhellesoy/cucumber/using-rake#profiles\&quot;)\nend\n&quot;</span><span class='comma token'>,</span> <span class='__FILE__ __file__ kw'>__FILE__</span><span class='comma token'>,</span> <span class='__LINE__ __line__ kw'>__LINE__</span> <span class='plus op'>+</span> <span class='integer val'>1</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div><div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>arguments_for_ruby_execution</h3>
+</div><div id="arguments_for_ruby_execution-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>arguments_for_ruby_execution</span><span class='args'>(task_args = nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/cucumber/rake/task.rb', line 97</span>
+
+<span class='def def kw'>def</span> <span class='arguments_for_ruby_execution identifier id'>arguments_for_ruby_execution</span><span class='lparen token'>(</span><span class='task_args identifier id'>task_args</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span> <span class='comment val'># :nodoc:</span>
+  <span class='lib_args identifier id'>lib_args</span>     <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='string val'>'&quot;%s&quot;'</span> <span class='mod op'>%</span> <span class='libs identifier id'>libs</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='File constant id'>File</span><span class='colon2 op'>::</span><span class='PATH_SEPARATOR constant id'>PATH_SEPARATOR</span><span class='rparen token'>)</span><span class='rbrack token'>]</span>
+  <span class='cucumber_bin identifier id'>cucumber_bin</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='string val'>'&quot;%s&quot;'</span> <span class='mod op'>%</span> <span class='binary identifier id'>binary</span><span class='rbrack token'>]</span>
+  <span class='cuc_opts identifier id'>cuc_opts</span>     <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='lparen token'>(</span><span class='ENV constant id'>ENV</span><span class='lbrack token'>[</span><span class='string val'>'CUCUMBER_OPTS'</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='cucumber_opts_with_profile identifier id'>cucumber_opts_with_profile</span><span class='rparen token'>)</span><span class='rbrack token'>]</span>
+
+  <span class='step_files identifier id'>step_files</span><span class='lparen token'>(</span><span class='task_args identifier id'>task_args</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='step_file identifier id'>step_file</span><span class='bitor op'>|</span>
+    <span class='cuc_opts identifier id'>cuc_opts</span> <span class='lshft op'>&lt;&lt;</span> <span class='string val'>'--require'</span>
+    <span class='cuc_opts identifier id'>cuc_opts</span> <span class='lshft op'>&lt;&lt;</span> <span class='step_file identifier id'>step_file</span>
+  <span class='end end kw'>end</span>
+
+  <span class='if if kw'>if</span> <span class='rcov identifier id'>rcov</span>
+    <span class='args identifier id'>args</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='lbrack token'>[</span><span class='string val'>'-I'</span><span class='rbrack token'>]</span> <span class='plus op'>+</span> <span class='lib_args identifier id'>lib_args</span> <span class='plus op'>+</span> <span class='lbrack token'>[</span><span class='string val'>'-S'</span><span class='comma token'>,</span> <span class='string val'>'rcov'</span><span class='rbrack token'>]</span> <span class='plus op'>+</span> <span class='rcov_opts identifier id'>rcov_opts</span> <span class='plus op'>+</span>
+      <span class='cucumber_bin identifier id'>cucumber_bin</span> <span class='plus op'>+</span> <span class='lbrack token'>[</span><span class='string val'>'--'</span><span class='rbrack token'>]</span> <span class='plus op'>+</span> <span class='cuc_opts identifier id'>cuc_opts</span> <span class='plus op'>+</span> <span class='feature_files identifier id'>feature_files</span><span class='lparen token'>(</span><span class='task_args identifier id'>task_args</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='flatten identifier id'>flatten</span>
+  <span class='else else kw'>else</span>
+    <span class='args identifier id'>args</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='lbrack token'>[</span><span class='string val'>'-I'</span><span class='rbrack token'>]</span> <span class='plus op'>+</span> <span class='lib_args identifier id'>lib_args</span> <span class='plus op'>+</span> <span class='cucumber_bin identifier id'>cucumber_bin</span> <span class='plus op'>+</span> <span class='cuc_opts identifier id'>cuc_opts</span> <span class='plus op'>+</span> <span class='feature_files identifier id'>feature_files</span><span class='lparen token'>(</span><span class='task_args identifier id'>task_args</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='flatten identifier id'>flatten</span>
+  <span class='end end kw'>end</span>
+
+  <span class='args identifier id'>args</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>cucumber_opts_with_profile</h3>
+</div><div id="cucumber_opts_with_profile-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>cucumber_opts_with_profile</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+117
+118
+119</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/cucumber/rake/task.rb', line 117</span>
+
+<span class='def def kw'>def</span> <span class='cucumber_opts_with_profile identifier id'>cucumber_opts_with_profile</span> 
+  <span class='@profile ivar id'>@profile</span> <span class='question op'>?</span> <span class='dstring node'>&quot;#{cucumber_opts} --profile #{@profile}&quot;</span> <span class='colon op'>:</span> <span class='cucumber_opts identifier id'>cucumber_opts</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>define_task</h3>
+</div><div id="define_task-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>define_task</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+90
+91
+92
+93
+94
+95</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/cucumber/rake/task.rb', line 90</span>
+
+<span class='def def kw'>def</span> <span class='define_task identifier id'>define_task</span> 
+  <span class='desc identifier id'>desc</span> <span class='@desc ivar id'>@desc</span>
+  <span class='task identifier id'>task</span> <span class='@task_name ivar id'>@task_name</span> <span class='do do kw'>do</span>
+    <span class='ruby identifier id'>ruby</span><span class='lparen token'>(</span><span class='arguments_for_ruby_execution identifier id'>arguments_for_ruby_execution</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='string val'>&quot; &quot;</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='comment val'># ruby(*args) is broken on Windows</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>feature_files</h3>
+</div><div id="feature_files-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>feature_files</span><span class='args'>(task_args = nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/cucumber/rake/task.rb', line 121</span>
+
+<span class='def def kw'>def</span> <span class='feature_files identifier id'>feature_files</span><span class='lparen token'>(</span><span class='task_args identifier id'>task_args</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span> <span class='comment val'># :nodoc:</span>
+  <span class='if if kw'>if</span> <span class='ENV constant id'>ENV</span><span class='lbrack token'>[</span><span class='string val'>'FEATURE'</span><span class='rbrack token'>]</span>
+    <span class='FileList constant id'>FileList</span><span class='lbrack token'>[</span> <span class='ENV constant id'>ENV</span><span class='lbrack token'>[</span><span class='string val'>'FEATURE'</span><span class='rbrack token'>]</span> <span class='rbrack token'>]</span>
+  <span class='else else kw'>else</span>
+    <span class='result identifier id'>result</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+    <span class='result identifier id'>result</span> <span class='opasgn op'>+=</span> <span class='feature_list identifier id'>feature_list</span><span class='dot token'>.</span><span class='to_a identifier id'>to_a</span> <span class='if if_mod kw'>if</span> <span class='feature_list identifier id'>feature_list</span>
+    <span class='result identifier id'>result</span> <span class='opasgn op'>+=</span> <span class='FileList constant id'>FileList</span><span class='lbrack token'>[</span><span class='feature_pattern identifier id'>feature_pattern</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_a identifier id'>to_a</span> <span class='if if_mod kw'>if</span> <span class='feature_pattern identifier id'>feature_pattern</span>
+    <span class='FileList constant id'>FileList</span><span class='lbrack token'>[</span><span class='result identifier id'>result</span><span class='rbrack token'>]</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>profile</h3>
+</div><div id="profile-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>profile</span><span class='args'>=(profile)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns the value of attribute <tt>profile</tt>
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+71
+72
+73
+74
+75
+76
+77
+78</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/cucumber/rake/task.rb', line 71</span>
+
+<span class='def def kw'>def</span> <span class='profile= identifier id'>profile=</span><span class='lparen token'>(</span><span class='profile identifier id'>profile</span><span class='rparen token'>)</span>
+  <span class='@profile ivar id'>@profile</span> <span class='assign token'>=</span> <span class='profile identifier id'>profile</span>
+  <span class='unless unless kw'>unless</span> <span class='feature_list identifier id'>feature_list</span>
+    <span class='comment val'># TODO: remove once we completely remove these from the rake task.</span>
+    <span class='@step_list ivar id'>@step_list</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+    <span class='@feature_list ivar id'>@feature_list</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span> <span class='comment val'># Don't use accessor to avoid deprecation warning.</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>step_files</h3>
+</div><div id="step_files-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>step_files</span><span class='args'>(task_args = nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/cucumber/rake/task.rb', line 132</span>
+
+<span class='def def kw'>def</span> <span class='step_files identifier id'>step_files</span><span class='lparen token'>(</span><span class='task_args identifier id'>task_args</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span> <span class='comment val'># :nodoc:</span>
+  <span class='if if kw'>if</span> <span class='ENV constant id'>ENV</span><span class='lbrack token'>[</span><span class='string val'>'STEPS'</span><span class='rbrack token'>]</span>
+    <span class='FileList constant id'>FileList</span><span class='lbrack token'>[</span> <span class='ENV constant id'>ENV</span><span class='lbrack token'>[</span><span class='string val'>'STEPS'</span><span class='rbrack token'>]</span> <span class='rbrack token'>]</span>
+  <span class='else else kw'>else</span>
+    <span class='result identifier id'>result</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+    <span class='result identifier id'>result</span> <span class='opasgn op'>+=</span> <span class='Array constant id'>Array</span><span class='lparen token'>(</span><span class='step_list identifier id'>step_list</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='step_list identifier id'>step_list</span>
+    <span class='result identifier id'>result</span> <span class='opasgn op'>+=</span> <span class='Array constant id'>Array</span><span class='lparen token'>(</span><span class='FileList constant id'>FileList</span><span class='lbrack token'>[</span><span class='step_pattern identifier id'>step_pattern</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='step_pattern identifier id'>step_pattern</span>
+    <span class='FileList constant id'>FileList</span><span class='lbrack token'>[</span><span class='result identifier id'>result</span><span class='rbrack token'>]</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

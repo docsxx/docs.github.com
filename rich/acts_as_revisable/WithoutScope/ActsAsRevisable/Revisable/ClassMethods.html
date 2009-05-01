@@ -1,0 +1,538 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: WithoutScope::ActsAsRevisable::Revisable::ClassMethods</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module WithoutScope_ActsAsRevisable_Revisable_ClassMethods">
+  <h1 class="title">Module: WithoutScope::ActsAsRevisable::Revisable::ClassMethods</h1>
+  <div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#find-instance_method' title='#find'>#find</a></span><span class='args'>(*args)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+acts_as_revisable&#8217;s override for find that allows for including
+revisions in the find.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#revisable_class-instance_method' title='#revisable_class'>#revisable_class</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns the revisable_class which in this case is simply <tt>self</tt>.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#revisable_watch_columns-instance_method' title='#revisable_watch_columns'>#revisable_watch_columns</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns an Array of the columns that are watched for changes.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#revision_class-instance_method' title='#revision_class'>#revision_class</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns the actual <tt>Revision</tt> class based on the
+#revision_class_name.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#revision_class_name-instance_method' title='#revision_class_name'>#revision_class_name</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns the <tt>revision_class_name</tt> as configured in
+<tt>acts_as_revisable</tt>.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#revisions_association_name-instance_method' title='#revisions_association_name'>#revisions_association_name</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns the name of the association acts_as_revisable creates.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#with_scope-instance_method' title='#with_scope'>#with_scope</a></span><span class='args'>(*args, &amp;block)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+acts_as_revisable&#8217;s override for with_scope that allows for including
+revisions in the scope.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>find</h3>
+</div><div id="find-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>find</span><span class='args'>(*args)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+acts_as_revisable&#8217;s override for find that allows for including
+revisions in the find.
+</p>
+<h4>Example</h4>
+<pre class="code">
+  <span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='symbol val'>:all</span><span class='comma token'>,</span> <span class='symbol val'>:with_revisions</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span><span class='rparen token'>)</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/acts_as_revisable/acts/revisable.rb', line 424</span>
+
+<span class='def def kw'>def</span> <span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span> <span class='comment val'>#:nodoc:</span>
+  <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='grep identifier id'>grep</span><span class='lparen token'>(</span><span class='Hash constant id'>Hash</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='first identifier id'>first</span>
+
+  <span class='if if kw'>if</span> <span class='options identifier id'>options</span> <span class='andop op'>&amp;&amp;</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='colon op'>:</span><span class='with_revisions identifier id'>with_revisions</span><span class='rparen token'>)</span>
+    <span class='with_exclusive_scope identifier id'>with_exclusive_scope</span> <span class='do do kw'>do</span>
+      <span class='super super kw'>super</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='else else kw'>else</span>
+    <span class='super super kw'>super</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>revisable_class</h3>
+</div><div id="revisable_class-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>revisable_class</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns the revisable_class which in this case is simply <tt>self</tt>.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+449
+450
+451</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/acts_as_revisable/acts/revisable.rb', line 449</span>
+
+<span class='def def kw'>def</span> <span class='revisable_class identifier id'>revisable_class</span> 
+  <span class='self self kw'>self</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>revisable_watch_columns</h3>
+</div><div id="revisable_watch_columns-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>revisable_watch_columns</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns an Array of the columns that are watched for changes.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+460
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/acts_as_revisable/acts/revisable.rb', line 460</span>
+
+<span class='def def kw'>def</span> <span class='revisable_watch_columns identifier id'>revisable_watch_columns</span> 
+  <span class='return return kw'>return</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='revisable_columns identifier id'>revisable_columns</span> <span class='unless unless_mod kw'>unless</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='revisable_columns identifier id'>revisable_columns</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span>
+  <span class='return return kw'>return</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='revisable_columns identifier id'>revisable_columns</span> <span class='opasgn op'>||=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span> <span class='if if_mod kw'>if</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='revisable_options identifier id'>revisable_options</span><span class='dot token'>.</span><span class='except identifier id'>except</span> <span class='eq op'>==</span> <span class='symbol val'>:all</span>
+  <span class='return return kw'>return</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='revisable_columns identifier id'>revisable_columns</span> <span class='opasgn op'>||=</span> <span class='lbrack token'>[</span><span class='self self kw'>self</span><span class='dot token'>.</span><span class='revisable_options identifier id'>revisable_options</span><span class='dot token'>.</span><span class='only identifier id'>only</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='flatten identifier id'>flatten</span><span class='dot token'>.</span><span class='map identifier id'>map</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='symbol val'>:to_s</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='map identifier id'>map</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='symbol val'>:downcase</span><span class='rparen token'>)</span> <span class='unless unless_mod kw'>unless</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='revisable_options identifier id'>revisable_options</span><span class='dot token'>.</span><span class='only identifier id'>only</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span>
+            
+  <span class='except identifier id'>except</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='self self kw'>self</span><span class='dot token'>.</span><span class='revisable_options identifier id'>revisable_options</span><span class='dot token'>.</span><span class='except identifier id'>except</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='flatten identifier id'>flatten</span> <span class='orop op'>||</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+  <span class='except identifier id'>except</span> <span class='opasgn op'>+=</span> <span class='REVISABLE_SYSTEM_COLUMNS constant id'>REVISABLE_SYSTEM_COLUMNS</span>
+  <span class='except identifier id'>except</span> <span class='opasgn op'>+=</span> <span class='REVISABLE_UNREVISABLE_COLUMNS constant id'>REVISABLE_UNREVISABLE_COLUMNS</span>
+  <span class='except identifier id'>except</span><span class='dot token'>.</span><span class='uniq! fid id'>uniq!</span>
+
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='revisable_columns identifier id'>revisable_columns</span> <span class='opasgn op'>||=</span> <span class='lparen token'>(</span><span class='column_names identifier id'>column_names</span> <span class='minus op'>-</span> <span class='except identifier id'>except</span><span class='dot token'>.</span><span class='map identifier id'>map</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='symbol val'>:to_s</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='flatten identifier id'>flatten</span><span class='dot token'>.</span><span class='map identifier id'>map</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='symbol val'>:downcase</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>revision_class</h3>
+</div><div id="revision_class-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>revision_class</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns the actual <tt>Revision</tt> class based on the
+#revision_class_name.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+444
+445
+446</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/acts_as_revisable/acts/revisable.rb', line 444</span>
+
+<span class='def def kw'>def</span> <span class='revision_class identifier id'>revision_class</span> 
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='revisable_revision_class identifier id'>revisable_revision_class</span> <span class='opasgn op'>||=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='revision_class_name identifier id'>revision_class_name</span><span class='dot token'>.</span><span class='constantize identifier id'>constantize</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>revision_class_name</h3>
+</div><div id="revision_class_name-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>revision_class_name</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns the <tt>revision_class_name</tt> as configured in
+<tt>acts_as_revisable</tt>.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+438
+439
+440</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/acts_as_revisable/acts/revisable.rb', line 438</span>
+
+<span class='def def kw'>def</span> <span class='revision_class_name identifier id'>revision_class_name</span> 
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='revisable_options identifier id'>revisable_options</span><span class='dot token'>.</span><span class='revision_class_name identifier id'>revision_class_name</span> <span class='orop op'>||</span> <span class='dstring node'>&quot;#{self.class_name}Revision&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>revisions_association_name</h3>
+</div><div id="revisions_association_name-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>revisions_association_name</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns the name of the association acts_as_revisable creates.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+455
+456
+457</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/acts_as_revisable/acts/revisable.rb', line 455</span>
+
+<span class='def def kw'>def</span> <span class='revisions_association_name identifier id'>revisions_association_name</span> 
+  <span class='revision_class_name identifier id'>revision_class_name</span><span class='dot token'>.</span><span class='pluralize identifier id'>pluralize</span><span class='dot token'>.</span><span class='underscore identifier id'>underscore</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>with_scope</h3>
+</div><div id="with_scope-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>with_scope</span><span class='args'>(*args, &amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+acts_as_revisable&#8217;s override for with_scope that allows for including
+revisions in the scope.
+</p>
+<h4>Example</h4>
+<pre class="code">
+  <span class='with_scope identifier id'>with_scope</span><span class='lparen token'>(</span><span class='symbol val'>:with_revisions</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span><span class='rparen token'>)</span> <span class='do do kw'>do</span>
+    <span class='dot3 op'>...</span>
+  <span class='end end kw'>end</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/acts_as_revisable/acts/revisable.rb', line 406</span>
+
+<span class='def def kw'>def</span> <span class='with_scope identifier id'>with_scope</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span> <span class='comment val'>#:nodoc:</span>
+  <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='args identifier id'>args</span><span class='dot token'>.</span><span class='grep identifier id'>grep</span><span class='lparen token'>(</span><span class='Hash constant id'>Hash</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='first identifier id'>first</span> <span class='orop op'>||</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span><span class='lbrack token'>[</span><span class='symbol val'>:find</span><span class='rbrack token'>]</span>
+
+  <span class='if if kw'>if</span> <span class='options identifier id'>options</span> <span class='andop op'>&amp;&amp;</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='colon op'>:</span><span class='with_revisions identifier id'>with_revisions</span><span class='rparen token'>)</span>
+    <span class='with_exclusive_scope identifier id'>with_exclusive_scope</span> <span class='do do kw'>do</span>
+      <span class='super super kw'>super</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='else else kw'>else</span>
+    <span class='super super kw'>super</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

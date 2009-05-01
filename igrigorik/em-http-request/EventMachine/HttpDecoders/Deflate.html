@@ -1,0 +1,198 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: EventMachine::HttpDecoders::Deflate</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class EventMachine_HttpDecoders_Deflate">
+  <h1 class="title">Class: EventMachine::HttpDecoders::Deflate</h1>
+  <div class="section inheritance">
+  <ul>
+  <li><a href='Base.html' title='EventMachine::HttpDecoders::Base'>EventMachine::HttpDecoders::Base</a></li><ul><li>EventMachine::HttpDecoders::Deflate</li>
+  </ul></ul>
+</div><div class="section constants">
+  
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <p class="inherited_msg">
+    This class inherits a constructor from <a href='Base.html#initialize-instance_method' title='EventMachine::HttpDecoders::Base'>EventMachine::HttpDecoders::Base</a>.
+  </p>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <div class="inherited">
+  
+  <div>
+    <h1>Public Class Methods Inherited from <a href='Base.html' title='EventMachine::HttpDecoders::Base'>EventMachine::HttpDecoders::Base</a></h1>
+    <p><span class='name'><a href='Base.html#encoding_names-class_method' title='encoding_names'>encoding_names</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+  <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#decompress-instance_method' title='#decompress'>#decompress</a></span><span class='args'>(compressed)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#finalize-instance_method' title='#finalize'>#finalize</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table><div class="inherited">
+  
+  <div>
+    <h1>Public Instance Methods Inherited from <a href='Base.html' title='EventMachine::HttpDecoders::Base'>EventMachine::HttpDecoders::Base</a></h1>
+    <p><span class='name'><a href='Base.html#%3C%3C-instance_method' title='&lt;&lt;'>&lt;&lt;</a></span>, <span class='name'><a href='Base.html#finalize%21-instance_method' title='finalize!'>finalize!</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>decompress</h3>
+</div><div id="decompress-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>decompress</span><span class='args'>(compressed)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+71
+72
+73
+74
+75
+76
+77
+78</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/em-http/decoders.rb', line 71</span>
+
+<span class='def def kw'>def</span> <span class='decompress identifier id'>decompress</span><span class='lparen token'>(</span><span class='compressed identifier id'>compressed</span><span class='rparen token'>)</span>
+  <span class='begin begin kw'>begin</span>
+    <span class='@zstream ivar id'>@zstream</span> <span class='opasgn op'>||=</span> <span class='Zlib constant id'>Zlib</span><span class='colon2 op'>::</span><span class='Inflate constant id'>Inflate</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+    <span class='@zstream ivar id'>@zstream</span><span class='dot token'>.</span><span class='inflate identifier id'>inflate</span><span class='lparen token'>(</span><span class='compressed identifier id'>compressed</span><span class='rparen token'>)</span>
+  <span class='rescue rescue kw'>rescue</span> <span class='Zlib constant id'>Zlib</span><span class='colon2 op'>::</span><span class='Error constant id'>Error</span>
+    <span class='raise identifier id'>raise</span> <span class='DecoderError constant id'>DecoderError</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>finalize</h3>
+</div><div id="finalize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>finalize</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/em-http/decoders.rb', line 80</span>
+
+<span class='def def kw'>def</span> <span class='finalize identifier id'>finalize</span>
+  <span class='return return kw'>return</span> <span class='nil nil kw'>nil</span> <span class='unless unless_mod kw'>unless</span> <span class='@zstream ivar id'>@zstream</span>
+
+  <span class='begin begin kw'>begin</span>
+    <span class='r identifier id'>r</span> <span class='assign token'>=</span> <span class='@zstream ivar id'>@zstream</span><span class='dot token'>.</span><span class='inflate identifier id'>inflate</span><span class='lparen token'>(</span><span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+    <span class='@zstream ivar id'>@zstream</span><span class='dot token'>.</span><span class='close identifier id'>close</span>
+    <span class='r identifier id'>r</span>
+  <span class='rescue rescue kw'>rescue</span> <span class='Zlib constant id'>Zlib</span><span class='colon2 op'>::</span><span class='Error constant id'>Error</span>
+    <span class='raise identifier id'>raise</span> <span class='DecoderError constant id'>DecoderError</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

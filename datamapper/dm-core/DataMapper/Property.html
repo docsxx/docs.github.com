@@ -1,0 +1,2666 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: DataMapper::Property</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class DataMapper_Property">
+  <h1 class="title">Class: DataMapper::Property</h1>
+  <div class="section mixins">
+  <h1>Included Modules</h1>
+  <p><a href='Property/Assertions.html' title='DataMapper::Assertions'>DataMapper::Assertions</a></p>
+</div><div class="section docstring">
+  <p>
+:include:QUICKLINKS
+</p>
+<h1>Properties</h1>
+<p>
+Properties for a model are not derived from a database structure, but
+instead explicitly declared inside your model class definitions. These
+properties then map (or, if using automigrate, generate) fields in your
+repository/database.
+</p>
+<p>
+If you are coming to DataMapper from another ORM framework, such as
+ActiveRecord, this is a fundamental difference in thinking. However, there
+are several advantages to defining your properties in your models:
+</p>
+<ul>
+<li>information about your model is centralized in one place: rather than
+having to dig out migrations, xml or other configuration files.
+
+</li>
+<li>having information centralized in your models, encourages you and the
+developers on your team to take a model-centric view of development.
+
+</li>
+<li>it provides the ability to use Ruby&#8217;s access control functions.
+
+</li>
+<li>and, because DataMapper only cares about properties explicitly defined in
+your models, DataMapper plays well with legacy databases, and shares
+databases easily with other applications.
+
+</li>
+</ul>
+<h2>Declaring Properties</h2>
+<p>
+Inside your class, you call the property method for each property you want
+to add. The only two required arguments are the name and type, everything
+else is optional.
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='Post constant id'>Post</span>
+    <span class='include identifier id'>include</span> <span class='DataMapper constant id'>DataMapper</span><span class='colon2 op'>::</span><span class='Resource constant id'>Resource</span>
+    <span class='property identifier id'>property</span> <span class='symbol val'>:title</span><span class='comma token'>,</span>   <span class='String constant id'>String</span><span class='comma token'>,</span>    <span class='symbol val'>:nullable</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='false false kw'>false</span>
+       <span class='comment val'># Cannot be null</span>
+    <span class='property identifier id'>property</span> <span class='symbol val'>:publish</span><span class='comma token'>,</span> <span class='TrueClass constant id'>TrueClass</span><span class='comma token'>,</span> <span class='symbol val'>:default</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='false false kw'>false</span>
+       <span class='comment val'># Default value for new records is false</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+By default, DataMapper supports the following primitive types:
+</p>
+<ul>
+<li>TrueClass, Boolean
+
+</li>
+<li>String
+
+</li>
+<li>Text (limit of 65k characters by default)
+
+</li>
+<li>Float
+
+</li>
+<li>Integer
+
+</li>
+<li>BigDecimal
+
+</li>
+<li>DateTime
+
+</li>
+<li>Date
+
+</li>
+<li>Time
+
+</li>
+<li>Object (marshalled out during serialization)
+
+</li>
+<li>Class (datastore primitive is the same as String. Used for Inheritance)
+
+</li>
+</ul>
+<p>
+For more information about available Types, see DataMapper::Type
+</p>
+<h2>Limiting Access</h2>
+<p>
+Property access control is uses the same terminology Ruby does. Properties
+are public by default, but can also be declared private or protected as
+needed (via the :accessor option).
+</p>
+<pre class="code">
+ <span class='class class kw'>class</span> <span class='Post constant id'>Post</span>
+  <span class='include identifier id'>include</span> <span class='DataMapper constant id'>DataMapper</span><span class='colon2 op'>::</span><span class='Resource constant id'>Resource</span>
+   <span class='property identifier id'>property</span> <span class='symbol val'>:title</span><span class='comma token'>,</span>  <span class='String constant id'>String</span><span class='comma token'>,</span> <span class='symbol val'>:accessor</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:private</span>
+     <span class='comment val'># Both reader and writer are private</span>
+   <span class='property identifier id'>property</span> <span class='symbol val'>:body</span><span class='comma token'>,</span>   <span class='Text constant id'>Text</span><span class='comma token'>,</span>   <span class='symbol val'>:accessor</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:protected</span>
+     <span class='comment val'># Both reader and writer are protected</span>
+ <span class='end end kw'>end</span>
+</pre>
+<p>
+Access control is also analogous to Ruby accessors and mutators, and can be
+declared using :reader and :writer, in addition to :accessor.
+</p>
+<pre class="code">
+ <span class='class class kw'>class</span> <span class='Post constant id'>Post</span>
+   <span class='include identifier id'>include</span> <span class='DataMapper constant id'>DataMapper</span><span class='colon2 op'>::</span><span class='Resource constant id'>Resource</span>
+
+   <span class='property identifier id'>property</span> <span class='symbol val'>:title</span><span class='comma token'>,</span> <span class='String constant id'>String</span><span class='comma token'>,</span> <span class='symbol val'>:writer</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:private</span>
+     <span class='comment val'># Only writer is private</span>
+
+   <span class='property identifier id'>property</span> <span class='symbol val'>:tags</span><span class='comma token'>,</span>  <span class='String constant id'>String</span><span class='comma token'>,</span> <span class='symbol val'>:reader</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:protected</span>
+     <span class='comment val'># Only reader is protected</span>
+ <span class='end end kw'>end</span>
+</pre>
+<h2>Overriding Accessors</h2>
+<p>
+The accessor for any property can be overridden in the same manner that
+Ruby class accessors can be. After the property is defined, just add your
+custom accessor:
+</p>
+<pre class="code">
+ <span class='class class kw'>class</span> <span class='Post constant id'>Post</span>
+   <span class='include identifier id'>include</span> <span class='DataMapper constant id'>DataMapper</span><span class='colon2 op'>::</span><span class='Resource constant id'>Resource</span>
+   <span class='property identifier id'>property</span> <span class='symbol val'>:title</span><span class='comma token'>,</span>  <span class='String constant id'>String</span>
+
+   <span class='def def kw'>def</span> <span class='title= identifier id'>title=</span><span class='lparen token'>(</span><span class='new_title identifier id'>new_title</span><span class='rparen token'>)</span>
+     <span class='raise identifier id'>raise</span> <span class='ArgumentError constant id'>ArgumentError</span> <span class='if if_mod kw'>if</span> <span class='new_title identifier id'>new_title</span> <span class='neq op'>!=</span> <span class='string val'>'Luke is Awesome'</span>
+     <span class='@title ivar id'>@title</span> <span class='assign token'>=</span> <span class='new_title identifier id'>new_title</span>
+   <span class='end end kw'>end</span>
+ <span class='end end kw'>end</span>
+</pre>
+<h2>Lazy Loading</h2>
+<p>
+By default, some properties are not loaded when an object is fetched in
+DataMapper. These lazily loaded properties are fetched on demand when their
+accessor is called for the first time (as it is often unnecessary to
+instantiate -every- property -every- time an object is loaded). For
+instance, DataMapper::Types::Text fields are lazy loading by default,
+although you can over-ride this behavior if you wish:
+</p>
+<p>
+Example:
+</p>
+<pre class="code">
+ <span class='class class kw'>class</span> <span class='Post constant id'>Post</span>
+   <span class='include identifier id'>include</span> <span class='DataMapper constant id'>DataMapper</span><span class='colon2 op'>::</span><span class='Resource constant id'>Resource</span>
+   <span class='property identifier id'>property</span> <span class='symbol val'>:title</span><span class='comma token'>,</span>  <span class='String constant id'>String</span>                    <span class='comment val'># Loads normally</span>
+   <span class='property identifier id'>property</span> <span class='symbol val'>:body</span><span class='comma token'>,</span>   <span class='DataMapper constant id'>DataMapper</span><span class='colon2 op'>::</span><span class='Types constant id'>Types</span><span class='colon2 op'>::</span><span class='Text constant id'>Text</span>   <span class='comment val'># Is lazily loaded by default</span>
+ <span class='end end kw'>end</span>
+</pre>
+<p>
+If you want to over-ride the lazy loading on any field you can set it to a
+context or false to disable it with the :lazy option. Contexts allow
+multipule lazy properties to be loaded at one time. If you set :lazy to
+true, it is placed in the :default context
+</p>
+<pre class="code">
+ <span class='class class kw'>class</span> <span class='Post constant id'>Post</span>
+   <span class='include identifier id'>include</span> <span class='DataMapper constant id'>DataMapper</span><span class='colon2 op'>::</span><span class='Resource constant id'>Resource</span>
+
+   <span class='property identifier id'>property</span> <span class='symbol val'>:title</span><span class='comma token'>,</span>    <span class='String constant id'>String</span>
+     <span class='comment val'># Loads normally</span>
+
+   <span class='property identifier id'>property</span> <span class='symbol val'>:body</span><span class='comma token'>,</span>     <span class='DataMapper constant id'>DataMapper</span><span class='colon2 op'>::</span><span class='Types constant id'>Types</span><span class='colon2 op'>::</span><span class='Text constant id'>Text</span><span class='comma token'>,</span> <span class='symbol val'>:lazy</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='false false kw'>false</span>
+     <span class='comment val'># The default is now over-ridden</span>
+
+   <span class='property identifier id'>property</span> <span class='symbol val'>:comment</span><span class='comma token'>,</span>  <span class='String constant id'>String</span><span class='comma token'>,</span> <span class='lazy identifier id'>lazy</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='symbol val'>:detailed</span><span class='rbrack token'>]</span>
+     <span class='comment val'># Loads in the :detailed context</span>
+
+   <span class='property identifier id'>property</span> <span class='symbol val'>:author</span><span class='comma token'>,</span>   <span class='String constant id'>String</span><span class='comma token'>,</span> <span class='lazy identifier id'>lazy</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='symbol val'>:summary</span><span class='comma token'>,</span><span class='symbol val'>:detailed</span><span class='rbrack token'>]</span>
+     <span class='comment val'># Loads in :summary &amp; :detailed context</span>
+ <span class='end end kw'>end</span>
+</pre>
+<p>
+Delaying the request for lazy-loaded attributes even applies to objects
+accessed through associations. In a sense, DataMapper anticipates that you
+will likely be iterating over objects in associations and rolls all of the
+load commands for lazy-loaded properties into one request from the
+database.
+</p>
+<p>
+Example:
+</p>
+<pre class="code">
+  <span class='Widget constant id'>Widget</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='components identifier id'>components</span>
+    <span class='comment val'># loads when the post object is pulled from database, by default</span>
+
+  <span class='Widget constant id'>Widget</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='components identifier id'>components</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='dot token'>.</span><span class='body identifier id'>body</span>
+    <span class='comment val'># loads the values for the body property on all objects in the</span>
+    <span class='comment val'># association, rather than just this one.</span>
+
+  <span class='Widget constant id'>Widget</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='components identifier id'>components</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='dot token'>.</span><span class='comment identifier id'>comment</span>
+    <span class='comment val'># loads both comment and author for all objects in the association</span>
+    <span class='comment val'># since they are both in the :detailed context</span>
+</pre>
+<h2>Keys</h2>
+<p>
+Properties can be declared as primary or natural keys on a table. You
+should a property as the primary key of the table:
+</p>
+<p>
+Examples:
+</p>
+<pre class="code">
+ <span class='property identifier id'>property</span> <span class='symbol val'>:id</span><span class='comma token'>,</span>        <span class='Serial constant id'>Serial</span>                    <span class='comment val'># auto-incrementing key</span>
+ <span class='property identifier id'>property</span> <span class='symbol val'>:legacy_pk</span><span class='comma token'>,</span> <span class='String constant id'>String</span><span class='comma token'>,</span> <span class='symbol val'>:key</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span>      <span class='comment val'># 'natural' key</span>
+</pre>
+<p>
+This is roughly equivalent to ActiveRecord&#8217;s
+<tt>set_primary_key</tt>, though non-integer data types may be used, thus
+DataMapper supports natural keys. When a property is declared as a natural
+key, accessing the object using the indexer syntax <tt>Class[key]</tt>
+remains valid.
+</p>
+<pre class="code">
+  <span class='User constant id'>User</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span>
+     <span class='comment val'># when :id is the primary key on the users table</span>
+  <span class='User constant id'>User</span><span class='lbrack token'>[</span><span class='string val'>'bill'</span><span class='rbrack token'>]</span>
+     <span class='comment val'># when :name is the primary (natural) key on the users table</span>
+</pre>
+<h2>Indeces</h2>
+<p>
+You can add indeces for your properties by using the <tt>:index</tt>
+option. If you use <tt>true</tt> as the option value, the index will be
+automatically named. If you want to name the index yourself, use a symbol
+as the value.
+</p>
+<pre class="code">
+  <span class='property identifier id'>property</span> <span class='symbol val'>:last_name</span><span class='comma token'>,</span>  <span class='String constant id'>String</span><span class='comma token'>,</span> <span class='symbol val'>:index</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span>
+  <span class='property identifier id'>property</span> <span class='symbol val'>:first_name</span><span class='comma token'>,</span> <span class='String constant id'>String</span><span class='comma token'>,</span> <span class='symbol val'>:index</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:name</span>
+</pre>
+<p>
+You can create multi-column composite indeces by using the same symbol in
+all the columns belonging to the index. The columns will appear in the
+index in the order they are declared.
+</p>
+<pre class="code">
+  <span class='property identifier id'>property</span> <span class='symbol val'>:last_name</span><span class='comma token'>,</span>  <span class='String constant id'>String</span><span class='comma token'>,</span> <span class='symbol val'>:index</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:name</span>
+  <span class='property identifier id'>property</span> <span class='symbol val'>:first_name</span><span class='comma token'>,</span> <span class='String constant id'>String</span><span class='comma token'>,</span> <span class='symbol val'>:index</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:name</span>
+     <span class='comment val'># =&gt; index on (last_name, first_name)</span>
+</pre>
+<p>
+If you want to make the indeces unique, use <tt>:unique_index</tt> instead
+of <tt>:index</tt>
+</p>
+<h2>Inferred Validations</h2>
+<p>
+If you require the dm-validations plugin, auto-validations will
+automatically be mixed-in in to your model classes: validation rules that
+are inferred when properties are declared with specific column
+restrictions.
+</p>
+<pre class="code">
+ <span class='class class kw'>class</span> <span class='Post constant id'>Post</span>
+   <span class='include identifier id'>include</span> <span class='DataMapper constant id'>DataMapper</span><span class='colon2 op'>::</span><span class='Resource constant id'>Resource</span>
+
+   <span class='property identifier id'>property</span> <span class='symbol val'>:title</span><span class='comma token'>,</span> <span class='String constant id'>String</span><span class='comma token'>,</span> <span class='symbol val'>:length</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>250</span>
+     <span class='comment val'># =&gt; infers 'validates_length :title,</span>
+            <span class='symbol val'>:minimum</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>0</span><span class='comma token'>,</span> <span class='symbol val'>:maximum</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>250</span><span class='string val'>'
+
+   property :title, String, :nullable =&gt; false
+     # =&gt; infers '</span><span class='validates_present identifier id'>validates_present</span> <span class='symbol val'>:title</span>
+
+   <span class='property identifier id'>property</span> <span class='symbol val'>:email</span><span class='comma token'>,</span> <span class='String constant id'>String</span><span class='comma token'>,</span> <span class='symbol val'>:format</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:email_address</span>
+     <span class='comment val'># =&gt; infers 'validates_format :email, :with =&gt; :email_address</span>
+
+   <span class='property identifier id'>property</span> <span class='symbol val'>:title</span><span class='comma token'>,</span> <span class='String constant id'>String</span><span class='comma token'>,</span> <span class='symbol val'>:length</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>255</span><span class='comma token'>,</span> <span class='symbol val'>:nullable</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='false false kw'>false</span>
+     <span class='comment val'># =&gt; infers both 'validates_length' as well as</span>
+     <span class='comment val'>#    'validates_present'</span>
+     <span class='comment val'>#    better: property :title, String, :length =&gt; 1..255</span>
+
+ <span class='end end kw'>end</span>
+</pre>
+<p>
+This functionality is available with the dm-validations gem, part of the
+dm-more bundle. For more information about validations, check the
+documentation for dm-validations.
+</p>
+<h2>Default Values</h2>
+<p>
+To set a default for a property, use the <tt>:default</tt> key. The
+property will be set to the value associated with that key the first time
+it is accessed, or when the resource is saved if it hasn&#8217;t been set
+with another value already. This value can be a static value, such as
+&#8216;hello&#8217; but it can also be a proc that will be evaluated when
+the property is read before its value has been set. The property is set to
+the return of the proc. The proc is passed two values, the resource the
+property is being set for and the property itself.
+</p>
+<pre class="code">
+  <span class='property identifier id'>property</span> <span class='symbol val'>:display_name</span><span class='comma token'>,</span> <span class='String constant id'>String</span><span class='comma token'>,</span> <span class='symbol val'>:default</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='r identifier id'>r</span><span class='comma token'>,</span> <span class='p identifier id'>p</span><span class='bitor op'>|</span> <span class='r identifier id'>r</span><span class='dot token'>.</span><span class='login identifier id'>login</span> <span class='rbrace token'>}</span>
+</pre>
+<p>
+Word of warning. Don&#8217;t try to read the value of the property
+you&#8217;re setting the default for in the proc. An infinite loop will
+ensue.
+</p>
+<h2>Embedded Values</h2>
+<p>
+As an alternative to extraneous has_one relationships, consider using an
+EmbeddedValue.
+</p>
+<h2>Misc. Notes</h2>
+<ul>
+<li>Properties declared as strings will default to a length of 50, rather than
+255 (typical max varchar column size). To overload the default, pass
+<tt>:length =&gt; 255</tt> or <tt>:length =&gt; 0..255</tt>. Since
+DataMapper does not introspect for properties, this means that legacy
+database tables may need their <tt>String</tt> columns defined with a
+<tt>:length</tt> so that DM does not apply an un-needed length validation,
+or allow overflow.
+
+</li>
+<li>You may declare a Property with the data-type of <tt>Class</tt>. see
+SingleTableInheritance for more on how to use <tt>Class</tt> columns.
+
+</li>
+</ul>
+
+</div><div class="section attributes">
+  <h1>Attributes</h1>
+
+  
+    <div class="instance">
+      <h2>Instance Attributes</h2>
+      <table>
+      
+        <tr>
+          <th class="name">default</td>
+          <td class="readwrite">
+            [<span id='default-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>default</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">extra_options</td>
+          <td class="readwrite">
+            [<span id='extra_options-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>extra_options</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">getter</td>
+          <td class="readwrite">
+            [<span id='getter-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>getter</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">instance_variable_name</td>
+          <td class="readwrite">
+            [<span id='instance_variable_name-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>instance_variable_name</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">model</td>
+          <td class="readwrite">
+            [<span id='model-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>model</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">name</td>
+          <td class="readwrite">
+            [<span id='name-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>name</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">options</td>
+          <td class="readwrite">
+            [<span id='options-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>options</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">precision</td>
+          <td class="readwrite">
+            [<span id='precision-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>precision</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">primitive</td>
+          <td class="readwrite">
+            [<span id='primitive-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>primitive</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">reader_visibility</td>
+          <td class="readwrite">
+            [<span id='reader_visibility-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>reader_visibility</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">scale</td>
+          <td class="readwrite">
+            [<span id='scale-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>scale</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">track</td>
+          <td class="readwrite">
+            [<span id='track-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>track</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">type</td>
+          <td class="readwrite">
+            [<span id='type-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>type</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">writer_visibility</td>
+          <td class="readwrite">
+            [<span id='writer_visibility-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>writer_visibility</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+      </table>
+    </div>
+  
+</div><div class="section constants">
+  <div class="thisclass">
+  <h1>Constants</h1>
+  <dl>
+    
+      <dt id="DEFAULT_LENGTH-constant">DEFAULT_LENGTH</dt>
+      <dd>50</dd>
+    
+      <dt id="DEFAULT_PRECISION-constant">DEFAULT_PRECISION</dt>
+      <dd>10</dd>
+    
+      <dt id="DEFAULT_SCALE_BIGDECIMAL-constant">DEFAULT_SCALE_BIGDECIMAL</dt>
+      <dd>0</dd>
+    
+      <dt id="DEFAULT_SCALE_FLOAT-constant">DEFAULT_SCALE_FLOAT</dt>
+      <dd>nil</dd>
+    
+      <dt id="IMMUTABLE_TYPES-constant">IMMUTABLE_TYPES</dt>
+      <dd>[ TrueClass, Float, Integer, BigDecimal]</dd>
+    
+      <dt id="PROPERTY_OPTIONS-constant">PROPERTY_OPTIONS</dt>
+      <dd>[      :accessor, :reader, :writer,      :lazy, :default, :nullable, :key, :serial, :field, :size, :length,      :format, :index, :unique_index, :check, :ordinal, :auto_validation,      :validates, :unique, :track, :precision, :scale    ]</dd>
+    
+      <dt id="TYPES-constant">TYPES</dt>
+      <dd>[      TrueClass,      String,      DataMapper::Types::Text,      Float,      Integer,      BigDecimal,      DateTime,      Date,      Time,      Object,      Class,      DataMapper::Types::Discriminator,      DataMapper::Types::Serial    ]</dd>
+    
+      <dt id="VISIBILITY_OPTIONS-constant">VISIBILITY_OPTIONS</dt>
+      <dd>[ :public, :protected, :private ]</dd>
+    
+  </dl>
+</div>
+
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>private</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(model, name, type, options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+530
+531
+532
+533
+534
+535
+536
+537
+538
+539
+540
+541
+542
+543
+544
+545
+546
+547
+548
+549
+550
+551
+552
+553
+554
+555
+556
+557
+558
+559
+560
+561
+562
+563
+564
+565
+566
+567
+568
+569
+570
+571
+572
+573
+574
+575
+576
+577
+578
+579
+580
+581
+582
+583
+584
+585
+586
+587
+588
+589
+590
+591
+592
+593
+594
+595
+596
+597
+598
+599
+600
+601
+602
+603
+604
+605
+606
+607
+608
+609
+610
+611
+612
+613</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/property.rb', line 530</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='model identifier id'>model</span><span class='comma token'>,</span> <span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='type identifier id'>type</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='assert_kind_of identifier id'>assert_kind_of</span> <span class='string val'>'model'</span><span class='comma token'>,</span> <span class='model identifier id'>model</span><span class='comma token'>,</span> <span class='Model constant id'>Model</span>
+  <span class='assert_kind_of identifier id'>assert_kind_of</span> <span class='string val'>'name'</span><span class='comma token'>,</span>  <span class='name identifier id'>name</span><span class='comma token'>,</span>  <span class='Symbol constant id'>Symbol</span>
+  <span class='assert_kind_of identifier id'>assert_kind_of</span> <span class='string val'>'type'</span><span class='comma token'>,</span>  <span class='type identifier id'>type</span><span class='comma token'>,</span>  <span class='Class constant id'>Class</span>
+
+  <span class='if if kw'>if</span> <span class='Fixnum constant id'>Fixnum</span> <span class='eq op'>==</span> <span class='type identifier id'>type</span>
+    <span class='comment val'># It was decided that Integer is a more expressively names class to</span>
+    <span class='comment val'># use instead of Fixnum.  Fixnum only represents smaller numbers,</span>
+    <span class='comment val'># so there was some confusion over whether or not it would also</span>
+    <span class='comment val'># work with Bignum too (it will).  Any Integer, which includes</span>
+    <span class='comment val'># Fixnum and Bignum, can be stored in this property.</span>
+    <span class='warn identifier id'>warn</span> <span class='dstring node'>&quot;#{type} properties are deprecated.  Please use Integer instead&quot;</span>
+    <span class='type identifier id'>type</span> <span class='assign token'>=</span> <span class='Integer constant id'>Integer</span>
+  <span class='end end kw'>end</span>
+
+  <span class='unless unless kw'>unless</span> <span class='TYPES constant id'>TYPES</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='type identifier id'>type</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='lparen token'>(</span><span class='DataMapper constant id'>DataMapper</span><span class='colon2 op'>::</span><span class='Type constant id'>Type</span> <span class='gt op'>&gt;</span> <span class='type identifier id'>type</span> <span class='andop op'>&amp;&amp;</span> <span class='TYPES constant id'>TYPES</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='type identifier id'>type</span><span class='dot token'>.</span><span class='primitive identifier id'>primitive</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+    <span class='raise identifier id'>raise</span> <span class='ArgumentError constant id'>ArgumentError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;+type+ was #{type.inspect}, which is not a supported type: #{TYPES * ', '}&quot;</span><span class='comma token'>,</span> <span class='caller identifier id'>caller</span>
+  <span class='end end kw'>end</span>
+
+  <span class='@extra_options ivar id'>@extra_options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='dot token'>.</span><span class='keys identifier id'>keys</span> <span class='minus op'>-</span> <span class='PROPERTY_OPTIONS constant id'>PROPERTY_OPTIONS</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='key identifier id'>key</span><span class='bitor op'>|</span>
+    <span class='@extra_options ivar id'>@extra_options</span><span class='lbrack token'>[</span><span class='key identifier id'>key</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='key identifier id'>key</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+
+  <span class='@model ivar id'>@model</span>                  <span class='assign token'>=</span> <span class='model identifier id'>model</span>
+  <span class='@name ivar id'>@name</span>                   <span class='assign token'>=</span> <span class='name identifier id'>name</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='sub identifier id'>sub</span><span class='lparen token'>(</span><span class='regexp val'>/\?$/</span><span class='comma token'>,</span> <span class='string val'>''</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span>
+  <span class='@type ivar id'>@type</span>                   <span class='assign token'>=</span> <span class='type identifier id'>type</span>
+  <span class='@custom ivar id'>@custom</span>                 <span class='assign token'>=</span> <span class='DataMapper constant id'>DataMapper</span><span class='colon2 op'>::</span><span class='Type constant id'>Type</span> <span class='gt op'>&gt;</span> <span class='@type ivar id'>@type</span>
+  <span class='@options ivar id'>@options</span>                <span class='assign token'>=</span> <span class='@custom ivar id'>@custom</span> <span class='question op'>?</span> <span class='@type ivar id'>@type</span><span class='dot token'>.</span><span class='options identifier id'>options</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='options identifier id'>options</span>
+  <span class='@instance_variable_name ivar id'>@instance_variable_name</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;@#{@name}&quot;</span>
+
+  <span class='comment val'># TODO: This default should move to a DataMapper::Types::Text</span>
+  <span class='comment val'># Custom-Type and out of Property.</span>
+  <span class='@primitive ivar id'>@primitive</span> <span class='assign token'>=</span> <span class='@options ivar id'>@options</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='symbol val'>:primitive</span><span class='comma token'>,</span> <span class='@type ivar id'>@type</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:primitive</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='@type ivar id'>@type</span><span class='dot token'>.</span><span class='primitive identifier id'>primitive</span> <span class='colon op'>:</span> <span class='@type ivar id'>@type</span><span class='rparen token'>)</span>
+
+  <span class='@getter ivar id'>@getter</span>       <span class='assign token'>=</span> <span class='TrueClass constant id'>TrueClass</span> <span class='eq op'>==</span> <span class='@primitive ivar id'>@primitive</span> <span class='question op'>?</span> <span class='dstring node'>&quot;#{@name}?&quot;</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span> <span class='colon op'>:</span> <span class='@name ivar id'>@name</span>
+  <span class='@field ivar id'>@field</span>        <span class='assign token'>=</span> <span class='@options ivar id'>@options</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='symbol val'>:field</span><span class='comma token'>,</span>        <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='@serial ivar id'>@serial</span>       <span class='assign token'>=</span> <span class='@options ivar id'>@options</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='symbol val'>:serial</span><span class='comma token'>,</span>       <span class='false false kw'>false</span><span class='rparen token'>)</span>
+  <span class='@key ivar id'>@key</span>          <span class='assign token'>=</span> <span class='@options ivar id'>@options</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='symbol val'>:key</span><span class='comma token'>,</span>          <span class='@serial ivar id'>@serial</span> <span class='orop op'>||</span> <span class='false false kw'>false</span><span class='rparen token'>)</span>
+  <span class='@default ivar id'>@default</span>      <span class='assign token'>=</span> <span class='@options ivar id'>@options</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='symbol val'>:default</span><span class='comma token'>,</span>      <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='@nullable ivar id'>@nullable</span>     <span class='assign token'>=</span> <span class='@options ivar id'>@options</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='symbol val'>:nullable</span><span class='comma token'>,</span>     <span class='@key ivar id'>@key</span> <span class='eq op'>==</span> <span class='false false kw'>false</span><span class='rparen token'>)</span>
+  <span class='@index ivar id'>@index</span>        <span class='assign token'>=</span> <span class='@options ivar id'>@options</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='symbol val'>:index</span><span class='comma token'>,</span>        <span class='false false kw'>false</span><span class='rparen token'>)</span>
+  <span class='@unique_index ivar id'>@unique_index</span> <span class='assign token'>=</span> <span class='@options ivar id'>@options</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='symbol val'>:unique_index</span><span class='comma token'>,</span> <span class='false false kw'>false</span><span class='rparen token'>)</span>
+  <span class='@lazy ivar id'>@lazy</span>         <span class='assign token'>=</span> <span class='@options ivar id'>@options</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='symbol val'>:lazy</span><span class='comma token'>,</span>         <span class='@type ivar id'>@type</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:lazy</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='@type ivar id'>@type</span><span class='dot token'>.</span><span class='lazy identifier id'>lazy</span> <span class='colon op'>:</span> <span class='false false kw'>false</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='notop op'>!</span><span class='@key ivar id'>@key</span>
+  <span class='@fields ivar id'>@fields</span>       <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+
+  <span class='@track ivar id'>@track</span> <span class='assign token'>=</span> <span class='@options ivar id'>@options</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='symbol val'>:track</span><span class='rparen token'>)</span> <span class='do do kw'>do</span>
+    <span class='if if kw'>if</span> <span class='@custom ivar id'>@custom</span> <span class='andop op'>&amp;&amp;</span> <span class='@type ivar id'>@type</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='colon op'>:</span><span class='track identifier id'>track</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='@type ivar id'>@type</span><span class='dot token'>.</span><span class='track identifier id'>track</span>
+      <span class='@type ivar id'>@type</span><span class='dot token'>.</span><span class='track identifier id'>track</span>
+    <span class='else else kw'>else</span>
+      <span class='IMMUTABLE_TYPES constant id'>IMMUTABLE_TYPES</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='@primitive ivar id'>@primitive</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='symbol val'>:set</span> <span class='colon op'>:</span> <span class='symbol val'>:get</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+
+  <span class='comment val'># assign attributes per-type</span>
+  <span class='if if kw'>if</span> <span class='String constant id'>String</span> <span class='eq op'>==</span> <span class='@primitive ivar id'>@primitive</span> <span class='orop op'>||</span> <span class='Class constant id'>Class</span> <span class='eq op'>==</span> <span class='@primitive ivar id'>@primitive</span>
+    <span class='@length ivar id'>@length</span> <span class='assign token'>=</span> <span class='@options ivar id'>@options</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='symbol val'>:length</span><span class='comma token'>,</span> <span class='@options ivar id'>@options</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='symbol val'>:size</span><span class='comma token'>,</span> <span class='DEFAULT_LENGTH constant id'>DEFAULT_LENGTH</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='elsif elsif kw'>elsif</span> <span class='BigDecimal constant id'>BigDecimal</span> <span class='eq op'>==</span> <span class='@primitive ivar id'>@primitive</span> <span class='orop op'>||</span> <span class='Float constant id'>Float</span> <span class='eq op'>==</span> <span class='@primitive ivar id'>@primitive</span>
+    <span class='@precision ivar id'>@precision</span> <span class='assign token'>=</span> <span class='@options ivar id'>@options</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='symbol val'>:precision</span><span class='comma token'>,</span> <span class='DEFAULT_PRECISION constant id'>DEFAULT_PRECISION</span><span class='rparen token'>)</span>
+
+    <span class='default_scale identifier id'>default_scale</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='Float constant id'>Float</span> <span class='eq op'>==</span> <span class='@primitive ivar id'>@primitive</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='DEFAULT_SCALE_FLOAT constant id'>DEFAULT_SCALE_FLOAT</span> <span class='colon op'>:</span> <span class='DEFAULT_SCALE_BIGDECIMAL constant id'>DEFAULT_SCALE_BIGDECIMAL</span>
+    <span class='@scale ivar id'>@scale</span>     <span class='assign token'>=</span> <span class='@options ivar id'>@options</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='symbol val'>:scale</span><span class='comma token'>,</span> <span class='default_scale identifier id'>default_scale</span><span class='rparen token'>)</span>
+    <span class='comment val'># @scale     = @options.fetch(:scale, DEFAULT_SCALE_BIGDECIMAL)</span>
+
+    <span class='unless unless kw'>unless</span> <span class='@precision ivar id'>@precision</span> <span class='gt op'>&gt;</span> <span class='integer val'>0</span>
+      <span class='raise identifier id'>raise</span> <span class='ArgumentError constant id'>ArgumentError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;precision must be greater than 0, but was #{@precision.inspect}&quot;</span>
+    <span class='end end kw'>end</span>
+
+    <span class='if if kw'>if</span> <span class='lparen token'>(</span><span class='BigDecimal constant id'>BigDecimal</span> <span class='eq op'>==</span> <span class='@primitive ivar id'>@primitive</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='lparen token'>(</span><span class='Float constant id'>Float</span> <span class='eq op'>==</span> <span class='@primitive ivar id'>@primitive</span> <span class='andop op'>&amp;&amp;</span> <span class='notop op'>!</span><span class='@scale ivar id'>@scale</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span><span class='rparen token'>)</span>
+      <span class='unless unless kw'>unless</span> <span class='@scale ivar id'>@scale</span> <span class='geq op'>&gt;=</span> <span class='integer val'>0</span>
+        <span class='raise identifier id'>raise</span> <span class='ArgumentError constant id'>ArgumentError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;scale must be equal to or greater than 0, but was #{@scale.inspect}&quot;</span>
+      <span class='end end kw'>end</span>
+
+      <span class='unless unless kw'>unless</span> <span class='@precision ivar id'>@precision</span> <span class='geq op'>&gt;=</span> <span class='@scale ivar id'>@scale</span>
+        <span class='raise identifier id'>raise</span> <span class='ArgumentError constant id'>ArgumentError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;precision must be equal to or greater than scale, but was #{@precision.inspect} and scale was #{@scale.inspect}&quot;</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+
+  <span class='determine_visibility identifier id'>determine_visibility</span>
+
+  <span class='@model ivar id'>@model</span><span class='dot token'>.</span><span class='auto_generate_validations identifier id'>auto_generate_validations</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='rparen token'>)</span>    <span class='if if_mod kw'>if</span> <span class='@model ivar id'>@model</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:auto_generate_validations</span><span class='rparen token'>)</span>
+  <span class='@model ivar id'>@model</span><span class='dot token'>.</span><span class='property_serialization_setup identifier id'>property_serialization_setup</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='@model ivar id'>@model</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:property_serialization_setup</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <h1>Public Class Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#_load-class_method' title='_load'>_load</a></span><span class='args'>(marshalled)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+TODO: add docs.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+  <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#_dump-instance_method' title='#_dump'>#_dump</a></span><span class='args'>(*)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+TODO: add docs.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#custom%3F-instance_method' title='#custom?'>#custom?</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#default_for-instance_method' title='#default_for'>#default_for</a></span><span class='args'>(resource)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#eql%3F-instance_method' title='#eql?'>#eql?</a></span><span class='args'>(o)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#field-instance_method' title='#field'>#field</a></span><span class='args'>(repository_name = nil)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Supplies the field in the data-store which the property corresponds to.
+</p>
+
+        
+          <p class='returns'>
+            Returns: 
+              <span class='return_types'>
+                 
+              </span>
+          </p>
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#get-instance_method' title='#get'>#get</a></span><span class='args'>(resource)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Provides a standardized getter method for the property.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#get%21-instance_method' title='#get!'>#get!</a></span><span class='args'>(resource)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#hash-instance_method' title='#hash'>#hash</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#index-instance_method' title='#index'>#index</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#inspect-instance_method' title='#inspect'>#inspect</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#key%3F-instance_method' title='#key?'>#key?</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns whether or not the property is a key or a part of a key.
+</p>
+
+        
+          <p class='returns'>
+            Returns: 
+              <span class='return_types'>
+                 
+              </span>
+          </p>
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#lazy%3F-instance_method' title='#lazy?'>#lazy?</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns whether or not the property is to be lazy-loaded.
+</p>
+
+        
+          <p class='returns'>
+            Returns: 
+              <span class='return_types'>
+                 
+              </span>
+          </p>
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#lazy_load-instance_method' title='#lazy_load'>#lazy_load</a></span><span class='args'>(resource)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Loads lazy columns when get or set is called.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#length-instance_method' title='#length'>#length</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+          <span class='alias'>#size</span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#nullable%3F-instance_method' title='#nullable?'>#nullable?</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns whether or not the property can accept &#8216;nil&#8217; as
+it&#8217;s value.
+</p>
+
+        
+          <p class='returns'>
+            Returns: 
+              <span class='return_types'>
+                 
+              </span>
+          </p>
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#serial%3F-instance_method' title='#serial?'>#serial?</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns whether or not the property is &quot;serial&quot;
+(auto-incrementing).
+</p>
+
+        
+          <p class='returns'>
+            Returns: 
+              <span class='return_types'>
+                 
+              </span>
+          </p>
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#set-instance_method' title='#set'>#set</a></span><span class='args'>(resource, value)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Provides a standardized setter method for the property.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#set%21-instance_method' title='#set!'>#set!</a></span><span class='args'>(resource, value)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#set_original_value-instance_method' title='#set_original_value'>#set_original_value</a></span><span class='args'>(resource, val)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#typecast-instance_method' title='#typecast'>#typecast</a></span><span class='args'>(value)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+typecasts values into a primitive.
+</p>
+
+        
+          <p class='returns'>
+            Returns: 
+              <span class='return_types'>
+                 
+              </span>
+          </p>
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#unique-instance_method' title='#unique'>#unique</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#unique_index-instance_method' title='#unique_index'>#unique_index</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#value-instance_method' title='#value'>#value</a></span><span class='args'>(val)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table><div class="included">
+  
+  <div>
+    <h1>Public Instance Methods Included from <a href='Property/Assertions.html' title='DataMapper::Assertions'>DataMapper::Assertions</a></h1>
+    <p><span class='name'><a href='Assertions.html#assert_kind_of-instance_method' title='assert_kind_of'>assert_kind_of</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails class public">
+  <h1>Public Class Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>_load</h3>
+</div><div id="_load-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>_load</span><span class='args'>(marshalled)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+TODO: add docs
+</p>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+523
+524
+525
+526</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/property.rb', line 523</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='_load identifier id'>_load</span><span class='lparen token'>(</span><span class='marshalled identifier id'>marshalled</span><span class='rparen token'>)</span>
+  <span class='repository identifier id'>repository</span><span class='comma token'>,</span> <span class='model identifier id'>model</span><span class='comma token'>,</span> <span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='Marshal constant id'>Marshal</span><span class='dot token'>.</span><span class='load identifier id'>load</span><span class='lparen token'>(</span><span class='marshalled identifier id'>marshalled</span><span class='rparen token'>)</span>
+  <span class='model identifier id'>model</span><span class='dot token'>.</span><span class='properties identifier id'>properties</span><span class='lparen token'>(</span><span class='repository identifier id'>repository</span><span class='dot token'>.</span><span class='name identifier id'>name</span><span class='rparen token'>)</span><span class='lbrack token'>[</span><span class='name identifier id'>name</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div><div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>_dump</h3>
+</div><div id="_dump-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>_dump</span><span class='args'>(*)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+TODO: add docs
+</p>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+517
+518
+519</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/property.rb', line 517</span>
+
+<span class='def def kw'>def</span> <span class='_dump identifier id'>_dump</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='rparen token'>)</span>
+  <span class='Marshal constant id'>Marshal</span><span class='dot token'>.</span><span class='dump identifier id'>dump</span><span class='lparen token'>(</span><span class='lbrack token'>[</span> <span class='repository identifier id'>repository</span><span class='comma token'>,</span> <span class='model identifier id'>model</span><span class='comma token'>,</span> <span class='name identifier id'>name</span> <span class='rbrack token'>]</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>custom?</h3>
+</div><div id="custom%3F-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>custom?</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+380
+381
+382</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/property.rb', line 380</span>
+
+<span class='def def kw'>def</span> <span class='custom? fid id'>custom?</span>
+  <span class='@custom ivar id'>@custom</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>default_for</h3>
+</div><div id="default_for-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>default_for</span><span class='args'>(resource)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+503
+504
+505</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/property.rb', line 503</span>
+
+<span class='def def kw'>def</span> <span class='default_for identifier id'>default_for</span><span class='lparen token'>(</span><span class='resource identifier id'>resource</span><span class='rparen token'>)</span>
+  <span class='@default ivar id'>@default</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:call</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='@default ivar id'>@default</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='resource identifier id'>resource</span><span class='comma token'>,</span> <span class='self self kw'>self</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='@default ivar id'>@default</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>eql?</h3>
+</div><div id="eql%3F-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>eql?</span><span class='args'>(o)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+321
+322
+323
+324
+325
+326
+327</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/property.rb', line 321</span>
+
+<span class='def def kw'>def</span> <span class='eql? fid id'>eql?</span><span class='lparen token'>(</span><span class='o identifier id'>o</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='o identifier id'>o</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Property constant id'>Property</span><span class='rparen token'>)</span>
+    <span class='return return kw'>return</span> <span class='o identifier id'>o</span><span class='dot token'>.</span><span class='model identifier id'>model</span> <span class='eq op'>==</span> <span class='@model ivar id'>@model</span> <span class='andop op'>&amp;&amp;</span> <span class='o identifier id'>o</span><span class='dot token'>.</span><span class='name identifier id'>name</span> <span class='eq op'>==</span> <span class='@name ivar id'>@name</span>
+  <span class='else else kw'>else</span>
+    <span class='return return kw'>return</span> <span class='false false kw'>false</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>field</h3>
+</div><div id="field-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>field</span><span class='args'>(repository_name = nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Supplies the field in the data-store which the property corresponds to
+</p>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="return">
+  <h3>Returns:</h3>
+  <dl>
+  
+    <dt>
+      
+        <span class='type'></span>
+      
+      
+        <span class='name'></span>
+      
+    </dt>
+    <dd>
+      <span class='desc'><p>
+&lt;String&gt; name of field in data-store -
+</p>
+</span>
+    </dd>
+  
+  </dl>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+304
+305
+306</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/property.rb', line 304</span>
+
+<span class='def def kw'>def</span> <span class='field identifier id'>field</span><span class='lparen token'>(</span><span class='repository_name identifier id'>repository_name</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='@field ivar id'>@field</span> <span class='orop op'>||</span> <span class='@fields ivar id'>@fields</span><span class='lbrack token'>[</span><span class='repository_name identifier id'>repository_name</span><span class='rbrack token'>]</span> <span class='opasgn op'>||=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='model identifier id'>model</span><span class='dot token'>.</span><span class='field_naming_convention identifier id'>field_naming_convention</span><span class='lparen token'>(</span><span class='repository_name identifier id'>repository_name</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>get</h3>
+</div><div id="get-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>get</span><span class='args'>(resource)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Provides a standardized getter method for the property
+</p>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="raise">
+  <h3>Raises:</h3>
+  <dl>
+  
+    <dt>
+      
+        <span class='type'></span>
+      
+      
+    </dt>
+    <dd>
+      <span class='desc'><p>
+&lt;ArgumentError&gt; &quot;<tt>resource</tt> should be a
+DataMapper::Resource, but was .&#8230;&quot; -
+</p>
+</span>
+    </dd>
+  
+  </dl>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/property.rb', line 389</span>
+
+<span class='def def kw'>def</span> <span class='get identifier id'>get</span><span class='lparen token'>(</span><span class='resource identifier id'>resource</span><span class='rparen token'>)</span>
+  <span class='lazy_load identifier id'>lazy_load</span><span class='lparen token'>(</span><span class='resource identifier id'>resource</span><span class='rparen token'>)</span>
+
+  <span class='value identifier id'>value</span> <span class='assign token'>=</span> <span class='get! fid id'>get!</span><span class='lparen token'>(</span><span class='resource identifier id'>resource</span><span class='rparen token'>)</span>
+
+  <span class='set_original_value identifier id'>set_original_value</span><span class='lparen token'>(</span><span class='resource identifier id'>resource</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='rparen token'>)</span>
+
+  <span class='comment val'># [YK] Why did we previously care whether options[:default] is nil.</span>
+  <span class='comment val'># The default value of nil will be applied either way</span>
+  <span class='if if kw'>if</span> <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span> <span class='andop op'>&amp;&amp;</span> <span class='resource identifier id'>resource</span><span class='dot token'>.</span><span class='new_record? fid id'>new_record?</span> <span class='andop op'>&amp;&amp;</span> <span class='notop op'>!</span><span class='resource identifier id'>resource</span><span class='dot token'>.</span><span class='attribute_loaded? fid id'>attribute_loaded?</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='rparen token'>)</span>
+    <span class='value identifier id'>value</span> <span class='assign token'>=</span> <span class='default_for identifier id'>default_for</span><span class='lparen token'>(</span><span class='resource identifier id'>resource</span><span class='rparen token'>)</span>
+    <span class='set identifier id'>set</span><span class='lparen token'>(</span><span class='resource identifier id'>resource</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+
+  <span class='value identifier id'>value</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>get!</h3>
+</div><div id="get%21-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>get!</span><span class='args'>(resource)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+406
+407
+408</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/property.rb', line 406</span>
+
+<span class='def def kw'>def</span> <span class='get! fid id'>get!</span><span class='lparen token'>(</span><span class='resource identifier id'>resource</span><span class='rparen token'>)</span>
+  <span class='resource identifier id'>resource</span><span class='dot token'>.</span><span class='instance_variable_get identifier id'>instance_variable_get</span><span class='lparen token'>(</span><span class='instance_variable_name identifier id'>instance_variable_name</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>hash</h3>
+</div><div id="hash-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>hash</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+312
+313
+314
+315
+316
+317
+318
+319</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/property.rb', line 312</span>
+
+<span class='def def kw'>def</span> <span class='hash identifier id'>hash</span>
+  <span class='if if kw'>if</span> <span class='@custom ivar id'>@custom</span> <span class='andop op'>&amp;&amp;</span> <span class='notop op'>!</span><span class='@bound ivar id'>@bound</span>
+    <span class='@type ivar id'>@type</span><span class='dot token'>.</span><span class='bind identifier id'>bind</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='rparen token'>)</span>
+    <span class='@bound ivar id'>@bound</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+  <span class='end end kw'>end</span>
+
+  <span class='return return kw'>return</span> <span class='@model ivar id'>@model</span><span class='dot token'>.</span><span class='hash identifier id'>hash</span> <span class='plus op'>+</span> <span class='@name ivar id'>@name</span><span class='dot token'>.</span><span class='hash identifier id'>hash</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>index</h3>
+</div><div id="index-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>index</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+334
+335
+336</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/property.rb', line 334</span>
+
+<span class='def def kw'>def</span> <span class='index identifier id'>index</span>
+  <span class='@index ivar id'>@index</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>inspect</h3>
+</div><div id="inspect-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>inspect</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+511
+512
+513</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/property.rb', line 511</span>
+
+<span class='def def kw'>def</span> <span class='inspect identifier id'>inspect</span>
+  <span class='dstring node'>&quot;#&lt;Property:#{@model}:#{@name}&gt;&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>key?</h3>
+</div><div id="key%3F-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>key?</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns whether or not the property is a key or a part of a key
+</p>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="return">
+  <h3>Returns:</h3>
+  <dl>
+  
+    <dt>
+      
+        <span class='type'></span>
+      
+      
+        <span class='name'></span>
+      
+    </dt>
+    <dd>
+      <span class='desc'><p>
+&lt;TrueClass, FalseClass&gt; whether the property is a key or a part of a
+key -
+</p>
+</span>
+    </dd>
+  
+  </dl>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+358
+359
+360</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/property.rb', line 358</span>
+
+<span class='def def kw'>def</span> <span class='key? fid id'>key?</span>
+  <span class='@key ivar id'>@key</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>lazy?</h3>
+</div><div id="lazy%3F-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>lazy?</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns whether or not the property is to be lazy-loaded
+</p>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="return">
+  <h3>Returns:</h3>
+  <dl>
+  
+    <dt>
+      
+        <span class='type'></span>
+      
+      
+        <span class='name'></span>
+      
+    </dt>
+    <dd>
+      <span class='desc'><p>
+&lt;TrueClass, FalseClass&gt; whether or not the property is to be
+lazy-loaded -
+</p>
+</span>
+    </dd>
+  
+  </dl>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+348
+349
+350</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/property.rb', line 348</span>
+
+<span class='def def kw'>def</span> <span class='lazy? fid id'>lazy?</span>
+  <span class='@lazy ivar id'>@lazy</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>lazy_load</h3>
+</div><div id="lazy_load-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>lazy_load</span><span class='args'>(resource)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Loads lazy columns when get or set is called. -
+</p>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/property.rb', line 447</span>
+
+<span class='def def kw'>def</span> <span class='lazy_load identifier id'>lazy_load</span><span class='lparen token'>(</span><span class='resource identifier id'>resource</span><span class='rparen token'>)</span>
+  <span class='comment val'># It is faster to bail out at at a new_record? rather than to process</span>
+  <span class='comment val'># which properties would be loaded and then not load them.</span>
+  <span class='return return kw'>return</span> <span class='if if_mod kw'>if</span> <span class='resource identifier id'>resource</span><span class='dot token'>.</span><span class='new_record? fid id'>new_record?</span> <span class='orop op'>||</span> <span class='resource identifier id'>resource</span><span class='dot token'>.</span><span class='attribute_loaded? fid id'>attribute_loaded?</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='rparen token'>)</span>
+  <span class='comment val'># If we're trying to load a lazy property, load it. Otherwise, lazy-load</span>
+  <span class='comment val'># any properties that should be eager-loaded but were not included</span>
+  <span class='comment val'># in the original :fields list</span>
+  <span class='contexts identifier id'>contexts</span> <span class='assign token'>=</span> <span class='lazy? fid id'>lazy?</span> <span class='integer val'>? </span><span class='name identifier id'>name</span> <span class='colon op'>:</span> <span class='model identifier id'>model</span><span class='dot token'>.</span><span class='eager_properties identifier id'>eager_properties</span><span class='lparen token'>(</span><span class='resource identifier id'>resource</span><span class='dot token'>.</span><span class='repository identifier id'>repository</span><span class='dot token'>.</span><span class='name identifier id'>name</span><span class='rparen token'>)</span>
+  <span class='resource identifier id'>resource</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='symbol val'>:lazy_load</span><span class='comma token'>,</span> <span class='contexts identifier id'>contexts</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>length</h3>
+</div><div id="length-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>length</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+<p class="aliases">
+  <span class="aka">Also known as:</span>
+  
+    <tt id="size-instance_method">size</tt>
+  
+</p>
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+329
+330
+331</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/property.rb', line 329</span>
+
+<span class='def def kw'>def</span> <span class='length identifier id'>length</span>
+  <span class='@length ivar id'>@length</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Range constant id'>Range</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='@length ivar id'>@length</span><span class='dot token'>.</span><span class='max identifier id'>max</span> <span class='colon op'>:</span> <span class='@length ivar id'>@length</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>nullable?</h3>
+</div><div id="nullable%3F-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>nullable?</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns whether or not the property can accept &#8216;nil&#8217; as
+it&#8217;s value
+</p>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="return">
+  <h3>Returns:</h3>
+  <dl>
+  
+    <dt>
+      
+        <span class='type'></span>
+      
+      
+        <span class='name'></span>
+      
+    </dt>
+    <dd>
+      <span class='desc'><p>
+&lt;TrueClass, FalseClass&gt; whether or not the property can accept
+&#8216;nil&#8217; -
+</p>
+</span>
+    </dd>
+  
+  </dl>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+376
+377
+378</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/property.rb', line 376</span>
+
+<span class='def def kw'>def</span> <span class='nullable? fid id'>nullable?</span>
+  <span class='@nullable ivar id'>@nullable</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>serial?</h3>
+</div><div id="serial%3F-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>serial?</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns whether or not the property is &quot;serial&quot;
+(auto-incrementing)
+</p>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="return">
+  <h3>Returns:</h3>
+  <dl>
+  
+    <dt>
+      
+        <span class='type'></span>
+      
+      
+        <span class='name'></span>
+      
+    </dt>
+    <dd>
+      <span class='desc'><p>
+&lt;TrueClass, FalseClass&gt; whether or not the property is
+&quot;serial&quot; -
+</p>
+</span>
+    </dd>
+  
+  </dl>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+367
+368
+369</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/property.rb', line 367</span>
+
+<span class='def def kw'>def</span> <span class='serial? fid id'>serial?</span>
+  <span class='@serial ivar id'>@serial</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>set</h3>
+</div><div id="set-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>set</span><span class='args'>(resource, value)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Provides a standardized setter method for the property
+</p>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="raise">
+  <h3>Raises:</h3>
+  <dl>
+  
+    <dt>
+      
+        <span class='type'></span>
+      
+      
+    </dt>
+    <dd>
+      <span class='desc'><p>
+&lt;ArgumentError&gt; &quot;<tt>resource</tt> should be a
+DataMapper::Resource, but was .&#8230;&quot; -
+</p>
+</span>
+    </dd>
+  
+  </dl>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/property.rb', line 423</span>
+
+<span class='def def kw'>def</span> <span class='set identifier id'>set</span><span class='lparen token'>(</span><span class='resource identifier id'>resource</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='rparen token'>)</span>
+  <span class='comment val'># [YK] We previously checked for new_record? here, but lazy loading</span>
+  <span class='comment val'># is blocked anyway if we're in a new record by by</span>
+  <span class='comment val'># Resource#reload_attributes. This may eventually be useful for</span>
+  <span class='comment val'># optimizing, but let's (a) benchmark it first, and (b) do</span>
+  <span class='comment val'># whatever refactoring is necessary, which will benefit from the</span>
+  <span class='comment val'># centralize checking</span>
+  <span class='lazy_load identifier id'>lazy_load</span><span class='lparen token'>(</span><span class='resource identifier id'>resource</span><span class='rparen token'>)</span>
+
+  <span class='new_value identifier id'>new_value</span> <span class='assign token'>=</span> <span class='typecast identifier id'>typecast</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+  <span class='old_value identifier id'>old_value</span> <span class='assign token'>=</span> <span class='get! fid id'>get!</span><span class='lparen token'>(</span><span class='resource identifier id'>resource</span><span class='rparen token'>)</span>
+
+  <span class='set_original_value identifier id'>set_original_value</span><span class='lparen token'>(</span><span class='resource identifier id'>resource</span><span class='comma token'>,</span> <span class='old_value identifier id'>old_value</span><span class='rparen token'>)</span>
+
+  <span class='set! fid id'>set!</span><span class='lparen token'>(</span><span class='resource identifier id'>resource</span><span class='comma token'>,</span> <span class='new_value identifier id'>new_value</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>set!</h3>
+</div><div id="set%21-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>set!</span><span class='args'>(resource, value)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+440
+441
+442</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/property.rb', line 440</span>
+
+<span class='def def kw'>def</span> <span class='set! fid id'>set!</span><span class='lparen token'>(</span><span class='resource identifier id'>resource</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='rparen token'>)</span>
+  <span class='resource identifier id'>resource</span><span class='dot token'>.</span><span class='instance_variable_set identifier id'>instance_variable_set</span><span class='lparen token'>(</span><span class='instance_variable_name identifier id'>instance_variable_name</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>set_original_value</h3>
+</div><div id="set_original_value-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>set_original_value</span><span class='args'>(resource, val)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+410
+411
+412
+413
+414
+415
+416</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/property.rb', line 410</span>
+
+<span class='def def kw'>def</span> <span class='set_original_value identifier id'>set_original_value</span><span class='lparen token'>(</span><span class='resource identifier id'>resource</span><span class='comma token'>,</span> <span class='val identifier id'>val</span><span class='rparen token'>)</span>
+  <span class='unless unless kw'>unless</span> <span class='resource identifier id'>resource</span><span class='dot token'>.</span><span class='original_values identifier id'>original_values</span><span class='dot token'>.</span><span class='key? fid id'>key?</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='rparen token'>)</span>
+    <span class='val identifier id'>val</span> <span class='assign token'>=</span> <span class='val identifier id'>val</span><span class='dot token'>.</span><span class='try_dup identifier id'>try_dup</span>
+    <span class='val identifier id'>val</span> <span class='assign token'>=</span> <span class='val identifier id'>val</span><span class='dot token'>.</span><span class='hash identifier id'>hash</span> <span class='if if_mod kw'>if</span> <span class='track identifier id'>track</span> <span class='eq op'>==</span> <span class='symbol val'>:hash</span>
+    <span class='resource identifier id'>resource</span><span class='dot token'>.</span><span class='original_values identifier id'>original_values</span><span class='lbrack token'>[</span><span class='name identifier id'>name</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='val identifier id'>val</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>typecast</h3>
+</div><div id="typecast-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>typecast</span><span class='args'>(value)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+typecasts values into a primitive
+</p>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="return">
+  <h3>Returns:</h3>
+  <dl>
+  
+    <dt>
+      
+        <span class='type'></span>
+      
+      
+        <span class='name'></span>
+      
+    </dt>
+    <dd>
+      <span class='desc'><p>
+&lt;TrueClass, String, Float, Integer, BigDecimal, DateTime, Date, Time
+Class&gt; the primitive data-type, defaults to TrueClass -
+</p>
+</span>
+    </dd>
+  
+  </dl>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477
+478
+479
+480
+481
+482
+483
+484
+485
+486
+487
+488
+489
+490
+491
+492
+493
+494
+495
+496
+497
+498
+499
+500
+501</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/property.rb', line 464</span>
+
+<span class='def def kw'>def</span> <span class='typecast identifier id'>typecast</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+  <span class='return return kw'>return</span> <span class='type identifier id'>type</span><span class='dot token'>.</span><span class='typecast identifier id'>typecast</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='comma token'>,</span> <span class='self self kw'>self</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='type identifier id'>type</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:typecast</span><span class='rparen token'>)</span>
+  <span class='return return kw'>return</span> <span class='value identifier id'>value</span> <span class='if if_mod kw'>if</span> <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='kind_of? fid id'>kind_of?</span><span class='lparen token'>(</span><span class='primitive identifier id'>primitive</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+  <span class='begin begin kw'>begin</span>
+    <span class='if if kw'>if</span>    <span class='primitive identifier id'>primitive</span> <span class='eq op'>==</span> <span class='TrueClass constant id'>TrueClass</span>  <span class='then then kw'>then</span> <span class='dstring node'>%w[ true 1 t ]</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='downcase identifier id'>downcase</span><span class='rparen token'>)</span>
+    <span class='elsif elsif kw'>elsif</span> <span class='primitive identifier id'>primitive</span> <span class='eq op'>==</span> <span class='String constant id'>String</span>     <span class='then then kw'>then</span> <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+    <span class='elsif elsif kw'>elsif</span> <span class='primitive identifier id'>primitive</span> <span class='eq op'>==</span> <span class='Float constant id'>Float</span>      <span class='then then kw'>then</span> <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='to_f identifier id'>to_f</span>
+    <span class='elsif elsif kw'>elsif</span> <span class='primitive identifier id'>primitive</span> <span class='eq op'>==</span> <span class='Integer constant id'>Integer</span>
+      <span class='comment val'># The simplest possible implementation, i.e. value.to_i, is not</span>
+      <span class='comment val'># desirable because &quot;junk&quot;.to_i gives &quot;0&quot;. We want nil instead,</span>
+      <span class='comment val'># because this makes it clear that the typecast failed.</span>
+      <span class='comment val'>#</span>
+      <span class='comment val'># After benchmarking, we preferred the current implementation over</span>
+      <span class='comment val'># these two alternatives:</span>
+      <span class='comment val'># * Integer(value) rescue nil</span>
+      <span class='comment val'># * Integer(value_to_s =~ /(\d+)/ ? $1 : value_to_s) rescue nil</span>
+      <span class='comment val'>#</span>
+      <span class='comment val'># [YK] The previous implementation used a rescue. Why use a rescue</span>
+      <span class='comment val'># when the list of cases where a valid string other than &quot;0&quot; could</span>
+      <span class='comment val'># produce 0 is known?</span>
+      <span class='value_to_i identifier id'>value_to_i</span> <span class='assign token'>=</span> <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span>
+      <span class='if if kw'>if</span> <span class='value_to_i identifier id'>value_to_i</span> <span class='eq op'>==</span> <span class='integer val'>0</span>
+        <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='match op'>=~</span> <span class='regexp val'>/^(0x|0b)?0+/</span> <span class='question op'>?</span> <span class='integer val'>0</span> <span class='colon op'>:</span> <span class='nil nil kw'>nil</span>
+      <span class='else else kw'>else</span>
+        <span class='value_to_i identifier id'>value_to_i</span>
+      <span class='end end kw'>end</span>
+    <span class='elsif elsif kw'>elsif</span> <span class='primitive identifier id'>primitive</span> <span class='eq op'>==</span> <span class='BigDecimal constant id'>BigDecimal</span> <span class='then then kw'>then</span> <span class='BigDecimal constant id'>BigDecimal</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rparen token'>)</span>
+    <span class='elsif elsif kw'>elsif</span> <span class='primitive identifier id'>primitive</span> <span class='eq op'>==</span> <span class='DateTime constant id'>DateTime</span>   <span class='then then kw'>then</span> <span class='typecast_to_datetime identifier id'>typecast_to_datetime</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+    <span class='elsif elsif kw'>elsif</span> <span class='primitive identifier id'>primitive</span> <span class='eq op'>==</span> <span class='Date constant id'>Date</span>       <span class='then then kw'>then</span> <span class='typecast_to_date identifier id'>typecast_to_date</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+    <span class='elsif elsif kw'>elsif</span> <span class='primitive identifier id'>primitive</span> <span class='eq op'>==</span> <span class='Time constant id'>Time</span>       <span class='then then kw'>then</span> <span class='typecast_to_time identifier id'>typecast_to_time</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+    <span class='elsif elsif kw'>elsif</span> <span class='primitive identifier id'>primitive</span> <span class='eq op'>==</span> <span class='Class constant id'>Class</span>      <span class='then then kw'>then</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='find_const identifier id'>find_const</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+    <span class='else else kw'>else</span>
+      <span class='value identifier id'>value</span>
+    <span class='end end kw'>end</span>
+  <span class='rescue rescue kw'>rescue</span>
+    <span class='value identifier id'>value</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>unique</h3>
+</div><div id="unique-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>unique</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+308
+309
+310</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/property.rb', line 308</span>
+
+<span class='def def kw'>def</span> <span class='unique identifier id'>unique</span>
+  <span class='@unique ivar id'>@unique</span> <span class='opasgn op'>||=</span> <span class='@options ivar id'>@options</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='symbol val'>:unique</span><span class='comma token'>,</span> <span class='@serial ivar id'>@serial</span> <span class='orop op'>||</span> <span class='@key ivar id'>@key</span> <span class='orop op'>||</span> <span class='false false kw'>false</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>unique_index</h3>
+</div><div id="unique_index-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>unique_index</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+338
+339
+340</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/property.rb', line 338</span>
+
+<span class='def def kw'>def</span> <span class='unique_index identifier id'>unique_index</span>
+  <span class='@unique_index ivar id'>@unique_index</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>value</h3>
+</div><div id="value-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>value</span><span class='args'>(val)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+507
+508
+509</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/property.rb', line 507</span>
+
+<span class='def def kw'>def</span> <span class='value identifier id'>value</span><span class='lparen token'>(</span><span class='val identifier id'>val</span><span class='rparen token'>)</span>
+  <span class='custom? fid id'>custom?</span> <span class='integer val'>? </span><span class='self self kw'>self</span><span class='dot token'>.</span><span class='type identifier id'>type</span><span class='dot token'>.</span><span class='dump identifier id'>dump</span><span class='lparen token'>(</span><span class='val identifier id'>val</span><span class='comma token'>,</span> <span class='self self kw'>self</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='val identifier id'>val</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

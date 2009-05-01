@@ -1,0 +1,256 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: StateMachine::ConditionProxy</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class StateMachine_ConditionProxy">
+  <h1 class="title">Class: StateMachine::ConditionProxy</h1>
+  <div class="section inheritance">
+  <ul>
+  <li>Module</li><ul><li>StateMachine::ConditionProxy</li>
+  </ul></ul>
+</div><div class="section mixins">
+  <h1>Included Modules</h1>
+  <p><a href='ConditionProxy/EvalHelpers.html' title='StateMachine::EvalHelpers'>StateMachine::EvalHelpers</a></p>
+</div><div class="section docstring">
+  <p>
+Represents a type of module in which class-level methods are proxied to
+another class, injecting a custom :if condition along with method.
+</p>
+<p>
+This is used for being able to automatically include conditionals which
+check the current state in class-level methods that have configuration
+options.
+</p>
+<h2>Examples</h2>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='Vehicle constant id'>Vehicle</span>
+    <span class='class class kw'>class</span> <span class='lshft op'>&lt;&lt;</span> <span class='self self kw'>self</span>
+      <span class='attr_accessor identifier id'>attr_accessor</span> <span class='symbol val'>:validations</span>
+
+      <span class='def def kw'>def</span> <span class='validate identifier id'>validate</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+        <span class='validations identifier id'>validations</span> <span class='lshft op'>&lt;&lt;</span> <span class='options identifier id'>options</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+
+    <span class='self self kw'>self</span><span class='dot token'>.</span><span class='validations identifier id'>validations</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+    <span class='attr_accessor identifier id'>attr_accessor</span> <span class='symbol val'>:state</span><span class='comma token'>,</span> <span class='symbol val'>:simulate</span>
+
+    <span class='def def kw'>def</span> <span class='moving? fid id'>moving?</span>
+      <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='validations identifier id'>validations</span><span class='dot token'>.</span><span class='all? fid id'>all?</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='validation identifier id'>validation</span><span class='bitor op'>|</span> <span class='validation identifier id'>validation</span><span class='lbrack token'>[</span><span class='symbol val'>:if</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='rparen token'>)</span><span class='rbrace token'>}</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+In the above class, a simple set of validation behaviors have been defined.
+Each validation consists of a configuration like so:
+</p>
+<pre class="code">
+  <span class='Vehicle constant id'>Vehicle</span><span class='dot token'>.</span><span class='validate identifier id'>validate</span> <span class='symbol val'>:unless</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:simulate</span>
+  <span class='Vehicle constant id'>Vehicle</span><span class='dot token'>.</span><span class='validate identifier id'>validate</span> <span class='symbol val'>:if</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lambda identifier id'>lambda</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='vehicle identifier id'>vehicle</span><span class='bitor op'>|</span> <span class='dot3 op'>...</span><span class='rbrace token'>}</span>
+</pre>
+<p>
+In order to scope conditions, a condition proxy can be created to the
+Vehicle class. For example,
+</p>
+<pre class="code">
+  <span class='proxy identifier id'>proxy</span> <span class='assign token'>=</span> <span class='StateMachine constant id'>StateMachine</span><span class='colon2 op'>::</span><span class='ConditionProxy constant id'>ConditionProxy</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='Vehicle constant id'>Vehicle</span><span class='comma token'>,</span> <span class='lambda identifier id'>lambda</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='vehicle identifier id'>vehicle</span><span class='bitor op'>|</span> <span class='vehicle identifier id'>vehicle</span><span class='dot token'>.</span><span class='state identifier id'>state</span> <span class='eq op'>==</span> <span class='string val'>'first_gear'</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='proxy identifier id'>proxy</span><span class='dot token'>.</span><span class='validate identifier id'>validate</span><span class='lparen token'>(</span><span class='symbol val'>:unless</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:simulate</span><span class='rparen token'>)</span>
+
+  <span class='vehicle identifier id'>vehicle</span> <span class='assign token'>=</span> <span class='Vehicle constant id'>Vehicle</span><span class='dot token'>.</span><span class='new identifier id'>new</span>     <span class='comment val'># =&gt; #&lt;Vehicle:0xb7ce491c @simulate=nil, @state=nil&gt;</span>
+  <span class='vehicle identifier id'>vehicle</span><span class='dot token'>.</span><span class='moving? fid id'>moving?</span>           <span class='comment val'># =&gt; false</span>
+
+  <span class='vehicle identifier id'>vehicle</span><span class='dot token'>.</span><span class='state identifier id'>state</span> <span class='assign token'>=</span> <span class='string val'>'first_gear'</span>
+  <span class='vehicle identifier id'>vehicle</span><span class='dot token'>.</span><span class='moving? fid id'>moving?</span>           <span class='comment val'># =&gt; true</span>
+
+  <span class='vehicle identifier id'>vehicle</span><span class='dot token'>.</span><span class='simulate identifier id'>simulate</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+  <span class='vehicle identifier id'>vehicle</span><span class='dot token'>.</span><span class='moving? fid id'>moving?</span>           <span class='comment val'># =&gt; false</span>
+</pre>
+
+</div><div class="section constants">
+  
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(klass, condition)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Creates a new proxy to the given class, merging in the given condition
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+54
+55
+56
+57</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/state_machine/condition_proxy.rb', line 54</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='klass identifier id'>klass</span><span class='comma token'>,</span> <span class='condition identifier id'>condition</span><span class='rparen token'>)</span>
+  <span class='@klass ivar id'>@klass</span> <span class='assign token'>=</span> <span class='klass identifier id'>klass</span>
+  <span class='@condition ivar id'>@condition</span> <span class='assign token'>=</span> <span class='condition identifier id'>condition</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div><div class="section methodmissing">
+  <h1>Dynamic Method Handling</h1>
+
+  <p class="note">
+    This class handles dynamic methods through the <tt>method_missing</tt> method
+    
+  </p>
+
+  <div id="method_missing-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>method_missing</span><span class='args'>(*args, &amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Hooks in condition-merging to methods that don&#8217;t exist in this module
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/state_machine/condition_proxy.rb', line 60</span>
+
+<span class='def def kw'>def</span> <span class='method_missing identifier id'>method_missing</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='comment val'># Get the configuration</span>
+  <span class='if if kw'>if</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='last identifier id'>last</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Hash constant id'>Hash</span><span class='rparen token'>)</span>
+    <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='last identifier id'>last</span>
+  <span class='else else kw'>else</span>
+    <span class='args identifier id'>args</span> <span class='lshft op'>&lt;&lt;</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='end end kw'>end</span>
+  
+  <span class='comment val'># Get any existing condition that may need to be merged</span>
+  <span class='if_condition identifier id'>if_condition</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:if</span><span class='rparen token'>)</span>
+  <span class='unless_condition identifier id'>unless_condition</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:unless</span><span class='rparen token'>)</span>
+  
+  <span class='comment val'># Provide scope access to configuration in case the block is evaluated</span>
+  <span class='comment val'># within the object instance</span>
+  <span class='proxy identifier id'>proxy</span> <span class='assign token'>=</span> <span class='self self kw'>self</span>
+  <span class='proxy_condition identifier id'>proxy_condition</span> <span class='assign token'>=</span> <span class='@condition ivar id'>@condition</span>
+  
+  <span class='comment val'># Replace the configuration condition with the one configured for this</span>
+  <span class='comment val'># proxy, merging together any existing conditions</span>
+  <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:if</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='lambda identifier id'>lambda</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='bitor op'>|</span>
+    <span class='comment val'># Block may be executed within the context of the actual object, so</span>
+    <span class='comment val'># it'll either be the first argument or the executing context</span>
+    <span class='object identifier id'>object</span> <span class='assign token'>=</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='first identifier id'>first</span> <span class='orop op'>||</span> <span class='self self kw'>self</span>
+    
+    <span class='proxy identifier id'>proxy</span><span class='dot token'>.</span><span class='evaluate_method identifier id'>evaluate_method</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='comma token'>,</span> <span class='proxy_condition identifier id'>proxy_condition</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span>
+    <span class='Array constant id'>Array</span><span class='lparen token'>(</span><span class='if_condition identifier id'>if_condition</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='all? fid id'>all?</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='condition identifier id'>condition</span><span class='bitor op'>|</span> <span class='proxy identifier id'>proxy</span><span class='dot token'>.</span><span class='evaluate_method identifier id'>evaluate_method</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='comma token'>,</span> <span class='condition identifier id'>condition</span><span class='rparen token'>)</span><span class='rbrace token'>}</span> <span class='andop op'>&amp;&amp;</span>
+    <span class='notop op'>!</span><span class='Array constant id'>Array</span><span class='lparen token'>(</span><span class='unless_condition identifier id'>unless_condition</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='any? fid id'>any?</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='condition identifier id'>condition</span><span class='bitor op'>|</span> <span class='proxy identifier id'>proxy</span><span class='dot token'>.</span><span class='evaluate_method identifier id'>evaluate_method</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='comma token'>,</span> <span class='condition identifier id'>condition</span><span class='rparen token'>)</span><span class='rbrace token'>}</span>
+  <span class='end end kw'>end</span>
+  
+  <span class='comment val'># Evaluate the method on the original class with the condition proxied</span>
+  <span class='comment val'># through</span>
+  <span class='@klass ivar id'>@klass</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <div class="included">
+  
+  <div>
+    <h1>Public Instance Methods Included from <a href='ConditionProxy/EvalHelpers.html' title='StateMachine::EvalHelpers'>StateMachine::EvalHelpers</a></h1>
+    <p><span class='name'><a href='EvalHelpers.html#evaluate_method-instance_method' title='evaluate_method'>evaluate_method</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

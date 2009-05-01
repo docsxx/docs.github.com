@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <title>README</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section docstring readme">
+        <h1>Rack::Test</h1>
+<ul>
+<li>http://gitrdoc.com/brynary/rack-test
+
+</li>
+<li>http://github.com/brynary/rack-test
+
+</li>
+</ul>
+<h2>Description</h2>
+<p>
+Rack::Test is a small, simple testing API for Rack apps. It can be used on
+its own or as a reusable starting point for Web frameworks and testing
+libraries to build on. Most of its initial functionality is an extraction
+of Merb 1.0&#8217;s request helpers feature.
+</p>
+<h2>Features</h2>
+<ul>
+<li>Maintains a cookie jar across requests
+
+</li>
+<li>Easily follow redirects when desired
+
+</li>
+<li>Set request headers to be used by all subsequent requests
+
+</li>
+<li>Small footprint. Approximately 200 LOC
+
+</li>
+</ul>
+<h2>Example</h2>
+<pre class="code">
+  <span class='require identifier id'>require</span> <span class='string val'>&quot;rack/test&quot;</span>
+
+  <span class='class class kw'>class</span> <span class='HomepageTest constant id'>HomepageTest</span> <span class='lt op'>&lt;</span> <span class='Test constant id'>Test</span><span class='colon2 op'>::</span><span class='Unit constant id'>Unit</span><span class='colon2 op'>::</span><span class='TestCase constant id'>TestCase</span>
+    <span class='include identifier id'>include</span> <span class='Rack constant id'>Rack</span><span class='colon2 op'>::</span><span class='Test constant id'>Test</span><span class='colon2 op'>::</span><span class='Methods constant id'>Methods</span>
+
+    <span class='def def kw'>def</span> <span class='app identifier id'>app</span>
+      <span class='MyApp constant id'>MyApp</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+    <span class='end end kw'>end</span>
+
+    <span class='def def kw'>def</span> <span class='test_redirect_logged_in_users_to_dashboard identifier id'>test_redirect_logged_in_users_to_dashboard</span>
+      <span class='authorize identifier id'>authorize</span> <span class='string val'>&quot;bryan&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;secret&quot;</span>
+      <span class='get identifier id'>get</span> <span class='string val'>&quot;/&quot;</span>
+      <span class='follow_redirect! fid id'>follow_redirect!</span>
+
+      <span class='assert_equal identifier id'>assert_equal</span> <span class='string val'>&quot;http://example.org/redirected&quot;</span><span class='comma token'>,</span> <span class='last_request identifier id'>last_request</span><span class='dot token'>.</span><span class='url identifier id'>url</span>
+      <span class='assert identifier id'>assert</span> <span class='last_response identifier id'>last_response</span><span class='dot token'>.</span><span class='ok? fid id'>ok?</span>
+    <span class='end end kw'>end</span>
+
+  <span class='end end kw'>end</span>
+</pre>
+<h2>Install</h2>
+<p>
+To install the latest release as a gem:
+</p>
+<pre class="code">
+  <span class='sudo identifier id'>sudo</span> <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='rack identifier id'>rack</span><span class='minus op'>-</span><span class='test identifier id'>test</span>
+</pre>
+<h2>Authors</h2>
+<ul>
+<li>Maintained by {Bryan Helmkamp}[mailto:bryan@brynary.com]
+
+</li>
+<li>Contributions from Simon Rozet and Pat Nakajima
+
+</li>
+<li>Much of the original code was extracted from Merb 1.0&#8217;s request
+helper
+
+</li>
+</ul>
+<h2>License</h2>
+<p>
+Copyright &#169; 2008-2009 Bryan Helmkamp, Engine Yard Inc. See
+MIT-LICENSE.txt in this directory.
+</p>
+
+      </div>
+    </div>
+  </body>
+</html>

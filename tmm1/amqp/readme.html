@@ -1,0 +1,171 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <title>README</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section docstring readme">
+        <p>
+Simple AMQP driver for Ruby/EventMachine
+</p>
+<pre class="code">
+  <span class='lparen token'>(</span><span class='c identifier id'>c</span><span class='rparen token'>)</span> <span class='integer val'>2008</span> <span class='Aman constant id'>Aman</span> <span class='Gupta constant id'>Gupta</span> <span class='lparen token'>(</span><span class='tmm1 identifier id'>tmm1</span><span class='rparen token'>)</span>
+
+  <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/github.com/</span><span class='tmm1 identifier id'>tmm1</span><span class='div op'>/</span><span class='amqp identifier id'>amqp</span>
+  <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/rubyforge.org/</span><span class='projects identifier id'>projects</span><span class='div op'>/</span><span class='amqp identifier id'>amqp</span>
+  <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/hopper.squarespace.com/</span><span class='blog identifier id'>blog</span><span class='div op'>/</span><span class='integer val'>2008</span><span class='div op'>/</span><span class='integer val'>7</span><span class='div op'>/</span><span class='integer val'>22</span><span class='div op'>/</span><span class='simple identifier id'>simple</span><span class='minus op'>-</span><span class='amqp identifier id'>amqp</span><span class='minus op'>-</span><span class='library identifier id'>library</span><span class='minus op'>-</span><span class='for for kw'>for</span><span class='minus op'>-</span><span class='ruby identifier id'>ruby</span><span class='dot token'>.</span><span class='html identifier id'>html</span>
+  <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/groups.google.com/</span><span class='group identifier id'>group</span><span class='div op'>/</span><span class='ruby identifier id'>ruby</span><span class='minus op'>-</span><span class='amqp identifier id'>amqp</span>
+  <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/lists.rabbitmq.com/</span><span class='pipermail identifier id'>pipermail</span><span class='div op'>/</span><span class='rabbitmq identifier id'>rabbitmq</span><span class='minus op'>-</span><span class='discuss identifier id'>discuss</span><span class='div op'>/</span><span class='integer val'>2008</span><span class='minus op'>-</span><span class='July constant id'>July</span><span class='div op'>/</span><span class='integer val'>001417</span><span class='dot token'>.</span><span class='html identifier id'>html</span>
+</pre>
+<p>
+This library works with Ruby 1.8, Ruby 1.9 and JRuby.
+</p>
+<p>
+This library was tested primarily with RabbitMQ, although it should be
+compatible with any server implementing the AMQP 0-8 spec.
+</p>
+<p>
+To use with RabbitMQ, first run the server:
+</p>
+<pre class="code">
+  <span class='hg identifier id'>hg</span> <span class='clone identifier id'>clone</span> <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/hg.rabbitmq.com/</span><span class='rabbitmq identifier id'>rabbitmq</span><span class='minus op'>-</span><span class='codegen identifier id'>codegen</span>
+  <span class='hg identifier id'>hg</span> <span class='clone identifier id'>clone</span> <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/hg.rabbitmq.com/</span><span class='rabbitmq identifier id'>rabbitmq</span><span class='minus op'>-</span><span class='server identifier id'>server</span>
+  <span class='cd identifier id'>cd</span> <span class='rabbitmq identifier id'>rabbitmq</span><span class='minus op'>-</span><span class='server identifier id'>server</span>
+  <span class='make identifier id'>make</span> <span class='run identifier id'>run</span>
+</pre>
+<p>
+To get started, refer to the various bundled examples:
+</p>
+<pre class="code">
+  <span class='ruby identifier id'>ruby</span> <span class='examples identifier id'>examples</span><span class='div op'>/</span><span class='mq identifier id'>mq</span><span class='div op'>/</span><span class='pingpong identifier id'>pingpong</span><span class='dot token'>.</span><span class='rb identifier id'>rb</span>   <span class='comment val'># 1-1 communication using amq.direct</span>
+  <span class='ruby identifier id'>ruby</span> <span class='examples identifier id'>examples</span><span class='div op'>/</span><span class='mq identifier id'>mq</span><span class='div op'>/</span><span class='clock identifier id'>clock</span><span class='dot token'>.</span><span class='rb identifier id'>rb</span>      <span class='comment val'># 1-N communication using amq.fanout</span>
+  <span class='ruby identifier id'>ruby</span> <span class='examples identifier id'>examples</span><span class='div op'>/</span><span class='mq identifier id'>mq</span><span class='div op'>/</span><span class='stocks identifier id'>stocks</span><span class='dot token'>.</span><span class='rb identifier id'>rb</span>     <span class='comment val'># 1-subscriber communication using amq.topic</span>
+
+  <span class='ruby identifier id'>ruby</span> <span class='examples identifier id'>examples</span><span class='div op'>/</span><span class='mq identifier id'>mq</span><span class='div op'>/</span><span class='multiclock identifier id'>multiclock</span><span class='dot token'>.</span><span class='rb identifier id'>rb</span> <span class='comment val'># header based routing (new rabbitmq feature)</span>
+  <span class='ruby identifier id'>ruby</span> <span class='examples identifier id'>examples</span><span class='div op'>/</span><span class='mq identifier id'>mq</span><span class='div op'>/</span><span class='ack identifier id'>ack</span><span class='dot token'>.</span><span class='rb identifier id'>rb</span>        <span class='comment val'># using ack</span>
+  <span class='ruby identifier id'>ruby</span> <span class='examples identifier id'>examples</span><span class='div op'>/</span><span class='mq identifier id'>mq</span><span class='div op'>/</span><span class='pop identifier id'>pop</span><span class='dot token'>.</span><span class='rb identifier id'>rb</span>        <span class='comment val'># pop off messages one at a time</span>
+
+  <span class='ruby identifier id'>ruby</span> <span class='examples identifier id'>examples</span><span class='div op'>/</span><span class='mq identifier id'>mq</span><span class='div op'>/</span><span class='hashtable identifier id'>hashtable</span><span class='dot token'>.</span><span class='rb identifier id'>rb</span>  <span class='comment val'># simple async rpc layer</span>
+  <span class='ruby identifier id'>ruby</span> <span class='examples identifier id'>examples</span><span class='div op'>/</span><span class='mq identifier id'>mq</span><span class='div op'>/</span><span class='primes identifier id'>primes</span><span class='dot token'>.</span><span class='rb identifier id'>rb</span> <span class='integer val'>4</span>   <span class='comment val'># parallelized prime number generation</span>
+  <span class='ruby identifier id'>ruby</span> <span class='examples identifier id'>examples</span><span class='div op'>/</span><span class='mq identifier id'>mq</span><span class='div op'>/</span><span class='logger identifier id'>logger</span><span class='dot token'>.</span><span class='rb identifier id'>rb</span>     <span class='comment val'># simple logging api</span>
+</pre>
+<p>
+For more details into the lower level AMQP client API, run the simple
+client example:
+</p>
+<pre class="code">
+  <span class='ruby identifier id'>ruby</span> <span class='examples identifier id'>examples</span><span class='div op'>/</span><span class='amqp identifier id'>amqp</span><span class='div op'>/</span><span class='simple identifier id'>simple</span><span class='dot token'>.</span><span class='rb identifier id'>rb</span>   <span class='comment val'># low-level AMQP api</span>
+  <span class='ruby identifier id'>ruby</span> <span class='examples identifier id'>examples</span><span class='div op'>/</span><span class='mq identifier id'>mq</span><span class='div op'>/</span><span class='internal identifier id'>internal</span><span class='dot token'>.</span><span class='rb identifier id'>rb</span>   <span class='comment val'># low-level Queue/Exchange api</span>
+</pre>
+<p>
+Or refer to protocol/doc.txt, which enumerates packets sent between a
+server and client during a typical session, in both binary and decoded
+formats.
+</p>
+<p>
+To run the test suite:
+</p>
+<pre class="code">
+  <span class='rake identifier id'>rake</span> <span class='spec identifier id'>spec</span>
+</pre>
+<p>
+The lib/amqp/spec.rb file is generated automatically based on the AMQP
+specification. To generate it:
+</p>
+<pre class="code">
+  <span class='rake identifier id'>rake</span> <span class='codegen identifier id'>codegen</span>
+</pre>
+<p>
+This project was inspired by py-amqplib, rabbitmq, qpid and rubbyt. Special
+thanks to Dmitriy Samovskiy, Ben Hood and Tony Garnock-Jones.
+</p>
+<p>
+AMQP resources:
+</p>
+<pre class="code">
+  <span class='Servers constant id'>Servers</span><span class='colon op'>:</span>
+    <span class='RabbitMQ constant id'>RabbitMQ</span> <span class='lparen token'>(</span><span class='Rabbit constant id'>Rabbit</span> <span class='Technologies constant id'>Technologies</span><span class='comma token'>,</span> <span class='Erlang constant id'>Erlang</span><span class='div op'>/</span><span class='OTP constant id'>OTP</span><span class='comma token'>,</span> <span class='MPL constant id'>MPL</span><span class='rparen token'>)</span> <span class='minus op'>-</span> <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/rabbitmq.com
+    ZeroMQ   (iMatix/</span><span class='FastMQ constant id'>FastMQ</span><span class='div op'>/</span><span class='Intel constant id'>Intel</span><span class='comma token'>,</span> <span class='C constant id'>C</span><span class='plus op'>+</span><span class='plus op'>+</span><span class='comma token'>,</span> <span class='GPL3 constant id'>GPL3</span><span class='rparen token'>)</span>       <span class='minus op'>-</span> <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/www.zeromq.org
+    OpenAMQ  (iMatix, C, GPL2)                      - http:/</span><span class='div op'>/</span><span class='openamq identifier id'>openamq</span><span class='dot token'>.</span><span class='org identifier id'>org</span>
+    <span class='ActiveMQ constant id'>ActiveMQ</span> <span class='lparen token'>(</span><span class='Apache constant id'>Apache</span> <span class='Foundation constant id'>Foundation</span><span class='comma token'>,</span> <span class='Java constant id'>Java</span><span class='comma token'>,</span> <span class='apache2 identifier id'>apache2</span><span class='rparen token'>)</span>     <span class='minus op'>-</span> <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/activemq.apache.org
+
+  Steve Vinoski explains AMQP in his column, Towards Integration
+    http:/</span><span class='div op'>/</span><span class='steve identifier id'>steve</span><span class='dot token'>.</span><span class='vinoski identifier id'>vinoski</span><span class='dot token'>.</span><span class='net identifier id'>net</span><span class='div op'>/</span><span class='pdf identifier id'>pdf</span><span class='div op'>/</span><span class='IEEE constant id'>IEEE</span><span class='minus op'>-</span><span class='Advanced_Message_Queuing_Protocol constant id'>Advanced_Message_Queuing_Protocol</span><span class='dot token'>.</span><span class='pdf identifier id'>pdf</span>
+
+  <span class='John constant id'>John</span> <span class='O constant id'>O</span><span class='string val'>'Hara on the history of AMQP
+    http://www.acmqueue.org/modules.php?name=Content&amp;pa=showpage&amp;pid=485
+
+  Dmitriy'</span><span class='s identifier id'>s</span> <span class='presentation identifier id'>presentation</span> <span class='on identifier id'>on</span> <span class='RabbitMQ constant id'>RabbitMQ</span><span class='div op'>/</span><span class='AMQP constant id'>AMQP</span>
+    <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/somic-org.homelinux.org/</span><span class='blog identifier id'>blog</span><span class='div op'>/</span><span class='integer val'>2008</span><span class='div op'>/</span><span class='integer val'>07</span><span class='div op'>/</span><span class='integer val'>31</span><span class='div op'>/</span><span class='slides identifier id'>slides</span><span class='minus op'>-</span><span class='for for kw'>for</span><span class='minus op'>-</span><span class='my identifier id'>my</span><span class='minus op'>-</span><span class='amqprabbitmq identifier id'>amqprabbitmq</span><span class='minus op'>-</span><span class='talk identifier id'>talk</span><span class='div op'>/</span>
+
+  <span class='ZeroMQ constant id'>ZeroMQ</span><span class='string val'>'s analysis of the messaging technology market
+    http://www.zeromq.org/whitepapers:market-analysis
+
+  Pieter Hintjens'</span><span class='s identifier id'>s</span> <span class='background identifier id'>background</span> <span class='to identifier id'>to</span> <span class='AMQP constant id'>AMQP</span>
+    <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/www.openamq.org/</span><span class='doc identifier id'>doc</span><span class='symbol val'>:amqp</span><span class='minus op'>-</span><span class='background identifier id'>background</span>
+
+  <span class='Barry constant id'>Barry</span> <span class='Pederson constant id'>Pederson</span><span class='string val'>'s py-amqplib
+    http://barryp.org/software/py-amqplib/
+
+  Ben Hood on writing an AMQP client
+    http://hopper.squarespace.com/blog/2008/6/21/build-your-own-amqp-client.html
+
+  Dmitriy Samovskiy introduces Ruby + QPid + RabbitMQ
+    http://somic-org.homelinux.org/blog/2008/06/24/ruby-amqp-rabbitmq-example/
+
+  Ben Hood'</span><span class='s identifier id'>s</span> <span class='as3 identifier id'>as3</span><span class='minus op'>-</span><span class='amqp identifier id'>amqp</span>
+    <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/github.com/</span><span class='integer val'>0x6e6562</span><span class='div op'>/</span><span class='as3 identifier id'>as3</span><span class='minus op'>-</span><span class='amqp identifier id'>amqp</span>
+    <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/hopper.squarespace.com/</span><span class='blog identifier id'>blog</span><span class='div op'>/</span><span class='integer val'>2008</span><span class='div op'>/</span><span class='integer val'>7</span><span class='div op'>/</span><span class='integer val'>4</span><span class='div op'>/</span><span class='server identifier id'>server</span><span class='minus op'>-</span><span class='side identifier id'>side</span><span class='minus op'>-</span><span class='as3 identifier id'>as3</span><span class='dot token'>.</span><span class='html identifier id'>html</span>
+    <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/hopper.squarespace.com/</span><span class='blog identifier id'>blog</span><span class='div op'>/</span><span class='integer val'>2008</span><span class='div op'>/</span><span class='integer val'>3</span><span class='div op'>/</span><span class='integer val'>24</span><span class='div op'>/</span><span class='as3 identifier id'>as3</span><span class='minus op'>-</span><span class='amqp identifier id'>amqp</span><span class='minus op'>-</span><span class='client identifier id'>client</span><span class='minus op'>-</span><span class='first identifier id'>first</span><span class='minus op'>-</span><span class='cut identifier id'>cut</span><span class='dot token'>.</span><span class='html identifier id'>html</span>
+
+  <span class='RabbitMQ constant id'>RabbitMQ</span><span class='string val'>'s protocol code generator
+    http://hg.rabbitmq.com/rabbitmq-codegen/
+
+  Erlang Exchange presentation on the implementation of RabbitMQ
+    http://skillsmatter.com/podcast/erlang/presenting-rabbitmq-an-erlang-based-implementatio-nof-amqp
+    http://www.lshift.net/blog/2008/07/01/slides-from-our-erlang-exchange-talk
+
+  Jonathan Conway'</span><span class='s identifier id'>s</span> <span class='series identifier id'>series</span> <span class='on identifier id'>on</span> <span class='RabbitMQ constant id'>RabbitMQ</span> <span class='and and kw'>and</span> <span class='using identifier id'>using</span> <span class='it identifier id'>it</span> <span class='with identifier id'>with</span> <span class='Ruby constant id'>Ruby</span><span class='div op'>/</span><span class='Merb constant id'>Merb</span>
+    <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/jaikoo.com/</span><span class='integer val'>2008</span><span class='div op'>/</span><span class='integer val'>3</span><span class='div op'>/</span><span class='integer val'>20</span><span class='div op'>/</span><span class='daemonize identifier id'>daemonize</span><span class='minus op'>-</span><span class='rabbitmq identifier id'>rabbitmq</span>
+    <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/jaikoo.com/</span><span class='integer val'>2008</span><span class='div op'>/</span><span class='integer val'>3</span><span class='div op'>/</span><span class='integer val'>14</span><span class='div op'>/</span><span class='oh identifier id'>oh</span><span class='minus op'>-</span><span class='hai identifier id'>hai</span><span class='minus op'>-</span><span class='rabbitmq identifier id'>rabbitmq</span>
+    <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/jaikoo.com/</span><span class='integer val'>2008</span><span class='div op'>/</span><span class='integer val'>2</span><span class='div op'>/</span><span class='integer val'>29</span><span class='div op'>/</span><span class='friday identifier id'>friday</span><span class='minus op'>-</span><span class='round identifier id'>round</span><span class='minus op'>-</span><span class='up identifier id'>up</span><span class='minus op'>-</span><span class='integer val'>2008</span><span class='minus op'>-</span><span class='integer val'>02</span><span class='minus op'>-</span><span class='integer val'>29</span>
+    <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/jaikoo.com/</span><span class='integer val'>2007</span><span class='div op'>/</span><span class='integer val'>9</span><span class='div op'>/</span><span class='integer val'>4</span><span class='div op'>/</span><span class='didn identifier id'>didn</span><span class='minus op'>-</span><span class='t identifier id'>t</span><span class='minus op'>-</span><span class='you identifier id'>you</span><span class='minus op'>-</span><span class='get identifier id'>get</span><span class='minus op'>-</span><span class='the identifier id'>the</span><span class='minus op'>-</span><span class='memo identifier id'>memo</span>
+
+  <span class='Open constant id'>Open</span> <span class='Enterprise constant id'>Enterprise</span><span class='string val'>'s series on messaging middleware and AMQP
+    http://www1.interopsystems.com/analysis/can-amqp-break-ibms-mom-monopoly-part-1.html
+    http://www1.interopsystems.com/analysis/can-amqp-break-ibms-mom-monopoly-part-2.html
+    http://www1.interopsystems.com/analysis/can-amqp-break-ibms-mom-monopoly-part-3.html
+</span></pre>
+<p>
+Messaging and distributed systems resources:
+</p>
+<pre class="code">
+  <span class='A constant id'>A</span> <span class='Critique constant id'>Critique</span> <span class='of identifier id'>of</span> <span class='the identifier id'>the</span> <span class='Remote constant id'>Remote</span> <span class='Procedure constant id'>Procedure</span> <span class='Call constant id'>Call</span> <span class='Paradigm constant id'>Paradigm</span>
+    <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/www.cs.vu.nl/</span><span class='bitnot op'>~</span><span class='ast identifier id'>ast</span><span class='div op'>/</span><span class='publications identifier id'>publications</span><span class='div op'>/</span><span class='euteco identifier id'>euteco</span><span class='minus op'>-</span><span class='float val'>1988</span><span class='dot token'>.</span><span class='pdf identifier id'>pdf</span>
+
+  <span class='A constant id'>A</span> <span class='Note constant id'>Note</span> <span class='on identifier id'>on</span> <span class='Distributed constant id'>Distributed</span> <span class='Computing constant id'>Computing</span>
+    <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/research.sun.com/</span><span class='techrep identifier id'>techrep</span><span class='div op'>/</span><span class='integer val'>1994</span><span class='div op'>/</span><span class='smli_tr identifier id'>smli_tr</span><span class='minus op'>-</span><span class='integer val'>94</span><span class='minus op'>-</span><span class='float val'>29</span><span class='dot token'>.</span><span class='pdf identifier id'>pdf</span>
+
+  <span class='Convenience constant id'>Convenience</span> <span class='Over constant id'>Over</span> <span class='Correctness constant id'>Correctness</span>
+    <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/steve.vinoski.net/</span><span class='pdf identifier id'>pdf</span><span class='div op'>/</span><span class='IEEE constant id'>IEEE</span><span class='minus op'>-</span><span class='Convenience_Over_Correctness constant id'>Convenience_Over_Correctness</span><span class='dot token'>.</span><span class='pdf identifier id'>pdf</span>
+
+  <span class='Metaprotocol constant id'>Metaprotocol</span> <span class='Taxonomy constant id'>Taxonomy</span> <span class='and and kw'>and</span> <span class='Communications constant id'>Communications</span> <span class='Patterns constant id'>Patterns</span>
+    <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/hessian.caucho.com/</span><span class='doc identifier id'>doc</span><span class='div op'>/</span><span class='metaprotocol identifier id'>metaprotocol</span><span class='minus op'>-</span><span class='taxonomy identifier id'>taxonomy</span><span class='dot token'>.</span><span class='xtp identifier id'>xtp</span>
+
+  <span class='Joe constant id'>Joe</span> <span class='Armstrong constant id'>Armstrong</span> <span class='on identifier id'>on</span> <span class='Erlang constant id'>Erlang</span> <span class='messaging identifier id'>messaging</span> <span class='vs identifier id'>vs</span> <span class='RPC constant id'>RPC</span>
+    <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/armstrongonsoftware.blogspot.com/</span><span class='integer val'>2008</span><span class='div op'>/</span><span class='integer val'>05</span><span class='div op'>/</span><span class='road identifier id'>road</span><span class='minus op'>-</span><span class='we identifier id'>we</span><span class='minus op'>-</span><span class='didnt identifier id'>didnt</span><span class='minus op'>-</span><span class='go identifier id'>go</span><span class='minus op'>-</span><span class='down identifier id'>down</span><span class='dot token'>.</span><span class='html identifier id'>html</span>
+
+  <span class='SEDA constant id'>SEDA</span><span class='colon op'>:</span> <span class='scalable identifier id'>scalable</span> <span class='internet identifier id'>internet</span> <span class='services identifier id'>services</span> <span class='using identifier id'>using</span> <span class='message identifier id'>message</span> <span class='queues identifier id'>queues</span>
+    <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/www.eecs.harvard.edu/</span><span class='bitnot op'>~</span><span class='mdw identifier id'>mdw</span><span class='div op'>/</span><span class='papers identifier id'>papers</span><span class='div op'>/</span><span class='seda identifier id'>seda</span><span class='minus op'>-</span><span class='sosp01 identifier id'>sosp01</span><span class='dot token'>.</span><span class='pdf identifier id'>pdf</span>
+</pre>
+
+      </div>
+    </div>
+  </body>
+</html>

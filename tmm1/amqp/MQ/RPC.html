@@ -1,0 +1,250 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: MQ::RPC</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class MQ_RPC">
+  <h1 class="title">Class: MQ::RPC</h1>
+  <div class="section inheritance">
+  <ul>
+  <li>BlankSlate</li><ul><li>MQ::RPC</li>
+  </ul></ul>
+</div><div class="section docstring">
+  <p>
+Basic RPC (remote procedure call) facility.
+</p>
+<p>
+Needs more detail and explanation.
+</p>
+<pre class="code">
+ <span class='EM constant id'>EM</span><span class='dot token'>.</span><span class='run identifier id'>run</span> <span class='do do kw'>do</span>
+   <span class='server identifier id'>server</span> <span class='assign token'>=</span> <span class='MQ constant id'>MQ</span><span class='dot token'>.</span><span class='rpc identifier id'>rpc</span><span class='lparen token'>(</span><span class='string val'>'hash table node'</span><span class='comma token'>,</span> <span class='Hash constant id'>Hash</span><span class='rparen token'>)</span>
+
+   <span class='client identifier id'>client</span> <span class='assign token'>=</span> <span class='MQ constant id'>MQ</span><span class='dot token'>.</span><span class='rpc identifier id'>rpc</span><span class='lparen token'>(</span><span class='string val'>'hash table node'</span><span class='rparen token'>)</span>
+   <span class='client identifier id'>client</span><span class='lbrack token'>[</span><span class='symbol val'>:now</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='Time constant id'>Time</span><span class='dot token'>.</span><span class='now identifier id'>now</span>
+   <span class='client identifier id'>client</span><span class='lbrack token'>[</span><span class='symbol val'>:one</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='integer val'>1</span>
+
+   <span class='client identifier id'>client</span><span class='dot token'>.</span><span class='values identifier id'>values</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='res identifier id'>res</span><span class='bitor op'>|</span>
+     <span class='p identifier id'>p</span> <span class='string val'>'client'</span><span class='comma token'>,</span> <span class='symbol val'>:values</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='res identifier id'>res</span>
+   <span class='end end kw'>end</span>
+
+   <span class='client identifier id'>client</span><span class='dot token'>.</span><span class='keys identifier id'>keys</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='res identifier id'>res</span><span class='bitor op'>|</span>
+     <span class='p identifier id'>p</span> <span class='string val'>'client'</span><span class='comma token'>,</span> <span class='symbol val'>:keys</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='res identifier id'>res</span>
+     <span class='EM constant id'>EM</span><span class='dot token'>.</span><span class='stop_event_loop identifier id'>stop_event_loop</span>
+   <span class='end end kw'>end</span>
+ <span class='end end kw'>end</span>
+</pre>
+
+</div><div class="section constants">
+  
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>mq, queue, obj = nil</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Takes a channel, queue and optional object.
+</p>
+<p>
+The optional object may be a class name, module name or object instance.
+When given a class or module name, the object is instantiated during this
+setup. The passed queue is automatically subscribed to so it passes all
+messages (and their arguments) to the object.
+</p>
+<p>
+Marshalling and unmarshalling the objects is handled internally. This
+marshalling is subject to the same restrictions as defined in the
+Marshal[http://ruby-doc.org/core/classes/Marshal.html] standard library.
+See that documentation for further reference.
+</p>
+<p>
+When the optional object is not passed, the returned rpc reference is used
+to send messages and arguments to the queue. See #method_missing which does
+all of the heavy lifting with the proxy. Some client elsewhere must call
+this method <b>with</b> the optional block so that there is a valid
+destination. Failure to do so will just enqueue marshalled messages that
+are never consumed.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/mq/rpc.rb', line 43</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span> <span class='mq identifier id'>mq</span><span class='comma token'>,</span> <span class='queue identifier id'>queue</span><span class='comma token'>,</span> <span class='obj identifier id'>obj</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+  <span class='@mq ivar id'>@mq</span> <span class='assign token'>=</span> <span class='mq identifier id'>mq</span>
+  <span class='@mq ivar id'>@mq</span><span class='dot token'>.</span><span class='rpcs identifier id'>rpcs</span><span class='lbrack token'>[</span><span class='queue identifier id'>queue</span><span class='rbrack token'>]</span> <span class='opasgn op'>||=</span> <span class='self self kw'>self</span>
+
+  <span class='if if kw'>if</span> <span class='obj identifier id'>obj</span>
+    <span class='@obj ivar id'>@obj</span> <span class='assign token'>=</span> <span class='case case kw'>case</span> <span class='obj identifier id'>obj</span>
+           <span class='when when kw'>when</span> <span class='colon3 op'>::</span><span class='Class constant id'>Class</span>
+             <span class='obj identifier id'>obj</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+           <span class='when when kw'>when</span> <span class='colon3 op'>::</span><span class='Module constant id'>Module</span>
+             <span class='lparen token'>(</span><span class='colon3 op'>::</span><span class='Class constant id'>Class</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='do do kw'>do</span> <span class='include identifier id'>include</span><span class='lparen token'>(</span><span class='obj identifier id'>obj</span><span class='rparen token'>)</span> <span class='end end kw'>end</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+           <span class='else else kw'>else</span>
+             <span class='obj identifier id'>obj</span>
+           <span class='end end kw'>end</span>
+    
+    <span class='@mq ivar id'>@mq</span><span class='dot token'>.</span><span class='queue identifier id'>queue</span><span class='lparen token'>(</span><span class='queue identifier id'>queue</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='subscribe identifier id'>subscribe</span><span class='lparen token'>(</span><span class='symbol val'>:ack=</span><span class='gt op'>&gt;</span><span class='true true kw'>true</span><span class='rparen token'>)</span><span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='info identifier id'>info</span><span class='comma token'>,</span> <span class='request identifier id'>request</span><span class='bitor op'>|</span>
+      <span class='method identifier id'>method</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span> <span class='assign token'>=</span> <span class='colon3 op'>::</span><span class='Marshal constant id'>Marshal</span><span class='dot token'>.</span><span class='load identifier id'>load</span><span class='lparen token'>(</span><span class='request identifier id'>request</span><span class='rparen token'>)</span>
+      <span class='ret identifier id'>ret</span> <span class='assign token'>=</span> <span class='@obj ivar id'>@obj</span><span class='dot token'>.</span><span class='__send__ identifier id'>__send__</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+
+      <span class='info identifier id'>info</span><span class='dot token'>.</span><span class='ack identifier id'>ack</span>
+
+      <span class='if if kw'>if</span> <span class='info identifier id'>info</span><span class='dot token'>.</span><span class='reply_to identifier id'>reply_to</span>
+        <span class='@mq ivar id'>@mq</span><span class='dot token'>.</span><span class='queue identifier id'>queue</span><span class='lparen token'>(</span><span class='info identifier id'>info</span><span class='dot token'>.</span><span class='reply_to identifier id'>reply_to</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='publish identifier id'>publish</span><span class='lparen token'>(</span><span class='colon3 op'>::</span><span class='Marshal constant id'>Marshal</span><span class='dot token'>.</span><span class='dump identifier id'>dump</span><span class='lparen token'>(</span><span class='ret identifier id'>ret</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:key</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='info identifier id'>info</span><span class='dot token'>.</span><span class='reply_to identifier id'>reply_to</span><span class='comma token'>,</span> <span class='symbol val'>:message_id</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='info identifier id'>info</span><span class='dot token'>.</span><span class='message_id identifier id'>message_id</span><span class='rparen token'>)</span>
+      <span class='end end kw'>end</span>
+    <span class='rbrace token'>}</span>
+  <span class='else else kw'>else</span>
+    <span class='@callbacks ivar id'>@callbacks</span> <span class='opasgn op'>||=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+    <span class='comment val'># XXX implement and use queue(nil)</span>
+    <span class='@queue ivar id'>@queue</span> <span class='assign token'>=</span> <span class='@mq ivar id'>@mq</span><span class='dot token'>.</span><span class='queue identifier id'>queue</span><span class='lparen token'>(</span><span class='@name ivar id'>@name</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;random identifier #{::Kernel.rand(999_999_999_999)}&quot;</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='subscribe identifier id'>subscribe</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='info identifier id'>info</span><span class='comma token'>,</span> <span class='msg identifier id'>msg</span><span class='bitor op'>|</span>
+      <span class='if if kw'>if</span> <span class='blk identifier id'>blk</span> <span class='assign token'>=</span> <span class='@callbacks ivar id'>@callbacks</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='info identifier id'>info</span><span class='dot token'>.</span><span class='message_id identifier id'>message_id</span><span class='rparen token'>)</span>
+        <span class='blk identifier id'>blk</span><span class='dot token'>.</span><span class='call identifier id'>call</span> <span class='colon3 op'>::</span><span class='Marshal constant id'>Marshal</span><span class='dot token'>.</span><span class='load identifier id'>load</span><span class='lparen token'>(</span><span class='msg identifier id'>msg</span><span class='rparen token'>)</span>
+      <span class='end end kw'>end</span>
+    <span class='rbrace token'>}</span>
+    <span class='@remote ivar id'>@remote</span> <span class='assign token'>=</span> <span class='@mq ivar id'>@mq</span><span class='dot token'>.</span><span class='queue identifier id'>queue</span><span class='lparen token'>(</span><span class='queue identifier id'>queue</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div><div class="section methodmissing">
+  <h1>Dynamic Method Handling</h1>
+
+  <p class="note">
+    This class handles dynamic methods through the <tt>method_missing</tt> method
+    
+  </p>
+
+  <div id="method_missing-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>method_missing</span><span class='args'>meth, *args, &amp;blk</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Calling MQ.rpc(*args) returns a proxy object without any methods beyond
+those in Object. All calls to the proxy are handled by #method_missing
+which works to marshal and unmarshal all method calls and their arguments.
+</p>
+<pre class="code">
+ <span class='EM constant id'>EM</span><span class='dot token'>.</span><span class='run identifier id'>run</span> <span class='do do kw'>do</span>
+   <span class='server identifier id'>server</span> <span class='assign token'>=</span> <span class='MQ constant id'>MQ</span><span class='dot token'>.</span><span class='rpc identifier id'>rpc</span><span class='lparen token'>(</span><span class='string val'>'hash table node'</span><span class='comma token'>,</span> <span class='Hash constant id'>Hash</span><span class='rparen token'>)</span>
+   <span class='client identifier id'>client</span> <span class='assign token'>=</span> <span class='MQ constant id'>MQ</span><span class='dot token'>.</span><span class='rpc identifier id'>rpc</span><span class='lparen token'>(</span><span class='string val'>'hash table node'</span><span class='rparen token'>)</span>
+
+   <span class='comment val'># calls #method_missing on #[] which marshals the method name and</span>
+   <span class='comment val'># arguments to publish them to the remote</span>
+   <span class='client identifier id'>client</span><span class='lbrack token'>[</span><span class='symbol val'>:now</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='Time constant id'>Time</span><span class='dot token'>.</span><span class='now identifier id'>now</span>
+   <span class='dot3 op'>...</span><span class='dot token'>.</span>
+ <span class='end identifier id'>end</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+93
+94
+95
+96
+97
+98</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/mq/rpc.rb', line 93</span>
+
+<span class='def def kw'>def</span> <span class='method_missing identifier id'>method_missing</span> <span class='meth identifier id'>meth</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='blk identifier id'>blk</span>
+  <span class='comment val'># XXX use uuids instead</span>
+  <span class='message_id identifier id'>message_id</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;random message id #{::Kernel.rand(999_999_999_999)}&quot;</span>
+  <span class='@callbacks ivar id'>@callbacks</span><span class='lbrack token'>[</span><span class='message_id identifier id'>message_id</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='blk identifier id'>blk</span> <span class='if if_mod kw'>if</span> <span class='blk identifier id'>blk</span>
+  <span class='@remote ivar id'>@remote</span><span class='dot token'>.</span><span class='publish identifier id'>publish</span><span class='lparen token'>(</span><span class='colon3 op'>::</span><span class='Marshal constant id'>Marshal</span><span class='dot token'>.</span><span class='dump identifier id'>dump</span><span class='lparen token'>(</span><span class='lbrack token'>[</span><span class='meth identifier id'>meth</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:reply_to</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='blk identifier id'>blk</span> <span class='integer val'>? </span><span class='@name ivar id'>@name</span> <span class='colon op'>:</span> <span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='symbol val'>:message_id</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='message_id identifier id'>message_id</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>
+</div>
+    </div>
+  </body>
+</html>

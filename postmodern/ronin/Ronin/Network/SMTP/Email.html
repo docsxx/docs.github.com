@@ -1,0 +1,393 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: Ronin::Network::SMTP::Email</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class Ronin_Network_SMTP_Email">
+  <h1 class="title">Class: Ronin::Network::SMTP::Email</h1>
+  <div class="section inheritance">
+  <ul>
+  <li><a href='../../../Object.html' title='Object'>Object</a></li><ul><li>Ronin::Network::SMTP::Email</li>
+  </ul></ul>
+</div><div class="section attributes">
+  <h1>Attributes</h1>
+
+  
+    <div class="instance">
+      <h2>Instance Attributes</h2>
+      <table>
+      
+        <tr>
+          <th class="name">body</td>
+          <td class="readwrite">
+            [<span id='body-instance_method'>R</span><span id='body%3D-instance_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Body of the email.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">date</td>
+          <td class="readwrite">
+            [<span id='date-instance_method'>R</span><span id='date%3D-instance_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Date of the email.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">from</td>
+          <td class="readwrite">
+            [<span id='from-instance_method'>R</span><span id='from%3D-instance_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Sender of the email.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">message_id</td>
+          <td class="readwrite">
+            [<span id='message_id-instance_method'>R</span><span id='message_id%3D-instance_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Unique message-id string.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">subject</td>
+          <td class="readwrite">
+            [<span id='subject-instance_method'>R</span><span id='subject%3D-instance_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Subject of the email.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">to</td>
+          <td class="readwrite">
+            [<span id='to-instance_method'>R</span><span id='to%3D-instance_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Recipient of the email.
+</p>
+
+            
+          </td>
+        </tr>
+      
+      </table>
+    </div>
+  
+</div><div class="section constants">
+  
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(options={},&amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Creates a new Email object with the given <em>options</em>. If a
+<em>block</em> is given, it will be passed the newly created Email object.
+</p>
+<p>
+<em>options</em> must contain the following keys:
+</p>
+<table>
+<tr><td valign="top"><tt>:from</tt>:</td><td>The address the email is from.
+
+</td></tr>
+<tr><td valign="top"><tt>:to</tt>:</td><td>The address that the email should be sent to.
+
+</td></tr>
+<tr><td valign="top"><tt>:subject</tt>:</td><td>The subject of the email.
+
+</td></tr>
+</table>
+<p>
+<tt>:message_id</tt>::
+</p>
+<p>
+<em>options</em> may contain the following keys:
+</p>
+<table>
+<tr><td valign="top"><tt>:date</tt>:</td><td>The date the email was sent on. Defaults to <tt>Time.now</tt>.
+
+</td></tr>
+<tr><td valign="top"><tt>:body</tt>:</td><td>The body of the email. Can be a String or an Array of Strings.
+
+</td></tr>
+</table>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/ronin/network/smtp/email.rb', line 63</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='@from ivar id'>@from</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:from</span><span class='rbrack token'>]</span>
+  <span class='@to ivar id'>@to</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:to</span><span class='rbrack token'>]</span>
+  <span class='@subject ivar id'>@subject</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:subject</span><span class='rbrack token'>]</span>
+  <span class='@date ivar id'>@date</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:date</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='Time constant id'>Time</span><span class='dot token'>.</span><span class='now identifier id'>now</span>
+  <span class='@message_id ivar id'>@message_id</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:message_id</span><span class='rbrack token'>]</span>
+  <span class='@body ivar id'>@body</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+
+  <span class='if if kw'>if</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='colon op'>:</span><span class='body identifier id'>body</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='kind_of? fid id'>kind_of?</span><span class='lparen token'>(</span><span class='Array constant id'>Array</span><span class='rparen token'>)</span>
+    <span class='@body ivar id'>@body</span> <span class='opasgn op'>+=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:body</span><span class='rbrack token'>]</span>
+  <span class='else else kw'>else</span>
+    <span class='@body ivar id'>@body</span> <span class='lshft op'>&lt;&lt;</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:body</span><span class='rbrack token'>]</span>
+  <span class='end end kw'>end</span>
+
+  <span class='block identifier id'>block</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='block identifier id'>block</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#to_s-instance_method' title='#to_s'>#to_s</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Formats the email into a SMTP message as described in http://www.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table><div class="inherited">
+  
+  <div>
+    <h1>Public Instance Methods Inherited from <a href='../../../Object.html' title='Object'>Object</a></h1>
+    <p><span class='name'><a href='../../../Object.html#class_def-instance_method' title='class_def'>class_def</a></span>, <span class='name'><a href='../../../Object.html#meta_def-instance_method' title='meta_def'>meta_def</a></span>, <span class='name'><a href='../../../Object.html#meta_eval-instance_method' title='meta_eval'>meta_eval</a></span>, <span class='name'><a href='../../../Object.html#metaclass-instance_method' title='metaclass'>metaclass</a></span>, <span class='name'><a href='../../../Object.html#metaclass_def-instance_method' title='metaclass_def'>metaclass_def</a></span>, <span class='name'><a href='../../../Object.html#metaclass_eval-instance_method' title='metaclass_eval'>metaclass_eval</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>to_s</h3>
+</div><div id="to_s-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>to_s</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Formats the email into a SMTP message as described in
+http://www.ruby-doc.org/stdlib/libdoc/net/smtp/rdoc/classes/Net/SMTP.html
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/ronin/network/smtp/email.rb', line 84</span>
+
+<span class='def def kw'>def</span> <span class='to_s identifier id'>to_s</span>
+  <span class='address identifier id'>address</span> <span class='assign token'>=</span> <span class='lambda identifier id'>lambda</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='info identifier id'>info</span><span class='bitor op'>|</span>
+    <span class='if if kw'>if</span> <span class='info identifier id'>info</span><span class='dot token'>.</span><span class='kind_of? fid id'>kind_of?</span><span class='lparen token'>(</span><span class='Array constant id'>Array</span><span class='rparen token'>)</span>
+      <span class='return return kw'>return</span> <span class='dstring node'>&quot;#{info[0]} &lt;#{info[1]}&gt;&quot;</span>
+    <span class='elsif elsif kw'>elsif</span> <span class='info identifier id'>info</span><span class='dot token'>.</span><span class='kind_of? fid id'>kind_of?</span><span class='lparen token'>(</span><span class='Hash constant id'>Hash</span><span class='rparen token'>)</span>
+      <span class='return return kw'>return</span> <span class='dstring node'>&quot;#{info[:name]} &lt;#{info[:email]}&gt;&quot;</span>
+    <span class='else else kw'>else</span>
+      <span class='return return kw'>return</span> <span class='info identifier id'>info</span>
+    <span class='end end kw'>end</span>
+  <span class='rbrace token'>}</span>
+
+  <span class='message identifier id'>message</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+
+  <span class='if if kw'>if</span> <span class='@from ivar id'>@from</span>
+    <span class='message identifier id'>message</span> <span class='lshft op'>&lt;&lt;</span> <span class='dstring node'>&quot;From: #{address.call(@from)}&quot;</span>
+  <span class='end end kw'>end</span>
+
+  <span class='if if kw'>if</span> <span class='@to ivar id'>@to</span>
+    <span class='message identifier id'>message</span> <span class='lshft op'>&lt;&lt;</span> <span class='dstring node'>&quot;To: #{address.call(@to)}&quot;</span>
+  <span class='end end kw'>end</span>
+
+  <span class='if if kw'>if</span> <span class='@subject ivar id'>@subject</span>
+    <span class='message identifier id'>message</span> <span class='lshft op'>&lt;&lt;</span> <span class='dstring node'>&quot;Subject: #{@subject}&quot;</span>
+  <span class='end end kw'>end</span>
+
+  <span class='if if kw'>if</span> <span class='@date ivar id'>@date</span>
+    <span class='message identifier id'>message</span> <span class='lshft op'>&lt;&lt;</span> <span class='dstring node'>&quot;Date: #{@date}&quot;</span>
+  <span class='end end kw'>end</span>
+
+  <span class='if if kw'>if</span> <span class='@message_id ivar id'>@message_id</span>
+    <span class='message identifier id'>message</span> <span class='lshft op'>&lt;&lt;</span> <span class='dstring node'>&quot;Message-Id: &lt;#{@message_id}&gt;&quot;</span>
+  <span class='end end kw'>end</span>
+
+  <span class='message identifier id'>message</span> <span class='lshft op'>&lt;&lt;</span> <span class='string val'>''</span>
+  <span class='message identifier id'>message</span> <span class='opasgn op'>+=</span> <span class='@body ivar id'>@body</span>
+
+  <span class='return return kw'>return</span> <span class='message identifier id'>message</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='string val'>&quot;\n&quot;</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

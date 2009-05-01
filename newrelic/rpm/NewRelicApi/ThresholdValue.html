@@ -1,0 +1,196 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: NewRelicApi::ThresholdValue</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class NewRelicApi_ThresholdValue">
+  <h1 class="title">Class: NewRelicApi::ThresholdValue</h1>
+  <div class="section inheritance">
+  <ul>
+  <li>ActiveResource::Base</li><ul><li><a href='BaseResource.html' title='NewRelicApi::BaseResource'>NewRelicApi::BaseResource</a></li><ul><li>NewRelicApi::ThresholdValue</li>
+  </ul></ul></ul>
+</div><div class="section docstring">
+  <p>
+A threshold value represents a single health indicator for an application
+such as CPU, memory or response time.
+</p>
+<h2>Fields</h2>
+<table>
+<tr><td valign="top"><tt>name</tt>:</td><td>The name of the threshold setting associated with this threshold value.
+
+</td></tr>
+<tr><td valign="top"><tt>threshold_value</tt>:</td><td>A value of 0, 1, 2 or 3 representing gray (not reporting), green, yellow
+and red
+
+</td></tr>
+<tr><td valign="top"><tt>metric_value</tt>:</td><td>The metric value associated with this threshold
+
+</td></tr>
+</table>
+
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <div class="inherited">
+  
+  <div>
+    <h1>Public Class Methods Inherited from <a href='BaseResource.html' title='NewRelicApi::BaseResource'>NewRelicApi::BaseResource</a></h1>
+    <p><span class='name'><a href='BaseResource.html#headers-class_method' title='headers'>headers</a></span>, <span class='name'><a href='BaseResource.html#inherited-class_method' title='inherited'>inherited</a></span>, <span class='name'><a href='BaseResource.html#reset%21-class_method' title='reset!'>reset!</a></span>, <span class='name'><a href='BaseResource.html#site_url-class_method' title='site_url'>site_url</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+  <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#color_value-instance_method' title='#color_value'>#color_value</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns the color value for this threshold (Gray, Green, Yellow or Red).
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#to_s-instance_method' title='#to_s'>#to_s</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>color_value</h3>
+</div><div id="color_value-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>color_value</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns the color value for this threshold (Gray, Green, Yellow or Red).
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+202
+203
+204
+205
+206
+207
+208
+209</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/new_relic_api.rb', line 202</span>
+
+<span class='def def kw'>def</span> <span class='color_value identifier id'>color_value</span>
+  <span class='case case kw'>case</span> <span class='threshold_value identifier id'>threshold_value</span>
+    <span class='when when kw'>when</span> <span class='integer val'>3</span><span class='colon op'>:</span> <span class='string val'>'Red'</span>
+    <span class='when when kw'>when</span> <span class='integer val'>2</span><span class='colon op'>:</span> <span class='string val'>'Yellow'</span>
+    <span class='when when kw'>when</span> <span class='integer val'>1</span><span class='colon op'>:</span> <span class='string val'>'Green'</span>
+  <span class='else else kw'>else</span> <span class='string val'>'Gray'</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>to_s</h3>
+</div><div id="to_s-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>to_s</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+211
+212
+213</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/new_relic_api.rb', line 211</span>
+
+<span class='def def kw'>def</span> <span class='to_s identifier id'>to_s</span> 
+  <span class='dstring node'>&quot;#{name}: #{color_value} (#{formatted_metric_value})&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

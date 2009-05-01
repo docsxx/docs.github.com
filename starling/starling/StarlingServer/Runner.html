@@ -1,0 +1,854 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: StarlingServer::Runner</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class StarlingServer_Runner">
+  <h1 class="title">Class: StarlingServer::Runner</h1>
+  <div class="section attributes">
+  <h1>Attributes</h1>
+
+  
+    <div class="instance">
+      <h2>Instance Attributes</h2>
+      <table>
+      
+        <tr>
+          <th class="name">options</td>
+          <td class="readwrite">
+            [<span id='options-instance_method'>R</span><span id='options%3D-instance_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            private
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>options</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+      </table>
+    </div>
+  
+</div><div class="section constants">
+  
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/starling/server_runner.rb', line 22</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span>
+  <span class='@@instance ivar id'>@@instance</span> <span class='assign token'>=</span> <span class='self self kw'>self</span>
+  <span class='parse_options identifier id'>parse_options</span>
+
+  <span class='@process ivar id'>@process</span> <span class='assign token'>=</span> <span class='ProcessHelper constant id'>ProcessHelper</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:logger</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:pid_file</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:user</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:group</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+
+  <span class='pid identifier id'>pid</span> <span class='assign token'>=</span> <span class='@process ivar id'>@process</span><span class='dot token'>.</span><span class='running? fid id'>running?</span>
+  <span class='if if kw'>if</span> <span class='pid identifier id'>pid</span>
+    <span class='STDERR constant id'>STDERR</span><span class='dot token'>.</span><span class='puts identifier id'>puts</span> <span class='dstring node'>&quot;There is already a Starling process running (pid #{pid}), exiting.&quot;</span>
+    <span class='exit identifier id'>exit</span><span class='lparen token'>(</span><span class='integer val'>1</span><span class='rparen token'>)</span>
+  <span class='elsif elsif kw'>elsif</span> <span class='pid identifier id'>pid</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+    <span class='STDERR constant id'>STDERR</span><span class='dot token'>.</span><span class='puts identifier id'>puts</span> <span class='dstring node'>&quot;Cleaning up stale pidfile at #{options[:pid_file]}.&quot;</span>
+  <span class='end end kw'>end</span>
+
+  <span class='start identifier id'>start</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <h1>Public Class Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#run-class_method' title='run'>run</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#shutdown-class_method' title='shutdown'>shutdown</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+  <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#drop_privileges-instance_method' title='#drop_privileges'>#drop_privileges</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#load_config_file-instance_method' title='#load_config_file'>#load_config_file</a></span><span class='args'>(filename)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#parse_options-instance_method' title='#parse_options'>#parse_options</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#setup_signal_traps-instance_method' title='#setup_signal_traps'>#setup_signal_traps</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#shutdown-instance_method' title='#shutdown'>#shutdown</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#start-instance_method' title='#start'>#start</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails class public">
+  <h1>Public Class Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>run</h3>
+</div><div id="run-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>run</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+14
+15
+16</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/starling/server_runner.rb', line 14</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='run identifier id'>run</span>
+  <span class='new identifier id'>new</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>shutdown</h3>
+</div><div id="shutdown-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>shutdown</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+18
+19
+20</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/starling/server_runner.rb', line 18</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='shutdown identifier id'>shutdown</span>
+  <span class='@@instance ivar id'>@@instance</span><span class='dot token'>.</span><span class='shutdown identifier id'>shutdown</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div><div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>drop_privileges</h3>
+</div><div id="drop_privileges-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>drop_privileges</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+184
+185
+186
+187</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/starling/server_runner.rb', line 184</span>
+
+<span class='def def kw'>def</span> <span class='drop_privileges identifier id'>drop_privileges</span>
+  <span class='Process constant id'>Process</span><span class='colon2 op'>::</span><span class='Sys constant id'>Sys</span><span class='dot token'>.</span><span class='setgid identifier id'>setgid</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:group</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:group</span><span class='rbrack token'>]</span>
+  <span class='Process constant id'>Process</span><span class='colon2 op'>::</span><span class='Sys constant id'>Sys</span><span class='dot token'>.</span><span class='setuid identifier id'>setuid</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:user</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:user</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>load_config_file</h3>
+</div><div id="load_config_file-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>load_config_file</span><span class='args'>(filename)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/starling/server_runner.rb', line 39</span>
+
+<span class='def def kw'>def</span> <span class='load_config_file identifier id'>load_config_file</span><span class='lparen token'>(</span><span class='filename identifier id'>filename</span><span class='rparen token'>)</span>
+  <span class='config identifier id'>config</span> <span class='assign token'>=</span> <span class='YAML constant id'>YAML</span><span class='dot token'>.</span><span class='load identifier id'>load</span><span class='lparen token'>(</span><span class='ERB constant id'>ERB</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='File constant id'>File</span><span class='dot token'>.</span><span class='read identifier id'>read</span><span class='lparen token'>(</span><span class='filename identifier id'>filename</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='result identifier id'>result</span><span class='rparen token'>)</span>
+
+  <span class='unless unless kw'>unless</span> <span class='config identifier id'>config</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Hash constant id'>Hash</span><span class='rparen token'>)</span>
+    <span class='STDERR constant id'>STDERR</span><span class='dot token'>.</span><span class='puts identifier id'>puts</span> <span class='dstring node'>&quot;Config file does not contain a hash: #{filename}, exiting.&quot;</span>
+    <span class='exit identifier id'>exit</span><span class='lparen token'>(</span><span class='integer val'>1</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+
+  <span class='if if kw'>if</span> <span class='config identifier id'>config</span><span class='lbrack token'>[</span><span class='string val'>'starling'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+    <span class='STDERR constant id'>STDERR</span><span class='dot token'>.</span><span class='puts identifier id'>puts</span> <span class='dstring node'>&quot;Missing starling section in config file: #{filename}, exiting.&quot;</span>
+    <span class='exit identifier id'>exit</span><span class='lparen token'>(</span><span class='integer val'>1</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+
+  <span class='config identifier id'>config</span><span class='lbrack token'>[</span><span class='string val'>'starling'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='key identifier id'>key</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='bitor op'>|</span>
+    <span class='comment val'># alias some keys</span>
+    <span class='case case kw'>case</span> <span class='key identifier id'>key</span>
+    <span class='when when kw'>when</span> <span class='string val'>&quot;queue_path&quot;</span> <span class='then then kw'>then</span> <span class='key identifier id'>key</span> <span class='assign token'>=</span> <span class='string val'>&quot;path&quot;</span>
+    <span class='when when kw'>when</span> <span class='string val'>&quot;log_file&quot;</span> <span class='then then kw'>then</span> <span class='key identifier id'>key</span> <span class='assign token'>=</span> <span class='string val'>&quot;logger&quot;</span>
+    <span class='end end kw'>end</span>
+
+    <span class='if if kw'>if</span> <span class='dstring node'>%w(logger path pid_file)</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='key identifier id'>key</span><span class='rparen token'>)</span>
+      <span class='value identifier id'>value</span> <span class='assign token'>=</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='expand_path identifier id'>expand_path</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+
+    <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='key identifier id'>key</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='value identifier id'>value</span>
+
+    <span class='if if kw'>if</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='colon op'>:</span><span class='log_level identifier id'>log_level</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='instance_of? fid id'>instance_of?</span><span class='lparen token'>(</span><span class='String constant id'>String</span><span class='rparen token'>)</span>
+      <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:log_level</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='Logger constant id'>Logger</span><span class='dot token'>.</span><span class='const_get identifier id'>const_get</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:log_level</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>parse_options</h3>
+</div><div id="parse_options-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>parse_options</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/starling/server_runner.rb', line 71</span>
+
+<span class='def def kw'>def</span> <span class='parse_options identifier id'>parse_options</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span> <span class='symbol val'>:host</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'127.0.0.1'</span><span class='comma token'>,</span>
+                   <span class='symbol val'>:port</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>22122</span><span class='comma token'>,</span>
+                   <span class='symbol val'>:path</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='string val'>''</span><span class='comma token'>,</span> <span class='string val'>'var'</span><span class='comma token'>,</span> <span class='string val'>'spool'</span><span class='comma token'>,</span> <span class='string val'>'starling'</span><span class='rparen token'>)</span><span class='comma token'>,</span>
+                   <span class='symbol val'>:log_level</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='Logger constant id'>Logger</span><span class='colon2 op'>::</span><span class='INFO constant id'>INFO</span><span class='comma token'>,</span>
+                   <span class='symbol val'>:daemonize</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='false false kw'>false</span><span class='comma token'>,</span>
+                   <span class='symbol val'>:timeout</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>0</span><span class='comma token'>,</span>
+                   <span class='symbol val'>:pid_file</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='string val'>''</span><span class='comma token'>,</span> <span class='string val'>'var'</span><span class='comma token'>,</span> <span class='string val'>'run'</span><span class='comma token'>,</span> <span class='string val'>'starling.pid'</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+
+  <span class='OptionParser constant id'>OptionParser</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='opts identifier id'>opts</span><span class='bitor op'>|</span>
+    <span class='opts identifier id'>opts</span><span class='dot token'>.</span><span class='summary_width identifier id'>summary_width</span> <span class='assign token'>=</span> <span class='integer val'>25</span>
+
+    <span class='opts identifier id'>opts</span><span class='dot token'>.</span><span class='banner identifier id'>banner</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;Starling (#{StarlingServer::VERSION})\n\n&quot;</span><span class='comma token'>,</span>
+                  <span class='string val'>&quot;usage: starling [options...]\n&quot;</span><span class='comma token'>,</span>
+                  <span class='string val'>&quot;       starling --help\n&quot;</span><span class='comma token'>,</span>
+                  <span class='string val'>&quot;       starling --version\n&quot;</span>
+
+    <span class='opts identifier id'>opts</span><span class='dot token'>.</span><span class='separator identifier id'>separator</span> <span class='string val'>&quot;&quot;</span>
+    <span class='opts identifier id'>opts</span><span class='dot token'>.</span><span class='separator identifier id'>separator</span> <span class='string val'>&quot;Configuration:&quot;</span>
+
+    <span class='opts identifier id'>opts</span><span class='dot token'>.</span><span class='on identifier id'>on</span><span class='lparen token'>(</span><span class='string val'>&quot;-f&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;--config FILENAME&quot;</span><span class='comma token'>,</span>
+            <span class='string val'>&quot;Config file (yaml) to load&quot;</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='filename identifier id'>filename</span><span class='bitor op'>|</span>
+      <span class='load_config_file identifier id'>load_config_file</span><span class='lparen token'>(</span><span class='filename identifier id'>filename</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+
+    <span class='opts identifier id'>opts</span><span class='dot token'>.</span><span class='on identifier id'>on</span><span class='lparen token'>(</span><span class='string val'>&quot;-q&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;--queue_path PATH&quot;</span><span class='comma token'>,</span>
+            <span class='symbol val'>:REQUIRED</span><span class='comma token'>,</span>
+            <span class='string val'>&quot;Path to store Starling queue logs&quot;</span><span class='comma token'>,</span> <span class='dstring node'>&quot;(default: #{options[:path]})&quot;</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='queue_path identifier id'>queue_path</span><span class='bitor op'>|</span>
+      <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:path</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='expand_path identifier id'>expand_path</span><span class='lparen token'>(</span><span class='queue_path identifier id'>queue_path</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+
+    <span class='opts identifier id'>opts</span><span class='dot token'>.</span><span class='separator identifier id'>separator</span> <span class='string val'>&quot;&quot;</span><span class='semicolon token'>;</span> <span class='opts identifier id'>opts</span><span class='dot token'>.</span><span class='separator identifier id'>separator</span> <span class='string val'>&quot;Network:&quot;</span>
+
+    <span class='opts identifier id'>opts</span><span class='dot token'>.</span><span class='on identifier id'>on</span><span class='lparen token'>(</span><span class='string val'>&quot;-hHOST&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;--host HOST&quot;</span><span class='comma token'>,</span> <span class='dstring node'>&quot;Interface on which to listen (default: #{options[:host]})&quot;</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='host identifier id'>host</span><span class='bitor op'>|</span>
+      <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:host</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='host identifier id'>host</span>
+    <span class='end end kw'>end</span>
+
+    <span class='opts identifier id'>opts</span><span class='dot token'>.</span><span class='on identifier id'>on</span><span class='lparen token'>(</span><span class='string val'>&quot;-pHOST&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;--port PORT&quot;</span><span class='comma token'>,</span> <span class='Integer constant id'>Integer</span><span class='comma token'>,</span> <span class='dstring node'>&quot;TCP port on which to listen (default: #{options[:port]})&quot;</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='port identifier id'>port</span><span class='bitor op'>|</span>
+      <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:port</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='port identifier id'>port</span>
+    <span class='end end kw'>end</span>
+
+    <span class='opts identifier id'>opts</span><span class='dot token'>.</span><span class='separator identifier id'>separator</span> <span class='string val'>&quot;&quot;</span><span class='semicolon token'>;</span> <span class='opts identifier id'>opts</span><span class='dot token'>.</span><span class='separator identifier id'>separator</span> <span class='string val'>&quot;Process:&quot;</span>
+
+    <span class='opts identifier id'>opts</span><span class='dot token'>.</span><span class='on identifier id'>on</span><span class='lparen token'>(</span><span class='string val'>&quot;-d&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;Run as a daemon.&quot;</span><span class='rparen token'>)</span> <span class='do do kw'>do</span>
+      <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:daemonize</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+    <span class='end end kw'>end</span>
+
+    <span class='opts identifier id'>opts</span><span class='dot token'>.</span><span class='on identifier id'>on</span><span class='lparen token'>(</span><span class='string val'>&quot;-PFILE&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;--pid FILENAME&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;save PID in FILENAME when using -d option.&quot;</span><span class='comma token'>,</span> <span class='dstring node'>&quot;(default: #{options[:pid_file]})&quot;</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='pid_file identifier id'>pid_file</span><span class='bitor op'>|</span>
+      <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:pid_file</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='expand_path identifier id'>expand_path</span><span class='lparen token'>(</span><span class='pid_file identifier id'>pid_file</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+
+    <span class='opts identifier id'>opts</span><span class='dot token'>.</span><span class='on identifier id'>on</span><span class='lparen token'>(</span><span class='string val'>&quot;-u&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;--user USER&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;User to run as&quot;</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='user identifier id'>user</span><span class='bitor op'>|</span>
+      <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:user</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='user identifier id'>user</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span> <span class='eq op'>==</span> <span class='integer val'>0</span> <span class='question op'>?</span> <span class='Etc constant id'>Etc</span><span class='dot token'>.</span><span class='getpwnam identifier id'>getpwnam</span><span class='lparen token'>(</span><span class='user identifier id'>user</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='uid identifier id'>uid</span> <span class='colon op'>:</span> <span class='user identifier id'>user</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span>
+    <span class='end end kw'>end</span>
+
+    <span class='opts identifier id'>opts</span><span class='dot token'>.</span><span class='on identifier id'>on</span><span class='lparen token'>(</span><span class='string val'>&quot;-gGROUP&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;--group GROUP&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;Group to run as&quot;</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='group identifier id'>group</span><span class='bitor op'>|</span>
+      <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:group</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='group identifier id'>group</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span> <span class='eq op'>==</span> <span class='integer val'>0</span> <span class='question op'>?</span> <span class='Etc constant id'>Etc</span><span class='dot token'>.</span><span class='getgrnam identifier id'>getgrnam</span><span class='lparen token'>(</span><span class='group identifier id'>group</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='gid identifier id'>gid</span> <span class='colon op'>:</span> <span class='group identifier id'>group</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span>
+    <span class='end end kw'>end</span>
+
+    <span class='opts identifier id'>opts</span><span class='dot token'>.</span><span class='separator identifier id'>separator</span> <span class='string val'>&quot;&quot;</span><span class='semicolon token'>;</span> <span class='opts identifier id'>opts</span><span class='dot token'>.</span><span class='separator identifier id'>separator</span> <span class='string val'>&quot;Logging:&quot;</span>
+
+    <span class='opts identifier id'>opts</span><span class='dot token'>.</span><span class='on identifier id'>on</span><span class='lparen token'>(</span><span class='string val'>&quot;-L&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;--log [FILE]&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;Path to print debugging information.&quot;</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='log_path identifier id'>log_path</span><span class='bitor op'>|</span>
+      <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:logger</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='expand_path identifier id'>expand_path</span><span class='lparen token'>(</span><span class='log_path identifier id'>log_path</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+
+    <span class='begin begin kw'>begin</span>
+      <span class='require identifier id'>require</span> <span class='string val'>'syslog_logger'</span>
+
+      <span class='opts identifier id'>opts</span><span class='dot token'>.</span><span class='on identifier id'>on</span><span class='lparen token'>(</span><span class='string val'>&quot;-l&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;--syslog CHANNEL&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;Write logs to the syslog instead of a log file.&quot;</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='channel identifier id'>channel</span><span class='bitor op'>|</span>
+        <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:syslog_channel</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='channel identifier id'>channel</span>
+      <span class='end end kw'>end</span>
+    <span class='rescue rescue kw'>rescue</span> <span class='LoadError constant id'>LoadError</span>
+    <span class='end end kw'>end</span>
+
+    <span class='opts identifier id'>opts</span><span class='dot token'>.</span><span class='on identifier id'>on</span><span class='lparen token'>(</span><span class='string val'>&quot;-v&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;Increase logging verbosity (may be used multiple times).&quot;</span><span class='rparen token'>)</span> <span class='do do kw'>do</span>
+      <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:log_level</span><span class='rbrack token'>]</span> <span class='opasgn op'>-=</span> <span class='integer val'>1</span>
+    <span class='end end kw'>end</span>
+
+    <span class='opts identifier id'>opts</span><span class='dot token'>.</span><span class='on identifier id'>on</span><span class='lparen token'>(</span><span class='string val'>&quot;-t&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;--timeout [SECONDS]&quot;</span><span class='comma token'>,</span> <span class='Integer constant id'>Integer</span><span class='comma token'>,</span>
+            <span class='string val'>&quot;Time in seconds before disconnecting inactive clients (0 to disable).&quot;</span><span class='comma token'>,</span>
+            <span class='dstring node'>&quot;(default: #{options[:timeout]})&quot;</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='timeout identifier id'>timeout</span><span class='bitor op'>|</span>
+      <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:timeout</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='timeout identifier id'>timeout</span>
+    <span class='end end kw'>end</span>
+
+    <span class='opts identifier id'>opts</span><span class='dot token'>.</span><span class='separator identifier id'>separator</span> <span class='string val'>&quot;&quot;</span><span class='semicolon token'>;</span> <span class='opts identifier id'>opts</span><span class='dot token'>.</span><span class='separator identifier id'>separator</span> <span class='string val'>&quot;Miscellaneous:&quot;</span>
+
+    <span class='opts identifier id'>opts</span><span class='dot token'>.</span><span class='on_tail identifier id'>on_tail</span><span class='lparen token'>(</span><span class='string val'>&quot;-?&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;--help&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;Display this usage information.&quot;</span><span class='rparen token'>)</span> <span class='do do kw'>do</span>
+      <span class='puts identifier id'>puts</span> <span class='dstring node'>&quot;#{opts}\n&quot;</span>
+      <span class='exit identifier id'>exit</span>
+    <span class='end end kw'>end</span>
+
+    <span class='opts identifier id'>opts</span><span class='dot token'>.</span><span class='on_tail identifier id'>on_tail</span><span class='lparen token'>(</span><span class='string val'>&quot;-V&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;--version&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;Print version number and exit.&quot;</span><span class='rparen token'>)</span> <span class='do do kw'>do</span>
+      <span class='puts identifier id'>puts</span> <span class='dstring node'>&quot;Starling #{StarlingServer::VERSION}\n\n&quot;</span>
+      <span class='exit identifier id'>exit</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span><span class='dot token'>.</span><span class='parse! fid id'>parse!</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>setup_signal_traps</h3>
+</div><div id="setup_signal_traps-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>setup_signal_traps</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+200
+201
+202
+203</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/starling/server_runner.rb', line 200</span>
+
+<span class='def def kw'>def</span> <span class='setup_signal_traps identifier id'>setup_signal_traps</span>
+  <span class='Signal constant id'>Signal</span><span class='dot token'>.</span><span class='trap identifier id'>trap</span><span class='lparen token'>(</span><span class='string val'>&quot;INT&quot;</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='shutdown identifier id'>shutdown</span> <span class='rbrace token'>}</span>
+  <span class='Signal constant id'>Signal</span><span class='dot token'>.</span><span class='trap identifier id'>trap</span><span class='lparen token'>(</span><span class='string val'>&quot;TERM&quot;</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='shutdown identifier id'>shutdown</span> <span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>shutdown</h3>
+</div><div id="shutdown-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>shutdown</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/starling/server_runner.rb', line 189</span>
+
+<span class='def def kw'>def</span> <span class='shutdown identifier id'>shutdown</span>
+  <span class='begin begin kw'>begin</span>
+    <span class='STDOUT constant id'>STDOUT</span><span class='dot token'>.</span><span class='puts identifier id'>puts</span> <span class='string val'>&quot;Shutting down.&quot;</span>
+    <span class='StarlingServer constant id'>StarlingServer</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='dot token'>.</span><span class='logger identifier id'>logger</span><span class='dot token'>.</span><span class='info identifier id'>info</span> <span class='string val'>&quot;Shutting down.&quot;</span>
+    <span class='@server ivar id'>@server</span><span class='dot token'>.</span><span class='stop identifier id'>stop</span>
+  <span class='rescue rescue kw'>rescue</span> <span class='Object constant id'>Object</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
+    <span class='STDERR constant id'>STDERR</span><span class='dot token'>.</span><span class='puts identifier id'>puts</span> <span class='dstring node'>&quot;There was an error shutting down: #{e}&quot;</span>
+    <span class='exit identifier id'>exit</span><span class='lparen token'>(</span><span class='integer val'>70</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>start</h3>
+</div><div id="start-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>start</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/starling/server_runner.rb', line 169</span>
+
+<span class='def def kw'>def</span> <span class='start identifier id'>start</span>
+  <span class='drop_privileges identifier id'>drop_privileges</span>
+
+  <span class='@process ivar id'>@process</span><span class='dot token'>.</span><span class='daemonize identifier id'>daemonize</span> <span class='if if_mod kw'>if</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:daemonize</span><span class='rbrack token'>]</span>
+
+  <span class='setup_signal_traps identifier id'>setup_signal_traps</span>
+  <span class='@process ivar id'>@process</span><span class='dot token'>.</span><span class='write_pid_file identifier id'>write_pid_file</span>
+
+  <span class='STDOUT constant id'>STDOUT</span><span class='dot token'>.</span><span class='puts identifier id'>puts</span> <span class='dstring node'>&quot;Starting at #{options[:host]}:#{options[:port]}.&quot;</span>
+  <span class='@server ivar id'>@server</span> <span class='assign token'>=</span> <span class='StarlingServer constant id'>StarlingServer</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='@server ivar id'>@server</span><span class='dot token'>.</span><span class='run identifier id'>run</span>
+
+  <span class='@process ivar id'>@process</span><span class='dot token'>.</span><span class='remove_pid_file identifier id'>remove_pid_file</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

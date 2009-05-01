@@ -1,0 +1,219 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: Nokogiri::HTML::Builder</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class Nokogiri_HTML_Builder">
+  <h1 class="title">Class: Nokogiri::HTML::Builder</h1>
+  <div class="section inheritance">
+  <ul>
+  <li><a href='../XML/Builder.html' title='Nokogiri::XML::Builder'>Nokogiri::XML::Builder</a></li><ul><li>Nokogiri::HTML::Builder</li>
+  </ul></ul>
+</div><div class="section docstring">
+  <p>
+Nokogiri HTML builder is used for building HTML documents. It is very
+similar to the Nokogiri::XML::Builder. In fact, you should go read the
+documentation for Nokogiri::XML::Builder before reading this documentation.
+</p>
+<h2>Synopsis:</h2>
+<p>
+Create an HTML document with a body that has an onload attribute, and a
+span tag with a class of &quot;bold&quot; that has content of &quot;Hello
+world&quot;.
+</p>
+<pre class="code">
+  <span class='builder identifier id'>builder</span> <span class='assign token'>=</span> <span class='Nokogiri constant id'>Nokogiri</span><span class='colon2 op'>::</span><span class='HTML constant id'>HTML</span><span class='colon2 op'>::</span><span class='Builder constant id'>Builder</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='doc identifier id'>doc</span><span class='bitor op'>|</span>
+    <span class='doc identifier id'>doc</span><span class='dot token'>.</span><span class='html identifier id'>html</span> <span class='lbrace token'>{</span>
+      <span class='doc identifier id'>doc</span><span class='dot token'>.</span><span class='body identifier id'>body</span><span class='lparen token'>(</span><span class='symbol val'>:onload</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'some_func();'</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span>
+        <span class='doc identifier id'>doc</span><span class='dot token'>.</span><span class='span identifier id'>span</span><span class='dot token'>.</span><span class='bold identifier id'>bold</span> <span class='lbrace token'>{</span>
+          <span class='doc identifier id'>doc</span><span class='dot token'>.</span><span class='text identifier id'>text</span> <span class='string val'>&quot;Hello world&quot;</span>
+        <span class='rbrace token'>}</span>
+      <span class='rbrace token'>}</span>
+    <span class='rbrace token'>}</span>
+  <span class='end end kw'>end</span>
+  <span class='puts identifier id'>puts</span> <span class='builder identifier id'>builder</span><span class='dot token'>.</span><span class='to_html identifier id'>to_html</span>
+</pre>
+<p>
+The HTML builder inherits from the XML builder, so make sure to read the
+Nokogiri::XML::Builder documentation.
+</p>
+
+</div><div class="section constants">
+  
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <p class="inherited_msg">
+    This class inherits a constructor from <a href='../XML/Builder.html#initialize-instance_method' title='Nokogiri::XML::Builder'>Nokogiri::XML::Builder</a>.
+  </p>
+</div><div class="section methodmissing">
+  <h1>Dynamic Method Handling</h1>
+
+  <p class="note">
+    This class handles dynamic methods through the <tt>method_missing</tt> method
+    
+      in the class <a href='../XML/Builder.html' title='Nokogiri::XML::Builder'>Nokogiri::XML::Builder</a>
+    
+  </p>
+
+  <div id="method_missing-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>method_missing</span><span class='args'>method, *args, &amp;block </span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/nokogiri/xml/builder.rb', line 173</span>
+
+<span class='def def kw'>def</span> <span class='method_missing identifier id'>method_missing</span> <span class='method identifier id'>method</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span> 
+  <span class='if if kw'>if</span> <span class='@context ivar id'>@context</span> <span class='andop op'>&amp;&amp;</span> <span class='@context ivar id'>@context</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='rparen token'>)</span>
+    <span class='@context ivar id'>@context</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+    <span class='node identifier id'>node</span> <span class='assign token'>=</span> <span class='Nokogiri constant id'>Nokogiri</span><span class='colon2 op'>::</span><span class='XML constant id'>XML</span><span class='colon2 op'>::</span><span class='Node constant id'>Node</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='sub identifier id'>sub</span><span class='lparen token'>(</span><span class='regexp val'>/[_!]$/</span><span class='comma token'>,</span> <span class='string val'>''</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='@doc ivar id'>@doc</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='n identifier id'>n</span><span class='bitor op'>|</span>
+      <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='arg identifier id'>arg</span><span class='bitor op'>|</span>
+        <span class='case case kw'>case</span> <span class='arg identifier id'>arg</span>
+        <span class='when when kw'>when</span> <span class='Hash constant id'>Hash</span>
+          <span class='arg identifier id'>arg</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='k identifier id'>k</span><span class='comma token'>,</span><span class='v identifier id'>v</span><span class='bitor op'>|</span> <span class='n identifier id'>n</span><span class='lbrack token'>[</span><span class='k identifier id'>k</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='v identifier id'>v</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='rbrace token'>}</span>
+        <span class='else else kw'>else</span>
+          <span class='n identifier id'>n</span><span class='dot token'>.</span><span class='content identifier id'>content</span> <span class='assign token'>=</span> <span class='arg identifier id'>arg</span>
+        <span class='end end kw'>end</span>
+      <span class='end end kw'>end</span>
+    <span class='rbrace token'>}</span>
+    <span class='insert identifier id'>insert</span><span class='lparen token'>(</span><span class='node identifier id'>node</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#to_html-instance_method' title='#to_html'>#to_html</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Convert the builder to HTML.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table><div class="inherited">
+  
+  <div>
+    <h1>Public Instance Methods Inherited from <a href='../XML/Builder.html' title='Nokogiri::XML::Builder'>Nokogiri::XML::Builder</a></h1>
+    <p><span class='name'><a href='../XML/Builder.html#cdata-instance_method' title='cdata'>cdata</a></span>, <span class='name'><a href='../XML/Builder.html#text-instance_method' title='text'>text</a></span>, <span class='name'><a href='../XML/Builder.html#to_xml-instance_method' title='to_xml'>to_xml</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>to_html</h3>
+</div><div id="to_html-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>to_html</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Convert the builder to HTML
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+30
+31
+32</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/nokogiri/html/builder.rb', line 30</span>
+
+<span class='def def kw'>def</span> <span class='to_html identifier id'>to_html</span>
+  <span class='@doc ivar id'>@doc</span><span class='dot token'>.</span><span class='to_html identifier id'>to_html</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

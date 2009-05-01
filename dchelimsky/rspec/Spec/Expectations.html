@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: Spec::Expectations</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module Spec_Expectations">
+  <h1 class="title">Module: Spec::Expectations</h1>
+  <div class="section docstring">
+  <p>
+Spec::Expectations lets you set expectations on your objects.
+</p>
+<pre class="code">
+  <span class='result identifier id'>result</span><span class='dot token'>.</span><span class='should identifier id'>should</span> <span class='eq op'>==</span> <span class='integer val'>37</span>
+  <span class='team identifier id'>team</span><span class='dot token'>.</span><span class='should identifier id'>should</span> <span class='have identifier id'>have</span><span class='lparen token'>(</span><span class='integer val'>11</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='players_on_the_field identifier id'>players_on_the_field</span>
+</pre>
+<h2>How Expectations work.</h2>
+<p>
+Spec::Expectations adds two methods to Object:
+</p>
+<pre class="code">
+  <span class='should identifier id'>should</span><span class='lparen token'>(</span><span class='matcher identifier id'>matcher</span><span class='assign token'>=</span><span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='should_not identifier id'>should_not</span><span class='lparen token'>(</span><span class='matcher identifier id'>matcher</span><span class='assign token'>=</span><span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+</pre>
+<p>
+Both methods take an optional Expression Matcher (See Spec::Matchers).
+</p>
+<p>
+When <tt>should</tt> receives an Expression Matcher, it calls
+<tt>matches?(self)</tt>. If it returns <tt>true</tt>, the spec passes and
+execution continues. If it returns <tt>false</tt>, then the spec fails with
+the message returned by <tt>matcher.failure_message</tt>.
+</p>
+<p>
+Similarly, when <tt>should_not</tt> receives a matcher, it calls
+<tt>matches?(self)</tt>. If it returns <tt>false</tt>, the spec passes and
+execution continues. If it returns <tt>true</tt>, then the spec fails with
+the message returned by <tt>matcher.negative_failure_message</tt>.
+</p>
+<p>
+RSpec ships with a standard set of useful matchers, and writing your own
+matchers is quite simple. See Spec::Matchers for details.
+</p>
+
+</div><div class="section constants">
+  
+</div>
+</div>
+    </div>
+  </body>
+</html>

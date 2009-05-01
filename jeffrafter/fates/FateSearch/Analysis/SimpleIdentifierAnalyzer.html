@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: FateSearch::Analysis::SimpleIdentifierAnalyzer</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class FateSearch_Analysis_SimpleIdentifierAnalyzer">
+  <h1 class="title">Class: FateSearch::Analysis::SimpleIdentifierAnalyzer</h1>
+  <div class="section inheritance">
+  <ul>
+  <li><a href='Analyzer.html' title='FateSearch::Analysis::Analyzer'>FateSearch::Analysis::Analyzer</a></li><ul><li>FateSearch::Analysis::SimpleIdentifierAnalyzer</li>
+  </ul></ul>
+</div><div class="section docstring">
+  <p>
+Basic identifier analysis. Attempts to split a section of text based on
+simple identifier rules. See <tt>append_suffixes</tt> for more information
+</p>
+
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#append_suffixes-instance_method' title='#append_suffixes'>#append_suffixes</a></span><span class='args'>(array, text, offset, base_offset, index)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Checks the text for identifiers that start with letter, followed by letters
+or numbers or an underscore.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>append_suffixes</h3>
+</div><div id="append_suffixes-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>append_suffixes</span><span class='args'>(array, text, offset, base_offset, index)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Checks the text for identifiers that start with letter, followed by letters
+or numbers or an underscore. Each match is stored as an index to the
+suffix.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+15
+16
+17
+18
+19
+20
+21
+22
+23</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/analysis/simple_identifier_analyzer.rb', line 15</span>
+
+<span class='def def kw'>def</span> <span class='append_suffixes identifier id'>append_suffixes</span><span class='lparen token'>(</span><span class='array identifier id'>array</span><span class='comma token'>,</span> <span class='text identifier id'>text</span><span class='comma token'>,</span> <span class='offset identifier id'>offset</span><span class='comma token'>,</span> <span class='base_offset identifier id'>base_offset</span><span class='comma token'>,</span> <span class='index identifier id'>index</span><span class='rparen token'>)</span>
+  <span class='sc identifier id'>sc</span> <span class='assign token'>=</span> <span class='StringScanner constant id'>StringScanner</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='text identifier id'>text</span><span class='rparen token'>)</span>
+  <span class='sc identifier id'>sc</span><span class='dot token'>.</span><span class='skip identifier id'>skip</span><span class='lparen token'>(</span><span class='regexp val'>/[^A-Za-z_]+/</span><span class='rparen token'>)</span>
+  <span class='until until kw'>until</span> <span class='sc identifier id'>sc</span><span class='dot token'>.</span><span class='eos? fid id'>eos?</span>
+    <span class='array identifier id'>array</span> <span class='lshft op'>&lt;&lt;</span> <span class='lbrack token'>[</span><span class='lparen token'>(</span><span class='sc identifier id'>sc</span><span class='dot token'>.</span><span class='pos identifier id'>pos</span> <span class='plus op'>+</span> <span class='offset identifier id'>offset</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='base_offset identifier id'>base_offset</span><span class='comma token'>,</span> <span class='index identifier id'>index</span><span class='rbrack token'>]</span>
+    <span class='break break kw'>break</span> <span class='unless unless_mod kw'>unless</span> <span class='sc identifier id'>sc</span><span class='dot token'>.</span><span class='skip identifier id'>skip</span><span class='lparen token'>(</span><span class='regexp val'>/[A-Za-z_][A-Za-z0-9_]*[^A-Za-z_]*/</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+  <span class='array identifier id'>array</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

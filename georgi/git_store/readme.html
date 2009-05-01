@@ -1,0 +1,283 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <title>README</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section docstring readme">
+        <p>
+Git Store - using Git as versioned data store in Ruby
+</p>
+<h6>===============================================</h6>
+<p>
+GitStore implements a versioned data store based on the revision management
+system [Git][1]. You can store object hierarchies as nested hashes, which
+will be mapped on the directory structure of a git repository. Basically
+GitStore checks out the repository into a in-memory representation, which
+can be modified and finally committed.
+</p>
+<p>
+GitStore supports transactions, so that updates to the store either fail or
+succeed completely.
+</p>
+<p>
+GitStore manages concurrent access by a file locking scheme. So only one
+process can start a transaction at one time. This is implemented by locking
+the `refs/head/&lt;branch&gt;.lock` file, which is also respected by the
+git binary.
+</p>
+<p>
+### Installation
+</p>
+<p>
+GitStore can be installed as gem easily, if you have RubyGems 1.2.0:
+</p>
+<pre class="code">
+    $ <span class='gem identifier id'>gem</span> <span class='sources identifier id'>sources</span> <span class='minus op'>-</span><span class='a identifier id'>a</span> <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/gems.github.com
+    $ sudo gem install georgi-git_store
+</span></pre>
+<p>
+If you don&#8217;t have RubyGems 1.2.0, you may download the package on the
+</p>
+<dl>
+<dt>github page][4</dt><dd>and build the gem yourself:
+
+</dd>
+</dl>
+<pre class="code">
+    $ <span class='gem identifier id'>gem</span> <span class='build identifier id'>build</span> <span class='git_store identifier id'>git_store</span><span class='dot token'>.</span><span class='gemspec identifier id'>gemspec</span>
+    $ <span class='sudo identifier id'>sudo</span> <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='git_store identifier id'>git_store</span>
+</pre>
+<p>
+### Usage Example
+</p>
+<p>
+First thing you should do, is to initialize a new git repository.
+</p>
+<pre class="code">
+    $ <span class='mkdir identifier id'>mkdir</span> <span class='test identifier id'>test</span>
+    $ <span class='cd identifier id'>cd</span> <span class='test identifier id'>test</span>
+    $ <span class='git identifier id'>git</span> <span class='init identifier id'>init</span>
+</pre>
+<p>
+Now you can instantiate a GitStore instance and store some data. The data
+will be serialized depending on the file extension. So for YAML storage you
+can use the &#8216;yml&#8217; extension:
+</p>
+<pre class="code">
+    <span class='@@ruby ivar id'>@@ruby</span>
+
+    <span class='store identifier id'>store</span> <span class='assign token'>=</span> <span class='GitStore constant id'>GitStore</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'/path/to/repo'</span><span class='rparen token'>)</span>
+
+    <span class='store identifier id'>store</span><span class='lbrack token'>[</span><span class='string val'>'users/matthias.yml'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='User constant id'>User</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'Matthias'</span><span class='rparen token'>)</span>
+    <span class='store identifier id'>store</span><span class='lbrack token'>[</span><span class='string val'>'pages/home.yml'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='Page constant id'>Page</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'matthias'</span><span class='comma token'>,</span> <span class='string val'>'Home'</span><span class='rparen token'>)</span>
+
+    <span class='store identifier id'>store</span><span class='dot token'>.</span><span class='commit identifier id'>commit</span> <span class='string val'>'Added user and page'</span>
+
+    <span class='comment val'># Note, that directories will be created automatically.</span>
+    <span class='comment val'># Another way to access a path is:</span>
+
+    <span class='store identifier id'>store</span><span class='lbrack token'>[</span><span class='string val'>'config'</span><span class='comma token'>,</span> <span class='string val'>'wiki.yml'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span> <span class='string val'>'name'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'My Personal Wiki'</span> <span class='rbrace token'>}</span>
+
+    <span class='comment val'># Finally you can access the git store as a Hash of Hashes, but in</span>
+    <span class='comment val'># this case you have to create the Tree objects manually:</span>
+
+    <span class='puts identifier id'>puts</span> <span class='store identifier id'>store</span><span class='lbrack token'>[</span><span class='string val'>'users'</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='string val'>'wiki.yml'</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='string val'>'name'</span><span class='rbrack token'>]</span>
+</pre>
+<p>
+### Transactions
+</p>
+<p>
+If you access the repository from different processes, you should write to
+your store using transactions. If something goes wrong inside a
+transaction, all changes will be rolled back to the original state.
+</p>
+<pre class="code">
+    <span class='@@ruby ivar id'>@@ruby</span>
+
+    <span class='store identifier id'>store</span> <span class='assign token'>=</span> <span class='GitStore constant id'>GitStore</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'/path/to/repo'</span><span class='rparen token'>)</span>
+
+    <span class='store identifier id'>store</span><span class='dot token'>.</span><span class='transaction identifier id'>transaction</span> <span class='do do kw'>do</span>
+      <span class='comment val'># If an exception happens here, the transaction will be aborted.</span>
+      <span class='store identifier id'>store</span><span class='lbrack token'>[</span><span class='string val'>'pages/home.yml'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='Page constant id'>Page</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'matthias'</span><span class='comma token'>,</span> <span class='string val'>'Home'</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+
+    <span class='comment val'># transaction without a block</span>
+
+    <span class='store identifier id'>store</span><span class='dot token'>.</span><span class='start_transaction identifier id'>start_transaction</span>
+
+    <span class='store identifier id'>store</span><span class='lbrack token'>[</span><span class='string val'>'pages/home.yml'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='Page constant id'>Page</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'matthias'</span><span class='comma token'>,</span> <span class='string val'>'Home'</span><span class='rparen token'>)</span>
+
+    <span class='store identifier id'>store</span><span class='dot token'>.</span><span class='rollback identifier id'>rollback</span> <span class='comment val'># This will restore the original state</span>
+</pre>
+<p>
+### Performance
+</p>
+<p>
+Maintaining 1000 objects in one folder seems to yield quite usable results.
+If I run the following benchmark:
+</p>
+<pre class="code">
+    <span class='@@ruby ivar id'>@@ruby</span>
+
+    <span class='Benchmark constant id'>Benchmark</span><span class='dot token'>.</span><span class='bm identifier id'>bm</span> <span class='integer val'>20</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='x identifier id'>x</span><span class='bitor op'>|</span>
+      <span class='x identifier id'>x</span><span class='dot token'>.</span><span class='report identifier id'>report</span> <span class='string val'>'store 1000 objects'</span> <span class='do do kw'>do</span>
+        <span class='store identifier id'>store</span><span class='dot token'>.</span><span class='transaction identifier id'>transaction</span> <span class='lbrace token'>{</span> <span class='string val'>'aaa'</span><span class='dot token'>.</span><span class='upto identifier id'>upto</span><span class='lparen token'>(</span><span class='string val'>'jjj'</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='key identifier id'>key</span><span class='bitor op'>|</span> <span class='store identifier id'>store</span><span class='lbrack token'>[</span><span class='key identifier id'>key</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='rand identifier id'>rand</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='rbrace token'>}</span> <span class='rbrace token'>}</span>
+      <span class='end end kw'>end</span>
+      <span class='x identifier id'>x</span><span class='dot token'>.</span><span class='report identifier id'>report</span> <span class='string val'>'commit one object'</span> <span class='do do kw'>do</span>
+        <span class='store identifier id'>store</span><span class='dot token'>.</span><span class='transaction identifier id'>transaction</span> <span class='lbrace token'>{</span> <span class='store identifier id'>store</span><span class='lbrack token'>[</span><span class='string val'>'aa'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='rand identifier id'>rand</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='rbrace token'>}</span>
+      <span class='end end kw'>end</span>
+      <span class='x identifier id'>x</span><span class='dot token'>.</span><span class='report identifier id'>report</span> <span class='string val'>'load 1000 objects'</span> <span class='do do kw'>do</span>
+        <span class='GitStore constant id'>GitStore</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'.'</span><span class='rparen token'>)</span>
+      <span class='end end kw'>end</span>
+      <span class='x identifier id'>x</span><span class='dot token'>.</span><span class='report identifier id'>report</span> <span class='string val'>'load 1000 with grit'</span> <span class='do do kw'>do</span>
+        <span class='Grit constant id'>Grit</span><span class='colon2 op'>::</span><span class='Repo constant id'>Repo</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'.'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='tree identifier id'>tree</span><span class='dot token'>.</span><span class='contents identifier id'>contents</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='e identifier id'>e</span><span class='bitor op'>|</span> <span class='e identifier id'>e</span><span class='dot token'>.</span><span class='data identifier id'>data</span> <span class='rbrace token'>}</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+</pre>
+<p>
+I get following results:
+</p>
+<pre class="code">
+                              <span class='user identifier id'>user</span>     <span class='system identifier id'>system</span>      <span class='total identifier id'>total</span>        <span class='real identifier id'>real</span>
+    <span class='store identifier id'>store</span> <span class='integer val'>1000</span> <span class='objects identifier id'>objects</span>    <span class='float val'>4.150000</span>   <span class='integer val'>0</span><span class='integer val'>.880000</span>   <span class='float val'>5.030000</span> <span class='lparen token'>(</span>  <span class='float val'>5.035804</span><span class='rparen token'>)</span>
+    <span class='commit identifier id'>commit</span> <span class='one identifier id'>one</span> <span class='object identifier id'>object</span>     <span class='integer val'>0</span><span class='integer val'>.070000</span>   <span class='integer val'>0</span><span class='integer val'>.020000</span>   <span class='integer val'>0</span><span class='integer val'>.090000</span> <span class='lparen token'>(</span>  <span class='integer val'>0</span><span class='integer val'>.082252</span><span class='rparen token'>)</span>
+    <span class='load identifier id'>load</span> <span class='integer val'>1000</span> <span class='objects identifier id'>objects</span>     <span class='integer val'>0</span><span class='integer val'>.630000</span>   <span class='integer val'>0</span><span class='integer val'>.120000</span>   <span class='integer val'>0</span><span class='integer val'>.750000</span> <span class='lparen token'>(</span>  <span class='integer val'>0</span><span class='integer val'>.750765</span><span class='rparen token'>)</span>
+    <span class='load identifier id'>load</span> <span class='integer val'>1000</span> <span class='with identifier id'>with</span> <span class='grit identifier id'>grit</span>   <span class='float val'>1.960000</span>   <span class='integer val'>0</span><span class='integer val'>.260000</span>   <span class='float val'>2.220000</span> <span class='lparen token'>(</span>  <span class='float val'>2.228583</span><span class='rparen token'>)</span>
+</pre>
+<p>
+In a real world scenario, you should partition your data. For example, my
+blog engine [Shinmun][7], stores posts in folders by month.
+</p>
+<p>
+One nice thing about the results is, that GitStore loads large directories
+three times faster than [Grit][2].
+</p>
+<p>
+### Where is my data?
+</p>
+<p>
+When you call the `commit` method, your data is written back straight into
+the git repository. No intermediate file representation. So if you want to
+look into your data, you can use some git browser like
+</p>
+<dl>
+<dt>git-gui][6</dt><dd>or just checkout the files:
+
+</dd>
+</dl>
+<pre class="code">
+    $ <span class='git identifier id'>git</span> <span class='checkout identifier id'>checkout</span>
+</pre>
+<p>
+### Development Mode
+</p>
+<p>
+There is also some kind of development mode, which is convenient to use.
+Imagine you are tweaking the design of your blog, which is storing its
+pages in a GitStore. You don&#8217;t want to commit each change to some
+change in your browser. FileStore helps you here:
+</p>
+<pre class="code">
+    <span class='@@ruby ivar id'>@@ruby</span>
+
+    <span class='store identifier id'>store</span> <span class='assign token'>=</span> <span class='GitStore constant id'>GitStore</span><span class='colon2 op'>::</span><span class='FileStore constant id'>FileStore</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'.'</span><span class='rparen token'>)</span>
+
+    <span class='comment val'># Access the file 'posts/2009/1/git-store.md'</span>
+
+    <span class='p identifier id'>p</span> <span class='store identifier id'>store</span><span class='lbrack token'>[</span><span class='string val'>'posts'</span><span class='comma token'>,</span> <span class='integer val'>2009</span><span class='comma token'>,</span> <span class='integer val'>1</span><span class='comma token'>,</span> <span class='string val'>'git-store.md'</span><span class='rbrack token'>]</span>
+</pre>
+<p>
+FileStore forbids you to write to the disk, as this makes no sense. If you
+want to store something programmatically, you have to use the real
+GitStore.
+</p>
+<p>
+### Iteration
+</p>
+<p>
+Iterating over the data objects is quite easy. Furthermore you can iterate
+over trees and subtrees, so you can partition your data in a meaningful
+way. For example you may separate the config files and the pages of a wiki:
+</p>
+<pre class="code">
+    <span class='@@ruby ivar id'>@@ruby</span>
+
+    <span class='store identifier id'>store</span><span class='lbrack token'>[</span><span class='string val'>'pages/home.yml'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='Page constant id'>Page</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'matthias'</span><span class='comma token'>,</span> <span class='string val'>'Home'</span><span class='rparen token'>)</span>
+    <span class='store identifier id'>store</span><span class='lbrack token'>[</span><span class='string val'>'pages/about.yml'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='Page constant id'>Page</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'matthias'</span><span class='comma token'>,</span> <span class='string val'>'About'</span><span class='rparen token'>)</span>
+    <span class='store identifier id'>store</span><span class='lbrack token'>[</span><span class='string val'>'pages/links.yml'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='WikiPage constant id'>WikiPage</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'matthias'</span><span class='comma token'>,</span> <span class='string val'>'Links'</span><span class='rparen token'>)</span>
+    <span class='store identifier id'>store</span><span class='lbrack token'>[</span><span class='string val'>'config/wiki.yml'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span> <span class='string val'>'name'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'My Personal Wiki'</span> <span class='rbrace token'>}</span>
+
+    <span class='store identifier id'>store</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='obj identifier id'>obj</span><span class='bitor op'>|</span> <span class='dot3 op'>...</span> <span class='rbrace token'>}</span> <span class='comment val'># yields all pages and the config file</span>
+    <span class='store identifier id'>store</span><span class='lbrack token'>[</span><span class='string val'>'pages'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='page identifier id'>page</span><span class='bitor op'>|</span> <span class='dot3 op'>...</span> <span class='rbrace token'>}</span> <span class='comment val'># yields only the pages</span>
+</pre>
+<p>
+### Serialization
+</p>
+<p>
+Serialization is dependent on the filename extension. You can add more
+handlers if you like, the interface is like this:
+</p>
+<pre class="code">
+    <span class='@@ruby ivar id'>@@ruby</span>
+
+    <span class='class class kw'>class</span> <span class='YAMLHandler constant id'>YAMLHandler</span>
+      <span class='def def kw'>def</span> <span class='read identifier id'>read</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='comma token'>,</span> <span class='data identifier id'>data</span><span class='rparen token'>)</span>
+        <span class='YAML constant id'>YAML</span><span class='dot token'>.</span><span class='load identifier id'>load</span><span class='lparen token'>(</span><span class='data identifier id'>data</span><span class='rparen token'>)</span>
+      <span class='end end kw'>end</span>
+
+      <span class='def def kw'>def</span> <span class='write identifier id'>write</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='comma token'>,</span> <span class='data identifier id'>data</span><span class='rparen token'>)</span>
+        <span class='data identifier id'>data</span><span class='dot token'>.</span><span class='to_yaml identifier id'>to_yaml</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+
+    <span class='GitStore constant id'>GitStore</span><span class='colon2 op'>::</span><span class='Handler constant id'>Handler</span><span class='lbrack token'>[</span><span class='string val'>'yml'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='YAMLHandler constant id'>YAMLHandler</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+</pre>
+<p>
+Shinmun uses its own handler for files with `md` extension:
+</p>
+<pre class="code">
+    <span class='@@ruby ivar id'>@@ruby</span>
+
+    <span class='class class kw'>class</span> <span class='PostHandler constant id'>PostHandler</span>
+      <span class='def def kw'>def</span> <span class='read identifier id'>read</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='comma token'>,</span> <span class='data identifier id'>data</span><span class='rparen token'>)</span>
+        <span class='Post constant id'>Post</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='symbol val'>:path</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='path identifier id'>path</span><span class='comma token'>,</span> <span class='symbol val'>:src</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='data identifier id'>data</span><span class='rparen token'>)</span>
+      <span class='end end kw'>end</span>
+
+      <span class='def def kw'>def</span> <span class='write identifier id'>write</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='comma token'>,</span> <span class='post identifier id'>post</span><span class='rparen token'>)</span>
+        <span class='post identifier id'>post</span><span class='dot token'>.</span><span class='dump identifier id'>dump</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+
+    <span class='GitStore constant id'>GitStore</span><span class='colon2 op'>::</span><span class='Handler constant id'>Handler</span><span class='lbrack token'>[</span><span class='string val'>'md'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='PostHandler constant id'>PostHandler</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+</pre>
+<p>
+### GitStore on GitHub
+</p>
+<p>
+Download or fork the project on its [Github page][5]
+</p>
+<p>
+### Related Work
+</p>
+<p>
+John Wiegley already has done [something similar for Python][4].
+</p>
+<p>
+[1]: http://git.or.cz/ [2]: http://github.com/mojombo/grit [4]:
+http://www.newartisans.com/blog_files/git.versioned.data.store.php [5]:
+http://github.com/georgi/git_store [6]:
+http://www.kernel.org/pub/software/scm/git/docs/git-gui.html [7]:
+http://www.matthias-georgi.de/shinmun
+</p>
+
+      </div>
+    </div>
+  </body>
+</html>

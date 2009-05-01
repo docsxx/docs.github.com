@@ -1,0 +1,321 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: AjaxfulRating::ClassMethods</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module AjaxfulRating_ClassMethods">
+  <h1 class="title">Module: AjaxfulRating::ClassMethods</h1>
+  <div class="section mixins">
+  <h1>Included Modules</h1>
+  <p><a href='InstanceMethods.html' title='AjaxfulRating::InstanceMethods'>AjaxfulRating::InstanceMethods</a></p>
+</div><div class="section attributes">
+  <h1>Attributes</h1>
+
+  
+    <div class="instance">
+      <h2>Instance Attributes</h2>
+      <table>
+      
+        <tr>
+          <th class="name">options</td>
+          <td class="readwrite">
+            [<span id='options-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>options</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+      </table>
+    </div>
+  
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#ajaxful_rateable-instance_method' title='#ajaxful_rateable'>#ajaxful_rateable</a></span><span class='args'>(options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Extends the model to be easy ajaxly rateable.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#ajaxful_rater-instance_method' title='#ajaxful_rater'>#ajaxful_rater</a></span><span class='args'>(options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Makes the association between user and Rate model.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#max_rate_value-instance_method' title='#max_rate_value'>#max_rate_value</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Maximum value accepted when rating the model.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table><div class="included">
+  
+  <div>
+    <h1>Public Instance Methods Included from <a href='InstanceMethods.html' title='AjaxfulRating::InstanceMethods'>AjaxfulRating::InstanceMethods</a></h1>
+    <p><span class='name'><a href='InstanceMethods.html#caching_column_name-instance_method' title='caching_column_name'>caching_column_name</a></span>, <span class='name'><a href='InstanceMethods.html#rate-instance_method' title='rate'>rate</a></span>, <span class='name'><a href='InstanceMethods.html#rate_average-instance_method' title='rate_average'>rate_average</a></span>, <span class='name'><a href='InstanceMethods.html#rate_by-instance_method' title='rate_by'>rate_by</a></span>, <span class='name'><a href='InstanceMethods.html#rated_by%3F-instance_method' title='rated_by?'>rated_by?</a></span>, <span class='name'><a href='InstanceMethods.html#raters-instance_method' title='raters'>raters</a></span>, <span class='name'><a href='InstanceMethods.html#rates-instance_method' title='rates'>rates</a></span>, <span class='name'><a href='InstanceMethods.html#rates_sum-instance_method' title='rates_sum'>rates_sum</a></span>, <span class='name'><a href='InstanceMethods.html#total_rates-instance_method' title='total_rates'>total_rates</a></span>, <span class='name'><a href='InstanceMethods.html#update_cached_average-instance_method' title='update_cached_average'>update_cached_average</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>ajaxful_rateable</h3>
+</div><div id="ajaxful_rateable-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>ajaxful_rateable</span><span class='args'>(options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Extends the model to be easy ajaxly rateable.
+</p>
+<p>
+Options:
+</p>
+<ul>
+<li><tt>:stars</tt> Max number of stars that can be submitted.
+
+</li>
+<li><tt>:allow_update</tt> Set to true if you want users to be able to update
+their votes.
+
+</li>
+<li><tt>:cache_column</tt> Name of the column for storing the cached rating
+average.
+
+</li>
+</ul>
+<p>
+Example:
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='Article constant id'>Article</span> <span class='lt op'>&lt;</span> <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
+    <span class='ajaxful_rateable identifier id'>ajaxful_rateable</span> <span class='symbol val'>:stars</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>10</span><span class='comma token'>,</span> <span class='symbol val'>:cache_column</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:custom_column</span>
+  <span class='end end kw'>end</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/ajaxful_rating.rb', line 26</span>
+
+<span class='def def kw'>def</span> <span class='ajaxful_rateable identifier id'>ajaxful_rateable</span><span class='lparen token'>(</span><span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='has_many identifier id'>has_many</span> <span class='symbol val'>:rates_without_dimension</span><span class='comma token'>,</span> <span class='symbol val'>:as</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:rateable</span><span class='comma token'>,</span> <span class='symbol val'>:class_name</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'Rate'</span><span class='comma token'>,</span>
+    <span class='symbol val'>:dependent</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:destroy</span><span class='comma token'>,</span> <span class='symbol val'>:conditions</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='symbol val'>:dimension</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='nil nil kw'>nil</span><span class='rbrace token'>}</span>
+
+  
+  <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:dimensions</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='dimension identifier id'>dimension</span><span class='bitor op'>|</span>
+    <span class='has_many identifier id'>has_many</span> <span class='dstring node'>&quot;#{dimension}_rates&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:dependent</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:destroy</span><span class='comma token'>,</span>
+      <span class='symbol val'>:conditions</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='symbol val'>:dimension</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='dimension identifier id'>dimension</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='symbol val'>:class_name</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'Rate'</span><span class='comma token'>,</span> <span class='symbol val'>:as</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:rateable</span>
+  <span class='end end kw'>end</span> <span class='if if_mod kw'>if</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:dimensions</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Array constant id'>Array</span><span class='rparen token'>)</span>
+
+  <span class='@options ivar id'>@options</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='reverse_merge identifier id'>reverse_merge</span><span class='lparen token'>(</span>
+    <span class='symbol val'>:stars</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>5</span><span class='comma token'>,</span>
+    <span class='symbol val'>:allow_update</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span><span class='comma token'>,</span>
+    <span class='symbol val'>:cache_column</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:rating_average</span>
+  <span class='rparen token'>)</span>
+  <span class='include identifier id'>include</span> <span class='AjaxfulRating constant id'>AjaxfulRating</span><span class='colon2 op'>::</span><span class='InstanceMethods constant id'>InstanceMethods</span>
+  <span class='extend identifier id'>extend</span> <span class='AjaxfulRating constant id'>AjaxfulRating</span><span class='colon2 op'>::</span><span class='SingletonMethods constant id'>SingletonMethods</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>ajaxful_rater</h3>
+</div><div id="ajaxful_rater-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>ajaxful_rater</span><span class='args'>(options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Makes the association between user and Rate model.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+46
+47
+48</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/ajaxful_rating.rb', line 46</span>
+
+<span class='def def kw'>def</span> <span class='ajaxful_rater identifier id'>ajaxful_rater</span><span class='lparen token'>(</span><span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='has_many identifier id'>has_many</span> <span class='symbol val'>:rates</span><span class='comma token'>,</span> <span class='options identifier id'>options</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>max_rate_value</h3>
+</div><div id="max_rate_value-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>max_rate_value</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Maximum value accepted when rating the model. Default is 5.
+</p>
+<p>
+Change it by passing the :stars option to <tt>ajaxful_rateable</tt>
+</p>
+<pre class="code">
+  <span class='ajaxful_rateable identifier id'>ajaxful_rateable</span> <span class='symbol val'>:stars</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>10</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+55
+56
+57</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/ajaxful_rating.rb', line 55</span>
+
+<span class='def def kw'>def</span> <span class='max_rate_value identifier id'>max_rate_value</span>
+  <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:stars</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

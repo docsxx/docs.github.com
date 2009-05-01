@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: Shoulda::ActionController::Helpers</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module Shoulda_ActionController_Helpers">
+  <h1 class="title">Module: Shoulda::ActionController::Helpers</h1>
+  <div class="section constants">
+  <div class="thisclass">
+  <h1>Constants</h1>
+  <dl>
+    
+      <dt id="SPECIAL_INSTANCE_VARIABLES-constant">SPECIAL_INSTANCE_VARIABLES</dt>
+      <dd>%w{
+  _cookies
+  _flash
+  _headers
+  _params
+  _request
+  _response
+  _session
+  action_name
+  before_filter_chain_aborted
+  cookies
+  flash
+  headers
+  ignore_missing_templates
+  logger
+  params
+  request
+  request_origin
+  response
+  session
+  template
+  template_class
+  template_root
+  url
+  variables_added
+}.map(&amp;:to_s)</dd>
+    
+  </dl>
+</div>
+
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#instantiate_variables_from_assigns-instance_method' title='#instantiate_variables_from_assigns'>#instantiate_variables_from_assigns</a></span><span class='args'>(*names, &amp;blk)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>instantiate_variables_from_assigns</h3>
+</div><div id="instantiate_variables_from_assigns-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>instantiate_variables_from_assigns</span><span class='args'>(*names, &amp;blk)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/shoulda/action_controller/helpers.rb', line 33</span>
+
+<span class='def def kw'>def</span> <span class='instantiate_variables_from_assigns identifier id'>instantiate_variables_from_assigns</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='names identifier id'>names</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='blk identifier id'>blk</span><span class='rparen token'>)</span>
+  <span class='old identifier id'>old</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='names identifier id'>names</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='@response ivar id'>@response</span><span class='dot token'>.</span><span class='template identifier id'>template</span><span class='dot token'>.</span><span class='assigns identifier id'>assigns</span><span class='dot token'>.</span><span class='keys identifier id'>keys</span> <span class='minus op'>-</span> <span class='SPECIAL_INSTANCE_VARIABLES constant id'>SPECIAL_INSTANCE_VARIABLES</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='names identifier id'>names</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span>
+  <span class='names identifier id'>names</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='name identifier id'>name</span><span class='bitor op'>|</span>
+    <span class='old identifier id'>old</span><span class='lbrack token'>[</span><span class='name identifier id'>name</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='instance_variable_get identifier id'>instance_variable_get</span><span class='lparen token'>(</span><span class='dstring node'>&quot;@#{name}&quot;</span><span class='rparen token'>)</span>
+    <span class='instance_variable_set identifier id'>instance_variable_set</span><span class='lparen token'>(</span><span class='dstring node'>&quot;@#{name}&quot;</span><span class='comma token'>,</span> <span class='assigns identifier id'>assigns</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+  <span class='blk identifier id'>blk</span><span class='dot token'>.</span><span class='call identifier id'>call</span>
+  <span class='names identifier id'>names</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='name identifier id'>name</span><span class='bitor op'>|</span>
+    <span class='instance_variable_set identifier id'>instance_variable_set</span><span class='lparen token'>(</span><span class='dstring node'>&quot;@#{name}&quot;</span><span class='comma token'>,</span> <span class='old identifier id'>old</span><span class='lbrack token'>[</span><span class='name identifier id'>name</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

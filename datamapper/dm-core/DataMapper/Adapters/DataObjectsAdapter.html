@@ -1,0 +1,650 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: DataMapper::Adapters::DataObjectsAdapter</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class DataMapper_Adapters_DataObjectsAdapter">
+  <h1 class="title">Class: DataMapper::Adapters::DataObjectsAdapter</h1>
+  <div class="section inheritance">
+  <ul>
+  <li><a href='AbstractAdapter.html' title='DataMapper::Adapters::AbstractAdapter'>DataMapper::Adapters::AbstractAdapter</a></li><ul><li>DataMapper::Adapters::DataObjectsAdapter</li>
+  </ul></ul>
+</div><div class="section mixins">
+  <h1>Included Modules</h1>
+  <p><a href='DataObjectsAdapter/SQL.html' title='DataMapper::Adapters::DataObjectsAdapter::SQL'>DataMapper::Adapters::DataObjectsAdapter::SQL</a>, <a href='DataObjectsAdapter/Migration.html' title='DataMapper::Adapters::DataObjectsAdapter::Migration'>DataMapper::Adapters::DataObjectsAdapter::Migration</a></p>
+</div><div class="section docstring">
+  <p>
+You must inherit from the DoAdapter, and implement the required methods to
+adapt a database library for use with the DataMapper.
+</p>
+<p>
+NOTE: By inheriting from DataObjectsAdapter, you get a copy of all the
+standard sub-modules (Quoting, Coersion and Queries) in your own Adapter.
+You can extend and overwrite these copies without affecting the originals.
+</p>
+
+</div><div class="section constants">
+  
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>private</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(name, uri_or_options)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+160
+161
+162
+163
+164
+165
+166
+167</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/adapters/data_objects_adapter.rb', line 160</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='uri_or_options identifier id'>uri_or_options</span><span class='rparen token'>)</span>
+  <span class='super super kw'>super</span>
+
+  <span class='comment val'># Default the driver-specifc logger to DataMapper's logger</span>
+  <span class='if if kw'>if</span> <span class='driver_module identifier id'>driver_module</span> <span class='assign token'>=</span> <span class='DataObjects constant id'>DataObjects</span><span class='dot token'>.</span><span class='const_get identifier id'>const_get</span><span class='lparen token'>(</span><span class='@uri ivar id'>@uri</span><span class='dot token'>.</span><span class='scheme identifier id'>scheme</span><span class='dot token'>.</span><span class='capitalize identifier id'>capitalize</span><span class='rparen token'>)</span> <span class='rescue rescue kw'>rescue</span> <span class='nil nil kw'>nil</span>
+    <span class='driver_module identifier id'>driver_module</span><span class='dot token'>.</span><span class='logger identifier id'>logger</span> <span class='assign token'>=</span> <span class='DataMapper constant id'>DataMapper</span><span class='dot token'>.</span><span class='logger identifier id'>logger</span> <span class='if if_mod kw'>if</span> <span class='driver_module identifier id'>driver_module</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:logger=</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#create-instance_method' title='#create'>#create</a></span><span class='args'>(resources)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#delete-instance_method' title='#delete'>#delete</a></span><span class='args'>(query)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#execute-instance_method' title='#execute'>#execute</a></span><span class='args'>(statement, *bind_values)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Database-specific method.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#query-instance_method' title='#query'>#query</a></span><span class='args'>(statement, *bind_values)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#read_many-instance_method' title='#read_many'>#read_many</a></span><span class='args'>(query)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#read_one-instance_method' title='#read_one'>#read_one</a></span><span class='args'>(query)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#update-instance_method' title='#update'>#update</a></span><span class='args'>(attributes, query)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table><div class="inherited">
+  
+</div>
+<div class="clear"></div><div class="included">
+  
+  <div>
+    <h1>Public Instance Methods Included from <a href='DataObjectsAdapter/Migration.html' title='DataMapper::Adapters::DataObjectsAdapter::Migration'>DataMapper::Adapters::DataObjectsAdapter::Migration</a></h1>
+    <p><span class='name'><a href='DataObjectsAdapter/Migration.html#create_model_storage-instance_method' title='create_model_storage'>create_model_storage</a></span>, <span class='name'><a href='DataObjectsAdapter/Migration.html#destroy_model_storage-instance_method' title='destroy_model_storage'>destroy_model_storage</a></span>, <span class='name'><a href='DataObjectsAdapter/Migration.html#transaction_primitive-instance_method' title='transaction_primitive'>transaction_primitive</a></span>, <span class='name'><a href='DataObjectsAdapter/Migration.html#upgrade_model_storage-instance_method' title='upgrade_model_storage'>upgrade_model_storage</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>create</h3>
+</div><div id="create-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>create</span><span class='args'>(resources)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/adapters/data_objects_adapter.rb', line 13</span>
+
+<span class='def def kw'>def</span> <span class='create identifier id'>create</span><span class='lparen token'>(</span><span class='resources identifier id'>resources</span><span class='rparen token'>)</span>
+  <span class='created identifier id'>created</span> <span class='assign token'>=</span> <span class='integer val'>0</span>
+  <span class='resources identifier id'>resources</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='resource identifier id'>resource</span><span class='bitor op'>|</span>
+    <span class='repository identifier id'>repository</span> <span class='assign token'>=</span> <span class='resource identifier id'>resource</span><span class='dot token'>.</span><span class='repository identifier id'>repository</span>
+    <span class='model identifier id'>model</span>      <span class='assign token'>=</span> <span class='resource identifier id'>resource</span><span class='dot token'>.</span><span class='model identifier id'>model</span>
+    <span class='attributes identifier id'>attributes</span> <span class='assign token'>=</span> <span class='resource identifier id'>resource</span><span class='dot token'>.</span><span class='dirty_attributes identifier id'>dirty_attributes</span>
+
+    <span class='comment val'># TODO: make a model.identity_field method</span>
+    <span class='identity_field identifier id'>identity_field</span> <span class='assign token'>=</span> <span class='model identifier id'>model</span><span class='dot token'>.</span><span class='key identifier id'>key</span><span class='lparen token'>(</span><span class='repository identifier id'>repository</span><span class='dot token'>.</span><span class='name identifier id'>name</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='detect identifier id'>detect</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='p identifier id'>p</span><span class='bitor op'>|</span> <span class='p identifier id'>p</span><span class='dot token'>.</span><span class='serial? fid id'>serial?</span> <span class='rbrace token'>}</span>
+
+    <span class='statement identifier id'>statement</span> <span class='assign token'>=</span> <span class='create_statement identifier id'>create_statement</span><span class='lparen token'>(</span><span class='repository identifier id'>repository</span><span class='comma token'>,</span> <span class='model identifier id'>model</span><span class='comma token'>,</span> <span class='attributes identifier id'>attributes</span><span class='dot token'>.</span><span class='keys identifier id'>keys</span><span class='comma token'>,</span> <span class='identity_field identifier id'>identity_field</span><span class='rparen token'>)</span>
+    <span class='bind_values identifier id'>bind_values</span> <span class='assign token'>=</span> <span class='attributes identifier id'>attributes</span><span class='dot token'>.</span><span class='values identifier id'>values</span>
+
+    <span class='result identifier id'>result</span> <span class='assign token'>=</span> <span class='execute identifier id'>execute</span><span class='lparen token'>(</span><span class='statement identifier id'>statement</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='bind_values identifier id'>bind_values</span><span class='rparen token'>)</span>
+
+    <span class='if if kw'>if</span> <span class='result identifier id'>result</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span> <span class='eq op'>==</span> <span class='integer val'>1</span>
+      <span class='if if kw'>if</span> <span class='identity_field identifier id'>identity_field</span>
+        <span class='identity_field identifier id'>identity_field</span><span class='dot token'>.</span><span class='set! fid id'>set!</span><span class='lparen token'>(</span><span class='resource identifier id'>resource</span><span class='comma token'>,</span> <span class='result identifier id'>result</span><span class='dot token'>.</span><span class='insert_id identifier id'>insert_id</span><span class='rparen token'>)</span>
+      <span class='end end kw'>end</span>
+      <span class='created identifier id'>created</span> <span class='opasgn op'>+=</span> <span class='integer val'>1</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+  <span class='created identifier id'>created</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>delete</h3>
+</div><div id="delete-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>delete</span><span class='args'>(query)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+83
+84
+85
+86</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/adapters/data_objects_adapter.rb', line 83</span>
+
+<span class='def def kw'>def</span> <span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='query identifier id'>query</span><span class='rparen token'>)</span>
+  <span class='statement identifier id'>statement</span> <span class='assign token'>=</span> <span class='delete_statement identifier id'>delete_statement</span><span class='lparen token'>(</span><span class='query identifier id'>query</span><span class='rparen token'>)</span>
+  <span class='execute identifier id'>execute</span><span class='lparen token'>(</span><span class='statement identifier id'>statement</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='query identifier id'>query</span><span class='dot token'>.</span><span class='bind_values identifier id'>bind_values</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>execute</h3>
+</div><div id="execute-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>execute</span><span class='args'>(statement, *bind_values)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Database-specific method
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+89
+90
+91
+92
+93
+94</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/adapters/data_objects_adapter.rb', line 89</span>
+
+<span class='def def kw'>def</span> <span class='execute identifier id'>execute</span><span class='lparen token'>(</span><span class='statement identifier id'>statement</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='bind_values identifier id'>bind_values</span><span class='rparen token'>)</span>
+  <span class='with_connection identifier id'>with_connection</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='connection identifier id'>connection</span><span class='bitor op'>|</span>
+    <span class='command identifier id'>command</span> <span class='assign token'>=</span> <span class='connection identifier id'>connection</span><span class='dot token'>.</span><span class='create_command identifier id'>create_command</span><span class='lparen token'>(</span><span class='statement identifier id'>statement</span><span class='rparen token'>)</span>
+    <span class='command identifier id'>command</span><span class='dot token'>.</span><span class='execute_non_query identifier id'>execute_non_query</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='bind_values identifier id'>bind_values</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>query</h3>
+</div><div id="query-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>query</span><span class='args'>(statement, *bind_values)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/adapters/data_objects_adapter.rb', line 96</span>
+
+<span class='def def kw'>def</span> <span class='query identifier id'>query</span><span class='lparen token'>(</span><span class='statement identifier id'>statement</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='bind_values identifier id'>bind_values</span><span class='rparen token'>)</span>
+  <span class='with_reader identifier id'>with_reader</span><span class='lparen token'>(</span><span class='statement identifier id'>statement</span><span class='comma token'>,</span> <span class='bind_values identifier id'>bind_values</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='reader identifier id'>reader</span><span class='bitor op'>|</span>
+    <span class='results identifier id'>results</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+
+    <span class='if if kw'>if</span> <span class='lparen token'>(</span><span class='fields identifier id'>fields</span> <span class='assign token'>=</span> <span class='reader identifier id'>reader</span><span class='dot token'>.</span><span class='fields identifier id'>fields</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='size identifier id'>size</span> <span class='gt op'>&gt;</span> <span class='integer val'>1</span>
+      <span class='fields identifier id'>fields</span> <span class='assign token'>=</span> <span class='fields identifier id'>fields</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='field identifier id'>field</span><span class='bitor op'>|</span> <span class='Extlib constant id'>Extlib</span><span class='colon2 op'>::</span><span class='Inflection constant id'>Inflection</span><span class='dot token'>.</span><span class='underscore identifier id'>underscore</span><span class='lparen token'>(</span><span class='field identifier id'>field</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span> <span class='rbrace token'>}</span>
+      <span class='struct identifier id'>struct</span> <span class='assign token'>=</span> <span class='Struct constant id'>Struct</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='fields identifier id'>fields</span><span class='rparen token'>)</span>
+
+      <span class='while while kw'>while</span><span class='lparen token'>(</span><span class='reader identifier id'>reader</span><span class='dot token'>.</span><span class='next! fid id'>next!</span><span class='rparen token'>)</span> <span class='do do kw'>do</span>
+        <span class='results identifier id'>results</span> <span class='lshft op'>&lt;&lt;</span> <span class='struct identifier id'>struct</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='reader identifier id'>reader</span><span class='dot token'>.</span><span class='values identifier id'>values</span><span class='rparen token'>)</span>
+      <span class='end end kw'>end</span>
+    <span class='else else kw'>else</span>
+      <span class='while while kw'>while</span><span class='lparen token'>(</span><span class='reader identifier id'>reader</span><span class='dot token'>.</span><span class='next! fid id'>next!</span><span class='rparen token'>)</span> <span class='do do kw'>do</span>
+        <span class='results identifier id'>results</span> <span class='lshft op'>&lt;&lt;</span> <span class='reader identifier id'>reader</span><span class='dot token'>.</span><span class='values identifier id'>values</span><span class='dot token'>.</span><span class='at identifier id'>at</span><span class='lparen token'>(</span><span class='integer val'>0</span><span class='rparen token'>)</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+
+    <span class='results identifier id'>results</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>read_many</h3>
+</div><div id="read_many-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>read_many</span><span class='args'>(query)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/adapters/data_objects_adapter.rb', line 38</span>
+
+<span class='def def kw'>def</span> <span class='read_many identifier id'>read_many</span><span class='lparen token'>(</span><span class='query identifier id'>query</span><span class='rparen token'>)</span>
+  <span class='Collection constant id'>Collection</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='query identifier id'>query</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='collection identifier id'>collection</span><span class='bitor op'>|</span>
+    <span class='with_connection identifier id'>with_connection</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='connection identifier id'>connection</span><span class='bitor op'>|</span>
+      <span class='command identifier id'>command</span> <span class='assign token'>=</span> <span class='connection identifier id'>connection</span><span class='dot token'>.</span><span class='create_command identifier id'>create_command</span><span class='lparen token'>(</span><span class='read_statement identifier id'>read_statement</span><span class='lparen token'>(</span><span class='query identifier id'>query</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+      <span class='command identifier id'>command</span><span class='dot token'>.</span><span class='set_types identifier id'>set_types</span><span class='lparen token'>(</span><span class='query identifier id'>query</span><span class='dot token'>.</span><span class='fields identifier id'>fields</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='p identifier id'>p</span><span class='bitor op'>|</span> <span class='p identifier id'>p</span><span class='dot token'>.</span><span class='primitive identifier id'>primitive</span> <span class='rbrace token'>}</span><span class='rparen token'>)</span>
+
+      <span class='begin begin kw'>begin</span>
+        <span class='bind_values identifier id'>bind_values</span> <span class='assign token'>=</span> <span class='query identifier id'>query</span><span class='dot token'>.</span><span class='bind_values identifier id'>bind_values</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='v identifier id'>v</span><span class='bitor op'>|</span>
+          <span class='v identifier id'>v</span> <span class='eq op'>==</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span> <span class='question op'>?</span> <span class='lbrack token'>[</span><span class='nil nil kw'>nil</span><span class='rbrack token'>]</span> <span class='colon op'>:</span> <span class='v identifier id'>v</span>
+        <span class='end end kw'>end</span>
+        <span class='reader identifier id'>reader</span> <span class='assign token'>=</span> <span class='command identifier id'>command</span><span class='dot token'>.</span><span class='execute_reader identifier id'>execute_reader</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='bind_values identifier id'>bind_values</span><span class='rparen token'>)</span>
+
+        <span class='while while kw'>while</span><span class='lparen token'>(</span><span class='reader identifier id'>reader</span><span class='dot token'>.</span><span class='next! fid id'>next!</span><span class='rparen token'>)</span>
+          <span class='collection identifier id'>collection</span><span class='dot token'>.</span><span class='load identifier id'>load</span><span class='lparen token'>(</span><span class='reader identifier id'>reader</span><span class='dot token'>.</span><span class='values identifier id'>values</span><span class='rparen token'>)</span>
+        <span class='end end kw'>end</span>
+      <span class='ensure ensure kw'>ensure</span>
+        <span class='reader identifier id'>reader</span><span class='dot token'>.</span><span class='close identifier id'>close</span> <span class='if if_mod kw'>if</span> <span class='reader identifier id'>reader</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>read_one</h3>
+</div><div id="read_one-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>read_one</span><span class='args'>(query)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/adapters/data_objects_adapter.rb', line 60</span>
+
+<span class='def def kw'>def</span> <span class='read_one identifier id'>read_one</span><span class='lparen token'>(</span><span class='query identifier id'>query</span><span class='rparen token'>)</span>
+  <span class='with_connection identifier id'>with_connection</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='connection identifier id'>connection</span><span class='bitor op'>|</span>
+    <span class='command identifier id'>command</span> <span class='assign token'>=</span> <span class='connection identifier id'>connection</span><span class='dot token'>.</span><span class='create_command identifier id'>create_command</span><span class='lparen token'>(</span><span class='read_statement identifier id'>read_statement</span><span class='lparen token'>(</span><span class='query identifier id'>query</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+    <span class='command identifier id'>command</span><span class='dot token'>.</span><span class='set_types identifier id'>set_types</span><span class='lparen token'>(</span><span class='query identifier id'>query</span><span class='dot token'>.</span><span class='fields identifier id'>fields</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='p identifier id'>p</span><span class='bitor op'>|</span> <span class='p identifier id'>p</span><span class='dot token'>.</span><span class='primitive identifier id'>primitive</span> <span class='rbrace token'>}</span><span class='rparen token'>)</span>
+
+    <span class='begin begin kw'>begin</span>
+      <span class='reader identifier id'>reader</span> <span class='assign token'>=</span> <span class='command identifier id'>command</span><span class='dot token'>.</span><span class='execute_reader identifier id'>execute_reader</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='query identifier id'>query</span><span class='dot token'>.</span><span class='bind_values identifier id'>bind_values</span><span class='rparen token'>)</span>
+
+      <span class='if if kw'>if</span> <span class='reader identifier id'>reader</span><span class='dot token'>.</span><span class='next! fid id'>next!</span>
+        <span class='query identifier id'>query</span><span class='dot token'>.</span><span class='model identifier id'>model</span><span class='dot token'>.</span><span class='load identifier id'>load</span><span class='lparen token'>(</span><span class='reader identifier id'>reader</span><span class='dot token'>.</span><span class='values identifier id'>values</span><span class='comma token'>,</span> <span class='query identifier id'>query</span><span class='rparen token'>)</span>
+      <span class='end end kw'>end</span>
+    <span class='ensure ensure kw'>ensure</span>
+      <span class='reader identifier id'>reader</span><span class='dot token'>.</span><span class='close identifier id'>close</span> <span class='if if_mod kw'>if</span> <span class='reader identifier id'>reader</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>update</h3>
+</div><div id="update-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>update</span><span class='args'>(attributes, query)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+77
+78
+79
+80
+81</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dm-core/adapters/data_objects_adapter.rb', line 77</span>
+
+<span class='def def kw'>def</span> <span class='update identifier id'>update</span><span class='lparen token'>(</span><span class='attributes identifier id'>attributes</span><span class='comma token'>,</span> <span class='query identifier id'>query</span><span class='rparen token'>)</span>
+  <span class='statement identifier id'>statement</span> <span class='assign token'>=</span> <span class='update_statement identifier id'>update_statement</span><span class='lparen token'>(</span><span class='attributes identifier id'>attributes</span><span class='dot token'>.</span><span class='keys identifier id'>keys</span><span class='comma token'>,</span> <span class='query identifier id'>query</span><span class='rparen token'>)</span>
+  <span class='bind_values identifier id'>bind_values</span> <span class='assign token'>=</span> <span class='attributes identifier id'>attributes</span><span class='dot token'>.</span><span class='values identifier id'>values</span> <span class='plus op'>+</span> <span class='query identifier id'>query</span><span class='dot token'>.</span><span class='bind_values identifier id'>bind_values</span>
+  <span class='execute identifier id'>execute</span><span class='lparen token'>(</span><span class='statement identifier id'>statement</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='bind_values identifier id'>bind_values</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

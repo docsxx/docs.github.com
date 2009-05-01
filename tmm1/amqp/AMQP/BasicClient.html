@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: AMQP::BasicClient</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module AMQP_BasicClient">
+  <h1 class="title">Module: AMQP::BasicClient</h1>
+  <div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#process_frame-instance_method' title='#process_frame'>#process_frame</a></span><span class='args'>frame</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>process_frame</h3>
+</div><div id="process_frame-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>process_frame</span><span class='args'>frame</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/amqp/client.rb', line 7</span>
+
+<span class='def def kw'>def</span> <span class='process_frame identifier id'>process_frame</span> <span class='frame identifier id'>frame</span>
+  <span class='if if kw'>if</span> <span class='mq identifier id'>mq</span> <span class='assign token'>=</span> <span class='channels identifier id'>channels</span><span class='lbrack token'>[</span><span class='frame identifier id'>frame</span><span class='dot token'>.</span><span class='channel identifier id'>channel</span><span class='rbrack token'>]</span>
+    <span class='mq identifier id'>mq</span><span class='dot token'>.</span><span class='process_frame identifier id'>process_frame</span><span class='lparen token'>(</span><span class='frame identifier id'>frame</span><span class='rparen token'>)</span>
+    <span class='return return kw'>return</span>
+  <span class='end end kw'>end</span>
+  
+  <span class='case case kw'>case</span> <span class='frame identifier id'>frame</span>
+  <span class='when when kw'>when</span> <span class='Frame constant id'>Frame</span><span class='colon2 op'>::</span><span class='Method constant id'>Method</span>
+    <span class='case case kw'>case</span> <span class='method identifier id'>method</span> <span class='assign token'>=</span> <span class='frame identifier id'>frame</span><span class='dot token'>.</span><span class='payload identifier id'>payload</span>
+    <span class='when when kw'>when</span> <span class='Protocol constant id'>Protocol</span><span class='colon2 op'>::</span><span class='Connection constant id'>Connection</span><span class='colon2 op'>::</span><span class='Start constant id'>Start</span>
+      <span class='send identifier id'>send</span> <span class='Protocol constant id'>Protocol</span><span class='colon2 op'>::</span><span class='Connection constant id'>Connection</span><span class='colon2 op'>::</span><span class='StartOk constant id'>StartOk</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='lbrace token'>{</span><span class='symbol val'>:platform</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'Ruby/EventMachine'</span><span class='comma token'>,</span>
+                                              <span class='symbol val'>:product</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'AMQP'</span><span class='comma token'>,</span>
+                                              <span class='symbol val'>:information</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'http://github.com/tmm1/amqp'</span><span class='comma token'>,</span>
+                                              <span class='symbol val'>:version</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='VERSION constant id'>VERSION</span><span class='rbrace token'>}</span><span class='comma token'>,</span>
+                                             <span class='string val'>'AMQPLAIN'</span><span class='comma token'>,</span>
+                                             <span class='lbrace token'>{</span><span class='symbol val'>:LOGIN</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='@settings ivar id'>@settings</span><span class='lbrack token'>[</span><span class='symbol val'>:user</span><span class='rbrack token'>]</span><span class='comma token'>,</span>
+                                              <span class='symbol val'>:PASSWORD</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='@settings ivar id'>@settings</span><span class='lbrack token'>[</span><span class='symbol val'>:pass</span><span class='rbrack token'>]</span><span class='rbrace token'>}</span><span class='comma token'>,</span>
+                                             <span class='string val'>'en_US'</span><span class='rparen token'>)</span>
+
+    <span class='when when kw'>when</span> <span class='Protocol constant id'>Protocol</span><span class='colon2 op'>::</span><span class='Connection constant id'>Connection</span><span class='colon2 op'>::</span><span class='Tune constant id'>Tune</span>
+      <span class='send identifier id'>send</span> <span class='Protocol constant id'>Protocol</span><span class='colon2 op'>::</span><span class='Connection constant id'>Connection</span><span class='colon2 op'>::</span><span class='TuneOk constant id'>TuneOk</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='symbol val'>:channel_max</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>0</span><span class='comma token'>,</span>
+                                            <span class='symbol val'>:frame_max</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>131072</span><span class='comma token'>,</span>
+                                            <span class='symbol val'>:heartbeat</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>0</span><span class='rparen token'>)</span>
+
+      <span class='send identifier id'>send</span> <span class='Protocol constant id'>Protocol</span><span class='colon2 op'>::</span><span class='Connection constant id'>Connection</span><span class='colon2 op'>::</span><span class='Open constant id'>Open</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='symbol val'>:virtual_host</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='@settings ivar id'>@settings</span><span class='lbrack token'>[</span><span class='symbol val'>:vhost</span><span class='rbrack token'>]</span><span class='comma token'>,</span>
+                                          <span class='symbol val'>:capabilities</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>''</span><span class='comma token'>,</span>
+                                          <span class='symbol val'>:insist</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='@settings ivar id'>@settings</span><span class='lbrack token'>[</span><span class='symbol val'>:insist</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+
+    <span class='when when kw'>when</span> <span class='Protocol constant id'>Protocol</span><span class='colon2 op'>::</span><span class='Connection constant id'>Connection</span><span class='colon2 op'>::</span><span class='OpenOk constant id'>OpenOk</span>
+      <span class='succeed identifier id'>succeed</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='rparen token'>)</span>
+
+    <span class='when when kw'>when</span> <span class='Protocol constant id'>Protocol</span><span class='colon2 op'>::</span><span class='Connection constant id'>Connection</span><span class='colon2 op'>::</span><span class='Close constant id'>Close</span>
+      <span class='comment val'># raise Error, &quot;#{method.reply_text} in #{Protocol.classes[method.class_id].methods[method.method_id]}&quot;</span>
+      <span class='STDERR constant id'>STDERR</span><span class='dot token'>.</span><span class='puts identifier id'>puts</span> <span class='dstring node'>&quot;#{method.reply_text} in #{Protocol.classes[method.class_id].methods[method.method_id]}&quot;</span>
+
+    <span class='when when kw'>when</span> <span class='Protocol constant id'>Protocol</span><span class='colon2 op'>::</span><span class='Connection constant id'>Connection</span><span class='colon2 op'>::</span><span class='CloseOk constant id'>CloseOk</span>
+      <span class='@on_disconnect ivar id'>@on_disconnect</span><span class='dot token'>.</span><span class='call identifier id'>call</span> <span class='if if_mod kw'>if</span> <span class='@on_disconnect ivar id'>@on_disconnect</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

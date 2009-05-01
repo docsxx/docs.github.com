@@ -1,0 +1,466 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: ActiveMerchant::Billing::PslCardGateway</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class ActiveMerchant_Billing_PslCardGateway">
+  <h1 class="title">Class: ActiveMerchant::Billing::PslCardGateway</h1>
+  <div class="section inheritance">
+  <ul>
+  <li><a href='Gateway.html' title='ActiveMerchant::Billing::Gateway'>ActiveMerchant::Billing::Gateway</a></li><ul><li>ActiveMerchant::Billing::PslCardGateway</li>
+  </ul></ul>
+</div><div class="section docstring">
+  <p>
+ActiveMerchant PSL Card Gateway
+</p>
+<p>
+Notes:
+</p>
+<pre class="code">
+  <span class='minus op'>-</span><span class='To constant id'>To</span> <span class='be identifier id'>be</span> <span class='able identifier id'>able</span> <span class='to identifier id'>to</span> <span class='use identifier id'>use</span> <span class='the identifier id'>the</span> <span class='capture identifier id'>capture</span> <span class='function identifier id'>function</span><span class='comma token'>,</span> <span class='the identifier id'>the</span> <span class='IP constant id'>IP</span> <span class='address identifier id'>address</span> <span class='of identifier id'>of</span> <span class='the identifier id'>the</span> <span class='machine identifier id'>machine</span> <span class='must identifier id'>must</span> <span class='be identifier id'>be</span>
+   <span class='registered identifier id'>registered</span> <span class='with identifier id'>with</span> <span class='PSL constant id'>PSL</span>
+  <span class='minus op'>-</span><span class='ESALE_KEYED constant id'>ESALE_KEYED</span> <span class='should identifier id'>should</span> <span class='only identifier id'>only</span> <span class='be identifier id'>be</span> <span class='used identifier id'>used</span> <span class='in in kw'>in</span> <span class='situations identifier id'>situations</span> <span class='where identifier id'>where</span> <span class='the identifier id'>the</span> <span class='cardholder identifier id'>cardholder</span> <span class='perceives identifier id'>perceives</span> <span class='the identifier id'>the</span>
+   <span class='transaction identifier id'>transaction</span> <span class='to identifier id'>to</span> <span class='be identifier id'>be</span> <span class='Internet constant id'>Internet</span><span class='minus op'>-</span><span class='based identifier id'>based</span><span class='comma token'>,</span> <span class='such identifier id'>such</span> <span class='as identifier id'>as</span> <span class='purchasing identifier id'>purchasing</span> <span class='from identifier id'>from</span> <span class='a identifier id'>a</span> <span class='web identifier id'>web</span> <span class='site identifier id'>site</span><span class='div op'>/</span><span class='on identifier id'>on</span><span class='minus op'>-</span><span class='line identifier id'>line</span> <span class='store identifier id'>store</span><span class='dot token'>.</span>
+   <span class='If constant id'>If</span> <span class='the identifier id'>the</span> <span class='Internet constant id'>Internet</span> <span class='is identifier id'>is</span> <span class='used identifier id'>used</span> <span class='purely identifier id'>purely</span> <span class='for for kw'>for</span> <span class='the identifier id'>the</span> <span class='transport identifier id'>transport</span> <span class='of identifier id'>of</span> <span class='information identifier id'>information</span> <span class='from identifier id'>from</span> <span class='the identifier id'>the</span> <span class='merchant identifier id'>merchant</span>
+   <span class='directly identifier id'>directly</span> <span class='to identifier id'>to</span> <span class='the identifier id'>the</span> <span class='gateway identifier id'>gateway</span> <span class='then then kw'>then</span> <span class='the identifier id'>the</span> <span class='appropriate identifier id'>appropriate</span> <span class='cardholder identifier id'>cardholder</span> <span class='present identifier id'>present</span> <span class='or or kw'>or</span> <span class='not not kw'>not</span> <span class='present identifier id'>present</span> <span class='message identifier id'>message</span>
+   <span class='type identifier id'>type</span> <span class='should identifier id'>should</span> <span class='be identifier id'>be</span> <span class='used identifier id'>used</span> <span class='rather identifier id'>rather</span> <span class='than identifier id'>than</span> <span class='the identifier id'>the</span> </pre>
+
+</div><div class="section constants">
+  <div class="thisclass">
+  <h1>Constants</h1>
+  <dl>
+    
+      <dt id="APPROVED-constant">APPROVED</dt>
+      <dd>'00'</dd>
+    
+      <dt id="AVS_CODE-constant">AVS_CODE</dt>
+      <dd>{        &quot;ALL MATCH&quot; =&gt; 'Y',        &quot;SECURITY CODE MATCH ONLY&quot; =&gt; 'N',        &quot;ADDRESS MATCH ONLY&quot; =&gt; 'Y',        &quot;NO DATA MATCHES&quot; =&gt; 'N',        &quot;DATA NOT CHECKED&quot;  =&gt; 'R',        &quot;SECURITY CHECKS NOT SUPPORTED&quot; =&gt; 'X'      }</dd>
+    
+      <dt id="CURRENCY_CODES-constant">CURRENCY_CODES</dt>
+      <dd>{        'AUD' =&gt; 036,        'GBP' =&gt; 826,        'USD' =&gt; 840      }</dd>
+    
+      <dt id="CVV_CODE-constant">CVV_CODE</dt>
+      <dd>{        &quot;ALL MATCH&quot; =&gt; 'M',        &quot;SECURITY CODE MATCH ONLY&quot; =&gt; 'M',        &quot;ADDRESS MATCH ONLY&quot; =&gt; 'N',        &quot;NO DATA MATCHES&quot; =&gt; 'N',        &quot;DATA NOT CHECKED&quot;  =&gt; 'P',        &quot;SECURITY CHECKS NOT SUPPORTED&quot; =&gt; 'X'      }</dd>
+    
+      <dt id="DISPATCH_LATER-constant">DISPATCH_LATER</dt>
+      <dd>'LATER'</dd>
+    
+      <dt id="DISPATCH_NOW-constant">DISPATCH_NOW</dt>
+      <dd>'NOW'</dd>
+    
+      <dt id="EMV_TERMINAL_TYPE-constant">EMV_TERMINAL_TYPE</dt>
+      <dd>32</dd>
+    
+      <dt id="MESSAGE_TYPE-constant">MESSAGE_TYPE</dt>
+      <dd>'ESALE_KEYED' </dd>
+    
+      <dt id="NOMINAL_AMOUNT-constant">NOMINAL_AMOUNT</dt>
+      <dd>101</dd>
+    
+      <dt id="RESPONSE_ACTION-constant">RESPONSE_ACTION</dt>
+      <dd>'HTML'</dd>
+    
+      <dt id="URL-constant">URL</dt>
+      <dd>'https://pslcard3.paymentsolutionsltd.com/secure/transact.asp?'</dd>
+    
+  </dl>
+</div>
+<div class="inherited">
+  
+  <div>
+    <h1>Constants Inherited from <a href='Gateway.html' title='ActiveMerchant::Billing::Gateway'>ActiveMerchant::Billing::Gateway</a></h1>
+    <p><span class='name'><a href='Gateway.html#DEBIT_CARDS-constant' title='DEBIT_CARDS'>DEBIT_CARDS</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Create a new PslCardGateway
+</p>
+<p>
+The gateway requires that a valid :login be passed in the options hash
+</p>
+<p>
+Paramaters:
+</p>
+<pre class="code">
+  <span class='minus op'>-</span><span class='options identifier id'>options</span><span class='colon op'>:</span>
+    <span class='symbol val'>:login</span> <span class='minus op'>-</span>    <span class='the identifier id'>the</span> <span class='PslCard constant id'>PslCard</span> <span class='account identifier id'>account</span> <span class='login identifier id'>login</span> <span class='lparen token'>(</span><span class='required identifier id'>required</span><span class='rparen token'>)</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+92
+93
+94
+95
+96
+97</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/psl_card.rb', line 92</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='requires! fid id'>requires!</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='comma token'>,</span> <span class='symbol val'>:login</span><span class='rparen token'>)</span>
+        
+  <span class='@options ivar id'>@options</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span>
+  <span class='super super kw'>super</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <div class="inherited">
+  
+  <div>
+    <h1>Public Class Methods Inherited from <a href='Gateway.html' title='ActiveMerchant::Billing::Gateway'>ActiveMerchant::Billing::Gateway</a></h1>
+    <p><span class='name'><a href='Gateway.html#card_brand-class_method' title='card_brand'>card_brand</a></span>, <span class='name'><a href='Gateway.html#inherited-class_method' title='inherited'>inherited</a></span>, <span class='name'><a href='Gateway.html#supports%3F-class_method' title='supports?'>supports?</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+  <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#authorize-instance_method' title='#authorize'>#authorize</a></span><span class='args'>(money, credit_card, options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Authorize the transaction.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#capture-instance_method' title='#capture'>#capture</a></span><span class='args'>(money, authorization, options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Post an authorization.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#purchase-instance_method' title='#purchase'>#purchase</a></span><span class='args'>(money, credit_card, options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Purchase the item straight away.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table><div class="inherited">
+  
+  <div>
+    <h1>Public Instance Methods Inherited from <a href='Gateway.html' title='ActiveMerchant::Billing::Gateway'>ActiveMerchant::Billing::Gateway</a></h1>
+    <p><span class='name'><a href='Gateway.html#amount-instance_method' title='amount'>amount</a></span>, <span class='name'><a href='Gateway.html#card_brand-instance_method' title='card_brand'>card_brand</a></span>, <span class='name'><a href='Gateway.html#currency-instance_method' title='currency'>currency</a></span>, <span class='name'><a href='Gateway.html#name-instance_method' title='name'>name</a></span>, <span class='name'><a href='Gateway.html#requires_start_date_or_issue_number%3F-instance_method' title='requires_start_date_or_issue_number?'>requires_start_date_or_issue_number?</a></span>, <span class='name'><a href='Gateway.html#test%3F-instance_method' title='test?'>test?</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>authorize</h3>
+</div><div id="authorize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>authorize</span><span class='args'>(money, credit_card, options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Authorize the transaction
+</p>
+<p>
+Reserves the funds on the customer&#8217;s credit card, but does not charge
+the card.
+</p>
+<p>
+This implementation does not authorize the full amount, rather it checks
+that the full amount is available and only &#8216;reserves&#8217; the
+nominal amount (currently a pound and a penny)
+</p>
+<p>
+Parameters:
+</p>
+<pre class="code">
+  <span class='minus op'>-</span><span class='money identifier id'>money</span><span class='colon op'>:</span> <span class='Money constant id'>Money</span> <span class='object identifier id'>object</span> <span class='for for kw'>for</span> <span class='the identifier id'>the</span> <span class='total identifier id'>total</span> <span class='to identifier id'>to</span> <span class='be identifier id'>be</span> <span class='charged identifier id'>charged</span>
+  <span class='minus op'>-</span><span class='authorization identifier id'>authorization</span><span class='colon op'>:</span> <span class='the identifier id'>the</span> <span class='PSL constant id'>PSL</span> <span class='cross identifier id'>cross</span> <span class='reference identifier id'>reference</span> <span class='from identifier id'>from</span> <span class='the identifier id'>the</span> <span class='previous identifier id'>previous</span> <span class='authorization identifier id'>authorization</span>
+  <span class='minus op'>-</span><span class='options identifier id'>options</span><span class='colon op'>:</span>
+</pre>
+<p>
+Returns:
+</p>
+<pre class="code">
+  <span class='minus op'>-</span><span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Billing constant id'>Billing</span><span class='colon2 op'>::</span><span class='Response constant id'>Response</span> <span class='object identifier id'>object</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/psl_card.rb', line 137</span>
+
+<span class='def def kw'>def</span> <span class='authorize identifier id'>authorize</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='comma token'>,</span> <span class='credit_card identifier id'>credit_card</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='post identifier id'>post</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+
+  <span class='add_amount identifier id'>add_amount</span><span class='lparen token'>(</span><span class='post identifier id'>post</span><span class='comma token'>,</span> <span class='money identifier id'>money</span><span class='comma token'>,</span> <span class='DISPATCH_LATER constant id'>DISPATCH_LATER</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='add_credit_card identifier id'>add_credit_card</span><span class='lparen token'>(</span><span class='post identifier id'>post</span><span class='comma token'>,</span> <span class='credit_card identifier id'>credit_card</span><span class='rparen token'>)</span>
+  <span class='add_address identifier id'>add_address</span><span class='lparen token'>(</span><span class='post identifier id'>post</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='add_invoice identifier id'>add_invoice</span><span class='lparen token'>(</span><span class='post identifier id'>post</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='add_purchase_details identifier id'>add_purchase_details</span><span class='lparen token'>(</span><span class='post identifier id'>post</span><span class='rparen token'>)</span>
+        
+  <span class='commit identifier id'>commit</span><span class='lparen token'>(</span><span class='post identifier id'>post</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>capture</h3>
+</div><div id="capture-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>capture</span><span class='args'>(money, authorization, options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Post an authorization.
+</p>
+<p>
+Captures the funds from an authorized transaction.
+</p>
+<p>
+Parameters:
+</p>
+<pre class="code">
+  <span class='minus op'>-</span><span class='money identifier id'>money</span><span class='colon op'>:</span> <span class='Money constant id'>Money</span> <span class='object identifier id'>object</span> <span class='for for kw'>for</span> <span class='the identifier id'>the</span> <span class='total identifier id'>total</span> <span class='to identifier id'>to</span> <span class='be identifier id'>be</span> <span class='charged identifier id'>charged</span>
+  <span class='minus op'>-</span><span class='authorization identifier id'>authorization</span><span class='colon op'>:</span> <span class='The constant id'>The</span> <span class='PSL constant id'>PSL</span> <span class='Cross constant id'>Cross</span> <span class='Reference constant id'>Reference</span>
+  <span class='minus op'>-</span><span class='options identifier id'>options</span><span class='colon op'>:</span>
+</pre>
+<p>
+Returns:
+</p>
+<pre class="code">
+  <span class='minus op'>-</span><span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Billing constant id'>Billing</span><span class='colon2 op'>::</span><span class='Response constant id'>Response</span> <span class='object identifier id'>object</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+161
+162
+163
+164
+165
+166
+167
+168
+169</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/psl_card.rb', line 161</span>
+
+<span class='def def kw'>def</span> <span class='capture identifier id'>capture</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='comma token'>,</span> <span class='authorization identifier id'>authorization</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='post identifier id'>post</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+
+  <span class='add_amount identifier id'>add_amount</span><span class='lparen token'>(</span><span class='post identifier id'>post</span><span class='comma token'>,</span> <span class='money identifier id'>money</span><span class='comma token'>,</span> <span class='DISPATCH_NOW constant id'>DISPATCH_NOW</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='add_reference identifier id'>add_reference</span><span class='lparen token'>(</span><span class='post identifier id'>post</span><span class='comma token'>,</span> <span class='authorization identifier id'>authorization</span><span class='rparen token'>)</span>
+  <span class='add_purchase_details identifier id'>add_purchase_details</span><span class='lparen token'>(</span><span class='post identifier id'>post</span><span class='rparen token'>)</span>
+
+  <span class='commit identifier id'>commit</span><span class='lparen token'>(</span><span class='post identifier id'>post</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>purchase</h3>
+</div><div id="purchase-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>purchase</span><span class='args'>(money, credit_card, options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Purchase the item straight away
+</p>
+<p>
+Parameters:
+</p>
+<pre class="code">
+  <span class='minus op'>-</span><span class='money identifier id'>money</span><span class='colon op'>:</span> <span class='Money constant id'>Money</span> <span class='object identifier id'>object</span> <span class='for for kw'>for</span> <span class='the identifier id'>the</span> <span class='total identifier id'>total</span> <span class='to identifier id'>to</span> <span class='be identifier id'>be</span> <span class='charged identifier id'>charged</span>
+  <span class='minus op'>-</span><span class='authorization identifier id'>authorization</span><span class='colon op'>:</span> <span class='the identifier id'>the</span> <span class='PSL constant id'>PSL</span> <span class='cross identifier id'>cross</span> <span class='reference identifier id'>reference</span> <span class='from identifier id'>from</span> <span class='the identifier id'>the</span> <span class='previous identifier id'>previous</span> <span class='authorization identifier id'>authorization</span>
+  <span class='minus op'>-</span><span class='options identifier id'>options</span><span class='colon op'>:</span>
+</pre>
+<p>
+Returns:
+</p>
+<pre class="code">
+  <span class='minus op'>-</span><span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Billing constant id'>Billing</span><span class='colon2 op'>::</span><span class='Response constant id'>Response</span> <span class='object identifier id'>object</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/gateways/psl_card.rb', line 109</span>
+
+<span class='def def kw'>def</span> <span class='purchase identifier id'>purchase</span><span class='lparen token'>(</span><span class='money identifier id'>money</span><span class='comma token'>,</span> <span class='credit_card identifier id'>credit_card</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='post identifier id'>post</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  
+  <span class='add_amount identifier id'>add_amount</span><span class='lparen token'>(</span><span class='post identifier id'>post</span><span class='comma token'>,</span> <span class='money identifier id'>money</span><span class='comma token'>,</span> <span class='DISPATCH_NOW constant id'>DISPATCH_NOW</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='add_credit_card identifier id'>add_credit_card</span><span class='lparen token'>(</span><span class='post identifier id'>post</span><span class='comma token'>,</span> <span class='credit_card identifier id'>credit_card</span><span class='rparen token'>)</span>
+  <span class='add_address identifier id'>add_address</span><span class='lparen token'>(</span><span class='post identifier id'>post</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='add_invoice identifier id'>add_invoice</span><span class='lparen token'>(</span><span class='post identifier id'>post</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='add_purchase_details identifier id'>add_purchase_details</span><span class='lparen token'>(</span><span class='post identifier id'>post</span><span class='rparen token'>)</span>
+  
+  <span class='commit identifier id'>commit</span><span class='lparen token'>(</span><span class='post identifier id'>post</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

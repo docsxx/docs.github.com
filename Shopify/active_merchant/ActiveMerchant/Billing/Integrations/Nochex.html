@@ -1,0 +1,221 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: ActiveMerchant::Billing::Integrations::Nochex</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module ActiveMerchant_Billing_Integrations_Nochex">
+  <h1 class="title">Module: ActiveMerchant::Billing::Integrations::Nochex</h1>
+  <div class="section docstring">
+  <p>
+To start with Nochex, follow the instructions for installing ActiveMerchant
+as a plugin, as described on http://www.activemerchant.org/.
+</p>
+<p>
+The plugin will automatically add the ActionView helper for ActiveMerchant,
+which will allow you to make the Nochex payments. The idea behind the
+helper is that it generates an invisible forwarding screen that will
+automatically redirect the user. So you would collect all the information
+about the order and then simply render the hidden form, which redirects the
+user to Nochex.
+</p>
+<p>
+The syntax of the helper is as follows:
+</p>
+<pre class="code">
+  <span class='lt op'>&lt;</span><span class='string val'>% payment_service_for </span><span class='string val'>'order id'</span><span class='comma token'>,</span> <span class='string val'>'nochex_user_id'</span><span class='comma token'>,</span>
+                                <span class='symbol val'>:amount</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='float val'>50.00</span><span class='comma token'>,</span>
+                                <span class='symbol val'>:service</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:nochex</span><span class='comma token'>,</span>
+                                <span class='symbol val'>:html</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span> <span class='symbol val'>:id</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'nochex-form'</span> <span class='rbrace token'>}</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='service identifier id'>service</span><span class='bitor op'>|</span> <span class='string val'>%&gt;
+
+     &lt;% service.customer :first_name =&gt;</span> <span class='string val'>'Cody'</span><span class='comma token'>,</span>
+                        <span class='symbol val'>:last_name</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'Fauser'</span><span class='comma token'>,</span>
+                        <span class='symbol val'>:phone</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'(555)555-5555'</span><span class='comma token'>,</span>
+                        <span class='symbol val'>:email</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'cody@example.com'</span> <span class='mod op'>%</span><span class='gt op'>&gt;</span>
+
+     <span class='lt op'>&lt;</span><span class='string val'>% service.billing_address </span><span class='symbol val'>:city</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'Ottawa'</span><span class='comma token'>,</span>
+                               <span class='symbol val'>:address1</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'21 Snowy Brook Lane'</span><span class='comma token'>,</span>
+                               <span class='symbol val'>:address2</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'Apt. 36'</span><span class='comma token'>,</span>
+                               <span class='symbol val'>:state</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'ON'</span><span class='comma token'>,</span>
+                               <span class='symbol val'>:country</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'CA'</span><span class='comma token'>,</span>
+                               <span class='symbol val'>:zip</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'K1J1E5'</span> <span class='mod op'>%</span><span class='gt op'>&gt;</span>
+
+     <span class='lt op'>&lt;</span><span class='string val'>% service.invoice </span><span class='string val'>'#1000'</span> <span class='mod op'>%</span><span class='gt op'>&gt;</span>
+     <span class='lt op'>&lt;</span><span class='string val'>% service.shipping </span><span class='string val'>'0.00'</span> <span class='mod op'>%</span><span class='gt op'>&gt;</span>
+     <span class='lt op'>&lt;</span><span class='string val'>% service.tax </span><span class='string val'>'0.00'</span> <span class='mod op'>%</span><span class='gt op'>&gt;</span>
+
+     <span class='lt op'>&lt;</span><span class='string val'>% service.notify_url </span><span class='url_for identifier id'>url_for</span><span class='lparen token'>(</span><span class='symbol val'>:action</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'notify'</span><span class='comma token'>,</span> <span class='symbol val'>:only_path</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='false false kw'>false</span><span class='rparen token'>)</span> <span class='mod op'>%</span><span class='gt op'>&gt;</span>
+     <span class='lt op'>&lt;</span><span class='string val'>% service.return_url </span><span class='url_for identifier id'>url_for</span><span class='lparen token'>(</span><span class='symbol val'>:action</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'done'</span><span class='comma token'>,</span> <span class='symbol val'>:only_path</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='false false kw'>false</span><span class='rparen token'>)</span> <span class='mod op'>%</span><span class='gt op'>&gt;</span>
+     <span class='lt op'>&lt;</span><span class='string val'>% service.cancel_return_url </span><span class='string val'>'http://mystore.com'</span> <span class='mod op'>%</span><span class='gt op'>&gt;</span>
+   <span class='lt op'>&lt;</span><span class='string val'>% end </span><span class='mod op'>%</span><span class='gt op'>&gt;</span>
+</pre>
+<p>
+The notify_url is the URL that the Nochex IPN will be sent. You can handle
+the notification in your controller action as follows:
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='NotificationController constant id'>NotificationController</span> <span class='lt op'>&lt;</span> <span class='ApplicationController constant id'>ApplicationController</span>
+    <span class='include identifier id'>include</span> <span class='ActiveMerchant constant id'>ActiveMerchant</span><span class='colon2 op'>::</span><span class='Billing constant id'>Billing</span><span class='colon2 op'>::</span><span class='Integrations constant id'>Integrations</span>
+
+    <span class='def def kw'>def</span> <span class='notify identifier id'>notify</span>
+      <span class='notification identifier id'>notification</span> <span class='assign token'>=</span>  <span class='Nochex constant id'>Nochex</span><span class='colon2 op'>::</span><span class='Notification constant id'>Notification</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='request identifier id'>request</span><span class='dot token'>.</span><span class='raw_post identifier id'>raw_post</span><span class='rparen token'>)</span>
+
+      <span class='begin begin kw'>begin</span>
+        <span class='comment val'># Acknowledge notification with Nochex</span>
+        <span class='raise identifier id'>raise</span> <span class='StandardError constant id'>StandardError</span><span class='comma token'>,</span> <span class='string val'>'Illegal Notification'</span> <span class='unless unless_mod kw'>unless</span> <span class='notification identifier id'>notification</span><span class='dot token'>.</span><span class='acknowledge identifier id'>acknowledge</span>
+          <span class='comment val'># Process the payment</span>
+      <span class='rescue rescue kw'>rescue</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
+          <span class='logger identifier id'>logger</span><span class='dot token'>.</span><span class='warn identifier id'>warn</span><span class='lparen token'>(</span><span class='dstring node'>&quot;Illegal notification received: #{e.message}&quot;</span><span class='rparen token'>)</span>
+      <span class='ensure ensure kw'>ensure</span>
+          <span class='head identifier id'>head</span><span class='lparen token'>(</span><span class='symbol val'>:ok</span><span class='rparen token'>)</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+</pre>
+
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <h1>Public Class Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#notification-class_method' title='notification'>notification</a></span><span class='args'>(post)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Simply a convenience method that returns a new
+ActiveMerchant::Billing::Integrations::Nochex::Notification.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#return-class_method' title='return'>return</a></span><span class='args'>(query_string)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails class public">
+  <h1>Public Class Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>notification</h3>
+</div><div id="notification-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>notification</span><span class='args'>(post)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Simply a convenience method that returns a new
+ActiveMerchant::Billing::Integrations::Nochex::Notification
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+77
+78
+79</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/integrations/nochex.rb', line 77</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='notification identifier id'>notification</span><span class='lparen token'>(</span><span class='post identifier id'>post</span><span class='rparen token'>)</span>
+  <span class='Notification constant id'>Notification</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='post identifier id'>post</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>  
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>return</h3>
+</div><div id="return-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>return</span><span class='args'>(query_string)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+81
+82
+83</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/active_merchant/billing/integrations/nochex.rb', line 81</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='return identifier id'>return</span><span class='lparen token'>(</span><span class='query_string identifier id'>query_string</span><span class='rparen token'>)</span>
+  <span class='Return constant id'>Return</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='query_string identifier id'>query_string</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

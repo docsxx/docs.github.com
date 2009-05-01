@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: Xapit::Membership::ClassMethods</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module Xapit_Membership_ClassMethods">
+  <h1 class="title">Module: Xapit::Membership::ClassMethods</h1>
+  <div class="section mixins">
+  <h1>Included Modules</h1>
+  <p><a href='ClassMethods/AdditionalMethods.html' title='Xapit::Membership::AdditionalMethods'>Xapit::Membership::AdditionalMethods</a></p>
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <div class="included">
+  
+  <div>
+    <h1>Public Class Methods Included from <a href='ClassMethods/AdditionalMethods.html' title='Xapit::Membership::AdditionalMethods'>Xapit::Membership::AdditionalMethods</a></h1>
+    <p><span class='name'><a href='AdditionalMethods.html#included-class_method' title='included'>included</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+  <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#xapit-instance_method' title='#xapit'>#xapit</a></span><span class='args'>(*args)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Simply call &quot;xapit&quot; on a class and pass a block to define the
+indexed attributes.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table><div class="included">
+  
+  <div>
+    <h1>Public Instance Methods Included from <a href='ClassMethods/AdditionalMethods.html' title='Xapit::Membership::AdditionalMethods'>Xapit::Membership::AdditionalMethods</a></h1>
+    <p><span class='name'><a href='AdditionalMethods.html#search_similar-instance_method' title='search_similar'>search_similar</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>xapit</h3>
+</div><div id="xapit-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>xapit</span><span class='args'>(*args)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Simply call &quot;xapit&quot; on a class and pass a block to define the
+indexed attributes.
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='Article constant id'>Article</span> <span class='lt op'>&lt;</span> <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
+    <span class='xapit identifier id'>xapit</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='index identifier id'>index</span><span class='bitor op'>|</span>
+      <span class='index identifier id'>index</span><span class='dot token'>.</span><span class='text identifier id'>text</span> <span class='symbol val'>:name</span><span class='comma token'>,</span> <span class='symbol val'>:content</span>
+      <span class='index identifier id'>index</span><span class='dot token'>.</span><span class='field identifier id'>field</span> <span class='symbol val'>:category_id</span>
+      <span class='index identifier id'>index</span><span class='dot token'>.</span><span class='facet identifier id'>facet</span> <span class='symbol val'>:author_name</span><span class='comma token'>,</span> <span class='string val'>&quot;Author&quot;</span>
+      <span class='index identifier id'>index</span><span class='dot token'>.</span><span class='sortable identifier id'>sortable</span> <span class='symbol val'>:id</span><span class='comma token'>,</span> <span class='symbol val'>:category_id</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+First we index &quot;name&quot; and &quot;content&quot; attributes for full
+text searching. The &quot;category_id&quot; field is indexed for
+:conditions searching. The &quot;author_name&quot; is indexed as a facet
+with &quot;Author&quot; being the display name of the facet. See the facets
+section below for details. Finally the &quot;id&quot; and
+&quot;category_id&quot; attributes are indexed as sortable attributes so
+they can be included in the :order option in a search.
+</p>
+<p>
+Because the indexing happens in Ruby these attributes do no have to be
+database columns. They can be simple Ruby methods. For example, the
+&quot;author_name&quot; attribute mentioned above can be defined like this.
+</p>
+<pre class="code">
+  <span class='def def kw'>def</span> <span class='author_name identifier id'>author_name</span>
+    <span class='author identifier id'>author</span><span class='dot token'>.</span><span class='name identifier id'>name</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+This way you can create a completely custom facet by simply defining your
+own method
+</p>
+<p>
+You can also pass any find options to the xapit method to determine what
+gets indexed and improve performance with eager loading or a different
+batch size.
+</p>
+<pre class="code">
+  <span class='xapit identifier id'>xapit</span><span class='lparen token'>(</span><span class='symbol val'>:batch_size</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>100</span><span class='comma token'>,</span> <span class='symbol val'>:include</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:author</span><span class='comma token'>,</span> <span class='symbol val'>:conditions</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span> <span class='symbol val'>:visible</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span> <span class='rbrace token'>}</span><span class='rparen token'>)</span>
+</pre>
+<p>
+If you pass in a block you can customize how the text words will be devided
+(instead of by simply white space).
+</p>
+<pre class="code">
+  <span class='xapit identifier id'>xapit</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='index identifier id'>index</span><span class='bitor op'>|</span>
+    <span class='index identifier id'>index</span><span class='dot token'>.</span><span class='text identifier id'>text</span><span class='lparen token'>(</span><span class='symbol val'>:keywords</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='words identifier id'>words</span><span class='bitor op'>|</span> <span class='words identifier id'>words</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='string val'>', '</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  <span class='end end kw'>end</span>
+</pre>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+41
+42
+43
+44
+45</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/xapit/membership.rb', line 41</span>
+
+<span class='def def kw'>def</span> <span class='xapit identifier id'>xapit</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='@xapit_index_blueprint ivar id'>@xapit_index_blueprint</span> <span class='assign token'>=</span> <span class='IndexBlueprint constant id'>IndexBlueprint</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='yield yield kw'>yield</span><span class='lparen token'>(</span><span class='@xapit_index_blueprint ivar id'>@xapit_index_blueprint</span><span class='rparen token'>)</span>
+  <span class='include identifier id'>include</span> <span class='AdditionalMethods constant id'>AdditionalMethods</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

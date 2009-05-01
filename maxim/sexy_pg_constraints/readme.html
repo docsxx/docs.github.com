@@ -1,0 +1,243 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <title>README</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section docstring readme">
+        <h1>Sexy PG Constraints</h1>
+<p>
+If you&#8217;re on PostgreSQL and see the importance of data-layer
+constraints - this gem/plugin is for you. It integrates constraints into
+PostgreSQL adapter so you can add/remove them in your migrations. You get
+two simple methods for adding/removing constraints, as well as a pack of
+pre-made constraints.
+</p>
+<h2>Install</h2>
+<p>
+As a gem
+</p>
+<pre class="code">
+  <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='maxim identifier id'>maxim</span><span class='minus op'>-</span><span class='sexy_pg_constraints identifier id'>sexy_pg_constraints</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='source identifier id'>source</span> <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/gems.github.com
+</span></pre>
+<p>
+or as a plugin
+</p>
+<pre class="code">
+  <span class='script identifier id'>script</span><span class='div op'>/</span><span class='plugin identifier id'>plugin</span> <span class='install identifier id'>install</span> <span class='git identifier id'>git</span><span class='symbol val'>:/</span><span class='regexp val'>/github.com/</span><span class='maxim identifier id'>maxim</span><span class='div op'>/</span><span class='sexy_pg_constraints identifier id'>sexy_pg_constraints</span><span class='dot token'>.</span><span class='git identifier id'>git</span>
+</pre>
+<p>
+One more thing. Make sure that in your environment.rb file you have the
+following line uncommented.
+</p>
+<pre class="code">
+  <span class='config identifier id'>config</span><span class='dot token'>.</span><span class='active_record identifier id'>active_record</span><span class='dot token'>.</span><span class='schema_format identifier id'>schema_format</span> <span class='assign token'>=</span> <span class='symbol val'>:sql</span>
+</pre>
+<p>
+Otherwise your test database will not have these constraints replicated.
+</p>
+<h2>Usage</h2>
+<h3>Single-column constraints</h3>
+<p>
+Say you have a table &quot;books&quot; and you want your Postgres DB to
+ensure that their title is not-blank, alphanumeric, and its length is
+between 3 and 50 chars. You also want to make sure that their isbn is
+unique. In addition you want to blacklist a few isbn numbers from ever
+being in your database. You can tell all that to your Postgres in no time.
+Generate a migration and write the following.
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='AddConstraintsToBooks constant id'>AddConstraintsToBooks</span> <span class='lt op'>&lt;</span> <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Migration constant id'>Migration</span>
+    <span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='up identifier id'>up</span>
+      <span class='constrain identifier id'>constrain</span> <span class='symbol val'>:books</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='t identifier id'>t</span><span class='bitor op'>|</span>
+        <span class='t identifier id'>t</span><span class='dot token'>.</span><span class='title identifier id'>title</span> <span class='symbol val'>:not_blank</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span><span class='comma token'>,</span> <span class='symbol val'>:alphanumeric</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span><span class='comma token'>,</span> <span class='symbol val'>:length_within</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='float val'>3</span><span class='dot2 op'>..</span><span class='integer val'>50</span>
+        <span class='t identifier id'>t</span><span class='dot token'>.</span><span class='isbn identifier id'>isbn</span> <span class='symbol val'>:unique</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span><span class='comma token'>,</span> <span class='symbol val'>:blacklist</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='dstring node'>%w(badbook1 badbook2)</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+
+    <span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='down identifier id'>down</span>
+      <span class='deconstrain identifier id'>deconstrain</span> <span class='symbol val'>:books</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='t identifier id'>t</span><span class='bitor op'>|</span>
+        <span class='t identifier id'>t</span><span class='dot token'>.</span><span class='title identifier id'>title</span> <span class='symbol val'>:not_blank</span><span class='comma token'>,</span> <span class='symbol val'>:alphanumeric</span><span class='comma token'>,</span> <span class='symbol val'>:length_within</span>
+        <span class='t identifier id'>t</span><span class='dot token'>.</span><span class='isbn identifier id'>isbn</span> <span class='symbol val'>:unique</span><span class='comma token'>,</span> <span class='symbol val'>:blacklist</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+This will add all the necessary constraints to the database on the next
+migration, and remove them on rollback.
+</p>
+<p>
+There&#8217;s also a syntax for when you don&#8217;t need to work with
+multiple columns at once.
+</p>
+<pre class="code">
+  <span class='constrain identifier id'>constrain</span> <span class='symbol val'>:books</span><span class='comma token'>,</span> <span class='symbol val'>:title</span><span class='comma token'>,</span> <span class='symbol val'>:not_blank</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span><span class='comma token'>,</span> <span class='symbol val'>:length_within</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='float val'>3</span><span class='dot2 op'>..</span><span class='integer val'>50</span>
+</pre>
+<p>
+The above line works exactly the same as this block
+</p>
+<pre class="code">
+  <span class='constrain identifier id'>constrain</span> <span class='symbol val'>:books</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='t identifier id'>t</span><span class='bitor op'>|</span>
+    <span class='t identifier id'>t</span><span class='dot token'>.</span><span class='title identifier id'>title</span> <span class='symbol val'>:not_blank</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span><span class='comma token'>,</span> <span class='symbol val'>:length_within</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='float val'>3</span><span class='dot2 op'>..</span><span class='integer val'>50</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+Same applies to deconstrain.
+</p>
+<h3>Multi-column constraints</h3>
+<p>
+Say you have the same table &quot;books&quot; only now you want to tell
+your Postgres to make sure that you should never have the same title +
+author_id combination. It means that you want to apply uniqueness to two
+columns, not just one. There is a special syntax for working with
+multicolumn constraints.
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='AddConstraintsToBooks constant id'>AddConstraintsToBooks</span> <span class='lt op'>&lt;</span> <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Migration constant id'>Migration</span>
+    <span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='up identifier id'>up</span>
+      <span class='constrain identifier id'>constrain</span> <span class='symbol val'>:books</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='t identifier id'>t</span><span class='bitor op'>|</span>
+        <span class='t identifier id'>t</span><span class='lbrack token'>[</span><span class='symbol val'>:title</span><span class='comma token'>,</span> <span class='symbol val'>:author_id</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='all identifier id'>all</span> <span class='symbol val'>:unique</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span> <span class='comment val'># Notice how multiple columns are listed in brackets.</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+
+    <span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='down identifier id'>down</span>
+      <span class='deconstrain identifier id'>deconstrain</span> <span class='symbol val'>:books</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='t identifier id'>t</span><span class='bitor op'>|</span>
+        <span class='t identifier id'>t</span><span class='lbrack token'>[</span><span class='symbol val'>:title</span><span class='comma token'>,</span> <span class='symbol val'>:author_id</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='all identifier id'>all</span> <span class='symbol val'>:unique</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+It&#8217;s important to note that you shouldn&#8217;t mix multicolumn
+constraints with regular ones in one line. This may cause unexpected
+behavior.
+</p>
+<h3>Foreign key constrants</h3>
+<p>
+In our table &quot;books&quot; we have column &quot;author_id&quot; which
+should reference the &quot;id&quot; column in the &quot;authors&quot;
+table. Here&#8217;s the very simple syntax for setting up foreign key
+constraint that will tell Postgres to enforce this relationship.
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='AddConstraintsToBooks constant id'>AddConstraintsToBooks</span> <span class='lt op'>&lt;</span> <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Migration constant id'>Migration</span>
+    <span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='up identifier id'>up</span>
+      <span class='constrain identifier id'>constrain</span> <span class='symbol val'>:books</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='t identifier id'>t</span><span class='bitor op'>|</span>
+        <span class='t identifier id'>t</span><span class='dot token'>.</span><span class='author_id identifier id'>author_id</span> <span class='symbol val'>:reference</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='symbol val'>:authors</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:id</span><span class='comma token'>,</span> <span class='symbol val'>:on_delete</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:cascade</span><span class='rbrace token'>}</span> <span class='comment val'># :on_delete is optional</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+
+    <span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='down identifier id'>down</span>
+      <span class='deconstrain identifier id'>deconstrain</span> <span class='symbol val'>:books</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='t identifier id'>t</span><span class='bitor op'>|</span>
+        <span class='t identifier id'>t</span><span class='dot token'>.</span><span class='author_id identifier id'>author_id</span> <span class='symbol val'>:reference</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+In this example we&#8217;re telling Postgres to enforce the connection of
+author_id to the column &quot;id&quot; in table &quot;authors&quot;.
+However, we&#8217;re also telling it to cascade on delete. This means that
+when an author is deleted - every book that referred to that author will be
+deleted as well.
+</p>
+<h2>Available constraints</h2>
+<p>
+Below is the list of constraints available and tested so far.
+</p>
+<ul>
+<li>whitelist
+
+</li>
+<li>blacklist
+
+</li>
+<li>not_blank
+
+</li>
+<li>within
+
+</li>
+<li>length_within
+
+</li>
+<li>email
+
+</li>
+<li>alphanumeric
+
+</li>
+<li>positive
+
+</li>
+<li>unique
+
+</li>
+<li>exact_length
+
+</li>
+<li>reference
+
+</li>
+<li>even
+
+</li>
+<li>odd
+
+</li>
+<li>format
+
+</li>
+</ul>
+<h2>Extensibility</h2>
+<p>
+All constraints are located in the lib/constraints.rb. Extending this
+module with more methods will automatically make constraints available in
+migrations. All methods in the Constraints module are under module_function
+directive. Each method is supposed to return a piece of SQL that is
+inserted &quot;alter table foo add constraint bar #{RIGHT HERE};.&quot;
+</p>
+<h2>TODO</h2>
+<ul>
+<li>Create better API for adding constraints
+
+</li>
+</ul>
+<h2>License</h2>
+<p>
+Copyright &#169; 2008 Maxim Chernyak
+</p>
+<p>
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the
+&quot;Software&quot;), to deal in the Software without restriction,
+including without limitation the rights to use, copy, modify, merge,
+publish, distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to the
+following conditions:
+</p>
+<p>
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+</p>
+<p>
+THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+USE OR OTHER DEALINGS IN THE SOFTWARE.
+</p>
+
+      </div>
+    </div>
+  </body>
+</html>
