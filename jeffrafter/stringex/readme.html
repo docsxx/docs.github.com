@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <title>README</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section docstring readme">
+        <h1>Stringex</h1>
+<p>
+Some [hopefully] useful extensions to Ruby&#8217;s String class. It is made
+up of three libraries: ActsAsUrl, Unidecoder, and StringExtensions.
+</p>
+<h2>ActsAsUrl</h2>
+<p>
+This library is designed to create URI-friendly representations of an
+attribute, for use in generating urls from your attributes. Basic usage is
+just calling the method:
+</p>
+<pre class="code">
+  <span class='acts_as_url identifier id'>acts_as_url</span> <span class='symbol val'>:title</span>
+</pre>
+<p>
+which will populate the <tt>url</tt> attribute on the object with the
+converted contents of the <tt>title</tt> attribute. This behavior can be
+customized by adding the following options to the arguments of the
+<tt>acts_as_url</tt> method:
+</p>
+<table>
+<tr><td valign="top"><tt>:url_attribute</tt>:</td><td>The name of the attribute to use for storing the generated url string.
+Default is <tt>:url</tt>
+
+</td></tr>
+<tr><td valign="top"><tt>:scope</tt>:</td><td>The name of model attribute to scope unique urls to. There is no default
+here.
+
+</td></tr>
+<tr><td valign="top"><tt>:only_when_blank</tt>:</td><td>If true, the url generation will only happen when <tt>:url_attribute</tt>
+is blank. Default is false (meaning url generation will happen always)
+
+</td></tr>
+<tr><td valign="top"><tt>:sync_url</tt>:</td><td>If set to true, the url field will be updated when changes are made to the
+attribute it is based on. Default is false.
+
+</td></tr>
+</table>
+<p>
+In order to use the generated url attribute, you will probably want to
+override <tt>to_param</tt> like so, in your Model:
+</p>
+<pre class="code">
+  <span class='def def kw'>def</span> <span class='to_param identifier id'>to_param</span>
+    <span class='url identifier id'>url</span> <span class='comment val'># or whatever you set :url_attribute to</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+Routing called via named routes like <tt>foo_path(@foo)</tt> will
+automatically use the url. In your controllers you will need to call
+<tt>Foo.find_by_url(params[:id])</tt> instead of the regular find.
+Don&#8217;t look for <tt>params[:url]</tt> unless you set it explicitly in
+the routing, <tt>to_param</tt> will generate <tt>params[:id]</tt>.
+</p>
+<p>
+Unlike other permalink solutions, ActsAsUrl doesn&#8217;t rely on Iconv
+(which is inconsistent across platforms and doesn&#8217;t provide great
+transliteration as is) but instead uses a transliteration scheme (see the
+code for Unidecoder) which produces much better results for Unicode
+characters. It also mixes in some custom helpers to translate common
+characters into a more URI-friendly format rather than just dump them
+completely. Examples:
+</p>
+<pre class="code">
+   <span class='comment val'># A simple prelude</span>
+   <span class='string val'>&quot;simple English&quot;</span><span class='dot token'>.</span><span class='to_url identifier id'>to_url</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;simple-english&quot;</span>
+   <span class='string val'>&quot;it's nothing at all&quot;</span><span class='dot token'>.</span><span class='to_url identifier id'>to_url</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;its-nothing-at-all&quot;</span>
+   <span class='string val'>&quot;rock &amp; roll&quot;</span><span class='dot token'>.</span><span class='to_url identifier id'>to_url</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;rock-and-roll&quot;</span>
+
+   <span class='comment val'># Let's show off</span>
+   <span class='string val'>&quot;$12 worth of Ruby power&quot;</span><span class='dot token'>.</span><span class='to_url identifier id'>to_url</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;12-dollars-worth-of-ruby-power&quot;</span>
+   <span class='string val'>&quot;10% off if you act now&quot;</span><span class='dot token'>.</span><span class='to_url identifier id'>to_url</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;10-percent-off-if-you-act-now&quot;</span>
+
+   <span class='comment val'># You don't even wanna trust Iconv for this next part</span>
+   <span class='string val'>&quot;kick it en Français&quot;</span><span class='dot token'>.</span><span class='to_url identifier id'>to_url</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;kick-it-en-francais&quot;</span>
+   <span class='string val'>&quot;rock it Español style&quot;</span><span class='dot token'>.</span><span class='to_url identifier id'>to_url</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;rock-it-espanol-style&quot;</span>
+   <span class='string val'>&quot;tell your readers 你好&quot;</span><span class='dot token'>.</span><span class='to_url identifier id'>to_url</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;tell-your-readers-ni-hao&quot;</span>
+</pre>
+<p>
+Compare those results with the ones produced on my Intel Mac by a leading
+permalink plugin:
+</p>
+<pre class="code">
+  <span class='string val'>&quot;simple English&quot;</span> <span class='comment val'># =&gt; &quot;simple-english&quot;</span>
+  <span class='string val'>&quot;it's nothing at all&quot;</span> <span class='comment val'># =&gt; &quot;it-s-nothing-at-all&quot;</span>
+  <span class='string val'>&quot;rock &amp; roll&quot;</span> <span class='comment val'># =&gt; &quot;rock-roll&quot;</span>
+
+  <span class='string val'>&quot;$12 worth of Ruby power&quot;</span> <span class='comment val'># =&gt; &quot;12-worth-of-ruby-power&quot;</span>
+  <span class='string val'>&quot;10% off if you act now&quot;</span> <span class='comment val'># =&gt; &quot;10-off-if-you-act-now&quot;</span>
+
+  <span class='string val'>&quot;kick it en Français&quot;</span> <span class='comment val'># =&gt; &quot;kick-it-en-francais&quot;</span>
+  <span class='string val'>&quot;rock it Español style&quot;</span> <span class='comment val'># =&gt; &quot;rock-it-espan-ol-style&quot;</span>
+  <span class='string val'>&quot;tell your readers 你好&quot;</span> <span class='comment val'># =&gt; &quot;tell-your-readers&quot;</span>
+</pre>
+<p>
+Not so great, actually.
+</p>
+<p>
+Note: No offense is intended to the author[s] of whatever plugins might
+produce such results. It&#8217;s not your faults Iconv sucks.
+</p>
+<h2>Unidecoder</h2>
+<p>
+This library converts Unicode [and accented Ascii] characters to their
+plain-text Ascii equivalents. This is a port of Perl&#8217;s Unidecode and
+provides eminently superior and more reliable results than Iconv.
+(Seriously, Iconv&#8230; A plague on both your houses! [sic])
+</p>
+<p>
+You probably won&#8217;t ever need to run Unidecoder by itself.
+StringExtensions adds String#to_ascii which wraps all of Unidecoder&#8217;s
+functionality. For anyone interested, details of the implementation can be
+read about in the original implementation of
+Text::Unidecode[http://interglacial.com/~sburke/tpj/as_html/tpj22.html].
+Extensive examples can be found in the tests.
+</p>
+<h2>StringExtensions</h2>
+<p>
+A collection of extensions on Ruby&#8217;s String class. Please see the
+documentation for string_extensions module for more information.
+There&#8217;s not much to explain about them really.
+</p>
+<h2>Thanks &amp; Acknowledgements</h2>
+<p>
+If it&#8217;s not obvious, some of the code for ActsAsUrl is based on Rick
+Olsen&#8217;s
+permalink_fu[http://svn.techno-weenie.net/projects/plugins/permalink_fu/]
+plugin. Unidecoder is a Ruby port of Sean Burke&#8217;s
+Text::Unidecode[http://interglacial.com/~sburke/tpj/as_html/tpj22.html]
+module for Perl. And, finally, the bulk of
+strip_html_tags[link:classes/LuckySneaks/StringExtensions.html#M000005] in
+StringExtensions was stolen from Tobias Lütke&#8217;s Regex in
+Typo[http://typosphere.org/].
+</p>
+<p>
+copyright &#169; 2008 Lucky Sneaks, released under the MIT license
+</p>
+
+      </div>
+    </div>
+  </body>
+</html>

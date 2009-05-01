@@ -1,0 +1,236 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: LuckySneaks::ActsAsUrl::ClassMethods</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module LuckySneaks_ActsAsUrl_ClassMethods">
+  <h1 class="title">Module: LuckySneaks::ActsAsUrl::ClassMethods</h1>
+  <div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#acts_as_url-instance_method' title='#acts_as_url'>#acts_as_url</a></span><span class='args'>(attribute, options = {})</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Creates a callback to automatically create an url-friendly representation
+of the <tt>attribute</tt> argument.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#initialize_urls-instance_method' title='#initialize_urls'>#initialize_urls</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Initialize the url fields for the records that need it.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>acts_as_url</h3>
+</div><div id="acts_as_url-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>acts_as_url</span><span class='args'>(attribute, options = {})</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Creates a callback to automatically create an url-friendly representation
+of the <tt>attribute</tt> argument. Example:
+</p>
+<pre class="code">
+  <span class='act_as_url identifier id'>act_as_url</span> <span class='symbol val'>:title</span>
+</pre>
+<p>
+will use the string contents of the <tt>title</tt> attribute to create the
+permalink. &lt;strong&gt;Note:&lt;/strong&gt; you can also use a
+non-database-backed method to supply the string contents for the permalink.
+Just use that method&#8217;s name as the argument as you would an
+attribute.
+</p>
+<p>
+The default attribute <tt>acts_as_url</tt> uses to save the permalink is
+<tt>url</tt> but this can be changed in the options hash. Available options
+are:
+</p>
+<table>
+<tr><td valign="top"><tt>:url_attribute</tt>:</td><td>The name of the attribute to use for storing the generated url string.
+Default is <tt>:url</tt>
+
+</td></tr>
+<tr><td valign="top"><tt>:scope</tt>:</td><td>The name of model attribute to scope unique urls to. There is no default
+here.
+
+</td></tr>
+<tr><td valign="top"><tt>:only_when_blank</tt>:</td><td>If true, the url generation will only happen when <tt>:url_attribute</tt>
+is blank. Default is false (meaning url generation will happen always)
+
+</td></tr>
+<tr><td valign="top"><tt>:sync_url</tt>:</td><td>If set to true, the url field will be updated when changes are made to the
+attribute it is based on. Default is false.
+
+</td></tr>
+</table>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/lucky_sneaks/acts_as_url.rb', line 28</span>
+
+<span class='def def kw'>def</span> <span class='acts_as_url identifier id'>acts_as_url</span><span class='lparen token'>(</span><span class='attribute identifier id'>attribute</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='cattr_accessor identifier id'>cattr_accessor</span> <span class='symbol val'>:attribute_to_urlify</span>
+  <span class='cattr_accessor identifier id'>cattr_accessor</span> <span class='symbol val'>:scope_for_url</span>
+  <span class='cattr_accessor identifier id'>cattr_accessor</span> <span class='symbol val'>:url_attribute</span> <span class='comment val'># The attribute on the DB</span>
+  <span class='cattr_accessor identifier id'>cattr_accessor</span> <span class='symbol val'>:only_when_blank</span>
+  
+  <span class='if if kw'>if</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='colon op'>:</span><span class='sync_url identifier id'>sync_url</span><span class='rbrack token'>]</span>
+    <span class='before_validation identifier id'>before_validation</span> <span class='symbol val'>:ensure_unique_url</span>
+  <span class='else else kw'>else</span>
+    <span class='before_validation_on_create identifier id'>before_validation_on_create</span> <span class='symbol val'>:ensure_unique_url</span>
+  <span class='end end kw'>end</span>
+
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='attribute_to_urlify identifier id'>attribute_to_urlify</span> <span class='assign token'>=</span> <span class='attribute identifier id'>attribute</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='scope_for_url identifier id'>scope_for_url</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:scope</span><span class='rbrack token'>]</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='url_attribute identifier id'>url_attribute</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:url_attribute</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='string val'>&quot;url&quot;</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='only_when_blank identifier id'>only_when_blank</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:only_when_blank</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='false false kw'>false</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>initialize_urls</h3>
+</div><div id="initialize_urls-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize_urls</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Initialize the url fields for the records that need it. Designed for people
+who add <tt>acts_as_url</tt> support once there&#8217;s already
+development/production data they&#8217;d like to keep around.
+</p>
+<p>
+Note: This method can get very expensive, very fast. If you&#8217;re
+planning on using this on a large selection, you will get much better
+results writing your own version with using pagination.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+53
+54
+55
+56
+57
+58</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/lucky_sneaks/acts_as_url.rb', line 53</span>
+
+<span class='def def kw'>def</span> <span class='initialize_urls identifier id'>initialize_urls</span>
+  <span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='symbol val'>:all</span><span class='comma token'>,</span> <span class='symbol val'>:conditions</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='self self kw'>self</span><span class='dot token'>.</span><span class='url_attribute identifier id'>url_attribute</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='nil nil kw'>nil</span><span class='rbrace token'>}</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='instance identifier id'>instance</span><span class='bitor op'>|</span>
+    <span class='instance identifier id'>instance</span><span class='dot token'>.</span><span class='send identifier id'>send</span> <span class='symbol val'>:ensure_unique_url</span>
+    <span class='instance identifier id'>instance</span><span class='dot token'>.</span><span class='save identifier id'>save</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

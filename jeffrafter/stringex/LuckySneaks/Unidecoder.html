@@ -1,0 +1,254 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: LuckySneaks::Unidecoder</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module LuckySneaks_Unidecoder">
+  <h1 class="title">Module: LuckySneaks::Unidecoder</h1>
+  <div class="section constants">
+  <div class="thisclass">
+  <h1>Constants</h1>
+  <dl>
+    
+      <dt id="CODEPOINTS-constant">CODEPOINTS</dt>
+      <dd>Hash.new { |h, k|      h[k] = YAML::load_file(File.join(File.dirname(__FILE__), &quot;unidecoder_data&quot;, &quot;#{k}.yml&quot;))    } unless defined?(CODEPOINTS)</dd>
+    
+  </dl>
+</div>
+
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <h1>Public Class Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#decode-class_method' title='decode'>decode</a></span><span class='args'>(string)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns string with its UTF-8 characters transliterated to ASCII ones.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#encode-class_method' title='encode'>encode</a></span><span class='args'>(codepoint)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns character for the given Unicode codepoint.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#in_yaml_file-class_method' title='in_yaml_file'>in_yaml_file</a></span><span class='args'>(character)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns string indicating which file (and line) contains the
+transliteration value for the character.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails class public">
+  <h1>Public Class Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>decode</h3>
+</div><div id="decode-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>decode</span><span class='args'>(string)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns string with its UTF-8 characters transliterated to ASCII ones
+</p>
+<p>
+You&#8217;re probably better off just using the added String#to_ascii
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/lucky_sneaks/unidecoder.rb', line 14</span>
+
+<span class='def def kw'>def</span> <span class='decode identifier id'>decode</span><span class='lparen token'>(</span><span class='string identifier id'>string</span><span class='rparen token'>)</span>
+  <span class='string identifier id'>string</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='regexp val'>/[^\x00-\x7f]/</span><span class='u identifier id'>u</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='codepoint identifier id'>codepoint</span><span class='bitor op'>|</span>
+    <span class='unpacked identifier id'>unpacked</span> <span class='assign token'>=</span> <span class='codepoint identifier id'>codepoint</span><span class='dot token'>.</span><span class='unpack identifier id'>unpack</span><span class='lparen token'>(</span><span class='string val'>&quot;U&quot;</span><span class='rparen token'>)</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span>
+    <span class='begin begin kw'>begin</span>
+      <span class='CODEPOINTS constant id'>CODEPOINTS</span><span class='lbrack token'>[</span><span class='code_group identifier id'>code_group</span><span class='lparen token'>(</span><span class='unpacked identifier id'>unpacked</span><span class='rparen token'>)</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='grouped_point identifier id'>grouped_point</span><span class='lparen token'>(</span><span class='unpacked identifier id'>unpacked</span><span class='rparen token'>)</span><span class='rbrack token'>]</span>
+    <span class='rescue rescue kw'>rescue</span>
+      <span class='comment val'># Hopefully this won't come up much</span>
+      <span class='string val'>&quot;?&quot;</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>encode</h3>
+</div><div id="encode-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>encode</span><span class='args'>(codepoint)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns character for the given Unicode codepoint
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+27
+28
+29</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/lucky_sneaks/unidecoder.rb', line 27</span>
+
+<span class='def def kw'>def</span> <span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='codepoint identifier id'>codepoint</span><span class='rparen token'>)</span>
+  <span class='lbrack token'>[</span><span class='dstring node'>&quot;0x#{codepoint}&quot;</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span><span class='lparen token'>(</span><span class='integer val'>16</span><span class='rparen token'>)</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='pack identifier id'>pack</span><span class='lparen token'>(</span><span class='string val'>&quot;U&quot;</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>in_yaml_file</h3>
+</div><div id="in_yaml_file-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>in_yaml_file</span><span class='args'>(character)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns string indicating which file (and line) contains the
+transliteration value for the character
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+33
+34
+35
+36</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/lucky_sneaks/unidecoder.rb', line 33</span>
+
+<span class='def def kw'>def</span> <span class='in_yaml_file identifier id'>in_yaml_file</span><span class='lparen token'>(</span><span class='character identifier id'>character</span><span class='rparen token'>)</span>
+  <span class='unpacked identifier id'>unpacked</span> <span class='assign token'>=</span> <span class='character identifier id'>character</span><span class='dot token'>.</span><span class='unpack identifier id'>unpack</span><span class='lparen token'>(</span><span class='string val'>&quot;U&quot;</span><span class='rparen token'>)</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span>
+  <span class='dstring node'>&quot;#{code_group(unpacked)}.yml (line #{grouped_point(unpacked) + 2})&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>
