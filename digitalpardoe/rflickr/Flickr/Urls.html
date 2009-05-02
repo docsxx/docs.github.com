@@ -1,0 +1,362 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: Flickr::Urls</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class Flickr_Urls">
+  <h1 class="title">Class: Flickr::Urls</h1>
+  <div class="section inheritance">
+  <ul>
+  <li>Flickr::APIBase</li><ul><li>Flickr::Urls</li>
+  </ul></ul>
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#getGroup-instance_method' title='#getGroup'>#getGroup</a></span><span class='args'>(group)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#getUserPhotos-instance_method' title='#getUserPhotos'>#getUserPhotos</a></span><span class='args'>(user)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#getUserProfile-instance_method' title='#getUserProfile'>#getUserProfile</a></span><span class='args'>(user)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#lookupGroup-instance_method' title='#lookupGroup'>#lookupGroup</a></span><span class='args'>(url)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#lookupUser-instance_method' title='#lookupUser'>#lookupUser</a></span><span class='args'>(url)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>getGroup</h3>
+</div><div id="getGroup-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>getGroup</span><span class='args'>(group)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+24
+25
+26
+27
+28
+29</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/flickr/urls.rb', line 24</span>
+
+<span class='def def kw'>def</span> <span class='getGroup identifier id'>getGroup</span><span class='lparen token'>(</span><span class='group identifier id'>group</span><span class='rparen token'>)</span>
+  <span class='group identifier id'>group</span> <span class='assign token'>=</span> <span class='group identifier id'>group</span><span class='dot token'>.</span><span class='nsid identifier id'>nsid</span> <span class='if if_mod kw'>if</span> <span class='group identifier id'>group</span><span class='dot token'>.</span><span class='class identifier id'>class</span> <span class='eq op'>==</span> <span class='Flickr constant id'>Flickr</span><span class='colon2 op'>::</span><span class='Group constant id'>Group</span>
+  <span class='res identifier id'>res</span> <span class='assign token'>=</span> <span class='@flickr ivar id'>@flickr</span><span class='dot token'>.</span><span class='call_method identifier id'>call_method</span><span class='lparen token'>(</span><span class='string val'>'flickr.urls.getGroup'</span><span class='comma token'>,</span>
+    <span class='string val'>'group_id'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='group identifier id'>group</span><span class='rparen token'>)</span>
+  <span class='return return kw'>return</span> <span class='res identifier id'>res</span><span class='dot token'>.</span><span class='elements identifier id'>elements</span><span class='lbrack token'>[</span><span class='string val'>'/group'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='attributes identifier id'>attributes</span><span class='lbrack token'>[</span><span class='string val'>'url'</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>getUserPhotos</h3>
+</div><div id="getUserPhotos-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>getUserPhotos</span><span class='args'>(user)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+31
+32
+33
+34
+35
+36
+37</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/flickr/urls.rb', line 31</span>
+
+<span class='def def kw'>def</span> <span class='getUserPhotos identifier id'>getUserPhotos</span><span class='lparen token'>(</span><span class='user identifier id'>user</span><span class='rparen token'>)</span>
+  <span class='user identifier id'>user</span> <span class='assign token'>=</span> <span class='user identifier id'>user</span><span class='dot token'>.</span><span class='nsid identifier id'>nsid</span> <span class='if if_mod kw'>if</span> <span class='user identifier id'>user</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:nsid</span><span class='rparen token'>)</span>
+  <span class='args identifier id'>args</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='args identifier id'>args</span><span class='lbrack token'>[</span><span class='string val'>'user_id'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='user identifier id'>user</span> <span class='if if_mod kw'>if</span> <span class='user identifier id'>user</span>
+  <span class='res identifier id'>res</span> <span class='assign token'>=</span> <span class='@flickr ivar id'>@flickr</span><span class='dot token'>.</span><span class='call_method identifier id'>call_method</span><span class='lparen token'>(</span><span class='string val'>'flickr.urls.getUserPhotos'</span><span class='comma token'>,</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='return return kw'>return</span> <span class='res identifier id'>res</span><span class='dot token'>.</span><span class='elements identifier id'>elements</span><span class='lbrack token'>[</span><span class='string val'>'/user'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='attributes identifier id'>attributes</span><span class='lbrack token'>[</span><span class='string val'>'url'</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>getUserProfile</h3>
+</div><div id="getUserProfile-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>getUserProfile</span><span class='args'>(user)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+39
+40
+41
+42
+43
+44
+45</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/flickr/urls.rb', line 39</span>
+
+<span class='def def kw'>def</span> <span class='getUserProfile identifier id'>getUserProfile</span><span class='lparen token'>(</span><span class='user identifier id'>user</span><span class='rparen token'>)</span>
+  <span class='user identifier id'>user</span> <span class='assign token'>=</span> <span class='user identifier id'>user</span><span class='dot token'>.</span><span class='nsid identifier id'>nsid</span> <span class='if if_mod kw'>if</span> <span class='user identifier id'>user</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:nsid</span><span class='rparen token'>)</span>
+  <span class='args identifier id'>args</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='args identifier id'>args</span><span class='lbrack token'>[</span><span class='string val'>'user_id'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='user identifier id'>user</span> <span class='if if_mod kw'>if</span> <span class='user identifier id'>user</span>
+  <span class='res identifier id'>res</span> <span class='assign token'>=</span> <span class='@flickr ivar id'>@flickr</span><span class='dot token'>.</span><span class='call_method identifier id'>call_method</span><span class='lparen token'>(</span><span class='string val'>'flickr.urls.getUserProfile'</span><span class='comma token'>,</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='return return kw'>return</span> <span class='res identifier id'>res</span><span class='dot token'>.</span><span class='elements identifier id'>elements</span><span class='lbrack token'>[</span><span class='string val'>'/user'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='attributes identifier id'>attributes</span><span class='lbrack token'>[</span><span class='string val'>'url'</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>lookupGroup</h3>
+</div><div id="lookupGroup-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>lookupGroup</span><span class='args'>(url)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/flickr/urls.rb', line 47</span>
+
+<span class='def def kw'>def</span> <span class='lookupGroup identifier id'>lookupGroup</span><span class='lparen token'>(</span><span class='url identifier id'>url</span><span class='rparen token'>)</span>
+  <span class='res identifier id'>res</span> <span class='assign token'>=</span> <span class='@flickr ivar id'>@flickr</span><span class='dot token'>.</span><span class='call_method identifier id'>call_method</span><span class='lparen token'>(</span><span class='string val'>'flickr.urls.lookupGroup'</span><span class='comma token'>,</span><span class='string val'>'url'</span><span class='assign token'>=</span><span class='gt op'>&gt;</span><span class='url identifier id'>url</span><span class='rparen token'>)</span>
+  <span class='els identifier id'>els</span> <span class='assign token'>=</span> <span class='res identifier id'>res</span><span class='dot token'>.</span><span class='elements identifier id'>elements</span>
+  <span class='nsid identifier id'>nsid</span> <span class='assign token'>=</span> <span class='els identifier id'>els</span><span class='lbrack token'>[</span><span class='string val'>'/group'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='attributes identifier id'>attributes</span><span class='lbrack token'>[</span><span class='string val'>'id'</span><span class='rbrack token'>]</span>
+
+  <span class='g identifier id'>g</span> <span class='assign token'>=</span> <span class='@flickr ivar id'>@flickr</span><span class='dot token'>.</span><span class='group_cache_lookup identifier id'>group_cache_lookup</span><span class='lparen token'>(</span><span class='nsid identifier id'>nsid</span><span class='rparen token'>)</span> <span class='orop op'>||</span>
+    <span class='Flickr constant id'>Flickr</span><span class='colon2 op'>::</span><span class='Group constant id'>Group</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='@flickr ivar id'>@flickr</span><span class='comma token'>,</span><span class='nsid identifier id'>nsid</span><span class='comma token'>,</span>
+        <span class='els identifier id'>els</span><span class='lbrack token'>[</span><span class='string val'>'/group/groupname'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='text identifier id'>text</span><span class='rparen token'>)</span>
+  <span class='@flickr ivar id'>@flickr</span><span class='dot token'>.</span><span class='group_cache_store identifier id'>group_cache_store</span><span class='lparen token'>(</span><span class='g identifier id'>g</span><span class='rparen token'>)</span>
+  <span class='return return kw'>return</span> <span class='g identifier id'>g</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>lookupUser</h3>
+</div><div id="lookupUser-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>lookupUser</span><span class='args'>(url)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/flickr/urls.rb', line 59</span>
+
+<span class='def def kw'>def</span> <span class='lookupUser identifier id'>lookupUser</span><span class='lparen token'>(</span><span class='url identifier id'>url</span><span class='rparen token'>)</span>
+  <span class='res identifier id'>res</span> <span class='assign token'>=</span> <span class='@flickr ivar id'>@flickr</span><span class='dot token'>.</span><span class='call_method identifier id'>call_method</span><span class='lparen token'>(</span><span class='string val'>'flickr.urls.lookupUser'</span><span class='comma token'>,</span><span class='string val'>'url'</span><span class='assign token'>=</span><span class='gt op'>&gt;</span><span class='url identifier id'>url</span><span class='rparen token'>)</span>
+  <span class='els identifier id'>els</span> <span class='assign token'>=</span> <span class='res identifier id'>res</span><span class='dot token'>.</span><span class='elements identifier id'>elements</span>
+  <span class='nsid identifier id'>nsid</span> <span class='assign token'>=</span> <span class='els identifier id'>els</span><span class='lbrack token'>[</span><span class='string val'>'/user'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='attributes identifier id'>attributes</span><span class='lbrack token'>[</span><span class='string val'>'id'</span><span class='rbrack token'>]</span>
+  <span class='p identifier id'>p</span> <span class='assign token'>=</span> <span class='@flickr ivar id'>@flickr</span><span class='dot token'>.</span><span class='person_cache_lookup identifier id'>person_cache_lookup</span><span class='lparen token'>(</span><span class='nsid identifier id'>nsid</span><span class='rparen token'>)</span> <span class='orop op'>||</span>
+    <span class='Flickr constant id'>Flickr</span><span class='colon2 op'>::</span><span class='Person constant id'>Person</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='@flickr ivar id'>@flickr</span><span class='comma token'>,</span><span class='nsid identifier id'>nsid</span><span class='comma token'>,</span>
+      <span class='els identifier id'>els</span><span class='lbrack token'>[</span><span class='string val'>'/user/username'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='text identifier id'>text</span><span class='rparen token'>)</span>
+  <span class='@flickr ivar id'>@flickr</span><span class='dot token'>.</span><span class='person_cache_store identifier id'>person_cache_store</span><span class='lparen token'>(</span><span class='p identifier id'>p</span><span class='rparen token'>)</span>
+  <span class='return return kw'>return</span> <span class='p identifier id'>p</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

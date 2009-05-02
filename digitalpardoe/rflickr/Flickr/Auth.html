@@ -1,0 +1,304 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: Flickr::Auth</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class Flickr_Auth">
+  <h1 class="title">Class: Flickr::Auth</h1>
+  <div class="section inheritance">
+  <ul>
+  <li>Flickr::APIBase</li><ul><li>Flickr::Auth</li>
+  </ul></ul>
+</div><div class="section attributes">
+  <h1>Attributes</h1>
+
+  
+    <div class="instance">
+      <h2>Instance Attributes</h2>
+      <table>
+      
+        <tr>
+          <th class="name">cache_file</td>
+          <td class="readwrite">
+            [<span id='cache_file-instance_method'>R</span><span id='cache_file%3D-instance_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>cache_file</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">token</td>
+          <td class="readwrite">
+            [<span id='token-instance_method'>R</span><span id='token%3D-instance_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>token</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+      </table>
+    </div>
+  
+</div><div class="section constants">
+  
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(flickr,cache_file=nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+33
+34
+35
+36
+37
+38
+39
+40
+41</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/flickr/auth.rb', line 33</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='flickr identifier id'>flickr</span><span class='comma token'>,</span><span class='cache_file identifier id'>cache_file</span><span class='assign token'>=</span><span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='super super kw'>super</span><span class='lparen token'>(</span><span class='flickr identifier id'>flickr</span><span class='rparen token'>)</span>
+  <span class='@frob ivar id'>@frob</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+  <span class='@token ivar id'>@token</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+  <span class='@cache_file ivar id'>@cache_file</span> <span class='assign token'>=</span> <span class='cache_file identifier id'>cache_file</span>
+  <span class='if if kw'>if</span> <span class='@cache_file ivar id'>@cache_file</span> <span class='andop op'>&amp;&amp;</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='exists? fid id'>exists?</span><span class='lparen token'>(</span><span class='@cache_file ivar id'>@cache_file</span><span class='rparen token'>)</span>
+    <span class='load_token identifier id'>load_token</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#clear_cache-instance_method' title='#clear_cache'>#clear_cache</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#frob-instance_method' title='#frob'>#frob</a></span><span class='args'>() return @frob || getFrob end</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#login_link-instance_method' title='#login_link'>#login_link</a></span><span class='args'>(perms='delete')</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>clear_cache</h3>
+</div><div id="clear_cache-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>clear_cache</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+28
+29
+30
+31</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/flickr/auth.rb', line 28</span>
+
+<span class='def def kw'>def</span> <span class='clear_cache identifier id'>clear_cache</span>
+  <span class='@token ivar id'>@token</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+  <span class='@frob ivar id'>@frob</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>frob</h3>
+</div><div id="frob-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>frob</span><span class='args'>() return @frob || getFrob end</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+52</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/flickr/auth.rb', line 52</span>
+
+<span class='def def kw'>def</span> <span class='frob identifier id'>frob</span><span class='lparen token'>(</span><span class='rparen token'>)</span> <span class='return return kw'>return</span> <span class='@frob ivar id'>@frob</span> <span class='orop op'>||</span> <span class='getFrob identifier id'>getFrob</span> <span class='end end kw'>end</span><span class='semicolon token'>;</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>login_link</h3>
+</div><div id="login_link-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>login_link</span><span class='args'>(perms='delete')</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+43
+44
+45
+46
+47
+48
+49</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/flickr/auth.rb', line 43</span>
+
+<span class='def def kw'>def</span> <span class='login_link identifier id'>login_link</span><span class='lparen token'>(</span><span class='perms identifier id'>perms</span><span class='assign token'>=</span><span class='string val'>'delete'</span><span class='rparen token'>)</span>
+  <span class='args identifier id'>args</span><span class='assign token'>=</span><span class='lbrace token'>{</span> <span class='string val'>'api_key'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='@flickr ivar id'>@flickr</span><span class='dot token'>.</span><span class='api_key identifier id'>api_key</span><span class='comma token'>,</span> <span class='string val'>'perms'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='perms identifier id'>perms</span><span class='rbrace token'>}</span>
+  <span class='args identifier id'>args</span><span class='lbrack token'>[</span><span class='string val'>'frob'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='frob identifier id'>frob</span>
+  <span class='args identifier id'>args</span><span class='lbrack token'>[</span><span class='string val'>'api_sig'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='@flickr ivar id'>@flickr</span><span class='dot token'>.</span><span class='sign identifier id'>sign</span><span class='lparen token'>(</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='return return kw'>return</span> <span class='string val'>&quot;http://flickr.com/services/auth/?&quot;</span><span class='plus op'>+</span>
+    <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='to_a identifier id'>to_a</span><span class='dot token'>.</span><span class='map identifier id'>map</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='arr identifier id'>arr</span><span class='bitor op'>|</span> <span class='arr identifier id'>arr</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='string val'>'='</span><span class='rparen token'>)</span><span class='rbrace token'>}</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='string val'>'&amp;'</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

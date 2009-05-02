@@ -1,0 +1,228 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: Flickr::Contacts</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class Flickr_Contacts">
+  <h1 class="title">Class: Flickr::Contacts</h1>
+  <div class="section inheritance">
+  <ul>
+  <li>Flickr::APIBase</li><ul><li>Flickr::Contacts</li>
+  </ul></ul>
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#getList-instance_method' title='#getList'>#getList</a></span><span class='args'>(filter=nil)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#getPublicList-instance_method' title='#getPublicList'>#getPublicList</a></span><span class='args'>(user)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+User can be either the NSID String or a Contact.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>getList</h3>
+</div><div id="getList-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>getList</span><span class='args'>(filter=nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/flickr/contacts.rb', line 24</span>
+
+<span class='def def kw'>def</span> <span class='getList identifier id'>getList</span><span class='lparen token'>(</span><span class='filter identifier id'>filter</span><span class='assign token'>=</span><span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='res identifier id'>res</span> <span class='assign token'>=</span> <span class='filter identifier id'>filter</span> <span class='integer val'>?
+</span>    <span class='@flickr ivar id'>@flickr</span><span class='dot token'>.</span><span class='call_method identifier id'>call_method</span><span class='lparen token'>(</span><span class='string val'>'flickr.contacts.getList'</span><span class='rparen token'>)</span> <span class='colon op'>:</span>
+    <span class='@flickr ivar id'>@flickr</span><span class='dot token'>.</span><span class='call_method identifier id'>call_method</span><span class='lparen token'>(</span><span class='string val'>'flickr.contacts.getList'</span><span class='comma token'>,</span>
+      <span class='string val'>'filter'</span><span class='assign token'>=</span><span class='gt op'>&gt;</span><span class='filter identifier id'>filter</span><span class='rparen token'>)</span>
+  <span class='list identifier id'>list</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+  <span class='res identifier id'>res</span><span class='dot token'>.</span><span class='elements identifier id'>elements</span><span class='lbrack token'>[</span><span class='string val'>'/contacts'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='each_element identifier id'>each_element</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='e identifier id'>e</span><span class='bitor op'>|</span>
+    <span class='att identifier id'>att</span> <span class='assign token'>=</span> <span class='e identifier id'>e</span><span class='dot token'>.</span><span class='attributes identifier id'>attributes</span>
+    <span class='nsid identifier id'>nsid</span> <span class='assign token'>=</span> <span class='att identifier id'>att</span><span class='lbrack token'>[</span><span class='string val'>'nsid'</span><span class='rbrack token'>]</span>
+
+    <span class='person identifier id'>person</span> <span class='assign token'>=</span> <span class='@flickr ivar id'>@flickr</span><span class='dot token'>.</span><span class='person_cache_lookup identifier id'>person_cache_lookup</span><span class='lparen token'>(</span><span class='nsid identifier id'>nsid</span><span class='rparen token'>)</span>
+    <span class='person identifier id'>person</span> <span class='opasgn op'>||=</span> <span class='Flickr constant id'>Flickr</span><span class='colon2 op'>::</span><span class='Person constant id'>Person</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='nsid identifier id'>nsid</span><span class='comma token'>,</span><span class='att identifier id'>att</span><span class='lbrack token'>[</span><span class='string val'>'username'</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+
+    <span class='person identifier id'>person</span><span class='dot token'>.</span><span class='realname identifier id'>realname</span> <span class='assign token'>=</span> <span class='att identifier id'>att</span><span class='lbrack token'>[</span><span class='string val'>'realname'</span><span class='rbrack token'>]</span>
+    <span class='person identifier id'>person</span><span class='dot token'>.</span><span class='friend identifier id'>friend</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='att identifier id'>att</span><span class='lbrack token'>[</span><span class='string val'>'friend'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span> <span class='eq op'>==</span> <span class='integer val'>1</span><span class='rparen token'>)</span>
+    <span class='person identifier id'>person</span><span class='dot token'>.</span><span class='family identifier id'>family</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='att identifier id'>att</span><span class='lbrack token'>[</span><span class='string val'>'family'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span> <span class='eq op'>==</span> <span class='integer val'>1</span><span class='rparen token'>)</span>
+    <span class='person identifier id'>person</span><span class='dot token'>.</span><span class='ignored identifier id'>ignored</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='att identifier id'>att</span><span class='lbrack token'>[</span><span class='string val'>'ignored'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span> <span class='eq op'>==</span> <span class='integer val'>1</span><span class='rparen token'>)</span>
+
+    <span class='list identifier id'>list</span> <span class='lshft op'>&lt;&lt;</span> <span class='person identifier id'>person</span>
+
+    <span class='@flickr ivar id'>@flickr</span><span class='dot token'>.</span><span class='person_cache_store identifier id'>person_cache_store</span><span class='lparen token'>(</span><span class='person identifier id'>person</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+  <span class='return return kw'>return</span> <span class='list identifier id'>list</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>getPublicList</h3>
+</div><div id="getPublicList-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>getPublicList</span><span class='args'>(user)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+User can be either the NSID String or a Contact
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/flickr/contacts.rb', line 50</span>
+
+<span class='def def kw'>def</span> <span class='getPublicList identifier id'>getPublicList</span><span class='lparen token'>(</span><span class='user identifier id'>user</span><span class='rparen token'>)</span>
+  <span class='user identifier id'>user</span> <span class='assign token'>=</span> <span class='user identifier id'>user</span><span class='dot token'>.</span><span class='nsid identifier id'>nsid</span> <span class='if if_mod kw'>if</span> <span class='user identifier id'>user</span><span class='dot token'>.</span><span class='class identifier id'>class</span> <span class='eq op'>==</span> <span class='Flickr constant id'>Flickr</span><span class='colon2 op'>::</span><span class='Person constant id'>Person</span>
+  <span class='res identifier id'>res</span> <span class='assign token'>=</span> <span class='@flickr ivar id'>@flickr</span><span class='dot token'>.</span><span class='call_method identifier id'>call_method</span><span class='lparen token'>(</span><span class='string val'>'flickr.contacts.getPublicList'</span><span class='comma token'>,</span>
+      <span class='string val'>'user_id'</span><span class='assign token'>=</span><span class='gt op'>&gt;</span><span class='user identifier id'>user</span><span class='rparen token'>)</span>
+  <span class='list identifier id'>list</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+  <span class='res identifier id'>res</span><span class='dot token'>.</span><span class='elements identifier id'>elements</span><span class='lbrack token'>[</span><span class='string val'>'/contacts'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='each_element identifier id'>each_element</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='e identifier id'>e</span><span class='bitor op'>|</span>
+    <span class='att identifier id'>att</span> <span class='assign token'>=</span> <span class='e identifier id'>e</span><span class='dot token'>.</span><span class='attributes identifier id'>attributes</span>
+    <span class='nsid identifier id'>nsid</span> <span class='assign token'>=</span> <span class='att identifier id'>att</span><span class='lbrack token'>[</span><span class='string val'>'nsid'</span><span class='rbrack token'>]</span>
+
+    <span class='person identifier id'>person</span> <span class='assign token'>=</span> <span class='@flickr ivar id'>@flickr</span><span class='dot token'>.</span><span class='person_cache_lookup identifier id'>person_cache_lookup</span><span class='lparen token'>(</span><span class='nsid identifier id'>nsid</span><span class='rparen token'>)</span>
+    <span class='person identifier id'>person</span> <span class='opasgn op'>||=</span> <span class='Flickr constant id'>Flickr</span><span class='colon2 op'>::</span><span class='Person constant id'>Person</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='nsid identifier id'>nsid</span><span class='comma token'>,</span><span class='att identifier id'>att</span><span class='lbrack token'>[</span><span class='string val'>'username'</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+
+    <span class='person identifier id'>person</span><span class='dot token'>.</span><span class='ignored identifier id'>ignored</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='att identifier id'>att</span><span class='lbrack token'>[</span><span class='string val'>'ignored'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span> <span class='eq op'>==</span> <span class='integer val'>1</span><span class='rparen token'>)</span>
+    <span class='@flickr ivar id'>@flickr</span><span class='dot token'>.</span><span class='person_cache_store identifier id'>person_cache_store</span><span class='lparen token'>(</span><span class='person identifier id'>person</span><span class='rparen token'>)</span>
+    <span class='list identifier id'>list</span> <span class='lshft op'>&lt;&lt;</span> <span class='person identifier id'>person</span>
+  <span class='end end kw'>end</span>
+  <span class='return return kw'>return</span> <span class='list identifier id'>list</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

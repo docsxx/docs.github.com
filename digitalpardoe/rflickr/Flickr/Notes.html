@@ -1,0 +1,220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: Flickr::Notes</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class Flickr_Notes">
+  <h1 class="title">Class: Flickr::Notes</h1>
+  <div class="section inheritance">
+  <ul>
+  <li>Flickr::APIBase</li><ul><li>Flickr::Notes</li>
+  </ul></ul>
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#add-instance_method' title='#add'>#add</a></span><span class='args'>(photo,x,y,w,h,text)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#delete-instance_method' title='#delete'>#delete</a></span><span class='args'>(note)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#edit-instance_method' title='#edit'>#edit</a></span><span class='args'>(note,x,y,w,h,text)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>add</h3>
+</div><div id="add-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>add</span><span class='args'>(photo,x,y,w,h,text)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+24
+25
+26
+27
+28
+29
+30</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/flickr/notes.rb', line 24</span>
+
+<span class='def def kw'>def</span> <span class='add identifier id'>add</span><span class='lparen token'>(</span><span class='photo identifier id'>photo</span><span class='comma token'>,</span><span class='x identifier id'>x</span><span class='comma token'>,</span><span class='y identifier id'>y</span><span class='comma token'>,</span><span class='w identifier id'>w</span><span class='comma token'>,</span><span class='h identifier id'>h</span><span class='comma token'>,</span><span class='text identifier id'>text</span><span class='rparen token'>)</span>
+  <span class='photo identifier id'>photo</span> <span class='assign token'>=</span> <span class='photo identifier id'>photo</span><span class='dot token'>.</span><span class='id identifier id'>id</span> <span class='if if_mod kw'>if</span> <span class='photo identifier id'>photo</span><span class='dot token'>.</span><span class='class identifier id'>class</span> <span class='eq op'>==</span> <span class='Flickr constant id'>Flickr</span><span class='colon2 op'>::</span><span class='Photo constant id'>Photo</span>
+  <span class='res identifier id'>res</span> <span class='assign token'>=</span> <span class='@flickr ivar id'>@flickr</span><span class='dot token'>.</span><span class='call_method identifier id'>call_method</span><span class='lparen token'>(</span><span class='string val'>'flickr.photos.notes.add'</span><span class='comma token'>,</span>
+    <span class='string val'>'photo_id'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='photo identifier id'>photo</span><span class='comma token'>,</span> <span class='string val'>'note_x'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='x identifier id'>x</span><span class='comma token'>,</span> <span class='string val'>'note_y'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='y identifier id'>y</span><span class='comma token'>,</span>
+    <span class='string val'>'note_w'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='w identifier id'>w</span><span class='comma token'>,</span> <span class='string val'>'note_h'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='h identifier id'>h</span><span class='comma token'>,</span> <span class='string val'>'note_text'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='text identifier id'>text</span><span class='rparen token'>)</span>
+  <span class='return return kw'>return</span> <span class='res identifier id'>res</span><span class='dot token'>.</span><span class='elements identifier id'>elements</span><span class='lbrack token'>[</span><span class='string val'>'/note'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='attributes identifier id'>attributes</span><span class='lbrack token'>[</span><span class='string val'>'id'</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>delete</h3>
+</div><div id="delete-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>delete</span><span class='args'>(note)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+32
+33
+34
+35
+36</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/flickr/notes.rb', line 32</span>
+
+<span class='def def kw'>def</span> <span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='note identifier id'>note</span><span class='rparen token'>)</span>
+  <span class='note identifier id'>note</span> <span class='assign token'>=</span> <span class='note identifier id'>note</span><span class='dot token'>.</span><span class='id identifier id'>id</span> <span class='if if_mod kw'>if</span> <span class='note identifier id'>note</span><span class='dot token'>.</span><span class='class identifier id'>class</span> <span class='eq op'>==</span> <span class='Flickr constant id'>Flickr</span><span class='colon2 op'>::</span><span class='Note constant id'>Note</span>
+  <span class='res identifier id'>res</span> <span class='assign token'>=</span> <span class='@flickr ivar id'>@flickr</span><span class='dot token'>.</span><span class='call_method identifier id'>call_method</span><span class='lparen token'>(</span><span class='string val'>'flickr.photos.notes.delete'</span><span class='comma token'>,</span>
+    <span class='string val'>'note_id'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='note identifier id'>note</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>edit</h3>
+</div><div id="edit-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>edit</span><span class='args'>(note,x,y,w,h,text)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+38
+39
+40
+41
+42
+43</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/flickr/notes.rb', line 38</span>
+
+<span class='def def kw'>def</span> <span class='edit identifier id'>edit</span><span class='lparen token'>(</span><span class='note identifier id'>note</span><span class='comma token'>,</span><span class='x identifier id'>x</span><span class='comma token'>,</span><span class='y identifier id'>y</span><span class='comma token'>,</span><span class='w identifier id'>w</span><span class='comma token'>,</span><span class='h identifier id'>h</span><span class='comma token'>,</span><span class='text identifier id'>text</span><span class='rparen token'>)</span>
+  <span class='note identifier id'>note</span> <span class='assign token'>=</span> <span class='note identifier id'>note</span><span class='dot token'>.</span><span class='id identifier id'>id</span> <span class='if if_mod kw'>if</span> <span class='note identifier id'>note</span><span class='dot token'>.</span><span class='class identifier id'>class</span> <span class='eq op'>==</span> <span class='Flickr constant id'>Flickr</span><span class='colon2 op'>::</span><span class='Note constant id'>Note</span>
+  <span class='res identifier id'>res</span> <span class='assign token'>=</span> <span class='@flickr ivar id'>@flickr</span><span class='dot token'>.</span><span class='call_method identifier id'>call_method</span><span class='lparen token'>(</span><span class='string val'>'flickr.photos.notes.edit'</span><span class='comma token'>,</span>
+    <span class='string val'>'note_id'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='note identifier id'>note</span><span class='comma token'>,</span> <span class='string val'>'note_x'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='x identifier id'>x</span><span class='comma token'>,</span> <span class='string val'>'note_y'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='y identifier id'>y</span><span class='comma token'>,</span>
+    <span class='string val'>'note_w'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='w identifier id'>w</span><span class='comma token'>,</span> <span class='string val'>'note_h'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='h identifier id'>h</span><span class='comma token'>,</span> <span class='string val'>'note_text'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='text identifier id'>text</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

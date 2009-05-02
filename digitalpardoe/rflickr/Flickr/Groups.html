@@ -1,0 +1,392 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: Flickr::Groups</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class Flickr_Groups">
+  <h1 class="title">Class: Flickr::Groups</h1>
+  <div class="section inheritance">
+  <ul>
+  <li>Flickr::APIBase</li><ul><li>Flickr::Groups</li>
+  </ul></ul>
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#browse-instance_method' title='#browse'>#browse</a></span><span class='args'>(category=nil)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+category can be a Category or nsid string.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#getInfo-instance_method' title='#getInfo'>#getInfo</a></span><span class='args'>(group)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+group can be a Group or group nsid.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#pools-instance_method' title='#pools'>#pools</a></span><span class='args'>() @pools ||= Flickr::Pools.new(@flickr,self)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#search-instance_method' title='#search'>#search</a></span><span class='args'>(text,per_page=nil,page=nil)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>browse</h3>
+</div><div id="browse-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>browse</span><span class='args'>(category=nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+category can be a Category or nsid string
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/flickr/groups.rb', line 27</span>
+
+<span class='def def kw'>def</span> <span class='browse identifier id'>browse</span><span class='lparen token'>(</span><span class='category identifier id'>category</span><span class='assign token'>=</span><span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='category identifier id'>category</span><span class='assign token'>=</span><span class='category identifier id'>category</span><span class='dot token'>.</span><span class='id identifier id'>id</span> <span class='if if_mod kw'>if</span> <span class='lparen token'>(</span><span class='category identifier id'>category</span><span class='dot token'>.</span><span class='class identifier id'>class</span> <span class='eq op'>==</span> <span class='Flickr constant id'>Flickr</span><span class='colon2 op'>::</span><span class='Category constant id'>Category</span> <span class='orop op'>||</span>
+    <span class='category identifier id'>category</span><span class='dot token'>.</span><span class='class identifier id'>class</span> <span class='eq op'>==</span> <span class='Flickr constant id'>Flickr</span><span class='colon2 op'>::</span><span class='SubCategory constant id'>SubCategory</span> <span class='rparen token'>)</span>
+
+  <span class='args identifier id'>args</span> <span class='assign token'>=</span> <span class='category identifier id'>category</span> <span class='integer val'>? </span> <span class='lbrace token'>{</span><span class='string val'>'cat_id'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='category identifier id'>category</span> <span class='rbrace token'>}</span> <span class='colon op'>:</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='res identifier id'>res</span> <span class='assign token'>=</span> <span class='@flickr ivar id'>@flickr</span><span class='dot token'>.</span><span class='call_method identifier id'>call_method</span><span class='lparen token'>(</span><span class='string val'>'flickr.groups.browse'</span><span class='comma token'>,</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='att identifier id'>att</span> <span class='assign token'>=</span> <span class='res identifier id'>res</span><span class='dot token'>.</span><span class='root identifier id'>root</span><span class='dot token'>.</span><span class='attributes identifier id'>attributes</span>
+  <span class='cat identifier id'>cat</span><span class='assign token'>=</span><span class='Flickr constant id'>Flickr</span><span class='colon2 op'>::</span><span class='Category constant id'>Category</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='att identifier id'>att</span><span class='lbrack token'>[</span><span class='string val'>'name'</span><span class='rbrack token'>]</span><span class='comma token'>,</span><span class='att identifier id'>att</span><span class='lbrack token'>[</span><span class='string val'>'path'</span><span class='rbrack token'>]</span><span class='comma token'>,</span><span class='att identifier id'>att</span><span class='lbrack token'>[</span><span class='string val'>'pathids'</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+  <span class='res identifier id'>res</span><span class='dot token'>.</span><span class='elements identifier id'>elements</span><span class='lbrack token'>[</span><span class='string val'>'/category'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='each_element identifier id'>each_element</span><span class='lparen token'>(</span><span class='string val'>'subcat'</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='e identifier id'>e</span><span class='bitor op'>|</span>
+    <span class='att identifier id'>att</span> <span class='assign token'>=</span> <span class='e identifier id'>e</span><span class='dot token'>.</span><span class='attributes identifier id'>attributes</span>
+    <span class='cat identifier id'>cat</span><span class='dot token'>.</span><span class='subcats identifier id'>subcats</span> <span class='lshft op'>&lt;&lt;</span> <span class='Flickr constant id'>Flickr</span><span class='colon2 op'>::</span><span class='SubCategory constant id'>SubCategory</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='att identifier id'>att</span><span class='lbrack token'>[</span><span class='string val'>'name'</span><span class='rbrack token'>]</span><span class='comma token'>,</span>
+      <span class='att identifier id'>att</span><span class='lbrack token'>[</span><span class='string val'>'id'</span><span class='rbrack token'>]</span><span class='comma token'>,</span><span class='att identifier id'>att</span><span class='lbrack token'>[</span><span class='string val'>'count'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+  <span class='res identifier id'>res</span><span class='dot token'>.</span><span class='elements identifier id'>elements</span><span class='lbrack token'>[</span><span class='string val'>'/category'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='each_element identifier id'>each_element</span><span class='lparen token'>(</span><span class='string val'>'group'</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='e identifier id'>e</span><span class='bitor op'>|</span>
+    <span class='att identifier id'>att</span> <span class='assign token'>=</span> <span class='e identifier id'>e</span><span class='dot token'>.</span><span class='attributes identifier id'>attributes</span>
+    <span class='nsid identifier id'>nsid</span> <span class='assign token'>=</span> <span class='att identifier id'>att</span><span class='lbrack token'>[</span><span class='string val'>'nsid'</span><span class='rbrack token'>]</span>
+
+    <span class='g identifier id'>g</span> <span class='assign token'>=</span> <span class='@flickr ivar id'>@flickr</span><span class='dot token'>.</span><span class='group_cache_lookup identifier id'>group_cache_lookup</span><span class='lparen token'>(</span><span class='nsid identifier id'>nsid</span><span class='rparen token'>)</span>
+    <span class='g identifier id'>g</span> <span class='opasgn op'>||=</span> <span class='Flickr constant id'>Flickr</span><span class='colon2 op'>::</span><span class='Group constant id'>Group</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='@flickr ivar id'>@flickr</span><span class='comma token'>,</span><span class='nsid identifier id'>nsid</span><span class='rparen token'>)</span>
+
+    <span class='g identifier id'>g</span><span class='dot token'>.</span><span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='att identifier id'>att</span><span class='lbrack token'>[</span><span class='string val'>'name'</span><span class='rbrack token'>]</span>
+    <span class='g identifier id'>g</span><span class='dot token'>.</span><span class='members identifier id'>members</span> <span class='assign token'>=</span> <span class='att identifier id'>att</span><span class='lbrack token'>[</span><span class='string val'>'members'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span>
+    <span class='g identifier id'>g</span><span class='dot token'>.</span><span class='online identifier id'>online</span> <span class='assign token'>=</span> <span class='att identifier id'>att</span><span class='lbrack token'>[</span><span class='string val'>'online'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span>
+    <span class='g identifier id'>g</span><span class='dot token'>.</span><span class='chatnsid identifier id'>chatnsid</span> <span class='assign token'>=</span> <span class='att identifier id'>att</span><span class='lbrack token'>[</span><span class='string val'>'chatnsid'</span><span class='rbrack token'>]</span>
+    <span class='g identifier id'>g</span><span class='dot token'>.</span><span class='inchat identifier id'>inchat</span> <span class='assign token'>=</span> <span class='att identifier id'>att</span><span class='lbrack token'>[</span><span class='string val'>'inchat'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span>
+
+    <span class='@flickr ivar id'>@flickr</span><span class='dot token'>.</span><span class='group_cache_store identifier id'>group_cache_store</span><span class='lparen token'>(</span><span class='g identifier id'>g</span><span class='rparen token'>)</span>
+    <span class='cat identifier id'>cat</span><span class='dot token'>.</span><span class='groups identifier id'>groups</span> <span class='lshft op'>&lt;&lt;</span> <span class='g identifier id'>g</span>
+  <span class='end end kw'>end</span>
+
+  <span class='return return kw'>return</span> <span class='cat identifier id'>cat</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>getInfo</h3>
+</div><div id="getInfo-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>getInfo</span><span class='args'>(group)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+group can be a Group or group nsid
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/flickr/groups.rb', line 61</span>
+
+<span class='def def kw'>def</span> <span class='getInfo identifier id'>getInfo</span><span class='lparen token'>(</span><span class='group identifier id'>group</span><span class='rparen token'>)</span>
+  <span class='group identifier id'>group</span> <span class='assign token'>=</span> <span class='group identifier id'>group</span><span class='dot token'>.</span><span class='nsid identifier id'>nsid</span> <span class='if if_mod kw'>if</span> <span class='group identifier id'>group</span><span class='dot token'>.</span><span class='class identifier id'>class</span> <span class='eq op'>==</span> <span class='Flickr constant id'>Flickr</span><span class='colon2 op'>::</span><span class='Group constant id'>Group</span>
+  <span class='g identifier id'>g</span> <span class='assign token'>=</span> <span class='@flickr ivar id'>@flickr</span><span class='dot token'>.</span><span class='group_cache_lookup identifier id'>group_cache_lookup</span><span class='lparen token'>(</span><span class='group identifier id'>group</span><span class='rparen token'>)</span>
+  <span class='return return kw'>return</span> <span class='g identifier id'>g</span> <span class='if if_mod kw'>if</span> <span class='g identifier id'>g</span> <span class='andop op'>&amp;&amp;</span> <span class='g identifier id'>g</span><span class='dot token'>.</span><span class='fully_fetched identifier id'>fully_fetched</span>
+
+  <span class='res identifier id'>res</span> <span class='assign token'>=</span> <span class='@flickr ivar id'>@flickr</span><span class='dot token'>.</span><span class='call_method identifier id'>call_method</span><span class='lparen token'>(</span><span class='string val'>'flickr.groups.getInfo'</span><span class='comma token'>,</span>
+    <span class='string val'>'group_id'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='group identifier id'>group</span><span class='rparen token'>)</span>
+  <span class='group identifier id'>group</span> <span class='assign token'>=</span> <span class='res identifier id'>res</span><span class='dot token'>.</span><span class='elements identifier id'>elements</span><span class='lbrack token'>[</span><span class='string val'>'/group'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='attributes identifier id'>attributes</span><span class='lbrack token'>[</span><span class='string val'>'id'</span><span class='rbrack token'>]</span>
+  <span class='g identifier id'>g</span> <span class='opasgn op'>||=</span> <span class='Flickr constant id'>Flickr</span><span class='colon2 op'>::</span><span class='Group constant id'>Group</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='@flickr ivar id'>@flickr</span><span class='comma token'>,</span><span class='nsid identifier id'>nsid</span><span class='rparen token'>)</span>
+  <span class='g identifier id'>g</span><span class='dot token'>.</span><span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='res identifier id'>res</span><span class='dot token'>.</span><span class='elements identifier id'>elements</span><span class='lbrack token'>[</span><span class='string val'>'/group/name'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='text identifier id'>text</span>
+  <span class='g identifier id'>g</span><span class='dot token'>.</span><span class='description identifier id'>description</span> <span class='assign token'>=</span> <span class='res identifier id'>res</span><span class='dot token'>.</span><span class='elements identifier id'>elements</span><span class='lbrack token'>[</span><span class='string val'>'/group/description'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='text identifier id'>text</span>
+  <span class='g identifier id'>g</span><span class='dot token'>.</span><span class='members identifier id'>members</span> <span class='assign token'>=</span> <span class='res identifier id'>res</span><span class='dot token'>.</span><span class='elements identifier id'>elements</span><span class='lbrack token'>[</span><span class='string val'>'/group/members'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='text identifier id'>text</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span>
+  <span class='g identifier id'>g</span><span class='dot token'>.</span><span class='privacy identifier id'>privacy</span> <span class='assign token'>=</span> <span class='res identifier id'>res</span><span class='dot token'>.</span><span class='elements identifier id'>elements</span><span class='lbrack token'>[</span><span class='string val'>'/group/privacy'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='text identifier id'>text</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span>
+  <span class='g identifier id'>g</span><span class='dot token'>.</span><span class='fully_fetched identifier id'>fully_fetched</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+
+  <span class='@flickr ivar id'>@flickr</span><span class='dot token'>.</span><span class='group_cache_store identifier id'>group_cache_store</span><span class='lparen token'>(</span><span class='g identifier id'>g</span><span class='rparen token'>)</span>
+  <span class='return return kw'>return</span> <span class='g identifier id'>g</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>pools</h3>
+</div><div id="pools-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>pools</span><span class='args'>() @pools ||= Flickr::Pools.new(@flickr,self)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+24</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/flickr/groups.rb', line 24</span>
+
+<span class='def def kw'>def</span> <span class='pools identifier id'>pools</span><span class='lparen token'>(</span><span class='rparen token'>)</span> <span class='@pools ivar id'>@pools</span> <span class='opasgn op'>||=</span> <span class='Flickr constant id'>Flickr</span><span class='colon2 op'>::</span><span class='Pools constant id'>Pools</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='@flickr ivar id'>@flickr</span><span class='comma token'>,</span><span class='self self kw'>self</span><span class='rparen token'>)</span> <span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>search</h3>
+</div><div id="search-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>search</span><span class='args'>(text,per_page=nil,page=nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/flickr/groups.rb', line 80</span>
+
+<span class='def def kw'>def</span> <span class='search identifier id'>search</span><span class='lparen token'>(</span><span class='text identifier id'>text</span><span class='comma token'>,</span><span class='per_page identifier id'>per_page</span><span class='assign token'>=</span><span class='nil nil kw'>nil</span><span class='comma token'>,</span><span class='page identifier id'>page</span><span class='assign token'>=</span><span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='args identifier id'>args</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span> <span class='string val'>'text'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='text identifier id'>text</span> <span class='rbrace token'>}</span>
+  <span class='args identifier id'>args</span><span class='lbrack token'>[</span><span class='string val'>'per_page'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='per_page identifier id'>per_page</span> <span class='if if_mod kw'>if</span> <span class='per_page identifier id'>per_page</span>
+  <span class='args identifier id'>args</span><span class='lbrack token'>[</span><span class='string val'>'page'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='page identifier id'>page</span> <span class='if if_mod kw'>if</span> <span class='page identifier id'>page</span>
+  <span class='res identifier id'>res</span> <span class='assign token'>=</span> <span class='@flickr ivar id'>@flickr</span><span class='dot token'>.</span><span class='call_method identifier id'>call_method</span><span class='lparen token'>(</span><span class='string val'>'flickr.groups.search'</span><span class='comma token'>,</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='att identifier id'>att</span> <span class='assign token'>=</span> <span class='res identifier id'>res</span><span class='dot token'>.</span><span class='root identifier id'>root</span><span class='dot token'>.</span><span class='attributes identifier id'>attributes</span>
+  <span class='list identifier id'>list</span> <span class='assign token'>=</span> <span class='Flickr constant id'>Flickr</span><span class='colon2 op'>::</span><span class='GroupList constant id'>GroupList</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='att identifier id'>att</span><span class='lbrack token'>[</span><span class='string val'>'page'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span><span class='comma token'>,</span><span class='att identifier id'>att</span><span class='lbrack token'>[</span><span class='string val'>'pages'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span><span class='comma token'>,</span>
+    <span class='att identifier id'>att</span><span class='lbrack token'>[</span><span class='string val'>'perpage'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span><span class='comma token'>,</span><span class='att identifier id'>att</span><span class='lbrack token'>[</span><span class='string val'>'total'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span><span class='rparen token'>)</span>
+  <span class='res identifier id'>res</span><span class='dot token'>.</span><span class='elements identifier id'>elements</span><span class='lbrack token'>[</span><span class='string val'>'/groups'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='each_element identifier id'>each_element</span><span class='lparen token'>(</span><span class='string val'>'group'</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='e identifier id'>e</span><span class='bitor op'>|</span>
+    <span class='att identifier id'>att</span> <span class='assign token'>=</span> <span class='e identifier id'>e</span><span class='dot token'>.</span><span class='attributes identifier id'>attributes</span>
+    <span class='nsid identifier id'>nsid</span> <span class='assign token'>=</span> <span class='att identifier id'>att</span><span class='lbrack token'>[</span><span class='string val'>'nsid'</span><span class='rbrack token'>]</span>
+    <span class='g identifier id'>g</span> <span class='assign token'>=</span> <span class='@flickr ivar id'>@flickr</span><span class='dot token'>.</span><span class='group_cache_lookup identifier id'>group_cache_lookup</span><span class='lparen token'>(</span><span class='nsid identifier id'>nsid</span><span class='rparen token'>)</span> <span class='orop op'>||</span>
+      <span class='Flickr constant id'>Flickr</span><span class='colon2 op'>::</span><span class='Group constant id'>Group</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='@flickr ivar id'>@flickr</span><span class='comma token'>,</span><span class='nsid identifier id'>nsid</span><span class='rparen token'>)</span>
+    <span class='g identifier id'>g</span><span class='dot token'>.</span><span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='att identifier id'>att</span><span class='lbrack token'>[</span><span class='string val'>'name'</span><span class='rbrack token'>]</span>
+    <span class='g identifier id'>g</span><span class='dot token'>.</span><span class='eighteenplus identifier id'>eighteenplus</span> <span class='assign token'>=</span> <span class='att identifier id'>att</span><span class='lbrack token'>[</span><span class='string val'>'eighteenplus'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span> <span class='eq op'>==</span> <span class='integer val'>1</span>
+
+    <span class='@flickr ivar id'>@flickr</span><span class='dot token'>.</span><span class='group_cache_store identifier id'>group_cache_store</span><span class='lparen token'>(</span><span class='g identifier id'>g</span><span class='rparen token'>)</span>
+    <span class='list identifier id'>list</span> <span class='lshft op'>&lt;&lt;</span> <span class='g identifier id'>g</span>
+  <span class='end end kw'>end</span>
+  <span class='return return kw'>return</span> <span class='list identifier id'>list</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

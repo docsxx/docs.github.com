@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: Flickr::Blogs</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class Flickr_Blogs">
+  <h1 class="title">Class: Flickr::Blogs</h1>
+  <div class="section inheritance">
+  <ul>
+  <li>Flickr::APIBase</li><ul><li>Flickr::Blogs</li>
+  </ul></ul>
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#getList-instance_method' title='#getList'>#getList</a></span><span class='args'>()</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#postPhoto-instance_method' title='#postPhoto'>#postPhoto</a></span><span class='args'>(blog, photo, title, description, blog_password=nil)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+blog can be either an integer blog ID or a Blog object photo can be either
+an integer photo ID or a Photo object.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>getList</h3>
+</div><div id="getList-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>getList</span><span class='args'>()</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/flickr/blogs.rb', line 25</span>
+
+<span class='def def kw'>def</span> <span class='getList identifier id'>getList</span><span class='lparen token'>(</span><span class='rparen token'>)</span>
+  <span class='return return kw'>return</span> <span class='@flickr ivar id'>@flickr</span><span class='dot token'>.</span><span class='blog_cache_lookup identifier id'>blog_cache_lookup</span> <span class='if if_mod kw'>if</span> <span class='@flickr ivar id'>@flickr</span><span class='dot token'>.</span><span class='blog_cache_lookup identifier id'>blog_cache_lookup</span>
+  <span class='res identifier id'>res</span> <span class='assign token'>=</span> <span class='@flickr ivar id'>@flickr</span><span class='dot token'>.</span><span class='call_method identifier id'>call_method</span><span class='lparen token'>(</span><span class='string val'>'flickr.blogs.getList'</span><span class='rparen token'>)</span>
+  <span class='list identifier id'>list</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+  <span class='res identifier id'>res</span><span class='dot token'>.</span><span class='elements identifier id'>elements</span><span class='lbrack token'>[</span><span class='string val'>'/blogs'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='each_element identifier id'>each_element</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='e identifier id'>e</span><span class='bitor op'>|</span>
+    <span class='att identifier id'>att</span> <span class='assign token'>=</span> <span class='e identifier id'>e</span><span class='dot token'>.</span><span class='attributes identifier id'>attributes</span>
+    <span class='list identifier id'>list</span> <span class='lshft op'>&lt;&lt;</span> <span class='Flickr constant id'>Flickr</span><span class='colon2 op'>::</span><span class='Blog constant id'>Blog</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='att identifier id'>att</span><span class='lbrack token'>[</span><span class='string val'>'id'</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='att identifier id'>att</span><span class='lbrack token'>[</span><span class='string val'>'name'</span><span class='rbrack token'>]</span><span class='comma token'>,</span>
+      <span class='att identifier id'>att</span><span class='lbrack token'>[</span><span class='string val'>'needspassword'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span> <span class='eq op'>==</span> <span class='integer val'>1</span><span class='comma token'>,</span> <span class='att identifier id'>att</span><span class='lbrack token'>[</span><span class='string val'>'url'</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+  <span class='@flickr ivar id'>@flickr</span><span class='dot token'>.</span><span class='blog_cache_store identifier id'>blog_cache_store</span><span class='lparen token'>(</span><span class='list identifier id'>list</span><span class='rparen token'>)</span>
+  <span class='return return kw'>return</span> <span class='list identifier id'>list</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>postPhoto</h3>
+</div><div id="postPhoto-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>postPhoto</span><span class='args'>(blog, photo, title, description, blog_password=nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+blog can be either an integer blog ID or a Blog object photo can be either
+an integer photo ID or a Photo object
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/flickr/blogs.rb', line 40</span>
+
+<span class='def def kw'>def</span> <span class='postPhoto identifier id'>postPhoto</span><span class='lparen token'>(</span><span class='blog identifier id'>blog</span><span class='comma token'>,</span> <span class='photo identifier id'>photo</span><span class='comma token'>,</span> <span class='title identifier id'>title</span><span class='comma token'>,</span> <span class='description identifier id'>description</span><span class='comma token'>,</span> <span class='blog_password identifier id'>blog_password</span><span class='assign token'>=</span><span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='blog identifier id'>blog</span> <span class='assign token'>=</span> <span class='blog identifier id'>blog</span><span class='dot token'>.</span><span class='id identifier id'>id</span> <span class='if if_mod kw'>if</span> <span class='blog identifier id'>blog</span><span class='dot token'>.</span><span class='class identifier id'>class</span> <span class='eq op'>==</span> <span class='Flickr constant id'>Flickr</span><span class='colon2 op'>::</span><span class='Blog constant id'>Blog</span>
+  <span class='photo identifier id'>photo</span> <span class='assign token'>=</span> <span class='photo identifier id'>photo</span><span class='dot token'>.</span><span class='id identifier id'>id</span> <span class='if if_mod kw'>if</span> <span class='photo identifier id'>photo</span><span class='dot token'>.</span><span class='class identifier id'>class</span> <span class='eq op'>==</span> <span class='Flickr constant id'>Flickr</span><span class='colon2 op'>::</span><span class='Photo constant id'>Photo</span>
+
+  <span class='args identifier id'>args</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='string val'>'blog'</span><span class='assign token'>=</span><span class='gt op'>&gt;</span><span class='blog identifier id'>blog</span><span class='comma token'>,</span><span class='string val'>'photo'</span><span class='assign token'>=</span><span class='gt op'>&gt;</span><span class='photo identifier id'>photo</span><span class='comma token'>,</span><span class='string val'>'title'</span><span class='assign token'>=</span><span class='gt op'>&gt;</span><span class='title identifier id'>title</span><span class='comma token'>,</span>
+    <span class='description identifier id'>description</span><span class='assign token'>=</span><span class='gt op'>&gt;</span><span class='string val'>'description'</span><span class='rbrace token'>}</span>
+  <span class='args identifier id'>args</span><span class='lbrack token'>[</span><span class='string val'>'blogs_password'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='blog_password identifier id'>blog_password</span> <span class='if if_mod kw'>if</span> <span class='blog_password identifier id'>blog_password</span>
+
+  <span class='@flickr ivar id'>@flickr</span><span class='dot token'>.</span><span class='call_method identifier id'>call_method</span><span class='lparen token'>(</span><span class='string val'>'flickr.blogs.postPhoto'</span><span class='comma token'>,</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>
