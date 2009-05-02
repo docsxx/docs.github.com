@@ -1,0 +1,809 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: Containers::Trie</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class Containers_Trie">
+  <h1 class="title">Class: Containers::Trie</h1>
+  <div class="section constants">
+  
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Create a new, empty Trie.
+</p>
+<pre class="code">
+  <span class='t identifier id'>t</span> <span class='assign token'>=</span> <span class='Containers constant id'>Containers</span><span class='colon2 op'>::</span><span class='Trie constant id'>Trie</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+  <span class='t identifier id'>t</span><span class='lbrack token'>[</span><span class='string val'>&quot;hello&quot;</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='string val'>&quot;world&quot;</span>
+  <span class='t identifier id'>t</span><span class='lbrack token'>[</span><span class='string val'>&quot;hello] #=&gt; &quot;</span><span class='world identifier id'>world</span><span class='string val'>&quot;
+</span></pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+17
+18
+19</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/containers/trie.rb', line 17</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span>
+  <span class='@root ivar id'>@root</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#get-instance_method' title='#get'>#get</a></span><span class='args'>(key)</span>
+        <span class='block'></span>
+        
+          <span class='alias'>#[]</span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns the value of the desired key, or nil if the key doesn&#8217;t
+exist.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#get_recursive-instance_method' title='#get_recursive'>#get_recursive</a></span><span class='args'>(node, string, index)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns [char, value] if found.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#has_key%3F-instance_method' title='#has_key?'>#has_key?</a></span><span class='args'>(key)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns true if the key is contained in the Trie.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#longest_prefix-instance_method' title='#longest_prefix'>#longest_prefix</a></span><span class='args'>(string)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns the longest key that has a prefix in common with the parameter
+string.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#prefix_recursive-instance_method' title='#prefix_recursive'>#prefix_recursive</a></span><span class='args'>(node, string, index)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#push-instance_method' title='#push'>#push</a></span><span class='args'>(key, value)</span>
+        <span class='block'></span>
+        
+          <span class='alias'>#[]=</span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Adds a key, value pair to the Trie, and returns the value if successful.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#push_recursive-instance_method' title='#push_recursive'>#push_recursive</a></span><span class='args'>(node, string, index, value)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#wildcard-instance_method' title='#wildcard'>#wildcard</a></span><span class='args'>(string)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns a sorted array containing strings that match the parameter string.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#wildcard_recursive-instance_method' title='#wildcard_recursive'>#wildcard_recursive</a></span><span class='args'>(node, string, index, prefix)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>get</h3>
+</div><div id="get-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>get</span><span class='args'>(key)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+<p class="aliases">
+  <span class="aka">Also known as:</span>
+  
+    <tt id="%5B%5D-instance_method">[]</tt>
+  
+</p>
+</div><div class="section docstring">
+  <p>
+Returns the value of the desired key, or nil if the key doesn&#8217;t
+exist.
+</p>
+<p>
+Complexity: O(m) worst case
+</p>
+<pre class="code">
+  <span class='t identifier id'>t</span> <span class='assign token'>=</span> <span class='Containers constant id'>Containers</span><span class='colon2 op'>::</span><span class='Trie constant id'>Trie</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+  <span class='t identifier id'>t</span><span class='dot token'>.</span><span class='get identifier id'>get</span><span class='lparen token'>(</span><span class='string val'>&quot;hello&quot;</span><span class='rparen token'>)</span> <span class='assign token'>=</span> <span class='string val'>&quot;world&quot;</span>
+  <span class='t identifier id'>t</span><span class='dot token'>.</span><span class='get identifier id'>get</span><span class='lparen token'>(</span><span class='string val'>&quot;non-existant&quot;</span><span class='rparen token'>)</span> <span class='comment val'>#=&gt; nil</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+57
+58
+59
+60
+61
+62</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/containers/trie.rb', line 57</span>
+
+<span class='def def kw'>def</span> <span class='get identifier id'>get</span><span class='lparen token'>(</span><span class='key identifier id'>key</span><span class='rparen token'>)</span>
+  <span class='key identifier id'>key</span> <span class='assign token'>=</span> <span class='key identifier id'>key</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+  <span class='return return kw'>return</span> <span class='nil nil kw'>nil</span> <span class='if if_mod kw'>if</span> <span class='key identifier id'>key</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span>
+  <span class='node identifier id'>node</span> <span class='assign token'>=</span> <span class='get_recursive identifier id'>get_recursive</span><span class='lparen token'>(</span><span class='@root ivar id'>@root</span><span class='comma token'>,</span> <span class='key identifier id'>key</span><span class='comma token'>,</span> <span class='integer val'>0</span><span class='rparen token'>)</span>
+  <span class='node identifier id'>node</span> <span class='integer val'>? </span><span class='node identifier id'>node</span><span class='dot token'>.</span><span class='last identifier id'>last</span> <span class='colon op'>:</span> <span class='nil nil kw'>nil</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>get_recursive</h3>
+</div><div id="get_recursive-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>get_recursive</span><span class='args'>(node, string, index)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns [char, value] if found
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/containers/trie.rb', line 169</span>
+
+<span class='def def kw'>def</span> <span class='get_recursive identifier id'>get_recursive</span><span class='lparen token'>(</span><span class='node identifier id'>node</span><span class='comma token'>,</span> <span class='string identifier id'>string</span><span class='comma token'>,</span> <span class='index identifier id'>index</span><span class='rparen token'>)</span>
+  <span class='return return kw'>return</span> <span class='nil nil kw'>nil</span> <span class='if if_mod kw'>if</span> <span class='node identifier id'>node</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+  <span class='char identifier id'>char</span> <span class='assign token'>=</span> <span class='string identifier id'>string</span><span class='lbrack token'>[</span><span class='index identifier id'>index</span><span class='rbrack token'>]</span>
+  <span class='if if kw'>if</span> <span class='lparen token'>(</span><span class='char identifier id'>char</span> <span class='lt op'>&lt;</span> <span class='node identifier id'>node</span><span class='dot token'>.</span><span class='char identifier id'>char</span><span class='rparen token'>)</span>
+    <span class='return return kw'>return</span> <span class='get_recursive identifier id'>get_recursive</span><span class='lparen token'>(</span><span class='node identifier id'>node</span><span class='dot token'>.</span><span class='left identifier id'>left</span><span class='comma token'>,</span> <span class='string identifier id'>string</span><span class='comma token'>,</span> <span class='index identifier id'>index</span><span class='rparen token'>)</span>
+  <span class='elsif elsif kw'>elsif</span> <span class='lparen token'>(</span><span class='char identifier id'>char</span> <span class='gt op'>&gt;</span> <span class='node identifier id'>node</span><span class='dot token'>.</span><span class='char identifier id'>char</span><span class='rparen token'>)</span>
+    <span class='return return kw'>return</span> <span class='get_recursive identifier id'>get_recursive</span><span class='lparen token'>(</span><span class='node identifier id'>node</span><span class='dot token'>.</span><span class='right identifier id'>right</span><span class='comma token'>,</span> <span class='string identifier id'>string</span><span class='comma token'>,</span> <span class='index identifier id'>index</span><span class='rparen token'>)</span>
+  <span class='elsif elsif kw'>elsif</span> <span class='lparen token'>(</span><span class='index identifier id'>index</span> <span class='lt op'>&lt;</span> <span class='string identifier id'>string</span><span class='dot token'>.</span><span class='length identifier id'>length</span><span class='minus op'>-</span><span class='integer val'>1</span><span class='rparen token'>)</span> <span class='comment val'># We're not at the end of the input string; add next char</span>
+    <span class='return return kw'>return</span> <span class='get_recursive identifier id'>get_recursive</span><span class='lparen token'>(</span><span class='node identifier id'>node</span><span class='dot token'>.</span><span class='mid identifier id'>mid</span><span class='comma token'>,</span> <span class='string identifier id'>string</span><span class='comma token'>,</span> <span class='index identifier id'>index</span><span class='plus op'>+</span><span class='integer val'>1</span><span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+    <span class='return return kw'>return</span> <span class='node identifier id'>node</span><span class='dot token'>.</span><span class='last? fid id'>last?</span> <span class='integer val'>? </span><span class='lbrack token'>[</span><span class='node identifier id'>node</span><span class='dot token'>.</span><span class='char identifier id'>char</span><span class='comma token'>,</span> <span class='node identifier id'>node</span><span class='dot token'>.</span><span class='value identifier id'>value</span><span class='rbrack token'>]</span> <span class='colon op'>:</span> <span class='nil nil kw'>nil</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>has_key?</h3>
+</div><div id="has_key%3F-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>has_key?</span><span class='args'>(key)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns true if the key is contained in the Trie.
+</p>
+<p>
+Complexity: O(m) worst case
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+44
+45
+46
+47
+48</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/containers/trie.rb', line 44</span>
+
+<span class='def def kw'>def</span> <span class='has_key? fid id'>has_key?</span><span class='lparen token'>(</span><span class='key identifier id'>key</span><span class='rparen token'>)</span>
+  <span class='key identifier id'>key</span> <span class='assign token'>=</span> <span class='key identifier id'>key</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+  <span class='return return kw'>return</span> <span class='false false kw'>false</span> <span class='if if_mod kw'>if</span> <span class='key identifier id'>key</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span>
+  <span class='notop op'>!</span><span class='lparen token'>(</span><span class='get_recursive identifier id'>get_recursive</span><span class='lparen token'>(</span><span class='@root ivar id'>@root</span><span class='comma token'>,</span> <span class='key identifier id'>key</span><span class='comma token'>,</span> <span class='integer val'>0</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>longest_prefix</h3>
+</div><div id="longest_prefix-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>longest_prefix</span><span class='args'>(string)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns the longest key that has a prefix in common with the parameter
+string. If no match is found, the blank string &quot;&quot; is returned.
+</p>
+<p>
+Complexity: O(m) worst case
+</p>
+<pre class="code">
+  <span class='t identifier id'>t</span> <span class='assign token'>=</span> <span class='Containers constant id'>Containers</span><span class='colon2 op'>::</span><span class='Trie constant id'>Trie</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+  <span class='t identifier id'>t</span><span class='dot token'>.</span><span class='push identifier id'>push</span><span class='lparen token'>(</span><span class='string val'>&quot;Hello&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;World&quot;</span><span class='rparen token'>)</span>
+  <span class='t identifier id'>t</span><span class='dot token'>.</span><span class='push identifier id'>push</span><span class='lparen token'>(</span><span class='string val'>&quot;Hello, brother&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;World&quot;</span><span class='rparen token'>)</span>
+  <span class='t identifier id'>t</span><span class='dot token'>.</span><span class='push identifier id'>push</span><span class='lparen token'>(</span><span class='string val'>&quot;Hello, bob&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;World&quot;</span><span class='rparen token'>)</span>
+  <span class='t identifier id'>t</span><span class='dot token'>.</span><span class='longest_prefix identifier id'>longest_prefix</span><span class='lparen token'>(</span><span class='string val'>&quot;Hello, brandon&quot;</span><span class='rparen token'>)</span> <span class='comment val'>#=&gt; &quot;Hello&quot;</span>
+  <span class='t identifier id'>t</span><span class='dot token'>.</span><span class='longest_prefix identifier id'>longest_prefix</span><span class='lparen token'>(</span><span class='string val'>&quot;Hel&quot;</span><span class='rparen token'>)</span> <span class='comment val'>#=&gt; &quot;&quot;</span>
+  <span class='t identifier id'>t</span><span class='dot token'>.</span><span class='longest_prefix identifier id'>longest_prefix</span><span class='lparen token'>(</span><span class='string val'>&quot;Hello&quot;</span><span class='rparen token'>)</span> <span class='comment val'>#=&gt; &quot;Hello&quot;</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+77
+78
+79
+80
+81
+82</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/containers/trie.rb', line 77</span>
+
+<span class='def def kw'>def</span> <span class='longest_prefix identifier id'>longest_prefix</span><span class='lparen token'>(</span><span class='string identifier id'>string</span><span class='rparen token'>)</span>
+  <span class='string identifier id'>string</span> <span class='assign token'>=</span> <span class='string identifier id'>string</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+  <span class='return return kw'>return</span> <span class='nil nil kw'>nil</span> <span class='if if_mod kw'>if</span> <span class='string identifier id'>string</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span>
+  <span class='len identifier id'>len</span> <span class='assign token'>=</span> <span class='prefix_recursive identifier id'>prefix_recursive</span><span class='lparen token'>(</span><span class='@root ivar id'>@root</span><span class='comma token'>,</span> <span class='string identifier id'>string</span><span class='comma token'>,</span> <span class='integer val'>0</span><span class='rparen token'>)</span>
+  <span class='string identifier id'>string</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='dot3 op'>...</span><span class='len identifier id'>len</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>prefix_recursive</h3>
+</div><div id="prefix_recursive-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>prefix_recursive</span><span class='args'>(node, string, index)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/containers/trie.rb', line 136</span>
+
+<span class='def def kw'>def</span> <span class='prefix_recursive identifier id'>prefix_recursive</span><span class='lparen token'>(</span><span class='node identifier id'>node</span><span class='comma token'>,</span> <span class='string identifier id'>string</span><span class='comma token'>,</span> <span class='index identifier id'>index</span><span class='rparen token'>)</span>
+  <span class='return return kw'>return</span> <span class='integer val'>0</span> <span class='if if_mod kw'>if</span> <span class='node identifier id'>node</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span> <span class='orop op'>||</span> <span class='index identifier id'>index</span> <span class='eq op'>==</span> <span class='string identifier id'>string</span><span class='dot token'>.</span><span class='length identifier id'>length</span>
+  <span class='len identifier id'>len</span> <span class='assign token'>=</span> <span class='integer val'>0</span>
+  <span class='rec_len identifier id'>rec_len</span> <span class='assign token'>=</span> <span class='integer val'>0</span>
+  <span class='char identifier id'>char</span> <span class='assign token'>=</span> <span class='string identifier id'>string</span><span class='lbrack token'>[</span><span class='index identifier id'>index</span><span class='rbrack token'>]</span>
+  <span class='if if kw'>if</span> <span class='lparen token'>(</span><span class='char identifier id'>char</span> <span class='lt op'>&lt;</span> <span class='node identifier id'>node</span><span class='dot token'>.</span><span class='char identifier id'>char</span><span class='rparen token'>)</span>
+    <span class='rec_len identifier id'>rec_len</span> <span class='assign token'>=</span> <span class='prefix_recursive identifier id'>prefix_recursive</span><span class='lparen token'>(</span><span class='node identifier id'>node</span><span class='dot token'>.</span><span class='left identifier id'>left</span><span class='comma token'>,</span> <span class='string identifier id'>string</span><span class='comma token'>,</span> <span class='index identifier id'>index</span><span class='rparen token'>)</span>
+  <span class='elsif elsif kw'>elsif</span> <span class='lparen token'>(</span><span class='char identifier id'>char</span> <span class='gt op'>&gt;</span> <span class='node identifier id'>node</span><span class='dot token'>.</span><span class='char identifier id'>char</span><span class='rparen token'>)</span>
+    <span class='rec_len identifier id'>rec_len</span> <span class='assign token'>=</span> <span class='prefix_recursive identifier id'>prefix_recursive</span><span class='lparen token'>(</span><span class='node identifier id'>node</span><span class='dot token'>.</span><span class='right identifier id'>right</span><span class='comma token'>,</span> <span class='string identifier id'>string</span><span class='comma token'>,</span> <span class='index identifier id'>index</span><span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+    <span class='len identifier id'>len</span> <span class='assign token'>=</span> <span class='index identifier id'>index</span><span class='plus op'>+</span><span class='integer val'>1</span> <span class='if if_mod kw'>if</span> <span class='node identifier id'>node</span><span class='dot token'>.</span><span class='last? fid id'>last?</span>
+    <span class='rec_len identifier id'>rec_len</span> <span class='assign token'>=</span> <span class='prefix_recursive identifier id'>prefix_recursive</span><span class='lparen token'>(</span><span class='node identifier id'>node</span><span class='dot token'>.</span><span class='mid identifier id'>mid</span><span class='comma token'>,</span> <span class='string identifier id'>string</span><span class='comma token'>,</span> <span class='index identifier id'>index</span><span class='plus op'>+</span><span class='integer val'>1</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+  <span class='len identifier id'>len</span> <span class='gt op'>&gt;</span> <span class='rec_len identifier id'>rec_len</span> <span class='integer val'>? </span><span class='len identifier id'>len</span> <span class='colon op'>:</span> <span class='rec_len identifier id'>rec_len</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>push</h3>
+</div><div id="push-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>push</span><span class='args'>(key, value)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+<p class="aliases">
+  <span class="aka">Also known as:</span>
+  
+    <tt id="%5B%5D%3D-instance_method">[]=</tt>
+  
+</p>
+</div><div class="section docstring">
+  <p>
+Adds a key, value pair to the Trie, and returns the value if successful.
+The to_s method is called on the parameter to turn it into a string.
+</p>
+<p>
+Complexity: O(m)
+</p>
+<pre class="code">
+  <span class='t identifier id'>t</span> <span class='assign token'>=</span> <span class='Containers constant id'>Containers</span><span class='colon2 op'>::</span><span class='Trie constant id'>Trie</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+  <span class='t identifier id'>t</span><span class='lbrack token'>[</span><span class='string val'>&quot;hello&quot;</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='string val'>&quot;world&quot;</span>
+  <span class='t identifier id'>t</span><span class='dot token'>.</span><span class='push identifier id'>push</span><span class='lparen token'>(</span><span class='string val'>&quot;hello&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;world&quot;</span><span class='rparen token'>)</span> <span class='comment val'># does the same thing</span>
+  <span class='t identifier id'>t</span><span class='lbrack token'>[</span><span class='string val'>&quot;hello&quot;</span><span class='rbrack token'>]</span> <span class='comment val'>#=&gt; &quot;world&quot;</span>
+  <span class='t identifier id'>t</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='integer val'>1</span>
+  <span class='t identifier id'>t</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span> <span class='comment val'>#=&gt; 1</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+32
+33
+34
+35
+36
+37</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/containers/trie.rb', line 32</span>
+
+<span class='def def kw'>def</span> <span class='push identifier id'>push</span><span class='lparen token'>(</span><span class='key identifier id'>key</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='rparen token'>)</span>
+  <span class='key identifier id'>key</span> <span class='assign token'>=</span> <span class='key identifier id'>key</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+  <span class='return return kw'>return</span> <span class='nil nil kw'>nil</span> <span class='if if_mod kw'>if</span> <span class='key identifier id'>key</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span>
+  <span class='@root ivar id'>@root</span> <span class='assign token'>=</span> <span class='push_recursive identifier id'>push_recursive</span><span class='lparen token'>(</span><span class='@root ivar id'>@root</span><span class='comma token'>,</span> <span class='key identifier id'>key</span><span class='comma token'>,</span> <span class='integer val'>0</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='rparen token'>)</span>
+  <span class='value identifier id'>value</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>push_recursive</h3>
+</div><div id="push_recursive-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>push_recursive</span><span class='args'>(node, string, index, value)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/containers/trie.rb', line 152</span>
+
+<span class='def def kw'>def</span> <span class='push_recursive identifier id'>push_recursive</span><span class='lparen token'>(</span><span class='node identifier id'>node</span><span class='comma token'>,</span> <span class='string identifier id'>string</span><span class='comma token'>,</span> <span class='index identifier id'>index</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='rparen token'>)</span>
+  <span class='char identifier id'>char</span> <span class='assign token'>=</span> <span class='string identifier id'>string</span><span class='lbrack token'>[</span><span class='index identifier id'>index</span><span class='rbrack token'>]</span>
+  <span class='node identifier id'>node</span> <span class='assign token'>=</span> <span class='Node constant id'>Node</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='char identifier id'>char</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='node identifier id'>node</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+  <span class='if if kw'>if</span> <span class='lparen token'>(</span><span class='char identifier id'>char</span> <span class='lt op'>&lt;</span> <span class='node identifier id'>node</span><span class='dot token'>.</span><span class='char identifier id'>char</span><span class='rparen token'>)</span>
+    <span class='node identifier id'>node</span><span class='dot token'>.</span><span class='left identifier id'>left</span> <span class='assign token'>=</span> <span class='push_recursive identifier id'>push_recursive</span><span class='lparen token'>(</span><span class='node identifier id'>node</span><span class='dot token'>.</span><span class='left identifier id'>left</span><span class='comma token'>,</span> <span class='string identifier id'>string</span><span class='comma token'>,</span> <span class='index identifier id'>index</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='rparen token'>)</span>
+  <span class='elsif elsif kw'>elsif</span> <span class='lparen token'>(</span><span class='char identifier id'>char</span> <span class='gt op'>&gt;</span> <span class='node identifier id'>node</span><span class='dot token'>.</span><span class='char identifier id'>char</span><span class='rparen token'>)</span>
+    <span class='node identifier id'>node</span><span class='dot token'>.</span><span class='right identifier id'>right</span> <span class='assign token'>=</span> <span class='push_recursive identifier id'>push_recursive</span><span class='lparen token'>(</span><span class='node identifier id'>node</span><span class='dot token'>.</span><span class='right identifier id'>right</span><span class='comma token'>,</span> <span class='string identifier id'>string</span><span class='comma token'>,</span> <span class='index identifier id'>index</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='rparen token'>)</span>
+  <span class='elsif elsif kw'>elsif</span> <span class='lparen token'>(</span><span class='index identifier id'>index</span> <span class='lt op'>&lt;</span> <span class='string identifier id'>string</span><span class='dot token'>.</span><span class='length identifier id'>length</span><span class='minus op'>-</span><span class='integer val'>1</span><span class='rparen token'>)</span> <span class='comment val'># We're not at the end of the input string; add next char</span>
+    <span class='node identifier id'>node</span><span class='dot token'>.</span><span class='mid identifier id'>mid</span> <span class='assign token'>=</span> <span class='push_recursive identifier id'>push_recursive</span><span class='lparen token'>(</span><span class='node identifier id'>node</span><span class='dot token'>.</span><span class='mid identifier id'>mid</span><span class='comma token'>,</span> <span class='string identifier id'>string</span><span class='comma token'>,</span> <span class='index identifier id'>index</span><span class='plus op'>+</span><span class='integer val'>1</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+    <span class='node identifier id'>node</span><span class='dot token'>.</span><span class='end identifier id'>end</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+    <span class='node identifier id'>node</span><span class='dot token'>.</span><span class='value identifier id'>value</span> <span class='assign token'>=</span> <span class='value identifier id'>value</span>
+  <span class='end end kw'>end</span>
+  <span class='node identifier id'>node</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>wildcard</h3>
+</div><div id="wildcard-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>wildcard</span><span class='args'>(string)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns a sorted array containing strings that match the parameter string.
+The wildcard characters that match any character are &#8217;*&#8217; and
+&#8217;.&#8217; If no match is found, an empty array is returned.
+</p>
+<p>
+Complexity: O(n) worst case
+</p>
+<pre class="code">
+  <span class='t identifier id'>t</span> <span class='assign token'>=</span> <span class='Containers constant id'>Containers</span><span class='colon2 op'>::</span><span class='Trie constant id'>Trie</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+  <span class='t identifier id'>t</span><span class='dot token'>.</span><span class='push identifier id'>push</span><span class='lparen token'>(</span><span class='string val'>&quot;Hello&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;World&quot;</span><span class='rparen token'>)</span>
+  <span class='t identifier id'>t</span><span class='dot token'>.</span><span class='push identifier id'>push</span><span class='lparen token'>(</span><span class='string val'>&quot;Hilly&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;World&quot;</span><span class='rparen token'>)</span>
+  <span class='t identifier id'>t</span><span class='dot token'>.</span><span class='push identifier id'>push</span><span class='lparen token'>(</span><span class='string val'>&quot;Hello, bob&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;World&quot;</span><span class='rparen token'>)</span>
+  <span class='t identifier id'>t</span><span class='dot token'>.</span><span class='wildcard identifier id'>wildcard</span><span class='lparen token'>(</span><span class='string val'>&quot;H*ll.&quot;</span><span class='rparen token'>)</span> <span class='comment val'>#=&gt; [&quot;Hello&quot;, &quot;Hilly&quot;]</span>
+  <span class='t identifier id'>t</span><span class='dot token'>.</span><span class='wildcard identifier id'>wildcard</span><span class='lparen token'>(</span><span class='string val'>&quot;Hel&quot;</span><span class='rparen token'>)</span> <span class='comment val'>#=&gt; []</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+96
+97
+98
+99
+100
+101
+102</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/containers/trie.rb', line 96</span>
+
+<span class='def def kw'>def</span> <span class='wildcard identifier id'>wildcard</span><span class='lparen token'>(</span><span class='string identifier id'>string</span><span class='rparen token'>)</span>
+  <span class='string identifier id'>string</span> <span class='assign token'>=</span> <span class='string identifier id'>string</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+  <span class='return return kw'>return</span> <span class='nil nil kw'>nil</span> <span class='if if_mod kw'>if</span> <span class='string identifier id'>string</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span>
+  <span class='ary identifier id'>ary</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span> 
+  <span class='ary identifier id'>ary</span> <span class='lshft op'>&lt;&lt;</span> <span class='wildcard_recursive identifier id'>wildcard_recursive</span><span class='lparen token'>(</span><span class='@root ivar id'>@root</span><span class='comma token'>,</span> <span class='string identifier id'>string</span><span class='comma token'>,</span> <span class='integer val'>0</span><span class='comma token'>,</span> <span class='string val'>&quot;&quot;</span><span class='rparen token'>)</span>
+  <span class='ary identifier id'>ary</span><span class='dot token'>.</span><span class='flatten identifier id'>flatten</span><span class='dot token'>.</span><span class='compact identifier id'>compact</span><span class='dot token'>.</span><span class='sort identifier id'>sort</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>wildcard_recursive</h3>
+</div><div id="wildcard_recursive-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>wildcard_recursive</span><span class='args'>(node, string, index, prefix)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/containers/trie.rb', line 119</span>
+
+<span class='def def kw'>def</span> <span class='wildcard_recursive identifier id'>wildcard_recursive</span><span class='lparen token'>(</span><span class='node identifier id'>node</span><span class='comma token'>,</span> <span class='string identifier id'>string</span><span class='comma token'>,</span> <span class='index identifier id'>index</span><span class='comma token'>,</span> <span class='prefix identifier id'>prefix</span><span class='rparen token'>)</span>
+  <span class='return return kw'>return</span> <span class='nil nil kw'>nil</span> <span class='if if_mod kw'>if</span> <span class='node identifier id'>node</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span> <span class='orop op'>||</span> <span class='index identifier id'>index</span> <span class='eq op'>==</span> <span class='string identifier id'>string</span><span class='dot token'>.</span><span class='length identifier id'>length</span>
+  <span class='arr identifier id'>arr</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+  <span class='char identifier id'>char</span> <span class='assign token'>=</span> <span class='string identifier id'>string</span><span class='lbrack token'>[</span><span class='index identifier id'>index</span><span class='rbrack token'>]</span>
+  <span class='if if kw'>if</span> <span class='lparen token'>(</span><span class='char identifier id'>char</span><span class='dot token'>.</span><span class='chr identifier id'>chr</span> <span class='eq op'>==</span> <span class='string val'>&quot;*&quot;</span> <span class='orop op'>||</span> <span class='char identifier id'>char</span><span class='dot token'>.</span><span class='chr identifier id'>chr</span> <span class='eq op'>==</span> <span class='string val'>&quot;.&quot;</span> <span class='orop op'>||</span> <span class='char identifier id'>char</span> <span class='lt op'>&lt;</span> <span class='node identifier id'>node</span><span class='dot token'>.</span><span class='char identifier id'>char</span><span class='rparen token'>)</span>
+    <span class='arr identifier id'>arr</span> <span class='lshft op'>&lt;&lt;</span> <span class='wildcard_recursive identifier id'>wildcard_recursive</span><span class='lparen token'>(</span><span class='node identifier id'>node</span><span class='dot token'>.</span><span class='left identifier id'>left</span><span class='comma token'>,</span> <span class='string identifier id'>string</span><span class='comma token'>,</span> <span class='index identifier id'>index</span><span class='comma token'>,</span> <span class='prefix identifier id'>prefix</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+  <span class='if if kw'>if</span> <span class='lparen token'>(</span><span class='char identifier id'>char</span><span class='dot token'>.</span><span class='chr identifier id'>chr</span> <span class='eq op'>==</span> <span class='string val'>&quot;*&quot;</span> <span class='orop op'>||</span> <span class='char identifier id'>char</span><span class='dot token'>.</span><span class='chr identifier id'>chr</span> <span class='eq op'>==</span> <span class='string val'>&quot;.&quot;</span> <span class='orop op'>||</span> <span class='char identifier id'>char</span> <span class='gt op'>&gt;</span> <span class='node identifier id'>node</span><span class='dot token'>.</span><span class='char identifier id'>char</span><span class='rparen token'>)</span>
+    <span class='arr identifier id'>arr</span> <span class='lshft op'>&lt;&lt;</span> <span class='wildcard_recursive identifier id'>wildcard_recursive</span><span class='lparen token'>(</span><span class='node identifier id'>node</span><span class='dot token'>.</span><span class='right identifier id'>right</span><span class='comma token'>,</span> <span class='string identifier id'>string</span><span class='comma token'>,</span> <span class='index identifier id'>index</span><span class='comma token'>,</span> <span class='prefix identifier id'>prefix</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+  <span class='if if kw'>if</span> <span class='lparen token'>(</span><span class='char identifier id'>char</span><span class='dot token'>.</span><span class='chr identifier id'>chr</span> <span class='eq op'>==</span> <span class='string val'>&quot;*&quot;</span> <span class='orop op'>||</span> <span class='char identifier id'>char</span><span class='dot token'>.</span><span class='chr identifier id'>chr</span> <span class='eq op'>==</span> <span class='string val'>&quot;.&quot;</span> <span class='orop op'>||</span> <span class='char identifier id'>char</span> <span class='eq op'>==</span> <span class='node identifier id'>node</span><span class='dot token'>.</span><span class='char identifier id'>char</span><span class='rparen token'>)</span>
+    <span class='arr identifier id'>arr</span> <span class='lshft op'>&lt;&lt;</span> <span class='dstring node'>&quot;#{prefix}#{node.char.chr}&quot;</span> <span class='if if_mod kw'>if</span> <span class='node identifier id'>node</span><span class='dot token'>.</span><span class='last? fid id'>last?</span>
+    <span class='arr identifier id'>arr</span> <span class='lshft op'>&lt;&lt;</span> <span class='wildcard_recursive identifier id'>wildcard_recursive</span><span class='lparen token'>(</span><span class='node identifier id'>node</span><span class='dot token'>.</span><span class='mid identifier id'>mid</span><span class='comma token'>,</span> <span class='string identifier id'>string</span><span class='comma token'>,</span> <span class='index identifier id'>index</span><span class='plus op'>+</span><span class='integer val'>1</span><span class='comma token'>,</span> <span class='prefix identifier id'>prefix</span> <span class='plus op'>+</span> <span class='node identifier id'>node</span><span class='dot token'>.</span><span class='char identifier id'>char</span><span class='dot token'>.</span><span class='chr identifier id'>chr</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+  <span class='arr identifier id'>arr</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

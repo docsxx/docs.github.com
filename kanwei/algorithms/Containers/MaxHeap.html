@@ -1,0 +1,267 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: Containers::MaxHeap</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class Containers_MaxHeap">
+  <h1 class="title">Class: Containers::MaxHeap</h1>
+  <div class="section inheritance">
+  <ul>
+  <li><a href='Heap.html' title='Containers::Heap'>Containers::Heap</a></li><ul><li>Containers::MaxHeap</li>
+  </ul></ul>
+</div><div class="section docstring">
+  <p>
+A MaxHeap is a heap where the items are returned in descending order of key
+value.
+</p>
+
+</div><div class="section constants">
+  
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(ary=[])</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+call-seq:
+</p>
+<pre class="code">
+    <span class='MaxHeap constant id'>MaxHeap</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='ary identifier id'>ary</span><span class='rparen token'>)</span> <span class='minus op'>-</span><span class='gt op'>&gt;</span> <span class='new_heap identifier id'>new_heap</span>
+</pre>
+<p>
+Creates a new MaxHeap with an optional array parameter of items to insert
+into the heap. A MaxHeap is created by calling Heap.new { |x, y| (x
+&lt;=&gt; y) == 1 }, so this is a convenience class.
+</p>
+<pre class="code">
+    <span class='maxheap identifier id'>maxheap</span> <span class='assign token'>=</span> <span class='MaxHeap constant id'>MaxHeap</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='comma token'>,</span> <span class='integer val'>2</span><span class='comma token'>,</span> <span class='integer val'>3</span><span class='comma token'>,</span> <span class='integer val'>4</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+    <span class='maxheap identifier id'>maxheap</span><span class='dot token'>.</span><span class='pop identifier id'>pop</span> <span class='comment val'>#=&gt; 4</span>
+    <span class='maxheap identifier id'>maxheap</span><span class='dot token'>.</span><span class='pop identifier id'>pop</span> <span class='comment val'>#=&gt; 3</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+416
+417
+418</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/containers/heap.rb', line 416</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='ary identifier id'>ary</span><span class='assign token'>=</span><span class='lbrack token'>[</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+  <span class='super super kw'>super</span><span class='lparen token'>(</span><span class='ary identifier id'>ary</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='x identifier id'>x</span><span class='comma token'>,</span> <span class='y identifier id'>y</span><span class='bitor op'>|</span> <span class='lparen token'>(</span><span class='x identifier id'>x</span> <span class='cmp op'>&lt;=&gt;</span> <span class='y identifier id'>y</span><span class='rparen token'>)</span> <span class='eq op'>==</span> <span class='integer val'>1</span> <span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#max-instance_method' title='#max'>#max</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+call-seq:
+</p>
+<pre class="code">
+    <span class='max identifier id'>max</span> <span class='minus op'>-</span><span class='gt op'>&gt;</span> <span class='value identifier id'>value</span>
+    <span class='max identifier id'>max</span> <span class='minus op'>-</span><span class='gt op'>&gt;</span> <span class='nil nil kw'>nil</span><span class='dot token'>.</span>
+</pre>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#max%21-instance_method' title='#max!'>#max!</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+call-seq:
+</p>
+<pre class="code">
+    <span class='max! fid id'>max!</span> <span class='minus op'>-</span><span class='gt op'>&gt;</span> <span class='value identifier id'>value</span>
+    <span class='max! fid id'>max!</span> <span class='minus op'>-</span><span class='gt op'>&gt;</span> <span class='nil nil kw'>nil</span><span class='dot token'>.</span>
+</pre>
+
+        
+      </td>
+    </tr>
+  
+</table><div class="inherited">
+  
+  <div>
+    <h1>Public Instance Methods Inherited from <a href='Heap.html' title='Containers::Heap'>Containers::Heap</a></h1>
+    <p><span class='name'><a href='Heap.html#change_key-instance_method' title='change_key'>change_key</a></span>, <span class='name'><a href='Heap.html#clear-instance_method' title='clear'>clear</a></span>, <span class='name'><a href='Heap.html#delete-instance_method' title='delete'>delete</a></span>, <span class='name'><a href='Heap.html#empty%3F-instance_method' title='empty?'>empty?</a></span>, <span class='name'><a href='Heap.html#has_key%3F-instance_method' title='has_key?'>has_key?</a></span>, <span class='name'><a href='Heap.html#merge%21-instance_method' title='merge!'>merge!</a></span>, <span class='name'><a href='Heap.html#next-instance_method' title='next'>next</a></span>, <span class='name'><a href='Heap.html#pop-instance_method' title='pop'>pop</a></span>, <span class='name'><a href='Heap.html#push-instance_method' title='push'>push</a></span>, <span class='name'><a href='Heap.html#size-instance_method' title='size'>size</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>max</h3>
+</div><div id="max-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>max</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+call-seq:
+</p>
+<pre class="code">
+    <span class='max identifier id'>max</span> <span class='minus op'>-</span><span class='gt op'>&gt;</span> <span class='value identifier id'>value</span>
+    <span class='max identifier id'>max</span> <span class='minus op'>-</span><span class='gt op'>&gt;</span> <span class='nil nil kw'>nil</span>
+</pre>
+<p>
+Returns the item with the largest key, but does not remove it from the
+heap.
+</p>
+<pre class="code">
+    <span class='maxheap identifier id'>maxheap</span> <span class='assign token'>=</span> <span class='MaxHeap constant id'>MaxHeap</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='comma token'>,</span> <span class='integer val'>2</span><span class='comma token'>,</span> <span class='integer val'>3</span><span class='comma token'>,</span> <span class='integer val'>4</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+    <span class='maxheap identifier id'>maxheap</span><span class='dot token'>.</span><span class='max identifier id'>max</span> <span class='comment val'>#=&gt; 4</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+428
+429
+430</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/containers/heap.rb', line 428</span>
+
+<span class='def def kw'>def</span> <span class='max identifier id'>max</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='next identifier id'>next</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>max!</h3>
+</div><div id="max%21-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>max!</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+call-seq:
+</p>
+<pre class="code">
+    <span class='max! fid id'>max!</span> <span class='minus op'>-</span><span class='gt op'>&gt;</span> <span class='value identifier id'>value</span>
+    <span class='max! fid id'>max!</span> <span class='minus op'>-</span><span class='gt op'>&gt;</span> <span class='nil nil kw'>nil</span>
+</pre>
+<p>
+Returns the item with the largest key and removes it from the heap.
+</p>
+<pre class="code">
+    <span class='maxheap identifier id'>maxheap</span> <span class='assign token'>=</span> <span class='MaxHeap constant id'>MaxHeap</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='comma token'>,</span> <span class='integer val'>2</span><span class='comma token'>,</span> <span class='integer val'>3</span><span class='comma token'>,</span> <span class='integer val'>4</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+    <span class='maxheap identifier id'>maxheap</span><span class='dot token'>.</span><span class='max! fid id'>max!</span> <span class='comment val'>#=&gt; 4</span>
+    <span class='maxheap identifier id'>maxheap</span><span class='dot token'>.</span><span class='size identifier id'>size</span> <span class='comment val'>#=&gt; 3</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+441
+442
+443</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/containers/heap.rb', line 441</span>
+
+<span class='def def kw'>def</span> <span class='max! fid id'>max!</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='pop identifier id'>pop</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

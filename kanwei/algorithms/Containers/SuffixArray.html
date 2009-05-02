@@ -1,0 +1,242 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: Containers::SuffixArray</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class Containers_SuffixArray">
+  <h1 class="title">Class: Containers::SuffixArray</h1>
+  <div class="section constants">
+  
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(string)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Creates a new SuffixArray with a given string. Object of any class
+implementing a #to_s method can be passed in, such as integers.
+</p>
+<p>
+Complexity: O(n^2 log n)
+</p>
+<pre class="code">
+  <span class='s_array identifier id'>s_array</span> <span class='assign token'>=</span> <span class='Containers constant id'>Containers</span><span class='colon2 op'>::</span><span class='SuffixArray constant id'>SuffixArray</span><span class='lparen token'>(</span><span class='string val'>&quot;abracadabra&quot;</span><span class='rparen token'>)</span>
+  <span class='s_array identifier id'>s_array</span><span class='lbrack token'>[</span><span class='string val'>&quot;abra&quot;</span><span class='rbrack token'>]</span> <span class='comment val'>#=&gt; true</span>
+
+  <span class='number identifier id'>number</span> <span class='assign token'>=</span> <span class='Containers constant id'>Containers</span><span class='colon2 op'>::</span><span class='SuffixArray constant id'>SuffixArray</span><span class='lparen token'>(</span><span class='integer val'>1234567</span><span class='rparen token'>)</span>
+  <span class='number identifier id'>number</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span> <span class='comment val'>#=&gt; true</span>
+  <span class='number identifier id'>number</span><span class='lbrack token'>[</span><span class='integer val'>13</span><span class='rbrack token'>]</span> <span class='comment val'>#=&gt; false</span>
+</pre>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="raise">
+  <h3>Raises:</h3>
+  <dl>
+  
+    <dt>
+      
+        <span class='type'>[<tt>ArgumentError</tt>]</span>
+      
+      
+    </dt>
+    <dd>
+      <span class='desc'></span>
+    </dd>
+  
+  </dl>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/containers/suffix_array.rb', line 21</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='string identifier id'>string</span><span class='rparen token'>)</span>
+  <span class='string identifier id'>string</span> <span class='assign token'>=</span> <span class='string identifier id'>string</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+  <span class='raise identifier id'>raise</span> <span class='ArgumentError constant id'>ArgumentError</span><span class='comma token'>,</span> <span class='string val'>&quot;SuffixArray needs to be initialized with a non-empty string&quot;</span> <span class='if if_mod kw'>if</span> <span class='string identifier id'>string</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span>
+  <span class='@original_string ivar id'>@original_string</span> <span class='assign token'>=</span> <span class='string identifier id'>string</span>
+  <span class='@suffixes ivar id'>@suffixes</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+  <span class='string identifier id'>string</span><span class='dot token'>.</span><span class='length identifier id'>length</span><span class='dot token'>.</span><span class='times identifier id'>times</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='i identifier id'>i</span><span class='bitor op'>|</span>
+    <span class='@suffixes ivar id'>@suffixes</span> <span class='lshft op'>&lt;&lt;</span> <span class='string identifier id'>string</span><span class='lbrack token'>[</span><span class='i identifier id'>i</span><span class='dot2 op'>..</span><span class='integer val'>-1</span><span class='rbrack token'>]</span>
+  <span class='end end kw'>end</span>
+
+  <span class='comment val'># Sort the suffixes in ascending order</span>
+  <span class='@suffixes ivar id'>@suffixes</span><span class='dot token'>.</span><span class='sort! fid id'>sort!</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='x identifier id'>x</span><span class='comma token'>,</span> <span class='y identifier id'>y</span><span class='bitor op'>|</span> <span class='x identifier id'>x</span> <span class='cmp op'>&lt;=&gt;</span> <span class='y identifier id'>y</span> <span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#has_substring%3F-instance_method' title='#has_substring?'>#has_substring?</a></span><span class='args'>(substring)</span>
+        <span class='block'></span>
+        
+          <span class='alias'>#[]</span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns true if the substring occurs in the string, false otherwise.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>has_substring?</h3>
+</div><div id="has_substring%3F-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>has_substring?</span><span class='args'>(substring)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+<p class="aliases">
+  <span class="aka">Also known as:</span>
+  
+    <tt id="%5B%5D-instance_method">[]</tt>
+  
+</p>
+</div><div class="section docstring">
+  <p>
+Returns true if the substring occurs in the string, false otherwise.
+</p>
+<p>
+Complexity: O(m + log n)
+</p>
+<pre class="code">
+  <span class='s_array identifier id'>s_array</span> <span class='assign token'>=</span> <span class='Containers constant id'>Containers</span><span class='colon2 op'>::</span><span class='SuffixArray constant id'>SuffixArray</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;abracadabra&quot;</span><span class='rparen token'>)</span>
+  <span class='s_array identifier id'>s_array</span><span class='dot token'>.</span><span class='has_substring? fid id'>has_substring?</span><span class='lparen token'>(</span><span class='string val'>&quot;a&quot;</span><span class='rparen token'>)</span> <span class='comment val'>#=&gt; true</span>
+  <span class='s_array identifier id'>s_array</span><span class='dot token'>.</span><span class='has_substring? fid id'>has_substring?</span><span class='lparen token'>(</span><span class='string val'>&quot;abra&quot;</span><span class='rparen token'>)</span> <span class='comment val'>#=&gt; true</span>
+  <span class='s_array identifier id'>s_array</span><span class='dot token'>.</span><span class='has_substring? fid id'>has_substring?</span><span class='lparen token'>(</span><span class='string val'>&quot;abracadabra&quot;</span><span class='rparen token'>)</span> <span class='comment val'>#=&gt; true</span>
+  <span class='s_array identifier id'>s_array</span><span class='dot token'>.</span><span class='has_substring? fid id'>has_substring?</span><span class='lparen token'>(</span><span class='string val'>&quot;acadabra&quot;</span><span class='rparen token'>)</span> <span class='comment val'>#=&gt; true</span>
+  <span class='s_array identifier id'>s_array</span><span class='dot token'>.</span><span class='has_substring? fid id'>has_substring?</span><span class='lparen token'>(</span><span class='string val'>&quot;adabra&quot;</span><span class='rparen token'>)</span> <span class='comment val'>#=&gt; true</span>
+  <span class='s_array identifier id'>s_array</span><span class='dot token'>.</span><span class='has_substring? fid id'>has_substring?</span><span class='lparen token'>(</span><span class='string val'>&quot;bra&quot;</span><span class='rparen token'>)</span> <span class='comment val'>#=&gt; true</span>
+  <span class='s_array identifier id'>s_array</span><span class='dot token'>.</span><span class='has_substring? fid id'>has_substring?</span><span class='lparen token'>(</span><span class='string val'>&quot;bracadabra&quot;</span><span class='rparen token'>)</span> <span class='comment val'>#=&gt; true</span>
+  <span class='s_array identifier id'>s_array</span><span class='dot token'>.</span><span class='has_substring? fid id'>has_substring?</span><span class='lparen token'>(</span><span class='string val'>&quot;cadabra&quot;</span><span class='rparen token'>)</span> <span class='comment val'>#=&gt; true</span>
+  <span class='s_array identifier id'>s_array</span><span class='dot token'>.</span><span class='has_substring? fid id'>has_substring?</span><span class='lparen token'>(</span><span class='string val'>&quot;dabra&quot;</span><span class='rparen token'>)</span> <span class='comment val'>#=&gt; true</span>
+  <span class='s_array identifier id'>s_array</span><span class='dot token'>.</span><span class='has_substring? fid id'>has_substring?</span><span class='lparen token'>(</span><span class='string val'>&quot;ra&quot;</span><span class='rparen token'>)</span> <span class='comment val'>#=&gt; true</span>
+  <span class='s_array identifier id'>s_array</span><span class='dot token'>.</span><span class='has_substring? fid id'>has_substring?</span><span class='lparen token'>(</span><span class='string val'>&quot;racadabra&quot;</span><span class='rparen token'>)</span> <span class='comment val'>#=&gt; true</span>
+  <span class='s_array identifier id'>s_array</span><span class='dot token'>.</span><span class='has_substring? fid id'>has_substring?</span><span class='lparen token'>(</span><span class='string val'>&quot;nope&quot;</span><span class='rparen token'>)</span> <span class='comment val'>#=&gt; false</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/containers/suffix_array.rb', line 51</span>
+
+<span class='def def kw'>def</span> <span class='has_substring? fid id'>has_substring?</span><span class='lparen token'>(</span><span class='substring identifier id'>substring</span><span class='rparen token'>)</span>
+  <span class='substring identifier id'>substring</span> <span class='assign token'>=</span> <span class='substring identifier id'>substring</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+  <span class='return return kw'>return</span> <span class='false false kw'>false</span> <span class='if if_mod kw'>if</span> <span class='substring identifier id'>substring</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span>
+  <span class='substring_length identifier id'>substring_length</span> <span class='assign token'>=</span> <span class='substring identifier id'>substring</span><span class='dot token'>.</span><span class='length identifier id'>length</span><span class='minus op'>-</span><span class='integer val'>1</span>
+  <span class='l identifier id'>l</span><span class='comma token'>,</span> <span class='r identifier id'>r</span> <span class='assign token'>=</span> <span class='integer val'>0</span><span class='comma token'>,</span> <span class='@suffixes ivar id'>@suffixes</span><span class='dot token'>.</span><span class='size identifier id'>size</span><span class='minus op'>-</span><span class='integer val'>1</span>
+  <span class='while while kw'>while</span><span class='lparen token'>(</span><span class='l identifier id'>l</span> <span class='leq op'>&lt;=</span> <span class='r identifier id'>r</span><span class='rparen token'>)</span>
+    <span class='mid identifier id'>mid</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='l identifier id'>l</span> <span class='plus op'>+</span> <span class='r identifier id'>r</span><span class='rparen token'>)</span> <span class='div op'>/</span> <span class='integer val'>2</span>
+    <span class='suffix identifier id'>suffix</span> <span class='assign token'>=</span> <span class='@suffixes ivar id'>@suffixes</span><span class='lbrack token'>[</span><span class='mid identifier id'>mid</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='dot2 op'>..</span><span class='substring_length identifier id'>substring_length</span><span class='rbrack token'>]</span>
+    <span class='case case kw'>case</span> <span class='substring identifier id'>substring</span> <span class='cmp op'>&lt;=&gt;</span> <span class='suffix identifier id'>suffix</span>
+    <span class='when when kw'>when</span> <span class='integer val'>0</span> <span class='then then kw'>then</span> <span class='return return kw'>return</span> <span class='true true kw'>true</span>
+    <span class='when when kw'>when</span> <span class='integer val'>1</span> <span class='then then kw'>then</span> <span class='l identifier id'>l</span> <span class='assign token'>=</span> <span class='mid identifier id'>mid</span> <span class='plus op'>+</span> <span class='integer val'>1</span>
+    <span class='when when kw'>when</span> <span class='integer val'>-1</span> <span class='then then kw'>then</span> <span class='r identifier id'>r</span> <span class='assign token'>=</span> <span class='mid identifier id'>mid</span> <span class='minus op'>-</span> <span class='integer val'>1</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+  <span class='return return kw'>return</span> <span class='false false kw'>false</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>
