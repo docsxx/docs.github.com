@@ -8,29 +8,78 @@
 
     <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
     <script src="../app.js" type="text/javascript" charset="utf-8"></script>
-    <title>Module: Blather::Stream</title>
+    <title>Class: Blather::Stream</title>
   </head>
   <body>
     <div id="content">
-      <div class="section module Blather_Stream">
-  <h1 class="title">Module: Blather::Stream</h1>
-  <div class="section constants">
-  <div class="thisclass">
-  <h1>Constants</h1>
-  <dl>
-    
-      <dt id="LANG-constant">LANG</dt>
-      <dd>'en'</dd>
-    
-      <dt id="NAMESPACE-constant">NAMESPACE</dt>
-      <dd>'jabber:client'</dd>
-    
-      <dt id="VERSION-constant">VERSION</dt>
-      <dd>'1.0'</dd>
-    
-  </dl>
+      <div class="section class Blather_Stream">
+  <h1 class="title">Class: Blather::Stream</h1>
+  <div class="section inheritance">
+  <ul>
+  <li>EventMachine::Connection</li><ul><li>Blather::Stream</li>
+  </ul></ul>
+</div><div class="section constants">
+  
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(client, jid, pass)</span>
+    <span class='block'></span>
+  </tt>
 </div>
 
+</div><div class="section docstring">
+  <p>
+Called by EM.connect to initialize stream variables
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/blather/stream.rb', line 52</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='client identifier id'>client</span><span class='comma token'>,</span> <span class='jid identifier id'>jid</span><span class='comma token'>,</span> <span class='pass identifier id'>pass</span><span class='rparen token'>)</span> <span class='comment val'># :nodoc:</span>
+  <span class='super super kw'>super</span><span class='lparen token'>(</span><span class='rparen token'>)</span>
+
+  <span class='@error ivar id'>@error</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+  <span class='@client ivar id'>@client</span> <span class='assign token'>=</span> <span class='client identifier id'>client</span>
+
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='jid identifier id'>jid</span> <span class='assign token'>=</span> <span class='jid identifier id'>jid</span>
+  <span class='@pass ivar id'>@pass</span> <span class='assign token'>=</span> <span class='pass identifier id'>pass</span>
+
+  <span class='@to ivar id'>@to</span> <span class='assign token'>=</span> <span class='@jid ivar id'>@jid</span><span class='dot token'>.</span><span class='domain identifier id'>domain</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
 </div>  <div class="section visibilitygroup public">
     <h1>Public Visibility</h1>
       <div class="section methodsummary class public">
@@ -246,15 +295,15 @@ Start the stream between client and server
           <pre class="lines">
 
 
+11
+12
+13
+14
 15
-16
-17
-18
-19
-20</pre>
+16</pre>
         </td>
         <td>
-          <pre class="code"><span class="info file"># File 'lib/blather/stream.rb', line 15</span>
+          <pre class="code"><span class="info file"># File 'lib/blather/stream.rb', line 11</span>
 
 <span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='start identifier id'>start</span><span class='lparen token'>(</span><span class='client identifier id'>client</span><span class='comma token'>,</span> <span class='jid identifier id'>jid</span><span class='comma token'>,</span> <span class='pass identifier id'>pass</span><span class='comma token'>,</span> <span class='host identifier id'>host</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='port identifier id'>port</span> <span class='assign token'>=</span> <span class='integer val'>5222</span><span class='rparen token'>)</span>
   <span class='jid identifier id'>jid</span> <span class='assign token'>=</span> <span class='JID constant id'>JID</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='jid identifier id'>jid</span>
@@ -303,14 +352,14 @@ starttls/authorize/bind process
           <pre class="lines">
 
 
-71
-72
-73
-74
-75</pre>
+67
+68
+69
+70
+71</pre>
         </td>
         <td>
-          <pre class="code"><span class="info file"># File 'lib/blather/stream.rb', line 71</span>
+          <pre class="code"><span class="info file"># File 'lib/blather/stream.rb', line 67</span>
 
 <span class='def def kw'>def</span> <span class='connection_completed identifier id'>connection_completed</span> 
 <span class='comment val'>#      @keepalive = EM::Timer.new(60) { send_data ' ' }</span>
@@ -354,14 +403,14 @@ Ensure the JID gets attached to the client
           <pre class="lines">
 
 
-129
-130
-131
-132
-133</pre>
+125
+126
+127
+128
+129</pre>
         </td>
         <td>
-          <pre class="code"><span class="info file"># File 'lib/blather/stream.rb', line 129</span>
+          <pre class="code"><span class="info file"># File 'lib/blather/stream.rb', line 125</span>
 
 <span class='def def kw'>def</span> <span class='jid= identifier id'>jid=</span><span class='lparen token'>(</span><span class='new_jid identifier id'>new_jid</span><span class='rparen token'>)</span> <span class='comment val'># :nodoc:</span>
   <span class='LOG constant id'>LOG</span><span class='dot token'>.</span><span class='debug identifier id'>debug</span> <span class='dstring node'>&quot;NEW JID: #{new_jid}&quot;</span>
@@ -405,12 +454,12 @@ True when the stream is in the negotiation phase.
           <pre class="lines">
 
 
-40
-41
-42</pre>
+36
+37
+38</pre>
         </td>
         <td>
-          <pre class="code"><span class="info file"># File 'lib/blather/stream.rb', line 40</span>
+          <pre class="code"><span class="info file"># File 'lib/blather/stream.rb', line 36</span>
 
 <span class='def def kw'>def</span> <span class='negotiating? fid id'>negotiating?</span>
   <span class='notop op'>!</span><span class='lbrack token'>[</span><span class='symbol val'>:stopped</span><span class='comma token'>,</span> <span class='symbol val'>:ready</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='include? fid id'>include?</span> <span class='@state ivar id'>@state</span>
@@ -458,12 +507,12 @@ True when the stream is ready
           <pre class="lines">
 
 
-50
-51
-52</pre>
+46
+47
+48</pre>
         </td>
         <td>
-          <pre class="code"><span class="info file"># File 'lib/blather/stream.rb', line 50</span>
+          <pre class="code"><span class="info file"># File 'lib/blather/stream.rb', line 46</span>
 
 <span class='def def kw'>def</span> <span class='ready? fid id'>ready?</span>
   <span class='@state ivar id'>@state</span> <span class='eq op'>==</span> <span class='symbol val'>:ready</span>
@@ -505,6 +554,10 @@ Called by the parser with parsed nodes
           <pre class="lines">
 
 
+96
+97
+98
+99
 100
 101
 102
@@ -526,14 +579,10 @@ Called by the parser with parsed nodes
 118
 119
 120
-121
-122
-123
-124
-125</pre>
+121</pre>
         </td>
         <td>
-          <pre class="code"><span class="info file"># File 'lib/blather/stream.rb', line 100</span>
+          <pre class="code"><span class="info file"># File 'lib/blather/stream.rb', line 96</span>
 
 <span class='def def kw'>def</span> <span class='receive identifier id'>receive</span><span class='lparen token'>(</span><span class='node identifier id'>node</span><span class='rparen token'>)</span> <span class='comment val'># :nodoc:</span>
   <span class='LOG constant id'>LOG</span><span class='dot token'>.</span><span class='debug identifier id'>debug</span> <span class='dstring node'>&quot;RECEIVING (#{node.element_name}) #{node}&quot;</span>
@@ -598,21 +647,21 @@ Called by EM with data from the wire
           <pre class="lines">
 
 
+75
+76
+77
+78
 79
 80
 81
 82
-83
-84
-85
-86
-87</pre>
+83</pre>
         </td>
         <td>
-          <pre class="code"><span class="info file"># File 'lib/blather/stream.rb', line 79</span>
+          <pre class="code"><span class="info file"># File 'lib/blather/stream.rb', line 75</span>
 
 <span class='def def kw'>def</span> <span class='receive_data identifier id'>receive_data</span><span class='lparen token'>(</span><span class='data identifier id'>data</span><span class='rparen token'>)</span> <span class='comment val'># :nodoc:</span>
-  <span class='LOG constant id'>LOG</span><span class='dot token'>.</span><span class='debug identifier id'>debug</span> <span class='string val'>&quot;\n&quot;</span><span class='plus op'>+</span><span class='lparen token'>(</span><span class='string val'>'-'</span><span class='mult op'>*</span><span class='integer val'>30</span><span class='rparen token'>)</span><span class='plus op'>+</span><span class='string val'>&quot;\n&quot;</span>
+  <span class='LOG constant id'>LOG</span><span class='dot token'>.</span><span class='debug identifier id'>debug</span> <span class='dstring node'>&quot;\n#{'-'*30}\n&quot;</span>
   <span class='LOG constant id'>LOG</span><span class='dot token'>.</span><span class='debug identifier id'>debug</span> <span class='dstring node'>&quot;&lt;&lt; #{data}&quot;</span>
   <span class='@parser ivar id'>@parser</span><span class='dot token'>.</span><span class='receive_data identifier id'>receive_data</span> <span class='data identifier id'>data</span>
 
@@ -661,14 +710,14 @@ Send data over the wire
           <pre class="lines">
 
 
-26
-27
-28
-29
-30</pre>
+22
+23
+24
+25
+26</pre>
         </td>
         <td>
-          <pre class="code"><span class="info file"># File 'lib/blather/stream.rb', line 26</span>
+          <pre class="code"><span class="info file"># File 'lib/blather/stream.rb', line 22</span>
 
 <span class='def def kw'>def</span> <span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='stanza identifier id'>stanza</span><span class='rparen token'>)</span>
   <span class='comment val'>#TODO Queue if not ready</span>
@@ -712,12 +761,12 @@ True if the stream is in the stopped state
           <pre class="lines">
 
 
-34
-35
-36</pre>
+30
+31
+32</pre>
         </td>
         <td>
-          <pre class="code"><span class="info file"># File 'lib/blather/stream.rb', line 34</span>
+          <pre class="code"><span class="info file"># File 'lib/blather/stream.rb', line 30</span>
 
 <span class='def def kw'>def</span> <span class='stopped? fid id'>stopped?</span>
   <span class='@state ivar id'>@state</span> <span class='eq op'>==</span> <span class='symbol val'>:stopped</span>
@@ -759,15 +808,15 @@ Called by EM when the connection is closed
           <pre class="lines">
 
 
+87
+88
+89
+90
 91
-92
-93
-94
-95
-96</pre>
+92</pre>
         </td>
         <td>
-          <pre class="code"><span class="info file"># File 'lib/blather/stream.rb', line 91</span>
+          <pre class="code"><span class="info file"># File 'lib/blather/stream.rb', line 87</span>
 
 <span class='def def kw'>def</span> <span class='unbind identifier id'>unbind</span> 
 <span class='comment val'>#      @keepalive.cancel</span>

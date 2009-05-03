@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: Blather::Stream::Component</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class Blather_Stream_Component">
+  <h1 class="title">Class: Blather::Stream::Component</h1>
+  <div class="section inheritance">
+  <ul>
+  <li>EventMachine::Connection</li><ul><li><a href='../Stream.html' title='Blather::Stream'>Blather::Stream</a></li><ul><li>Blather::Stream::Component</li>
+  </ul></ul></ul>
+</div><div class="section constants">
+  <div class="thisclass">
+  <h1>Constants</h1>
+  <dl>
+    
+      <dt id="NAMESPACE-constant">NAMESPACE</dt>
+      <dd>'jabber:component:accept'</dd>
+    
+  </dl>
+</div>
+
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <p class="inherited_msg">
+    This class inherits a constructor from <a href='../Stream.html#initialize-instance_method' title='Blather::Stream'>Blather::Stream</a>.
+  </p>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <div class="inherited">
+  
+  <div>
+    <h1>Public Class Methods Inherited from <a href='../Stream.html' title='Blather::Stream'>Blather::Stream</a></h1>
+    <p><span class='name'><a href='../Stream.html#start-class_method' title='start'>start</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+  <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href='#receive-instance_method' title='#receive'>#receive</a></span><span class='args'>(node)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table><div class="inherited">
+  
+  <div>
+    <h1>Public Instance Methods Inherited from <a href='../Stream.html' title='Blather::Stream'>Blather::Stream</a></h1>
+    <p><span class='name'><a href='../Stream.html#connection_completed-instance_method' title='connection_completed'>connection_completed</a></span>, <span class='name'><a href='../Stream.html#jid-instance_method' title='jid'>jid</a></span>, <span class='name'><a href='../Stream.html#negotiating%3F-instance_method' title='negotiating?'>negotiating?</a></span>, <span class='name'><a href='../Stream.html#ready%3F-instance_method' title='ready?'>ready?</a></span>, <span class='name'><a href='../Stream.html#receive_data-instance_method' title='receive_data'>receive_data</a></span>, <span class='name'><a href='../Stream.html#send-instance_method' title='send'>send</a></span>, <span class='name'><a href='../Stream.html#stopped%3F-instance_method' title='stopped?'>stopped?</a></span>, <span class='name'><a href='../Stream.html#unbind-instance_method' title='unbind'>unbind</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>receive</h3>
+</div><div id="receive-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>receive</span><span class='args'>(node)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/blather/stream/component.rb', line 7</span>
+
+<span class='def def kw'>def</span> <span class='receive identifier id'>receive</span><span class='lparen token'>(</span><span class='node identifier id'>node</span><span class='rparen token'>)</span> <span class='comment val'># :nodoc:</span>
+  <span class='if if kw'>if</span> <span class='node identifier id'>node</span><span class='dot token'>.</span><span class='element_name identifier id'>element_name</span> <span class='eq op'>==</span> <span class='string val'>'handshake'</span>
+    <span class='@client ivar id'>@client</span><span class='dot token'>.</span><span class='stream_started identifier id'>stream_started</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+    <span class='super super kw'>super</span>
+  <span class='end end kw'>end</span>
+
+  <span class='if if kw'>if</span> <span class='node identifier id'>node</span><span class='dot token'>.</span><span class='element_name identifier id'>element_name</span> <span class='eq op'>==</span> <span class='string val'>'stream:stream'</span>
+    <span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='dstring node'>&quot;&lt;handshake&gt;#{Digest::SHA1.hexdigest(@node['id']+@pass)}&lt;/handshake&gt;&quot;</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>
