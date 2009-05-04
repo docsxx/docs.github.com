@@ -1,0 +1,1472 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <title>GitHub Documentation - giraffesoft/classy_resources - Class: Mime::Type</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="description" content="">
+
+<link rel="search" type="application/opensearchdescription+xml" href="http://github.com/opensearch.xml" title="GitHub">
+<link rel="fluid-icon" href="http://github.com/fluidicon.png" title="GitHub">
+<link href="http://assets0.github.com/stylesheets/bundle.css" media="screen" rel="stylesheet" type="text/css">
+<link href="http://github.com/feeds/giraffesoft/commits/classy_resources/master" rel="alternate" title="Recent Commits to classy_resources:master" type="application/atom+xml">
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script type="text/javascript" src="http://assets3.github.com/javascripts/bundle.js"></script>              
+<script src="../app.js" type="text/javascript" charset="utf-8"></script>
+
+<style type="text/css">
+  #repo_menu { border-bottom: 5px solid #ccc; margin-bottom: 1.5em; }
+  #repo_sub_menu { display: none; }
+</style>
+    <link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+  </head>
+  <body>    
+    
+    
+        <div id="main">
+      <div id="header" class="">
+        <div class="site">
+          <div class="logo">
+            <a href="http://github.com/"><img src="http://github.com/images/modules/header/logov3.png" alt="github"></a>
+          </div>          
+          <div class="topsearch">
+            <form action="http://github.com/search" id="top_search_form" method="get">
+              <input class="search" name="q" type="search"> <input value="Search" type="submit">
+            </form>
+            <div class="links">
+              <a href="http://github.com/repositories">Browse</a> | <a href="http://github.com/guides">Guides</a> | <a href="http://github.com/search">Advanced</a>
+            </div>
+          </div>
+        </div>
+      </div>    
+                                                  
+      <div id="repo_menu">
+        <div class="site">
+          <ul>          
+            <li class=""><a href="http://github.com/giraffesoft/classy_resources/tree/">Source</a></li>
+            <li class=""><a href="http://github.com/giraffesoft/classy_resources/commits/">Commits</a></li>            
+            <li class=""><a href="http://github.com/giraffesoft/classy_resources/network">Network</a></li>            
+            <li class=""><a href="http://github.com/giraffesoft/classy_resources/issues">Issues</a></li>
+            <li class=""><a href="http://wiki.github.com/giraffesoft/classy_resources">Wiki</a></li>
+            <li class=""><a href="http://github.com/giraffesoft/classy_resources/graphs">Graphs</a></li>                    
+            <li class="active"><a href="http://docs.github.com/giraffesoft/classy_resources">Documentation</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div id="repo_sub_menu">
+        <div class="site">
+          <div class="joiner"></div>      
+        </div>
+      </div>
+
+      <div class="site">  
+        <div id="repos">
+          <div class="repo public">
+            <div class="title">
+              <div class="path">
+                <a href="http://github.com/giraffesoft">giraffesoft</a> / <b><a href="http://github.com/giraffesoft/classy_resources/tree">classy_resources</a></b>        
+                <a id="namespaces_button" rel="giraffesoft/classy_resources" href="#">
+                  <img class="button" src="http://docs.github.com/namespaces_button.png" alt="Modules and Classes"/>
+                </a>
+                <a id="methods_button" rel="giraffesoft/classy_resources" href="#">
+                  <img class="button" src="http://docs.github.com/methods_button.png" alt="Methods"/>
+                </a>
+
+                <script type="text/javascript">          
+                $('#namespaces_button').click(function(){
+                  var url="/"+$(this).attr('rel')+"/namespaces/";
+                  $.gitbox(url);
+                  return false;
+                });
+
+                $('#methods_button').click(function(){
+                  var url="/"+$(this).attr('rel')+"/methods/";
+                  $.gitbox(url);
+                  return false;
+                });
+                </script>
+                
+              </div>
+            </div>
+
+            <div class="meta">
+              <table>
+                <tbody>
+                  <tr>
+                    <td class="label">Description:</td>
+                    <td><span id="repository_description" rel="http://github.com/giraffesoft/classy_resources/edit/update" class="">No description available</span></td>
+                  </tr>              
+                </tbody>
+              </table>
+            </div>
+          </div>
+                                        
+          <div id="content">
+            <div class="wikistyle">
+  <div class="section class Mime_Type">
+  <h1>Class: Mime::Type</h1>
+  <div class="section docstring">
+  <p>
+Encapsulates the notion of a mime type. Can be used at render time, for
+example, with:
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='PostsController constant id'>PostsController</span> <span class='lt op'>&lt;</span> <span class='ActionController constant id'>ActionController</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
+    <span class='def def kw'>def</span> <span class='show identifier id'>show</span>
+      <span class='@post ivar id'>@post</span> <span class='assign token'>=</span> <span class='Post constant id'>Post</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:id</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+
+      <span class='respond_to identifier id'>respond_to</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='format identifier id'>format</span><span class='bitor op'>|</span>
+        <span class='format identifier id'>format</span><span class='dot token'>.</span><span class='html identifier id'>html</span>
+        <span class='format identifier id'>format</span><span class='dot token'>.</span><span class='ics identifier id'>ics</span> <span class='lbrace token'>{</span> <span class='render identifier id'>render</span> <span class='symbol val'>:text</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='post identifier id'>post</span><span class='dot token'>.</span><span class='to_ics identifier id'>to_ics</span><span class='comma token'>,</span> <span class='symbol val'>:mime_type</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='Mime constant id'>Mime</span><span class='colon2 op'>::</span><span class='Type constant id'>Type</span><span class='lbrack token'>[</span><span class='string val'>&quot;text/calendar&quot;</span><span class='rbrack token'>]</span>  <span class='rbrace token'>}</span>
+        <span class='format identifier id'>format</span><span class='dot token'>.</span><span class='xml identifier id'>xml</span> <span class='lbrace token'>{</span> <span class='render identifier id'>render</span> <span class='symbol val'>:xml</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='@people ivar id'>@people</span><span class='dot token'>.</span><span class='to_xml identifier id'>to_xml</span> <span class='rbrace token'>}</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+</pre>
+
+</div><div class="section constants">
+  
+</div><div class="section constructor">
+<h2>Constructor</h2>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(string, symbol = nil, synonyms = [])</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/classy_resources/mime_type.rb', line 139</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/giraffesoft/classy_resources/blob/master/lib/classy_resources/mime_type.rb#L139">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">139
+140
+141
+142</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='string identifier id'>string</span><span class='comma token'>,</span> <span class='symbol identifier id'>symbol</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='synonyms identifier id'>synonyms</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+  <span class='@symbol ivar id'>@symbol</span><span class='comma token'>,</span> <span class='@synonyms ivar id'>@synonyms</span> <span class='assign token'>=</span> <span class='symbol identifier id'>symbol</span><span class='comma token'>,</span> <span class='synonyms identifier id'>synonyms</span>
+  <span class='@string ivar id'>@string</span> <span class='assign token'>=</span> <span class='string identifier id'>string</span>
+<span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+</div><div class="section methodmissing">
+  <h2>Dynamic Method Handling</h2>
+
+  <p class="note">
+    This class handles dynamic methods through the <tt>method_missing</tt> method
+    
+  </p>
+
+  <div id="method_missing-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>private</span>
+    <span class='return_types'></span>
+    <span class='name'>method_missing</span><span class='args'>(method, *args)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/classy_resources/mime_type.rb', line 186</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/giraffesoft/classy_resources/blob/master/lib/classy_resources/mime_type.rb#L186">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">186
+187
+188
+189
+190
+191
+192</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='method_missing identifier id'>method_missing</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='method identifier id'>method</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='match op'>=~</span> <span class='regexp val'>/(\w+)\?$/</span>
+    <span class='$1 nth_ref id'>$1</span><span class='dot token'>.</span><span class='downcase identifier id'>downcase</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span> <span class='eq op'>==</span> <span class='to_sym identifier id'>to_sym</span>
+  <span class='else else kw'>else</span>
+    <span class='super super kw'>super</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+</div>  <div class="section visibilitygroup">
+      <div class="section methodsummary">
+    <h2>Public Class Method Summary</h2>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a title="browser_generated_types" href="#browser_generated_types-class_method">browser_generated_types</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a title="html_types" href="#html_types-class_method">html_types</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a title="lookup" href="#lookup-class_method">lookup</a></span><span class='args'>(string)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a title="lookup_by_extension" href="#lookup_by_extension-class_method">lookup_by_extension</a></span><span class='args'>(extension)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a title="parse" href="#parse-class_method">parse</a></span><span class='args'>(accept_header)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a title="register" href="#register-class_method">register</a></span><span class='args'>(string, symbol, mime_type_synonyms = [], extension_synonyms = [], skip_lookup = false)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a title="register_alias" href="#register_alias-class_method">register_alias</a></span><span class='args'>(string, symbol, extension_synonyms = [])</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Registers an alias that&#8217;s not used on mime type lookup, but can be
+referenced directly.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+  <div class="section methodsummary">
+    <h2>Public Instance Method Summary</h2>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a title="#==" href="#%3D%3D-instance_method">#==</a></span><span class='args'>(mime_type)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a title="#===" href="#%3D%3D%3D-instance_method">#===</a></span><span class='args'>(list)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a title="#browser_generated?" href="#browser_generated%3F-instance_method">#browser_generated?</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a title="#html?" href="#html%3F-instance_method">#html?</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a title="#to_s" href="#to_s-instance_method">#to_s</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a title="#to_str" href="#to_str-instance_method">#to_str</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a title="#to_sym" href="#to_sym-instance_method">#to_sym</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a title="#verify_request?" href="#verify_request%3F-instance_method">#verify_request?</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns true if Action Pack should check requests using this Mime Type for
+possible request forgery.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails">
+  <h2>Public Class Method Details</h2>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>browser_generated_types</h3>
+</div><div id="browser_generated_types-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>browser_generated_types</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/classy_resources/mime_type.rb', line 24</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/giraffesoft/classy_resources/blob/master/lib/classy_resources/mime_type.rb#L24">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">24</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='browser_generated_types identifier id'>browser_generated_types</span><span class='semicolon token'>;</span> <span class='@@browser_generated_types ivar id'>@@browser_generated_types</span><span class='semicolon token'>;</span> <span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>html_types</h3>
+</div><div id="html_types-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>html_types</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/classy_resources/mime_type.rb', line 23</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/giraffesoft/classy_resources/blob/master/lib/classy_resources/mime_type.rb#L23">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">23</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='html_types identifier id'>html_types</span><span class='semicolon token'>;</span> <span class='@@html_types ivar id'>@@html_types</span><span class='semicolon token'>;</span> <span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>lookup</h3>
+</div><div id="lookup-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>lookup</span><span class='args'>(string)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/classy_resources/mime_type.rb', line 57</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/giraffesoft/classy_resources/blob/master/lib/classy_resources/mime_type.rb#L57">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">57
+58
+59</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='lookup identifier id'>lookup</span><span class='lparen token'>(</span><span class='string identifier id'>string</span><span class='rparen token'>)</span>
+  <span class='LOOKUP constant id'>LOOKUP</span><span class='lbrack token'>[</span><span class='string identifier id'>string</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>lookup_by_extension</h3>
+</div><div id="lookup_by_extension-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>lookup_by_extension</span><span class='args'>(extension)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/classy_resources/mime_type.rb', line 61</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/giraffesoft/classy_resources/blob/master/lib/classy_resources/mime_type.rb#L61">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">61
+62
+63</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='lookup_by_extension identifier id'>lookup_by_extension</span><span class='lparen token'>(</span><span class='extension identifier id'>extension</span><span class='rparen token'>)</span>
+  <span class='EXTENSION_LOOKUP constant id'>EXTENSION_LOOKUP</span><span class='lbrack token'>[</span><span class='extension identifier id'>extension</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>parse</h3>
+</div><div id="parse-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>parse</span><span class='args'>(accept_header)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/classy_resources/mime_type.rb', line 80</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/giraffesoft/classy_resources/blob/master/lib/classy_resources/mime_type.rb#L80">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='parse identifier id'>parse</span><span class='lparen token'>(</span><span class='accept_header identifier id'>accept_header</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='accept_header identifier id'>accept_header</span> <span class='nmatch op'>!~</span> <span class='regexp val'>/,/</span>
+    <span class='lbrack token'>[</span><span class='Mime constant id'>Mime</span><span class='colon2 op'>::</span><span class='Type constant id'>Type</span><span class='dot token'>.</span><span class='lookup identifier id'>lookup</span><span class='lparen token'>(</span><span class='accept_header identifier id'>accept_header</span><span class='rparen token'>)</span><span class='rbrack token'>]</span>
+  <span class='else else kw'>else</span>
+    <span class='comment val'># keep track of creation order to keep the subsequent sort stable</span>
+    <span class='list identifier id'>list</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+    <span class='accept_header identifier id'>accept_header</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='regexp val'>/,/</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='each_with_index identifier id'>each_with_index</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='header identifier id'>header</span><span class='comma token'>,</span> <span class='index identifier id'>index</span><span class='bitor op'>|</span> 
+      <span class='params identifier id'>params</span><span class='comma token'>,</span> <span class='q identifier id'>q</span> <span class='assign token'>=</span> <span class='header identifier id'>header</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='regexp val'>/;\s*q=/</span><span class='rparen token'>)</span>       
+      <span class='if if kw'>if</span> <span class='params identifier id'>params</span>
+        <span class='params identifier id'>params</span><span class='dot token'>.</span><span class='strip! fid id'>strip!</span>          
+        <span class='list identifier id'>list</span> <span class='lshft op'>&lt;&lt;</span> <span class='AcceptItem constant id'>AcceptItem</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='index identifier id'>index</span><span class='comma token'>,</span> <span class='params identifier id'>params</span><span class='comma token'>,</span> <span class='q identifier id'>q</span><span class='rparen token'>)</span> <span class='unless unless_mod kw'>unless</span> <span class='params identifier id'>params</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+    <span class='list identifier id'>list</span><span class='dot token'>.</span><span class='sort! fid id'>sort!</span>
+
+    <span class='comment val'># Take care of the broken text/xml entry by renaming or deleting it</span>
+    <span class='text_xml identifier id'>text_xml</span> <span class='assign token'>=</span> <span class='list identifier id'>list</span><span class='dot token'>.</span><span class='index identifier id'>index</span><span class='lparen token'>(</span><span class='string val'>&quot;text/xml&quot;</span><span class='rparen token'>)</span>
+    <span class='app_xml identifier id'>app_xml</span> <span class='assign token'>=</span> <span class='list identifier id'>list</span><span class='dot token'>.</span><span class='index identifier id'>index</span><span class='lparen token'>(</span><span class='Mime constant id'>Mime</span><span class='colon2 op'>::</span><span class='XML constant id'>XML</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rparen token'>)</span>
+
+    <span class='if if kw'>if</span> <span class='text_xml identifier id'>text_xml</span> <span class='andop op'>&amp;&amp;</span> <span class='app_xml identifier id'>app_xml</span>
+      <span class='comment val'># set the q value to the max of the two</span>
+      <span class='list identifier id'>list</span><span class='lbrack token'>[</span><span class='app_xml identifier id'>app_xml</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='q identifier id'>q</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='list identifier id'>list</span><span class='lbrack token'>[</span><span class='text_xml identifier id'>text_xml</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='q identifier id'>q</span><span class='comma token'>,</span> <span class='list identifier id'>list</span><span class='lbrack token'>[</span><span class='app_xml identifier id'>app_xml</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='q identifier id'>q</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='max identifier id'>max</span>
+
+      <span class='comment val'># make sure app_xml is ahead of text_xml in the list</span>
+      <span class='if if kw'>if</span> <span class='app_xml identifier id'>app_xml</span> <span class='gt op'>&gt;</span> <span class='text_xml identifier id'>text_xml</span>
+        <span class='list identifier id'>list</span><span class='lbrack token'>[</span><span class='app_xml identifier id'>app_xml</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='list identifier id'>list</span><span class='lbrack token'>[</span><span class='text_xml identifier id'>text_xml</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='list identifier id'>list</span><span class='lbrack token'>[</span><span class='text_xml identifier id'>text_xml</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='list identifier id'>list</span><span class='lbrack token'>[</span><span class='app_xml identifier id'>app_xml</span><span class='rbrack token'>]</span>
+        <span class='app_xml identifier id'>app_xml</span><span class='comma token'>,</span> <span class='text_xml identifier id'>text_xml</span> <span class='assign token'>=</span> <span class='text_xml identifier id'>text_xml</span><span class='comma token'>,</span> <span class='app_xml identifier id'>app_xml</span>
+      <span class='end end kw'>end</span>
+
+      <span class='comment val'># delete text_xml from the list</span>
+      <span class='list identifier id'>list</span><span class='dot token'>.</span><span class='delete_at identifier id'>delete_at</span><span class='lparen token'>(</span><span class='text_xml identifier id'>text_xml</span><span class='rparen token'>)</span>
+
+    <span class='elsif elsif kw'>elsif</span> <span class='text_xml identifier id'>text_xml</span>
+      <span class='list identifier id'>list</span><span class='lbrack token'>[</span><span class='text_xml identifier id'>text_xml</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='Mime constant id'>Mime</span><span class='colon2 op'>::</span><span class='XML constant id'>XML</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+    <span class='end end kw'>end</span>
+
+    <span class='comment val'># Look for more specific XML-based types and sort them ahead of app/xml</span>
+
+    <span class='if if kw'>if</span> <span class='app_xml identifier id'>app_xml</span>
+      <span class='idx identifier id'>idx</span> <span class='assign token'>=</span> <span class='app_xml identifier id'>app_xml</span>
+      <span class='app_xml_type identifier id'>app_xml_type</span> <span class='assign token'>=</span> <span class='list identifier id'>list</span><span class='lbrack token'>[</span><span class='app_xml identifier id'>app_xml</span><span class='rbrack token'>]</span>
+
+      <span class='while while kw'>while</span><span class='lparen token'>(</span><span class='idx identifier id'>idx</span> <span class='lt op'>&lt;</span> <span class='list identifier id'>list</span><span class='dot token'>.</span><span class='length identifier id'>length</span><span class='rparen token'>)</span>
+        <span class='type identifier id'>type</span> <span class='assign token'>=</span> <span class='list identifier id'>list</span><span class='lbrack token'>[</span><span class='idx identifier id'>idx</span><span class='rbrack token'>]</span>
+        <span class='break break kw'>break</span> <span class='if if_mod kw'>if</span> <span class='type identifier id'>type</span><span class='dot token'>.</span><span class='q identifier id'>q</span> <span class='lt op'>&lt;</span> <span class='app_xml_type identifier id'>app_xml_type</span><span class='dot token'>.</span><span class='q identifier id'>q</span>
+        <span class='if if kw'>if</span> <span class='type identifier id'>type</span><span class='dot token'>.</span><span class='name identifier id'>name</span> <span class='match op'>=~</span> <span class='regexp val'>/\+xml$/</span>
+          <span class='list identifier id'>list</span><span class='lbrack token'>[</span><span class='app_xml identifier id'>app_xml</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='list identifier id'>list</span><span class='lbrack token'>[</span><span class='idx identifier id'>idx</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='list identifier id'>list</span><span class='lbrack token'>[</span><span class='idx identifier id'>idx</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='list identifier id'>list</span><span class='lbrack token'>[</span><span class='app_xml identifier id'>app_xml</span><span class='rbrack token'>]</span>
+          <span class='app_xml identifier id'>app_xml</span> <span class='assign token'>=</span> <span class='idx identifier id'>idx</span>
+        <span class='end end kw'>end</span>
+        <span class='idx identifier id'>idx</span> <span class='opasgn op'>+=</span> <span class='integer val'>1</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+
+    <span class='list identifier id'>list</span><span class='dot token'>.</span><span class='map! fid id'>map!</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='i identifier id'>i</span><span class='bitor op'>|</span> <span class='Mime constant id'>Mime</span><span class='colon2 op'>::</span><span class='Type constant id'>Type</span><span class='dot token'>.</span><span class='lookup identifier id'>lookup</span><span class='lparen token'>(</span><span class='i identifier id'>i</span><span class='dot token'>.</span><span class='name identifier id'>name</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='uniq! fid id'>uniq!</span>
+    <span class='list identifier id'>list</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>register</h3>
+</div><div id="register-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>register</span><span class='args'>(string, symbol, mime_type_synonyms = [], extension_synonyms = [], skip_lookup = false)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/classy_resources/mime_type.rb', line 71</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/giraffesoft/classy_resources/blob/master/lib/classy_resources/mime_type.rb#L71">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">71
+72
+73
+74
+75
+76
+77
+78</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='string identifier id'>string</span><span class='comma token'>,</span> <span class='symbol identifier id'>symbol</span><span class='comma token'>,</span> <span class='mime_type_synonyms identifier id'>mime_type_synonyms</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='extension_synonyms identifier id'>extension_synonyms</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='skip_lookup identifier id'>skip_lookup</span> <span class='assign token'>=</span> <span class='false false kw'>false</span><span class='rparen token'>)</span>
+  <span class='Mime constant id'>Mime</span><span class='dot token'>.</span><span class='instance_eval identifier id'>instance_eval</span> <span class='lbrace token'>{</span> <span class='const_set identifier id'>const_set</span> <span class='symbol identifier id'>symbol</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='upcase identifier id'>upcase</span><span class='comma token'>,</span> <span class='Type constant id'>Type</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string identifier id'>string</span><span class='comma token'>,</span> <span class='symbol identifier id'>symbol</span><span class='comma token'>,</span> <span class='mime_type_synonyms identifier id'>mime_type_synonyms</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+
+  <span class='SET constant id'>SET</span> <span class='lshft op'>&lt;&lt;</span> <span class='Mime constant id'>Mime</span><span class='dot token'>.</span><span class='const_get identifier id'>const_get</span><span class='lparen token'>(</span><span class='symbol identifier id'>symbol</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='upcase identifier id'>upcase</span><span class='rparen token'>)</span>
+
+  <span class='lparen token'>(</span><span class='lbrack token'>[</span><span class='string identifier id'>string</span><span class='rbrack token'>]</span> <span class='plus op'>+</span> <span class='mime_type_synonyms identifier id'>mime_type_synonyms</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='string identifier id'>string</span><span class='bitor op'>|</span> <span class='LOOKUP constant id'>LOOKUP</span><span class='lbrack token'>[</span><span class='string identifier id'>string</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='SET constant id'>SET</span><span class='dot token'>.</span><span class='last identifier id'>last</span> <span class='rbrace token'>}</span> <span class='unless unless_mod kw'>unless</span> <span class='skip_lookup identifier id'>skip_lookup</span>
+  <span class='lparen token'>(</span><span class='lbrack token'>[</span><span class='symbol identifier id'>symbol</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rbrack token'>]</span> <span class='plus op'>+</span> <span class='extension_synonyms identifier id'>extension_synonyms</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='ext identifier id'>ext</span><span class='bitor op'>|</span> <span class='EXTENSION_LOOKUP constant id'>EXTENSION_LOOKUP</span><span class='lbrack token'>[</span><span class='ext identifier id'>ext</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='SET constant id'>SET</span><span class='dot token'>.</span><span class='last identifier id'>last</span> <span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>register_alias</h3>
+</div><div id="register_alias-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>register_alias</span><span class='args'>(string, symbol, extension_synonyms = [])</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Registers an alias that&#8217;s not used on mime type lookup, but can be
+referenced directly. Especially useful for rendering different HTML
+versions depending on the user agent, like an iPhone.
+</p>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/classy_resources/mime_type.rb', line 67</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/giraffesoft/classy_resources/blob/master/lib/classy_resources/mime_type.rb#L67">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">67
+68
+69</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='register_alias identifier id'>register_alias</span><span class='lparen token'>(</span><span class='string identifier id'>string</span><span class='comma token'>,</span> <span class='symbol identifier id'>symbol</span><span class='comma token'>,</span> <span class='extension_synonyms identifier id'>extension_synonyms</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+  <span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='string identifier id'>string</span><span class='comma token'>,</span> <span class='symbol identifier id'>symbol</span><span class='comma token'>,</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='extension_synonyms identifier id'>extension_synonyms</span><span class='comma token'>,</span> <span class='true true kw'>true</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+    </div>
+  
+</div><div class="section methoddetails">
+  <h2>Public Instance Method Details</h2>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>==</h3>
+</div><div id="%3D%3D-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>==</span><span class='args'>(mime_type)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/classy_resources/mime_type.rb', line 164</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/giraffesoft/classy_resources/blob/master/lib/classy_resources/mime_type.rb#L164">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">164
+165
+166
+167
+168
+169</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='eq op'>==</span><span class='lparen token'>(</span><span class='mime_type identifier id'>mime_type</span><span class='rparen token'>)</span>
+  <span class='return return kw'>return</span> <span class='false false kw'>false</span> <span class='if if_mod kw'>if</span> <span class='mime_type identifier id'>mime_type</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span>
+  <span class='lparen token'>(</span><span class='@synonyms ivar id'>@synonyms</span> <span class='plus op'>+</span> <span class='lbrack token'>[</span> <span class='self self kw'>self</span> <span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='any? fid id'>any?</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='synonym identifier id'>synonym</span><span class='bitor op'>|</span> 
+    <span class='synonym identifier id'>synonym</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='eq op'>==</span> <span class='mime_type identifier id'>mime_type</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='orop op'>||</span> <span class='synonym identifier id'>synonym</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span> <span class='eq op'>==</span> <span class='mime_type identifier id'>mime_type</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span> 
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>===</h3>
+</div><div id="%3D%3D%3D-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>===</span><span class='args'>(list)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/classy_resources/mime_type.rb', line 156</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/giraffesoft/classy_resources/blob/master/lib/classy_resources/mime_type.rb#L156">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">156
+157
+158
+159
+160
+161
+162</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='eqq op'>===</span><span class='lparen token'>(</span><span class='list identifier id'>list</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='list identifier id'>list</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Array constant id'>Array</span><span class='rparen token'>)</span>
+    <span class='lparen token'>(</span><span class='@synonyms ivar id'>@synonyms</span> <span class='plus op'>+</span> <span class='lbrack token'>[</span> <span class='self self kw'>self</span> <span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='any? fid id'>any?</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='synonym identifier id'>synonym</span><span class='bitor op'>|</span> <span class='list identifier id'>list</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='synonym identifier id'>synonym</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  <span class='else else kw'>else</span>
+    <span class='super super kw'>super</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>browser_generated?</h3>
+</div><div id="browser_generated%3F-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>browser_generated?</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/classy_resources/mime_type.rb', line 181</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/giraffesoft/classy_resources/blob/master/lib/classy_resources/mime_type.rb#L181">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">181
+182
+183</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='browser_generated? fid id'>browser_generated?</span>
+  <span class='@@browser_generated_types ivar id'>@@browser_generated_types</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='to_sym identifier id'>to_sym</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>html?</h3>
+</div><div id="html%3F-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>html?</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/classy_resources/mime_type.rb', line 177</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/giraffesoft/classy_resources/blob/master/lib/classy_resources/mime_type.rb#L177">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">177
+178
+179</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='html? fid id'>html?</span>
+  <span class='@@html_types ivar id'>@@html_types</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='to_sym identifier id'>to_sym</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='@string ivar id'>@string</span> <span class='match op'>=~</span> <span class='regexp val'>/html/</span>
+<span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>to_s</h3>
+</div><div id="to_s-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>to_s</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/classy_resources/mime_type.rb', line 144</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/giraffesoft/classy_resources/blob/master/lib/classy_resources/mime_type.rb#L144">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">144
+145
+146</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='to_s identifier id'>to_s</span>
+  <span class='@string ivar id'>@string</span>
+<span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>to_str</h3>
+</div><div id="to_str-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>to_str</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/classy_resources/mime_type.rb', line 148</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/giraffesoft/classy_resources/blob/master/lib/classy_resources/mime_type.rb#L148">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">148
+149
+150</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='to_str identifier id'>to_str</span>
+  <span class='to_s identifier id'>to_s</span>
+<span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>to_sym</h3>
+</div><div id="to_sym-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>to_sym</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/classy_resources/mime_type.rb', line 152</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/giraffesoft/classy_resources/blob/master/lib/classy_resources/mime_type.rb#L152">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">152
+153
+154</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='to_sym identifier id'>to_sym</span>
+  <span class='@symbol ivar id'>@symbol</span> <span class='orop op'>||</span> <span class='@string ivar id'>@string</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span>
+<span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>verify_request?</h3>
+</div><div id="verify_request%3F-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>verify_request?</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Returns true if Action Pack should check requests using this Mime Type for
+possible request forgery. See ActionController::RequestForgeryProtection.
+</p>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/classy_resources/mime_type.rb', line 173</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/giraffesoft/classy_resources/blob/master/lib/classy_resources/mime_type.rb#L173">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">173
+174
+175</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='verify_request? fid id'>verify_request?</span>
+  <span class='browser_generated? fid id'>browser_generated?</span>
+<span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+</div>
+          </div>
+        </div>
+      </div>  
+                  
+      <div id="footer">
+        <div class="site">
+          <div class="info">
+            <div class="links">
+              <a href="http://github.com/blog/148-github-shirts-now-available">Shirts</a> |
+              <a href="http://github.com/blog">Blog</a> |
+              <a href="http://support.github.com/">Support</a> |
+              <a href="http://github.com/training">Training</a> |
+              <a href="http://github.com/contact">Contact</a> |
+              <a href="http://groups.google.com/group/github/">Google Group</a> |
+              <a href="http://develop.github.com/">API</a> |
+              <a href="http://twitter.com/github">Status</a>
+            </div>
+            <div class="company">
+              <span id="_rrt" title="0.64509s from xc88-s00039">GitHub</span>
+              is <a href="http://logicalawesome.com/">Logical Awesome</a> ©2009 | <a href="http://github.com/site/terms">Terms of Service</a> | <a href="http://github.com/site/privacy">Privacy Policy</a>
+            </div>
+          </div>
+          <div class="sponsor">
+            <a href="http://engineyard.com/"><img src="http://github.com/images/modules/footer/engine_yard_logo.png" alt="Engine Yard"></a>
+            <div>
+              Hosting provided by our<br> partners at Engine Yard
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div id="coming_soon" style="display: none;">
+        This feature is coming soon.  Sit tight!
+      </div>
+
+      <div id="facebox" style="display: none;">       
+        <div class="popup">         
+          <table>           
+            <tbody>             
+              <tr>               
+                <td class="tl"></td>
+                <td class="b"></td>
+                <td class="tr"></td>             
+              </tr>             
+            <tr>               
+              <td class="b"></td>               
+              <td class="body">                 
+                <div class="content"></div>                 
+                <div class="footer">                   
+                  <a href="#" class="close"><img src="http://github.com/facebox/closelabel.gif" title="close" class="close_image"></a>                 
+                </div>               
+              </td>               
+              <td class="b"></td>             
+            </tr>             
+            <tr>               
+              <td class="bl"></td>
+              <td class="b"></td>
+              <td class="br"></td>             
+            </tr>           
+          </tbody>         
+        </table>       
+      </div>     
+    </div>
+
+  </body>
+</html>
