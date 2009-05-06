@@ -1,0 +1,1278 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: RecordFilter::DSL::ConjunctionDSL</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class RecordFilter_DSL_ConjunctionDSL">
+  <h1 class="title">Class: RecordFilter::DSL::ConjunctionDSL</h1>
+  <div class="section docstring">
+  <p>
+The ConjunctionDSL is used for specifying restrictions, conjunctions and
+joins, with methods that can be accessed from any point in a filter
+declaration. The where method is used for creating restrictions,
+conjunctions are specified through any_of, all_of, none_of and not_all_of,
+and joins are described by having and join.
+</p>
+
+</div><div class="section attributes">
+  <h1>Attributes</h1>
+
+  
+    <div class="instance">
+      <h2>Instance Attributes</h2>
+      <table>
+      
+        <tr>
+          <th class="name">conjunction</td>
+          <td class="readwrite">
+            [<span id='conjunction-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>conjunction</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+      </table>
+    </div>
+  
+</div><div class="section constants">
+  
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(model_class, conjunction)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+11
+12
+13
+14</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/record_filter/dsl/conjunction_dsl.rb', line 11</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='model_class identifier id'>model_class</span><span class='comma token'>,</span> <span class='conjunction identifier id'>conjunction</span><span class='rparen token'>)</span> <span class='comment val'># :nodoc:</span>
+  <span class='@model_class ivar id'>@model_class</span> <span class='assign token'>=</span> <span class='model_class identifier id'>model_class</span>
+  <span class='@conjunction ivar id'>@conjunction</span> <span class='assign token'>=</span> <span class='conjunction identifier id'>conjunction</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div><div class="section methodmissing">
+  <h1>Dynamic Method Handling</h1>
+
+  <p class="note">
+    This class handles dynamic methods through the <tt>method_missing</tt> method
+    
+  </p>
+
+  <div id="method_missing-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>method_missing</span><span class='args'>(method, *args)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Enable calling of named filters from within other filters by catching
+unknown calls and assuming that they are to named filters. This enables the
+following examples:
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='Post constant id'>Post</span> <span class='lt op'>&lt;</span> <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
+    <span class='has_many identifier id'>has_many</span> <span class='symbol val'>:comments</span>
+    <span class='named_filter identifier id'>named_filter</span><span class='lparen token'>(</span><span class='symbol val'>:empty</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:contents</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='nil identifier id'>nil</span> <span class='rbrace token'>}</span>
+  <span class='end end kw'>end</span>
+
+  <span class='class class kw'>class</span> <span class='Comment constant id'>Comment</span> <span class='lt op'>&lt;</span> <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
+    <span class='belongs_to identifier id'>belongs_to</span> <span class='symbol val'>:post</span>
+    <span class='named_filter identifier id'>named_filter</span><span class='lparen token'>(</span><span class='symbol val'>:offensive</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='value identifier id'>value</span><span class='bitor op'>|</span> <span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:offensive</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  <span class='end end kw'>end</span>
+
+  <span class='Post constant id'>Post</span><span class='dot token'>.</span><span class='filter identifier id'>filter</span> <span class='do do kw'>do</span>
+    <span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:created_at</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='less_than identifier id'>less_than</span><span class='lparen token'>(</span><span class='float val'>1</span><span class='dot token'>.</span><span class='hour identifier id'>hour</span><span class='dot token'>.</span><span class='ago identifier id'>ago</span><span class='rparen token'>)</span>
+    <span class='empty identifier id'>empty</span>
+  <span class='end end kw'>end</span>
+
+  <span class='comment val'># Results in:</span>
+  <span class='comment val'># :conditions =&gt; { ['posts.created_at &lt; ? AND posts.contents IS NULL', 1.hour.ago] }</span>
+  <span class='comment val'># And even cooler:</span>
+
+  <span class='Post constant id'>Post</span><span class='dot token'>.</span><span class='filter identifier id'>filter</span> <span class='do do kw'>do</span>
+    <span class='having identifier id'>having</span><span class='lparen token'>(</span><span class='symbol val'>:comments</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='offensive identifier id'>offensive</span><span class='lparen token'>(</span><span class='true true kw'>true</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+
+  <span class='comment val'># Results in:</span>
+  <span class='comment val'># :conditions =&gt; { ['posts__comments.offensive = ?', true] }</span>
+  <span class='comment val'># :joins =&gt; { 'INNER JOIN &quot;comments&quot; AS posts__comments ON &quot;posts&quot;.id = posts__comments.post_id' }</span>
+</pre>
+<h4>Parameters</h4>
+<table>
+<tr><td valign="top">args&lt;Array&gt;:</td><td>The arguments to pass to the named filter when called.
+
+</td></tr>
+</table>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+280
+281
+282</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/record_filter/dsl/conjunction_dsl.rb', line 280</span>
+
+<span class='def def kw'>def</span> <span class='method_missing identifier id'>method_missing</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='@conjunction ivar id'>@conjunction</span><span class='dot token'>.</span><span class='add_named_filter identifier id'>add_named_filter</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a title="#all_of" href="#all_of-instance_method">#all_of</a></span><span class='args'>(&amp;block)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Add a where clause that will pass only if all of the conditions specified
+within it are true.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a title="#any_of" href="#any_of-instance_method">#any_of</a></span><span class='args'>(&amp;block)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Add a where clause that will pass if any of the conditions specified within
+it are true.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a title="#filter_class" href="#filter_class-instance_method">#filter_class</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Access the class that the current filter is being applied to.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a title="#group_by" href="#group_by-instance_method">#group_by</a></span><span class='args'>(column)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a title="#having" href="#having-instance_method">#having</a></span><span class='args'>(join_type, association = nil, &amp;block)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Create an implicit join using an association as the target.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a title="#join" href="#join-instance_method">#join</a></span><span class='args'>(clazz, join_type, table_alias = nil, &amp;block)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Create an explicit join on the table of the given class.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a title="#limit" href="#limit-instance_method">#limit</a></span><span class='args'>(offset_or_limit, limit = nil)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Define these_methods here just so that we can throw exceptions when they
+are called.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a title="#none_of" href="#none_of-instance_method">#none_of</a></span><span class='args'>(&amp;block)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Add a where clause that will pass only if none of the conditions specified
+within it are true.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a title="#not_all_of" href="#not_all_of-instance_method">#not_all_of</a></span><span class='args'>(&amp;block)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Add a where clause that will pass unless all of the conditions specified
+within it are true.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a title="#on" href="#on-instance_method">#on</a></span><span class='args'>(column, value = Restriction::DEFAULT_VALUE)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a title="#order" href="#order-instance_method">#order</a></span><span class='args'>(column, direction = :asc)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a title="#with" href="#with-instance_method">#with</a></span><span class='args'>(column, value = Restriction::DEFAULT_VALUE)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Specify a condition on the given column, which will be added to the WHERE
+clause of the resulting query.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>all_of</h3>
+</div><div id="all_of-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>all_of</span><span class='args'>(&amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Add a where clause that will pass only if all of the conditions specified
+within it are true. Any restrictions created inside the given block are
+AND&#8217;ed together in the final query, and the block can contain any
+number of joins, restrictions, or other conjunctions.
+</p>
+<pre class="code">
+  <span class='Blog constant id'>Blog</span><span class='dot token'>.</span><span class='filter identifier id'>filter</span> <span class='do do kw'>do</span>
+    <span class='all_of identifier id'>all_of</span> <span class='do do kw'>do</span>
+      <span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:created_at</span><span class='comma token'>,</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+      <span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:created_at</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='greater_than identifier id'>greater_than</span><span class='lparen token'>(</span><span class='float val'>3</span><span class='dot token'>.</span><span class='days identifier id'>days</span><span class='dot token'>.</span><span class='ago identifier id'>ago</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+
+  <span class='comment val'># :conditions =&gt; { ['blogs.created_at IS NULL AND blogs.created_at &gt; ?', 3.days.ago] }</span>
+</pre>
+<h4>Parameters</h4>
+<table>
+<tr><td valign="top">block&lt;Proc&gt;:</td><td>The block can contain any sequence of calls, and the conditions that it
+contains will be AND&#8217;ed together to create a where clause.
+
+</td></tr>
+</table>
+<h4>Returns</h4>
+<p>
+nil
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+101
+102
+103
+104</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/record_filter/dsl/conjunction_dsl.rb', line 101</span>
+
+<span class='def def kw'>def</span> <span class='all_of identifier id'>all_of</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='@conjunction ivar id'>@conjunction</span><span class='dot token'>.</span><span class='add_conjunction identifier id'>add_conjunction</span><span class='lparen token'>(</span><span class='symbol val'>:all_of</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='nil nil kw'>nil</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>any_of</h3>
+</div><div id="any_of-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>any_of</span><span class='args'>(&amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Add a where clause that will pass if any of the conditions specified within
+it are true. Any restrictions created inside the given block are
+OR&#8217;ed together in the final query, and the block can contain any
+number of joins, restrictions, or other conjunctions.
+</p>
+<pre class="code">
+  <span class='Blog constant id'>Blog</span><span class='dot token'>.</span><span class='filter identifier id'>filter</span> <span class='do do kw'>do</span>
+    <span class='any_of identifier id'>any_of</span> <span class='do do kw'>do</span>
+      <span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:created_at</span><span class='comma token'>,</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+      <span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:created_at</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='greater_than identifier id'>greater_than</span><span class='lparen token'>(</span><span class='float val'>3</span><span class='dot token'>.</span><span class='days identifier id'>days</span><span class='dot token'>.</span><span class='ago identifier id'>ago</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+
+  <span class='comment val'># :conditions =&gt; { ['blogs.created_at IS NULL OR blogs.created_at &gt; ?', 3.days.ago] }</span>
+</pre>
+<h4>Parameters</h4>
+<table>
+<tr><td valign="top">block&lt;Proc&gt;:</td><td>The block can contain any sequence of calls, and the conditions that it
+contains will be OR&#8217;ed together to create a where clause.
+
+</td></tr>
+</table>
+<h4>Returns</h4>
+<p>
+nil
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+74
+75
+76
+77</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/record_filter/dsl/conjunction_dsl.rb', line 74</span>
+
+<span class='def def kw'>def</span> <span class='any_of identifier id'>any_of</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='@conjunction ivar id'>@conjunction</span><span class='dot token'>.</span><span class='add_conjunction identifier id'>add_conjunction</span><span class='lparen token'>(</span><span class='symbol val'>:any_of</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='nil nil kw'>nil</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>filter_class</h3>
+</div><div id="filter_class-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>filter_class</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Access the class that the current filter is being applied to. This is
+necessary because the filter is evaluated in the context of the DSL object,
+so self will not give access to any methods that need to be called on the
+filtered class. It is especially useful in named filters that may be
+defined in a way that allows them to apply to multiple classes.
+</p>
+<h4>Returns</h4>
+<table>
+<tr><td valign="top">Class:</td><td>The class that is currently being filtered.
+
+</td></tr>
+</table>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+242
+243
+244</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/record_filter/dsl/conjunction_dsl.rb', line 242</span>
+
+<span class='def def kw'>def</span> <span class='filter_class identifier id'>filter_class</span>
+  <span class='@model_class ivar id'>@model_class</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>group_by</h3>
+</div><div id="group_by-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>group_by</span><span class='args'>(column)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="param">
+  <h3>Parameters:</h3>
+  <dl>
+  
+  </dl>
+</div><div class="raise">
+  <h3>Raises:</h3>
+  <dl>
+  
+    <dt>
+      
+        <span class='type'>[<tt><a title="InvalidFilterException" href="../InvalidFilterException.html">InvalidFilterException</a></tt>]</span>
+      
+      
+      
+    </dt>
+    <dd>
+      <span class='desc'></span>
+    </dd>
+  
+  </dl>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+296
+297
+298</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/record_filter/dsl/conjunction_dsl.rb', line 296</span>
+
+<span class='def def kw'>def</span> <span class='group_by identifier id'>group_by</span><span class='lparen token'>(</span><span class='column identifier id'>column</span><span class='rparen token'>)</span> <span class='comment val'># :nodoc:</span>
+  <span class='raise identifier id'>raise</span> <span class='InvalidFilterException constant id'>InvalidFilterException</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'Calls to group_by can only be made in the outer block of a filter.'</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>having</h3>
+</div><div id="having-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>having</span><span class='args'>(join_type, association = nil, &amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Create an implicit join using an association as the target. This method
+allows you to easily specify a join without specifying the columns to use
+by taking any needed data from the given ActiveRecord association. If
+provided, the block will be evaluated in the context of the table that has
+been joined, so any restrictions or other joins will be performed using its
+columns and associations. For example, if a Post has_many comments then the
+following code will join to the comments table and restrict the comments
+based on their created_at field:
+</p>
+<pre class="code">
+  <span class='Post constant id'>Post</span><span class='dot token'>.</span><span class='filter identifier id'>filter</span> <span class='do do kw'>do</span>
+    <span class='having identifier id'>having</span><span class='lparen token'>(</span><span class='symbol val'>:comments</span><span class='rparen token'>)</span> <span class='do do kw'>do</span>
+      <span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:created_at</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='greater_than identifier id'>greater_than</span><span class='lparen token'>(</span><span class='float val'>3</span><span class='dot token'>.</span><span class='days identifier id'>days</span><span class='dot token'>.</span><span class='ago identifier id'>ago</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+If one argument is given, it is assumed to represent the name of the
+association that will be used for the join and a join type of :inner will
+be used by default. If two arguments are provided, the first one is assumed
+to be the join type, which can be one of :inner, :left or :right and the
+second one is the association name. An alias will automatically be created
+for the joined table named &quot;#{left_table}__#{association_name}&quot;,
+so in the above example, the alias would be posts__comments. It is also
+possible to provide a hash as the association name, in which case a trail
+of associations can be joined in one statment.
+</p>
+<h4>Parameters</h4>
+<table>
+<tr><td valign="top">join_type&lt;Symbol&gt;:</td><td>Specifies the type of join to perform, and can be one of :inner, :left or
+:right. :left and :right will create left and right outer joins,
+respectively.
+
+</td></tr>
+<tr><td valign="top">association&lt;Symbol&gt;:</td><td>The name of the association to use as a base for the join.
+
+</td></tr>
+</table>
+<h4>Returns</h4>
+<table>
+<tr><td valign="top">ConjunctionDSL:</td><td>A DSL object is returned in order to allow constructs like:
+having(:comments).with(:offensive, true)
+
+</td></tr>
+</table>
+<h4>Alternatives</h4>
+<p>
+If only one argument is given, the join type will default to :inner and the
+first argument will be used as the association name.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+196
+197
+198
+199
+200
+201</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/record_filter/dsl/conjunction_dsl.rb', line 196</span>
+
+<span class='def def kw'>def</span> <span class='having identifier id'>having</span><span class='lparen token'>(</span><span class='join_type identifier id'>join_type</span><span class='comma token'>,</span> <span class='association identifier id'>association</span><span class='assign token'>=</span><span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='association identifier id'>association</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+    <span class='association identifier id'>association</span><span class='comma token'>,</span> <span class='join_type identifier id'>join_type</span> <span class='assign token'>=</span> <span class='join_type identifier id'>join_type</span><span class='comma token'>,</span> <span class='nil nil kw'>nil</span>
+  <span class='end end kw'>end</span>
+  <span class='@conjunction ivar id'>@conjunction</span><span class='dot token'>.</span><span class='add_join identifier id'>add_join</span><span class='lparen token'>(</span><span class='association identifier id'>association</span><span class='comma token'>,</span> <span class='join_type identifier id'>join_type</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>join</h3>
+</div><div id="join-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>join</span><span class='args'>(clazz, join_type, table_alias = nil, &amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Create an explicit join on the table of the given class. This method allows
+more complex joins to be speficied than can be created using having,
+including jump joins and ones that include conditions on column values. The
+method accepts a block that can contain any sequence of conjunctions,
+restrictions, or other joins, but it must also contain at least one call to
+JoinDSL.on to specify the conditions for the join.
+</p>
+<h4>Parameters</h4>
+<table>
+<tr><td valign="top">clazz&lt;Class&gt;:</td><td>The class that is being joined to.
+
+</td></tr>
+<tr><td valign="top">join_type&lt;Symbol&gt;:</td><td>Indicates the type of join to use and must be one of :inner, :left or
+:right, where :left or :right will create a LEFT or RIGHT OUTER join
+respectively.
+
+</td></tr>
+<tr><td valign="top">table_alias&lt;String, optional&gt;:</td><td>If provided, will specify an alias to use in the SQL when referring to the
+joined table. If the argument is not given, the alias will be
+&quot;#{left_table}__#{clazz.name}&quot;
+
+</td></tr>
+</table>
+<p>
+block&lt;Proc&gt;
+</p>
+<pre class="code">
+  <span class='The constant id'>The</span> <span class='contents identifier id'>contents</span> <span class='of identifier id'>of</span> <span class='the identifier id'>the</span> <span class='join identifier id'>join</span> <span class='block identifier id'>block</span> <span class='can identifier id'>can</span> <span class='contain identifier id'>contain</span> <span class='any identifier id'>any</span> <span class='sequence identifier id'>sequence</span> <span class='of identifier id'>of</span> <span class='conjunctions identifier id'>conjunctions</span><span class='comma token'>,</span> <span class='restrictions identifier id'>restrictions</span><span class='comma token'>,</span> <span class='or or kw'>or</span> <span class='joins identifier id'>joins</span><span class='dot token'>.</span>
+</pre>
+<h4>Returns</h4>
+<table>
+<tr><td valign="top">JoinDSL:</td><td>A DSL object that can be used to specify the contents of the join.
+Returning this value allows for constructions like: join(Comment,
+:inner).on(:id =&gt; :post_id)
+
+</td></tr>
+</table>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+227
+228
+229</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/record_filter/dsl/conjunction_dsl.rb', line 227</span>
+
+<span class='def def kw'>def</span> <span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='clazz identifier id'>clazz</span><span class='comma token'>,</span> <span class='join_type identifier id'>join_type</span><span class='comma token'>,</span> <span class='table_alias identifier id'>table_alias</span><span class='assign token'>=</span><span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='@conjunction ivar id'>@conjunction</span><span class='dot token'>.</span><span class='add_class_join identifier id'>add_class_join</span><span class='lparen token'>(</span><span class='clazz identifier id'>clazz</span><span class='comma token'>,</span> <span class='join_type identifier id'>join_type</span><span class='comma token'>,</span> <span class='table_alias identifier id'>table_alias</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>limit</h3>
+</div><div id="limit-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>limit</span><span class='args'>(offset_or_limit, limit = nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Define these_methods here just so that we can throw exceptions when they
+are called. They should not be callable in the scope of a conjunction_dsl.
+</p>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="param">
+  <h3>Parameters:</h3>
+  <dl>
+  
+  </dl>
+</div><div class="raise">
+  <h3>Raises:</h3>
+  <dl>
+  
+    <dt>
+      
+        <span class='type'>[<tt><a title="InvalidFilterException" href="../InvalidFilterException.html">InvalidFilterException</a></tt>]</span>
+      
+      
+      
+    </dt>
+    <dd>
+      <span class='desc'></span>
+    </dd>
+  
+  </dl>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+288
+289
+290</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/record_filter/dsl/conjunction_dsl.rb', line 288</span>
+
+<span class='def def kw'>def</span> <span class='limit identifier id'>limit</span><span class='lparen token'>(</span><span class='offset_or_limit identifier id'>offset_or_limit</span><span class='comma token'>,</span> <span class='limit identifier id'>limit</span><span class='assign token'>=</span><span class='nil nil kw'>nil</span><span class='rparen token'>)</span> <span class='comment val'># :nodoc:</span>
+  <span class='raise identifier id'>raise</span> <span class='InvalidFilterException constant id'>InvalidFilterException</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'Calls to limit can only be made in the outer block of a filter.'</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>none_of</h3>
+</div><div id="none_of-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>none_of</span><span class='args'>(&amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Add a where clause that will pass only if none of the conditions specified
+within it are true. Any restrictions created inside the given block are
+OR&#8217;ed together in the final query and the result is negated. The
+block can contain any number of joins, restrictions, or other conjunctions.
+</p>
+<pre class="code">
+  <span class='Blog constant id'>Blog</span><span class='dot token'>.</span><span class='filter identifier id'>filter</span> <span class='do do kw'>do</span>
+    <span class='none_of identifier id'>none_of</span> <span class='do do kw'>do</span>
+      <span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:created_at</span><span class='comma token'>,</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+      <span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:created_at</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='greater_than identifier id'>greater_than</span><span class='lparen token'>(</span><span class='float val'>3</span><span class='dot token'>.</span><span class='days identifier id'>days</span><span class='dot token'>.</span><span class='ago identifier id'>ago</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+
+  <span class='comment val'># :conditions =&gt; { ['NOT (blogs.created_at IS NULL OR blogs.created_at &gt; ?)', 3.days.ago] }</span>
+</pre>
+<h4>Parameters</h4>
+<table>
+<tr><td valign="top">block&lt;Proc&gt;:</td><td>The block can contain any sequence of calls, and the conditions that it
+contains will be OR&#8217;ed together and then negated to create a where
+clause.
+
+</td></tr>
+</table>
+<h4>Returns</h4>
+<p>
+nil
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+128
+129
+130
+131</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/record_filter/dsl/conjunction_dsl.rb', line 128</span>
+
+<span class='def def kw'>def</span> <span class='none_of identifier id'>none_of</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='@conjunction ivar id'>@conjunction</span><span class='dot token'>.</span><span class='add_conjunction identifier id'>add_conjunction</span><span class='lparen token'>(</span><span class='symbol val'>:none_of</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='nil nil kw'>nil</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>not_all_of</h3>
+</div><div id="not_all_of-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>not_all_of</span><span class='args'>(&amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Add a where clause that will pass unless all of the conditions specified
+within it are true. Any restrictions created inside the given block are
+AND&#8217;ed together in the final query and the result is negated. The
+block can contain any number of joins, restrictions, or other conjunctions.
+</p>
+<pre class="code">
+  <span class='Blog constant id'>Blog</span><span class='dot token'>.</span><span class='filter identifier id'>filter</span> <span class='do do kw'>do</span>
+    <span class='none_of identifier id'>none_of</span> <span class='do do kw'>do</span>
+      <span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:created_at</span><span class='comma token'>,</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+      <span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:created_at</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='greater_than identifier id'>greater_than</span><span class='lparen token'>(</span><span class='float val'>3</span><span class='dot token'>.</span><span class='days identifier id'>days</span><span class='dot token'>.</span><span class='ago identifier id'>ago</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+
+  <span class='comment val'># :conditions =&gt; { ['NOT (blogs.created_at IS NULL AND blogs.created_at &gt; ?)', 3.days.ago] }</span>
+</pre>
+<h4>Parameters</h4>
+<table>
+<tr><td valign="top">block&lt;Proc&gt;:</td><td>The block can contain any sequence of calls, and the conditions that it
+contains will be AND&#8217;ed together and then negated to create a where
+clause.
+
+</td></tr>
+</table>
+<h4>Returns</h4>
+<p>
+nil
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+155
+156
+157
+158</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/record_filter/dsl/conjunction_dsl.rb', line 155</span>
+
+<span class='def def kw'>def</span> <span class='not_all_of identifier id'>not_all_of</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='@conjunction ivar id'>@conjunction</span><span class='dot token'>.</span><span class='add_conjunction identifier id'>add_conjunction</span><span class='lparen token'>(</span><span class='symbol val'>:not_all_of</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='nil nil kw'>nil</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>on</h3>
+</div><div id="on-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>on</span><span class='args'>(column, value = Restriction::DEFAULT_VALUE)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="param">
+  <h3>Parameters:</h3>
+  <dl>
+  
+  </dl>
+</div><div class="raise">
+  <h3>Raises:</h3>
+  <dl>
+  
+    <dt>
+      
+        <span class='type'>[<tt><a title="InvalidFilterException" href="../InvalidFilterException.html">InvalidFilterException</a></tt>]</span>
+      
+      
+      
+    </dt>
+    <dd>
+      <span class='desc'></span>
+    </dd>
+  
+  </dl>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+300
+301
+302</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/record_filter/dsl/conjunction_dsl.rb', line 300</span>
+
+<span class='def def kw'>def</span> <span class='on identifier id'>on</span><span class='lparen token'>(</span><span class='column identifier id'>column</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='assign token'>=</span><span class='Restriction constant id'>Restriction</span><span class='colon2 op'>::</span><span class='DEFAULT_VALUE constant id'>DEFAULT_VALUE</span><span class='rparen token'>)</span> <span class='comment val'># :nodoc:</span>
+  <span class='raise identifier id'>raise</span> <span class='InvalidFilterException constant id'>InvalidFilterException</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'Calls to on can only be made in the block of a call to join.'</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>order</h3>
+</div><div id="order-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>order</span><span class='args'>(column, direction = :asc)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="param">
+  <h3>Parameters:</h3>
+  <dl>
+  
+  </dl>
+</div><div class="raise">
+  <h3>Raises:</h3>
+  <dl>
+  
+    <dt>
+      
+        <span class='type'>[<tt><a title="InvalidFilterException" href="../InvalidFilterException.html">InvalidFilterException</a></tt>]</span>
+      
+      
+      
+    </dt>
+    <dd>
+      <span class='desc'></span>
+    </dd>
+  
+  </dl>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+292
+293
+294</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/record_filter/dsl/conjunction_dsl.rb', line 292</span>
+
+<span class='def def kw'>def</span> <span class='order identifier id'>order</span><span class='lparen token'>(</span><span class='column identifier id'>column</span><span class='comma token'>,</span> <span class='direction identifier id'>direction</span><span class='assign token'>=</span><span class='symbol val'>:asc</span><span class='rparen token'>)</span> <span class='comment val'># :nodoc:</span>
+  <span class='raise identifier id'>raise</span> <span class='InvalidFilterException constant id'>InvalidFilterException</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'Calls to order can only be made in the outer block of a filter.'</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>with</h3>
+</div><div id="with-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>with</span><span class='args'>(column, value = Restriction::DEFAULT_VALUE)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Specify a condition on the given column, which will be added to the WHERE
+clause of the resulting query. This method returns a Restriction object,
+which can be called with any of the specific restriction methods described
+there in order to create many types of conditions. If both a column name
+and a value are passed, this will automatically create an equality
+condition, so the following two examples are equal:
+</p>
+<pre class="code">
+  <span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:permalink</span><span class='comma token'>,</span> <span class='string val'>'junk'</span><span class='rparen token'>)</span>
+  <span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:permalink</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='equal_to identifier id'>equal_to</span><span class='lparen token'>(</span><span class='string val'>'junk'</span><span class='rparen token'>)</span>
+</pre>
+<p>
+If nil is passed as the second argument, an is_null restriction will
+automatically be created, so these two examples are equal as well:
+</p>
+<pre class="code">
+  <span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:permalink</span><span class='comma token'>,</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:permalink</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='is_null identifier id'>is_null</span>
+</pre>
+<p>
+This method can be called at any point in the filter specification, and the
+appropriate clauses will be created if it is called within or other
+conjunctions.
+</p>
+<h4>Parameters</h4>
+<table>
+<tr><td valign="top">column&lt;Symbol&gt;:</td><td>The name of the column to restrict. The column is assumed to exist in the
+table that is currently in scope. In the outer block of a filter, that
+would be the table being filtered, and within joins it would be the table
+being joined.
+
+</td></tr>
+<tr><td valign="top">value&lt;value, optional&gt;:</td><td>If specified, the value will be used to automatically create either an
+equality restriction or an IS NULL test, as described above.
+
+</td></tr>
+</table>
+<h4>Returns</h4>
+<table>
+<tr><td valign="top">Restriction:</td><td>A restriction object that can be used to create a specific condition. See
+the API in Restriction for options.
+
+</td></tr>
+</table>
+<h4>Alternatives</h4>
+<p>
+The value parameter is optional, as described above.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+48
+49
+50</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/record_filter/dsl/conjunction_dsl.rb', line 48</span>
+
+<span class='def def kw'>def</span> <span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='column identifier id'>column</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='assign token'>=</span><span class='Restriction constant id'>Restriction</span><span class='colon2 op'>::</span><span class='DEFAULT_VALUE constant id'>DEFAULT_VALUE</span><span class='rparen token'>)</span>
+  <span class='return return kw'>return</span> <span class='@conjunction ivar id'>@conjunction</span><span class='dot token'>.</span><span class='add_restriction identifier id'>add_restriction</span><span class='lparen token'>(</span><span class='column identifier id'>column</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

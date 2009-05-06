@@ -1,0 +1,1246 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: RecordFilter::DSL::Restriction</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class RecordFilter_DSL_Restriction">
+  <h1 class="title">Class: RecordFilter::DSL::Restriction</h1>
+  <div class="section docstring">
+  <p>
+The Restriction class is used to specify conditions in your filters. It is
+accessed through the use of ConjunctionDSL.with, which can be chained with
+further methods below in order to create many types of conditions.
+</p>
+<pre class="code">
+  <span class='Blog constant id'>Blog</span><span class='dot token'>.</span><span class='filter identifier id'>filter</span> <span class='do do kw'>do</span>
+    <span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:id</span><span class='comma token'>,</span> <span class='integer val'>2</span><span class='rparen token'>)</span>          <span class='comment val'># :conditions =&gt; { ['id = ?', 2] }</span>
+    <span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:id</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='is_null identifier id'>is_null</span>     <span class='comment val'># :conditions =&gt; { ['id IS NULL'] }</span>
+    <span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:id</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='in identifier id'>in</span><span class='lparen token'>(</span><span class='lbrack token'>[</span><span class='integer val'>2</span><span class='comma token'>,</span><span class='integer val'>3</span><span class='comma token'>,</span><span class='integer val'>4</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='comment val'># :conditions =&gt; { ['id IN (?)', [2,3,4]] }</span>
+    <span class='dot3 op'>...</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+The following restriction types are supported:
+</p>
+<ul>
+<li>Between
+
+</li>
+<li>Equality
+
+</li>
+<li>Comparisons (&gt;, &gt;=, &lt;, &lt;=)
+
+</li>
+<li>In
+
+</li>
+<li>Is Null and Is Not Null
+
+</li>
+<li>Like
+
+</li>
+<li>Negation of any restriction through not
+
+</li>
+</ul>
+
+</div><div class="section attributes">
+  <h1>Attributes</h1>
+
+  
+    <div class="instance">
+      <h2>Instance Attributes</h2>
+      <table>
+      
+        <tr>
+          <th class="name">column</td>
+          <td class="readwrite">
+            [<span id='column-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>column</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">negated</td>
+          <td class="readwrite">
+            [<span id='negated-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>negated</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">operator</td>
+          <td class="readwrite">
+            [<span id='operator-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>operator</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">value</td>
+          <td class="readwrite">
+            [<span id='value-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>value</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+      </table>
+    </div>
+  
+</div><div class="section constants">
+  <div class="thisclass">
+  <h1>Constants</h1>
+  <dl>
+    
+      <dt id="DEFAULT_VALUE-constant">DEFAULT_VALUE</dt>
+      <dd>Object.new</dd>
+    
+  </dl>
+</div>
+
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(column, value = DEFAULT_VALUE)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Create a restriction, given a column to restrict and an optional value.
+</p>
+<h4>Parameters</h4>
+<table>
+<tr><td valign="top">column&lt;Symbol&gt;:</td><td>The name of the column to be restricted.
+
+</td></tr>
+<tr><td valign="top">value&lt;String, Symbol, number, Time, nil, etc.&gt;:</td><td>The value of the column to use for equality restriction.
+
+</td></tr>
+</table>
+<h4>Returns</h4>
+<table>
+<tr><td valign="top">Restriction:</td><td>self
+
+</td></tr>
+</table>
+<h4>Alternatives</h4>
+<p>
+If a second argument is passed, an equality restriction of the form
+[&#8216;column = ?&#8217;, value] will be created. If the second argument
+is nil, an is_null restriction of the form
+</p>
+<dl>
+<dt>&#8216;column IS NULL&#8217;</dt><dd>will be created. If no value is provided, the type of the restriction
+
+</dd>
+</dl>
+<p>
+will be unset and one of the restriction type methods should be called on
+the object in order to fully specify its type and value.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+48
+49
+50
+51</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/record_filter/dsl/restriction.rb', line 48</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='column identifier id'>column</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='assign token'>=</span><span class='DEFAULT_VALUE constant id'>DEFAULT_VALUE</span><span class='rparen token'>)</span> <span class='comment val'># :nodoc:</span>
+  <span class='@column ivar id'>@column</span><span class='comma token'>,</span> <span class='@negated ivar id'>@negated</span><span class='comma token'>,</span> <span class='@operator ivar id'>@operator</span> <span class='assign token'>=</span> <span class='column identifier id'>column</span><span class='comma token'>,</span> <span class='false false kw'>false</span><span class='comma token'>,</span> <span class='nil nil kw'>nil</span>
+  <span class='take_value identifier id'>take_value</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a title="#between" href="#between-instance_method">#between</a></span><span class='args'>(start, finish = nil)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Create a between filter of the form [&#8216;column BETWEEN ? AND ?&#8217;,
+start, finish].
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a title="#equal_to" href="#equal_to-instance_method">#equal_to</a></span><span class='args'>(value)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Make the restriction into an equality test of the form [&#8216;column =
+?&#8217;, value].
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a title="#greater_than" href="#greater_than-instance_method">#greater_than</a></span><span class='args'>(value)</span>
+        <span class='block'></span>
+        
+          <span class='alias'>#gt</span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Create a comparison restriction of the form [&#8216;column &gt; ?&#8217;,
+value].
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a title="#greater_than_or_equal_to" href="#greater_than_or_equal_to-instance_method">#greater_than_or_equal_to</a></span><span class='args'>(value)</span>
+        <span class='block'></span>
+        
+          <span class='alias'>#gte</span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Create a comparison restriction of the form [&#8216;column &gt;= ?&#8217;,
+value].
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a title="#in" href="#in-instance_method">#in</a></span><span class='args'>(value)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Create an IN restriction of the form [&#8216;column IN (?)&#8217;, value].
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a title="#is_not_null" href="#is_not_null-instance_method">#is_not_null</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Change the restriction into a negated test for null of the form
+[&#8216;column IS NOT NULL&#8217;].
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a title="#is_null" href="#is_null-instance_method">#is_null</a></span><span class='args'></span>
+        <span class='block'></span>
+        
+          <span class='alias'>#nil</span>
+        
+          <span class='alias'>#null</span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Change the restriction into a test for null in the form [&#8216;column IS
+NULL&#8217;].
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a title="#less_than" href="#less_than-instance_method">#less_than</a></span><span class='args'>(value)</span>
+        <span class='block'></span>
+        
+          <span class='alias'>#lt</span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Create a less_than condition of the form [&#8216;column &lt; ?&#8217;,
+value].
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a title="#less_than_or_equal_to" href="#less_than_or_equal_to-instance_method">#less_than_or_equal_to</a></span><span class='args'>(value)</span>
+        <span class='block'></span>
+        
+          <span class='alias'>#lte</span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Create a comparison restriction of the form [&#8216;column &lt;= ?&#8217;,
+value].
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a title="#like" href="#like-instance_method">#like</a></span><span class='args'>(value)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Create a LIKE restriction of the form [&#8216;column LIKE ?&#8217;, value].
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a title="#not" href="#not-instance_method">#not</a></span><span class='args'>(value = DEFAULT_VALUE)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Negate the restriction, taking an optional value for inequality
+restrictions.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a title="#not_in" href="#not_in-instance_method">#not_in</a></span><span class='args'>(value)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Create a negated IN restriction of the form [&#8216;column NOT IN
+(?)&#8217;, value].
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>between</h3>
+</div><div id="between-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>between</span><span class='args'>(start, finish = nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Create a between filter of the form [&#8216;column BETWEEN ? AND ?&#8217;,
+start, finish]
+</p>
+<h4>Parameters</h4>
+<table>
+<tr><td valign="top">start:</td><td>The starting limit for the between test.
+
+</td></tr>
+<tr><td valign="top">finish:</td><td>The ending limit for the between test.
+
+</td></tr>
+</table>
+<h4>Returns</h4>
+<table>
+<tr><td valign="top">Restriction:</td><td>self
+
+</td></tr>
+</table>
+<h4>Alternatives</h4>
+<p>
+With the second argument omitted, the method can also accept either a tuple
+(Array) or a range as the first argument. If a tuple is given, it will be
+used as [start, finish]. If a range is given, its beginning and ending
+values will be used.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+251
+252
+253
+254
+255
+256
+257
+258
+259</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/record_filter/dsl/restriction.rb', line 251</span>
+
+<span class='def def kw'>def</span> <span class='between identifier id'>between</span><span class='lparen token'>(</span><span class='start identifier id'>start</span><span class='comma token'>,</span> <span class='finish identifier id'>finish</span><span class='assign token'>=</span><span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='@operator ivar id'>@operator</span> <span class='assign token'>=</span> <span class='symbol val'>:between</span>
+  <span class='if if kw'>if</span> <span class='notop op'>!</span><span class='finish identifier id'>finish</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+    <span class='@value ivar id'>@value</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='start identifier id'>start</span><span class='comma token'>,</span> <span class='finish identifier id'>finish</span><span class='rbrack token'>]</span>
+  <span class='else else kw'>else</span>
+    <span class='@value ivar id'>@value</span> <span class='assign token'>=</span> <span class='start identifier id'>start</span>
+  <span class='end end kw'>end</span>
+  <span class='self self kw'>self</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>equal_to</h3>
+</div><div id="equal_to-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>equal_to</span><span class='args'>(value)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Make the restriction into an equality test of the form [&#8216;column =
+?&#8217;, value]
+</p>
+<h4>Parameters</h4>
+<table>
+<tr><td valign="top">value&lt;String, Symbol, number, nil, etc&gt;:</td><td>The value to use in the restriction.
+
+</td></tr>
+</table>
+<h4>Returns</h4>
+<table>
+<tr><td valign="top">Restriction:</td><td>self
+
+</td></tr>
+</table>
+<h4>Alternatives</h4>
+<p>
+If nil is passed as the value, this will create an is_null restriction.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+88
+89
+90
+91
+92</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/record_filter/dsl/restriction.rb', line 88</span>
+
+<span class='def def kw'>def</span> <span class='equal_to identifier id'>equal_to</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+  <span class='@value ivar id'>@value</span><span class='comma token'>,</span> <span class='@operator ivar id'>@operator</span> <span class='assign token'>=</span> <span class='value identifier id'>value</span><span class='comma token'>,</span> <span class='symbol val'>:equal_to</span>
+  <span class='@value ivar id'>@value</span><span class='comma token'>,</span> <span class='@operator ivar id'>@operator</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='symbol val'>:is_null</span> <span class='if if_mod kw'>if</span> <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+  <span class='self self kw'>self</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>greater_than</h3>
+</div><div id="greater_than-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>greater_than</span><span class='args'>(value)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+<p class="aliases">
+  <span class="aka">Also known as:</span>
+  
+    <tt id="gt-instance_method">gt</tt>
+  
+</p>
+</div><div class="section docstring">
+  <p>
+Create a comparison restriction of the form [&#8216;column &gt; ?&#8217;,
+value]
+</p>
+<h4>Parameters</h4>
+<table>
+<tr><td valign="top">value:</td><td>The value to be used for comparison.
+
+</td></tr>
+</table>
+<h4>Returns</h4>
+<table>
+<tr><td valign="top">Restriction:</td><td>self
+
+</td></tr>
+</table>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+167
+168
+169
+170</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/record_filter/dsl/restriction.rb', line 167</span>
+
+<span class='def def kw'>def</span> <span class='greater_than identifier id'>greater_than</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+  <span class='@value ivar id'>@value</span><span class='comma token'>,</span> <span class='@operator ivar id'>@operator</span> <span class='assign token'>=</span> <span class='value identifier id'>value</span><span class='comma token'>,</span> <span class='symbol val'>:greater_than</span>
+  <span class='self self kw'>self</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>greater_than_or_equal_to</h3>
+</div><div id="greater_than_or_equal_to-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>greater_than_or_equal_to</span><span class='args'>(value)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+<p class="aliases">
+  <span class="aka">Also known as:</span>
+  
+    <tt id="gte-instance_method">gte</tt>
+  
+</p>
+</div><div class="section docstring">
+  <p>
+Create a comparison restriction of the form [&#8216;column &gt;= ?&#8217;,
+value]
+</p>
+<h4>Parameters</h4>
+<table>
+<tr><td valign="top">value:</td><td>The value to be used in the comparison.
+
+</td></tr>
+</table>
+<h4>Returns</h4>
+<table>
+<tr><td valign="top">Restriction:</td><td>self
+
+</td></tr>
+</table>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+183
+184
+185
+186</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/record_filter/dsl/restriction.rb', line 183</span>
+
+<span class='def def kw'>def</span> <span class='greater_than_or_equal_to identifier id'>greater_than_or_equal_to</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+  <span class='@value ivar id'>@value</span><span class='comma token'>,</span> <span class='@operator ivar id'>@operator</span> <span class='assign token'>=</span> <span class='value identifier id'>value</span><span class='comma token'>,</span> <span class='symbol val'>:greater_than_or_equal_to</span>
+  <span class='self self kw'>self</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>in</h3>
+</div><div id="in-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>in</span><span class='args'>(value)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Create an IN restriction of the form [&#8216;column IN (?)&#8217;, value]
+</p>
+<h4>Parameters</h4>
+<table>
+<tr><td valign="top">value:</td><td>Either a single item or an array of values to form the values to be tested
+for inclusion.
+
+</td></tr>
+</table>
+<h4>Returns</h4>
+<table>
+<tr><td valign="top">Restriction:</td><td>self
+
+</td></tr>
+</table>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+199
+200
+201
+202</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/record_filter/dsl/restriction.rb', line 199</span>
+
+<span class='def def kw'>def</span> <span class='in in kw'>in</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+  <span class='@value ivar id'>@value</span><span class='comma token'>,</span> <span class='@operator ivar id'>@operator</span> <span class='assign token'>=</span> <span class='value identifier id'>value</span><span class='comma token'>,</span> <span class='symbol val'>:in</span>
+  <span class='self self kw'>self</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>is_not_null</h3>
+</div><div id="is_not_null-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>is_not_null</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Change the restriction into a negated test for null of the form
+[&#8216;column IS NOT NULL&#8217;]
+</p>
+<h4>Parameters</h4>
+<p>
+none
+</p>
+<h4>Returns</h4>
+<table>
+<tr><td valign="top">Restriction:</td><td>self
+
+</td></tr>
+</table>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+119
+120
+121
+122
+123</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/record_filter/dsl/restriction.rb', line 119</span>
+
+<span class='def def kw'>def</span> <span class='is_not_null identifier id'>is_not_null</span>
+  <span class='@operator ivar id'>@operator</span> <span class='assign token'>=</span> <span class='symbol val'>:is_null</span>
+  <span class='@negated ivar id'>@negated</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+  <span class='self self kw'>self</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>is_null</h3>
+</div><div id="is_null-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>is_null</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+<p class="aliases">
+  <span class="aka">Also known as:</span>
+  
+    <tt id="nil-instance_method">nil</tt>
+  
+    <tt id="null-instance_method">null</tt>
+  
+</p>
+</div><div class="section docstring">
+  <p>
+Change the restriction into a test for null in the form [&#8216;column IS
+NULL&#8217;]
+</p>
+<h4>Parameters</h4>
+<p>
+none
+</p>
+<h4>Returns</h4>
+<table>
+<tr><td valign="top">Restriction:</td><td>self
+
+</td></tr>
+</table>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+103
+104
+105
+106</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/record_filter/dsl/restriction.rb', line 103</span>
+
+<span class='def def kw'>def</span> <span class='is_null identifier id'>is_null</span>
+  <span class='@value ivar id'>@value</span><span class='comma token'>,</span> <span class='@operator ivar id'>@operator</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='symbol val'>:is_null</span>
+  <span class='self self kw'>self</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>less_than</h3>
+</div><div id="less_than-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>less_than</span><span class='args'>(value)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+<p class="aliases">
+  <span class="aka">Also known as:</span>
+  
+    <tt id="lt-instance_method">lt</tt>
+  
+</p>
+</div><div class="section docstring">
+  <p>
+Create a less_than condition of the form [&#8216;column &lt; ?&#8217;,
+value]
+</p>
+<h4>Parameters</h4>
+<table>
+<tr><td valign="top">value&lt;String, number, time, etc.&gt;:</td><td>The value to be compared.
+
+</td></tr>
+</table>
+<h4>Returns</h4>
+<table>
+<tr><td valign="top">Restriction:</td><td>self
+
+</td></tr>
+</table>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+135
+136
+137
+138</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/record_filter/dsl/restriction.rb', line 135</span>
+
+<span class='def def kw'>def</span> <span class='less_than identifier id'>less_than</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+  <span class='@value ivar id'>@value</span><span class='comma token'>,</span> <span class='@operator ivar id'>@operator</span> <span class='assign token'>=</span> <span class='value identifier id'>value</span><span class='comma token'>,</span> <span class='symbol val'>:less_than</span>
+  <span class='self self kw'>self</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>less_than_or_equal_to</h3>
+</div><div id="less_than_or_equal_to-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>less_than_or_equal_to</span><span class='args'>(value)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+<p class="aliases">
+  <span class="aka">Also known as:</span>
+  
+    <tt id="lte-instance_method">lte</tt>
+  
+</p>
+</div><div class="section docstring">
+  <p>
+Create a comparison restriction of the form [&#8216;column &lt;= ?&#8217;,
+value]
+</p>
+<h4>Parameters</h4>
+<table>
+<tr><td valign="top">value:</td><td>The value to be used in the comparison.
+
+</td></tr>
+</table>
+<h4>Returns</h4>
+<table>
+<tr><td valign="top">Restriction:</td><td>self
+
+</td></tr>
+</table>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+151
+152
+153
+154</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/record_filter/dsl/restriction.rb', line 151</span>
+
+<span class='def def kw'>def</span> <span class='less_than_or_equal_to identifier id'>less_than_or_equal_to</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+  <span class='@value ivar id'>@value</span><span class='comma token'>,</span> <span class='@operator ivar id'>@operator</span> <span class='assign token'>=</span> <span class='value identifier id'>value</span><span class='comma token'>,</span> <span class='symbol val'>:less_than_or_equal_to</span>
+  <span class='self self kw'>self</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>like</h3>
+</div><div id="like-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>like</span><span class='args'>(value)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Create a LIKE restriction of the form [&#8216;column LIKE ?&#8217;, value]
+</p>
+<h4>Parameters</h4>
+<table>
+<tr><td valign="top">value:</td><td>The value to be tested against the column.
+
+</td></tr>
+</table>
+<h4>Returns</h4>
+<table>
+<tr><td valign="top">Restriction:</td><td>self
+
+</td></tr>
+</table>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+229
+230
+231
+232</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/record_filter/dsl/restriction.rb', line 229</span>
+
+<span class='def def kw'>def</span> <span class='like identifier id'>like</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+  <span class='@value ivar id'>@value</span><span class='comma token'>,</span> <span class='@operator ivar id'>@operator</span> <span class='assign token'>=</span> <span class='value identifier id'>value</span><span class='comma token'>,</span> <span class='symbol val'>:like</span>
+  <span class='self self kw'>self</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>not</h3>
+</div><div id="not-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>not</span><span class='args'>(value = DEFAULT_VALUE)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Negate the restriction, taking an optional value for inequality
+restrictions.
+</p>
+<h4>Parameters</h4>
+<table>
+<tr><td valign="top">value&lt;String, number, Time, nil, etc&gt;:</td><td>A value to be used when specifying inequality restrictions.
+
+</td></tr>
+</table>
+<h4>Returns</h4>
+<table>
+<tr><td valign="top">Restriction:</td><td>self
+
+</td></tr>
+</table>
+<h4>Alternatives</h4>
+<p>
+The value option works in the same way as in the initializer, as a shortcut
+for inequality or is_null restrictions if it is provided. This allows
+restrictions to be specified like: with(:permalink).not(nil) If no value is
+specified, it will simply negate the restriction.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+69
+70
+71
+72
+73</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/record_filter/dsl/restriction.rb', line 69</span>
+
+<span class='def def kw'>def</span> <span class='not not kw'>not</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='assign token'>=</span><span class='DEFAULT_VALUE constant id'>DEFAULT_VALUE</span><span class='rparen token'>)</span>
+  <span class='@negated ivar id'>@negated</span> <span class='assign token'>=</span> <span class='notop op'>!</span><span class='@negated ivar id'>@negated</span>
+  <span class='take_value identifier id'>take_value</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+  <span class='self self kw'>self</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>not_in</h3>
+</div><div id="not_in-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>not_in</span><span class='args'>(value)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Create a negated IN restriction of the form [&#8216;column NOT IN
+(?)&#8217;, value]
+</p>
+<h4>Parameters</h4>
+<table>
+<tr><td valign="top">value:</td><td>Either a single item or an array of values to form the inclusion test.
+
+</td></tr>
+</table>
+<h4>Returns</h4>
+<table>
+<tr><td valign="top">Restriction:</td><td>self
+
+</td></tr>
+</table>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+214
+215
+216
+217</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/record_filter/dsl/restriction.rb', line 214</span>
+
+<span class='def def kw'>def</span> <span class='not_in identifier id'>not_in</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+  <span class='@value ivar id'>@value</span><span class='comma token'>,</span> <span class='@operator ivar id'>@operator</span><span class='comma token'>,</span> <span class='@negated ivar id'>@negated</span> <span class='assign token'>=</span> <span class='value identifier id'>value</span><span class='comma token'>,</span> <span class='symbol val'>:in</span><span class='comma token'>,</span> <span class='true true kw'>true</span>
+  <span class='self self kw'>self</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+  </body>
+</html>

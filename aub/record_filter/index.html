@@ -1,0 +1,385 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <title>README</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section docstring readme">
+        <h1>record_filter</h1>
+<p>
+record_filter is a DSL for specifying ActiveRecord queries in pure Ruby. It
+has support for filters created on the fly and for named filters that are
+associated with object types. record_filter has the following top-level
+features:
+</p>
+<ul>
+<li>Pure ruby API eliminates the need for hard-coded SQL in most cases.
+
+</li>
+<li>Works seamlessly with existing ActiveRecord APIs, including named scopes.
+
+</li>
+<li>Supports creation of ad-hoc filters as well as named filters that can be
+associated with object types.
+
+</li>
+<li>Allows chaining of filters with each other and with named scopes to create
+complex queries.
+
+</li>
+<li>Takes advantage of the associations in your ActiveRecord objects for a
+clean implicit join API.
+
+</li>
+</ul>
+<h2>Documentation</h2>
+<p>
+The complete RDoc documentation is available at
+http://aub.github.com/record_filter/rdoc/. This page is intended to be a
+getting started guide that should cover the most common uses.
+</p>
+<h2>Installation</h2>
+<pre class="code">
+  <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='outoftime identifier id'>outoftime</span><span class='minus op'>-</span><span class='record_filter identifier id'>record_filter</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='source identifier id'>source</span><span class='assign token'>=</span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/gems.github.com
+</span></pre>
+<h2>Using Filters</h2>
+<p>
+Given a Blog model having a has_many relationship with a Post model, a
+simple filter with conditions and joins might look like this.
+</p>
+<pre class="code">
+  <span class='Blog constant id'>Blog</span><span class='dot token'>.</span><span class='filter identifier id'>filter</span> <span class='do do kw'>do</span>
+    <span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:created_at</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='greater_than identifier id'>greater_than</span><span class='lparen token'>(</span><span class='float val'>1</span><span class='dot token'>.</span><span class='day identifier id'>day</span><span class='dot token'>.</span><span class='ago identifier id'>ago</span><span class='rparen token'>)</span>
+    <span class='having identifier id'>having</span><span class='lparen token'>(</span><span class='symbol val'>:posts</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:permalink</span><span class='comma token'>,</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+This could be expressed in ActiveRecord as:
+</p>
+<pre class="code">
+  <span class='Blog constant id'>Blog</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span>
+    <span class='symbol val'>:all</span><span class='comma token'>,</span>
+    <span class='symbol val'>:joins</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:posts</span><span class='comma token'>,</span>
+    <span class='symbol val'>:conditions</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='string val'>'posts.permalink IS NULL AND blogs.created_at &gt; ?'</span><span class='comma token'>,</span> <span class='string val'>'blog-post'</span><span class='comma token'>,</span> <span class='float val'>1</span><span class='dot token'>.</span><span class='day identifier id'>day</span><span class='dot token'>.</span><span class='ago identifier id'>ago</span><span class='rparen token'>)</span>
+</pre>
+<p>
+and it returns the same result, a list of Blog objects that are the result
+of the query. This type of filter is designed to be created on the fly, but
+if you have a filter that you would like to use in more than one place, it
+can be added to a class as a named filter. The following example creates
+the same filter as above and executes it:
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='Post constant id'>Post</span> <span class='lt op'>&lt;</span> <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
+    <span class='named_filter identifier id'>named_filter</span><span class='lparen token'>(</span><span class='symbol val'>:new_with_nil_permalink</span><span class='rparen token'>)</span> <span class='do do kw'>do</span>
+      <span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:created_at</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='greater_than identifier id'>greater_than</span><span class='lparen token'>(</span><span class='float val'>1</span><span class='dot token'>.</span><span class='day identifier id'>day</span><span class='dot token'>.</span><span class='ago identifier id'>ago</span><span class='rparen token'>)</span>
+      <span class='having identifier id'>having</span><span class='lparen token'>(</span><span class='symbol val'>:posts</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:permalink</span><span class='comma token'>,</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+
+  <span class='Post constant id'>Post</span><span class='dot token'>.</span><span class='new_with_nil_permalink identifier id'>new_with_nil_permalink</span>
+</pre>
+<p>
+This returns the same result as the example above but with the advantages
+that it is easily reusable and that it can be combined with other named
+filters to produce a more complex query:
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='Post constant id'>Post</span> <span class='lt op'>&lt;</span> <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
+    <span class='named_filter identifier id'>named_filter</span><span class='lparen token'>(</span><span class='symbol val'>:title_is_monkeys</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:title</span><span class='comma token'>,</span> <span class='string val'>'monkeys'</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+    <span class='named_filter identifier id'>named_filter</span><span class='lparen token'>(</span><span class='symbol val'>:permalink_is_donkeys</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:permalink</span><span class='comma token'>,</span> <span class='string val'>'donkeys'</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  <span class='end end kw'>end</span>
+
+  <span class='Post constant id'>Post</span><span class='dot token'>.</span><span class='title_is_monkeys identifier id'>title_is_monkeys</span><span class='dot token'>.</span><span class='permalink_is_donkeys identifier id'>permalink_is_donkeys</span>
+</pre>
+<p>
+This example will return all of the posts that meet both animal-related
+conditions. There is no limit to the number of filters that can be
+combined, and because record_filter works seamlessly with named scopes,
+they can also be combined in this way as well.
+</p>
+<p>
+Named filters can also be customized by taking any number of arguments. The
+example above can be replicated with the following filter:
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='Post constant id'>Post</span> <span class='lt op'>&lt;</span> <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
+    <span class='named_filter identifier id'>named_filter</span><span class='lparen token'>(</span><span class='symbol val'>:with_title_and_permalink</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='title identifier id'>title</span><span class='comma token'>,</span> <span class='permalink identifier id'>permalink</span><span class='bitor op'>|</span>
+      <span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:title</span><span class='comma token'>,</span> <span class='title identifier id'>title</span><span class='rparen token'>)</span>
+      <span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:permalink</span><span class='comma token'>,</span> <span class='permalink identifier id'>permalink</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+
+  <span class='Post constant id'>Post</span><span class='dot token'>.</span><span class='with_title_and_permalink identifier id'>with_title_and_permalink</span><span class='lparen token'>(</span><span class='string val'>'monkeys'</span><span class='comma token'>,</span> <span class='string val'>'donkeys'</span><span class='rparen token'>)</span>
+</pre>
+<p>
+Named filters can also be called from other named filters and will be
+invoked on the correct model even if called from a join.
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='Comment constant id'>Comment</span> <span class='lt op'>&lt;</span> <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
+    <span class='named_filter identifier id'>named_filter</span><span class='lparen token'>(</span><span class='symbol val'>:offensive</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:offensive</span><span class='comma token'>,</span> <span class='true true kw'>true</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  <span class='end end kw'>end</span>
+
+  <span class='class class kw'>class</span> <span class='Post constant id'>Post</span> <span class='lt op'>&lt;</span> <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
+    <span class='named_filter identifier id'>named_filter</span><span class='lparen token'>(</span><span class='symbol val'>:recursive_test</span><span class='rparen token'>)</span> <span class='do do kw'>do</span>
+      <span class='having identifier id'>having</span><span class='lparen token'>(</span><span class='symbol val'>:comments</span><span class='rparen token'>)</span> <span class='do do kw'>do</span>
+        <span class='offensive identifier id'>offensive</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+</pre>
+<h2>Specifying Filters</h2>
+<p>
+record_filter supports all of the SQL query abstractions provided by
+ActiveRecord, specifically:
+</p>
+<ul>
+<li>Conditions
+
+</li>
+<li>Boolean operations
+
+</li>
+<li>Joins
+
+</li>
+<li>Limits
+
+</li>
+<li>Offsets
+
+</li>
+<li>Ordering
+
+</li>
+<li>Grouping
+
+</li>
+</ul>
+<p>
+The following example shows the use of each of these techniques:
+</p>
+<pre class="code">
+  <span class='Post constant id'>Post</span><span class='dot token'>.</span><span class='filter identifier id'>filter</span> <span class='do do kw'>do</span>
+    <span class='any_of identifier id'>any_of</span> <span class='do do kw'>do</span>
+      <span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:permalink</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='is_null identifier id'>is_null</span>
+      <span class='having identifier id'>having</span><span class='lparen token'>(</span><span class='symbol val'>:comments</span><span class='rparen token'>)</span> <span class='do do kw'>do</span>
+        <span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:offensive</span><span class='comma token'>,</span> <span class='true true kw'>true</span><span class='rparen token'>)</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+    <span class='limit identifier id'>limit</span><span class='lparen token'>(</span><span class='integer val'>10</span><span class='comma token'>,</span> <span class='integer val'>100</span><span class='rparen token'>)</span>
+    <span class='order identifier id'>order</span><span class='lparen token'>(</span><span class='symbol val'>:created_at</span><span class='comma token'>,</span> <span class='symbol val'>:desc</span><span class='rparen token'>)</span>
+    <span class='group_by identifier id'>group_by</span><span class='lparen token'>(</span><span class='symbol val'>:comments</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:offensive</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+</pre>
+<h3>Conditions</h3>
+<p>
+Conditions are specified using the &#8216;with&#8217; function, which takes
+as its first argument the name of the column to restrict. If a second
+argument is given, it will automatically be used as the value in an
+equality condition. The &#8216;with&#8217; function will return a
+Restriction object that has methods to specify a number of different
+conditions and to negate them:
+</p>
+<pre class="code">
+  <span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:permalink</span><span class='comma token'>,</span> <span class='string val'>'aardvarks'</span><span class='rparen token'>)</span>            <span class='comment val'># :conditions =&gt; ['permalink = ?', 'aardvarks']</span>
+  <span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:permalink</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='equal_to identifier id'>equal_to</span><span class='lparen token'>(</span><span class='string val'>'sheep'</span><span class='rparen token'>)</span>       <span class='comment val'># :conditions =&gt; ['permalink = ?', 'sheep']</span>
+  <span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:permalink</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='not identifier id'>not</span><span class='dot token'>.</span><span class='equal_to identifier id'>equal_to</span><span class='lparen token'>(</span><span class='string val'>'cats'</span><span class='rparen token'>)</span>    <span class='comment val'># :conditions =&gt; ['permailnk &lt;&gt; ?', 'cats']</span>
+
+  <span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:permalink</span><span class='comma token'>,</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>                    <span class='comment val'># :conditions =&gt; ['permalink IS NULL']</span>
+  <span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:permalink</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='is_null identifier id'>is_null</span>                 <span class='comment val'># :conditions =&gt; ['permalink IS NULL']</span>
+  <span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:permalink</span><span class='comma token'>,</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='not identifier id'>not</span>                <span class='comment val'># :conditions =&gt; ['permalink IS NOT NULL']</span>
+</pre>
+<p>
+The following condition types are supported through the Restriction API:
+</p>
+<ul>
+<li>Equality
+
+</li>
+<li>Comparisons (&gt; &gt;= &lt; &lt;=)
+
+</li>
+<li>Between
+
+</li>
+<li>In
+
+</li>
+<li>Is null
+
+</li>
+<li>Like
+
+</li>
+</ul>
+<h3>Boolean Operations</h3>
+<p>
+Conditions can be combined with boolean operators using the methods all_of,
+any_of, none_of and not_all_of. These methods take a block where any
+conditions they contain will be combined using AND, OR and NOT to create
+the correct clause. The block can also contain any number of joins or other
+boolean operations. The default operator is all_of.
+</p>
+<pre class="code">
+  <span class='Post constant id'>Post</span><span class='dot token'>.</span><span class='filter identifier id'>filter</span> <span class='do do kw'>do</span>
+    <span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:id</span><span class='comma token'>,</span> <span class='integer val'>4</span><span class='rparen token'>)</span>
+    <span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:permalink</span><span class='comma token'>,</span> <span class='string val'>'ack'</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+
+  <span class='symbol val'>:conditions</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='string val'>'id = ? AND permalink = ?'</span><span class='comma token'>,</span> <span class='integer val'>4</span><span class='comma token'>,</span> <span class='string val'>'ack'</span><span class='rbrack token'>]</span>
+
+  <span class='Post constant id'>Post</span><span class='dot token'>.</span><span class='filter identifier id'>filter</span> <span class='do do kw'>do</span>
+    <span class='any_of identifier id'>any_of</span>
+      <span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:id</span><span class='comma token'>,</span> <span class='integer val'>3</span><span class='rparen token'>)</span>
+      <span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:permalink</span><span class='comma token'>,</span> <span class='string val'>'booya'</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+
+  <span class='symbol val'>:conditions</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='string val'>'id = ? OR permalink = ?'</span><span class='comma token'>,</span> <span class='integer val'>3</span><span class='comma token'>,</span> <span class='string val'>'booya'</span><span class='rbrack token'>]</span>
+
+  <span class='Post constant id'>Post</span><span class='dot token'>.</span><span class='filter identifier id'>filter</span> <span class='do do kw'>do</span>
+    <span class='none_of identifier id'>none_of</span>
+      <span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:id</span><span class='comma token'>,</span> <span class='integer val'>2</span><span class='rparen token'>)</span>
+      <span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:permalink</span><span class='comma token'>,</span> <span class='string val'>'ouch'</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+
+  <span class='symbol val'>:conditions</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='string val'>'NOT (id = ? OR permalink = ?'</span><span class='comma token'>,</span> <span class='integer val'>2</span><span class='comma token'>,</span> <span class='string val'>'ouch'</span><span class='rbrack token'>]</span>
+</pre>
+<h3>Joins</h3>
+<p>
+Joins in record_filter come in two varieties. Using the information in
+ActiveRecord associations, it is possible to perform most joins easily
+using the &#8216;having&#8217; method, which requires no specification of
+the columns to use for the join. In cases where an association does not
+apply, it is also possible to create an explicit join that can include both
+the columns to combine as well as restrictions on the columns in the join
+table.
+</p>
+<p>
+In a filter for a Post model that has_many comments, the following two
+examples are equivalent:
+</p>
+<pre class="code">
+  <span class='having identifier id'>having</span><span class='lparen token'>(</span><span class='symbol val'>:comments</span><span class='rparen token'>)</span>
+
+  <span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='Comment constant id'>Comment</span><span class='comma token'>,</span> <span class='symbol val'>:inner</span><span class='rparen token'>)</span> <span class='do do kw'>do</span>
+    <span class='on identifier id'>on</span><span class='lparen token'>(</span><span class='symbol val'>:id</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:post_id</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+With an explicit join, any number of columns can be matched in this way,
+and both join types accept a block in which any number of conditions,
+boolean operations, or other joins can be added. Explicit joins also allow
+conditions to be set on columns of the table being joined:
+</p>
+<pre class="code">
+  <span class='having identifier id'>having</span><span class='lparen token'>(</span><span class='symbol val'>:comments</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:offensive</span><span class='comma token'>,</span> <span class='true true kw'>true</span><span class='rparen token'>)</span>
+
+  <span class='having identifier id'>having</span><span class='lparen token'>(</span><span class='symbol val'>:comments</span><span class='rparen token'>)</span> <span class='do do kw'>do</span>
+    <span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:created_at</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='greater_than identifier id'>greater_than</span><span class='lparen token'>(</span><span class='float val'>2</span><span class='dot token'>.</span><span class='days identifier id'>days</span><span class='dot token'>.</span><span class='ago identifier id'>ago</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+
+  <span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='Comment constant id'>Comment</span><span class='comma token'>,</span> <span class='symbol val'>:inner</span><span class='rparen token'>)</span> <span class='do do kw'>do</span>
+    <span class='on identifier id'>on</span><span class='lparen token'>(</span><span class='symbol val'>:id</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:commentable_id</span><span class='rparen token'>)</span>
+    <span class='on identifier id'>on</span><span class='lparen token'>(</span><span class='symbol val'>:commentable_type</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='equal_to identifier id'>equal_to</span><span class='lparen token'>(</span><span class='string val'>'Post'</span><span class='rparen token'>)</span>
+    <span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:created_at</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='less_than identifier id'>less_than</span><span class='lparen token'>(</span><span class='float val'>1</span><span class='dot token'>.</span><span class='year identifier id'>year</span><span class='dot token'>.</span><span class='ago identifier id'>ago</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+With implicit joins, it is also possible to use a hash as the association
+name, in which case multiple joins can be created with one statement. If
+the comment model has_one Author, this example will join both tables and
+add a condition on the author.
+</p>
+<pre class="code">
+  <span class='having identifier id'>having</span><span class='lparen token'>(</span><span class='symbol val'>:comments</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:author</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:name</span><span class='comma token'>,</span> <span class='string val'>'Bob'</span><span class='rparen token'>)</span>
+</pre>
+<h3>Limits and Offsets</h3>
+<p>
+These are specified using the &#8216;limit&#8217; method, which takes two
+arguments, the offset and the limit. If only one argument is given, it is
+assumed to be the limit.
+</p>
+<pre class="code">
+  <span class='limit identifier id'>limit</span><span class='lparen token'>(</span><span class='integer val'>10</span><span class='comma token'>,</span> <span class='integer val'>100</span><span class='rparen token'>)</span>   <span class='comment val'># :offset =&gt; 10, :limit =&gt; 100</span>
+  <span class='limit identifier id'>limit</span><span class='lparen token'>(</span><span class='integer val'>100</span><span class='rparen token'>)</span>       <span class='comment val'># :offset =&gt; 0, :limit =&gt; 100</span>
+</pre>
+<h3>Ordering</h3>
+<p>
+Ordering is done through the &#8216;order&#8217; method, which accepts
+arguments for the column and direction. The column can either be passed as
+the name of a column in the class that is being filtered or as a hash that
+represents a path through the joined associations to the correct column.
+The direction argument should be either :asc or :desc and defaults to :asc
+if not given. Multiple calls to &#8216;order&#8217; are allowed and will be
+applied in the order in which they were given.
+</p>
+<pre class="code">
+  <span class='Post constant id'>Post</span><span class='dot token'>.</span><span class='filter identifier id'>filter</span> <span class='do do kw'>do</span>
+    <span class='having identifier id'>having</span><span class='lparen token'>(</span><span class='symbol val'>:comments</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:offensive</span><span class='comma token'>,</span> <span class='true true kw'>true</span><span class='rparen token'>)</span>
+    <span class='order identifier id'>order</span><span class='lparen token'>(</span><span class='symbol val'>:created_at</span><span class='comma token'>,</span> <span class='symbol val'>:desc</span><span class='rparen token'>)</span>
+    <span class='order identifier id'>order</span><span class='lparen token'>(</span><span class='symbol val'>:comments</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:id</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+
+  <span class='comment val'># :order =&gt; &quot;'posts'.created_at DESC posts__comments.id ASC&quot;</span>
+</pre>
+<h3>Grouping</h3>
+<p>
+Grouping is specified with the &#8216;group_by&#8217; method, which accepts
+either the name of a column in the class that is being filtered or a hash
+that represents a path through the joined associations. If there are
+multiple calls to &#8216;group_by&#8217; they will be combined in the final
+result, maintaining the order in which they were given.
+</p>
+<pre class="code">
+  <span class='Post constant id'>Post</span><span class='dot token'>.</span><span class='filter identifier id'>filter</span> <span class='do do kw'>do</span>
+    <span class='having identifier id'>having</span><span class='lparen token'>(</span><span class='symbol val'>:comments</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='symbol val'>:created_at</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='greater_than identifier id'>greater_than</span><span class='lparen token'>(</span><span class='float val'>1</span><span class='dot token'>.</span><span class='hour identifier id'>hour</span><span class='dot token'>.</span><span class='ago identifier id'>ago</span><span class='rparen token'>)</span>
+    <span class='group_by identifier id'>group_by</span><span class='lparen token'>(</span><span class='symbol val'>:permalink</span><span class='rparen token'>)</span>
+    <span class='group_by identifier id'>group_by</span><span class='lparen token'>(</span><span class='symbol val'>:comments</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:offensive</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+
+  <span class='comment val'># :group =&gt; &quot;'posts'.permalink, posts__comments.offensive'</span>
+</pre>
+<h2>LICENSE:</h2>
+<p>
+(The MIT License)
+</p>
+<p>
+Copyright &#169; 2008 Aubrey Holland, Mat Brown
+</p>
+<p>
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the
+&#8216;Software&#8217;), to deal in the Software without restriction,
+including without limitation the rights to use, copy, modify, merge,
+publish, distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to the
+following conditions:
+</p>
+<p>
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+</p>
+<p>
+THE SOFTWARE IS PROVIDED &#8216;AS IS&#8217;, WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+USE OR OTHER DEALINGS IN THE SOFTWARE.
+</p>
+
+      </div>
+    </div>
+  </body>
+</html>
