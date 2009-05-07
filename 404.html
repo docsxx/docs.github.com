@@ -31,8 +31,9 @@
           } catch(ex) { }
           return false;
         });
-
-        $("#doc_q").Watermark("user/project");
+        
+        $("#doc_owner").Watermark("user");
+        $("#doc_name").Watermark("project");         
       });
     </script>
   </head>
@@ -64,34 +65,45 @@
         <div class="announce">
           <h1>GitHub Documentation is Built on GitHub Pages</h1>
         </div>
-
-        <div id="site" style="height:430px;">                                                  
+                                 
+        <div id="site">                                                  
           <div id="content">
             <div class="search">
-              <form method="get" class="search_repos" id="doc_search_form" action="http://github.com/search">
-                <div class="label">Find documentation for public git repositories (username/project)</div>
+              <form method="post" class="search_repos" id="doc_update_form" action="http://rdoc.info/projects/">                
+                <div class="label">Enter a public GitHub project by entering the user and project name</div>
                 <div class="box">
-                  <input type="text" name="q" id="doc_q" class="text"/>
+                  <input type="text" name="owner" id="doc_owner" class="text" style="width:10em"/>
+                  <input type="text" name="name" id="doc_name" class="text"  style="width:10em"/>
                   <input type="image" alt="search" src="http://github.com/images/modules/home/search_button.png"/>
                 </div>
               </form>
             </div>
           </div>
-
-          <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-            <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">This documentation application is a custom website developed by Nick Plante and Jeff Rafter.
-            If you run into problems please let us know or report the issues on the GitHub repository at <a href="http://github.com/docs/docs.github.com">http://github.com/docs/docs.github.com</a>.
-            They have very graciously let us use their style because they are cool. In fact, you should sign up there now.</p>            
+          <br/>
+          <br/>
+          <div style="float:none;clear:both;">
+            <img src="http://github.com/images/error/octocat_happy.gif">
           </div>
-          <div class="tour" style="margin-top:80px;">
-            <a href="/plans"><img src="http://assets0.github.com/images/modules/tour/sign_up_now.png?add25bbfa82f0b09a209206d69a2366544a9699b" alt="Sign up now!"/></a>
-          </div>          
+          <br/>
+          
+        </div>        
+
+        <div class="features" style="background:none;border:none;float:none;clear:both;height:100px;">
+          <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
+            It looks like the documentation you were looking for could not be found. 
+            If you followed this link from a project, please report this to the project owner.
+            If the documentation has never been generated you should do that now.
+            If you are the project owner, why not add a post-commit hook to your
+            repository?
+          </p>            
         </div>
-
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        
       </div>  
-
     </div>                  
-
     
     <div id="footer">
       <div class="site">
