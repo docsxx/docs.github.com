@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
-    <title>mislav's will_paginate - Module: WillPaginate::Finder - GitHub Documentation</title>
+    <title>mislav's will_paginate - Module: WillPaginate::Deprecation - GitHub Documentation</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -95,18 +95,9 @@
                                         
           <div id="content">
             <div class="wikistyle">
-  <div class="section module WillPaginate_Finder">
-  <h1>Module: WillPaginate::Finder</h1>
-  <div class="section docstring">
-  <p>
-A mixin for ActiveRecord::Base. Provides <tt>per_page</tt> class method and
-hooks things up to provide paginating finders.
-</p>
-<p>
-Find out more in WillPaginate::Finder::ClassMethods
-</p>
-
-</div><div class="section constants">
+  <div class="section module WillPaginate_Deprecation">
+  <h1>Module: WillPaginate::Deprecation</h1>
+  <div class="section constants">
   
 </div>  <div class="section visibilitygroup">
       <div class="section methodsummary">
@@ -115,7 +106,7 @@ Find out more in WillPaginate::Finder::ClassMethods
   
     <tr>
       <th class="signature">
-        <span class='name'><a href="#included-class_method">included</span><span class='args'>(base)</span>
+        <span class='name'><a href="#warn-class_method">warn</span><span class='args'>(message, callstack = caller)</span>
         <span class='block'></span>
         
       </th>
@@ -132,14 +123,14 @@ Find out more in WillPaginate::Finder::ClassMethods
   
     <div class="method">
       <div class="method_header">
-  <h3>included</h3>
-</div><div id="included-class_method" class="section method">
+  <h3>warn</h3>
+</div><div id="warn-class_method" class="section method">
   <div class="details_title">
   <div class='section methodsignature'>
   <tt class='def'>
     <span class='visibility'>public</span>
     <span class='return_types'></span>
-    <span class='name'>included</span><span class='args'>(base)</span>
+    <span class='name'>warn</span><span class='args'>(message, callstack = caller)</span>
     <span class='block'></span>
   </tt>
 </div>
@@ -151,10 +142,10 @@ Find out more in WillPaginate::Finder::ClassMethods
     <div class="file">
       <div class="meta">
         <div class="info">
-          <span>File 'lib/will_paginate/finder.rb', line 10</span>
+          <span>File 'lib/will_paginate.rb', line 69</span>
         </div>
         <div class="actions">      
-          <a id="raw-url" href="http://github.com/mislav/will_paginate/blob/master/lib/will_paginate/finder.rb#L10">raw</a>      
+          <a id="raw-url" href="http://github.com/mislav/will_paginate/blob/master/lib/will_paginate.rb#L69">raw</a>      
         </div>
       </div>
             
@@ -163,23 +154,15 @@ Find out more in WillPaginate::Finder::ClassMethods
           <tbody>
             <tr>
               <td>            
-                <pre class="line_numbers">10
-11
-12
-13
-14
-15
-16
-17</pre>
+                <pre class="line_numbers">69
+70
+71
+72</pre>
               </td>
               <td width="100%">                    
-                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='included identifier id'>included</span><span class='lparen token'>(</span><span class='base identifier id'>base</span><span class='rparen token'>)</span>
-  <span class='base identifier id'>base</span><span class='dot token'>.</span><span class='extend identifier id'>extend</span> <span class='ClassMethods constant id'>ClassMethods</span>
-  <span class='class class kw'>class</span> <span class='lshft op'>&lt;&lt;</span> <span class='base identifier id'>base</span>
-    <span class='alias_method_chain identifier id'>alias_method_chain</span> <span class='symbol val'>:method_missing</span><span class='comma token'>,</span> <span class='symbol val'>:paginate</span>
-    <span class='comment val'># alias_method_chain :find_every,     :paginate</span>
-    <span class='define_method identifier id'>define_method</span><span class='lparen token'>(</span><span class='symbol val'>:per_page</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='integer val'>30</span> <span class='rbrace token'>}</span> <span class='unless unless_mod kw'>unless</span> <span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:per_page</span><span class='rparen token'>)</span>
-  <span class='end end kw'>end</span>
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='warn identifier id'>warn</span><span class='lparen token'>(</span><span class='message identifier id'>message</span><span class='comma token'>,</span> <span class='callstack identifier id'>callstack</span> <span class='assign token'>=</span> <span class='caller identifier id'>caller</span><span class='rparen token'>)</span>
+  <span class='message identifier id'>message</span> <span class='assign token'>=</span> <span class='string val'>'WillPaginate: '</span> <span class='plus op'>+</span> <span class='message identifier id'>message</span><span class='dot token'>.</span><span class='strip identifier id'>strip</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='regexp val'>/\s+/</span><span class='comma token'>,</span> <span class='string val'>' '</span><span class='rparen token'>)</span>
+  <span class='ActiveSupport constant id'>ActiveSupport</span><span class='colon2 op'>::</span><span class='Deprecation constant id'>Deprecation</span><span class='dot token'>.</span><span class='warn identifier id'>warn</span><span class='lparen token'>(</span><span class='message identifier id'>message</span><span class='comma token'>,</span> <span class='callstack identifier id'>callstack</span><span class='rparen token'>)</span>
 <span class='end end kw'>end</span>
 </pre></div>          
               </td>
