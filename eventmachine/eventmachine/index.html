@@ -18,9 +18,9 @@
   #repo_menu { border-bottom: 5px solid #ccc; margin-bottom: 1.5em; }
   #repo_sub_menu { display: none; }
 </style>
-    <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
   </head>
   <body>    
+    
     
         <div id="main">
       <div id="header" class="">
@@ -48,7 +48,7 @@
             <li class=""><a href="http://github.com/eventmachine/eventmachine/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/eventmachine/eventmachine">Wiki</a></li>
             <li class=""><a href="http://github.com/eventmachine/eventmachine/graphs">Graphs</a></li>                    
-            <li class="active"><a href="http://docs.github.com/eventmachine/eventmachine">Documentation</a></li>
+            <li class="active"><a href="/eventmachine/eventmachine">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -102,114 +102,8 @@
           </div>
                                         
           <div id="content">
-            <div class="section docstring readme wikistyle">
-  <h1>RUBY/EventMachine</h1>
-<table>
-<tr><td valign="top">Homepage:</td><td>http://rubyeventmachine.com
-
-</td></tr>
-<tr><td valign="top">Rubyforge Page:</td><td>http://rubyforge.org/projects/eventmachine
-
-</td></tr>
-<tr><td valign="top">Google Group:</td><td>http://groups.google.com/group/eventmachine
-
-</td></tr>
-<tr><td valign="top">Mailing List:</td><td>http://rubyforge.org/pipermail/eventmachine-talk
-
-</td></tr>
-<tr><td valign="top">RDoc:</td><td>http://eventmachine.rubyforge.org
-
-</td></tr>
-<tr><td valign="top">IRC:</td><td>##eventmachine on irc.freenode.net
-
-</td></tr>
-<tr><td valign="top">Copyright:</td><td>(C) 2006-07 by Francis Cianfrocca. All Rights Reserved.
-
-</td></tr>
-<tr><td valign="top">Email:</td><td>gmail address: garbagecat10
-
-</td></tr>
-</table>
-<p>
-EventMachine is copyrighted free software made available under the terms of
-either the GPL or Ruby&#8217;s License. See the file COPYING for full
-licensing information. See EventMachine and EventMachine::Connection for
-documentation and usage examples.
-</p>
-<p>
-EventMachine implements a fast, single-threaded engine for arbitrary
-network communications. It&#8217;s extremely easy to use in Ruby.
-EventMachine wraps all interactions with IP sockets, allowing programs to
-concentrate on the implementation of network protocols. It can be used to
-create both network servers and clients. To create a server or client, a
-Ruby program only needs to specify the IP address and port, and provide a
-Module that implements the communications protocol. Implementations of
-several standard network protocols are provided with the package, primarily
-to serve as examples. The real goal of EventMachine is to enable programs
-to easily interface with other programs using TCP/IP, especially if custom
-protocols are required.
-</p>
-<p>
-A Ruby program uses EventMachine by registering the addresses and ports of
-network servers and clients, and then entering an event-handling loop.
-EventMachine contains glue code in Ruby which will execute callbacks to
-user-supplied code for all significant events occurring in the clients and
-servers. These events include connection acceptance, startup, data-receipt,
-shutdown, and timer events. Arbitrary processing can be performed by user
-code during event callbacks, including sending data to one or more remote
-network peers, startup and shutdown of network connections, and
-installation of new event handlers.
-</p>
-<p>
-The EventMachine implements a very familiar model for network programming.
-It emphasizes: 1) the maximum possible isolation of user code from network
-objects like sockets; 2) maximum performance and scalability; and 3)
-extreme ease-of-use for user code. It attempts to provide a higher-level
-interface than similar projects which expose a variety of low-level
-event-handling and networking objects to Ruby programs.
-</p>
-<p>
-The design and implementation of EventMachine grows out of nearly ten years
-of experience writing high-performance, high-scaling network server
-applications. We have taken particular account of the challenges and
-lessons described as the &quot;C10K problem&quot; by Dan Kegel and others.
-</p>
-<p>
-EventMachine consists of an extension library written in C++ (which can be
-accessed from languages other than Ruby), and a Ruby module which can be
-dropped into user programs. On most platforms, EventMachine uses the
-<tt>select(2)</tt> system call, so it will run on a large range of
-Unix-like systems and on Microsoft Windows with good performance and
-scalability. On Linux 2.6 kernels, EventMachine automatically configures
-itself to use <tt>epoll(4)</tt> instead of <tt>select(2),</tt> so
-scalability on that platform can be significantly improved.
-</p>
-<p>
-Here&#8217;s a fully-functional echo server written with EventMachine:
-</p>
-<pre class="code">
- <span class='require identifier id'>require</span> <span class='string val'>'eventmachine'</span>
-
- <span class='module module kw'>module</span> <span class='EchoServer constant id'>EchoServer</span>
-   <span class='def def kw'>def</span> <span class='post_init identifier id'>post_init</span>
-     <span class='puts identifier id'>puts</span> <span class='string val'>&quot;-- someone connected to the echo server!&quot;</span>
-   <span class='end end kw'>end</span>
-
-   <span class='def def kw'>def</span> <span class='receive_data identifier id'>receive_data</span> <span class='data identifier id'>data</span>
-     <span class='send_data identifier id'>send_data</span> <span class='dstring node'>&quot;&gt;&gt;&gt;you sent: #{data}&quot;</span>
-     <span class='close_connection identifier id'>close_connection</span> <span class='if if_mod kw'>if</span> <span class='data identifier id'>data</span> <span class='match op'>=~</span> <span class='regexp val'>/quit/i</span>
-   <span class='end end kw'>end</span>
-
-   <span class='def def kw'>def</span> <span class='unbind identifier id'>unbind</span>
-     <span class='puts identifier id'>puts</span> <span class='string val'>&quot;-- someone disconnected from the echo server!&quot;</span>
-   <span class='end end kw'>end</span>
- <span class='end end kw'>end</span>
-
- <span class='EventMachine constant id'>EventMachine</span><span class='colon2 op'>::</span><span class='run identifier id'>run</span> <span class='lbrace token'>{</span>
-   <span class='EventMachine constant id'>EventMachine</span><span class='colon2 op'>::</span><span class='start_server identifier id'>start_server</span> <span class='string val'>&quot;127.0.0.1&quot;</span><span class='comma token'>,</span> <span class='integer val'>8081</span><span class='comma token'>,</span> <span class='EchoServer constant id'>EchoServer</span>
- <span class='rbrace token'>}</span>
-</pre>
-
+            <div class="section docstring readme">
+  <p><a href="readme.html">Click here to go to the title page</a>.</p>
 </div>
           </div>
         </div>
@@ -280,7 +174,7 @@ Here&#8217;s a fully-functional echo server written with EventMachine:
     </script>
     <script type="text/javascript">
     try {
-    var pageTracker = _gat._getTracker("UA-8555229-2");
+    var pageTracker = _gat._getTracker("UA-8689483-1");
     pageTracker._trackPageview();
     } catch(err) {}</script>
 
