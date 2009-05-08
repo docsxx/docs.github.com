@@ -18,9 +18,9 @@
   #repo_menu { border-bottom: 5px solid #ccc; margin-bottom: 1.5em; }
   #repo_sub_menu { display: none; }
 </style>
-    <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
   </head>
   <body>    
+    
     
         <div id="main">
       <div id="header" class="">
@@ -48,7 +48,7 @@
             <li class=""><a href="http://github.com/reagent/etsy/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/reagent/etsy">Wiki</a></li>
             <li class=""><a href="http://github.com/reagent/etsy/graphs">Graphs</a></li>                    
-            <li class="active"><a href="http://docs.github.com/reagent/etsy">Documentation</a></li>
+            <li class="active"><a href="/reagent/etsy">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -102,152 +102,8 @@
           </div>
                                         
           <div id="content">
-            <div class="section docstring readme wikistyle">
-  <h1>Etsy</h1>
-<h2>Description</h2>
-<p>
-The Etsy gem provides a friendly Ruby interface to the Etsy API
-</p>
-<h2>Installation</h2>
-<p>
-Installing the latest stable version is simple:
-</p>
-<pre class="code">
-    <span class='sudo identifier id'>sudo</span> <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='etsy identifier id'>etsy</span>
-</pre>
-<p>
-If you want to be on the bleeding edge, install from GitHub:
-</p>
-<pre class="code">
-    <span class='sudo identifier id'>sudo</span> <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='reagent identifier id'>reagent</span><span class='minus op'>-</span><span class='etsy identifier id'>etsy</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='source identifier id'>source</span><span class='assign token'>=</span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/gems.github.com
-</span></pre>
-<h2>Usage</h2>
-<p>
-The Etsy API is read-only - all you need to gain access is an API Key
-(available from http://developer.etsy.com). Once you have your API key, set
-it in your script:
-</p>
-<pre class="code">
-    <span class='require identifier id'>require</span> <span class='string val'>'rubygems'</span>
-    <span class='require identifier id'>require</span> <span class='string val'>'etsy'</span>
-    <span class='Etsy constant id'>Etsy</span><span class='dot token'>.</span><span class='api_key identifier id'>api_key</span> <span class='assign token'>=</span> <span class='string val'>'foobar'</span>
-</pre>
-<p>
-From there, you can make any calls to the API that you need.
-</p>
-<h3>Users</h3>
-<p>
-If you&#8217;re starting with a user, the easiest way is to use the
-Etsy.user method:
-</p>
-<pre class="code">
-    <span class='rshft op'>&gt;&gt;</span> <span class='user identifier id'>user</span> <span class='assign token'>=</span> <span class='Etsy constant id'>Etsy</span><span class='dot token'>.</span><span class='user identifier id'>user</span><span class='lparen token'>(</span><span class='string val'>'littletjane'</span><span class='rparen token'>)</span>
-    <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='comment val'>#&lt;Etsy::User:0x107f82c @result=[{&quot;city&quot;=&gt;&quot;Washington, DC&quot;, ... &gt;</span>
-    <span class='rshft op'>&gt;&gt;</span> <span class='user identifier id'>user</span><span class='dot token'>.</span><span class='username identifier id'>username</span>
-    <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;littletjane&quot;</span>
-    <span class='rshft op'>&gt;&gt;</span> <span class='user identifier id'>user</span><span class='dot token'>.</span><span class='id identifier id'>id</span>
-    <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>5327518</span>
-    <span class='rshft op'>&gt;&gt;</span> <span class='user identifier id'>user</span><span class='dot token'>.</span><span class='url identifier id'>url</span>
-    <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;http://www.etsy.com/shop.php?user_id=5327518&quot;</span>
-</pre>
-<p>
-For more information about what is available for a user, check out the
-documentation for Etsy::User.
-</p>
-<h2>Shops</h2>
-<p>
-Each user may optionally have a shop. If a user is a seller, he / she also
-has an associated shop object:
-</p>
-<pre class="code">
-  <span class='rshft op'>&gt;&gt;</span> <span class='user identifier id'>user</span><span class='dot token'>.</span><span class='seller? fid id'>seller?</span>
-  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span>
-  <span class='rshft op'>&gt;&gt;</span> <span class='shop identifier id'>shop</span> <span class='assign token'>=</span> <span class='user identifier id'>user</span><span class='dot token'>.</span><span class='shop identifier id'>shop</span>
-  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='comment val'>#&lt;Etsy::Shop:0x102578c @result={&quot;is_vacation&quot;=&gt;&quot;&quot;, &quot;announcement&quot;=&gt; ... &gt;</span>
-  <span class='rshft op'>&gt;&gt;</span> <span class='shop identifier id'>shop</span><span class='dot token'>.</span><span class='name identifier id'>name</span>
-  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;littletjane&quot;</span>
-  <span class='rshft op'>&gt;&gt;</span> <span class='shop identifier id'>shop</span><span class='dot token'>.</span><span class='title identifier id'>title</span>
-  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;a cute and crafty mix of handmade goods.&quot;</span>
-</pre>
-<p>
-More information about shops can be found in the documentation for
-Etsy::Shop.
-</p>
-<h2>Listings</h2>
-<p>
-Shops contain multiple listings:
-</p>
-<pre class="code">
-  <span class='rshft op'>&gt;&gt;</span> <span class='shop identifier id'>shop</span><span class='dot token'>.</span><span class='listings identifier id'>listings</span>
-  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='comment val'>#&lt;Etsy::Listing:0x119acac @result={} ...&gt;, ... ]</span>
-  <span class='rshft op'>&gt;&gt;</span> <span class='listing identifier id'>listing</span> <span class='assign token'>=</span> <span class='shop identifier id'>shop</span><span class='dot token'>.</span><span class='listings identifier id'>listings</span><span class='dot token'>.</span><span class='first identifier id'>first</span>
-  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='comment val'>#&lt;Etsy::Listing:0x19a981c @result={} ... &gt;</span>
-  <span class='rshft op'>&gt;&gt;</span> <span class='listing identifier id'>listing</span><span class='dot token'>.</span><span class='title identifier id'>title</span>
-  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;hanging with the bad boys matchbox&quot;</span>
-  <span class='rshft op'>&gt;&gt;</span> <span class='listing identifier id'>listing</span><span class='dot token'>.</span><span class='description identifier id'>description</span>
-  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;standard size matchbox, approx. 1.5 x 2 inches ...&quot;</span>
-  <span class='rshft op'>&gt;&gt;</span> <span class='listing identifier id'>listing</span><span class='dot token'>.</span><span class='url identifier id'>url</span>
-  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;http://www.etsy.com/view_listing.php?listing_id=24165902&quot;</span>
-  <span class='rshft op'>&gt;&gt;</span> <span class='listing identifier id'>listing</span><span class='dot token'>.</span><span class='view_count identifier id'>view_count</span>
-  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>19</span>
-  <span class='rshft op'>&gt;&gt;</span> <span class='listing identifier id'>listing</span><span class='dot token'>.</span><span class='created_at identifier id'>created_at</span>
-  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='Sat constant id'>Sat</span> <span class='Apr constant id'>Apr</span> <span class='integer val'>25</span> <span class='integer val'>11</span><span class='symbol val'>:31</span><span class='symbol val'>:34</span> <span class='minus op'>-</span><span class='integer val'>0400</span> <span class='integer val'>2009</span>
-</pre>
-<p>
-See the documentation for Etsy::Listing for more information.
-</p>
-<h2>Images</h2>
-<p>
-Each listing has one or more images available:
-</p>
-<pre class="code">
-  <span class='rshft op'>&gt;&gt;</span> <span class='listing identifier id'>listing</span><span class='dot token'>.</span><span class='images identifier id'>images</span>
-  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='comment val'>#&lt;Etsy::Image:0x18f85e4 @result={} ... &gt;,</span>
-      <span class='comment val'>#&lt;Etsy::Image:0x18f85d0 @result={} ... &gt;]</span>
-  <span class='rshft op'>&gt;&gt;</span> <span class='listing identifier id'>listing</span><span class='dot token'>.</span><span class='images identifier id'>images</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='dot token'>.</span><span class='small_square identifier id'>small_square</span>
-  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;http://ny-image2.etsy.com/il_25x25.67765346.jpg&quot;</span>
-  <span class='rshft op'>&gt;&gt;</span> <span class='listing identifier id'>listing</span><span class='dot token'>.</span><span class='images identifier id'>images</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='dot token'>.</span><span class='large identifier id'>large</span>
-  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;http://ny-image2.etsy.com/il_430xN.67765346.jpg&quot;</span>
-</pre>
-<p>
-Listings also have a primary image:
-</p>
-<pre class="code">
-  <span class='rshft op'>&gt;&gt;</span> <span class='listing identifier id'>listing</span><span class='dot token'>.</span><span class='image identifier id'>image</span>
-  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='comment val'>#&lt;Etsy::Image:0x18c3060 @result={} ... &gt;</span>
-  <span class='rshft op'>&gt;&gt;</span> <span class='listing identifier id'>listing</span><span class='dot token'>.</span><span class='image identifier id'>image</span><span class='dot token'>.</span><span class='large identifier id'>large</span>
-  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;http://ny-image2.etsy.com/il_430xN.67765346.jpg&quot;</span>
-</pre>
-<p>
-More information is available in the documentation for Etsy::Image.
-</p>
-<h2>License</h2>
-<p>
-Copyright &#169; 2009 Patrick Reagan (reaganpr@gmail.com)
-</p>
-<p>
-Permission is hereby granted, free of charge, to any person obtaining a
-copy of this software and associated documentation files (the
-&quot;Software&quot;), to deal in the Software without restriction,
-including without limitation the rights to use, copy, modify, merge,
-publish, distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to the
-following conditions:
-</p>
-<p>
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-</p>
-<p>
-THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-USE OR OTHER DEALINGS IN THE SOFTWARE.
-</p>
-
+            <div class="section docstring readme">
+  <p><a href="readme.html">Click here to go to the title page</a>.</p>
 </div>
           </div>
         </div>
@@ -318,7 +174,7 @@ USE OR OTHER DEALINGS IN THE SOFTWARE.
     </script>
     <script type="text/javascript">
     try {
-    var pageTracker = _gat._getTracker("UA-8555229-2");
+    var pageTracker = _gat._getTracker("UA-8689483-1");
     pageTracker._trackPageview();
     } catch(err) {}</script>
 
