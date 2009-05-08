@@ -1,0 +1,1200 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <title>spicycode's rcov - Class: Rcov::CodeCoverageAnalyzer - GitHub Documentation</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="description" content="">
+
+<link rel="search" type="application/opensearchdescription+xml" href="http://github.com/opensearch.xml" title="GitHub">
+<link rel="fluid-icon" href="http://github.com/fluidicon.png" title="GitHub">
+<link href="http://assets0.github.com/stylesheets/bundle.css" media="screen" rel="stylesheet" type="text/css">
+<link href="http://github.com/feeds/spicycode/commits/rcov/master" rel="alternate" title="Recent Commits to rcov:master" type="application/atom+xml">
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script type="text/javascript" src="http://assets3.github.com/javascripts/bundle.js"></script>              
+<script src="../app.js" type="text/javascript" charset="utf-8"></script>
+
+<style type="text/css">
+  #repo_menu { border-bottom: 5px solid #ccc; margin-bottom: 1.5em; }
+  #repo_sub_menu { display: none; }
+</style>
+    <link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+  </head>
+  <body>    
+    
+    
+    
+        <div id="main">
+      <div id="header" class="">
+        <div class="site">
+          <div class="logo">
+            <a href="http://github.com/"><img src="http://github.com/images/modules/header/logov3.png" alt="github"></a>
+          </div>          
+          <div class="topsearch">
+            <form action="http://github.com/search" id="top_search_form" method="get">
+              <input class="search" name="q" type="search"> <input value="Search" type="submit">
+            </form>
+            <div class="links">
+              <a href="http://github.com/repositories">Browse</a> | <a href="http://github.com/guides">Guides</a> | <a href="http://github.com/search">Advanced</a>
+            </div>
+          </div>
+        </div>
+      </div>    
+                                                  
+      <div id="repo_menu">
+        <div class="site">
+          <ul>          
+            <li class=""><a href="http://github.com/spicycode/rcov/tree/">Source</a></li>
+            <li class=""><a href="http://github.com/spicycode/rcov/commits/">Commits</a></li>            
+            <li class=""><a href="http://github.com/spicycode/rcov/network">Network</a></li>            
+            <li class=""><a href="http://github.com/spicycode/rcov/issues">Issues</a></li>
+            <li class=""><a href="http://wiki.github.com/spicycode/rcov">Wiki</a></li>
+            <li class=""><a href="http://github.com/spicycode/rcov/graphs">Graphs</a></li>                    
+            <li class="active"><a href="/spicycode/rcov">Documentation</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div id="repo_sub_menu">
+        <div class="site">
+          <div class="joiner"></div>      
+        </div>
+      </div>
+
+      <div class="site">  
+        <div id="repos">
+          <div class="repo public">
+            <div class="title">
+              <div class="path">
+                <a href="http://github.com/spicycode">spicycode</a> / <b><a href="http://github.com/spicycode/rcov/tree">rcov</a></b>        
+                <a id="namespaces_button" rel="spicycode/rcov" href="#">
+                  <img class="button" src="http://docs.github.com/namespaces_button.png" alt="Modules and Classes"/>
+                </a>
+                <a id="methods_button" rel="spicycode/rcov" href="#">
+                  <img class="button" src="http://docs.github.com/methods_button.png" alt="Methods"/>
+                </a>
+
+                <script type="text/javascript">          
+                $('#namespaces_button').click(function(){
+                  var url="/"+$(this).attr('rel')+"/namespaces/";
+                  $.gitbox(url);
+                  return false;
+                });
+
+                $('#methods_button').click(function(){
+                  var url="/"+$(this).attr('rel')+"/methods/";
+                  $.gitbox(url);
+                  return false;
+                });
+                </script>
+                
+              </div>
+            </div>
+
+            <div class="meta">
+              <table>
+                <tbody>
+                  <tr>
+                    <td class="label">Description:</td>
+                    <td><span id="repository_description" rel="http://github.com/spicycode/rcov/edit/update" class="">No description available</span></td>
+                  </tr>              
+                </tbody>
+              </table>
+            </div>
+          </div>
+                                        
+          <div id="content">
+            <div class="wikistyle">
+  <div class="section class Rcov_CodeCoverageAnalyzer">
+  <h1>Class: Rcov::CodeCoverageAnalyzer</h1>
+  <div class="section inheritance">
+  <ul>
+  <li><a href="DifferentialAnalyzer.html" title="Rcov::DifferentialAnalyzer">Rcov::DifferentialAnalyzer</a></li><ul><li>Rcov::CodeCoverageAnalyzer</li>
+  </ul></ul>
+</div><div class="section docstring">
+  <p>
+A CodeCoverageAnalyzer is responsible for tracing code execution and
+returning code coverage and execution count information.
+</p>
+<p>
+Note that you must <tt>require &#8216;rcov&#8217;</tt> before the code you
+want to analyze is parsed (i.e. before it gets loaded or required). You can
+do that by either invoking ruby with the <tt>-rrcov</tt> command-line
+option or just:
+</p>
+<pre class="code">
+ <span class='require identifier id'>require</span> <span class='string val'>'rcov'</span>
+ <span class='require identifier id'>require</span> <span class='string val'>'mycode'</span>
+ <span class='comment val'># ....</span>
+</pre>
+<h2>Example</h2>
+<pre class="code">
+ <span class='analyzer identifier id'>analyzer</span> <span class='assign token'>=</span> <span class='Rcov constant id'>Rcov</span><span class='colon2 op'>::</span><span class='CodeCoverageAnalyzer constant id'>CodeCoverageAnalyzer</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+ <span class='analyzer identifier id'>analyzer</span><span class='dot token'>.</span><span class='run_hooked identifier id'>run_hooked</span> <span class='do do kw'>do</span>
+   <span class='do_foo identifier id'>do_foo</span>
+   <span class='comment val'># all the code executed as a result of this method call is traced</span>
+ <span class='end end kw'>end</span>
+ <span class='comment val'># ....</span>
+
+ <span class='analyzer identifier id'>analyzer</span><span class='dot token'>.</span><span class='run_hooked identifier id'>run_hooked</span> <span class='do do kw'>do</span>
+   <span class='do_bar identifier id'>do_bar</span>
+   <span class='comment val'># the code coverage information generated in this run is aggregated</span>
+   <span class='comment val'># to the previously recorded one</span>
+ <span class='end end kw'>end</span>
+
+ <span class='analyzer identifier id'>analyzer</span><span class='dot token'>.</span><span class='analyzed_files identifier id'>analyzed_files</span>   <span class='comment val'># =&gt; [&quot;foo.rb&quot;, &quot;bar.rb&quot;, ... ]</span>
+ <span class='lines identifier id'>lines</span><span class='comma token'>,</span> <span class='marked_info identifier id'>marked_info</span><span class='comma token'>,</span> <span class='count_info identifier id'>count_info</span> <span class='assign token'>=</span> <span class='analyzer identifier id'>analyzer</span><span class='dot token'>.</span><span class='data identifier id'>data</span><span class='lparen token'>(</span><span class='string val'>&quot;foo.rb&quot;</span><span class='rparen token'>)</span>
+</pre>
+<p>
+In this example, two pieces of code are monitored, and the data generated
+in both runs are aggregated. <tt>lines</tt> is an array of strings
+representing the source code of <tt>foo.rb</tt>. <tt>marked_info</tt> is an
+array holding false, true values indicating whether the corresponding lines
+of code were reported as executed by Ruby. <tt>count_info</tt> is an array
+of integers representing how many times each line of code has been executed
+(more precisely, how many events where reported by Ruby &#8212; a single
+line might correspond to several events, e.g. many method calls).
+</p>
+<p>
+You can have several CodeCoverageAnalyzer objects at a time, and it is
+possible to nest the #run_hooked / #install_hook/#remove_hook blocks: each
+analyzer will manage its data separately. Note however that no special
+provision is taken to ignore code executed &quot;inside&quot; the
+CodeCoverageAnalyzer class. At any rate this will not pose a problem since
+it&#8217;s easy to ignore it manually: just don&#8217;t do
+</p>
+<pre class="code">
+  <span class='lines identifier id'>lines</span><span class='comma token'>,</span> <span class='coverage identifier id'>coverage</span><span class='comma token'>,</span> <span class='counts identifier id'>counts</span> <span class='assign token'>=</span> <span class='analyzer identifier id'>analyzer</span><span class='dot token'>.</span><span class='data identifier id'>data</span><span class='lparen token'>(</span><span class='string val'>&quot;/path/to/lib/rcov.rb&quot;</span><span class='rparen token'>)</span>
+</pre>
+<p>
+if you&#8217;re not interested in that information.
+</p>
+
+</div><div class="section constants">
+  
+</div><div class="section constructor">
+<h2>Constructor</h2>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/rcov.rb', line 554</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/spicycode/rcov/blob/master/lib/rcov.rb#L554">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">554
+555
+556
+557
+558</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span>
+  <span class='@script_lines__ ivar id'>@script_lines__</span> <span class='assign token'>=</span> <span class='SCRIPT_LINES__ constant id'>SCRIPT_LINES__</span>
+  <span class='super super kw'>super</span><span class='lparen token'>(</span><span class='symbol val'>:install_coverage_hook</span><span class='comma token'>,</span> <span class='symbol val'>:remove_coverage_hook</span><span class='comma token'>,</span>
+        <span class='symbol val'>:reset_coverage</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+</div>  <div class="section visibilitygroup">
+      <div class="section methodsummary">
+    <h2>Public Class Method Summary</h2>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href="#hook_level-class_method">hook_level</span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+defined this way instead of attr_accessor so that it&#8217;s covered.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+  <div class="section methodsummary">
+    <h2>Public Instance Method Summary</h2>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href="#analyzed_files-instance_method">#analyzed_files</span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Return an array with the names of the files whose code was executed inside
+the block given to #run_hooked or between #install_hook and #remove_hook.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href="#data-instance_method">#data</span><span class='args'>(filename)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Return the available data about the requested file, or nil if none of its
+code was executed or it cannot be found.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href="#data_matching-instance_method">#data_matching</span><span class='args'>(filename_re)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Data for the first file matching the given regexp.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href="#dump_coverage_info-instance_method">#dump_coverage_info</span><span class='args'>(formatters)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href="#install_hook-instance_method">#install_hook</span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Start monitoring execution to gather code coverage and execution count
+information.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href="#marshal_dump-instance_method">#marshal_dump</span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href="#marshal_load-instance_method">#marshal_load</span><span class='args'>(ivs)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href="#remove_hook-instance_method">#remove_hook</span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Stop collecting code coverage and execution count information.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href="#reset-instance_method">#reset</span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Remove the data collected so far.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href="#run_hooked-instance_method">#run_hooked</span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Execute the code in the given block, monitoring it in order to gather
+information about which code was executed.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails">
+  <h2>Public Class Method Details</h2>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>hook_level</h3>
+</div><div id="hook_level-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>hook_level</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+defined this way instead of attr_accessor so that it&#8217;s covered
+</p>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/rcov.rb', line 547</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/spicycode/rcov/blob/master/lib/rcov.rb#L547">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">547
+548
+549</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='hook_level identifier id'>hook_level</span><span class='assign token'>=</span><span class='lparen token'>(</span><span class='x identifier id'>x</span><span class='rparen token'>)</span>  <span class='comment val'># :nodoc: </span>
+  <span class='@hook_level ivar id'>@hook_level</span> <span class='assign token'>=</span> <span class='x identifier id'>x</span> 
+<span class='end end kw'>end</span> 
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+    </div>
+  
+</div><div class="section methoddetails">
+  <h2>Public Instance Method Details</h2>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>analyzed_files</h3>
+</div><div id="analyzed_files-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>analyzed_files</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Return an array with the names of the files whose code was executed inside
+the block given to #run_hooked or between #install_hook and #remove_hook.
+</p>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/rcov.rb', line 562</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/spicycode/rcov/blob/master/lib/rcov.rb#L562">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">562
+563
+564
+565
+566
+567</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='analyzed_files identifier id'>analyzed_files</span>
+  <span class='update_script_lines__ identifier id'>update_script_lines__</span>
+  <span class='raw_data_relative identifier id'>raw_data_relative</span><span class='dot token'>.</span><span class='select identifier id'>select</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='file identifier id'>file</span><span class='comma token'>,</span> <span class='lines identifier id'>lines</span><span class='bitor op'>|</span>
+    <span class='@script_lines__ ivar id'>@script_lines__</span><span class='dot token'>.</span><span class='has_key? fid id'>has_key?</span><span class='lparen token'>(</span><span class='file identifier id'>file</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span><span class='dot token'>.</span><span class='map identifier id'>map</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='fname identifier id'>fname</span><span class='comma token'>,</span><span class='bitor op'>|</span> <span class='fname identifier id'>fname</span><span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>data</h3>
+</div><div id="data-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>data</span><span class='args'>(filename)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Return the available data about the requested file, or nil if none of its
+code was executed or it cannot be found. The return value is an array with
+three elements:
+</p>
+<pre class="code">
+ <span class='lines identifier id'>lines</span><span class='comma token'>,</span> <span class='marked_info identifier id'>marked_info</span><span class='comma token'>,</span> <span class='count_info identifier id'>count_info</span> <span class='assign token'>=</span> <span class='analyzer identifier id'>analyzer</span><span class='dot token'>.</span><span class='data identifier id'>data</span><span class='lparen token'>(</span><span class='string val'>&quot;foo.rb&quot;</span><span class='rparen token'>)</span>
+</pre>
+<p>
+<tt>lines</tt> is an array of strings representing the source code of
+<tt>foo.rb</tt>. <tt>marked_info</tt> is an array holding false, true
+values indicating whether the corresponding lines of code were reported as
+executed by Ruby. <tt>count_info</tt> is an array of integers representing
+how many times each line of code has been executed (more precisely, how
+many events where reported by Ruby &#8212; a single line might correspond
+to several events, e.g. many method calls).
+</p>
+<p>
+The returned data corresponds to the aggregation of all the statistics
+collected in each #run_hooked or #install_hook/#remove_hook runs. You can
+reset the data at any time with #reset to start from scratch.
+</p>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/rcov.rb', line 584</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/spicycode/rcov/blob/master/lib/rcov.rb#L584">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">584
+585
+586
+587
+588
+589
+590
+591
+592</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='data identifier id'>data</span><span class='lparen token'>(</span><span class='filename identifier id'>filename</span><span class='rparen token'>)</span>
+  <span class='raw_data identifier id'>raw_data</span> <span class='assign token'>=</span> <span class='raw_data_relative identifier id'>raw_data_relative</span>
+  <span class='update_script_lines__ identifier id'>update_script_lines__</span>
+  <span class='unless unless kw'>unless</span> <span class='@script_lines__ ivar id'>@script_lines__</span><span class='dot token'>.</span><span class='has_key? fid id'>has_key?</span><span class='lparen token'>(</span><span class='filename identifier id'>filename</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> 
+         <span class='raw_data identifier id'>raw_data</span><span class='dot token'>.</span><span class='has_key? fid id'>has_key?</span><span class='lparen token'>(</span><span class='filename identifier id'>filename</span><span class='rparen token'>)</span>
+    <span class='return return kw'>return</span> <span class='nil nil kw'>nil</span> 
+  <span class='end end kw'>end</span>
+  <span class='refine_coverage_info identifier id'>refine_coverage_info</span><span class='lparen token'>(</span><span class='@script_lines__ ivar id'>@script_lines__</span><span class='lbrack token'>[</span><span class='filename identifier id'>filename</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='raw_data identifier id'>raw_data</span><span class='lbrack token'>[</span><span class='filename identifier id'>filename</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>data_matching</h3>
+</div><div id="data_matching-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>data_matching</span><span class='args'>(filename_re)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Data for the first file matching the given regexp. See #data.
+</p>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/rcov.rb', line 596</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/spicycode/rcov/blob/master/lib/rcov.rb#L596">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">596
+597
+598
+599
+600
+601
+602
+603
+604</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='data_matching identifier id'>data_matching</span><span class='lparen token'>(</span><span class='filename_re identifier id'>filename_re</span><span class='rparen token'>)</span>
+  <span class='raw_data identifier id'>raw_data</span> <span class='assign token'>=</span> <span class='raw_data_relative identifier id'>raw_data_relative</span>
+  <span class='update_script_lines__ identifier id'>update_script_lines__</span>
+
+  <span class='match identifier id'>match</span> <span class='assign token'>=</span> <span class='raw_data identifier id'>raw_data</span><span class='dot token'>.</span><span class='keys identifier id'>keys</span><span class='dot token'>.</span><span class='sort identifier id'>sort</span><span class='dot token'>.</span><span class='grep identifier id'>grep</span><span class='lparen token'>(</span><span class='filename_re identifier id'>filename_re</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='first identifier id'>first</span>
+  <span class='return return kw'>return</span> <span class='nil nil kw'>nil</span> <span class='unless unless_mod kw'>unless</span> <span class='match identifier id'>match</span>
+
+  <span class='refine_coverage_info identifier id'>refine_coverage_info</span><span class='lparen token'>(</span><span class='@script_lines__ ivar id'>@script_lines__</span><span class='lbrack token'>[</span><span class='match identifier id'>match</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='raw_data identifier id'>raw_data</span><span class='lbrack token'>[</span><span class='match identifier id'>match</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>dump_coverage_info</h3>
+</div><div id="dump_coverage_info-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>dump_coverage_info</span><span class='args'>(formatters)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/rcov.rb', line 628</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/spicycode/rcov/blob/master/lib/rcov.rb#L628">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">628
+629
+630
+631
+632
+633
+634
+635
+636
+637
+638
+639
+640
+641
+642</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='dump_coverage_info identifier id'>dump_coverage_info</span><span class='lparen token'>(</span><span class='formatters identifier id'>formatters</span><span class='rparen token'>)</span> <span class='comment val'># :nodoc:</span>
+  <span class='update_script_lines__ identifier id'>update_script_lines__</span>
+  <span class='raw_data_relative identifier id'>raw_data_relative</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='file identifier id'>file</span><span class='comma token'>,</span> <span class='lines identifier id'>lines</span><span class='bitor op'>|</span>
+    <span class='next next kw'>next</span> <span class='if if_mod kw'>if</span> <span class='@script_lines__ ivar id'>@script_lines__</span><span class='dot token'>.</span><span class='has_key? fid id'>has_key?</span><span class='lparen token'>(</span><span class='file identifier id'>file</span><span class='rparen token'>)</span> <span class='eq op'>==</span> <span class='false false kw'>false</span>
+    <span class='lines identifier id'>lines</span> <span class='assign token'>=</span> <span class='@script_lines__ ivar id'>@script_lines__</span><span class='lbrack token'>[</span><span class='file identifier id'>file</span><span class='rbrack token'>]</span>
+    <span class='raw_coverage_array identifier id'>raw_coverage_array</span> <span class='assign token'>=</span> <span class='raw_data_relative identifier id'>raw_data_relative</span><span class='lbrack token'>[</span><span class='file identifier id'>file</span><span class='rbrack token'>]</span>
+
+    <span class='line_info identifier id'>line_info</span><span class='comma token'>,</span> <span class='marked_info identifier id'>marked_info</span><span class='comma token'>,</span> 
+      <span class='count_info identifier id'>count_info</span> <span class='assign token'>=</span> <span class='refine_coverage_info identifier id'>refine_coverage_info</span><span class='lparen token'>(</span><span class='lines identifier id'>lines</span><span class='comma token'>,</span> <span class='raw_coverage_array identifier id'>raw_coverage_array</span><span class='rparen token'>)</span>
+    <span class='formatters identifier id'>formatters</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='formatter identifier id'>formatter</span><span class='bitor op'>|</span>
+      <span class='formatter identifier id'>formatter</span><span class='dot token'>.</span><span class='add_file identifier id'>add_file</span><span class='lparen token'>(</span><span class='file identifier id'>file</span><span class='comma token'>,</span> <span class='line_info identifier id'>line_info</span><span class='comma token'>,</span> <span class='marked_info identifier id'>marked_info</span><span class='comma token'>,</span> <span class='count_info identifier id'>count_info</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+  <span class='formatters identifier id'>formatters</span><span class='dot token'>.</span><span class='each identifier id'>each</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='formatter identifier id'>formatter</span><span class='bitor op'>|</span> <span class='formatter identifier id'>formatter</span><span class='dot token'>.</span><span class='execute identifier id'>execute</span><span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>install_hook</h3>
+</div><div id="install_hook-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>install_hook</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Start monitoring execution to gather code coverage and execution count
+information. Such data will be collected until #remove_hook is called.
+</p>
+<p>
+Use #run_hooked instead if possible.
+</p>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/rcov.rb', line 614</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/spicycode/rcov/blob/master/lib/rcov.rb#L614">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">614</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='install_hook identifier id'>install_hook</span><span class='semicolon token'>;</span> <span class='super super kw'>super</span> <span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>marshal_dump</h3>
+</div><div id="marshal_dump-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>marshal_dump</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/rcov.rb', line 750</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/spicycode/rcov/blob/master/lib/rcov.rb#L750">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">750
+751
+752
+753
+754
+755
+756
+757</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='marshal_dump identifier id'>marshal_dump</span> 
+  <span class='comment val'># @script_lines__ is updated just before serialization so as to avoid</span>
+  <span class='comment val'># missing files in SCRIPT_LINES__</span>
+  <span class='ivs identifier id'>ivs</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='update_script_lines__ identifier id'>update_script_lines__</span>
+  <span class='instance_variables identifier id'>instance_variables</span><span class='dot token'>.</span><span class='each identifier id'>each</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='iv identifier id'>iv</span><span class='bitor op'>|</span> <span class='ivs identifier id'>ivs</span><span class='lbrack token'>[</span><span class='iv identifier id'>iv</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='instance_variable_get identifier id'>instance_variable_get</span><span class='lparen token'>(</span><span class='iv identifier id'>iv</span><span class='rparen token'>)</span><span class='rbrace token'>}</span>
+  <span class='ivs identifier id'>ivs</span>
+<span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>marshal_load</h3>
+</div><div id="marshal_load-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>marshal_load</span><span class='args'>(ivs)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/rcov.rb', line 759</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/spicycode/rcov/blob/master/lib/rcov.rb#L759">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">759
+760
+761</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='marshal_load identifier id'>marshal_load</span><span class='lparen token'>(</span><span class='ivs identifier id'>ivs</span><span class='rparen token'>)</span> <span class='comment val'># :nodoc:</span>
+  <span class='ivs identifier id'>ivs</span><span class='dot token'>.</span><span class='each_pair identifier id'>each_pair</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='iv identifier id'>iv</span><span class='comma token'>,</span> <span class='val identifier id'>val</span><span class='bitor op'>|</span> <span class='instance_variable_set identifier id'>instance_variable_set</span><span class='lparen token'>(</span><span class='iv identifier id'>iv</span><span class='comma token'>,</span> <span class='val identifier id'>val</span><span class='rparen token'>)</span><span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>remove_hook</h3>
+</div><div id="remove_hook-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>remove_hook</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Stop collecting code coverage and execution count information. #remove_hook
+will also stop collecting info if it is run inside a #run_hooked block.
+</p>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/rcov.rb', line 619</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/spicycode/rcov/blob/master/lib/rcov.rb#L619">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">619</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='remove_hook identifier id'>remove_hook</span><span class='semicolon token'>;</span> <span class='super super kw'>super</span> <span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>reset</h3>
+</div><div id="reset-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>reset</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Remove the data collected so far. The coverage and execution count
+&quot;history&quot; will be erased, and further collection will start from
+scratch: no code is considered executed, and therefore all execution counts
+are 0. Right after #reset, #analyzed_files will return an empty array, and
+#data(filename) will return nil.
+</p>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/rcov.rb', line 626</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/spicycode/rcov/blob/master/lib/rcov.rb#L626">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">626</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='reset identifier id'>reset</span><span class='semicolon token'>;</span> <span class='super super kw'>super</span> <span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>run_hooked</h3>
+</div><div id="run_hooked-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>run_hooked</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Execute the code in the given block, monitoring it in order to gather
+information about which code was executed.
+</p>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/rcov.rb', line 608</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/spicycode/rcov/blob/master/lib/rcov.rb#L608">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">608</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='run_hooked identifier id'>run_hooked</span><span class='semicolon token'>;</span> <span class='super super kw'>super</span> <span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+</div>
+          </div>
+        </div>
+      </div>  
+                  
+      <div id="footer">
+        <div class="site">
+          <div class="info">
+            <div class="links">
+              <a href="http://github.com/blog/148-github-shirts-now-available">Shirts</a> |
+              <a href="http://github.com/blog">Blog</a> |
+              <a href="http://support.github.com/">Support</a> |
+              <a href="http://github.com/training">Training</a> |
+              <a href="http://github.com/contact">Contact</a> |
+              <a href="http://groups.google.com/group/github/">Google Group</a> |
+              <a href="http://develop.github.com/">API</a> |
+              <a href="http://twitter.com/github">Status</a>
+            </div>
+            <div class="company">
+              <span id="_rrt" title="0.64509s from xc88-s00039">GitHub</span>
+              is <a href="http://logicalawesome.com/">Logical Awesome</a> ©2009 | <a href="http://github.com/site/terms">Terms of Service</a> | <a href="http://github.com/site/privacy">Privacy Policy</a>
+            </div>
+          </div>
+          <div class="sponsor">
+            <a href="http://engineyard.com/"><img src="http://github.com/images/modules/footer/engine_yard_logo.png" alt="Engine Yard"></a>
+            <div>
+              Hosting provided by our<br> partners at Engine Yard
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div id="coming_soon" style="display: none;">
+        This feature is coming soon.  Sit tight!
+      </div>
+
+      <div id="facebox" style="display: none;">       
+        <div class="popup">         
+          <table>           
+            <tbody>             
+              <tr>               
+                <td class="tl"></td>
+                <td class="b"></td>
+                <td class="tr"></td>             
+              </tr>             
+            <tr>               
+              <td class="b"></td>               
+              <td class="body">                 
+                <div class="content"></div>                 
+                <div class="footer">                   
+                  <a href="#" class="close"><img src="http://github.com/facebox/closelabel.gif" title="close" class="close_image"></a>                 
+                </div>               
+              </td>               
+              <td class="b"></td>             
+            </tr>             
+            <tr>               
+              <td class="bl"></td>
+              <td class="b"></td>
+              <td class="br"></td>             
+            </tr>           
+          </tbody>         
+        </table>       
+      </div>     
+    </div>
+    <script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+    try {
+    var pageTracker = _gat._getTracker("UA-8689483-1");
+    pageTracker._trackPageview();
+    } catch(err) {}</script>
+
+  </body>
+</html>
