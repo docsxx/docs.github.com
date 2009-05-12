@@ -22,21 +22,21 @@
     GitHubRepo.init("technicalpickles", "daywalker", function(){ 
       GitHubRepo.links = " <a id='namespaces_button' rel='technicalpickles/daywalker/blob/9c1c148626b0c36c72f25d7895a91aedd795eef7' href='#'><img class='button' src='http://docs.github.com/namespaces_button.png' alt='Modules and Classes'/></a> ";
       GitHubRepo.links += " <a id='methods_button' rel='technicalpickles/daywalker/blob/9c1c148626b0c36c72f25d7895a91aedd795eef7' href='#'><img class='button' src='http://docs.github.com/methods_button.png' alt='Methods'/></a> ";
-      $("#repo").html(GitHubRepo.content()) 
+      $("#repo").html(GitHubRepo.content());
+      $('#namespaces_button').click(function(){
+        var url="/"+$(this).attr('rel')+"/namespaces/";
+        $.gitbox(url);
+        return false;
+      });    
+      $('#methods_button').click(function(){
+        var url="/"+$(this).attr('rel')+"/methods/";
+        $.gitbox(url);
+        return false;
+      });        
     });
     GitHubCommit.init("technicalpickles", "daywalker", "9c1c148626b0c36c72f25d7895a91aedd795eef7", function(){ 
-      $("#commit").html(GitHubCommit.content()) 
+      $("#commit").html(GitHubCommit.content());
     });
-    $('#namespaces_button').click(function(){
-      var url="/"+$(this).attr('rel')+"/namespaces/";
-      $.gitbox(url);
-      return false;
-    });    
-    $('#methods_button').click(function(){
-      var url="/"+$(this).attr('rel')+"/methods/";
-      $.gitbox(url);
-      return false;
-    });        
   });
 </script>
 
@@ -101,7 +101,8 @@
             </div>            
           </div>
           <div id="commit">
-          </div>                                        
+          </div> 
+          <br/>                                       
           <div id="content">
             <div class="wikistyle">
   <div class="section class Daywalker_Base">
