@@ -1,0 +1,831 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <title>datamapper's dm-core - Class: DataMapper::Adapters::AbstractAdapter - GitHub Documentation</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="description" content="">
+
+<link rel="search" type="application/opensearchdescription+xml" href="http://github.com/opensearch.xml" title="GitHub">
+<link rel="fluid-icon" href="http://github.com/fluidicon.png" title="GitHub">
+<link href="http://assets0.github.com/stylesheets/bundle.css" media="screen" rel="stylesheet" type="text/css">
+<link href="http://github.com/feeds/datamapper/commits/dm-core/master" rel="alternate" title="Recent Commits to dm-core:master" type="application/atom+xml">
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script type="text/javascript" src="http://assets3.github.com/javascripts/bundle.js"></script>              
+<script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+
+<script type="text/javascript" src="http://docs.github.com/javascripts/md5.js"></script>
+<script type="text/javascript" src="http://docs.github.com/javascripts/repos.js"></script>
+<script type="text/javascript" src="http://docs.github.com/javascripts/commits.js"></script>
+<script type="text/javascript">
+  $(document).ready(function(){
+    GitHubRepo.init("datamapper", "dm-core", function(){ 
+      GitHubRepo.links = " <a id='namespaces_button' rel='datamapper/dm-core/blob/65802c9db1e61d0ae584633fc274b5cae959733a' href='#'><img class='button' src='http://docs.github.com/namespaces_button.png' alt='Modules and Classes'/></a> ";
+      GitHubRepo.links += " <a id='methods_button' rel='datamapper/dm-core/blob/65802c9db1e61d0ae584633fc274b5cae959733a' href='#'><img class='button' src='http://docs.github.com/methods_button.png' alt='Methods'/></a> ";
+      $("#repo").html(GitHubRepo.content());
+      $('#namespaces_button').click(function(){
+        var url="/"+$(this).attr('rel')+"/namespaces/";
+        $.gitbox(url);
+        return false;
+      });    
+      $('#methods_button').click(function(){
+        var url="/"+$(this).attr('rel')+"/methods/";
+        $.gitbox(url);
+        return false;
+      });        
+    });
+    GitHubCommit.init("datamapper", "dm-core", "65802c9db1e61d0ae584633fc274b5cae959733a", function(){ 
+      $("#commit").html(GitHubCommit.content());
+    });
+  });
+</script>
+
+    <link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+  </head>
+  <body>    
+    
+    
+    
+        <div id="main" style="padding-bottom:8em;">
+      <div id="header">
+        <div class="site">
+          <div class="logo">
+            <a href="http://github.com/"><img src="http://github.com/images/modules/header/logov3.png" alt="github"></a>
+          </div>          
+          <div class="topsearch">
+            <form action="http://github.com/search" id="top_search_form" method="get">
+              <input class="search" name="q" type="search"> <input value="Search" type="submit">
+            </form>
+            <div class="links">
+              <a href="http://github.com/repositories">Browse</a> | <a href="http://github.com/guides">Guides</a> | <a href="http://github.com/search">Advanced</a>
+            </div>
+          </div>
+          <div class="actions">
+            <a href="http://github.com">Home</a>
+            <a href="http://github.com/plans"><b><u>Pricing and Signup</u></b></a>
+            <a href="http://docs.github.com/">Documentation</a>
+            <a href="https://github.com/login">Login</a>
+          </div>                  
+        </div>
+      </div>    
+                                                  
+      <div id="repo_menu">
+        <div class="site">
+          <ul>          
+            <li class=""><a href="http://github.com/datamapper/dm-core/tree/">Source</a></li>
+            <li class=""><a href="http://github.com/datamapper/dm-core/commits/">Commits</a></li>            
+            <li class=""><a href="http://github.com/datamapper/dm-core/network">Network</a></li>            
+            <li class=""><a href="http://github.com/datamapper/dm-core/issues">Issues</a></li>
+            <li class=""><a href="http://wiki.github.com/datamapper/dm-core">Wiki</a></li>
+            <li class=""><a href="http://github.com/datamapper/dm-core/graphs">Graphs</a></li>                    
+            <li class="active"><a href="/datamapper/dm-core">Documentation</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div id="repo_sub_menu">
+        <div class="site">
+          <div class="joiner"></div>      
+        </div>
+      </div>
+
+      <div class="site">  
+        <div id="repos">
+          <div id="repo" class="repo public">
+            <div class="title">
+              <div class="path">
+                <a href="http://github.com/datamapper">datamapper</a> / <b><a href="http://github.com/datamapper/dm-core/tree">dm-core</a></b>        
+                <a id="namespaces_button" rel="datamapper/dm-core/blob/65802c9db1e61d0ae584633fc274b5cae959733a" href="#"><img class="button" src="http://docs.github.com/namespaces_button.png" alt="Modules and Classes"/></a>
+                <a id="methods_button" rel="datamapper/dm-core/blob/65802c9db1e61d0ae584633fc274b5cae959733a" href="#"><img class="button" src="http://docs.github.com/methods_button.png" alt="Methods"/></a>
+              </div>
+            </div>            
+          </div>
+          <div id="commit">
+          </div> 
+          <br/>                                       
+          <div id="content">
+            <div class="wikistyle">
+  <div class="section class DataMapper_Adapters_AbstractAdapter">
+  <h1>Class: DataMapper::Adapters::AbstractAdapter</h1>
+  <div class="section mixins">
+  <h2>Included Modules</h2>
+  <p><a title="DataMapper::Assertions" href="AbstractAdapter/Assertions.html">DataMapper::Assertions</a>, <a title="DataMapper::Adapters::AbstractAdapter::Migration" href="AbstractAdapter/Migration.html">DataMapper::Adapters::AbstractAdapter::Migration</a>, <a title="DataMapper::Adapters::AbstractAdapter::Transaction" href="AbstractAdapter/Transaction.html">DataMapper::Adapters::AbstractAdapter::Transaction</a></p>
+</div><div class="section attributes">
+  
+    <div class="">
+      <h2>Instance Attributes</h2>
+      <table>
+      
+        <tr>
+          <th class="name">field_naming_convention</td>
+          <td class="readwrite">
+            [<span id='field_naming_convention-instance_method'>R</span><span id='field_naming_convention%3D-instance_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>field_naming_convention</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">name</td>
+          <td class="readwrite">
+            [<span id='name-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>name</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">resource_naming_convention</td>
+          <td class="readwrite">
+            [<span id='resource_naming_convention-instance_method'>R</span><span id='resource_naming_convention%3D-instance_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>resource_naming_convention</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">uri</td>
+          <td class="readwrite">
+            [<span id='uri-instance_method'>R</span>W] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Returns the value of attribute <tt>uri</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+      </table>
+    </div>
+  
+</div><div class="section constants">
+  
+</div><div class="section constructor">
+<h2>Constructor</h2>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>private</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(name, uri_or_options)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Instantiate an Adapter by passing it a DataMapper::Repository connection
+string for configuration.
+</p>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/dm-core/adapters/abstract_adapter.rb', line 39</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/datamapper/dm-core/blob/master/lib/dm-core/adapters/abstract_adapter.rb#L39">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='uri_or_options identifier id'>uri_or_options</span><span class='rparen token'>)</span>
+  <span class='assert_kind_of identifier id'>assert_kind_of</span> <span class='string val'>'name'</span><span class='comma token'>,</span>           <span class='name identifier id'>name</span><span class='comma token'>,</span>           <span class='Symbol constant id'>Symbol</span>
+  <span class='assert_kind_of identifier id'>assert_kind_of</span> <span class='string val'>'uri_or_options'</span><span class='comma token'>,</span> <span class='uri_or_options identifier id'>uri_or_options</span><span class='comma token'>,</span> <span class='Addressable constant id'>Addressable</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='comma token'>,</span> <span class='DataObjects constant id'>DataObjects</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='comma token'>,</span> <span class='Hash constant id'>Hash</span><span class='comma token'>,</span> <span class='String constant id'>String</span>
+
+  <span class='@name ivar id'>@name</span> <span class='assign token'>=</span> <span class='name identifier id'>name</span>
+  <span class='@uri ivar id'>@uri</span>  <span class='assign token'>=</span> <span class='normalize_uri identifier id'>normalize_uri</span><span class='lparen token'>(</span><span class='uri_or_options identifier id'>uri_or_options</span><span class='rparen token'>)</span>
+
+  <span class='@resource_naming_convention ivar id'>@resource_naming_convention</span> <span class='assign token'>=</span> <span class='NamingConventions constant id'>NamingConventions</span><span class='colon2 op'>::</span><span class='Resource constant id'>Resource</span><span class='colon2 op'>::</span><span class='UnderscoredAndPluralized constant id'>UnderscoredAndPluralized</span>
+  <span class='@field_naming_convention ivar id'>@field_naming_convention</span>    <span class='assign token'>=</span> <span class='NamingConventions constant id'>NamingConventions</span><span class='colon2 op'>::</span><span class='Field constant id'>Field</span><span class='colon2 op'>::</span><span class='Underscored constant id'>Underscored</span>
+
+  <span class='@transactions ivar id'>@transactions</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+</div>  <div class="section visibilitygroup">
+      <div class="section methodsummary">
+    <h2>Public Instance Method Summary</h2>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href="#create-instance_method">#create</span><span class='args'>(resources)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href="#delete-instance_method">#delete</span><span class='args'>(query)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href="#read_many-instance_method">#read_many</span><span class='args'>(query)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href="#read_one-instance_method">#read_one</span><span class='args'>(query)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href="#update-instance_method">#update</span><span class='args'>(attributes, query)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table><div class="included">
+  
+  <div>
+    <h2>Public Instance Methods Included from <a title="DataMapper::Assertions" href="AbstractAdapter/Assertions.html">DataMapper::Assertions</a></h2>
+    <p><span class='name'><a title="assert_kind_of" href="../Assertions.html#assert_kind_of-instance_method">assert_kind_of</a></span></p>
+  </div>
+  
+  <div>
+    <h2>Public Instance Methods Included from <a title="DataMapper::Adapters::AbstractAdapter::Migration" href="AbstractAdapter/Migration.html">DataMapper::Adapters::AbstractAdapter::Migration</a></h2>
+    <p><span class='name'><a title="alter_model_storage" href="AbstractAdapter/Migration.html#alter_model_storage-instance_method">alter_model_storage</a></span>, <span class='name'><a title="alter_property_storage" href="AbstractAdapter/Migration.html#alter_property_storage-instance_method">alter_property_storage</a></span>, <span class='name'><a title="create_model_storage" href="AbstractAdapter/Migration.html#create_model_storage-instance_method">create_model_storage</a></span>, <span class='name'><a title="create_property_storage" href="AbstractAdapter/Migration.html#create_property_storage-instance_method">create_property_storage</a></span>, <span class='name'><a title="destroy_model_storage" href="AbstractAdapter/Migration.html#destroy_model_storage-instance_method">destroy_model_storage</a></span>, <span class='name'><a title="destroy_property_storage" href="AbstractAdapter/Migration.html#destroy_property_storage-instance_method">destroy_property_storage</a></span>, <span class='name'><a title="field_exists?" href="AbstractAdapter/Migration.html#field_exists%3F-instance_method">field_exists?</a></span>, <span class='name'><a title="storage_exists?" href="AbstractAdapter/Migration.html#storage_exists%3F-instance_method">storage_exists?</a></span>, <span class='name'><a title="upgrade_model_storage" href="AbstractAdapter/Migration.html#upgrade_model_storage-instance_method">upgrade_model_storage</a></span></p>
+  </div>
+  
+  <div>
+    <h2>Public Instance Methods Included from <a title="DataMapper::Adapters::AbstractAdapter::Transaction" href="AbstractAdapter/Transaction.html">DataMapper::Adapters::AbstractAdapter::Transaction</a></h2>
+    <p><span class='name'><a title="current_transaction" href="AbstractAdapter/Transaction.html#current_transaction-instance_method">current_transaction</a></span>, <span class='name'><a title="pop_transaction" href="AbstractAdapter/Transaction.html#pop_transaction-instance_method">pop_transaction</a></span>, <span class='name'><a title="push_transaction" href="AbstractAdapter/Transaction.html#push_transaction-instance_method">push_transaction</a></span>, <span class='name'><a title="transaction_primitive" href="AbstractAdapter/Transaction.html#transaction_primitive-instance_method">transaction_primitive</a></span>, <span class='name'><a title="within_transaction?" href="AbstractAdapter/Transaction.html#within_transaction%3F-instance_method">within_transaction?</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails">
+  <h2>Public Instance Method Details</h2>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>create</h3>
+</div><div id="create-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>create</span><span class='args'>(resources)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="param">
+  <h3>Parameters:</h3>
+  <dl>
+  
+  </dl>
+</div><div class="raise">
+  <h3>Raises:</h3>
+  <dl>
+  
+    <dt>
+      
+        <span class='type'>[<tt>NotImplementedError</tt>]</span>
+      
+      
+      
+    </dt>
+    <dd>
+      <span class='desc'></span>
+    </dd>
+  
+  </dl>
+</div>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/dm-core/adapters/abstract_adapter.rb', line 9</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/datamapper/dm-core/blob/master/lib/dm-core/adapters/abstract_adapter.rb#L9">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">9
+10
+11</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='create identifier id'>create</span><span class='lparen token'>(</span><span class='resources identifier id'>resources</span><span class='rparen token'>)</span>
+  <span class='raise identifier id'>raise</span> <span class='NotImplementedError constant id'>NotImplementedError</span>
+<span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>delete</h3>
+</div><div id="delete-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>delete</span><span class='args'>(query)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="param">
+  <h3>Parameters:</h3>
+  <dl>
+  
+  </dl>
+</div><div class="raise">
+  <h3>Raises:</h3>
+  <dl>
+  
+    <dt>
+      
+        <span class='type'>[<tt>NotImplementedError</tt>]</span>
+      
+      
+      
+    </dt>
+    <dd>
+      <span class='desc'></span>
+    </dd>
+  
+  </dl>
+</div>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/dm-core/adapters/abstract_adapter.rb', line 25</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/datamapper/dm-core/blob/master/lib/dm-core/adapters/abstract_adapter.rb#L25">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">25
+26
+27</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='query identifier id'>query</span><span class='rparen token'>)</span>
+  <span class='raise identifier id'>raise</span> <span class='NotImplementedError constant id'>NotImplementedError</span>
+<span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>read_many</h3>
+</div><div id="read_many-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>read_many</span><span class='args'>(query)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="param">
+  <h3>Parameters:</h3>
+  <dl>
+  
+  </dl>
+</div><div class="raise">
+  <h3>Raises:</h3>
+  <dl>
+  
+    <dt>
+      
+        <span class='type'>[<tt>NotImplementedError</tt>]</span>
+      
+      
+      
+    </dt>
+    <dd>
+      <span class='desc'></span>
+    </dd>
+  
+  </dl>
+</div>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/dm-core/adapters/abstract_adapter.rb', line 13</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/datamapper/dm-core/blob/master/lib/dm-core/adapters/abstract_adapter.rb#L13">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">13
+14
+15</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='read_many identifier id'>read_many</span><span class='lparen token'>(</span><span class='query identifier id'>query</span><span class='rparen token'>)</span>
+  <span class='raise identifier id'>raise</span> <span class='NotImplementedError constant id'>NotImplementedError</span>
+<span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>read_one</h3>
+</div><div id="read_one-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>read_one</span><span class='args'>(query)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="param">
+  <h3>Parameters:</h3>
+  <dl>
+  
+  </dl>
+</div><div class="raise">
+  <h3>Raises:</h3>
+  <dl>
+  
+    <dt>
+      
+        <span class='type'>[<tt>NotImplementedError</tt>]</span>
+      
+      
+      
+    </dt>
+    <dd>
+      <span class='desc'></span>
+    </dd>
+  
+  </dl>
+</div>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/dm-core/adapters/abstract_adapter.rb', line 17</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/datamapper/dm-core/blob/master/lib/dm-core/adapters/abstract_adapter.rb#L17">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">17
+18
+19</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='read_one identifier id'>read_one</span><span class='lparen token'>(</span><span class='query identifier id'>query</span><span class='rparen token'>)</span>
+  <span class='raise identifier id'>raise</span> <span class='NotImplementedError constant id'>NotImplementedError</span>
+<span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>update</h3>
+</div><div id="update-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>update</span><span class='args'>(attributes, query)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="param">
+  <h3>Parameters:</h3>
+  <dl>
+  
+  </dl>
+</div><div class="raise">
+  <h3>Raises:</h3>
+  <dl>
+  
+    <dt>
+      
+        <span class='type'>[<tt>NotImplementedError</tt>]</span>
+      
+      
+      
+    </dt>
+    <dd>
+      <span class='desc'></span>
+    </dd>
+  
+  </dl>
+</div>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/dm-core/adapters/abstract_adapter.rb', line 21</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/datamapper/dm-core/blob/master/lib/dm-core/adapters/abstract_adapter.rb#L21">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">21
+22
+23</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='update identifier id'>update</span><span class='lparen token'>(</span><span class='attributes identifier id'>attributes</span><span class='comma token'>,</span> <span class='query identifier id'>query</span><span class='rparen token'>)</span>
+  <span class='raise identifier id'>raise</span> <span class='NotImplementedError constant id'>NotImplementedError</span>
+<span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+</div>
+          </div>
+        </div>
+      </div>                    
+    </div>
+
+    <div id="footer">
+      <div class="site">
+        <div class="info">
+          <div class="links">
+            <a href="http://github.com/blog/148-github-shirts-now-available">Shirts</a> |
+            <a href="http://github.com/blog">Blog</a> |
+            <a href="http://support.github.com/">Support</a> |
+            <a href="http://github.com/training">Training</a> |
+            <a href="http://github.com/contact">Contact</a> |
+            <a href="http://groups.google.com/group/github/">Google Group</a> |
+            <a href="http://develop.github.com/">API</a> |
+            <a href="http://twitter.com/github">Status</a>
+          </div>
+          <div class="company">
+            <span id="_rrt" title="0.64509s from xc88-s00039">GitHub</span>
+            is <a href="http://logicalawesome.com/">Logical Awesome</a> ©2009 | <a href="http://github.com/site/terms">Terms of Service</a> | <a href="http://github.com/site/privacy">Privacy Policy</a>
+          </div>
+        </div>
+        <div class="sponsor">
+          <a href="http://engineyard.com/"><img src="http://github.com/images/modules/footer/engine_yard_logo.png" alt="Engine Yard"></a>
+          <div>
+            Hosting provided by our<br> partners at Engine Yard
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div id="coming_soon" style="display: none;">
+      This feature is coming soon.  Sit tight!
+    </div>
+
+    <div id="facebox" style="display: none;">       
+      <div class="popup">         
+        <table>           
+          <tbody>             
+            <tr>               
+              <td class="tl"></td>
+              <td class="b"></td>
+              <td class="tr"></td>             
+            </tr>             
+          <tr>               
+            <td class="b"></td>               
+            <td class="body">                 
+              <div class="content"></div>                 
+              <div class="footer">                   
+                <a href="#" class="close"><img src="http://github.com/facebox/closelabel.gif" title="close" class="close_image"></a>                 
+              </div>               
+            </td>               
+            <td class="b"></td>             
+          </tr>             
+          <tr>               
+            <td class="bl"></td>
+            <td class="b"></td>
+            <td class="br"></td>             
+          </tr>           
+        </tbody>         
+      </table>       
+    </div>     
+
+
+    <script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+    try {
+    var pageTracker = _gat._getTracker("UA-8689483-1");
+    pageTracker._trackPageview();
+    } catch(err) {}</script>
+
+  </body>
+</html>
