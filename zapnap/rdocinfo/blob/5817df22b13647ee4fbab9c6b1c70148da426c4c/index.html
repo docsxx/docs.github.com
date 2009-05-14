@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>zapnap's rdocinfo - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/zapnap/rdocinfo/blob/f9ee2e8b8d6d921e05e6563659179cdbd8b71408">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -26,8 +22,8 @@
     if (typeof skipHeaders != 'undefined') return;
     
     GitHubRepo.init("zapnap", "rdocinfo", function(){ 
-      GitHubRepo.links = " <a id='namespaces_button' rel='zapnap/rdocinfo/blob/f9ee2e8b8d6d921e05e6563659179cdbd8b71408' href='#'><img class='button' src='http://docs.github.com/namespaces_button.png' alt='Modules and Classes'/></a> ";
-      GitHubRepo.links += " <a id='methods_button' rel='zapnap/rdocinfo/blob/f9ee2e8b8d6d921e05e6563659179cdbd8b71408' href='#'><img class='button' src='http://docs.github.com/methods_button.png' alt='Methods'/></a> ";
+      GitHubRepo.links = " <a id='namespaces_button' rel='zapnap/rdocinfo/blob/5817df22b13647ee4fbab9c6b1c70148da426c4c' href='#'><img class='button' src='http://docs.github.com/namespaces_button.png' alt='Modules and Classes'/></a> ";
+      GitHubRepo.links += " <a id='methods_button' rel='zapnap/rdocinfo/blob/5817df22b13647ee4fbab9c6b1c70148da426c4c' href='#'><img class='button' src='http://docs.github.com/methods_button.png' alt='Methods'/></a> ";
       $("#repo").html(GitHubRepo.content());
       $('#namespaces_button').click(function(){
         var url="/"+$(this).attr('rel')+"/namespaces/";
@@ -40,7 +36,7 @@
         return false;
       });        
     });
-    GitHubCommit.init("zapnap", "rdocinfo", "f9ee2e8b8d6d921e05e6563659179cdbd8b71408", function(){ 
+    GitHubCommit.init("zapnap", "rdocinfo", "5817df22b13647ee4fbab9c6b1c70148da426c4c", function(){ 
       $("#commit").html(GitHubCommit.content());
     });
   });
@@ -49,6 +45,7 @@
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -82,7 +79,7 @@
             <li class=""><a href="http://github.com/zapnap/rdocinfo/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/zapnap/rdocinfo">Wiki</a></li>
             <li class=""><a href="http://github.com/zapnap/rdocinfo/graphs">Graphs</a></li>                    
-            <li class="active"><a href="zapnap/rdocinfo">Documentation</a></li>
+            <li class="active"><a href="/zapnap/rdocinfo">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -99,8 +96,8 @@
             <div class="title">
               <div class="path">
                 <a href="http://github.com/zapnap">zapnap</a> / <b><a href="http://github.com/zapnap/rdocinfo/tree">rdocinfo</a></b>        
-                <a id="namespaces_button" rel="zapnap/rdocinfo/blob/f9ee2e8b8d6d921e05e6563659179cdbd8b71408" href="#"><img class="button" src="http://docs.github.com/namespaces_button.png" alt="Modules and Classes"/></a>
-                <a id="methods_button" rel="zapnap/rdocinfo/blob/f9ee2e8b8d6d921e05e6563659179cdbd8b71408" href="#"><img class="button" src="http://docs.github.com/methods_button.png" alt="Methods"/></a>
+                <a id="namespaces_button" rel="zapnap/rdocinfo/blob/5817df22b13647ee4fbab9c6b1c70148da426c4c" href="#"><img class="button" src="http://docs.github.com/namespaces_button.png" alt="Modules and Classes"/></a>
+                <a id="methods_button" rel="zapnap/rdocinfo/blob/5817df22b13647ee4fbab9c6b1c70148da426c4c" href="#"><img class="button" src="http://docs.github.com/methods_button.png" alt="Methods"/></a>
               </div>
             </div>            
           </div>
@@ -108,16 +105,55 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automaticaly, if not please 
-      <a href="/zapnap/rdocinfo/blob/f9ee2e8b8d6d921e05e6563659179cdbd8b71408">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>RdocInfo</h1>
+<p>
+A simple Sinatra-based web service that generates and hosts rdocs for
+GitHub-based projects. Accepts updates from post-commit hooks and
+regenerates as needed. Public service is hosted at http://rdoc.info
+</p>
+<h2>Configuration</h2>
+<p>
+All configuration is done in the <tt>conf</tt> directory via environment
+yaml files. Copy <tt>development.yml.example</tt> to
+<tt>deelopment.yml</tt> within that directory and alter the settings to
+match your local environment.
+</p>
+<p>
+There are a couple additional steps you&#8217;ll need to take to get
+rdoc.info working:
+</p>
+<ul>
+<li>Install Jeff Rafter&#8217;s fork of YARD &#8212; see
+http://github.com/jeffrafter/yard
 
+</li>
+<li>Create a symlink from /public/rdoc to ../rdoc/default
+
+</li>
+</ul>
+<p>
+Once you&#8217;ve done that you should be ready to rock.
+</p>
+<h2>GitHub Integration</h2>
+<p>
+Rdoc.info can now push GitHub-themed doc files directly to a GitHub
+account. Toggle the enable_push and github_doc_pages options in the yaml
+config to set this up and make sure the appropriate keys are in place. This
+support is still considered experimental :).
+</p>
+<h2>Getting Started</h2>
+<pre class="code">
+  <span class='rake identifier id'>rake</span> <span class='db identifier id'>db</span><span class='symbol val'>:migrate</span>
+  <span class='ruby identifier id'>ruby</span> <span class='application identifier id'>application</span><span class='dot token'>.</span><span class='rb identifier id'>rb</span>
+</pre>
+<h2>Contribute</h2>
+<p>
+All contributions are welcome. See GitHub project issues for a list of
+specific features that have been requested or discussed.
+</p>
+
+</div>
           </div>
         </div>
       </div>                    
