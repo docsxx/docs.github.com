@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>Floppy's rb232 - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/Floppy/rb232/blob/c909eb785c5b7275eec4c01eb54a59650efcbcd9">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/Floppy/rb232/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/Floppy/rb232">Wiki</a></li>
             <li class=""><a href="http://github.com/Floppy/rb232/graphs">Graphs</a></li>                    
-            <li class="active"><a href="Floppy/rb232">Documentation</a></li>
+            <li class="active"><a href="/Floppy/rb232">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,84 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automaticaly, if not please 
-      <a href="/Floppy/rb232/blob/c909eb785c5b7275eec4c01eb54a59650efcbcd9">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h2>RB232</h2>
+<p>
+A simple serial port library for Ruby.
+</p>
+<p>
+Licensed under the MIT license (See COPYING file for details)
+</p>
+<p>
+Author: James Smith (james@floppy.org.uk / http://www.floppy.org.uk)
+</p>
+<p>
+Homepage: http://github.com/Floppy/rb232
+</p>
+<p>
+Documentation: http://docs.github.com/Floppy/rb232
+</p>
+<h2>ABOUT</h2>
+<p>
+This library is a simple serial port library for Ruby.
+</p>
+<p>
+You may ask, why not just use ruby-serialport? Mainly because the GPL
+license it is under is too restrictive for my purposes. This code is under
+the MIT license, so you can do anything you like with it.
+</p>
+<h2>INSTALLATION</h2>
+<p>
+1) Enable gems from github, if you haven&#8217;t already done so (rubygems
+&gt;= 1.2):
+</p>
+<pre class="code">
+    <span class='gt op'>&gt;</span> <span class='sudo identifier id'>sudo</span> <span class='gem identifier id'>gem</span> <span class='sources identifier id'>sources</span> <span class='minus op'>-</span><span class='a identifier id'>a</span> <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/gems.github.com
+</span></pre>
+<p>
+2) Install gem
+</p>
+<pre class="code">
+    <span class='gt op'>&gt;</span> <span class='sudo identifier id'>sudo</span> <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='Floppy constant id'>Floppy</span><span class='minus op'>-</span><span class='rb232 identifier id'>rb232</span>
+</pre>
+<h2>STATUS</h2>
+<p>
+Currently you can read from a serial port, but not write back. The code is
+only tested on Linux - other unixes <b>may</b> work, Mac OSX <b>might</b>
+be ok, but Windows is right out for now. Watch this space for further
+developments!
+</p>
+<h2>USAGE</h2>
+<p>
+The following code will read a 10-character string from the specified port,
+using the default port settings (9600/8/n/1)
+</p>
+<pre class="code">
+      <span class='@port ivar id'>@port</span> <span class='assign token'>=</span> <span class='RB232 constant id'>RB232</span><span class='colon2 op'>::</span><span class='Port constant id'>Port</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'/dev/ttyUSB0'</span><span class='rparen token'>)</span>
+      <span class='message identifier id'>message</span> <span class='assign token'>=</span> <span class='@port ivar id'>@port</span><span class='dot token'>.</span><span class='read_string identifier id'>read_string</span><span class='lparen token'>(</span><span class='integer val'>10</span><span class='rparen token'>)</span>
+</pre>
+<p>
+You can provide alternative settings when you create a new port:
+</p>
+<pre class="code">
+      <span class='RB232 constant id'>RB232</span><span class='colon2 op'>::</span><span class='Port constant id'>Port</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'/dev/ttyS0'</span><span class='comma token'>,</span> <span class='symbol val'>:baud_rate</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>19200</span><span class='comma token'>,</span>
+                                    <span class='symbol val'>:data_bits</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>7</span><span class='comma token'>,</span>
+                                    <span class='symbol val'>:parity</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span><span class='comma token'>,</span>
+                                    <span class='symbol val'>:stop_bits</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>2</span><span class='rparen token'>)</span>
+</pre>
+<p>
+See http://github.com/Floppy/rb232/tree/master/spec/port_spec.rb or
+RB232::Port documentation for more details.
+</p>
+<p>
+If you are using a simple text protocol over RS232, you can use the
+RB232::TextProtocol class to help you out. It automatically monitors the
+port and splits messages up by detecting separator characters. See
+http://github.com/Floppy/rb232/tree/master/examples/listen.rb for an
+example of how to use this class.
+</p>
 
+</div>
           </div>
         </div>
       </div>                    
