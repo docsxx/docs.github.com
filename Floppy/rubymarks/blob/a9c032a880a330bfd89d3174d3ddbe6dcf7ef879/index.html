@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>Floppy's rubymarks - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/Floppy/rubymarks/blob/a9c032a880a330bfd89d3174d3ddbe6dcf7ef879">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/Floppy/rubymarks/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/Floppy/rubymarks">Wiki</a></li>
             <li class=""><a href="http://github.com/Floppy/rubymarks/graphs">Graphs</a></li>                    
-            <li class="active"><a href="Floppy/rubymarks">Documentation</a></li>
+            <li class="active"><a href="/Floppy/rubymarks">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,88 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automaticaly, if not please 
-      <a href="/Floppy/rubymarks/blob/a9c032a880a330bfd89d3174d3ddbe6dcf7ef879">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h2>Rubymarks</h2>
+<p>
+A Ruby gem (and Rails plugin) which generates links for social bookmarking
+services.
+</p>
+<p>
+Licensed under the MIT license (See COPYING file for details)
+</p>
+<p>
+Author: James Smith (james@floppy.org.uk / http://www.floppy.org.uk)
+</p>
+<p>
+Homepage: http://github.com/Floppy/rubymarks
+</p>
+<p>
+Documentation: http://docs.github.com/Floppy/rubymarks/
+</p>
+<h2>INSTALLATION</h2>
+<p>
+1) Enable gems from github, if you haven&#8217;t already done so (rubygems
+&gt;= 1.2):
+</p>
+<pre class="code">
+    <span class='gt op'>&gt;</span> <span class='sudo identifier id'>sudo</span> <span class='gem identifier id'>gem</span> <span class='sources identifier id'>sources</span> <span class='minus op'>-</span><span class='a identifier id'>a</span> <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/gems.github.com
+</span></pre>
+<p>
+2) Install gem
+</p>
+<pre class="code">
+    <span class='gt op'>&gt;</span> <span class='sudo identifier id'>sudo</span> <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='Floppy constant id'>Floppy</span><span class='minus op'>-</span><span class='rubymarks identifier id'>rubymarks</span>
+</pre>
+<h2>RAILS PLUGIN</h2>
+<p>
+This gem can be used as a Rails plugin. You can either extract it into
+vendor/plugins, or use the new-style config.gem command in environment.rb.
+For example:
+</p>
+<pre class="code">
+    <span class='config identifier id'>config</span><span class='dot token'>.</span><span class='gem identifier id'>gem</span> <span class='string val'>&quot;Floppy-rubymarks&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:lib</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;rubymarks&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:source</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;http://gems.github.com&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:version</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'&gt;= 0.0.1'</span>
+</pre>
+<h2>USAGE</h2>
+<p>
+Once you&#8217;ve done that, you can use bookmark_tag in your views and
+controllers to generate an HTML link tag, or bookmark_url to just generate
+the URL. Examples:
+</p>
+<pre class="code">
+    <span class='bookmark_url identifier id'>bookmark_url</span> <span class='symbol val'>:tinyurl</span><span class='comma token'>,</span> <span class='string val'>&quot;http://www.google.com&quot;</span>
+    <span class='bookmark_tag identifier id'>bookmark_tag</span> <span class='symbol val'>:facebook</span><span class='comma token'>,</span> <span class='string val'>&quot;http://www.google.com&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:title</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;Google&quot;</span>
+</pre>
+<p>
+Both functions accepts the following options - not all work with all
+services.
+</p>
+<pre class="code">
+    <span class='symbol val'>:title</span> <span class='minus op'>-</span> <span class='a identifier id'>a</span> <span class='title identifier id'>title</span> <span class='for for kw'>for</span> <span class='the identifier id'>the</span> <span class='link identifier id'>link</span> <span class='lparen token'>(</span><span class='string identifier id'>string</span><span class='rparen token'>)</span>
+    <span class='symbol val'>:text</span> <span class='minus op'>-</span> <span class='some identifier id'>some</span> <span class='explanatory identifier id'>explanatory</span> <span class='text identifier id'>text</span> <span class='to identifier id'>to</span> <span class='go identifier id'>go</span> <span class='with identifier id'>with</span> <span class='the identifier id'>the</span> <span class='link identifier id'>link</span> <span class='lparen token'>(</span><span class='string identifier id'>string</span><span class='rparen token'>)</span>
+    <span class='symbol val'>:new_window</span> <span class='minus op'>-</span> <span class='open identifier id'>open</span> <span class='the identifier id'>the</span> <span class='bookmark identifier id'>bookmark</span> <span class='link identifier id'>link</span> <span class='in in kw'>in</span> <span class='a identifier id'>a</span> <span class='new identifier id'>new</span> <span class='window identifier id'>window</span> <span class='lparen token'>(</span><span class='true true kw'>true</span> <span class='or or kw'>or</span> <span class='false false kw'>false</span><span class='rparen token'>)</span>
+</pre>
+<p>
+Services supported are:
+</p>
+<pre class="code">
+    <span class='symbol val'>:facebook</span>
+    <span class='symbol val'>:digg</span>
+    <span class='symbol val'>:delicious</span>
+    <span class='symbol val'>:stumbleupon</span>
+    <span class='symbol val'>:twitter</span>
+    <span class='symbol val'>:reddit</span>
+    <span class='symbol val'>:windowslive</span>
+    <span class='symbol val'>:google</span>
+    <span class='symbol val'>:myaol</span>
+    <span class='symbol val'>:magnolia</span>
+    <span class='symbol val'>:technorati</span>
+    <span class='symbol val'>:newsvine</span>
+    <span class='symbol val'>:myspace</span>
+    <span class='symbol val'>:tinyurl</span>
+    <span class='symbol val'>:snurl</span>
+</pre>
 
+</div>
           </div>
         </div>
       </div>                    
