@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>armin-joellenbeck's rdbc - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/armin-joellenbeck/rdbc/blob/f6f6f75b11f1a80f01802db22fa61741701478c7">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/armin-joellenbeck/rdbc/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/armin-joellenbeck/rdbc">Wiki</a></li>
             <li class=""><a href="http://github.com/armin-joellenbeck/rdbc/graphs">Graphs</a></li>                    
-            <li class="active"><a href="armin-joellenbeck/rdbc">Documentation</a></li>
+            <li class="active"><a href="/armin-joellenbeck/rdbc">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,163 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automaticaly, if not please 
-      <a href="/armin-joellenbeck/rdbc/blob/f6f6f75b11f1a80f01802db22fa61741701478c7">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>Design by Contract for Ruby</h1>
+<p>
+This library supports Design by Contract for Ruby.
+</p>
+<h1>Installation</h1>
+<p>
+Install the <b>rdbc</b> gem itself by the following command:
+</p>
+<pre class="code">
+  $ <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='armin identifier id'>armin</span><span class='minus op'>-</span><span class='joellenbeck identifier id'>joellenbeck</span><span class='minus op'>-</span><span class='rdbc identifier id'>rdbc</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='source identifier id'>source</span> <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/gems.github.com
+</span></pre>
+<h1>Usage</h1>
+<p>
+A a standard example for Design by Contract consider the following Stack
+class and its contract StackContract.
+</p>
+<pre class="code">
+  <span class='symbol val'>:include</span><span class='symbol val'>:spec</span><span class='div op'>/</span><span class='stack_spec identifier id'>stack_spec</span><span class='dot token'>.</span><span class='rb identifier id'>rb</span>
+</pre>
+<p>
+The mechanics are really simple. There is the class Stack. For instances of
+this class you can define a contract by subclassing
+<b>DesignByContract::Contract</b>, in the example the contract is named
+StackContract. Then connect the class Stack to its contract StackContract
+by using the line
+</p>
+<pre class="code">
+  <span class='contract identifier id'>contract</span> <span class='StackContract constant id'>StackContract</span>
+</pre>
+<p>
+in the class definition of Stack.
+</p>
+<p>
+Then the following happens when a method of a Stack instance is called:
+</p>
+<ol>
+<li>the corresponding pre condition is called with the parameters:
 
+<ul>
+<li>the instance itself
+
+</li>
+<li>the parameters of the method call
+
+</li>
+</ul>
+</li>
+<li>the method is called
+
+</li>
+<li>the corresponding post condition is called with the parameters:
+
+<ul>
+<li>the instance before the method is called
+
+</li>
+<li>the instance after the method is called
+
+</li>
+<li>the return value of the method call
+
+</li>
+<li>the parameters of the method call
+
+</li>
+</ul>
+</li>
+<li>the invariant is called with the parameters:
+
+<ul>
+<li>the instance before the method is called
+
+</li>
+<li>the instance after the method is called
+
+</li>
+</ul>
+</li>
+</ol>
+<p>
+The instance before the execution of <b>method</b> in 3. and 4. is in fact
+a copy of the instance before the execution. So you have to implement the
+method <b>initialize_copy</b> in the class under contract, i.e. the class
+Stack.
+</p>
+<p>
+In any of these contract methods you can use assertions as in Test::Unit
+tests. When an assertion fails, the exception
+Test::Unit::AssertionFailedError is raised.
+</p>
+<h1>Support</h1>
+<p>
+The project home is at
+GitHub[http://github.com/armin-joellenbeck/rdbc/tree/master]:
+http://github.com/armin-joellenbeck/rdbc/tree/master
+</p>
+<p>
+Feel free to send:
+</p>
+<ul>
+<li>bug reports
+
+</li>
+<li>support requests
+
+</li>
+<li>feature requests
+
+</li>
+<li>patches
+
+</li>
+</ul>
+<h1>Copyright</h1>
+<p>
+Copyright &#169; 2007 - 2009 by Armin Jöllenbeck
+&lt;armin@joellenbeck.net[mailto:armin@joellenbeck.net]&gt;
+</p>
+<p>
+All rights reserved.
+</p>
+<p>
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+</p>
+<ol>
+<li>Redistributions of source code must retain the above copyright notice, this
+list of conditions and the following disclaimer.
+
+</li>
+<li>Redistributions in binary form must reproduce the above copyright notice,
+this list of conditions and the following disclaimer in the documentation
+and/or other materials provided with the distribution.
+
+</li>
+<li>The names of the contributors may not be used to endorse or promote
+products derived from this software without specific prior written
+permission.
+
+</li>
+</ol>
+<p>
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+&quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+</p>
+
+</div>
           </div>
         </div>
       </div>                    
