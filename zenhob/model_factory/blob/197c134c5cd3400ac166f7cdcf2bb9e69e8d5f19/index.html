@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>zenhob's model_factory - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/zenhob/model_factory/blob/197c134c5cd3400ac166f7cdcf2bb9e69e8d5f19">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/zenhob/model_factory/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/zenhob/model_factory">Wiki</a></li>
             <li class=""><a href="http://github.com/zenhob/model_factory/graphs">Graphs</a></li>                    
-            <li class="active"><a href="zenhob/model_factory">Documentation</a></li>
+            <li class="active"><a href="/zenhob/model_factory">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,89 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/zenhob/model_factory/blob/197c134c5cd3400ac166f7cdcf2bb9e69e8d5f19">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>ModelFactory</h1>
+<p>
+ModelFactory is a module designed to replace the use of fixtures for
+testing Rails applications.
+</p>
+<p>
+The best explanation for the motivation behind ModelFactory (and the
+inspiration for this module) comes from Dan Manges&#8217; blog:
+http://www.dcmanges.com/blog/38
+</p>
+<h2>Usage</h2>
+<p>
+The essential purpose of ModelFactory is the automatic generation of valid,
+opaque ActiveRecord objects whose contents are unimportant.
+</p>
+<pre class="code">
+ <span class='require identifier id'>require</span> <span class='string val'>'modelfactory'</span>
 
+ <span class='ModelFactory constant id'>ModelFactory</span><span class='dot token'>.</span><span class='configuration identifier id'>configuration</span> <span class='do do kw'>do</span>
+   <span class='default identifier id'>default</span><span class='lparen token'>(</span><span class='User constant id'>User</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='m identifier id'>m</span><span class='bitor op'>|</span>
+     <span class='m identifier id'>m</span><span class='dot token'>.</span><span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='string val'>&quot;Factory User&quot;</span>
+     <span class='m identifier id'>m</span><span class='dot token'>.</span><span class='email identifier id'>email</span> <span class='assign token'>=</span> <span class='string val'>&quot;user@factory.ws&quot;</span>
+   <span class='end end kw'>end</span>
+ <span class='end end kw'>end</span>
+
+ <span class='ModelFactory constant id'>ModelFactory</span><span class='lbrack token'>[</span><span class='User constant id'>User</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='create identifier id'>create</span><span class='dot token'>.</span><span class='name identifier id'>name</span>  <span class='comment val'># =&gt; 'Factory User'</span>
+</pre>
+<p>
+Since factory-created instances are meant to be valid, you will probably
+need a way to generate unique values. ModelFactory keeps a counter for each
+type that increments when each new instance is created. This counter is
+passed to configuration blocks to make it easier to generate unique values:
+</p>
+<pre class="code">
+ <span class='ModelFactory constant id'>ModelFactory</span><span class='dot token'>.</span><span class='configuration identifier id'>configuration</span> <span class='do do kw'>do</span>
+   <span class='default identifier id'>default</span><span class='lparen token'>(</span><span class='User constant id'>User</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='m identifier id'>m</span><span class='comma token'>,</span> <span class='i identifier id'>i</span><span class='bitor op'>|</span>
+     <span class='m identifier id'>m</span><span class='dot token'>.</span><span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;Factory User #{i}&quot;</span>
+     <span class='m identifier id'>m</span><span class='dot token'>.</span><span class='email identifier id'>email</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;user#{i}@factory.ws&quot;</span>
+   <span class='end end kw'>end</span>
+ <span class='end end kw'>end</span>
+
+ <span class='ModelFactory constant id'>ModelFactory</span><span class='lbrack token'>[</span><span class='User constant id'>User</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='create identifier id'>create</span><span class='dot token'>.</span><span class='name identifier id'>name</span>  <span class='comment val'># =&gt; 'Factory User 1'</span>
+ <span class='ModelFactory constant id'>ModelFactory</span><span class='lbrack token'>[</span><span class='User constant id'>User</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='create identifier id'>create</span><span class='dot token'>.</span><span class='email identifier id'>email</span> <span class='comment val'># =&gt; 'user2@factory.ws'</span>
+</pre>
+<p>
+Defaults can be overriden on instance creation. By not specifying
+unimportant values, the intention of your tests becomes clearer:
+</p>
+<pre class="code">
+ <span class='def def kw'>def</span> <span class='test_welcome identifier id'>test_welcome</span>
+    <span class='user identifier id'>user</span> <span class='assign token'>=</span> <span class='ModelFactory constant id'>ModelFactory</span><span class='lbrack token'>[</span><span class='User constant id'>User</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='create identifier id'>create</span><span class='lparen token'>(</span><span class='symbol val'>:name</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'bob'</span><span class='rparen token'>)</span>
+    <span class='assert_equal identifier id'>assert_equal</span> <span class='string val'>'Welcome, bob!'</span><span class='comma token'>,</span> <span class='user identifier id'>user</span><span class='dot token'>.</span><span class='welcome identifier id'>welcome</span>
+ <span class='end end kw'>end</span>
+</pre>
+<p>
+If you don&#8217;t care for the factory creation syntax, ModelFactory
+defines the factory class method on ActiveRecord models. The following is
+equivalent to ModelFactory[User].create:
+</p>
+<pre class="code">
+ <span class='User constant id'>User</span><span class='dot token'>.</span><span class='factory identifier id'>factory</span><span class='dot token'>.</span><span class='create identifier id'>create</span>
+</pre>
+<h3>A Note About Defaults</h3>
+<p>
+The purpose of default values is to generate valid instances, not to serve
+as replacements for fixture data. When writing tests that use
+factory-generated objects, it&#8217;s important never to depend on default
+values in your test assertions. If you depend on defaults in your tests
+they become more fragile and the intention is harder to discern. Alway
+override values you care about when using factory objects.
+</p>
+<h2>Installing ModelFactory</h2>
+<pre class="code">
+ <span class='sudo identifier id'>sudo</span> <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='modelfactory identifier id'>modelfactory</span>
+</pre>
+<h2>License</h2>
+<p>
+Copyright &#169; 2008 Justin Balthrop and Zack Hobson Published under The
+MIT License, see License.txt
+</p>
+
+</div>
           </div>
         </div>
       </div>                    
