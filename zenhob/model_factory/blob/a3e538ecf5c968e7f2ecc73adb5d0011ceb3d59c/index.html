@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>zenhob's model_factory - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/zenhob/model_factory/blob/a3e538ecf5c968e7f2ecc73adb5d0011ceb3d59c">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/zenhob/model_factory/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/zenhob/model_factory">Wiki</a></li>
             <li class=""><a href="http://github.com/zenhob/model_factory/graphs">Graphs</a></li>                    
-            <li class="active"><a href="zenhob/model_factory">Documentation</a></li>
+            <li class="active"><a href="/zenhob/model_factory">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,65 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/zenhob/model_factory/blob/a3e538ecf5c968e7f2ecc73adb5d0011ceb3d59c">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>ModelFactory</h1>
+<p>
+ModelFactory is a module designed to replace the use of fixtures for
+testing Rails applications.
+</p>
+<p>
+The best explanation for the motivation behind ModelFactory (and the
+inspiration for this module) comes from Dan Manges&#8217; blog:
+http://www.dcmanges.com/blog/38
+</p>
+<p>
+The idea is that instead of keeping your test data in a nearly opaque
+fixture file, you generate data in the test itself using a custom factory
+API designed for your test environment.
+</p>
+<p>
+By creating a new module just for your test factory API you make it easier
+to spot factory calls in your tests and keep your factory code out of your
+test code. ModelFactory adds some useful facilities for generating optional
+defaults for commonly instantiated types. It also fakes up id generation in
+the ActiveRecord models created with new, to assist in unit testing without
+the database.
+</p>
+<h3>A Note About Defaults</h3>
+<p>
+The purpose of default values is to generate valid instances, not to serve
+as replacements for fixture data. When writing tests that use
+factory-generated objects, it&#8217;s important never to depend on default
+values in your test assertions. If you depend on defaults in your tests
+they become more fragile and the intention is harder to discern. Alway
+override values you care about when using factory objects.
+</p>
+<p>
+If you find yourself repeating the same initialization to avoid using
+defaults, consider whether it would be appropriate to add a custom toplevel
+method to your factory module that includes this initialization. You can
+also specify multiple named types of defaults, described below. Be aware
+that both of these techniques should be used sparingly, as they can have
+some of the same issues as fixtures.
+</p>
+<h3>A Note About ID Generation</h3>
+<p>
+Since basic ID generation is done when you instantiate objects using
+Factory.new_&lt;type&gt; it is recommended not to mix such objects with
+those created using Factory.create_&lt;type&gt;. Use the former in unit
+tests and use the latter in functional tests.
+</p>
+<h2>Installing ModelFactory</h2>
+<pre class="code">
+ <span class='sudo identifier id'>sudo</span> <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='modelfactory identifier id'>modelfactory</span>
+</pre>
+<h2>License</h2>
+<p>
+Copyright &#169; 2008 Justin Balthrop and Zack Hobson Published under The
+MIT License, see License.txt
+</p>
 
+</div>
           </div>
         </div>
       </div>                    
