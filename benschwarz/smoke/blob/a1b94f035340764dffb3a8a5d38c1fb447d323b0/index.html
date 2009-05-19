@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>benschwarz's smoke - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/benschwarz/smoke/blob/a1b94f035340764dffb3a8a5d38c1fb447d323b0">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/benschwarz/smoke/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/benschwarz/smoke">Wiki</a></li>
             <li class=""><a href="http://github.com/benschwarz/smoke/graphs">Graphs</a></li>                    
-            <li class="active"><a href="benschwarz/smoke">Documentation</a></li>
+            <li class="active"><a href="/benschwarz/smoke">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,92 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/benschwarz/smoke/blob/a1b94f035340764dffb3a8a5d38c1fb447d323b0">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>smoke</h1>
 
+<p>smoke is a Ruby based DSL that allows you to take data from YQL, RSS / Atom (and more, if you think of a useful source).
+This "data" can then be re-represented, sorted and filtered. You can collect data from a multiude of sources, sort them on a common property
+and return a plain old ruby object or json (You could add in something to output XML too)</p>
+
+<h2>Media</h2>
+
+<ul>
+<li><a href="http://www.slideshare.net/benschwarz/smoke-1371124">Presentation from Melbourne #roro</a></li>
+<li>Early <a href="http://vimeo.com/4272804">screencast</a> to get developer / peer feedback</li>
+</ul>
+
+<h2>The concept</h2>
+
+<p>The concept comes from using <a href="http://pipes.yahoo.com">Yahoo Pipes</a> to make little mash ups, get a list of tv shows for my torrent client, compile a recipe book or make tools to give me a list of albums that artists in my music library are about to be release.</p>
+
+<h2>How or what to contribute</h2>
+
+<ul>
+<li>Test everything you do</li>
+<li>Add a way to output (XML, anyone?)</li>
+<li>Examples of queries you'd like to be able to do (email / github message them to me)</li>
+</ul>
+
+<h2>API Examples</h2>
+
+<h3>YQL</h3>
+
+<pre class="code"><span class='comment val'># This will use yahoo search to get an array of search results about Ruby</span>
+<span class='Smoke constant id'>Smoke</span><span class='dot token'>.</span><span class='yql identifier id'>yql</span><span class='lparen token'>(</span><span class='symbol val'>:ruby</span><span class='rparen token'>)</span> <span class='do do kw'>do</span>
+  <span class='select identifier id'>select</span>  <span class='symbol val'>:all</span>
+  <span class='from identifier id'>from</span>    <span class='string val'>&quot;search.web&quot;</span>
+  <span class='where identifier id'>where</span>   <span class='symbol val'>:query</span><span class='comma token'>,</span> <span class='string val'>&quot;ruby&quot;</span>
+
+  <span class='discard identifier id'>discard</span> <span class='symbol val'>:title</span><span class='comma token'>,</span> <span class='regexp val'>/tuesday/i</span>
+<span class='end end kw'>end</span>
+
+<span class='Smoke constant id'>Smoke</span><span class='dot token'>.</span><span class='yql identifier id'>yql</span><span class='lparen token'>(</span><span class='symbol val'>:python</span><span class='rparen token'>)</span> <span class='do do kw'>do</span>
+  <span class='select identifier id'>select</span>  <span class='symbol val'>:all</span>
+  <span class='from identifier id'>from</span>    <span class='string val'>&quot;search.web&quot;</span>
+  <span class='where identifier id'>where</span>   <span class='symbol val'>:query</span><span class='comma token'>,</span> <span class='string val'>&quot;python&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
+
+<h3>Join sources and use them together</h3>
+
+<pre class="code"><span class='Smoke constant id'>Smoke</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='symbol val'>:ruby</span><span class='comma token'>,</span> <span class='symbol val'>:python</span><span class='rparen token'>)</span>
+</pre>
+
+<p>or even</p>
+
+<pre class="code"><span class='Smoke constant id'>Smoke</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='symbol val'>:python</span><span class='comma token'>,</span> <span class='symbol val'>:ruby</span><span class='rparen token'>)</span> <span class='do do kw'>do</span>
+  <span class='emit identifier id'>emit</span> <span class='do do kw'>do</span>
+    <span class='sort identifier id'>sort</span> <span class='symbol val'>:title</span>
+    <span class='rename identifier id'>rename</span> <span class='symbol val'>:shit_name</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:title</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+
+<h3>CI</h3>
+
+<p>Integrity <a href="http://integrity.ffolio.net/smoke">is running for smoke</a></p>
+
+<h3>TODO (working on, just mental notes)</h3>
+
+<ul>
+<li>YQL Definitions</li>
+<li>Consider variable injection (eg, allow to query sending a username within some aspect of the request)</li>
+<li>Implement a disaptch / request method that will actually thread property (event-machine)</li>
+<li>Checkout experimental fakeweb version to stub out the yql specs</li>
+</ul>
+
+<h4>Later / maybe</h4>
+
+<ul>
+<li>Allow for sources to explicitly set the content type being returned for those stupid content providers</li>
+<li>YQL w/oAuth</li>
+<li>YQL Subqueries?</li>
+</ul>
+
+<h3>Copyright</h3>
+
+<p>Copyright (c) 2009 Ben Schwarz. See LICENSE for details.</p>
+</div>
           </div>
         </div>
       </div>                    
