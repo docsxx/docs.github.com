@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>mojodna's oauth - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/mojodna/oauth/blob/b0fc4dd4533ec8c5f98589cff930d0ddb77b1d68">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/mojodna/oauth/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/mojodna/oauth">Wiki</a></li>
             <li class=""><a href="http://github.com/mojodna/oauth/graphs">Graphs</a></li>                    
-            <li class="active"><a href="mojodna/oauth">Documentation</a></li>
+            <li class="active"><a href="/mojodna/oauth">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,114 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/mojodna/oauth/blob/b0fc4dd4533ec8c5f98589cff930d0ddb77b1d68">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>Ruby OAuth GEM</h1>
+<h2>What</h2>
+<p>
+This is a RubyGem for implementing both OAuth clients and servers in Ruby
+applications.
+</p>
+<p>
+See the OAuth specs http://oauth.net/core/1.0/
+</p>
+<h2>Installing</h2>
+<pre class="code">
+  <span class='sudo identifier id'>sudo</span> <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='oauth identifier id'>oauth</span>
+</pre>
+<p>
+You can also install it from the oauth rubyforge project
+http://rubyforge.org/projects/oauth/.
+</p>
+<p>
+The source code is now hosted on the OAuth GitHub Project
+http://github.com/mojodna/oauth
+</p>
+<h2>The basics</h2>
+<p>
+This is a ruby library which is intended to be used in creating Ruby
+Consumer and Service Provider applications. It is NOT a Rails plugin, but
+could easily be used for the foundation for such a Rails plugin.
+</p>
+<p>
+As a matter of fact it has been pulled out from an OAuth Rails Plugin
+http://code.google.com/p/oauth-plugin/ which now requires this GEM.
+</p>
+<h2>Demonstration of usage</h2>
+<p>
+Create a new consumer instance by passing it a configuration hash:
+</p>
+<pre class="code">
+  <span class='@consumer ivar id'>@consumer</span> <span class='assign token'>=</span> <span class='OAuth constant id'>OAuth</span><span class='colon2 op'>::</span><span class='Consumer constant id'>Consumer</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;key&quot;</span><span class='comma token'>,</span><span class='string val'>&quot;secret&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:site</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;https://agree2&quot;</span><span class='rparen token'>)</span>
+</pre>
+<p>
+Start the process by requesting a token
+</p>
+<pre class="code">
+  <span class='@request_token ivar id'>@request_token</span> <span class='assign token'>=</span> <span class='@consumer ivar id'>@consumer</span><span class='dot token'>.</span><span class='get_request_token identifier id'>get_request_token</span>
+  <span class='session identifier id'>session</span><span class='lbrack token'>[</span><span class='symbol val'>:request_token</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='@request_token ivar id'>@request_token</span>
+  <span class='redirect_to identifier id'>redirect_to</span> <span class='@request_token ivar id'>@request_token</span><span class='dot token'>.</span><span class='authorize_url identifier id'>authorize_url</span>
+</pre>
+<p>
+When user returns create an access_token
+</p>
+<pre class="code">
+  <span class='@access_token ivar id'>@access_token</span> <span class='assign token'>=</span> <span class='@request_token ivar id'>@request_token</span><span class='dot token'>.</span><span class='get_access_token identifier id'>get_access_token</span>
+  <span class='@photos ivar id'>@photos</span> <span class='assign token'>=</span> <span class='@access_token ivar id'>@access_token</span><span class='dot token'>.</span><span class='get identifier id'>get</span><span class='lparen token'>(</span><span class='string val'>'/photos.xml'</span><span class='rparen token'>)</span>
+</pre>
+<p>
+For more detailed instructions I have written this OAuth Client Tutorial
+http://stakeventures.com/articles/2008/02/23/developing-oauth-clients-in-ruby
+and &quot;How to turn your rails site into an OAuth Provider
+&quot;:http://stakeventures.com/articles/2007/11/26/how-to-turn-your-rails-site-into-an-oauth-provider
+.
+</p>
+<p>
+Finally be sure to check out the OAuth RDoc Manual
+http://oauth.rubyforge.org/rdoc/ .
+</p>
+<h2>Documentation Wiki</h2>
+<p>
+There is some documentation on the Google Code project for the &quot;OAuth
+Rails Plugin&quot;:http://code.google.com/p/oauth-plugin/ :
+</p>
+<ul>
+<li>RequestToken http://code.google.com/p/oauth-plugin/wiki/RequestToken
 
+</li>
+<li>AccessToken http://code.google.com/p/oauth-plugin/wiki/AccessToken
+
+</li>
+</ul>
+<h2>Forum</h2>
+<p>
+http://groups.google.com/group/oauth-ruby
+</p>
+<h2>How to submit patches</h2>
+<p>
+Read the &quot;8 steps for fixing other people&#8217;s code&quot;
+http://drnicwilliams.com/2007/06/01/8-steps-for-fixing-other-peoples-code/.
+</p>
+<p>
+The source code is now hosted on the OAuth GitHub Project
+http://github.com/mojodna/oauth
+</p>
+<p>
+To submit a patch, please fork the oauth project and create a patch with
+tests. Once you&#8217;re happy with it send a pull request and post a
+message to the google group.
+</p>
+<h2>License</h2>
+<p>
+This code is free to use under the terms of the MIT license.
+</p>
+<h2>Contact</h2>
+<p>
+Comments are welcome. Send an email to &quot;Pelle Braendgaard&quot;
+pelleb@gmail.com email via the OAuth Ruby mailing list
+http://groups.google.com/group/oauth-ruby
+</p>
+
+</div>
           </div>
         </div>
       </div>                    
