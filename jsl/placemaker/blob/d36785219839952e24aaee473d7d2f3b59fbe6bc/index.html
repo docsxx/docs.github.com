@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>jsl's placemaker - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/jsl/placemaker/blob/d36785219839952e24aaee473d7d2f3b59fbe6bc">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/jsl/placemaker/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/jsl/placemaker">Wiki</a></li>
             <li class=""><a href="http://github.com/jsl/placemaker/graphs">Graphs</a></li>                    
-            <li class="active"><a href="jsl/placemaker">Documentation</a></li>
+            <li class="active"><a href="/jsl/placemaker">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,123 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/jsl/placemaker/blob/d36785219839952e24aaee473d7d2f3b59fbe6bc">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>Description</h1>
+<p>
+Yahoo! Placemaker is a freely available geoparsing Web service. It helps
+developers make their applications location-aware by identifying places in
+unstructured and atomic content - feeds, web pages, news, status updates -
+and returning geographic metadata for geographic indexing and markup.
+</p>
+<p>
+This library is a Ruby interface for accessing the {Yahoo PlaceMaker
+API}[http://developer.yahoo.com/geo/placemaker/].
+</p>
+<h1>Installation</h1>
+<p>
+Assuming that you&#8217;ve set up your ruby environment to pull gems from
+GitHub (see {the GitHub instructions if you haven&#8217;t yet done
+this}[http://gems.github.com]), install placemaker with the following
+command:
+</p>
+<pre class="code">
+  <span class='sudo identifier id'>sudo</span> <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='jsl identifier id'>jsl</span><span class='minus op'>-</span><span class='placemaker identifier id'>placemaker</span>
+</pre>
+<h1>Usage</h1>
+<p>
+The following is an example of using the Placemaker gem to read places in a
+standard feed. You&#8217;ll have to get a Yahoo App ID first if you
+haven&#8217;t already done so.
+</p>
+<pre class="code">
+  <span class='require identifier id'>require</span> <span class='string val'>'placemaker'</span>
+  <span class='p identifier id'>p</span> <span class='assign token'>=</span> <span class='Placemaker constant id'>Placemaker</span><span class='colon2 op'>::</span><span class='Client constant id'>Client</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='symbol val'>:appid</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='YOUR_APP_ID constant id'>YOUR_APP_ID</span><span class='comma token'>,</span> <span class='symbol val'>:document_url</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'http://feeds.feedburner.com/wooster'</span><span class='comma token'>,</span> <span class='symbol val'>:document_type</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'text/xml'</span><span class='rparen token'>)</span>
+  <span class='p identifier id'>p</span><span class='dot token'>.</span><span class='fetch! fid id'>fetch!</span>
+</pre>
+<p>
+This will make a call to the Placemaker service and populate the
+Placemaker::Client object with data about the places in the content that
+you sent to Yahoo. The information that you&#8217;ll be interested in may
+be divided into &quot;documents&quot; and &quot;meta-data&quot;.
+</p>
+<h2>Documents</h2>
+<p>
+Once you&#8217;ve run the <tt>fetch!</tt> method on the Placemaker::Client, you
+may invoke the method <tt>documents</tt> which will return a set of
+Placemaker::Document objects corresponding to each of the entries in the
+feed given to the placemaker service. For example, if you gave a
+<tt>document_url</tt> pointing to a feed containing 15 entries, there will
+be 15 documents in the resulting client object.
+</p>
+<p>
+The following are methods that you may invoke on each of the
+Placemaker::Document objects to find out more about the place information
+that Yahoo was able to glean from the input document:
+</p>
+<ul>
+<li>place_details - Returns a Placemaker::Location object that is a container
+for one named place mentioned in the document
 
+</li>
+<li>administrative_scope - Returns a Placemaker::Location object that is a
+container for the smallest administrative place that best describes the
+document
+
+</li>
+<li>geographic_scope - Returns a Placemaker::Location object that is a
+container for the smallest place that best describes the document
+
+</li>
+<li>extents - Returns a Placemaker::Extents object that is a container for the
+the map extents covering the places mentioned in the document
+
+</li>
+</ul>
+<p>
+Below is a summary of the methods that these objects respond to. You may
+wish to browse the Placemaker rdoc files for these classes to see for more
+details.
+</p>
+<h3>Placemaker::Location</h3>
+<p>
+Placemaker::Location objects contain a woe_id, name, location_type and
+centroid.
+</p>
+<ul>
+<li>woe_id - permanent identifier for the place
+
+</li>
+<li>name - fully qualified name for the place
+
+</li>
+<li>location_type - type name for the place
+
+</li>
+<li>centroid - centroid for the place, responds to <tt>lat</tt> and
+<tt>lng</tt>
+
+</li>
+</ul>
+<h3>Placemaker::Extents</h3>
+<p>
+Placemaker::Extents are bounding boxes for an area of interest. They
+respond to methods for <tt>center</tt>, <tt>south_west</tt> and
+<tt>north_east</tt>. In all of these cases, they return a
+Placemaker::Coordinates object responding to <tt>lat</tt> and <tt>lng</tt>.
+</p>
+<h2>Meta-data</h2>
+<p>
+The request to the Yahoo place coding service returns information about the
+request. You may invoke the methods <tt>processing_time</tt>,
+<tt>version</tt>, and <tt>document_length</tt> to find out more about the
+request.
+</p>
+<h1>Author</h1>
+<p>
+Justin S. Leitgeb, justin@phq.org
+</p>
+
+</div>
           </div>
         </div>
       </div>                    
