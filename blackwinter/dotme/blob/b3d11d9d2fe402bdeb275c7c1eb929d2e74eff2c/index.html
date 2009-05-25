@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>blackwinter's dotme - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/blackwinter/dotme/blob/b3d11d9d2fe402bdeb275c7c1eb929d2e74eff2c">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/blackwinter/dotme/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/blackwinter/dotme">Wiki</a></li>
             <li class=""><a href="http://github.com/blackwinter/dotme/graphs">Graphs</a></li>                    
-            <li class="active"><a href="blackwinter/dotme">Documentation</a></li>
+            <li class="active"><a href="/blackwinter/dotme">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,155 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/blackwinter/dotme/blob/b3d11d9d2fe402bdeb275c7c1eb929d2e74eff2c">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>dotme - The dotfile manager</h1>
+<h2>DESCRIPTION</h2>
+<p>
+DotMe keeps configuration files (a.k.a. dotfiles) under version control
+(git) and installs symbolic links under your home directory. It&#8217;s
+controlled via rake commands (see USAGE for more information).
+</p>
+<p>
+Where possible, custom configuration files
+(<tt>&lt;some-name&gt;.mine</tt>) are supported and included by whatever
+mechanism is provided by the respective configuration system.
+</p>
+<h2>USAGE</h2>
+<p>
+Change to the directory you installed dotme in (see INSTALL below), e.g.:
+</p>
+<pre class="code">
+  <span class='cd identifier id'>cd</span> <span class='bitnot op'>~</span><span class='regexp val'>/dotme
+</span></pre>
+<p>
+Install symlinks to dotfiles:
+</p>
+<pre class="code">
+  <span class='rake identifier id'>rake</span> <span class='install identifier id'>install</span>
+</pre>
+<p>
+Update codebase and symlinks (default task):
+</p>
+<pre class="code">
+  <span class='rake identifier id'>rake</span> <span class='lbrack token'>[</span><span class='update identifier id'>update</span><span class='rbrack token'>]</span>
+</pre>
+<p>
+Remove symlinks to dotfiles:
+</p>
+<pre class="code">
+  <span class='rake identifier id'>rake</span> <span class='uninstall identifier id'>uninstall</span>
+</pre>
+<p>
+See a list of all available tasks:
+</p>
+<pre class="code">
+  <span class='rake identifier id'>rake</span> <span class='minus op'>-</span><span class='T constant id'>T</span>
+</pre>
+<h2>INSTALL</h2>
+<p>
+First, you need git[http://git.or.cz/] for dotme to function. Install it,
+if you haven&#8217;t already, and come back here.
+</p>
+<p>
+Change to the directory you want to install dotme in, e.g.:
+</p>
+<pre class="code">
+  <span class='cd identifier id'>cd</span> <span class='bitnot op'>~</span>
+</pre>
+<p>
+Clone branch master of dotme:
+</p>
+<pre class="code">
+  <span class='git identifier id'>git</span> <span class='clone identifier id'>clone</span> <span class='git identifier id'>git</span><span class='symbol val'>:/</span><span class='regexp val'>/github.com/</span><span class='blackwinter identifier id'>blackwinter</span><span class='div op'>/</span><span class='dotme identifier id'>dotme</span><span class='dot token'>.</span><span class='git identifier id'>git</span>
+</pre>
+<p>
+Change to the new directory and optionally create an include/exclude file:
+</p>
+<pre class="code">
+  <span class='cd identifier id'>cd</span> <span class='dotme identifier id'>dotme</span>
+  <span class='vi identifier id'>vi</span> <span class='inclexcl identifier id'>inclexcl</span>
 
+    <span class='comment val'># i want vim and irb</span>
+    <span class='lt op'>&lt;</span><span class='tt identifier id'>tt</span><span class='gt op'>&gt;</span><span class='vim identifier id'>vim</span>
+    <span class='lt op'>&lt;</span><span class='regexp val'>/tt&gt;irb
+
+    # and bash_aliases
+    &lt;tt&gt;bash/</span><span class='bash_aliases identifier id'>bash_aliases</span>
+
+    <span class='comment val'># but git only without gitignore</span>
+    <span class='lt op'>&lt;</span><span class='regexp val'>/tt&gt;git
+    -git/</span><span class='gitignore identifier id'>gitignore</span>
+</pre>
+<p>
+Finally, install the symlinks:
+</p>
+<pre class="code">
+  <span class='rake identifier id'>rake</span> <span class='install identifier id'>install</span>
+</pre>
+<h2>ISSUES</h2>
+<ul>
+<li><tt>git-config</tt> replaces <tt>~/.gitconfig</tt> symlink with real file
+[1]. So, if you update your git configuration through <tt>git-config
+--global</tt>, the config file will no longer be tracked by dotme.
+Instead, edit it directly.
+
+<p>
+[1]<b> </b>&lt;http://kerneltrap.org/mailarchive/git/2007/7/15/251676&gt;
+</p>
+</li>
+<li><tt>git-config</tt> doesn&#8217;t expand variables in <tt>~/.gitconfig</tt>
+file. See e.g. [2]. This means you have to update the <tt>name</tt>,
+<tt>email</tt>, and <tt>excludesfile</tt> settings in the configuration
+file. In particular, without the latter being adjusted you won&#8217;t
+benefit from the shipped <tt>~/.gitignore</tt> file.
+
+<p>
+[2]<b> </b>&lt;http://kerneltrap.org/mailarchive/git/2008/8/22/3047784&gt;
+</p>
+</li>
+</ul>
+<h2>CALL TO ACTION</h2>
+<p>
+If you want to contribute modifications to existing dotfiles or add some of
+your own, just send me a patch or a pull request. The same goes for any
+bugs or issues you find.
+</p>
+<h2>LINKS</h2>
+<p>
+</p>
+<table>
+<tr><td valign="top">Source code:</td><td>&lt;http://github.com/blackwinter/dotme&gt;
+
+</td></tr>
+</table>
+<h2>AUTHORS</h2>
+<ul>
+<li>Jens Wille &lt;mailto:jens.wille@uni-koeln.de&gt;
+
+</li>
+</ul>
+<h2>LICENSE AND COPYRIGHT</h2>
+<p>
+Copyright (C) 2008 Jens Wille
+</p>
+<p>
+dotme is free software: you can redistribute it and/or modify it under the
+terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
+</p>
+<p>
+dotme is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+details.
+</p>
+<p>
+You should have received a copy of the GNU General Public License along
+with dotme. If not, see &lt;http://www.gnu.org/licenses/&gt;.
+</p>
+
+</div>
           </div>
         </div>
       </div>                    
