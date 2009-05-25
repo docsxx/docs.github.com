@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>robolson's ruby-poker - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/robolson/ruby-poker/blob/bcc1291a08470d51749db74ace7b79f6e54257b7">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/robolson/ruby-poker/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/robolson/ruby-poker">Wiki</a></li>
             <li class=""><a href="http://github.com/robolson/ruby-poker/graphs">Graphs</a></li>                    
-            <li class="active"><a href="robolson/ruby-poker">Documentation</a></li>
+            <li class="active"><a href="/robolson/ruby-poker">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,79 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/robolson/ruby-poker/blob/bcc1291a08470d51749db74ace7b79f6e54257b7">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>Poker library in Ruby</h1>
+<h3></h3>
+<table>
+<tr><td valign="top">Author:</td><td><tt>Olson</tt>[http://thinkingdigitally.com]
 
+</td></tr>
+<tr><td valign="top">Email:</td><td>rko618 [at] gmail.com
+
+</td></tr>
+<tr><td valign="top">GitHub:</td><td>http://github.com/robolson/ruby-poker/
+
+</td></tr>
+</table>
+<h2>Description</h2>
+<p>
+Ruby-Poker handles the logic for getting the rank of a poker hand. It can
+also be used to compare two or more hands to determine which hand has the
+highest poker value.
+</p>
+<p>
+Card representations can be passed to the PokerHand constructor as a string
+or an array. Face cards (cards ten, jack, queen, king, and ace) are created
+using their letter representation (T, J, Q, K, A).
+</p>
+<h2>Install</h2>
+<pre class="code">
+    <span class='sudo identifier id'>sudo</span> <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='ruby identifier id'>ruby</span><span class='minus op'>-</span><span class='poker identifier id'>poker</span>
+</pre>
+<h2>Example</h2>
+<pre class="code">
+    <span class='require identifier id'>require</span> <span class='string val'>'rubygems'</span>
+    <span class='require identifier id'>require</span> <span class='string val'>'ruby-poker'</span>
+
+    <span class='hand1 identifier id'>hand1</span> <span class='assign token'>=</span> <span class='PokerHand constant id'>PokerHand</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;8H 9C TC JD QH&quot;</span><span class='rparen token'>)</span>
+    <span class='hand2 identifier id'>hand2</span> <span class='assign token'>=</span> <span class='PokerHand constant id'>PokerHand</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='lbrack token'>[</span><span class='string val'>&quot;3D&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;3C&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;3S&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;KD&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;AH&quot;</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+    <span class='puts identifier id'>puts</span> <span class='hand1 identifier id'>hand1</span>                <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>8</span><span class='h identifier id'>h</span> <span class='integer val'>9</span><span class='c identifier id'>c</span> <span class='Tc constant id'>Tc</span> <span class='Jd constant id'>Jd</span> <span class='Qh constant id'>Qh</span> <span class='lparen token'>(</span><span class='Straight constant id'>Straight</span><span class='rparen token'>)</span>
+    <span class='puts identifier id'>puts</span> <span class='hand1 identifier id'>hand1</span><span class='dot token'>.</span><span class='just_cards identifier id'>just_cards</span>     <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>8</span><span class='h identifier id'>h</span> <span class='integer val'>9</span><span class='c identifier id'>c</span> <span class='Tc constant id'>Tc</span> <span class='Jd constant id'>Jd</span> <span class='Qh constant id'>Qh</span>
+    <span class='puts identifier id'>puts</span> <span class='hand1 identifier id'>hand1</span><span class='dot token'>.</span><span class='rank identifier id'>rank</span>           <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='Straight constant id'>Straight</span>
+    <span class='puts identifier id'>puts</span> <span class='hand2 identifier id'>hand2</span>                <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>3</span><span class='d identifier id'>d</span> <span class='integer val'>3</span><span class='c identifier id'>c</span> <span class='integer val'>3</span><span class='s identifier id'>s</span> <span class='Kd constant id'>Kd</span> <span class='Ah constant id'>Ah</span> <span class='lparen token'>(</span><span class='Three constant id'>Three</span> <span class='of identifier id'>of</span> <span class='a identifier id'>a</span> <span class='kind identifier id'>kind</span><span class='rparen token'>)</span>
+    <span class='puts identifier id'>puts</span> <span class='hand2 identifier id'>hand2</span><span class='dot token'>.</span><span class='rank identifier id'>rank</span>           <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='Three constant id'>Three</span> <span class='of identifier id'>of</span> <span class='a identifier id'>a</span> <span class='kind identifier id'>kind</span>
+    <span class='puts identifier id'>puts</span> <span class='hand1 identifier id'>hand1</span> <span class='gt op'>&gt;</span> <span class='hand2 identifier id'>hand2</span>        <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span>
+</pre>
+<h2>Duplicates</h2>
+<p>
+By default ruby-poker will not raise an exception if you add the same card
+to a hand twice. You can tell ruby-poker to not allow duplicates by doing
+the following
+</p>
+<pre class="code">
+    <span class='PokerHand constant id'>PokerHand</span><span class='dot token'>.</span><span class='allow_duplicates identifier id'>allow_duplicates</span> <span class='assign token'>=</span> <span class='false false kw'>false</span>
+</pre>
+<p>
+Place that line near the beginning of your program. The change is program
+wide so once allow_duplicates is set to false, <em>all</em> poker hands
+will raise an exception if a duplicate card is added to the hand.
+</p>
+<h2>Compatibility</h2>
+<p>
+Ruby-Poker is compatible with Ruby 1.8.6 and Ruby 1.9.1.
+</p>
+<h2>History</h2>
+<p>
+In the 0.2.0 release Patrick Hurley&#8217;s Texas Holdem code from
+http://www.rubyquiz.com/quiz24.html was merged into ruby-poker.
+</p>
+<h2>License</h2>
+<p>
+This is free software; you can redistribute it and/or modify it under the
+terms of the BSD license. See LICENSE for more details.
+</p>
+
+</div>
           </div>
         </div>
       </div>                    
