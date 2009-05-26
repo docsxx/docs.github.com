@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>jnunemaker's happymapper - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/jnunemaker/happymapper/blob/741b7d5b007c0832807ce9f86c7800efc7f8bd51">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/jnunemaker/happymapper/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/jnunemaker/happymapper">Wiki</a></li>
             <li class=""><a href="http://github.com/jnunemaker/happymapper/graphs">Graphs</a></li>                    
-            <li class="active"><a href="jnunemaker/happymapper">Documentation</a></li>
+            <li class="active"><a href="/jnunemaker/happymapper">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,83 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/jnunemaker/happymapper/blob/741b7d5b007c0832807ce9f86c7800efc7f8bd51">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>happymapper</h1>
+<h2>DESCRIPTION:</h2>
+<p>
+Object to xml mapping library. I have included examples to help get you
+going. The specs should also point you in the right direction.
+</p>
+<h2>FEATURES:</h2>
+<ul>
+<li>Easy to define xml attributes and elements for an object
 
+</li>
+<li>Fast because it uses libxml-ruby under the hood
+
+</li>
+<li>Automatic conversion of xml to defined objects
+
+</li>
+</ul>
+<h2>EXAMPLES:</h2>
+<p>
+Here is a simple example that maps Twitter statuses and users.
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='User constant id'>User</span>
+    <span class='include identifier id'>include</span> <span class='HappyMapper constant id'>HappyMapper</span>
+
+    <span class='element identifier id'>element</span> <span class='symbol val'>:id</span><span class='comma token'>,</span> <span class='Integer constant id'>Integer</span>
+    <span class='element identifier id'>element</span> <span class='symbol val'>:name</span><span class='comma token'>,</span> <span class='String constant id'>String</span>
+    <span class='element identifier id'>element</span> <span class='symbol val'>:screen_name</span><span class='comma token'>,</span> <span class='String constant id'>String</span>
+    <span class='element identifier id'>element</span> <span class='symbol val'>:location</span><span class='comma token'>,</span> <span class='String constant id'>String</span>
+    <span class='element identifier id'>element</span> <span class='symbol val'>:description</span><span class='comma token'>,</span> <span class='String constant id'>String</span>
+    <span class='element identifier id'>element</span> <span class='symbol val'>:profile_image_url</span><span class='comma token'>,</span> <span class='String constant id'>String</span>
+    <span class='element identifier id'>element</span> <span class='symbol val'>:url</span><span class='comma token'>,</span> <span class='String constant id'>String</span>
+    <span class='element identifier id'>element</span> <span class='symbol val'>:protected</span><span class='comma token'>,</span> <span class='Boolean constant id'>Boolean</span>
+    <span class='element identifier id'>element</span> <span class='symbol val'>:followers_count</span><span class='comma token'>,</span> <span class='Integer constant id'>Integer</span>
+  <span class='end end kw'>end</span>
+
+  <span class='class class kw'>class</span> <span class='Status constant id'>Status</span>
+    <span class='include identifier id'>include</span> <span class='HappyMapper constant id'>HappyMapper</span>
+
+    <span class='element identifier id'>element</span> <span class='symbol val'>:id</span><span class='comma token'>,</span> <span class='Integer constant id'>Integer</span>
+    <span class='element identifier id'>element</span> <span class='symbol val'>:text</span><span class='comma token'>,</span> <span class='String constant id'>String</span>
+    <span class='element identifier id'>element</span> <span class='symbol val'>:created_at</span><span class='comma token'>,</span> <span class='Time constant id'>Time</span>
+    <span class='element identifier id'>element</span> <span class='symbol val'>:source</span><span class='comma token'>,</span> <span class='String constant id'>String</span>
+    <span class='element identifier id'>element</span> <span class='symbol val'>:truncated</span><span class='comma token'>,</span> <span class='Boolean constant id'>Boolean</span>
+    <span class='element identifier id'>element</span> <span class='symbol val'>:in_reply_to_status_id</span><span class='comma token'>,</span> <span class='Integer constant id'>Integer</span>
+    <span class='element identifier id'>element</span> <span class='symbol val'>:in_reply_to_user_id</span><span class='comma token'>,</span> <span class='Integer constant id'>Integer</span>
+    <span class='element identifier id'>element</span> <span class='symbol val'>:favorited</span><span class='comma token'>,</span> <span class='Boolean constant id'>Boolean</span>
+    <span class='has_one identifier id'>has_one</span> <span class='symbol val'>:user</span><span class='comma token'>,</span> <span class='User constant id'>User</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+See examples directory in the gem for more examples.
+</p>
+<p>
+http://github.com/jnunemaker/happymapper/tree/master/examples/
+</p>
+<h2>INSTALL:</h2>
+<ul>
+<li>sudo gem install jnunemaker-happymapper -s http://gems.github.com
+
+</li>
+<li>sudo gem install happymapper (when rubyforge approves and i release there)
+
+</li>
+</ul>
+<h2>TICKETS:</h2>
+<p>
+http://github.com/jnunemaker/happymapper/issues/
+</p>
+<h2>DOCS:</h2>
+<p>
+http://rdoc.info/projects/jnunemaker/happymapper
+</p>
+
+</div>
           </div>
         </div>
       </div>                    
