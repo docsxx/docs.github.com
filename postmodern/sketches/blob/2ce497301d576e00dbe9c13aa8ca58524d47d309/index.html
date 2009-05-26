@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>postmodern's sketches - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/postmodern/sketches/blob/2ce497301d576e00dbe9c13aa8ca58524d47d309">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/postmodern/sketches/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/postmodern/sketches">Wiki</a></li>
             <li class=""><a href="http://github.com/postmodern/sketches/graphs">Graphs</a></li>                    
-            <li class="active"><a href="postmodern/sketches">Documentation</a></li>
+            <li class="active"><a href="/postmodern/sketches">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,133 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/postmodern/sketches/blob/2ce497301d576e00dbe9c13aa8ca58524d47d309">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>Sketches</h1>
+<ul>
+<li>http://sketches.rubyforge.org/
 
+</li>
+<li>http://github.com/postmodern/sketches/
+
+</li>
+<li>Postmodern (postmodern.mod3 at gmail.com)
+
+</li>
+</ul>
+<h2>DESCRIPTION:</h2>
+<p>
+Sketches allows you to create and edit Ruby code from the comfort of your
+editor, while having it safely reloaded in IRB whenever changes to the code
+are saved.
+</p>
+<h2>FEATURES:</h2>
+<ul>
+<li>Spawn an editor of your choosing from IRB.
+
+</li>
+<li>Automatically reload your code when it changes.
+
+</li>
+<li>Use a custom editor command.
+
+</li>
+<li>Use a custom temp directory to store sketches in.
+
+</li>
+</ul>
+<h2>INSTALL:</h2>
+<pre class="code">
+  $ <span class='sudo identifier id'>sudo</span> <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='sketches identifier id'>sketches</span>
+</pre>
+<p>
+Then require sketches in your <tt>.irbrc</tt> file:
+</p>
+<pre class="code">
+  <span class='require identifier id'>require</span> <span class='string val'>'sketches'</span>
+</pre>
+<p>
+Sketches can be configured to use a custom editor command:
+</p>
+<pre class="code">
+  <span class='Sketches constant id'>Sketches</span><span class='dot token'>.</span><span class='config identifier id'>config</span> <span class='symbol val'>:editor</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'gvim'</span>
+
+  <span class='Sketches constant id'>Sketches</span><span class='dot token'>.</span><span class='config identifier id'>config</span> <span class='symbol val'>:editor</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lambda identifier id'>lambda</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='path identifier id'>path</span><span class='bitor op'>|</span>
+    <span class='dstring node'>&quot;xterm -fg gray -bg black -e vim #{path} &amp;&quot;</span>
+  <span class='rbrace token'>}</span>
+</pre>
+<h2>EXAMPLES:</h2>
+<ul>
+<li>Open a new sketch:
+
+<pre class="code">
+  <span class='sketch identifier id'>sketch</span>
+</pre>
+</li>
+<li>Open a new named sketch:
+
+<pre class="code">
+  <span class='sketch identifier id'>sketch</span> <span class='symbol val'>:foo</span>
+</pre>
+</li>
+<li>Open a sketch from an existing file:
+
+<pre class="code">
+  <span class='sketch_from identifier id'>sketch_from</span> <span class='string val'>'path/to/bar.rb'</span>
+</pre>
+</li>
+<li>Reopen an existing sketch:
+
+<pre class="code">
+  <span class='sketch identifier id'>sketch</span> <span class='integer val'>2</span>
+
+  <span class='sketch identifier id'>sketch</span> <span class='symbol val'>:foo</span>
+</pre>
+</li>
+<li>List all sketches:
+
+<pre class="code">
+  <span class='sketches identifier id'>sketches</span>
+</pre>
+</li>
+<li>Name a sketch:
+
+<pre class="code">
+  <span class='name_sketch identifier id'>name_sketch</span> <span class='integer val'>2</span><span class='comma token'>,</span> <span class='symbol val'>:foo</span>
+</pre>
+</li>
+<li>Save a sketch to an alternant location:
+
+<pre class="code">
+  <span class='save_sketch identifier id'>save_sketch</span> <span class='symbol val'>:foo</span><span class='comma token'>,</span> <span class='string val'>'path/to/foo.rb'</span>
+</pre>
+</li>
+</ul>
+<h2>LICENSE:</h2>
+<p>
+Sketches - A Ruby library for live programming.
+</p>
+<p>
+Copyright &#169; 2009 Hal Brodigan (postmodern.mod3 at gmail.com)
+</p>
+<p>
+This program is free software; you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the Free
+Software Foundation; either version 2 of the License, or (at your option)
+any later version.
+</p>
+<p>
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+more details.
+</p>
+<p>
+You should have received a copy of the GNU General Public License along
+with this program; if not, write to the Free Software Foundation, Inc., 51
+Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
+</p>
+
+</div>
           </div>
         </div>
       </div>                    
