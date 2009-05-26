@@ -1,11 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
-    <title>bobes's textmagic - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/bobes/textmagic/blob/f3212921afe400fb578d5361f4d2db28eeca3fcd">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
+    <title>bobes's textmagic - Module: TextMagic::API::Response - GitHub Documentation</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -16,7 +12,7 @@
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
 <script type="text/javascript" src="http://assets3.github.com/javascripts/bundle.js"></script>              
-<script src="app.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../app.js" type="text/javascript" charset="utf-8"></script>
 
 <script type="text/javascript" src="http://docs.github.com/javascripts/md5.js"></script>
 <script type="text/javascript" src="http://docs.github.com/javascripts/repos.js"></script>
@@ -46,12 +42,11 @@
   });
 </script>
 
-    <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
+    <link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
   </head>
   <body>    
+    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +80,7 @@
             <li class=""><a href="http://github.com/bobes/textmagic/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/bobes/textmagic">Wiki</a></li>
             <li class=""><a href="http://github.com/bobes/textmagic/graphs">Graphs</a></li>                    
-            <li class="active"><a href="bobes/textmagic">Documentation</a></li>
+            <li class="active"><a href="/bobes/textmagic">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +106,96 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/bobes/textmagic/blob/f3212921afe400fb578d5361f4d2db28eeca3fcd">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="wikistyle">
+  <div class="section module TextMagic_API_Response">
+  <h1>Module: TextMagic::API::Response</h1>
+  <div class="section docstring">
+  <p>
+Used to cleanup response hash and extend it with custom reader methods.
+</p>
+<h3>Account response hash</h3>
+<p>
+When extended, it
+</p>
+<ul>
+<li>converts the <tt>balance</tt> value to <tt>float</tt> and
 
+</li>
+<li>adds a reader method <tt>balance</tt>.
+
+</li>
+</ul>
+<h3>Send response hash</h3>
+<p>
+When extended, it
+</p>
+<ul>
+<li>inverts the <tt>message_id</tt> hash and puts it in
+<tt>message_id_hash</tt>,
+
+</li>
+<li>adds an array of ids to <tt>message_ids</tt>,
+
+</li>
+<li>adds reader methods <tt>message_id_hash</tt>, <tt>message_ids</tt>,
+<tt>sent_text</tt> and <tt>parts_count</tt> to the hash.
+
+</li>
+<li>adds a reader method <tt>message_id</tt>, which returns a
+<tt>message_id</tt> for a given phone number, or the first message_id if no
+phone number is specified.
+
+</li>
+</ul>
+<h3>Message status response hash</h3>
+<p>
+When extended, it
+</p>
+<ul>
+<li>converts the <tt>credits_cost</tt> value to <tt>float</tt>,
+
+</li>
+<li>converts the <tt>created_time</tt> and <tt>completed_time</tt> values to
+<tt>Time</tt>,
+
+</li>
+<li>adds reader methods <tt>text</tt>, <tt>status</tt>, <tt>reply_number</tt>,
+<tt>credits_cost</tt>, <tt>created_time</tt> and <tt>completed_time</tt> to
+all values of the hash.
+
+</li>
+</ul>
+<h3>Receive status response hash</h3>
+<p>
+When extended, it
+</p>
+<ul>
+<li>converts the <tt>timestamp</tt> value to <tt>Time</tt>,
+
+</li>
+<li>adds reader methods <tt>messages</tt> and <tt>unread</tt> to the hash
+
+</li>
+<li>adds reader methods <tt>message_id</tt>, <tt>timestamp</tt>, <tt>text</tt>
+and <tt>from</tt> to all members of the <tt>messages</tt> array.
+
+</li>
+</ul>
+<h3>Delete reply response hash</h3>
+<p>
+When extended, it
+</p>
+<ul>
+<li>adds a reader method <tt>deleted</tt>.
+
+</li>
+</ul>
+
+</div><div class="section constants">
+  
+</div>
+</div>
+</div>
           </div>
         </div>
       </div>                    
