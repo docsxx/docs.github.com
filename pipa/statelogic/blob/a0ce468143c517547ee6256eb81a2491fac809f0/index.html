@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>pipa's statelogic - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/pipa/statelogic/blob/a0ce468143c517547ee6256eb81a2491fac809f0">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/pipa/statelogic/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/pipa/statelogic">Wiki</a></li>
             <li class=""><a href="http://github.com/pipa/statelogic/graphs">Graphs</a></li>                    
-            <li class="active"><a href="pipa/statelogic">Documentation</a></li>
+            <li class="active"><a href="/pipa/statelogic">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,96 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/pipa/statelogic/blob/a0ce468143c517547ee6256eb81a2491fac809f0">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h3>Introduction</h3>
+<p>
+O hai!
+</p>
+<h3>Features</h3>
+<ul>
+<li>State transitions validation.
 
+</li>
+<li>State-scoped validations.
+
+</li>
+<li>State-scoped lifecycle callbacks (before|after_save, etc)
+
+</li>
+<li>???????
+
+</li>
+<li>PROFIT!!!11
+
+</li>
+</ul>
+<p>
+As a bonus you get multiple conditions in <tt>:if|:unless =&gt; [:one,
+:two, &#8230;]</tt> callback and validation options (as in edge Rails).
+</p>
+<h3>Installation</h3>
+<pre class="code">
+  <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='pipa identifier id'>pipa</span><span class='minus op'>-</span><span class='statelogic identifier id'>statelogic</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='source identifier id'>source</span> <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/gems.github.com
+</span></pre>
+<p>
+Installable as a plugin too.
+</p>
+<h3>Docs</h3>
+<p>
+http://rdoc.info/projects/pipa/statelogic
+</p>
+<h3>Bugs &amp; such</h3>
+<p>
+Please report via Github issue tracking.
+</p>
+<p>
+Hint: If you feel like generous today you can tip me at
+http://tipjoy.com/u/pisuka
+</p>
+<h3>Example</h3>
+<pre class="code">
+    <span class='class class kw'>class</span> <span class='Order constant id'>Order</span> <span class='lt op'>&lt;</span> <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
+      <span class='dot3 op'>...</span>
+      <span class='statelogic identifier id'>statelogic</span> <span class='symbol val'>:attribute</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:state</span> <span class='do do kw'>do</span> <span class='comment val'># &lt;tt&gt;:state&lt;/tt&gt; is the default value, may be omitted</span>
+        <span class='comment val'># you get methods &lt;tt&gt;unpaid?&lt;/tt&gt; and &lt;tt&gt;was_unpaid?&lt;/tt&gt;.</span>
+        <span class='comment val'># may be more than one initial state.</span>
+        <span class='initial_state identifier id'>initial_state</span> <span class='string val'>'unpaid'</span> <span class='do do kw'>do</span>
+          <span class='transitions_to identifier id'>transitions_to</span> <span class='string val'>'ready'</span><span class='comma token'>,</span> <span class='string val'>'suspended'</span> <span class='comment val'># won't let you change to wrong states</span>
+        <span class='end end kw'>end</span>
+        <span class='state identifier id'>state</span> <span class='string val'>'ready'</span> <span class='do do kw'>do</span> <span class='comment val'># you get &lt;tt&gt;ready?&lt;/tt&gt;, &lt;tt&gt;was_ready?&lt;/tt&gt;</span>
+          <span class='transitions_to identifier id'>transitions_to</span> <span class='string val'>'redeemed'</span><span class='comma token'>,</span> <span class='string val'>'suspended'</span>
+          <span class='validates_presence_of identifier id'>validates_presence_of</span> <span class='symbol val'>:txref</span> <span class='comment val'># scoped validations</span>
+          <span class='before_save identifier id'>before_save</span> <span class='symbol val'>:prepare_for_plucking</span> <span class='comment val'># scoped callbacks</span>
+        <span class='end end kw'>end</span>
+        <span class='state identifier id'>state</span> <span class='string val'>'redeemed'</span> <span class='do do kw'>do</span> <span class='comment val'># likewise</span>
+          <span class='transitions_to identifier id'>transitions_to</span> <span class='string val'>'suspended'</span>
+          <span class='validates_presence_of identifier id'>validates_presence_of</span> <span class='symbol val'>:txref</span><span class='comma token'>,</span> <span class='symbol val'>:redeemed_at</span><span class='comma token'>,</span> <span class='symbol val'>:facility_id</span> <span class='comment val'># scoped validations</span>
+        <span class='end end kw'>end</span>
+        <span class='state identifier id'>state</span> <span class='string val'>'suspended'</span> <span class='do do kw'>do</span> <span class='comment val'># you guess</span>
+          <span class='transitions_to identifier id'>transitions_to</span> <span class='string val'>'unpaid'</span><span class='comma token'>,</span> <span class='string val'>'ready'</span><span class='comma token'>,</span> <span class='string val'>'redeemed'</span>
+          <span class='validate identifier id'>validate</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='order identifier id'>order</span><span class='bitor op'>|</span>
+            <span class='order identifier id'>order</span><span class='dot token'>.</span><span class='errors identifier id'>errors</span><span class='dot token'>.</span><span class='add identifier id'>add</span><span class='lparen token'>(</span><span class='symbol val'>:txref</span><span class='comma token'>,</span> <span class='symbol val'>:invalid</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='order identifier id'>order</span><span class='dot token'>.</span><span class='txref identifier id'>txref</span> <span class='andop op'>&amp;&amp;</span> <span class='order identifier id'>order</span><span class='dot token'>.</span><span class='txref identifier id'>txref</span> <span class='nmatch op'>!~</span> <span class='regexp val'>/\AREF/</span>
+          <span class='end end kw'>end</span>
+        <span class='end end kw'>end</span>
+      <span class='end end kw'>end</span>
+      <span class='dot3 op'>...</span>
+    <span class='end end kw'>end</span>
+
+    <span class='order identifier id'>order</span> <span class='assign token'>=</span> <span class='Order constant id'>Order</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+    <span class='order identifier id'>order</span><span class='dot token'>.</span><span class='state identifier id'>state</span> <span class='assign token'>=</span> <span class='string val'>'wtf'</span>
+    <span class='order identifier id'>order</span><span class='dot token'>.</span><span class='txref identifier id'>txref</span> <span class='assign token'>=</span> <span class='string val'>'orly'</span>
+    <span class='order identifier id'>order</span><span class='dot token'>.</span><span class='valid? fid id'>valid?</span> <span class='comment val'># Please note that state transition checks are done during</span>
+                 <span class='comment val'># the validation step as well, and the error is added to</span>
+                 <span class='comment val'># the model's &lt;tt&gt;errors&lt;/tt&gt; collection on the state column and</span>
+                 <span class='comment val'># will appear on your form. Standard ActiveRecord's error</span>
+                 <span class='comment val'># message &lt;tt&gt;:inclusion&lt;/tt&gt; is used. Override it with Rails i18n</span>
+                 <span class='comment val'># for something more specific if it's to be displayed to user.</span>
+</pre>
+<p>
+Copyright &#169; 2009 Igor Gunko, released under the MIT license
+</p>
+
+</div>
           </div>
         </div>
       </div>                    
