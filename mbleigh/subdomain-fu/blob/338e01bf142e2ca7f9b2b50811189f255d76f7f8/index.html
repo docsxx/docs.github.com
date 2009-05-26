@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>mbleigh's subdomain-fu - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/mbleigh/subdomain-fu/blob/338e01bf142e2ca7f9b2b50811189f255d76f7f8">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/mbleigh/subdomain-fu/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/mbleigh/subdomain-fu">Wiki</a></li>
             <li class=""><a href="http://github.com/mbleigh/subdomain-fu/graphs">Graphs</a></li>                    
-            <li class="active"><a href="mbleigh/subdomain-fu">Documentation</a></li>
+            <li class="active"><a href="/mbleigh/subdomain-fu">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,155 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/mbleigh/subdomain-fu/blob/338e01bf142e2ca7f9b2b50811189f255d76f7f8">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <p>
+SubdomainFu
+</p>
+<h6>=====</h6>
+<p>
+SubdomainFu provides a modern implementation of subdomain handling in
+Rails. It takes aspects from account_location, request_routing, and other
+snippets found around the web and combines them to provide a single, simple
+solution for subdomain-based route and url management.
+</p>
+<p>
+Installation
+</p>
+<h6>======</h6>
+<p>
+SubdomainFu is available both as a traditional plugin and a GemPlugin. To
+install it as a traditional plugin (Rails 2.1 or later):
+</p>
+<pre class="code">
+  <span class='script identifier id'>script</span><span class='div op'>/</span><span class='plugin identifier id'>plugin</span> <span class='install identifier id'>install</span> <span class='git identifier id'>git</span><span class='symbol val'>:/</span><span class='regexp val'>/github.com/</span><span class='mbleigh identifier id'>mbleigh</span><span class='div op'>/</span><span class='subdomain identifier id'>subdomain</span><span class='minus op'>-</span><span class='fu identifier id'>fu</span><span class='dot token'>.</span><span class='git identifier id'>git</span>
+</pre>
+<p>
+To use it as a GemPlugin, add it to your environment.rb:
+</p>
+<pre class="code">
+  <span class='config identifier id'>config</span><span class='dot token'>.</span><span class='gem identifier id'>gem</span> <span class='string val'>'mbleigh-subdomain-fu'</span><span class='comma token'>,</span> <span class='symbol val'>:source</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;http://gems.github.com&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:lib</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;subdomain-fu&quot;</span>
+</pre>
+<p>
+Examples
+</p>
+<h6>==</h6>
+<p>
+SubdomainFu works inside of Rails&#8217;s URL Writing mechanisms to provide
+an easy and seamless way to link and otherwise understand cross-subdomain
+routing. You can use the :subdomain option both in named and non-named
+routes as well as in generated resources routes.
+</p>
+<p>
+Let&#8217;s say my domain is &#8216;intridea.com&#8217;. Here are some
+examples of the use of the :subdomain option:
+</p>
+<p>
+url_for(:controller =&gt; &quot;my_controller&quot;,
+</p>
+<pre class="code">
+        <span class='symbol val'>:action</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;my_action&quot;</span><span class='comma token'>,</span>
+        <span class='symbol val'>:subdomain</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;awesome&quot;</span><span class='rparen token'>)</span> <span class='comment val'># =&gt; http://awesome.intridea.com/my_controller/my_action</span>
+</pre>
+<p>
+Now let&#8217;s say I&#8217;m at http://awesome.intridea.com/ and I want
+back to the root. Specifying &quot;false&quot; will remove any current
+subdomain:
+</p>
+<p>
+users_url(:subdomain =&gt; false) # =&gt; http://intridea.com/users
+</p>
+<p>
+Note that this plugin does not honor the :only_path notion of routing when
+doing so would go against the intent of the command. For example, if I were
+at http://intridea.com again:
+</p>
+<p>
+users_path(:subdomain =&gt; &quot;fun&quot;) # =&gt;
+http://fun.intridea.com/users users_path(:subdomain =&gt; false) # =&gt;
+/users
+</p>
+<p>
+In this way you can rest assured that you will never misdirect your links
+to the same subdomain when you meant to change it.
+</p>
+<p>
+Configuration
+</p>
+<h6>=======</h6>
+<p>
+You may need to configure SubdomainFu based on your development setup. The
+configuration required is:
+</p>
+<p>
+tld_size
+</p>
+<hr size="6"></hr><p>
+A hash for each environment of the size of the top-level domain name.
+(something.com = 1, localhost = 0, etc.)
+</p>
+<p>
+SubdomainFu.tld_size = 1 # sets for current environment
+SubdomainFu.tld_sizes = {:development =&gt; 0,
+</p>
+<pre class="code">
+                         <span class='symbol val'>:test</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>0</span><span class='comma token'>,</span>
+                         <span class='symbol val'>:production</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>1</span><span class='rbrace token'>}</span> <span class='comment val'># set all at once (also the defaults)</span>
+</pre>
+<p>
+mirrors
+</p>
+<hr size="5"></hr><p>
+Mirrors are the subdomains that are equivalent to no subdomain (i.e. they
+&#8216;mirror&#8217;) the usage of the root domain.
+</p>
+<p>
+SubdomainFu.mirrors = %w(www site we) # Defaults to %w(www)
+</p>
+<p>
+preferred_mirror
+</p>
+<hr size="10"></hr><p>
+SubdomainFu also understands the notion of a &#8216;preferred
+mirror&#8217;, that is, if you always want your links going to
+&#8216;www.yourdomain.com&#8217; instead of &#8216;yourdomain.com&#8217;,
+you can set the preferred mirror like so:
+</p>
+<p>
+SubdomainFu.preferred_mirror = &quot;www&quot;
+</p>
+<p>
+Now when you create a link to a false subdomain
+</p>
+<p>
+Known Issues / Future Work
+</p>
+<h6>====================</h6>
+<p>
+SubdomainFu will eventually integrate with Rails&#8217; routing internals
+to provide the ability to specify routes based on the condition of a
+specific subdomain or simply whether a subdomain is present (or a mirror).
+</p>
+<p>
+Resources
+</p>
+<h6>===</h6>
+<ul>
+<li>Acts As Community Project: http://actsascommunity.com/projects/subdomain-fu
 
+</li>
+<li>GitHub Repository: http://github.com/mbleigh/subdomain-fu
+
+</li>
+<li>Lighthouse: http://mbleigh.lighthouseapp.com/projects/13148-subdomain-fu
+
+</li>
+</ul>
+<p>
+Copyright &#169; 2008 Michael Bleigh (http://www.mbleigh.com/) and
+Intridea, Inc. (http://www.intridea.com/). Released under the MIT license
+</p>
+
+</div>
           </div>
         </div>
       </div>                    
