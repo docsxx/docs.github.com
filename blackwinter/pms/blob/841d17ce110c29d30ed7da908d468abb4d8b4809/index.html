@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>blackwinter's pms - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/blackwinter/pms/blob/841d17ce110c29d30ed7da908d468abb4d8b4809">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/blackwinter/pms/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/blackwinter/pms">Wiki</a></li>
             <li class=""><a href="http://github.com/blackwinter/pms/graphs">Graphs</a></li>                    
-            <li class="active"><a href="blackwinter/pms">Documentation</a></li>
+            <li class="active"><a href="/blackwinter/pms">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,80 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/blackwinter/pms/blob/841d17ce110c29d30ed7da908d468abb4d8b4809">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>pms - Poor Man&#8217;s Search</h1>
+<h2>VERSION</h2>
+<p>
+This documentation refers to pms version 0.0.2
+</p>
+<h2>DESCRIPTION</h2>
+<p>
+Provides a simple searching facility for (nearly) arbitrary input. It
+allows searching by Strings (exact match) or Regexps (full control, but
+slower). Boolean operators AND, OR, and NOT are supported, as well as
+proximity operators NEAR (with configurable distance) and ADJACENT (taking
+order into account). You can chain operators and also group them into
+sub-queries.
+</p>
+<p>
+Inspiration came from a discussion on ruby-talk, starting with message
+ruby-talk:322014[http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/322014],
+but PMS has a more document-centric attitude (everything that
+<tt>input#each</tt> yields is considered a document of its own).
+</p>
+<p>
+Example:
+</p>
+<pre class="code">
+  <span class='require identifier id'>require</span> <span class='string val'>'pms/ext'</span>
 
+  <span class='text identifier id'>text</span> <span class='assign token'>=</span> <span class='string val'>&quot;  Hello world, how are you today? I said \&quot;Hello\&quot;\n  to the other guy but he would not answer although\n  all the world could hear me.\n  EOT\n\n  search = text.search('hello').near('world', 3)\n\n  p search.results\n  #=&gt; [0]\n\n  p search.results_with_positions\n  #=&gt; &lt;tt&gt;8]&lt;/tt&gt;\n\n  p search.matches\n  #=&gt; [\&quot;Hello world, how are you today? I said \\\&quot;Hello\\\&quot;\\n\&quot;]\n&quot;</span>
+</pre>
+<p>
+You can find more examples in the <tt>spec/</tt> directory.
+</p>
+<h2>LINKS</h2>
+<p>
+</p>
+<table>
+<tr><td valign="top">Documentation:</td><td>&lt;http://pms.rubyforge.org/&gt;
+
+</td></tr>
+<tr><td valign="top">Source code:</td><td>&lt;http://github.com/blackwinter/pms&gt;
+
+</td></tr>
+<tr><td valign="top">Rubyforge project:</td><td>&lt;http://rubyforge.org/projects/pms&gt;
+
+</td></tr>
+</table>
+<h2>AUTHORS</h2>
+<ul>
+<li>Jens Wille &lt;mailto:jens.wille@uni-koeln.de&gt;
+
+</li>
+</ul>
+<h2>LICENSE AND COPYRIGHT</h2>
+<p>
+Copyright (C) 2008 Jens Wille
+</p>
+<p>
+pms is free software: you can redistribute it and/or modify it under the
+terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
+</p>
+<p>
+pms is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+details.
+</p>
+<p>
+You should have received a copy of the GNU General Public License along
+with pms. If not, see &lt;http://www.gnu.org/licenses/&gt;.
+</p>
+
+</div>
           </div>
         </div>
       </div>                    
