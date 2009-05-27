@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>scudco's taza - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/scudco/taza/blob/0b95114eaece0ce4680a296220bd5b17ffc7547e">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/scudco/taza/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/scudco/taza">Wiki</a></li>
             <li class=""><a href="http://github.com/scudco/taza/graphs">Graphs</a></li>                    
-            <li class="active"><a href="scudco/taza">Documentation</a></li>
+            <li class="active"><a href="/scudco/taza">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,131 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/scudco/taza/blob/0b95114eaece0ce4680a296220bd5b17ffc7547e">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>taza</h1>
+<ul>
+<li>http://github.com/scudco/taza/tree/master
 
+</li>
+</ul>
+<h2>DESCRIPTION:</h2>
+<p>
+Taza is meant to make acceptance testing more sane for developers(or QA
+where applicable) and customers.
+</p>
+<h2>FEATURES:</h2>
+<ul>
+<li>Generate a project for browser-based testing
+
+</li>
+<li>Generate pages and sites for different applications
+
+</li>
+<li>Create flows that move through a site
+
+</li>
+<li>Use filters to control which elements are accessible on a page depending on
+its state
+
+</li>
+<li>Taza automatically creates and cleans up the browser for each site just
+like a File block
+
+</li>
+<li>Manage tests by tags
+
+</li>
+<li>Cross-site testing
+
+</li>
+</ul>
+<h2>ISSUES:</h2>
+<ul>
+<li>Taza has only been used in the wild with WATIR(Safari/Firefox/IE), but
+Selenium support is built-in
+
+</li>
+<li>Taza&#8217;s generators currently generate RSpec specs, Test::Unit and
+other test framework support is planned
+
+</li>
+</ul>
+<h2>SYNOPSIS:</h2>
+<p>
+Taza is meant to be a refreshing way to look at browser testing. Taza
+provides a few ways to abstract browser-based testing into three simple
+ideas.
+</p>
+<pre class="code">
+  <span class='mult op'>*</span> <span class='Sites constant id'>Sites</span>
+  <span class='mult op'>*</span> <span class='Pages constant id'>Pages</span>
+  <span class='mult op'>*</span> <span class='Flows constant id'>Flows</span>
+</pre>
+<p>
+Sites have Pages. Pages have elements and filters. Flows are common actions
+on a site such as logging in or performing a search.
+</p>
+<p>
+Here&#8217;s an example for starting a project around the Google sites
+</p>
+<pre class="code">
+  $ <span class='taza identifier id'>taza</span> <span class='google identifier id'>google</span>
+  $ <span class='cd identifier id'>cd</span> <span class='google identifier id'>google</span><span class='div op'>/</span>
+  $ <span class='dot token'>.</span><span class='div op'>/</span><span class='script identifier id'>script</span><span class='div op'>/</span><span class='generate identifier id'>generate</span> <span class='site identifier id'>site</span> <span class='google identifier id'>google</span>
+  $ <span class='dot token'>.</span><span class='div op'>/</span><span class='script identifier id'>script</span><span class='div op'>/</span><span class='generate identifier id'>generate</span> <span class='page identifier id'>page</span> <span class='home_page identifier id'>home_page</span> <span class='google identifier id'>google</span>
+  $ <span class='dot token'>.</span><span class='div op'>/</span><span class='script identifier id'>script</span><span class='div op'>/</span><span class='generate identifier id'>generate</span> <span class='flow identifier id'>flow</span> <span class='search identifier id'>search</span> <span class='google identifier id'>google</span>
+  $ <span class='rake identifier id'>rake</span> <span class='spec identifier id'>spec</span><span class='symbol val'>:functional</span><span class='symbol val'>:google</span>
+</pre>
+<p>
+That will generate an RSpec HTML report at
+artifacts/functional/google/index.html
+</p>
+<h2>REQUIREMENTS:</h2>
+<ul>
+<li>taglob
+
+</li>
+</ul>
+<h2>INSTALL:</h2>
+<ul>
+<li>sudo gem install taza
+
+</li>
+<li>gem install taza
+
+</li>
+</ul>
+<h2>LICENSE:</h2>
+<p>
+(The MIT License)
+</p>
+<p>
+Copyright &#169; 2008 Charley Baker
+</p>
+<p>
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the
+&#8216;Software&#8217;), to deal in the Software without restriction,
+including without limitation the rights to use, copy, modify, merge,
+publish, distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to the
+following conditions:
+</p>
+<p>
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+</p>
+<p>
+THE SOFTWARE IS PROVIDED &#8216;AS IS&#8217;, WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+USE OR OTHER DEALINGS IN THE SOFTWARE.
+</p>
+
+</div>
           </div>
         </div>
       </div>                    
