@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>mynyml's phocus - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/mynyml/phocus/blob/8c006a038db7fe836bd20e8f1320e8c20ec58ad3">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/mynyml/phocus/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/mynyml/phocus">Wiki</a></li>
             <li class=""><a href="http://github.com/mynyml/phocus/graphs">Graphs</a></li>                    
-            <li class="active"><a href="mynyml/phocus">Documentation</a></li>
+            <li class="active"><a href="/mynyml/phocus">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,114 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/mynyml/phocus/blob/8c006a038db7fe836bd20e8f1320e8c20ec58ad3">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h4>Intro</h4>
+<p>
+Phocus let&#8217;s you temporarily focus some tests, ignoring all others,
+even across test classes.
+</p>
+<h4>Examples</h4>
+<pre class="code">
+  <span class='require identifier id'>require</span> <span class='string val'>'test/unit'</span>
+  <span class='require identifier id'>require</span> <span class='string val'>'phocus/test_unit'</span>
 
+  <span class='class class kw'>class</span> <span class='TestUser constant id'>TestUser</span> <span class='lt op'>&lt;</span> <span class='Test constant id'>Test</span><span class='colon2 op'>::</span><span class='Unit constant id'>Unit</span><span class='colon2 op'>::</span><span class='TestCase constant id'>TestCase</span>
+
+    <span class='focus identifier id'>focus</span>
+    <span class='def def kw'>def</span> <span class='test_foo identifier id'>test_foo</span>
+      <span class='assert identifier id'>assert</span> <span class='User constant id'>User</span><span class='dot token'>.</span><span class='authenticate identifier id'>authenticate</span><span class='lparen token'>(</span><span class='string val'>'...'</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+
+    <span class='def def kw'>def</span> <span class='test_bar identifier id'>test_bar</span>
+      <span class='assert identifier id'>assert</span> <span class='User constant id'>User</span><span class='dot token'>.</span><span class='do_something_else identifier id'>do_something_else</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+
+  <span class='class class kw'>class</span> <span class='TestAcmeWidget constant id'>TestAcmeWidget</span> <span class='lt op'>&lt;</span> <span class='Test constant id'>Test</span><span class='colon2 op'>::</span><span class='Unit constant id'>Unit</span><span class='colon2 op'>::</span><span class='TestCase constant id'>TestCase</span>
+
+    <span class='def def kw'>def</span> <span class='test_abc identifier id'>test_abc</span>
+      <span class='assert identifier id'>assert</span> <span class='true true kw'>true</span>
+    <span class='end end kw'>end</span>
+
+    <span class='focus identifier id'>focus</span>
+    <span class='def def kw'>def</span> <span class='test_xyz identifier id'>test_xyz</span>
+      <span class='assert identifier id'>assert</span> <span class='true true kw'>true</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+Executing these tests (say with <tt>rake test</tt> or <tt>autotest</tt>),
+will only run <tt>test_foo</tt> and <tt>test_xyz</tt>.
+</p>
+<h4>Phocus Vs. Editor</h4>
+<p>
+&quot;Dude, MY editor already does that! Just get a real editor!!1!&quot;
+</p>
+<p>
+Actually, so does my editor. But I&#8217;ve found that in many situations,
+it was far from enough.
+</p>
+<p>
+Contexts: Some frameworks like shoulda, context and contest allow you to
+embed tests within context blocks, which usually throws off the
+editor&#8217;s &quot;run a sinlge test&quot; funtionality, since they
+expand the test method names.
+</p>
+<p>
+Debugging: Some editors will even allow you to step into the code when
+using <tt>debugger</tt> within that single test, but it&#8217;s usually not
+as convenient as the console.
+</p>
+<p>
+Multiple Tests: Phocus allows focusing more than one tests.
+</p>
+<h4>Other Testing Frameworks</h4>
+<p>
+Phocus is compatible with other testing frameworks. To use with your
+framework of choice, simply require the right compatibility file:
+</p>
+<pre class="code">
+  <span class='require identifier id'>require</span> <span class='string val'>'phocus/test_unit'</span>
+  <span class='require identifier id'>require</span> <span class='string val'>'phocus/minitest'</span>
+  <span class='require identifier id'>require</span> <span class='string val'>'phocus/shoulda'</span>
+  <span class='require identifier id'>require</span> <span class='string val'>'phocus/context'</span>
+  <span class='require identifier id'>require</span> <span class='string val'>'phocus/contest'</span>
+</pre>
+<p>
+It is likely to be compatible with other frameworks as well, but these are
+the ones that have been verified to work and that are automatically set up.
+</p>
+<p>
+In case you&#8217;re wondering,
+</p>
+<pre class="code">
+  <span class='require identifier id'>require</span> <span class='string val'>'phocus'</span>
+</pre>
+<p>
+is the standalone phocus functionality. You can require it directly, but
+you&#8217;ll have to set it up (which pretty much just means setting the
+right Phocus.method_pattern for your test framework and including the
+mixin). You really don&#8217;t need to bother though, that work has been
+taken care of for you if you <tt>require &#8216;phocus/&#8230;&#8217;</tt>
+directly. Though it will be useful if you&#8217;re trying to get Phocus
+working with another framework. Refer to the rdocs in this case (or better
+yet, you can read the source; it&#8217;s &lt; 50 LOCs)
+</p>
+<h4>Links</h4>
+<table>
+<tr><td valign="top">source:</td><td>http://github.com/mynyml/phocus
+
+</td></tr>
+<tr><td valign="top">rdocs:</td><td>http://docs.github.com/mynyml/phocus
+
+</td></tr>
+</table>
+<h4>License</h4>
+<p>
+MIT. See LICENSE file.
+</p>
+
+</div>
           </div>
         </div>
       </div>                    
