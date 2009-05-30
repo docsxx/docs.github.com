@@ -1,11 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
-    <title>xhochy's scrobbler - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/xhochy/scrobbler/blob/f664423303c3a15bdb72b16e63365bd39fdd1528">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
+    <title>xhochy's scrobbler - Module: Scrobbler - GitHub Documentation</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,10 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +80,7 @@
             <li class=""><a href="http://github.com/xhochy/scrobbler/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/xhochy/scrobbler">Wiki</a></li>
             <li class=""><a href="http://github.com/xhochy/scrobbler/graphs">Graphs</a></li>                    
-            <li class="active"><a href="xhochy/scrobbler">Documentation</a></li>
+            <li class="active"><a href="/xhochy/scrobbler">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +106,83 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/xhochy/scrobbler/blob/f664423303c3a15bdb72b16e63365bd39fdd1528">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="wikistyle">
+  <div class="section module Scrobbler">
+  <h1>Module: Scrobbler</h1>
+  <div class="section docstring">
+  <p>
+Probably the most common use of this lib would be to get your most recent
+tracks or your top tracks. Below are some code samples.
+</p>
+<pre class="code">
+  <span class='user identifier id'>user</span> <span class='assign token'>=</span> <span class='Scrobbler constant id'>Scrobbler</span><span class='colon2 op'>::</span><span class='User constant id'>User</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'jnunemaker'</span><span class='rparen token'>)</span>
 
+  <span class='puts identifier id'>puts</span> <span class='dstring node'>&quot;#{user.username}'s Recent Tracks&quot;</span>
+  <span class='puts identifier id'>puts</span> <span class='string val'>&quot;=&quot;</span> <span class='mult op'>*</span> <span class='lparen token'>(</span><span class='user identifier id'>user</span><span class='dot token'>.</span><span class='username identifier id'>username</span><span class='dot token'>.</span><span class='length identifier id'>length</span> <span class='plus op'>+</span> <span class='integer val'>16</span><span class='rparen token'>)</span>
+  <span class='user identifier id'>user</span><span class='dot token'>.</span><span class='recent_tracks identifier id'>recent_tracks</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='t identifier id'>t</span><span class='bitor op'>|</span> <span class='puts identifier id'>puts</span> <span class='t identifier id'>t</span><span class='dot token'>.</span><span class='name identifier id'>name</span> <span class='rbrace token'>}</span>
+
+  <span class='puts identifier id'>puts</span>
+  <span class='puts identifier id'>puts</span>
+
+  <span class='puts identifier id'>puts</span> <span class='dstring node'>&quot;#{user.username}'s Top Tracks&quot;</span>
+  <span class='puts identifier id'>puts</span> <span class='string val'>&quot;=&quot;</span> <span class='mult op'>*</span> <span class='lparen token'>(</span><span class='user identifier id'>user</span><span class='dot token'>.</span><span class='username identifier id'>username</span><span class='dot token'>.</span><span class='length identifier id'>length</span> <span class='plus op'>+</span> <span class='integer val'>13</span><span class='rparen token'>)</span>
+  <span class='user identifier id'>user</span><span class='dot token'>.</span><span class='top_tracks identifier id'>top_tracks</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='t identifier id'>t</span><span class='bitor op'>|</span> <span class='puts identifier id'>puts</span> <span class='dstring node'>&quot;(#{t.playcount}) #{t.name}&quot;</span> <span class='rbrace token'>}</span>
+</pre>
+<p>
+Which would output something like:
+</p>
+<pre class="code">
+  <span class='jnunemaker identifier id'>jnunemaker</span><span class='string val'>'s Recent Tracks
+  ==========================
+  Everything You Want
+  You'</span><span class='re identifier id'>re</span> <span class='a identifier id'>a</span> <span class='God constant id'>God</span>
+  <span class='Bitter constant id'>Bitter</span> <span class='Sweet constant id'>Sweet</span> <span class='Symphony constant id'>Symphony</span> <span class='lbrack token'>[</span><span class='Original constant id'>Original</span> <span class='Version constant id'>Version</span><span class='rbrack token'>]</span>
+  <span class='Lord constant id'>Lord</span> <span class='I constant id'>I</span> <span class='Guess constant id'>Guess</span> <span class='I constant id'>I</span><span class='string val'>'ll Never Know
+  Country Song
+  Bitter Sweet Symphony (Radio Edit)
+
+  jnunemaker'</span><span class='s identifier id'>s</span> <span class='Top constant id'>Top</span> <span class='Tracks constant id'>Tracks</span>
+  <span class='eqq op'>===</span><span class='eqq op'>===</span><span class='eqq op'>===</span><span class='eqq op'>===</span><span class='eqq op'>===</span><span class='eqq op'>===</span><span class='eqq op'>===</span><span class='eq op'>==</span>
+  <span class='lparen token'>(</span><span class='integer val'>62</span><span class='rparen token'>)</span> <span class='Probably constant id'>Probably</span> <span class='Wouldn constant id'>Wouldn</span><span class='string val'>'t Be This Way
+  (55) Not Ready To Make Nice
+  (45) Easy Silence
+  (43) Song 2
+  (40) Everybody Knows
+  (39) Before He Cheats
+  (39) Something'</span><span class='s identifier id'>s</span> <span class='Gotta constant id'>Gotta</span> <span class='Give constant id'>Give</span>
+  <span class='lparen token'>(</span><span class='integer val'>38</span><span class='rparen token'>)</span> <span class='Hips constant id'>Hips</span> <span class='Don constant id'>Don</span><span class='string val'>'t Lie (featuring Wyclef Jean)
+  (37) Unwritten
+  (37) Move Along
+  (37) Dance, Dance
+  (36) We Belong Together
+  (36) Jesus, Take the Wheel
+  (36) Black Horse and the Cherry Tree (radio version)
+  (35) Photograph
+  (35) You'</span><span class='re identifier id'>re</span> <span class='Beautiful constant id'>Beautiful</span>
+  <span class='lparen token'>(</span><span class='integer val'>35</span><span class='rparen token'>)</span> <span class='Walk constant id'>Walk</span> <span class='Away constant id'>Away</span>
+  <span class='lparen token'>(</span><span class='integer val'>34</span><span class='rparen token'>)</span> <span class='Stickwitu constant id'>Stickwitu</span>
+</pre>
+
+</div><div class="section constants">
+  <div class="thisclass">
+  <h2>Constants</h2>
+  <dl>
+    
+      <dt id="API_URL-constant">API_URL</dt>
+      <dd>'http://ws.audioscrobbler.com/'</dd>
+    
+      <dt id="AUTH_URL-constant">AUTH_URL</dt>
+      <dd>'http://post.audioscrobbler.com'</dd>
+    
+      <dt id="AUTH_VER-constant">AUTH_VER</dt>
+      <dd>'1.2.1'</dd>
+    
+  </dl>
+</div>
+
+</div>
+</div>
+</div>
           </div>
         </div>
       </div>                    
