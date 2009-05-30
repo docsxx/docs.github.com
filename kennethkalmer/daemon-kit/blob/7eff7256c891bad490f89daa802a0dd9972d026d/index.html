@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>kennethkalmer's daemon-kit - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/kennethkalmer/daemon-kit/blob/7eff7256c891bad490f89daa802a0dd9972d026d">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/kennethkalmer/daemon-kit/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/kennethkalmer/daemon-kit">Wiki</a></li>
             <li class=""><a href="http://github.com/kennethkalmer/daemon-kit/graphs">Graphs</a></li>                    
-            <li class="active"><a href="kennethkalmer/daemon-kit">Documentation</a></li>
+            <li class="active"><a href="/kennethkalmer/daemon-kit">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,179 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/kennethkalmer/daemon-kit/blob/7eff7256c891bad490f89daa802a0dd9972d026d">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>Daemon Kit</h1>
+<ul>
+<li>http://kit.rubyforge.org/daemon (coming soon)
 
+</li>
+<li>http://groups.google.com/group/daemon-kit (daemon-kit@googlegroups.com)
+
+</li>
+<li>#daemon-kit on Freenode
+
+</li>
+</ul>
+<h2>Description</h2>
+<p>
+Daemon Kit aims to simplify creating Ruby daemons by providing a sound
+application skeleton (through a generator), task specific generators
+(jabber bot, etc) and robust environment management code.
+</p>
+<p>
+Using simple built-in generators it is easy to created evented and
+non-evented daemons that perform a multitude of different tasks.
+</p>
+<p>
+Supported generators:
+</p>
+<ul>
+<li>Evented and non-evented Jabber Bot (coming next)
+
+</li>
+<li>Evented and non-evented loops (coming soon)
+
+</li>
+<li>Queue poller (SQS, AMQP, etc) (coming soon)
+
+</li>
+</ul>
+<h2>Features/Problems</h2>
+<ul>
+<li>Build it
+
+</li>
+<li>Review TODO.txt
+
+</li>
+</ul>
+<h2>Synopsis</h2>
+<pre class="code">
+  $ <span class='daemon identifier id'>daemon</span><span class='minus op'>-</span><span class='kit identifier id'>kit</span> <span class='lbrack token'>[</span><span class='regexp val'>/path/</span><span class='to identifier id'>to</span><span class='div op'>/</span><span class='your identifier id'>your</span><span class='div op'>/</span><span class='daemon identifier id'>daemon</span><span class='rbrack token'>]</span> <span class='lbrack token'>[</span><span class='options identifier id'>options</span><span class='rbrack token'>]</span>
+</pre>
+<p>
+The above command generates a skeleton daemon environment for you to adapt.
+</p>
+<pre class="code">
+  $ <span class='daemon identifier id'>daemon</span><span class='minus op'>-</span><span class='kit identifier id'>kit</span> <span class='lbrack token'>[</span><span class='regexp val'>/path/</span><span class='to identifier id'>to</span><span class='div op'>/</span><span class='your identifier id'>your</span><span class='div op'>/</span><span class='daemon identifier id'>daemon</span><span class='rbrack token'>]</span> <span class='minus op'>-</span><span class='i identifier id'>i</span> <span class='jabber identifier id'>jabber</span>
+</pre>
+<p>
+Use the &#8216;jabber&#8217; generator instead of the default one.
+</p>
+<h2>Generators</h2>
+<p>
+Currently only two generators exist, a &#8216;default&#8217; generator and
+a &#8216;jabber&#8217; generator.
+</p>
+<p>
+The default generator creates a simple daemon with an infinite loop inside
+that you can adapt.
+</p>
+<h3>Jabber Generator</h3>
+<p>
+The jabber generator creates a simple daemon that leverages the
+&quot;xmpp4r-simple&quot;:http://xmpp4r-simple.rubyforge.org/ gem to
+process inbound messages. The daemon will manage the roster and other
+little tasks, leaving you to provide the hooks for processing messages,
+presence notifications and subscription request.
+</p>
+<h3>Cron Generator</h3>
+<p>
+The cron generator creates a simple daemon that leverages the
+&quot;rufus-scheduler&quot;:http://github.com/jmettraux/rufus-scheduler gem
+to create a simple cron-lie daemon. Please be aware that this daemon could
+never be a replacement for the battle-tested &quot;cron
+utility&quot;:http://www.gentoo.org/doc/en/cron-guide.xml shipped standard
+with most *nix distributions.
+</p>
+<h3>AMQP Consumer Generator</h3>
+<p>
+The AMQP generator creates a simple daemon that has all the stub code and
+configuration in place to help you write AMQP consumers quickly and
+effectively. The generated daemon relies on the presence of the
+&quot;amqp&quot;:http://github.com/tmm1/amqp gem.
+</p>
+<h2>Requirements</h2>
+<ul>
+<li>Ruby 1.8.6
+
+</li>
+<li>daemons 1.0.10
+
+</li>
+<li>rspec 1.1.11 (for writing/running your specs)
+
+</li>
+</ul>
+<h2>Generator Requirements</h2>
+<p>
+Depending on the generator you choose for your daemon, it might require
+additional gems to run.
+</p>
+<p>
+&lt;table&gt;
+&lt;tr&gt;&lt;th&gt;Generator&lt;/th&gt;&lt;th&gt;\&amp;nbsp;&lt;/th&gt;&lt;th&gt;Dependencies&lt;/th&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;jabber&lt;/td&gt;&lt;td&gt;\&amp;nbsp;&lt;/td&gt;&lt;td&gt;
+xmpp4r-simple[http://xmpp4r-simple.rubyforge.org] &lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;cron&lt;/td&gt;&lt;td&gt;\&amp;nbsp;&lt;/td&gt;&lt;td&gt;
+rufus-scheduler[http://github.com/jmettraux/rufus-scheduler]
+&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;amqp&lt;/td&gt;&lt;td&gt;\&amp;nbsp;&lt;/td&gt;&lt;td&gt;
+amqp[http://github.com/tmm1/amqp] &lt;/td&gt;&lt;/tr&gt; &lt;/table&gt;
+</p>
+<h2>Install</h2>
+<p>
+Currently recommended to stick to the git repo:
+</p>
+<pre class="code">
+  $ <span class='git identifier id'>git</span> <span class='clone identifier id'>clone</span> <span class='git identifier id'>git</span><span class='symbol val'>:/</span><span class='regexp val'>/github.com/</span><span class='kennethkalmer identifier id'>kennethkalmer</span><span class='div op'>/</span><span class='daemon identifier id'>daemon</span><span class='minus op'>-</span><span class='kit identifier id'>kit</span><span class='dot token'>.</span><span class='git identifier id'>git</span>
+  $ <span class='rake identifier id'>rake</span> <span class='gem identifier id'>gem</span>
+  $ <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='pkg identifier id'>pkg</span><span class='div op'>/</span><span class='daemon identifier id'>daemon</span><span class='minus op'>-</span><span class='kit identifier id'>kit</span><span class='minus op'>-</span><span class='X constant id'>X</span><span class='dot token'>.</span><span class='X constant id'>X</span><span class='dot token'>.</span><span class='X constant id'>X</span><span class='dot token'>.</span><span class='gem identifier id'>gem</span>
+</pre>
+<p>
+Development versions are available as gems from github:
+</p>
+<pre class="code">
+  $ <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='kennethkalmer identifier id'>kennethkalmer</span><span class='minus op'>-</span><span class='daemon identifier id'>daemon</span><span class='minus op'>-</span><span class='kit identifier id'>kit</span> <span class='minus op'>-</span><span class='s identifier id'>s</span> <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/gems.github.com
+</span></pre>
+<p>
+Stable versions, when released are available directly from Rubyforge:
+</p>
+<pre class="code">
+  $ <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='daemon identifier id'>daemon</span><span class='minus op'>-</span><span class='kit identifier id'>kit</span>
+</pre>
+<h2>License</h2>
+<p>
+(The MIT License)
+</p>
+<p>
+Copyright &#169; 2009 Kenneth Kalmer (Internet Exchange CC, Clear Planet
+Information Solutions Pty Ltd)
+</p>
+<p>
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the
+&#8216;Software&#8217;), to deal in the Software without restriction,
+including without limitation the rights to use, copy, modify, merge,
+publish, distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to the
+following conditions:
+</p>
+<p>
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+</p>
+<p>
+THE SOFTWARE IS PROVIDED &#8216;AS IS&#8217;, WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+USE OR OTHER DEALINGS IN THE SOFTWARE.
+</p>
+
+</div>
           </div>
         </div>
       </div>                    
