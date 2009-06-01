@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>aeden's refinery - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/aeden/refinery/blob/f9fc9b749f87a2196bdd62d4c72f24c900778775">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/aeden/refinery/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/aeden/refinery">Wiki</a></li>
             <li class=""><a href="http://github.com/aeden/refinery/graphs">Graphs</a></li>                    
-            <li class="active"><a href="aeden/refinery">Documentation</a></li>
+            <li class="active"><a href="/aeden/refinery">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,76 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/aeden/refinery/blob/f9fc9b749f87a2196bdd62d4c72f24c900778775">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>Refinery</h1>
+<p>
+Refinery is a distributed processing framework written in the Ruby
+programming language. It is designed to work with Amazon&#8217;s Web
+Services such as SQS and S3 to distribute image and data processing across
+multiple severs to alleviate the need for heavy-duty data and image
+processing on web application servers.
+</p>
+<p>
+Interprocess messaging is accomplished through a distributed queue system
+such as Amazon SQS and data storage is accomplished through a distributed
+data store such as Amazon&#8217;s S3.
+</p>
+<h2>Required Libraries</h2>
+<ul>
+<li>RightScale AWS
 
+</li>
+<li>JSON
+
+</li>
+<li>Moneta
+
+</li>
+</ul>
+<h2>Optional Libraries</h2>
+<p>
+If you want to run the monitor then you&#8217;ll need to install Sequel and
+have SQLite3 installed.
+</p>
+<p>
+If you want to run the stats server to view operational statistics about
+Refinery then you&#8217;ll need to install Sequel, SQLite3 and Ramaze.
+</p>
+<h2>Executing</h2>
+<p>
+Refinery have several executable scripts that are used to launch the
+various components:
+</p>
+<h3>bin/refinery</h3>
+<p>
+This command executes the refinery execution server. This is where jobs are
+run.
+</p>
+<p>
+Example: bin/refinery -c config/config.yml
+</p>
+<h3>bin/epub</h3>
+<p>
+This command executes all publishers that fire on a regular basis.
+</p>
+<p>
+Example: bin/epub -c config/config.yml
+</p>
+<h3>bin/pubnow</h3>
+<p>
+This command executes a single publisher once.
+</p>
+<p>
+Example: bin/pubnow -c config/config.yml sample
+</p>
+<h3>bin/monitor</h3>
+<p>
+This command is used to run the monitor system. The monitor system tracks
+the health of the refinery. The monitor should only be run on a single
+host.
+</p>
+
+</div>
           </div>
         </div>
       </div>                    
