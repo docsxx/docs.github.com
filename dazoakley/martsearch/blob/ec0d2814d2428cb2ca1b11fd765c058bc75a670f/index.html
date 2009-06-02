@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>dazoakley's martsearch - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/dazoakley/martsearch/blob/ec0d2814d2428cb2ca1b11fd765c058bc75a670f">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/dazoakley/martsearch/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/dazoakley/martsearch">Wiki</a></li>
             <li class=""><a href="http://github.com/dazoakley/martsearch/graphs">Graphs</a></li>                    
-            <li class="active"><a href="dazoakley/martsearch">Documentation</a></li>
+            <li class="active"><a href="/dazoakley/martsearch">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,45 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/dazoakley/martsearch/blob/ec0d2814d2428cb2ca1b11fd765c058bc75a670f">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>Easymart</h1>
 
+
+	<p>Welcome to easymart! Easymart is a configurable web services based search interface for <a href="http://www.biomart.org/">Biomart</a>. It is
+being developed primarily for (intended) use with the <a href="http://i-dcc.org">i-DCC project</a> (International Data Coordination Centre), a (soon to be
+coming) central portal for mouse mutation information.</p>
+
+
+	<p>The interface is 100% javascript and uses the <a href="http://jquery.com">jQuery</a> library.</p>
+
+
+	<h2>Apache httpd.conf</h2>
+
+
+	<p>You will need to add a couple of lines to your httpd.conf for each different mart server that is called by your app (to get
+around cross-site scripting limits) &#8211; this relies on you using apache with mod_proxy or something equivalent&#8230;</p>
+
+
+	<p>i.e. Here&#8217;s our internal apache conf:</p>
+
+
+<pre class="code">
+    <span class='ProxyRequests constant id'>ProxyRequests</span> <span class='Off constant id'>Off</span>
+
+    <span class='lt op'>&lt;</span><span class='Proxy constant id'>Proxy</span> <span class='mult op'>*</span><span class='gt op'>&gt;</span>
+    <span class='Order constant id'>Order</span> <span class='deny identifier id'>deny</span><span class='comma token'>,</span><span class='allow identifier id'>allow</span>
+    <span class='Allow constant id'>Allow</span> <span class='from identifier id'>from</span> <span class='all identifier id'>all</span>
+    <span class='lt op'>&lt;</span><span class='regexp val'>/Proxy&gt;
+
+    ProxyPass /</span><span class='htgt identifier id'>htgt</span> <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/gtrap1a.internal.sanger.ac.uk:9001/</span><span class='htgt identifier id'>htgt</span>
+    <span class='ProxyPassReverse constant id'>ProxyPassReverse</span> <span class='regexp val'>/htgt http:/</span><span class='div op'>/</span><span class='gtrap1a identifier id'>gtrap1a</span><span class='dot token'>.</span><span class='internal identifier id'>internal</span><span class='dot token'>.</span><span class='sanger identifier id'>sanger</span><span class='dot token'>.</span><span class='ac identifier id'>ac</span><span class='dot token'>.</span><span class='uk identifier id'>uk</span><span class='symbol val'>:9001</span><span class='div op'>/</span><span class='htgt identifier id'>htgt</span>
+
+    <span class='ProxyPass constant id'>ProxyPass</span> <span class='regexp val'>/biomart http:/</span><span class='div op'>/</span><span class='www identifier id'>www</span><span class='dot token'>.</span><span class='biomart identifier id'>biomart</span><span class='dot token'>.</span><span class='org identifier id'>org</span>
+    <span class='ProxyPassReverse constant id'>ProxyPassReverse</span> <span class='regexp val'>/biomart http:/</span><span class='div op'>/</span><span class='www identifier id'>www</span><span class='dot token'>.</span><span class='biomart identifier id'>biomart</span><span class='dot token'>.</span><span class='org identifier id'>org</span>
+    <span class='ProxyRemote constant id'>ProxyRemote</span> <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/www.biomart.org http:/</span><span class='div op'>/</span><span class='wwwcache identifier id'>wwwcache</span><span class='dot token'>.</span><span class='sanger identifier id'>sanger</span><span class='dot token'>.</span><span class='ac identifier id'>ac</span><span class='dot token'>.</span><span class='uk identifier id'>uk</span><span class='symbol val'>:3128</span>
+  
+</pre>
+</div>
           </div>
         </div>
       </div>                    
