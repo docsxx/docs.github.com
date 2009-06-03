@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>mynyml's rack-respond_to - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/mynyml/rack-respond_to/blob/7f66722192baef9f0a22fd3afb23bb36b762dc38">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/mynyml/rack-respond_to/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/mynyml/rack-respond_to">Wiki</a></li>
             <li class=""><a href="http://github.com/mynyml/rack-respond_to/graphs">Graphs</a></li>                    
-            <li class="active"><a href="mynyml/rack-respond_to">Documentation</a></li>
+            <li class="active"><a href="/mynyml/rack-respond_to">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,72 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/mynyml/rack-respond_to/blob/7f66722192baef9f0a22fd3afb23bb36b762dc38">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h4>Summary</h4>
+<p>
+Rack convenience middleware that allows triggering different actions based
+on requested format. Standalone version of the equivalent Rails
+functionality.
+</p>
+<h4>Installation</h4>
+<pre class="code">
+  <span class='sudo identifier id'>sudo</span> <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='mynyml identifier id'>mynyml</span><span class='minus op'>-</span><span class='rack identifier id'>rack</span><span class='minus op'>-</span><span class='respond_to identifier id'>respond_to</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='source identifier id'>source</span><span class='assign token'>=</span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/gems.github.com/</span>
+</pre>
+<h4>Usage</h4>
+<pre class="code">
+  <span class='require identifier id'>require</span> <span class='string val'>'rubygems'</span>
+  <span class='require identifier id'>require</span> <span class='string val'>'rack'</span>
+  <span class='require identifier id'>require</span> <span class='string val'>'rack/respond_to'</span>
 
+  <span class='class class kw'>class</span> <span class='App constant id'>App</span>
+    <span class='include identifier id'>include</span> <span class='Rack constant id'>Rack</span><span class='colon2 op'>::</span><span class='RespondTo constant id'>RespondTo</span>
+
+    <span class='def def kw'>def</span> <span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='env identifier id'>env</span><span class='rparen token'>)</span>
+      <span class='comment val'># simply pass in the env if another middleware already added</span>
+      <span class='comment val'># the format to env['request.format']</span>
+      <span class='comment val'>#Rack::RespondTo.env = env</span>
+
+      <span class='comment val'># otherwise, you can assign it directly</span>
+      <span class='Rack constant id'>Rack</span><span class='colon2 op'>::</span><span class='RespondTo constant id'>RespondTo</span><span class='dot token'>.</span><span class='format identifier id'>format</span> <span class='assign token'>=</span> <span class='string val'>'html'</span>
+
+      <span class='body identifier id'>body</span> <span class='assign token'>=</span> <span class='respond_to identifier id'>respond_to</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='format identifier id'>format</span><span class='bitor op'>|</span>
+        <span class='format identifier id'>format</span><span class='dot token'>.</span><span class='html identifier id'>html</span> <span class='lbrace token'>{</span> <span class='string val'>'&lt;em&gt;html&lt;/em&gt;'</span> <span class='rbrace token'>}</span>
+        <span class='format identifier id'>format</span><span class='dot token'>.</span><span class='xml identifier id'>xml</span>  <span class='lbrace token'>{</span> <span class='string val'>'&lt;body&gt;xml&lt;/body&gt;'</span> <span class='rbrace token'>}</span>
+      <span class='end end kw'>end</span>
+
+      <span class='content_type identifier id'>content_type</span> <span class='assign token'>=</span> <span class='Rack constant id'>Rack</span><span class='colon2 op'>::</span><span class='RespondTo constant id'>RespondTo</span><span class='dot token'>.</span><span class='mime_type identifier id'>mime_type</span>
+      <span class='lbrack token'>[</span><span class='integer val'>200</span><span class='comma token'>,</span> <span class='lt op'>&lt;</span><span class='tt identifier id'>tt</span><span class='geq op'>&gt;=</span><span class='bitand op'>&amp;</span><span class='gt identifier id'>gt</span><span class='semicolon token'>;</span> <span class='content_type identifier id'>content_type</span><span class='lt op'>&lt;</span><span class='regexp val'>/tt&gt;, [body]]
+    end
+  end
+
+  run App.new
+</span></pre>
+<h4>Tips</h4>
+<p>
+To fully extract the requested format, use:
+</p>
+<pre class="code">
+  <span class='Rack constant id'>Rack</span><span class='colon2 op'>::</span><span class='AcceptFormat constant id'>AcceptFormat</span>    <span class='lparen token'>(</span><span class='sudo identifier id'>sudo</span> <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='rack identifier id'>rack</span><span class='minus op'>-</span><span class='rack identifier id'>rack</span><span class='minus op'>-</span><span class='contrib identifier id'>contrib</span>           <span class='minus op'>-</span><span class='minus op'>-</span><span class='source identifier id'>source</span><span class='assign token'>=</span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/gems.github.com/</span><span class='rparen token'>)</span>
+  <span class='Rack constant id'>Rack</span><span class='colon2 op'>::</span><span class='AbstractFormat constant id'>AbstractFormat</span>  <span class='lparen token'>(</span><span class='sudo identifier id'>sudo</span> <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='mynyml identifier id'>mynyml</span><span class='minus op'>-</span><span class='rack identifier id'>rack</span><span class='minus op'>-</span><span class='abstract identifier id'>abstract</span><span class='minus op'>-</span><span class='format identifier id'>format</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='source identifier id'>source</span><span class='assign token'>=</span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/gems.github.com/</span><span class='rparen token'>)</span>
+</pre>
+<p>
+These will allow using only <tt>Rack::RespondTo.env = env</tt> to set up
+ResondTo.
+</p>
+<p>
+See examples/recommended_use.ru for a complete example.
+</p>
+<h4>Links</h4>
+<table>
+<tr><td valign="top">source:</td><td>http://github.com/mynyml/rack-respond_to
+
+</td></tr>
+<tr><td valign="top">rdocs:</td><td>http://docs.github.com/mynyml/rack-respond_to
+
+</td></tr>
+</table>
+
+</div>
           </div>
         </div>
       </div>                    
