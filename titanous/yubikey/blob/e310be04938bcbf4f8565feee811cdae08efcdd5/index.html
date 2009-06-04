@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>titanous's yubikey - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/titanous/yubikey/blob/e310be04938bcbf4f8565feee811cdae08efcdd5">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/titanous/yubikey/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/titanous/yubikey">Wiki</a></li>
             <li class=""><a href="http://github.com/titanous/yubikey/graphs">Graphs</a></li>                    
-            <li class="active"><a href="titanous/yubikey">Documentation</a></li>
+            <li class="active"><a href="/titanous/yubikey">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,63 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/titanous/yubikey/blob/e310be04938bcbf4f8565feee811cdae08efcdd5">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>yubikey</h1>
+<h2>Description</h2>
+<p>
+A library to decode, decrypt and parse
+Yubikey[http://www.yubico.com/home/index/] one-time passwords.
+</p>
+<h2>Usage</h2>
+<h3>OTP Decryption</h3>
+<pre class="code">
+  <span class='key identifier id'>key</span> <span class='assign token'>=</span> <span class='string val'>'ecde18dbe76fbd0c33330f1c354871db'</span>
+  <span class='otp identifier id'>otp</span> <span class='assign token'>=</span> <span class='string val'>'dteffujehknhfjbrjnlnldnhcujvddbikngjrtgh'</span>
+  <span class='token identifier id'>token</span> <span class='assign token'>=</span> <span class='Yubikey constant id'>Yubikey</span><span class='colon2 op'>::</span><span class='OTP constant id'>OTP</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='otp identifier id'>otp</span><span class='comma token'>,</span> <span class='key identifier id'>key</span><span class='rparen token'>)</span>
 
+  <span class='p identifier id'>p</span> <span class='dstring node'>&quot;Device public id: #{token.public_id}&quot;</span> <span class='comment val'>#=&gt; 'dteffuje'</span>
+  <span class='p identifier id'>p</span> <span class='dstring node'>&quot;Device secret id: #{token.secret_id}&quot;</span> <span class='comment val'>#=&gt; '8792ebfe26cc'</span>
+  <span class='p identifier id'>p</span> <span class='dstring node'>&quot;Device insertions: #{token.insert_counter}&quot;</span> <span class='comment val'>#=&gt; 19</span>
+  <span class='p identifier id'>p</span> <span class='dstring node'>&quot;Session activation counter: #{token.session_counter}&quot;</span> <span class='comment val'>#=&gt; 17</span>
+  <span class='p identifier id'>p</span> <span class='dstring node'>&quot;Session timestamp: #{token.timestamp}&quot;</span> <span class='comment val'>#=&gt; 49712</span>
+  <span class='p identifier id'>p</span> <span class='dstring node'>&quot;OTP random data: #{token.random_number}&quot;</span> <span class='comment val'>#=&gt; 40904</span>
+</pre>
+<h2>OTP Verification</h2>
+<pre class="code">
+  <span class='begin begin kw'>begin</span>
+    <span class='otp identifier id'>otp</span> <span class='assign token'>=</span> <span class='Yubikey constant id'>Yubikey</span><span class='colon2 op'>::</span><span class='OTP constant id'>OTP</span><span class='colon2 op'>::</span><span class='Verify constant id'>Verify</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'dteffujehknhfjbrjnlnldnhcujvddbikngjrtgh'</span><span class='rparen token'>)</span>
+
+    <span class='if if kw'>if</span> <span class='otp identifier id'>otp</span><span class='dot token'>.</span><span class='valid? fid id'>valid?</span>
+      <span class='p identifier id'>p</span> <span class='string val'>'valid OTP'</span>
+    <span class='elsif elsif kw'>elsif</span> <span class='otp identifier id'>otp</span><span class='dot token'>.</span><span class='replayed? fid id'>replayed?</span>
+      <span class='p identifier id'>p</span> <span class='string val'>'replayed OTP'</span>
+    <span class='end end kw'>end</span>
+  <span class='rescue rescue kw'>rescue</span> <span class='Yubikey constant id'>Yubikey</span><span class='colon2 op'>::</span><span class='OTP constant id'>OTP</span><span class='colon2 op'>::</span><span class='InvalidOTPError constant id'>InvalidOTPError</span>
+    <span class='p identifier id'>p</span> <span class='string val'>'invalid OTP'</span>
+  <span class='end end kw'>end</span>
+</pre>
+<h2>Install</h2>
+<pre class="code">
+  <span class='sudo identifier id'>sudo</span> <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='yubikey identifier id'>yubikey</span>
+</pre>
+<h2>Copyright</h2>
+<h3>Ruby library</h3>
+<pre class="code">
+  <span class='Written constant id'>Written</span> <span class='by identifier id'>by</span> <span class='Jonathan constant id'>Jonathan</span> <span class='Rudenberg constant id'>Rudenberg</span> <span class='lt op'>&lt;</span><span class='jon335 identifier id'>jon335</span><span class='@gmail ivar id'>@gmail</span><span class='dot token'>.</span><span class='com identifier id'>com</span><span class='gt op'>&gt;</span>
+  <span class='Copyright constant id'>Copyright</span> <span class='lparen token'>(</span><span class='c identifier id'>c</span><span class='rparen token'>)</span> <span class='integer val'>2009</span> <span class='Jonathan constant id'>Jonathan</span> <span class='Rudenberg constant id'>Rudenberg</span>
+  <span class='The constant id'>The</span> <span class='MIT constant id'>MIT</span> <span class='License constant id'>License</span><span class='dot token'>.</span> <span class='See constant id'>See</span> <span class='LICENSE constant id'>LICENSE</span><span class='dot token'>.</span>
+</pre>
+<h3>Contributors</h3>
+<pre class="code">
+  <span class='Erik constant id'>Erik</span> <span class='Ruwalder constant id'>Ruwalder</span>
+</pre>
+<h3>AES, ModHex, and CRC code</h3>
+<pre class="code">
+  <span class='Written constant id'>Written</span> <span class='by identifier id'>by</span> <span class='Simon constant id'>Simon</span> <span class='Josefsson constant id'>Josefsson</span> <span class='lt op'>&lt;</span><span class='simon identifier id'>simon</span><span class='@josefsson ivar id'>@josefsson</span><span class='dot token'>.</span><span class='org identifier id'>org</span><span class='gt op'>&gt;</span>
+  <span class='Copyright constant id'>Copyright</span> <span class='lparen token'>(</span><span class='c identifier id'>c</span><span class='rparen token'>)</span> <span class='integer val'>2006</span><span class='comma token'>,</span> <span class='integer val'>2007</span><span class='comma token'>,</span> <span class='integer val'>2008</span><span class='comma token'>,</span> <span class='integer val'>2009</span> <span class='Yubico constant id'>Yubico</span> <span class='AB constant id'>AB</span>
+</pre>
+
+</div>
           </div>
         </div>
       </div>                    
