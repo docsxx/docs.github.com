@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>antage's merb-recaptcha - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/antage/merb-recaptcha/blob/caefc25bb5a96244e2ad1b2a4bce8ebf9709f189">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/antage/merb-recaptcha/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/antage/merb-recaptcha">Wiki</a></li>
             <li class=""><a href="http://github.com/antage/merb-recaptcha/graphs">Graphs</a></li>                    
-            <li class="active"><a href="antage/merb-recaptcha">Documentation</a></li>
+            <li class="active"><a href="/antage/merb-recaptcha">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,71 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/antage/merb-recaptcha/blob/caefc25bb5a96244e2ad1b2a4bce8ebf9709f189">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>merb-recaptcha</h1>
+<h2>About</h2>
+<p>
+Merb-recaptcha is plugin for Merb web-framework. It provides view and
+controller helpers for Recaptcha service.
+</p>
+<h2>Installation</h2>
+<p>
+Install gem from github.com:
+</p>
+<pre class="code">
+    <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='antage identifier id'>antage</span><span class='minus op'>-</span><span class='merb identifier id'>merb</span><span class='minus op'>-</span><span class='recaptcha identifier id'>recaptcha</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='source identifier id'>source</span><span class='assign token'>=</span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/gems.github.com
+</span></pre>
+<p>
+Add following line in <tt>config/dependencies.rb</tt> of your web
+application:
+</p>
+<pre class="code">
+    <span class='dependency identifier id'>dependency</span> <span class='string val'>&quot;antage-merb-recaptcha&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;~&gt; 1.0.0&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:require_as</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;merb-recaptcha&quot;</span>
+</pre>
+<p>
+Sign up at Recaptcha and get public and private keys. Add keys in
+<tt>config/init.rb</tt>:
+</p>
+<pre class="code">
+    <span class='Merb constant id'>Merb</span><span class='colon2 op'>::</span><span class='BootLoader constant id'>BootLoader</span><span class='dot token'>.</span><span class='after_app_loads identifier id'>after_app_loads</span> <span class='do do kw'>do</span>
+      <span class='Merb constant id'>Merb</span><span class='colon2 op'>::</span><span class='Plugins constant id'>Plugins</span><span class='dot token'>.</span><span class='config identifier id'>config</span><span class='lbrack token'>[</span><span class='symbol val'>:merb_recaptcha</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='symbol val'>:public_key</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='string val'>&quot;... here your public key ...&quot;</span>
+      <span class='Merb constant id'>Merb</span><span class='colon2 op'>::</span><span class='Plugins constant id'>Plugins</span><span class='dot token'>.</span><span class='config identifier id'>config</span><span class='lbrack token'>[</span><span class='symbol val'>:merb_recaptcha</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='symbol val'>:private_key</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='string val'>&quot;... here your private key ...&quot;</span>
+    <span class='end end kw'>end</span>
+</pre>
+<h2>Usage</h2>
+<p>
+Just add helper in your form:
+</p>
+<pre class="code">
+    <span class='lt op'>&lt;</span><span class='string val'>%= form_for @users, :action =</span><span class='gt op'>&gt;</span> <span class='resource identifier id'>resource</span><span class='lparen token'>(</span><span class='symbol val'>:users</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:method</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:post</span> <span class='do do kw'>do</span> <span class='string val'>%&gt;
+      .....
+      &lt;%= recaptcha_tags %&gt;</span>
+      <span class='lt op'>&lt;</span><span class='string val'>%= submit &quot;Send&quot; %&gt;
+    &lt;% end %&gt;
+</span></pre>
+<p>
+And then check captcha in controller:
+</p>
+<pre class="code">
+    <span class='class class kw'>class</span> <span class='Users constant id'>Users</span> <span class='lt op'>&lt;</span> <span class='Application constant id'>Application</span>
+      <span class='dot3 op'>...</span><span class='dot3 op'>...</span>
+      <span class='def def kw'>def</span> <span class='create identifier id'>create</span><span class='lparen token'>(</span><span class='user identifier id'>user</span><span class='rparen token'>)</span>
+        <span class='@user ivar id'>@user</span> <span class='assign token'>=</span> <span class='User constant id'>User</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='user identifier id'>user</span><span class='rparen token'>)</span>
+        <span class='if if kw'>if</span> <span class='lparen token'>(</span><span class='captcha_correct identifier id'>captcha_correct</span> <span class='assign token'>=</span> <span class='recaptcha_valid? fid id'>recaptcha_valid?</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='@user ivar id'>@user</span><span class='dot token'>.</span><span class='save identifier id'>save</span>
+          <span class='redirect identifier id'>redirect</span> <span class='resource identifier id'>resource</span><span class='lparen token'>(</span><span class='@user ivar id'>@user</span><span class='rparen token'>)</span>
+        <span class='else else kw'>else</span>
+          <span class='unless unless kw'>unless</span> <span class='captcha_correct identifier id'>captcha_correct</span>
+            <span class='@user ivar id'>@user</span><span class='dot token'>.</span><span class='valid? fid id'>valid?</span>
+            <span class='@user ivar id'>@user</span><span class='dot token'>.</span><span class='errors identifier id'>errors</span><span class='dot token'>.</span><span class='add identifier id'>add</span><span class='lparen token'>(</span><span class='symbol val'>:general</span><span class='comma token'>,</span> <span class='string val'>&quot;Captcha code is incorrect&quot;</span><span class='rparen token'>)</span>
+          <span class='end end kw'>end</span>
+        <span class='end end kw'>end</span>
+        <span class='render identifier id'>render</span> <span class='symbol val'>:new</span>
+      <span class='end end kw'>end</span>
+      <span class='dot3 op'>...</span><span class='dot3 op'>...</span>
+    <span class='end end kw'>end</span>
+</pre>
 
+</div>
           </div>
         </div>
       </div>                    
