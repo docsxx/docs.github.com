@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
-    <title>botanicus's rango - GitHub Documentation</title>
+    <title>botanicus's rango - Class: Object - GitHub Documentation</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -45,6 +45,7 @@
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
   </head>
   <body>    
+    
     
     
         <div id="main" style="padding-bottom:8em;">
@@ -105,24 +106,141 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div class="section docstring readme wikistyle">
-  <h1>Installation</h1>
-<p><code>sudo gem install botanicus-rango -s http://gems.github.com</code></p>
-<h1>Documentation</h1>
-<ol>
-	<li><a href="http://rango-project.org/docs/tutorial">Tutorial</a></li>
-	<li><a href="http://api.rango-project.org"><span class="caps">API</span> Docs</a></li>
-	<li><a href="http://github.com/botanicus/rango-examples">Examples</a></li>
-</ol>
-<h1>Rango Development</h1>
-<ol>
-	<li><a href="http://bit.ly/1xIq67">Roadmap</a></li>
-</ol>
-<h1>Community</h1>
-<ol>
-	<li><a href="xmpp://rango@conf.netlab.cz">Jabber <span class="caps">MUC</span></a></li>
-	<li><a href="https://twitter.com/RangoProject">Twitter</a></li>
-</ol>
+            <div class="wikistyle">
+  <div class="section class Object">
+  <h1>Class: Object</h1>
+  <div class="section docstring">
+  <p>
+rails defines try as <em>send</em> for each objects exclude nil - nil#try
+returns nil our try returns nil if the method doesn&#8217;t exist
+</p>
+
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup">
+      <div class="section methodsummary">
+    <h2>Public Instance Method Summary</h2>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href="#try-instance_method">#try</span><span class='args'>(method, *args, &amp;block)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Invokes the method identified by the symbol <tt>method</tt>, passing it any
+arguments and/or the block specified, just like the regular Ruby
+<tt>Object#send</tt> does.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails">
+  <h2>Public Instance Method Details</h2>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>try</h3>
+</div><div id="try-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>try</span><span class='args'>(method, *args, &amp;block)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Invokes the method identified by the symbol <tt>method</tt>, passing it any
+arguments and/or the block specified, just like the regular Ruby
+<tt>Object#send</tt> does.
+</p>
+<p>
+<b>Unlike</b> that method however, a <tt>NoMethodError</tt> exception will
+<b>not</b> be raised and <tt>nil</tt> will be returned instead, if the
+receiving object is a <tt>nil</tt> object or NilClass.
+</p>
+<h4>Examples</h4>
+<p>
+Without try
+</p>
+<pre class="code">
+  <span class='@person ivar id'>@person</span> <span class='andop op'>&amp;&amp;</span> <span class='@person ivar id'>@person</span><span class='dot token'>.</span><span class='name identifier id'>name</span>
+</pre>
+<p>
+or
+</p>
+<pre class="code">
+  <span class='@person ivar id'>@person</span> <span class='question op'>?</span> <span class='@person ivar id'>@person</span><span class='dot token'>.</span><span class='name identifier id'>name</span> <span class='colon op'>:</span> <span class='nil nil kw'>nil</span>
+</pre>
+<p>
+With try
+</p>
+<pre class="code">
+  <span class='@person ivar id'>@person</span><span class='dot token'>.</span><span class='try identifier id'>try</span><span class='lparen token'>(</span><span class='symbol val'>:name</span><span class='rparen token'>)</span>
+</pre>
+<p>
+<tt>try</tt> also accepts arguments and/or a block, for the method it is
+trying
+</p>
+<pre class="code">
+  <span class='Person constant id'>Person</span><span class='dot token'>.</span><span class='try identifier id'>try</span><span class='lparen token'>(</span><span class='symbol val'>:find</span><span class='comma token'>,</span> <span class='integer val'>1</span><span class='rparen token'>)</span>
+  <span class='@people ivar id'>@people</span><span class='dot token'>.</span><span class='try identifier id'>try</span><span class='lparen token'>(</span><span class='symbol val'>:collect</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='p identifier id'>p</span><span class='bitor op'>|</span> <span class='p identifier id'>p</span><span class='dot token'>.</span><span class='name identifier id'>name</span><span class='rbrace token'>}</span>
+</pre>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/rango/ext/try.rb', line 27</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/botanicus/rango/blob/b2e52f311935067862ae3d626ae07b7e14972203/lib/rango/ext/try.rb#L27">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">27
+28
+29</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='try identifier id'>try</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
 </div>
           </div>
         </div>
