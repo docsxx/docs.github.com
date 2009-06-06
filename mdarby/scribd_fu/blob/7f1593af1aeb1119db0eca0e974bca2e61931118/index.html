@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>mdarby's scribd_fu - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/mdarby/scribd_fu/blob/7f1593af1aeb1119db0eca0e974bca2e61931118">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/mdarby/scribd_fu/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/mdarby/scribd_fu">Wiki</a></li>
             <li class=""><a href="http://github.com/mdarby/scribd_fu/graphs">Graphs</a></li>                    
-            <li class="active"><a href="mdarby/scribd_fu">Documentation</a></li>
+            <li class="active"><a href="/mdarby/scribd_fu">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,56 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/mdarby/scribd_fu/blob/7f1593af1aeb1119db0eca0e974bca2e61931118">click here</a>.</p>
-    </div>
-  </div>
-</div>    
-
+            <div class="section docstring readme wikistyle">
+  <h1>Scribd_fu</h1>
+<p>A Ruby on Rails plugin that streamlines interaction with Scribd.com&#8217;s iPaper service, and works along side of either Attachment_fu or Paperclip</p>
+<h1>Big Changes! v2.0 <span class="caps">OMGZ</span>!</h1>
+<p>Please make sure to read below if you&#8217;re using an older version of ScribdFu. Pretty much everything has changed. Don&#8217;t fret, it&#8217;s now easier and cleaner. ScribdFu has been taken out into the backyard and given a thorough scrubbing. It&#8217;s now lean, mean, fully tested, and works beautifully with Attachment_fu, Paperclip, and Amazon&#8217;s S3 service.</p>
+<h2>What it does</h2>
+<p>Scribd_fu hides out in the shadows like a document converting ninja, just waiting to process your data into a convenient Flash format (like YouTube) with the help of the black majick of Scribd.com. Imagine embedding documents inline with your web UI &mdash; no downloading, no required programs on the client side (except for Flash) to view your data. It&#8217;s pretty damned cool, and free to boot!</p>
+<h2>Requirements</h2>
+<p>Scribd_fu requires the rscribd gem via <code>sudo gem install rscribd</code> (along with either the Attachment_fu plugin or the Paperclip gem)</p>
+<h2>How to Install</h2>
+<h3>ScribdFu requires a base plugin</h3>
+<p>ScribdFu is awesome, but it needs help from either <a href="http://github.com/technoweenie/attachment_fu/tree/master">Attachment_fu</a> or <a href="http://github.com/thoughtbot/paperclip/tree/master">Paperclip</a></p>
+<h3>Install ScribdFu</h3>
+<pre class="code"><span class='sudo identifier id'>sudo</span> <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='mdarby identifier id'>mdarby</span><span class='minus op'>-</span><span class='scribd_fu identifier id'>scribd_fu</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='source identifier id'>source</span> <span class='string val'>'http://gems.github.com'</span>
+</pre>
+<h3>Add ScribdFu to your environment.rb</h3>
+<pre class="code"><span class='config identifier id'>config</span><span class='dot token'>.</span><span class='gem identifier id'>gem</span> <span class='string val'>'mdarby-scribd_fu'</span><span class='comma token'>,</span> <span class='symbol val'>:lib</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'scribd_fu'</span><span class='comma token'>,</span> <span class='symbol val'>:source</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'http://gems.github.com'</span>
+</pre>
+<h2>How to Use</h2>
+<ul>
+	<li>Sign up for <a href="http://www.scribd.com/developers/signup_api">Scribd.com&#8217;s <span class="caps">API</span> access</a> (it&#8217;s totally free)</li>
+</ul>
+<ul>
+	<li>Run <code>./script/generate scribd_fu</code> and fill out <code>config/scribd_fu.yml</code> file with your Scribd account info.</li>
+</ul>
+<ul>
+	<li>If you&#8217;re using AttachmentFu, add <code>has_ipaper_and_uses 'AttachmentFu'</code> to your model that uses ScribdFu</li>
+</ul>
+<ul>
+	<li>If you&#8217;re using Paperclip, add <code>has_ipaper_and_uses 'Paperclip'</code> to your model that uses ScribdFu</li>
+</ul>
+<ul>
+	<li>Add the following fields into a new migration for the target model:</li>
+</ul>
+<pre class="code">
+  <span class='t identifier id'>t</span><span class='dot token'>.</span><span class='integer identifier id'>integer</span> <span class='symbol val'>:ipaper_id</span>
+  <span class='t identifier id'>t</span><span class='dot token'>.</span><span class='string identifier id'>string</span>  <span class='symbol val'>:ipaper_access_key</span>
+</pre>
+<p>Scribd_fu will use these to track Scribd-related information.</p>
+<p>Now, when you upload a file to that model, Scribd_fu will automatically handle the Scribd side of things for you. Files are uploaded to Scribd after the model is saved. No muss, no fuss. Scribd&#8217;s conversion of your document is usally quite fast, but if you want a contingency plan, the <code>conversion_processing?</code>, <code>conversion_complete?</code>, <code>conversion_successful?</code>, and <code>conversion_error?</code> instance methods can be used to determine the conversion status of the document.</p>
+<h2>Viewing the iPaper Document</h2>
+<p>Just add <code>&lt;%= document.display_ipaper %&gt;</code> into your view (where <code>document</code> is an object of your ScribdFu model). That&#8217;s it!</p>
+<h2>Access</h2>
+<p>You can set the access level on all documents by setting the <code>access</code> key in the scribd_fu.yml file to either &#8216;private&#8217; or &#8216;public&#8217;. ScribdFu assumes that you&#8217;d like to keep your documents private.</p>
+<h2>Help</h2>
+<p>Add a ticket to <a href="http://mdarby.lighthouseapp.com/projects/28697-scribdfu/overview">ScribdFu&#8217;s Lighthouse Account</a></p>
+<h2>About the Author</h2>
+<p>My name is <a href="http://blog.matt-darby.com">Matt Darby.</a> I’m an IT Manager and pro-web-dev at for <a href="http://dynamix-ltd.com">Dynamix Engineering</a> and hold a Master’s Degree in Computer Science from <a href="http://www.franklin.edu">Franklin University</a> in sunny <a href="http://en.wikipedia.org/wiki/Columbus,_Ohio">Columbus, OH.</a></p>
+<p>Feel free to check out my <a href="http://blog.matt-darby.com">blog</a> or <a href="http://www.workingwithrails.com/person/10908-matt-darby">recommend me</a></p>
+</div>
           </div>
         </div>
       </div>                    
