@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>mynyml's rack-supported-media-types - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/mynyml/rack-supported-media-types/blob/630e12a2d09079bbfe0022fcb4df6b405c8dce27">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/mynyml/rack-supported-media-types/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/mynyml/rack-supported-media-types">Wiki</a></li>
             <li class=""><a href="http://github.com/mynyml/rack-supported-media-types/graphs">Graphs</a></li>                    
-            <li class="active"><a href="mynyml/rack-supported-media-types">Documentation</a></li>
+            <li class="active"><a href="/mynyml/rack-supported-media-types">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,95 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/mynyml/rack-supported-media-types/blob/630e12a2d09079bbfe0022fcb4df6b405c8dce27">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h5>Summary</h5>
+<p>
+Rack middleware to specify an app&#8217;s supported media types. Returns
+&#8216;406 Not Acceptable&#8217; status when unsuported type is requested.
+</p>
+<p>
+The requested type is assumed to be the first content-type in the Accept
+header&#8217;s list.
+</p>
+<h5>Install</h5>
+<pre class="code">
+  <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='mynyml identifier id'>mynyml</span><span class='minus op'>-</span><span class='rack identifier id'>rack</span><span class='minus op'>-</span><span class='supported identifier id'>supported</span><span class='minus op'>-</span><span class='media identifier id'>media</span><span class='minus op'>-</span><span class='types identifier id'>types</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='source identifier id'>source</span><span class='assign token'>=</span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/gems.github.com/</span>
+</pre>
+<h5>Example</h5>
+<pre class="code">
+  <span class='require identifier id'>require</span> <span class='string val'>'rack'</span>
+  <span class='require identifier id'>require</span> <span class='string val'>'rack/supported_media_types'</span>
 
+  <span class='use identifier id'>use</span> <span class='Rack constant id'>Rack</span><span class='colon2 op'>::</span><span class='SupportedMediaTypes constant id'>SupportedMediaTypes</span><span class='comma token'>,</span> <span class='dstring node'>%w( application/xml application/json )</span>
+  <span class='run identifier id'>run</span> <span class='App constant id'>App</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+</pre>
+<p>
+will give you:
+</p>
+<pre class="code">
+  <span class='GET constant id'>GET</span> <span class='regexp val'>/foo
+  Accept: text/</span><span class='html identifier id'>html</span><span class='comma token'>,</span><span class='text identifier id'>text</span><span class='div op'>/</span><span class='plain identifier id'>plain</span>
+  <span class='comment val'>#=&gt; 406 Not Acceptable</span>
+
+  <span class='GET constant id'>GET</span> <span class='regexp val'>/foo
+  Accept: application/</span><span class='xml identifier id'>xml</span><span class='comma token'>,</span><span class='text identifier id'>text</span><span class='div op'>/</span><span class='html identifier id'>html</span>
+  <span class='comment val'>#=&gt; 200 OK</span>
+
+  <span class='GET constant id'>GET</span> <span class='regexp val'>/foo
+  Accept: application/</span><span class='json identifier id'>json</span><span class='comma token'>,</span><span class='text identifier id'>text</span><span class='div op'>/</span><span class='html identifier id'>html</span>
+  <span class='comment val'>#=&gt; 200 OK</span>
+</pre>
+<p>
+see examples/simple.ru for example code.
+</p>
+<h5>Tip</h5>
+<p>
+To read the requested type from the url&#8217;s extension instead of the
+Accept header (which is a more realistic use case), use
+Rack::AbstractFormat before Rack::SupportedMediaTypes.
+</p>
+<pre class="code">
+  <span class='comment val'># gem install mynyml-rack-abstract-format --source=http://gems.github.com/</span>
+
+  <span class='require identifier id'>require</span> <span class='string val'>'rack'</span>
+  <span class='require identifier id'>require</span> <span class='string val'>'rack/abstract_format'</span>
+  <span class='require identifier id'>require</span> <span class='string val'>'rack/supported_media_types'</span>
+
+  <span class='use identifier id'>use</span> <span class='Rack constant id'>Rack</span><span class='colon2 op'>::</span><span class='AbstractFormat constant id'>AbstractFormat</span>
+  <span class='use identifier id'>use</span> <span class='Rack constant id'>Rack</span><span class='colon2 op'>::</span><span class='SupportedMediaTypes constant id'>SupportedMediaTypes</span><span class='comma token'>,</span> <span class='dstring node'>%w( application/xml application/json )</span>
+  <span class='run identifier id'>run</span> <span class='App constant id'>App</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+</pre>
+<p>
+will result in:
+</p>
+<pre class="code">
+  <span class='GET constant id'>GET</span> <span class='regexp val'>/foo.html
+  #=&gt; 406 Not Acceptable
+
+  GET /</span><span class='foo identifier id'>foo</span><span class='dot token'>.</span><span class='xml identifier id'>xml</span>
+  <span class='comment val'>#=&gt; 200 OK</span>
+
+  <span class='GET constant id'>GET</span> <span class='regexp val'>/foo.json
+  #=&gt; 200 OK
+</span></pre>
+<p>
+(Rack::AbstractFormat prepends the media type for the url&#8217;s extension
+to the Accept header)
+</p>
+<p>
+see examples/recommended.ru for example code.
+</p>
+<h5>Links</h5>
+<table>
+<tr><td valign="top">source:</td><td>http://github.com/mynyml/rack-supported-media-types
+
+</td></tr>
+<tr><td valign="top">rdocs:</td><td>http://docs.github.com/mynyml/rack-supported-media-types
+
+</td></tr>
+</table>
+
+</div>
           </div>
         </div>
       </div>                    
