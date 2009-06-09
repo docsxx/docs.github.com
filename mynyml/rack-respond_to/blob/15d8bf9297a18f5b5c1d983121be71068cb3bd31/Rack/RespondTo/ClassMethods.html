@@ -1,11 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
-    <title>mynyml's rack-respond_to - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/mynyml/rack-respond_to/blob/15d8bf9297a18f5b5c1d983121be71068cb3bd31">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
+    <title>mynyml's rack-respond_to - Module: Rack::RespondTo::ClassMethods - GitHub Documentation</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -16,7 +12,7 @@
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
 <script type="text/javascript" src="http://assets3.github.com/javascripts/bundle.js"></script>              
-<script src="app.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../app.js" type="text/javascript" charset="utf-8"></script>
 
 <script type="text/javascript" src="http://docs.github.com/javascripts/md5.js"></script>
 <script type="text/javascript" src="http://docs.github.com/javascripts/repos.js"></script>
@@ -46,12 +42,11 @@
   });
 </script>
 
-    <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
+    <link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
   </head>
   <body>    
+    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +80,7 @@
             <li class=""><a href="http://github.com/mynyml/rack-respond_to/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/mynyml/rack-respond_to">Wiki</a></li>
             <li class=""><a href="http://github.com/mynyml/rack-respond_to/graphs">Graphs</a></li>                    
-            <li class="active"><a href="mynyml/rack-respond_to">Documentation</a></li>
+            <li class="active"><a href="/mynyml/rack-respond_to">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +106,146 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/mynyml/rack-respond_to/blob/15d8bf9297a18f5b5c1d983121be71068cb3bd31">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="wikistyle">
+  <div class="section module Rack_RespondTo_ClassMethods">
+  <h1>Module: Rack::RespondTo::ClassMethods</h1>
+  <div class="section constants">
+  
+</div>  <div class="section visibilitygroup">
+      <div class="section methodsummary">
+    <h2>Public Instance Method Summary</h2>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href="#respond_to-instance_method">#respond_to</span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Allows defining different actions and returns the one which corresponds to
+the highest ranking value in the RespondTo.
+</p>
 
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails">
+  <h2>Public Instance Method Details</h2>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>respond_to</h3>
+</div><div id="respond_to-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>respond_to</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Allows defining different actions and returns the one which corresponds to
+the highest ranking value in the RespondTo.media_types list.
+</p>
+<p>
+If no handler is defined for the highest ranking value, respond_to will
+cascade down the RespondTo.media_types list until it finds a match. Returns
+nil if there is no match.
+</p>
+<h5>Examples</h5>
+<pre class="code">
+  <span class='RespondTo constant id'>RespondTo</span><span class='dot token'>.</span><span class='media_types identifier id'>media_types</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='string val'>'text/html'</span><span class='comma token'>,</span> <span class='string val'>'application/xml'</span><span class='rbrack token'>]</span>
+
+  <span class='respond_to identifier id'>respond_to</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='format identifier id'>format</span><span class='bitor op'>|</span>
+    <span class='format identifier id'>format</span><span class='dot token'>.</span><span class='html identifier id'>html</span> <span class='lbrace token'>{</span> <span class='string val'>'html'</span> <span class='rbrace token'>}</span>
+    <span class='format identifier id'>format</span><span class='dot token'>.</span><span class='xml identifier id'>xml</span>  <span class='lbrace token'>{</span> <span class='string val'>'xml'</span>  <span class='rbrace token'>}</span>
+  <span class='end end kw'>end</span>
+  <span class='comment val'>#=&gt; 'html'</span>
+
+  <span class='RespondTo constant id'>RespondTo</span><span class='dot token'>.</span><span class='media_types identifier id'>media_types</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='string val'>'text/html'</span><span class='comma token'>,</span> <span class='string val'>'application/xml'</span><span class='rbrack token'>]</span>
+
+  <span class='respond_to identifier id'>respond_to</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='format identifier id'>format</span><span class='bitor op'>|</span>
+    <span class='format identifier id'>format</span><span class='dot token'>.</span><span class='xml identifier id'>xml</span>  <span class='lbrace token'>{</span> <span class='string val'>'xml'</span> <span class='rbrace token'>}</span>
+    <span class='format identifier id'>format</span><span class='dot token'>.</span><span class='txt identifier id'>txt</span>  <span class='lbrace token'>{</span> <span class='string val'>'txt'</span>  <span class='rbrace token'>}</span>
+  <span class='end end kw'>end</span>
+  <span class='comment val'>#=&gt; 'xml'</span>
+
+  <span class='RespondTo constant id'>RespondTo</span><span class='dot token'>.</span><span class='media_types identifier id'>media_types</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='string val'>'text/html'</span><span class='comma token'>,</span> <span class='string val'>'application/json'</span><span class='rbrack token'>]</span>
+
+  <span class='respond_to identifier id'>respond_to</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='format identifier id'>format</span><span class='bitor op'>|</span>
+    <span class='format identifier id'>format</span><span class='dot token'>.</span><span class='xml identifier id'>xml</span>  <span class='lbrace token'>{</span> <span class='string val'>'xml'</span> <span class='rbrace token'>}</span>
+    <span class='format identifier id'>format</span><span class='dot token'>.</span><span class='txt identifier id'>txt</span>  <span class='lbrace token'>{</span> <span class='string val'>'txt'</span>  <span class='rbrace token'>}</span>
+  <span class='end end kw'>end</span>
+  <span class='comment val'>#=&gt; nil</span>
+</pre>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/rack/respond_to.rb', line 125</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/mynyml/rack-respond_to/blob/15d8bf9297a18f5b5c1d983121be71068cb3bd31/lib/rack/respond_to.rb#L125">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">125
+126
+127
+128
+129
+130
+131
+132</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='respond_to identifier id'>respond_to</span>
+  <span class='format identifier id'>format</span> <span class='assign token'>=</span> <span class='Format constant id'>Format</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+  <span class='yield yield kw'>yield</span> <span class='format identifier id'>format</span>
+  <span class='type identifier id'>type</span> <span class='assign token'>=</span> <span class='RespondTo constant id'>RespondTo</span><span class='dot token'>.</span><span class='media_types identifier id'>media_types</span><span class='dot token'>.</span><span class='detect identifier id'>detect</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='type identifier id'>type</span><span class='bitor op'>|</span> <span class='format identifier id'>format</span><span class='lbrack token'>[</span><span class='type identifier id'>type</span><span class='rbrack token'>]</span> <span class='rbrace token'>}</span>
+  <span class='RespondTo constant id'>RespondTo</span><span class='dot token'>.</span><span class='selected_media_type identifier id'>selected_media_type</span> <span class='assign token'>=</span> <span class='type identifier id'>type</span>
+  <span class='handler identifier id'>handler</span> <span class='assign token'>=</span> <span class='format identifier id'>format</span><span class='lbrack token'>[</span><span class='type identifier id'>type</span><span class='rbrack token'>]</span>
+  <span class='handler identifier id'>handler</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span> <span class='integer val'>? </span><span class='nil nil kw'>nil</span> <span class='colon op'>:</span> <span class='handler identifier id'>handler</span><span class='dot token'>.</span><span class='call identifier id'>call</span>
+<span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+</div>
           </div>
         </div>
       </div>                    
