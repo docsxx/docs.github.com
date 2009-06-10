@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>Oshuma's pingfm - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/Oshuma/pingfm/blob/b3fe2b9b422fe3cf4fa357ef63eb760451140c9b">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/Oshuma/pingfm/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/Oshuma/pingfm">Wiki</a></li>
             <li class=""><a href="http://github.com/Oshuma/pingfm/graphs">Graphs</a></li>                    
-            <li class="active"><a href="Oshuma/pingfm">Documentation</a></li>
+            <li class="active"><a href="/Oshuma/pingfm">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,143 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/Oshuma/pingfm/blob/b3fe2b9b422fe3cf4fa357ef63eb760451140c9b">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <p>
+Ping.fm Ruby Client/Library
+</p>
+<h2>Authors</h2>
+<ul>
+<li>Krunoslav Husak (http://h00s.net)
 
+</li>
+<li>Dale Campbell (http://corrupt.save-state.net)
+
+</li>
+<li>Kevin Williams (http://almostserio.us)
+
+</li>
+</ul>
+<h2>CODE:</h2>
+<p>
+http://pingfm.rubyforge.org/
+</p>
+<h2>DESCRIPTION:</h2>
+<p>
+Ping.fm (http://ping.fm) is a simple service that makes updating your
+social networks a snap, and this it&#8217;s Ruby library.
+</p>
+<h2>FEATURES/PROBLEMS:</h2>
+<ul>
+<li>Installing the gem creates a &#8216;pingfm&#8217; shell script to post from
+the shell.
+
+</li>
+<li>Keys are stored in a YAML file in your home directory (under Linux/OSX).
+
+</li>
+</ul>
+<h2>SYNOPSIS:</h2>
+<p>
+Shell usage:
+</p>
+<pre class="code">
+  $ <span class='pingfm identifier id'>pingfm</span> <span class='This constant id'>This</span> <span class='message identifier id'>message</span> <span class='will identifier id'>will</span> <span class='post identifier id'>post</span> <span class='to identifier id'>to</span> <span class='my identifier id'>my</span> <span class='default identifier id'>default</span> <span class='services identifier id'>services</span><span class='dot token'>.</span>
+</pre>
+<p>
+Everything after the &#8216;pingfm&#8217; command is what will be posted to
+the service. You may also include the message within quotes (ex. using the
+client within a shell script).
+</p>
+<p>
+If your keys have not been stored, it will ask for them. These keys will be
+saved in a YAML file in your home directory and you won&#8217;t be asked
+for them again.
+</p>
+<p>
+You can obtain your keys here:
+</p>
+<ul>
+<li>User API Key - http://ping.fm/key/
+
+</li>
+<li>Application API Key - http://ping.fm/developers/
+
+</li>
+</ul>
+<p>
+Library usage:
+</p>
+<pre class="code">
+  <span class='comment val'># Require the library and initialize it.</span>
+  <span class='require identifier id'>require</span> <span class='string val'>'pingfm'</span>
+  <span class='pingfm identifier id'>pingfm</span> <span class='assign token'>=</span> <span class='Pingfm constant id'>Pingfm</span><span class='colon2 op'>::</span><span class='Client constant id'>Client</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'api_key'</span><span class='comma token'>,</span> <span class='string val'>'user_app_key'</span><span class='rparen token'>)</span>
+
+  <span class='comment val'># Ensure proper API and User App keys.</span>
+  <span class='pingfm identifier id'>pingfm</span><span class='dot token'>.</span><span class='validate identifier id'>validate</span><span class='lbrack token'>[</span><span class='string val'>'status'</span><span class='rbrack token'>]</span>
+  <span class='comment val'># =&gt; 'OK' if success, otherwise 'FAIL'</span>
+
+  <span class='comment val'># Grab latest 5 posts.</span>
+  <span class='pingfm identifier id'>pingfm</span><span class='dot token'>.</span><span class='latest identifier id'>latest</span><span class='lparen token'>(</span><span class='integer val'>5</span><span class='rparen token'>)</span>  <span class='comment val'># =&gt; {'messages' =&gt; [...]}</span>
+
+  <span class='comment val'># Posting to all services.</span>
+  <span class='pingfm identifier id'>pingfm</span><span class='dot token'>.</span><span class='post identifier id'>post</span><span class='lparen token'>(</span><span class='string val'>'The Dark Knight was amazing.'</span><span class='rparen token'>)</span>
+  <span class='comment val'># =&gt; {'status' =&gt; 'OK'} if success, otherwise 'FAIL'</span>
+
+  <span class='comment val'># Post using custom user trigger; must be defined on the Ping.fm site.</span>
+  <span class='pingfm identifier id'>pingfm</span><span class='dot token'>.</span><span class='tpost identifier id'>tpost</span><span class='lparen token'>(</span><span class='string val'>'The message here.'</span><span class='comma token'>,</span> <span class='string val'>'#something_custom'</span><span class='comma token'>,</span> <span class='string val'>'Optional Title'</span><span class='rparen token'>)</span>
+  <span class='comment val'># =&gt; {'status' =&gt; 'OK'} if success, otherwise 'FAIL'</span>
+</pre>
+<p>
+Check the source comments for more details.
+</p>
+<h2>REQUIREMENTS:</h2>
+<p>
+Ruby!
+</p>
+<h2>INSTALL:</h2>
+<pre class="code">
+  <span class='comment val'># From Rubyforge...</span>
+  $ <span class='sudo identifier id'>sudo</span> <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='pingfm identifier id'>pingfm</span>
+</pre>
+<p>
+<b>OR</b>
+</p>
+<pre class="code">
+  <span class='comment val'># From Github...</span>
+  $ <span class='sudo identifier id'>sudo</span> <span class='gem identifier id'>gem</span> <span class='sources identifier id'>sources</span> <span class='minus op'>-</span><span class='a identifier id'>a</span> <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/gems.github.com (only need to do this once)
+  $ sudo gem install oshuma-pingfm
+</span></pre>
+<h2>LICENSE:</h2>
+<p>
+(The MIT License)
+</p>
+<p>
+Copyright &#169; 2008 Krunoslav Husak, Dale Campbell, Kevin Williams
+</p>
+<p>
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the
+&#8216;Software&#8217;), to deal in the Software without restriction,
+including without limitation the rights to use, copy, modify, merge,
+publish, distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to the
+following conditions:
+</p>
+<p>
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+</p>
+<p>
+THE SOFTWARE IS PROVIDED &#8216;AS IS&#8217;, WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+USE OR OTHER DEALINGS IN THE SOFTWARE.
+</p>
+
+</div>
           </div>
         </div>
       </div>                    
