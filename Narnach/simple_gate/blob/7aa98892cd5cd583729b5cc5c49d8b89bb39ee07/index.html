@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>Narnach's simple_gate - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/Narnach/simple_gate/blob/7aa98892cd5cd583729b5cc5c49d8b89bb39ee07">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/Narnach/simple_gate/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/Narnach/simple_gate">Wiki</a></li>
             <li class=""><a href="http://github.com/Narnach/simple_gate/graphs">Graphs</a></li>                    
-            <li class="active"><a href="Narnach/simple_gate">Documentation</a></li>
+            <li class="active"><a href="/Narnach/simple_gate">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,209 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/Narnach/simple_gate/blob/7aa98892cd5cd583729b5cc5c49d8b89bb39ee07">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>SimpleGate</h1>
+<p>
+SimpleGate makes it possible to use net/ssh/gateway&#8217;s capabilities in
+a simple to use way. This makes it possible to write simple scripts that
+access servers that are located several hops inside a network.
+</p>
+<p>
+The core gateway chaining logic was taken from Capistrano, but it has been
+rewritten to be useful in a more generic way than Capistrano allows.
+</p>
+<p>
+SimpleGate&#8217;s Router class makes it possible to automatically find a
+route through a maze of servers instead of having to manually define
+gateway chains. An added benefit is that a change to one server&#8217;s
+connections no longer requires you to update all other servers if they
+relied on it as a gateway.
+</p>
+<p>
+SimpleGate is simple, meaning it does not (yet) do fancy things such as
+using ~/.ssh. Because of this, you&#8217;ll have to define ~/.servers.yml
+and add entries to configure your servers. To use the routing functionality
+used by the gate_cp and simple_gate executables, you have to define routes
+in ~/.servers.connections.yml
+</p>
+<p>
+An example configuration for the servers &#8216;foobar&#8217; and
+&#8216;barfoo&#8217; would look be:
+</p>
+<pre class="code">
+  <span class='minus op'>-</span><span class='minus op'>-</span><span class='minus op'>-</span>
+  <span class='foobar identifier id'>foobar</span><span class='colon op'>:</span>
+    <span class='address identifier id'>address</span><span class='colon op'>:</span> <span class='string val'>&quot;127.0.0.1&quot;</span>
+    <span class='username identifier id'>username</span><span class='colon op'>:</span> <span class='string val'>&quot;foo&quot;</span>
+    <span class='password identifier id'>password</span><span class='colon op'>:</span> <span class='string val'>&quot;bar
+    port: 22
+  barfoo:
+    address: &quot;</span><span class='float val'>192.168</span><span class='float val'>.0.1</span><span class='string val'>&quot;
+    username: &quot;</span><span class='bar identifier id'>bar</span><span class='string val'>&quot;
+    password: &quot;</span><span class='foo identifier id'>foo</span>
+    <span class='port identifier id'>port</span><span class='colon op'>:</span> <span class='integer val'>22</span>
+</pre>
+<p>
+Example of a ~/.servers.connections.yml file:
+</p>
+<pre class="code">
+  <span class='minus op'>-</span><span class='minus op'>-</span><span class='minus op'>-</span>
+  <span class='local identifier id'>local</span><span class='colon op'>:</span>
+  <span class='minus op'>-</span> <span class='foo identifier id'>foo</span>
+  <span class='foo identifier id'>foo</span><span class='colon op'>:</span>
+  <span class='minus op'>-</span> <span class='bar identifier id'>bar</span>
+  <span class='minus op'>-</span> <span class='baz identifier id'>baz</span>
+  <span class='bar identifier id'>bar</span><span class='colon op'>:</span>
+  <span class='minus op'>-</span> <span class='foobar identifier id'>foobar</span>
+  <span class='minus op'>-</span> <span class='foobaz identifier id'>foobaz</span>
+  <span class='minus op'>-</span> <span class='barbaz identifier id'>barbaz</span>
+</pre>
+<p>
+All keys are names of servers defined in ~/.servers.yml. The only special
+node is &quot;local&quot;, which is the starting point for all connections
+and not a real connection.
+</p>
+<h2>Recent changes</h2>
+<h3>Version 0.5.3</h3>
+<ul>
+<li>Added yardoc documentation to all classes.
 
+</li>
+<li>SimpleGate#through raises an error when no gates are chosen
+
+</li>
+<li>SimpleGate#through uses local variables instead of instance variables
+
+</li>
+<li>ServerDefinition#options is created on the fly
+
+</li>
+</ul>
+<h3>Version 0.5.2</h3>
+<ul>
+<li>Added -V verbose flag to gate_cp
+
+</li>
+<li>Use STDERR for status messages. STDOUT is used to output SSH responses
+
+</li>
+<li>Updated executables to support direct server connections
+
+</li>
+<li>SimpleGate#through_to can connect directly to a server without gateways
+
+</li>
+</ul>
+<h3>Version 0.5.1</h3>
+<ul>
+<li>Updated readme and simple_gate documentation
+
+</li>
+<li>Implemented infinite loop prevention code in Router#find
+
+</li>
+<li>Cleaned up Router#find to be more readable
+
+</li>
+<li>Added spec to show stack overflow occurs when a cyclical graph is used to
+find a route
+
+</li>
+<li>Added specs for Router#find
+
+</li>
+<li>Added a -V (verbose) flag option to simple_gate
+
+</li>
+<li>Removed empty method definition
+
+</li>
+</ul>
+<h3>Version 0.5.0</h3>
+<ul>
+<li>Added syntax explanation to gate_cp
+
+</li>
+<li>Added gate_cp, which copies one local file to a remote destination
+
+</li>
+</ul>
+<h3>Version 0.4.1</h3>
+<ul>
+<li>simple_gate is now executable
+
+</li>
+</ul>
+<h3>Version 0.4.0</h3>
+<ul>
+<li>Updated readme with version history for previous gem versions
+
+</li>
+<li>Added simple_gate executable to use SimpleGate&#8217;s new Router class to
+find a path to a server and execute a command there.
+
+</li>
+</ul>
+<h3>Version 0.3.0</h3>
+<ul>
+<li>Readme now has a project description and updated credits for a bit of
+Capistrano code
+
+</li>
+<li>Added mutator and documentation for ServerDefinition.servers
+
+</li>
+<li>Updated comment to make more sense
+
+</li>
+</ul>
+<h3>Version 0.2.0</h3>
+<ul>
+<li>Implemented SimpleGate#through_to, which establishes a real ssh session
+through a number of gateways
+
+</li>
+</ul>
+<h3>Version 0.1.0</h3>
+<ul>
+<li>Removed simple_gate executable
+
+</li>
+<li>Imported SimpleGate and ServerDefinition
+
+</li>
+</ul>
+<h3>Version 0.0.1</h3>
+<ul>
+<li>Created project
+
+</li>
+</ul>
+<h2>Installation</h2>
+<h3>From git</h3>
+<p>
+From the project root, use rake to install.
+</p>
+<pre class="code">
+  <span class='git identifier id'>git</span> <span class='clone identifier id'>clone</span> <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/github.com/</span><span class='Narnach constant id'>Narnach</span><span class='div op'>/</span><span class='simple_gate identifier id'>simple_gate</span>
+  <span class='cd identifier id'>cd</span> <span class='simple_gate identifier id'>simple_gate</span>
+  <span class='rake identifier id'>rake</span> <span class='install identifier id'>install</span>
+</pre>
+<p>
+This will build the gem and install it for you.
+</p>
+<h2>About</h2>
+<p>
+simple_gate was created by Wes Oldenbeuving. It is licensed under the MIT
+license.
+</p>
+<p>
+SimpleGate#through is based on GatewayConnectionFactory#initialize, which
+is part of Jamis Buck&#8217;s Capistrano and is also licensed under the MIT
+license.
+</p>
+
+</div>
           </div>
         </div>
       </div>                    
