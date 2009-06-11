@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>thumblemonks's chicago - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/thumblemonks/chicago/blob/a05148970626c1c610f76138718ff7df5c16dfd3">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/thumblemonks/chicago/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/thumblemonks/chicago">Wiki</a></li>
             <li class=""><a href="http://github.com/thumblemonks/chicago/graphs">Graphs</a></li>                    
-            <li class="active"><a href="thumblemonks/chicago">Documentation</a></li>
+            <li class="active"><a href="/thumblemonks/chicago">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,51 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/thumblemonks/chicago/blob/a05148970626c1c610f76138718ff7df5c16dfd3">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>Chicago</h1>
 
+<pre class="code"><span class='It constant id'>It</span><span class='string val'>'s my kind of town!
+- Sinatra
+</span></pre>
+
+<p>Yeah, we're real clever. We're also from <a href="http://www.azlyrics.com/lyrics/lupefiasco/gogogadgetflow.html">"The city in mid-west best city in the whole wide wide world"</a> ... which makes us double the clever.</p>
+
+<h2>What what?</h2>
+
+<h3>Sinatra runtime app</h3>
+
+<p>In your Sinatra app, do this:</p>
+
+<pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'chicago'</span>
+</pre>
+
+<p>And you'll get some helpful Sinatra extensions and helpers.</p>
+
+<p>If you're Sinatra app is considered modular - as in, you are not using the <code>Sinatra::Default</code> app - you will want to add the following in your app:</p>
+
+<pre class="code"><span class='YourApp constant id'>YourApp</span> <span class='lt op'>&lt;</span> <span class='Sinatra constant id'>Sinatra</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
+  <span class='register identifier id'>register</span> <span class='Sinatra constant id'>Sinatra</span><span class='colon2 op'>::</span><span class='Chicago constant id'>Chicago</span>            <span class='comment val'># for some DSL helpers</span>
+  <span class='helpers identifier id'>helpers</span> <span class='Sinatra constant id'>Sinatra</span><span class='colon2 op'>::</span><span class='Chicago constant id'>Chicago</span><span class='colon2 op'>::</span><span class='Helpers constant id'>Helpers</span>    <span class='comment val'># for standard helpers</span>
+  <span class='helpers identifier id'>helpers</span> <span class='Sinatra constant id'>Sinatra</span><span class='colon2 op'>::</span><span class='Chicago constant id'>Chicago</span><span class='colon2 op'>::</span><span class='Responders constant id'>Responders</span> <span class='comment val'># for JSON assistance</span>
+<span class='end end kw'>end</span>
+</pre>
+
+<p>You don't necessarily need all of them. You just need to "include" the statements that mix-in the functionality you want.</p>
+
+<h3>Sinatra testing</h3>
+
+<p>Assuming you have required 'rack/test', like so:</p>
+
+<pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'rack/test'</span>
+</pre>
+
+<p>This is because these macros use last_request defined by the Rack/Test library. If you're using Shoulda in your tests of your Sinatra app, do this:</p>
+
+<pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'chicago/shoulda'</span>
+</pre>
+
+<p>... and you'll get a bunch of cool Shoulda macros for testing specific Sinatra stuff.</p>
+</div>
           </div>
         </div>
       </div>                    
