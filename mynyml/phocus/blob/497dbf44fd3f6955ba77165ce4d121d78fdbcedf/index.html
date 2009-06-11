@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>mynyml's phocus - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/mynyml/phocus/blob/497dbf44fd3f6955ba77165ce4d121d78fdbcedf">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/mynyml/phocus/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/mynyml/phocus">Wiki</a></li>
             <li class=""><a href="http://github.com/mynyml/phocus/graphs">Graphs</a></li>                    
-            <li class="active"><a href="mynyml/phocus">Documentation</a></li>
+            <li class="active"><a href="/mynyml/phocus">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,109 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/mynyml/phocus/blob/497dbf44fd3f6955ba77165ce4d121d78fdbcedf">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h4>Summary</h4>
+<p>
+Phocus let&#8217;s you temporarily focus some tests, ignoring all others,
+even across test classes.
+</p>
+<h4>Features</h4>
+<ul>
+<li>Ultra simple to use
 
+</li>
+<li>Works accross testcase classes
+
+</li>
+<li>Works within contexts
+
+</li>
+<li>Can focus multiple tests
+
+</li>
+<li>Simple code (&lt; 50 LOCs)
+
+</li>
+<li>Compatible with various testing frameworks
+
+</li>
+</ul>
+<h4>Examples</h4>
+<pre class="code">
+  <span class='require identifier id'>require</span> <span class='string val'>'test/unit'</span>
+  <span class='require identifier id'>require</span> <span class='string val'>'rubygems'</span>
+  <span class='require identifier id'>require</span> <span class='string val'>'phocus'</span>
+
+  <span class='class class kw'>class</span> <span class='TestUser constant id'>TestUser</span> <span class='lt op'>&lt;</span> <span class='Test constant id'>Test</span><span class='colon2 op'>::</span><span class='Unit constant id'>Unit</span><span class='colon2 op'>::</span><span class='TestCase constant id'>TestCase</span>
+
+    <span class='focus identifier id'>focus</span>
+    <span class='def def kw'>def</span> <span class='test_foo identifier id'>test_foo</span>
+      <span class='assert identifier id'>assert</span> <span class='User constant id'>User</span><span class='dot token'>.</span><span class='do_something identifier id'>do_something</span>
+    <span class='end end kw'>end</span>
+
+    <span class='def def kw'>def</span> <span class='test_bar identifier id'>test_bar</span>
+      <span class='assert identifier id'>assert</span> <span class='User constant id'>User</span><span class='dot token'>.</span><span class='do_something_else identifier id'>do_something_else</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+
+  <span class='class class kw'>class</span> <span class='TestAcmeWidget constant id'>TestAcmeWidget</span> <span class='lt op'>&lt;</span> <span class='Test constant id'>Test</span><span class='colon2 op'>::</span><span class='Unit constant id'>Unit</span><span class='colon2 op'>::</span><span class='TestCase constant id'>TestCase</span>
+
+    <span class='def def kw'>def</span> <span class='test_abc identifier id'>test_abc</span>
+      <span class='assert identifier id'>assert</span> <span class='true true kw'>true</span>
+    <span class='end end kw'>end</span>
+
+    <span class='focus identifier id'>focus</span>
+    <span class='def def kw'>def</span> <span class='test_xyz identifier id'>test_xyz</span>
+      <span class='assert identifier id'>assert</span> <span class='true true kw'>true</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+Executing these tests (say with <tt>rake test</tt> or <tt>autotest</tt>),
+will only run <tt>test_foo</tt> and <tt>test_xyz</tt>.
+</p>
+<p>
+Also works fine with <tt>test &quot;description&quot;</tt> style tests.
+</p>
+<pre class="code">
+    <span class='focus identifier id'>focus</span>
+    <span class='test identifier id'>test</span> <span class='string val'>&quot;abc&quot;</span> <span class='do do kw'>do</span>
+      <span class='assert identifier id'>assert</span> <span class='true true kw'>true</span>
+    <span class='end end kw'>end</span>
+</pre>
+<h4>Testing Framework Compatibility</h4>
+<p>
+Phocus is known to be compatible with the following testing frameworks (see
+test/compat/*):
+</p>
+<pre class="code">
+  <span class='mult op'>*</span> <span class='test identifier id'>test</span><span class='div op'>/</span><span class='unit identifier id'>unit</span>
+  <span class='mult op'>*</span> <span class='minitest identifier id'>minitest</span><span class='div op'>/</span><span class='unit identifier id'>unit</span>
+  <span class='mult op'>*</span> <span class='shoulda identifier id'>shoulda</span>
+  <span class='mult op'>*</span> <span class='context identifier id'>context</span>
+  <span class='mult op'>*</span> <span class='contest identifier id'>contest</span>
+</pre>
+<p>
+It is possibly compatible out of the box with other test/unit-based testing
+frameworks as well, but it should be fairly easy to set up if it
+isn&#8217;t (include Phocus in parent testcase class and set proper
+method_pattern. See rdocs)
+</p>
+<h4>Links</h4>
+<table>
+<tr><td valign="top">source:</td><td>http://github.com/mynyml/phocus
+
+</td></tr>
+<tr><td valign="top">rdocs:</td><td>http://docs.github.com/mynyml/phocus
+
+</td></tr>
+</table>
+<h4>License</h4>
+<p>
+MIT. See LICENSE file.
+</p>
+
+</div>
           </div>
         </div>
       </div>                    
