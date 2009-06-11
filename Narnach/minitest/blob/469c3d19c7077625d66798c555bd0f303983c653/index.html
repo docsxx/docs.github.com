@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>Narnach's minitest - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/Narnach/minitest/blob/469c3d19c7077625d66798c555bd0f303983c653">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/Narnach/minitest/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/Narnach/minitest">Wiki</a></li>
             <li class=""><a href="http://github.com/Narnach/minitest/graphs">Graphs</a></li>                    
-            <li class="active"><a href="Narnach/minitest">Documentation</a></li>
+            <li class="active"><a href="/Narnach/minitest">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,228 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/Narnach/minitest/blob/469c3d19c7077625d66798c555bd0f303983c653">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h2>Minitest</h2>
+<p>
+Minitest is a simple autotester intended to be used with rSpec, Test::Unit
+and rCov. It can be used with &#8216;plain&#8217; Ruby projects and Ruby on
+Rails.
+</p>
+<h2>Recent changes</h2>
+<h3>Version 0.3.3</h3>
+<ul>
+<li>Ruby 1.9 compatibility
 
+<ul>
+<li>Changed Set#join to use #to_a instead of #map.
+
+</li>
+<li>Added workaround for gem not building on ruby 1.9.1p129
+
+</li>
+</ul>
+</li>
+<li>Tools
+
+<ul>
+<li>Added rake task to detect files not added to the gemspec
+
+</li>
+</ul>
+</li>
+<li>Refactorings
+
+<ul>
+<li>RspecMixin#rspec is now a public method with no default parameter
+
+</li>
+<li>Moved rspec functionality to RspecMixin
+
+</li>
+<li>Moved Rcov functionality into RcovMixin
+
+</li>
+<li>Define default specs to ignore in a constant instead of burying it in the
+code
+
+</li>
+<li>Moved trap_int_for_rcov back into Minitest
+
+</li>
+<li>Refactored rcov command to take the specs to check as its parameter
+
+</li>
+</ul>
+</li>
+</ul>
+<h3>Version 0.3.2</h3>
+<ul>
+<li>Bugfixes:
+
+<ul>
+<li>Minitest will not run non-existent specs
+
+</li>
+<li>Rcov will not run non-existent specs
+
+</li>
+</ul>
+</li>
+<li>Documentation changes:
+
+<ul>
+<li>Readme examples match current functionality
+
+</li>
+<li>Readme has a todo section
+
+</li>
+<li>Minitest documentation updated
+
+</li>
+<li>DirMonitor documentation updated
+
+</li>
+</ul>
+</li>
+<li>Code cleanups:
+
+<ul>
+<li>Gemspec is a lot more readable
+
+</li>
+<li>Numerous refactorings in Minitest and DirMonitor
+
+</li>
+<li>Set extension has its own file
+
+</li>
+</ul>
+</li>
+</ul>
+<h3>Version 0.3.1</h3>
+<p>
+Minitest gained support to test Test::Unit tests and RSpec specs at the
+same time.
+</p>
+<h3>Version 0.3.0</h3>
+<p>
+Minitest switched to a new file monitoring backend: DirMonitor. This makes
+it possible to track new files as they are created, without needing to
+restart minitest. The &#8216;recent&#8217; feature was removed because
+DirMonitor does not (yet?) have a way to only yield files newer than some
+timestamp. This feature is likely to re-appear in a nearby future.
+</p>
+<h2>Installation</h2>
+<h3>From gem</h3>
+<p>
+Use gem to install minitest. The gem is located on github.
+</p>
+<pre class="code">
+  <span class='sudo identifier id'>sudo</span> <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='Narnach constant id'>Narnach</span><span class='minus op'>-</span><span class='minitest identifier id'>minitest</span> <span class='minus op'>-</span><span class='s identifier id'>s</span> <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/gems.github.com
+</span></pre>
+<h3>From git</h3>
+<p>
+From the project root, use rake to install:
+</p>
+<pre class="code">
+  <span class='git identifier id'>git</span> <span class='clone identifier id'>clone</span> <span class='git identifier id'>git</span><span class='symbol val'>:/</span><span class='regexp val'>/github.com/</span><span class='Narnach constant id'>Narnach</span><span class='div op'>/</span><span class='minitest identifier id'>minitest</span><span class='dot token'>.</span><span class='git identifier id'>git</span>
+  <span class='cd identifier id'>cd</span> <span class='minitest identifier id'>minitest</span>
+  <span class='rake identifier id'>rake</span> <span class='install identifier id'>install</span>
+</pre>
+<p>
+This will build the gem and install it for you.
+</p>
+<h2>Usage</h2>
+<p>
+Minitest has the following command line options:
+</p>
+<table>
+<tr><td valign="top">profile:</td><td>Force rspec output format to &#8216;profile&#8217;, combined with coloured
+output and unified diffs.
+
+</td></tr>
+<tr><td valign="top">drb:</td><td>Use a spec server to execute specs, speeding up their execution.
+
+</td></tr>
+</table>
+<h2>Examples</h2>
+<p>
+When you start working on a codebase, it makes sense to run all specs:
+</p>
+<pre class="code">
+  <span class='minitest identifier id'>minitest</span>
+</pre>
+<p>
+When you want to see which specs are slow and could use optimizing:
+</p>
+<pre class="code">
+  <span class='minitest identifier id'>minitest</span> <span class='profile identifier id'>profile</span>
+</pre>
+<p>
+You can also combine options:
+</p>
+<pre class="code">
+  <span class='minitest identifier id'>minitest</span> <span class='drb identifier id'>drb</span> <span class='profile identifier id'>profile</span>
+</pre>
+<h2>Todo / ideas / plans</h2>
+<ul>
+<li>Figure out how to get RCov to run specs and tests at the same time and
+implement it.
+
+</li>
+<li>Add &#8216;recent&#8217; option (was removed in 0.3.0).
+
+</li>
+<li>Cleanup Minitest class / rewrite in a clean and testable way.
+
+</li>
+</ul>
+<h2>Minitest cleanup</h2>
+<p>
+The Minitest class started as a simple script and thus was not designed to
+focus on one responsibility. Right now it tries to do too much:
+</p>
+<ul>
+<li>Infinite loop
+
+</li>
+<li>Execute RSpec for changed files
+
+</li>
+<li>Execute test/unit for changed files
+
+</li>
+<li>Execute RCov when terminating the loop
+
+</li>
+</ul>
+<p>
+Instead of delegating these tasks, it actually performs them.
+</p>
+<p>
+Adding three classes is a good first step to reduce complexity. Each
+&#8216;executable&#8217; gets its own class: RSpec, RCov and test/unit.
+When that is done, the code in Minitest should be reduced to looping and
+delegating.
+</p>
+<h2>About</h2>
+<table>
+<tr><td valign="top">Author:</td><td>Wes &#8216;Narnach&#8217; Oldenbeuving (narnach@gmail.com)
+
+</td></tr>
+<tr><td valign="top">Website:</td><td>http://www.github.com/Narnach/minitest
+
+</td></tr>
+<tr><td valign="top">Copyright:</td><td>Copyright &#169; 2008 Wes Oldenbeuving
+
+</td></tr>
+<tr><td valign="top">License:</td><td>MIT license. See MIT-LICENSE (in the gem directory) for license details.
+
+</td></tr>
+</table>
+
+</div>
           </div>
         </div>
       </div>                    
