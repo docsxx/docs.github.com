@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>cheba's dm-is-slug - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/cheba/dm-is-slug/blob/83f0e42b92bd232e51d6c62f0737a9c1cc551a72">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/cheba/dm-is-slug/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/cheba/dm-is-slug">Wiki</a></li>
             <li class=""><a href="http://github.com/cheba/dm-is-slug/graphs">Graphs</a></li>                    
-            <li class="active"><a href="cheba/dm-is-slug">Documentation</a></li>
+            <li class="active"><a href="/cheba/dm-is-slug">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,85 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/cheba/dm-is-slug/blob/83f0e42b92bd232e51d6c62f0737a9c1cc551a72">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>dm-is-slug</h1>
+<p>
+DataMapper plugin for creating and slugs(permalinks).
+</p>
+<h2>Installation</h2>
+<p>
+NOTE: You no longer need to download dm-more source code in order to
+install this.
+</p>
+<p>
+All you need to do is:
+</p>
+<p>
+$ sudo rake install
+</p>
+<p>
+Remember to require it in your app&#8217;s init.rb
+</p>
+<p>
+dependency &#8216;dm-is-slug&#8217;
+</p>
+<h2>Getting started</h2>
+<p>
+Lets say we have a post-class, and we want to generate permalinks or slugs
+for all posts.
+</p>
+<p>
+class Post
+</p>
+<pre class="code">
+  <span class='include identifier id'>include</span> <span class='DataMapper constant id'>DataMapper</span><span class='colon2 op'>::</span><span class='Resource constant id'>Resource</span>
 
+  <span class='property identifier id'>property</span> <span class='symbol val'>:id</span><span class='comma token'>,</span> <span class='Serial constant id'>Serial</span>
+  <span class='property identifier id'>property</span> <span class='symbol val'>:title</span><span class='comma token'>,</span> <span class='String constant id'>String</span>
+  <span class='property identifier id'>property</span> <span class='symbol val'>:content</span><span class='comma token'>,</span> <span class='String constant id'>String</span>
+
+  <span class='comment val'># here we define that it should have a slug that uses title as the permalink</span>
+  <span class='comment val'># it will generate an extra slug property of String type, with the same size as title</span>
+  <span class='is identifier id'>is</span> <span class='symbol val'>:slug</span><span class='comma token'>,</span> <span class='symbol val'>:source</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:title</span>
+</pre>
+<p>
+end
+</p>
+<p>
+Let&#8217;s Say we need to define a permalink based on a method instead of
+a property.
+</p>
+<p>
+class User
+</p>
+<pre class="code">
+  <span class='include identifier id'>include</span> <span class='DataMapper constant id'>DataMapper</span><span class='colon2 op'>::</span><span class='Resource constant id'>Resource</span>
+
+  <span class='property identifier id'>property</span> <span class='symbol val'>:id</span><span class='comma token'>,</span> <span class='Serial constant id'>Serial</span>
+  <span class='property identifier id'>property</span> <span class='symbol val'>:email</span><span class='comma token'>,</span> <span class='String constant id'>String</span>
+  <span class='property identifier id'>property</span> <span class='symbol val'>:password</span><span class='comma token'>,</span> <span class='String constant id'>String</span>
+
+  <span class='comment val'># we only want to strip out the domain name</span>
+  <span class='comment val'># and use only the email account name as the permalink</span>
+  <span class='def def kw'>def</span> <span class='slug_for_email identifier id'>slug_for_email</span>
+    <span class='email identifier id'>email</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='string val'>&quot;@&quot;</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='first identifier id'>first</span>
+  <span class='end end kw'>end</span>
+
+  <span class='comment val'># here we define that it should have a slug that uses title as the permalink</span>
+  <span class='comment val'># it will generate an extra slug property of String type, with the same size as title</span>
+  <span class='is identifier id'>is</span> <span class='symbol val'>:slug</span><span class='comma token'>,</span> <span class='symbol val'>:source</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:slug_for_email</span><span class='comma token'>,</span> <span class='symbol val'>:size</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>255</span>
+</pre>
+<p>
+end
+</p>
+<p>
+You can now find objects by slug like this:
+</p>
+<pre class="code">
+ <span class='post identifier id'>post</span> <span class='assign token'>=</span> <span class='Post constant id'>Post</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='lparen token'>(</span><span class='symbol val'>:slug</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;your_slug&quot;</span><span class='rparen token'>)</span>
+</pre>
+
+</div>
           </div>
         </div>
       </div>                    
