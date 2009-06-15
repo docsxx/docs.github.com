@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>mwunsch's weary - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/mwunsch/weary/blob/bed68bfc243fecaf96bc2374d4c33b1b9ecb048d">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/mwunsch/weary/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/mwunsch/weary">Wiki</a></li>
             <li class=""><a href="http://github.com/mwunsch/weary/graphs">Graphs</a></li>                    
-            <li class="active"><a href="mwunsch/weary">Documentation</a></li>
+            <li class="active"><a href="/mwunsch/weary">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,99 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/mwunsch/weary/blob/bed68bfc243fecaf96bc2374d4c33b1b9ecb048d">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>Weary</h1>
 
+<p><em>The Weary need REST</em></p>
+
+<p>Weary is a tiny DSL for making the consumption of RESTful web services simple. It is the little brother to <a href="http://github.com/jnunemaker/httparty/" title="JNunemaker's HTTParty">HTTParty</a>. It provides a thin, gossamer-like layer over the Net/HTTP library.</p>
+
+<p>The things it do:</p>
+
+<ul>
+<li>Quickly build an interface to your favorite REST API.</li>
+<li>Parse XML and JSON with the <a href="http://github.com/jnunemaker/crack">Crack</a> library.</li>
+</ul>
+
+
+<p>Browse the documentation here: <a href="http://rdoc.info/projects/mwunsch/weary">http://rdoc.info/projects/mwunsch/weary</a></p>
+
+<h2>Requirements</h2>
+
+<ul>
+<li>Crack >= 0.1.2</li>
+<li>Nokogiri >= 1.3.1 (if you want to use the #search method)</li>
+</ul>
+
+
+<h2>Installation</h2>
+
+<p>You do have Rubygems right?</p>
+
+<pre class="code"><span class='sudo identifier id'>sudo</span> <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='weary identifier id'>weary</span>
+</pre>
+
+<h2>How it works</h2>
+
+<p>Create a class and <code>extend Weary</code> to give it methods to craft a resource request:</p>
+
+<pre class="code"><span class='class class kw'>class</span> <span class='Foo constant id'>Foo</span>
+    <span class='extend identifier id'>extend</span> <span class='Weary constant id'>Weary</span>
+
+    <span class='declare identifier id'>declare</span> <span class='string val'>&quot;foo&quot;</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='resource identifier id'>resource</span><span class='bitor op'>|</span>
+        <span class='resource identifier id'>resource</span><span class='dot token'>.</span><span class='url identifier id'>url</span> <span class='assign token'>=</span> <span class='string val'>&quot;http://path/to/foo&quot;</span>
+    <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+
+<p>If you instantiate this class, you'll get an instance method named <code>foo</code> that crafts a GET request to "http://path/to/foo"</p>
+
+<p>Besides the name of the resource, you can also give <code>declare_resource</code> a block like:</p>
+
+<pre class="code"><span class='declare identifier id'>declare</span> <span class='string val'>&quot;foo&quot;</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='r identifier id'>r</span><span class='bitor op'>|</span>
+    <span class='r identifier id'>r</span><span class='dot token'>.</span><span class='url identifier id'>url</span> <span class='assign token'>=</span> <span class='string val'>&quot;path/to/foo&quot;</span>
+    <span class='r identifier id'>r</span><span class='dot token'>.</span><span class='via identifier id'>via</span> <span class='assign token'>=</span> <span class='symbol val'>:post</span>               <span class='comment val'># defaults to :get</span>
+    <span class='r identifier id'>r</span><span class='dot token'>.</span><span class='format identifier id'>format</span> <span class='assign token'>=</span> <span class='symbol val'>:xml</span>             <span class='comment val'># defaults to :json</span>
+    <span class='r identifier id'>r</span><span class='dot token'>.</span><span class='requires identifier id'>requires</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='symbol val'>:id</span><span class='comma token'>,</span> <span class='symbol val'>:bar</span><span class='rbrack token'>]</span>    <span class='comment val'># an array of params that the resource requires to be in the query/body</span>
+    <span class='r identifier id'>r</span><span class='dot token'>.</span><span class='with identifier id'>with</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='symbol val'>:blah</span><span class='rbrack token'>]</span>            <span class='comment val'># an array of params that you can optionally send to the resource</span>
+    <span class='r identifier id'>r</span><span class='dot token'>.</span><span class='authenticates identifier id'>authenticates</span> <span class='assign token'>=</span> <span class='false false kw'>false</span>     <span class='comment val'># does the method require basic authentication? defaults to false</span>
+    <span class='r identifier id'>r</span><span class='dot token'>.</span><span class='follows identifier id'>follows</span> <span class='assign token'>=</span> <span class='false false kw'>false</span>           <span class='comment val'># if this is set to false, the formed request will not follow redirects.</span>
+<span class='end end kw'>end</span>
+</pre>
+
+<p>So this would form a method:</p>
+
+<pre class="code"><span class='x identifier id'>x</span> <span class='assign token'>=</span> <span class='Foo constant id'>Foo</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+<span class='x identifier id'>x</span><span class='dot token'>.</span><span class='foo identifier id'>foo</span><span class='lparen token'>(</span><span class='symbol val'>:id</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;mwunsch&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:bar</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>123</span><span class='rparen token'>)</span>
+</pre>
+
+<p>That method would return a Weary::Response object that you could then parse or examine.</p>
+
+<h3>Shortcuts</h3>
+
+<p>Of course, you don't always have to use <code>declare</code>; that is a little too ambiguous. You can also use <code>get</code>, <code>post</code>, <code>delete</code>, etc. Those do the obvious.</p>
+
+<p>The <code>#requires</code> and <code>#with</code> methods can either be arrays of symbols, or a comma delimited list of strings.</p>
+
+<h3>Forming URLs</h3>
+
+<p>There are many ways to form URLs in Weary. You can define URLs for the entire class by typing:</p>
+
+<pre class="code"><span class='class class kw'>class</span> <span class='Foo constant id'>Foo</span>
+    <span class='extend identifier id'>extend</span> <span class='Weary constant id'>Weary</span>
+
+    <span class='on_domain identifier id'>on_domain</span> <span class='string val'>&quot;http://foo.bar/&quot;</span>
+    <span class='construct_url identifier id'>construct_url</span> <span class='string val'>&quot;&lt;domain&gt;&lt;resource&gt;.&lt;format&gt;&quot;</span>
+    <span class='as_format identifier id'>as_format</span> <span class='symbol val'>:xml</span>
+
+    <span class='get identifier id'>get</span> <span class='string val'>&quot;show_users&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
+
+<p>The string <code>&lt;domain&gt;&lt;resource&gt;.&lt;format&gt;</code> helps define a simple pattern for creating URLs. These will be filled in by your resource declaration. The above <code>get</code> declaration creates a url that looks like: <em>http://foo.bar/show_users.xml</em></p>
+
+<p>If you use the <code>&lt;domain&gt;</code> flag but don't define a domain, an exception will be raised.</p>
+</div>
           </div>
         </div>
       </div>                    
