@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>bkerley's have-code - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/bkerley/have-code/blob/21eecd9b8656cdb45af3ceadde35f79b9a204c1a">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/bkerley/have-code/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/bkerley/have-code">Wiki</a></li>
             <li class=""><a href="http://github.com/bkerley/have-code/graphs">Graphs</a></li>                    
-            <li class="active"><a href="bkerley/have-code">Documentation</a></li>
+            <li class="active"><a href="/bkerley/have-code">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,72 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/bkerley/have-code/blob/21eecd9b8656cdb45af3ceadde35f79b9a204c1a">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>have-code</h1>
+<p>
+Add clever little base36 codes for your DataMapper and ActiveRecord
+objects.
+</p>
+<h2>Whoa seriously??</h2>
+<pre class="code">
+   <span class='comment val'># ActiveRecord</span>
+   <span class='class class kw'>class</span> <span class='Mug constant id'>Mug</span> <span class='lt op'>&lt;</span> <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
+     <span class='have_code identifier id'>have_code</span> <span class='integer val'>60466169</span><span class='comma token'>,</span> <span class='integer val'>12034710206</span><span class='comma token'>,</span> <span class='integer val'>81268112</span>
+   <span class='end end kw'>end</span>
 
+   <span class='initech identifier id'>initech</span> <span class='assign token'>=</span> <span class='Mug constant id'>Mug</span><span class='dot token'>.</span><span class='create identifier id'>create</span> <span class='symbol val'>:name=</span><span class='gt op'>&gt;</span><span class='string val'>'initech'</span><span class='comma token'>,</span> <span class='symbol val'>:material=</span><span class='gt op'>&gt;</span><span class='string val'>'porcelain'</span>
+   <span class='code identifier id'>code</span> <span class='assign token'>=</span> <span class='initech identifier id'>initech</span><span class='dot token'>.</span><span class='code identifier id'>code</span>
+   <span class='initech identifier id'>initech</span> <span class='eq op'>==</span> <span class='Mug constant id'>Mug</span><span class='dot token'>.</span><span class='find_by_code identifier id'>find_by_code</span> <span class='code identifier id'>code</span>
+
+   <span class='comment val'># DataMapper</span>
+   <span class='class class kw'>class</span> <span class='Goblet constant id'>Goblet</span>
+     <span class='include identifier id'>include</span> <span class='DataMapper constant id'>DataMapper</span><span class='colon2 op'>::</span><span class='Resource constant id'>Resource</span>
+     <span class='property identifier id'>property</span> <span class='symbol val'>:id</span><span class='comma token'>,</span> <span class='Serial constant id'>Serial</span>
+     <span class='property identifier id'>property</span> <span class='symbol val'>:name</span><span class='comma token'>,</span> <span class='String constant id'>String</span>
+     <span class='property identifier id'>property</span> <span class='symbol val'>:material</span><span class='comma token'>,</span> <span class='String constant id'>String</span>
+     <span class='have_code identifier id'>have_code</span> <span class='integer val'>60466169</span><span class='comma token'>,</span> <span class='integer val'>12034710206</span><span class='comma token'>,</span> <span class='integer val'>81268112</span>
+   <span class='end end kw'>end</span>
+   <span class='kohg identifier id'>kohg</span> <span class='assign token'>=</span> <span class='Goblet constant id'>Goblet</span><span class='dot token'>.</span><span class='create identifier id'>create</span> <span class='symbol val'>:name=</span><span class='gt op'>&gt;</span><span class='string val'>'king of hyrule'</span><span class='comma token'>,</span> <span class='symbol val'>:material=</span><span class='gt op'>&gt;</span><span class='string val'>'gold'</span>
+   <span class='code identifier id'>code</span> <span class='assign token'>=</span> <span class='kohg identifier id'>kohg</span><span class='dot token'>.</span><span class='code identifier id'>code</span>
+   <span class='kohg identifier id'>kohg</span> <span class='eq op'>==</span> <span class='Goblet constant id'>Goblet</span><span class='dot token'>.</span><span class='find_by_code identifier id'>find_by_code</span> <span class='code identifier id'>code</span>
+</pre>
+<h2>What are those big numbers?</h2>
+<p>
+In order:
+</p>
+<dl>
+<dt>modulus</dt><dd>specifies how many different plaintexts and ciphertexts are available.
+
+</dd>
+<dt>a_key</dt><dd>multiplied against the plaintext. <b>Must be coprime with the modulus.</b>
+
+</dd>
+<dt>b_key</dt><dd>added to the multiplied plaintext. No restrictions, but it&#8217;s modulus
+math, so making it larger than <tt>modulus</tt> is useless.
+
+</dd>
+</dl>
+<p>
+Change them to whatever you want, write tests to make sure they work as
+expected.
+</p>
+<h2>How secure is it?</h2>
+<p>
+Affine ciphers are incredibly easy to break. See the readme for the
+<tt>affine</tt> gem or http://en.wikipedia.org/wiki/Affine_cipher for more.
+</p>
+<h2>Dependencies</h2>
+<ul>
+<li>affine
+
+</li>
+</ul>
+<h2>Copyright</h2>
+<p>
+Copyright &#169; 2009 Bryce Kerley. See LICENSE for details.
+</p>
+
+</div>
           </div>
         </div>
       </div>                    
