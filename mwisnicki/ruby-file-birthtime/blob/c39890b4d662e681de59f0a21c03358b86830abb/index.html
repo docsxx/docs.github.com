@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>mwisnicki's ruby-file-birthtime - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/mwisnicki/ruby-file-birthtime/blob/c39890b4d662e681de59f0a21c03358b86830abb">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/mwisnicki/ruby-file-birthtime/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/mwisnicki/ruby-file-birthtime">Wiki</a></li>
             <li class=""><a href="http://github.com/mwisnicki/ruby-file-birthtime/graphs">Graphs</a></li>                    
-            <li class="active"><a href="mwisnicki/ruby-file-birthtime">Documentation</a></li>
+            <li class="active"><a href="/mwisnicki/ruby-file-birthtime">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,66 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/mwisnicki/ruby-file-birthtime/blob/c39890b4d662e681de59f0a21c03358b86830abb">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>File birthtime extension for Ruby</h1>
+<p>
+This module extends core Ruby classes File and File::Stat with methods to
+query file birthtime (creation time).
+</p>
+<h2>Platforms</h2>
+<p>
+For now, only systems with field st_birthtime in struct stat (BSDs with
+UFS2 support).
+</p>
+<h2>Requirements</h2>
+<ul>
+<li>rubygem &gt;= 1.2
 
+</li>
+<li>working C compiler
+
+</li>
+</ul>
+<h2>Installation</h2>
+<p>
+If installing to $HOME
+</p>
+<pre class="code">
+  <span class='export identifier id'>export</span> <span class='RB_USER_INSTALL constant id'>RB_USER_INSTALL</span><span class='assign token'>=</span><span class='true true kw'>true</span>
+</pre>
+<h3>From gem</h3>
+<pre class="code">
+  <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='source identifier id'>source</span> <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/gems.github.com mwisnicki-ruby-file-birthtime
+</span></pre>
+<h3>From source</h3>
+<pre class="code">
+  <span class='git identifier id'>git</span> <span class='clone identifier id'>clone</span> <span class='git identifier id'>git</span><span class='symbol val'>:/</span><span class='regexp val'>/github.com/</span><span class='mwisnicki identifier id'>mwisnicki</span><span class='div op'>/</span><span class='ruby identifier id'>ruby</span><span class='minus op'>-</span><span class='file identifier id'>file</span><span class='minus op'>-</span><span class='birthtime identifier id'>birthtime</span><span class='dot token'>.</span><span class='git identifier id'>git</span>
+  <span class='cd identifier id'>cd</span> <span class='ruby identifier id'>ruby</span><span class='minus op'>-</span><span class='file identifier id'>file</span><span class='minus op'>-</span><span class='birthtime identifier id'>birthtime</span>
+  <span class='gem identifier id'>gem</span> <span class='build identifier id'>build</span> <span class='ruby identifier id'>ruby</span><span class='minus op'>-</span><span class='file identifier id'>file</span><span class='minus op'>-</span><span class='birthtime identifier id'>birthtime</span><span class='dot token'>.</span><span class='gemspec identifier id'>gemspec</span>
+  <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='file identifier id'>file</span><span class='minus op'>-</span><span class='birthtime identifier id'>birthtime</span><span class='minus op'>-</span><span class='mult op'>*</span><span class='dot token'>.</span><span class='gem identifier id'>gem</span>
+</pre>
+<h2>Usage</h2>
+<pre class="code">
+  <span class='require identifier id'>require</span> <span class='string val'>'file_btime'</span> <span class='comment val'># =&gt; true</span>
+  <span class='File constant id'>File</span><span class='dot token'>.</span><span class='btime identifier id'>btime</span><span class='lparen token'>(</span><span class='string val'>'.'</span><span class='rparen token'>)</span> <span class='comment val'># =&gt; Tue Jun 16 15:07:21 0200 2009</span>
+  <span class='File constant id'>File</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'.'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='btime identifier id'>btime</span> <span class='comment val'># =&gt; Tue Jun 16 15:07:21 0200 2009</span>
+  <span class='File constant id'>File</span><span class='dot token'>.</span><span class='stat identifier id'>stat</span><span class='lparen token'>(</span><span class='string val'>'.'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='btime identifier id'>btime</span> <span class='comment val'># =&gt; Tue Jun 16 15:07:21 0200 2009</span>
+</pre>
+<p>
+Returns nil if particular filesystem does not support birthtimes
+(st_birthtime&lt;0).
+</p>
+<h2>TODO</h2>
+<ol>
+<li>Add necessary checks to extconf.rb
+
+</li>
+<li>Port to other platforms - at least Win32, MacOSX, maybe Solaris (with ZFS).
+
+</li>
+</ol>
+
+</div>
           </div>
         </div>
       </div>                    
