@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>dchelimsky's rspec - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/dchelimsky/rspec/blob/2370ecab974b815df04e0716862f3f3773d49577">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/dchelimsky/rspec/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/dchelimsky/rspec">Wiki</a></li>
             <li class=""><a href="http://github.com/dchelimsky/rspec/graphs">Graphs</a></li>                    
-            <li class="active"><a href="dchelimsky/rspec">Documentation</a></li>
+            <li class="active"><a href="/dchelimsky/rspec">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,84 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/dchelimsky/rspec/blob/2370ecab974b815df04e0716862f3f3773d49577">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>RSpec</h1>
+<ul>
+<li>http://rspec.info
 
+</li>
+<li>http://rubyforge.org/projects/rspec
+
+</li>
+<li>http://github.com/dchelimsky/rspec/wikis
+
+</li>
+<li>mailto:rspec-users@rubyforge.org
+
+</li>
+<li>mailto:rspec-devel@rubyforge.org
+
+</li>
+</ul>
+<h2>DESCRIPTION:</h2>
+<p>
+RSpec is a Behaviour Driven Development framework for writing executable
+code examples.
+</p>
+<h2>FEATURES:</h2>
+<ul>
+<li>Spec::Example provides a framework for organizing executable code examples
+
+</li>
+<li>Spec::Expectations adds #should and #should_not to every object
+
+</li>
+<li>Spec::Matchers provides Expression Matchers for use with #should and
+#should_not
+
+</li>
+<li>Spec::Mocks is a full featured mock object/stubbing library
+
+</li>
+</ul>
+<h2>SYNOPSIS:</h2>
+<pre class="code">
+  <span class='describe identifier id'>describe</span> <span class='Account constant id'>Account</span> <span class='do do kw'>do</span>
+    <span class='context identifier id'>context</span> <span class='string val'>&quot;transfering money&quot;</span> <span class='do do kw'>do</span>
+      <span class='it identifier id'>it</span> <span class='string val'>&quot;deposits transfer amount to the other account&quot;</span> <span class='do do kw'>do</span>
+        <span class='source identifier id'>source</span> <span class='assign token'>=</span> <span class='Account constant id'>Account</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='integer val'>50</span><span class='comma token'>,</span> <span class='symbol val'>:USD</span><span class='rparen token'>)</span>
+        <span class='target identifier id'>target</span> <span class='assign token'>=</span> <span class='mock identifier id'>mock</span><span class='lparen token'>(</span><span class='string val'>'target account'</span><span class='rparen token'>)</span>
+        <span class='target identifier id'>target</span><span class='dot token'>.</span><span class='should_receive identifier id'>should_receive</span><span class='lparen token'>(</span><span class='symbol val'>:deposit</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='with identifier id'>with</span><span class='lparen token'>(</span><span class='Money constant id'>Money</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='integer val'>5</span><span class='comma token'>,</span> <span class='symbol val'>:USD</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+        <span class='source identifier id'>source</span><span class='dot token'>.</span><span class='transfer identifier id'>transfer</span><span class='lparen token'>(</span><span class='integer val'>5</span><span class='comma token'>,</span> <span class='symbol val'>:USD</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to identifier id'>to</span><span class='lparen token'>(</span><span class='target identifier id'>target</span><span class='rparen token'>)</span>
+      <span class='end end kw'>end</span>
+
+      <span class='it identifier id'>it</span> <span class='string val'>&quot;reduces its balance by the transfer amount&quot;</span> <span class='do do kw'>do</span>
+        <span class='source identifier id'>source</span> <span class='assign token'>=</span> <span class='Account constant id'>Account</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='integer val'>50</span><span class='comma token'>,</span> <span class='symbol val'>:USD</span><span class='rparen token'>)</span>
+        <span class='target identifier id'>target</span> <span class='assign token'>=</span> <span class='stub identifier id'>stub</span><span class='lparen token'>(</span><span class='string val'>'target account'</span><span class='rparen token'>)</span>
+        <span class='source identifier id'>source</span><span class='dot token'>.</span><span class='transfer identifier id'>transfer</span><span class='lparen token'>(</span><span class='integer val'>5</span><span class='comma token'>,</span> <span class='symbol val'>:USD</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to identifier id'>to</span><span class='lparen token'>(</span><span class='target identifier id'>target</span><span class='rparen token'>)</span>
+        <span class='source identifier id'>source</span><span class='dot token'>.</span><span class='balance identifier id'>balance</span><span class='dot token'>.</span><span class='should identifier id'>should</span> <span class='eq op'>==</span> <span class='Money constant id'>Money</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='integer val'>45</span><span class='comma token'>,</span> <span class='symbol val'>:USD</span><span class='rparen token'>)</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+
+  $ <span class='spec identifier id'>spec</span> <span class='spec identifier id'>spec</span><span class='div op'>/</span><span class='account_spec identifier id'>account_spec</span><span class='dot token'>.</span><span class='rb identifier id'>rb</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='format identifier id'>format</span> <span class='nested identifier id'>nested</span>
+  <span class='Account constant id'>Account</span>
+    <span class='transfering identifier id'>transfering</span> <span class='money identifier id'>money</span>
+      <span class='deposits identifier id'>deposits</span> <span class='transfer identifier id'>transfer</span> <span class='amount identifier id'>amount</span> <span class='to identifier id'>to</span> <span class='the identifier id'>the</span> <span class='other identifier id'>other</span> <span class='account identifier id'>account</span>
+      <span class='reduces identifier id'>reduces</span> <span class='its identifier id'>its</span> <span class='balance identifier id'>balance</span> <span class='by identifier id'>by</span> <span class='the identifier id'>the</span> <span class='transfer identifier id'>transfer</span> <span class='amount identifier id'>amount</span>
+
+  <span class='integer val'>2</span> <span class='examples identifier id'>examples</span><span class='comma token'>,</span> <span class='integer val'>0</span> <span class='failures identifier id'>failures</span>
+</pre>
+<h2>INSTALL:</h2>
+<pre class="code">
+  <span class='lbrack token'>[</span><span class='sudo identifier id'>sudo</span><span class='rbrack token'>]</span> <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='rspec identifier id'>rspec</span>
+
+ <span class='or or kw'>or</span>
+
+ <span class='clone identifier id'>clone</span><span class='comma token'>,</span> <span class='build identifier id'>build</span><span class='comma token'>,</span> <span class='install identifier id'>install</span> <span class='minus op'>-</span> <span class='See constant id'>See</span> <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/wiki.github.com/</span><span class='dchelimsky identifier id'>dchelimsky</span><span class='div op'>/</span><span class='rspec identifier id'>rspec</span>
+</pre>
+
+</div>
           </div>
         </div>
       </div>                    
