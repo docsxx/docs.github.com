@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>logandk's capistrano-ec2group - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/logandk/capistrano-ec2group/blob/6810411932fe52a4b0afc3bc8ab4c4dfdb3bb574">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/logandk/capistrano-ec2group/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/logandk/capistrano-ec2group">Wiki</a></li>
             <li class=""><a href="http://github.com/logandk/capistrano-ec2group/graphs">Graphs</a></li>                    
-            <li class="active"><a href="logandk/capistrano-ec2group">Documentation</a></li>
+            <li class="active"><a href="/logandk/capistrano-ec2group">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,81 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/logandk/capistrano-ec2group/blob/6810411932fe52a4b0afc3bc8ab4c4dfdb3bb574">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>capistrano-ec2group</h1>
 
+<p>Capistrano plugin for deploying to Amazon EC2 instances by security groups.</p>
+
+<h1>Introduction</h1>
+
+<p>This plugin supports the deployment strategy of using the <em>security groups</em> feature of Amazon EC2. If you are using
+auto-scaling of instances, new hostnames will be added and removed regularly, causing problems when you have to specify
+your servers hostnames in your Capistrano recipes.</p>
+
+<p>By using <em>security groups</em> to organize your instances by roles, you have created a simple database of instances that is
+automatically updated as auto-scaling happens. By using a provisioning tool like Sprinkle, Moonshine, Chef, Puppet, Rubber
+(etc.) to automatically configure instances upon launch (through EC2 <code>user-data</code>), you have a completely automated workflow for
+configuring and deploying auto-scaling instances.</p>
+
+<h1>Installation</h1>
+
+<p><code>capistrano-ec2group</code> is provided as a Ruby gem, with the following dependencies:</p>
+
+<ul>
+<li>Capistrano 2 gem</li>
+<li>RightAWS gem</li>
+</ul>
+
+
+<p>You can install it with RubyGems:</p>
+
+<pre class="code">$ <span class='gem identifier id'>gem</span> <span class='sources identifier id'>sources</span> <span class='minus op'>-</span><span class='a identifier id'>a</span> <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/gems.github.com (you only have to do this once)
+$ gem install logandk-capistrano-ec2group
+</span></pre>
+
+<h1>Usage</h1>
+
+<p>In order to use the <code>capistrano-ec2group</code> plugin, you must require it in your <code>deploy.rb</code>:</p>
+
+<pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'capistrano/ec2group'</span>
+</pre>
+
+<p>Then you must specify your Amazon EC2 credentials:</p>
+
+<pre class="code"><span class='set identifier id'>set</span> <span class='symbol val'>:aws_access_key_id</span><span class='comma token'>,</span> <span class='string val'>'???'</span>
+<span class='set identifier id'>set</span> <span class='symbol val'>:aws_secret_access_key</span><span class='comma token'>,</span> <span class='string val'>'???'</span>
+</pre>
+
+<p>Optionally setting additional parameters, such as the region:</p>
+
+<pre class="code"><span class='set identifier id'>set</span> <span class='symbol val'>:aws_params</span><span class='comma token'>,</span> <span class='symbol val'>:region</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'eu-west-1'</span>
+</pre>
+
+<p>In order to define your instance groups, you must specify the security group name, the roles and params:</p>
+
+<pre class="code"><span class='group identifier id'>group</span> <span class='symbol val'>:webserver</span><span class='comma token'>,</span> <span class='symbol val'>:web</span>
+<span class='group identifier id'>group</span> <span class='symbol val'>:app_myappname</span><span class='comma token'>,</span> <span class='symbol val'>:app</span>
+<span class='group identifier id'>group</span> <span class='symbol val'>:lamp</span><span class='comma token'>,</span> <span class='symbol val'>:web</span><span class='comma token'>,</span> <span class='symbol val'>:app</span>
+<span class='group identifier id'>group</span> <span class='string val'>&quot;MySQL Servers&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:db</span><span class='comma token'>,</span> <span class='symbol val'>:port</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>22000</span>
+</pre>
+
+<p>Then just sit back, relax and <code>cap deploy</code>!</p>
+
+<h1>Documentation</h1>
+
+<p>Additional RDoc documentation is available at: <a href="http://rdoc.info/projects/logandk/capistrano-ec2group">http://rdoc.info/projects/logandk/capistrano-ec2group</a></p>
+
+<h1>Credits</h1>
+
+<ul>
+<li>Capistrano: <a href="http://github.com/jamis/capistrano">http://github.com/jamis/capistrano</a></li>
+<li>RightAws: <a href="http://rightaws.rubyforge.org">http://rightaws.rubyforge.org</a></li>
+<li>Amazon AWS: <a href="http://aws.amazon.com">http://aws.amazon.com</a></li>
+</ul>
+
+
+<p>Copyright (c) 2009 Logan Raarup, released under the MIT license</p>
+</div>
           </div>
         </div>
       </div>                    
