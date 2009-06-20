@@ -1,0 +1,563 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <title>rack's rack - Class: Rack::ShowExceptions - GitHub Documentation</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="description" content="">
+
+<link rel="search" type="application/opensearchdescription+xml" href="http://github.com/opensearch.xml" title="GitHub">
+<link rel="fluid-icon" href="http://github.com/fluidicon.png" title="GitHub">
+<link href="http://assets0.github.com/stylesheets/bundle.css" media="screen" rel="stylesheet" type="text/css">
+<link href="http://github.com/feeds/rack/commits/rack/master" rel="alternate" title="Recent Commits to rack:master" type="application/atom+xml">
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script type="text/javascript" src="http://assets3.github.com/javascripts/bundle.js"></script>              
+<script src="../app.js" type="text/javascript" charset="utf-8"></script>
+
+<script type="text/javascript" src="http://docs.github.com/javascripts/md5.js"></script>
+<script type="text/javascript" src="http://docs.github.com/javascripts/repos.js"></script>
+<script type="text/javascript" src="http://docs.github.com/javascripts/commits.js"></script>
+<script type="text/javascript">
+  $(document).ready(function(){
+    if (typeof skipHeaders != 'undefined') return;
+    
+    GitHubRepo.init("rack", "rack", function(){ 
+      GitHubRepo.links = " <a id='namespaces_button' rel='rack/rack/blob/fd1c1d2e494d9a7d15e0458602ef121f244addc3' href='#'><img class='button' src='http://docs.github.com/namespaces_button.png' alt='Modules and Classes'/></a> ";
+      GitHubRepo.links += " <a id='methods_button' rel='rack/rack/blob/fd1c1d2e494d9a7d15e0458602ef121f244addc3' href='#'><img class='button' src='http://docs.github.com/methods_button.png' alt='Methods'/></a> ";
+      $("#repo").html(GitHubRepo.content());
+      $('#namespaces_button').click(function(){
+        var url="/"+$(this).attr('rel')+"/namespaces/";
+        $.gitbox(url);
+        return false;
+      });    
+      $('#methods_button').click(function(){
+        var url="/"+$(this).attr('rel')+"/methods/";
+        $.gitbox(url);
+        return false;
+      });        
+    });
+    GitHubCommit.init("rack", "rack", "fd1c1d2e494d9a7d15e0458602ef121f244addc3", function(){ 
+      $("#commit").html(GitHubCommit.content());
+    });
+  });
+</script>
+
+    <link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+  </head>
+  <body>    
+    
+    
+    
+        <div id="main" style="padding-bottom:8em;">
+      <div id="header">
+        <div class="site">
+          <div class="logo">
+            <a href="http://github.com/"><img src="http://github.com/images/modules/header/logov3.png" alt="github"></a>
+          </div>          
+          <div class="topsearch">
+            <form action="http://github.com/search" id="top_search_form" method="get">
+              <input class="search" name="q" type="search"> <input value="Search" type="submit">
+            </form>
+            <div class="links">
+              <a href="http://github.com/repositories">Browse</a> | <a href="http://github.com/guides">Guides</a> | <a href="http://github.com/search">Advanced</a>
+            </div>
+          </div>
+          <div class="actions">
+            <a href="http://github.com">Home</a>
+            <a href="http://github.com/plans"><b><u>Pricing and Signup</u></b></a>
+            <a href="http://docs.github.com/">Documentation</a>
+            <a href="https://github.com/login">Login</a>
+          </div>                  
+        </div>
+      </div>    
+                                                  
+      <div id="repo_menu">
+        <div class="site">
+          <ul>          
+            <li class=""><a href="http://github.com/rack/rack/tree/">Source</a></li>
+            <li class=""><a href="http://github.com/rack/rack/commits/">Commits</a></li>            
+            <li class=""><a href="http://github.com/rack/rack/network">Network</a></li>            
+            <li class=""><a href="http://github.com/rack/rack/issues">Issues</a></li>
+            <li class=""><a href="http://wiki.github.com/rack/rack">Wiki</a></li>
+            <li class=""><a href="http://github.com/rack/rack/graphs">Graphs</a></li>                    
+            <li class="active"><a href="/rack/rack">Documentation</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div id="repo_sub_menu">
+        <div class="site">
+          <div class="joiner"></div>      
+        </div>
+      </div>
+
+      <div class="site">  
+        <div id="repos">
+          <div id="repo" class="repo public">
+            <div class="title">
+              <div class="path">
+                <a href="http://github.com/rack">rack</a> / <b><a href="http://github.com/rack/rack/tree">rack</a></b>        
+                <a id="namespaces_button" rel="rack/rack/blob/fd1c1d2e494d9a7d15e0458602ef121f244addc3" href="#"><img class="button" src="http://docs.github.com/namespaces_button.png" alt="Modules and Classes"/></a>
+                <a id="methods_button" rel="rack/rack/blob/fd1c1d2e494d9a7d15e0458602ef121f244addc3" href="#"><img class="button" src="http://docs.github.com/methods_button.png" alt="Methods"/></a>
+              </div>
+            </div>            
+          </div>
+          <div id="commit">
+          </div> 
+          <br/>                                       
+          <div id="content">
+            <div class="wikistyle">
+  <div class="section class Rack_ShowExceptions">
+  <h1>Class: Rack::ShowExceptions</h1>
+  <div class="section docstring">
+  <p>
+Rack::ShowExceptions catches all exceptions raised from the app it wraps.
+It shows a useful backtrace with the sourcefile and clickable context, the
+whole Rack environment and the request data.
+</p>
+<p>
+Be careful when you use this on public-facing sites as it could reveal
+information helpful to attackers.
+</p>
+
+</div><div class="section constants">
+  <div class="thisclass">
+  <h2>Constants</h2>
+  <dl>
+    
+      <dt id="CONTEXT-constant">CONTEXT</dt>
+      <dd>7</dd>
+    
+      <dt id="TEMPLATE-constant">TEMPLATE</dt>
+      <dd>&quot;&lt;!DOCTYPE HTML PUBLIC \&quot;-//W3C//DTD HTML 4.01 Transitional//EN\&quot; \&quot;http://www.w3.org/TR/html4/loose.dtd\&quot;&gt;\n&lt;html lang=\&quot;en\&quot;&gt;\n&lt;head&gt;\n  &lt;meta http-equiv=\&quot;content-type\&quot; content=\&quot;text/html; charset=utf-8\&quot; /&gt;\n  &lt;meta name=\&quot;robots\&quot; content=\&quot;NONE,NOARCHIVE\&quot; /&gt;\n  &lt;title&gt;&lt;%=h exception.class %&gt; at &lt;%=h path %&gt;&lt;/title&gt;\n  &lt;style type=\&quot;text/css\&quot;&gt;\n    html * { padding:0; margin:0; }\n    body * { padding:10px 20px; }\n    body * * { padding:0; }\n    body { font:small sans-serif; }\n    body&gt;div { border-bottom:1px solid #ddd; }\n    h1 { font-weight:normal; }\n    h2 { margin-bottom:.8em; }\n    h2 span { font-size:80%; color:#666; font-weight:normal; }\n    h3 { margin:1em 0 .5em 0; }\n    h4 { margin:0 0 .5em 0; font-weight: normal; }\n    table {\n        border:1px solid #ccc; border-collapse: collapse; background:white; }\n    tbody td, tbody th { vertical-align:top; padding:2px 3px; }\n    thead th {\n        padding:1px 6px 1px 3px; background:#fefefe; text-align:left;\n        font-weight:normal; font-size:11px; border:1px solid #ddd; }\n    tbody th { text-align:right; color:#666; padding-right:.5em; }\n    table.vars { margin:5px 0 2px 40px; }\n    table.vars td, table.req td { font-family:monospace; }\n    table td.code { width:100%;}\n    table td.code div { overflow:hidden; }\n    table.source th { color:#666; }\n    table.source td {\n        font-family:monospace; white-space:pre; border-bottom:1px solid #eee; }\n    ul.traceback { list-style-type:none; }\n    ul.traceback li.frame { margin-bottom:1em; }\n    div.context { margin: 10px 0; }\n    div.context ol {\n        padding-left:30px; margin:0 10px; list-style-position: inside; }\n    div.context ol li {\n        font-family:monospace; white-space:pre; color:#666; cursor:pointer; }\n    div.context ol.context-line li { color:black; background-color:#ccc; }\n    div.context ol.context-line li span { float: right; }\n    div.commands { margin-left: 40px; }\n    div.commands a { color:black; text-decoration:none; }\n    #summary { background: #ffc; }\n    #summary h2 { font-weight: normal; color: #666; }\n    #summary ul#quicklinks { list-style-type: none; margin-bottom: 2em; }\n    #summary ul#quicklinks li { float: left; padding: 0 1em; }\n    #summary ul#quicklinks&gt;li+li { border-left: 1px #666 solid; }\n    #explanation { background:#eee; }\n    #template, #template-not-exist { background:#f6f6f6; }\n    #template-not-exist ul { margin: 0 0 0 20px; }\n    #traceback { background:#eee; }\n    #requestinfo { background:#f6f6f6; padding-left:120px; }\n    #summary table { border:none; background:transparent; }\n    #requestinfo h2, #requestinfo h3 { position:relative; margin-left:-100px; }\n    #requestinfo h3 { margin-bottom:-1em; }\n    .error { background: #ffc; }\n    .specific { color:#cc3300; font-weight:bold; }\n  &lt;/style&gt;\n  &lt;script type=\&quot;text/javascript\&quot;&gt;\n  //&lt;!--\n    function getElementsByClassName(oElm, strTagName, strClassName){\n        // Written by Jonathan Snook, http://www.snook.ca/jon;\n        // Add-ons by Robert Nyman, http://www.robertnyman.com\n        var arrElements = (strTagName == \&quot;*\&quot; &amp;&amp; document.all)? document.all :\n        oElm.getElementsByTagName(strTagName);\n        var arrReturnElements = new Array();\n        strClassName = strClassName.replace(/\\-/g, \&quot;\\\\-\&quot;);\n        var oRegExp = new RegExp(\&quot;(^|\\\\s)\&quot; + strClassName + \&quot;(\\\\s|$$)\&quot;);\n        var oElement;\n        for(var i=0; i&lt;arrElements.length; i++){\n            oElement = arrElements[i];\n            if(oRegExp.test(oElement.className)){\n                arrReturnElements.push(oElement);\n            }\n        }\n        return (arrReturnElements)\n    }\n    function hideAll(elems) {\n      for (var e = 0; e &lt; elems.length; e++) {\n        elems[e].style.display = 'none';\n      }\n    }\n    window.onload = function() {\n      hideAll(getElementsByClassName(document, 'table', 'vars'));\n      hideAll(getElementsByClassName(document, 'ol', 'pre-context'));\n      hideAll(getElementsByClassName(document, 'ol', 'post-context'));\n    }\n    function toggle() {\n      for (var i = 0; i &lt; arguments.length; i++) {\n        var e = document.getElementById(arguments[i]);\n        if (e) {\n          e.style.display = e.style.display == 'none' ? 'block' : 'none';\n        }\n      }\n      return false;\n    }\n    function varToggle(link, id) {\n      toggle('v' + id);\n      var s = link.getElementsByTagName('span')[0];\n      var uarr = String.fromCharCode(0x25b6);\n      var darr = String.fromCharCode(0x25bc);\n      s.innerHTML = s.innerHTML == uarr ? darr : uarr;\n      return false;\n    }\n    //--&gt;\n  &lt;/script&gt;\n&lt;/head&gt;\n&lt;body&gt;\n\n&lt;div id=\&quot;summary\&quot;&gt;\n  &lt;h1&gt;&lt;%=h exception.class %&gt; at &lt;%=h path %&gt;&lt;/h1&gt;\n  &lt;h2&gt;&lt;%=h exception.message %&gt;&lt;/h2&gt;\n  &lt;table&gt;&lt;tr&gt;\n    &lt;th&gt;Ruby&lt;/th&gt;\n    &lt;td&gt;&lt;code&gt;&lt;%=h frames.first.filename %&gt;&lt;/code&gt;: in &lt;code&gt;&lt;%=h frames.first.function %&gt;&lt;/code&gt;, line &lt;%=h frames.first.lineno %&gt;&lt;/td&gt;\n  &lt;/tr&gt;&lt;tr&gt;\n    &lt;th&gt;Web&lt;/th&gt;\n    &lt;td&gt;&lt;code&gt;&lt;%=h req.request_method %&gt; &lt;%=h(req.host + path)%&gt;&lt;/code&gt;&lt;/td&gt;\n  &lt;/tr&gt;&lt;/table&gt;\n\n  &lt;h3&gt;Jump to:&lt;/h3&gt;\n  &lt;ul id=\&quot;quicklinks\&quot;&gt;\n    &lt;li&gt;&lt;a href=\&quot;#get-info\&quot;&gt;GET&lt;/a&gt;&lt;/li&gt;\n    &lt;li&gt;&lt;a href=\&quot;#post-info\&quot;&gt;POST&lt;/a&gt;&lt;/li&gt;\n    &lt;li&gt;&lt;a href=\&quot;#cookie-info\&quot;&gt;Cookies&lt;/a&gt;&lt;/li&gt;\n    &lt;li&gt;&lt;a href=\&quot;#env-info\&quot;&gt;ENV&lt;/a&gt;&lt;/li&gt;\n  &lt;/ul&gt;\n&lt;/div&gt;\n\n&lt;div id=\&quot;traceback\&quot;&gt;\n  &lt;h2&gt;Traceback &lt;span&gt;(innermost first)&lt;/span&gt;&lt;/h2&gt;\n  &lt;ul class=\&quot;traceback\&quot;&gt;\n&lt;% frames.each { |frame| %&gt;\n      &lt;li class=\&quot;frame\&quot;&gt;\n        &lt;code&gt;&lt;%=h frame.filename %&gt;&lt;/code&gt;: in &lt;code&gt;&lt;%=h frame.function %&gt;&lt;/code&gt;\n\n          &lt;% if frame.context_line %&gt;\n          &lt;div class=\&quot;context\&quot; id=\&quot;c&lt;%=h frame.object_id %&gt;\&quot;&gt;\n              &lt;% if frame.pre_context %&gt;\n              &lt;ol start=\&quot;&lt;%=h frame.pre_context_lineno+1 %&gt;\&quot; class=\&quot;pre-context\&quot; id=\&quot;pre&lt;%=h frame.object_id %&gt;\&quot;&gt;\n                &lt;% frame.pre_context.each { |line| %&gt;\n                &lt;li onclick=\&quot;toggle('pre&lt;%=h frame.object_id %&gt;', 'post&lt;%=h frame.object_id %&gt;')\&quot;&gt;&lt;%=h line %&gt;&lt;/li&gt;\n                &lt;% } %&gt;\n              &lt;/ol&gt;\n              &lt;% end %&gt;\n\n            &lt;ol start=\&quot;&lt;%=h frame.lineno %&gt;\&quot; class=\&quot;context-line\&quot;&gt;\n              &lt;li onclick=\&quot;toggle('pre&lt;%=h frame.object_id %&gt;', 'post&lt;%=h frame.object_id %&gt;')\&quot;&gt;&lt;%=h frame.context_line %&gt;&lt;span&gt;...&lt;/span&gt;&lt;/li&gt;&lt;/ol&gt;\n\n              &lt;% if frame.post_context %&gt;\n              &lt;ol start='&lt;%=h frame.lineno+1 %&gt;' class=\&quot;post-context\&quot; id=\&quot;post&lt;%=h frame.object_id %&gt;\&quot;&gt;\n                &lt;% frame.post_context.each { |line| %&gt;\n                &lt;li onclick=\&quot;toggle('pre&lt;%=h frame.object_id %&gt;', 'post&lt;%=h frame.object_id %&gt;')\&quot;&gt;&lt;%=h line %&gt;&lt;/li&gt;\n                &lt;% } %&gt;\n              &lt;/ol&gt;\n              &lt;% end %&gt;\n          &lt;/div&gt;\n          &lt;% end %&gt;\n      &lt;/li&gt;\n&lt;% } %&gt;\n  &lt;/ul&gt;\n&lt;/div&gt;\n\n&lt;div id=\&quot;requestinfo\&quot;&gt;\n  &lt;h2&gt;Request information&lt;/h2&gt;\n\n  &lt;h3 id=\&quot;get-info\&quot;&gt;GET&lt;/h3&gt;\n  &lt;% unless req.GET.empty? %&gt;\n    &lt;table class=\&quot;req\&quot;&gt;\n      &lt;thead&gt;\n        &lt;tr&gt;\n          &lt;th&gt;Variable&lt;/th&gt;\n          &lt;th&gt;Value&lt;/th&gt;\n        &lt;/tr&gt;\n      &lt;/thead&gt;\n      &lt;tbody&gt;\n          &lt;% req.GET.sort_by { |k, v| k.to_s }.each { |key, val| %&gt;\n          &lt;tr&gt;\n            &lt;td&gt;&lt;%=h key %&gt;&lt;/td&gt;\n            &lt;td class=\&quot;code\&quot;&gt;&lt;div&gt;&lt;%=h val.inspect %&gt;&lt;/div&gt;&lt;/td&gt;\n          &lt;/tr&gt;\n          &lt;% } %&gt;\n      &lt;/tbody&gt;\n    &lt;/table&gt;\n  &lt;% else %&gt;\n    &lt;p&gt;No GET data.&lt;/p&gt;\n  &lt;% end %&gt;\n\n  &lt;h3 id=\&quot;post-info\&quot;&gt;POST&lt;/h3&gt;\n  &lt;% unless req.POST.empty? %&gt;\n    &lt;table class=\&quot;req\&quot;&gt;\n      &lt;thead&gt;\n        &lt;tr&gt;\n          &lt;th&gt;Variable&lt;/th&gt;\n          &lt;th&gt;Value&lt;/th&gt;\n        &lt;/tr&gt;\n      &lt;/thead&gt;\n      &lt;tbody&gt;\n          &lt;% req.POST.sort_by { |k, v| k.to_s }.each { |key, val| %&gt;\n          &lt;tr&gt;\n            &lt;td&gt;&lt;%=h key %&gt;&lt;/td&gt;\n            &lt;td class=\&quot;code\&quot;&gt;&lt;div&gt;&lt;%=h val.inspect %&gt;&lt;/div&gt;&lt;/td&gt;\n          &lt;/tr&gt;\n          &lt;% } %&gt;\n      &lt;/tbody&gt;\n    &lt;/table&gt;\n  &lt;% else %&gt;\n    &lt;p&gt;No POST data.&lt;/p&gt;\n  &lt;% end %&gt;\n\n\n  &lt;h3 id=\&quot;cookie-info\&quot;&gt;COOKIES&lt;/h3&gt;\n  &lt;% unless req.cookies.empty? %&gt;\n    &lt;table class=\&quot;req\&quot;&gt;\n      &lt;thead&gt;\n        &lt;tr&gt;\n          &lt;th&gt;Variable&lt;/th&gt;\n          &lt;th&gt;Value&lt;/th&gt;\n        &lt;/tr&gt;\n      &lt;/thead&gt;\n      &lt;tbody&gt;\n        &lt;% req.cookies.each { |key, val| %&gt;\n          &lt;tr&gt;\n            &lt;td&gt;&lt;%=h key %&gt;&lt;/td&gt;\n            &lt;td class=\&quot;code\&quot;&gt;&lt;div&gt;&lt;%=h val.inspect %&gt;&lt;/div&gt;&lt;/td&gt;\n          &lt;/tr&gt;\n        &lt;% } %&gt;\n      &lt;/tbody&gt;\n    &lt;/table&gt;\n  &lt;% else %&gt;\n    &lt;p&gt;No cookie data.&lt;/p&gt;\n  &lt;% end %&gt;\n\n  &lt;h3 id=\&quot;env-info\&quot;&gt;Rack ENV&lt;/h3&gt;\n    &lt;table class=\&quot;req\&quot;&gt;\n      &lt;thead&gt;\n        &lt;tr&gt;\n          &lt;th&gt;Variable&lt;/th&gt;\n          &lt;th&gt;Value&lt;/th&gt;\n        &lt;/tr&gt;\n      &lt;/thead&gt;\n      &lt;tbody&gt;\n          &lt;% env.sort_by { |k, v| k.to_s }.each { |key, val| %&gt;\n          &lt;tr&gt;\n            &lt;td&gt;&lt;%=h key %&gt;&lt;/td&gt;\n            &lt;td class=\&quot;code\&quot;&gt;&lt;div&gt;&lt;%=h val %&gt;&lt;/div&gt;&lt;/td&gt;\n          &lt;/tr&gt;\n          &lt;% } %&gt;\n      &lt;/tbody&gt;\n    &lt;/table&gt;\n\n&lt;/div&gt;\n\n&lt;div id=\&quot;explanation\&quot;&gt;\n  &lt;p&gt;\n    You're seeing this error because you use &lt;code&gt;Rack::ShowExceptions&lt;/code&gt;.\n  &lt;/p&gt;\n&lt;/div&gt;\n\n&lt;/body&gt;\n&lt;/html&gt;\n&quot;</dd>
+    
+  </dl>
+</div>
+
+</div><div class="section constructor">
+<h2>Constructor</h2>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>initialize</span><span class='args'>(app)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/rack/showexceptions.rb', line 18</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/rack/rack/blob/fd1c1d2e494d9a7d15e0458602ef121f244addc3/lib/rack/showexceptions.rb#L18">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">18
+19
+20
+21</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='app identifier id'>app</span><span class='rparen token'>)</span>
+  <span class='@app ivar id'>@app</span> <span class='assign token'>=</span> <span class='app identifier id'>app</span>
+  <span class='@template ivar id'>@template</span> <span class='assign token'>=</span> <span class='ERB constant id'>ERB</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='TEMPLATE constant id'>TEMPLATE</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+</div>  <div class="section visibilitygroup">
+      <div class="section methodsummary">
+    <h2>Public Instance Method Summary</h2>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href="#call-instance_method">#call</span><span class='args'>(env)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href="#h-instance_method">#h</span><span class='args'>(obj)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href="#pretty-instance_method">#pretty</span><span class='args'>(env, exception)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails">
+  <h2>Public Instance Method Details</h2>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>call</h3>
+</div><div id="call-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>call</span><span class='args'>(env)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/rack/showexceptions.rb', line 23</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/rack/rack/blob/fd1c1d2e494d9a7d15e0458602ef121f244addc3/lib/rack/showexceptions.rb#L23">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">23
+24
+25
+26
+27
+28
+29
+30
+31</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='env identifier id'>env</span><span class='rparen token'>)</span>
+  <span class='@app ivar id'>@app</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='env identifier id'>env</span><span class='rparen token'>)</span>
+<span class='rescue rescue kw'>rescue</span> <span class='StandardError constant id'>StandardError</span><span class='comma token'>,</span> <span class='LoadError constant id'>LoadError</span><span class='comma token'>,</span> <span class='SyntaxError constant id'>SyntaxError</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
+  <span class='backtrace identifier id'>backtrace</span> <span class='assign token'>=</span> <span class='pretty identifier id'>pretty</span><span class='lparen token'>(</span><span class='env identifier id'>env</span><span class='comma token'>,</span> <span class='e identifier id'>e</span><span class='rparen token'>)</span>
+  <span class='lbrack token'>[</span><span class='integer val'>500</span><span class='comma token'>,</span>
+   <span class='lbrace token'>{</span><span class='string val'>&quot;Content-Type&quot;</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;text/html&quot;</span><span class='comma token'>,</span>
+    <span class='string val'>&quot;Content-Length&quot;</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='backtrace identifier id'>backtrace</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='dot token'>.</span><span class='size identifier id'>size</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rbrace token'>}</span><span class='comma token'>,</span>
+   <span class='backtrace identifier id'>backtrace</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>h</h3>
+</div><div id="h-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>h</span><span class='args'>(obj)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/rack/showexceptions.rb', line 68</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/rack/rack/blob/fd1c1d2e494d9a7d15e0458602ef121f244addc3/lib/rack/showexceptions.rb#L68">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">68
+69
+70
+71
+72
+73
+74
+75</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='h identifier id'>h</span><span class='lparen token'>(</span><span class='obj identifier id'>obj</span><span class='rparen token'>)</span>                  <span class='comment val'># :nodoc:</span>
+  <span class='case case kw'>case</span> <span class='obj identifier id'>obj</span>
+  <span class='when when kw'>when</span> <span class='String constant id'>String</span>
+    <span class='Utils constant id'>Utils</span><span class='dot token'>.</span><span class='escape_html identifier id'>escape_html</span><span class='lparen token'>(</span><span class='obj identifier id'>obj</span><span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+    <span class='Utils constant id'>Utils</span><span class='dot token'>.</span><span class='escape_html identifier id'>escape_html</span><span class='lparen token'>(</span><span class='obj identifier id'>obj</span><span class='dot token'>.</span><span class='inspect identifier id'>inspect</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>pretty</h3>
+</div><div id="pretty-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>pretty</span><span class='args'>(env, exception)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/rack/showexceptions.rb', line 33</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/rack/rack/blob/fd1c1d2e494d9a7d15e0458602ef121f244addc3/lib/rack/showexceptions.rb#L33">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='pretty identifier id'>pretty</span><span class='lparen token'>(</span><span class='env identifier id'>env</span><span class='comma token'>,</span> <span class='exception identifier id'>exception</span><span class='rparen token'>)</span>
+  <span class='req identifier id'>req</span> <span class='assign token'>=</span> <span class='Rack constant id'>Rack</span><span class='colon2 op'>::</span><span class='Request constant id'>Request</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='env identifier id'>env</span><span class='rparen token'>)</span>
+  <span class='path identifier id'>path</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='req identifier id'>req</span><span class='dot token'>.</span><span class='script_name identifier id'>script_name</span> <span class='plus op'>+</span> <span class='req identifier id'>req</span><span class='dot token'>.</span><span class='path_info identifier id'>path_info</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='squeeze identifier id'>squeeze</span><span class='lparen token'>(</span><span class='string val'>&quot;/&quot;</span><span class='rparen token'>)</span>
+
+  <span class='frames identifier id'>frames</span> <span class='assign token'>=</span> <span class='exception identifier id'>exception</span><span class='dot token'>.</span><span class='backtrace identifier id'>backtrace</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='line identifier id'>line</span><span class='bitor op'>|</span>
+    <span class='frame identifier id'>frame</span> <span class='assign token'>=</span> <span class='OpenStruct constant id'>OpenStruct</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+    <span class='if if kw'>if</span> <span class='line identifier id'>line</span> <span class='match op'>=~</span> <span class='regexp val'>/(.*?):(\d+)(:in `(.*)')?/</span>
+      <span class='frame identifier id'>frame</span><span class='dot token'>.</span><span class='filename identifier id'>filename</span> <span class='assign token'>=</span> <span class='$1 nth_ref id'>$1</span>
+      <span class='frame identifier id'>frame</span><span class='dot token'>.</span><span class='lineno identifier id'>lineno</span> <span class='assign token'>=</span> <span class='$2 nth_ref id'>$2</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span>
+      <span class='frame identifier id'>frame</span><span class='dot token'>.</span><span class='function identifier id'>function</span> <span class='assign token'>=</span> <span class='$4 nth_ref id'>$4</span>
+
+      <span class='begin begin kw'>begin</span>
+        <span class='lineno identifier id'>lineno</span> <span class='assign token'>=</span> <span class='frame identifier id'>frame</span><span class='dot token'>.</span><span class='lineno identifier id'>lineno</span><span class='minus op'>-</span><span class='integer val'>1</span>
+        <span class='lines identifier id'>lines</span> <span class='assign token'>=</span> <span class='colon3 op'>::</span><span class='File constant id'>File</span><span class='dot token'>.</span><span class='readlines identifier id'>readlines</span><span class='lparen token'>(</span><span class='frame identifier id'>frame</span><span class='dot token'>.</span><span class='filename identifier id'>filename</span><span class='rparen token'>)</span>
+        <span class='frame identifier id'>frame</span><span class='dot token'>.</span><span class='pre_context_lineno identifier id'>pre_context_lineno</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='lineno identifier id'>lineno</span><span class='minus op'>-</span><span class='CONTEXT constant id'>CONTEXT</span><span class='comma token'>,</span> <span class='integer val'>0</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='max identifier id'>max</span>
+        <span class='frame identifier id'>frame</span><span class='dot token'>.</span><span class='pre_context identifier id'>pre_context</span> <span class='assign token'>=</span> <span class='lines identifier id'>lines</span><span class='lbrack token'>[</span><span class='frame identifier id'>frame</span><span class='dot token'>.</span><span class='pre_context_lineno identifier id'>pre_context_lineno</span><span class='dot3 op'>...</span><span class='lineno identifier id'>lineno</span><span class='rbrack token'>]</span>
+        <span class='frame identifier id'>frame</span><span class='dot token'>.</span><span class='context_line identifier id'>context_line</span> <span class='assign token'>=</span> <span class='lines identifier id'>lines</span><span class='lbrack token'>[</span><span class='lineno identifier id'>lineno</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='chomp identifier id'>chomp</span>
+        <span class='frame identifier id'>frame</span><span class='dot token'>.</span><span class='post_context_lineno identifier id'>post_context_lineno</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='lineno identifier id'>lineno</span><span class='plus op'>+</span><span class='CONTEXT constant id'>CONTEXT</span><span class='comma token'>,</span> <span class='lines identifier id'>lines</span><span class='dot token'>.</span><span class='size identifier id'>size</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='min identifier id'>min</span>
+        <span class='frame identifier id'>frame</span><span class='dot token'>.</span><span class='post_context identifier id'>post_context</span> <span class='assign token'>=</span> <span class='lines identifier id'>lines</span><span class='lbrack token'>[</span><span class='lineno identifier id'>lineno</span><span class='plus op'>+</span><span class='float val'>1</span><span class='dot2 op'>..</span><span class='frame identifier id'>frame</span><span class='dot token'>.</span><span class='post_context_lineno identifier id'>post_context_lineno</span><span class='rbrack token'>]</span>
+      <span class='rescue rescue kw'>rescue</span>
+      <span class='end end kw'>end</span>
+
+      <span class='frame identifier id'>frame</span>
+    <span class='else else kw'>else</span>
+      <span class='nil nil kw'>nil</span>
+    <span class='end end kw'>end</span>
+  <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='compact identifier id'>compact</span>
+
+  <span class='env identifier id'>env</span><span class='lbrack token'>[</span><span class='string val'>&quot;rack.errors&quot;</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='puts identifier id'>puts</span> <span class='dstring node'>&quot;#{exception.class}: #{exception.message}&quot;</span>
+  <span class='env identifier id'>env</span><span class='lbrack token'>[</span><span class='string val'>&quot;rack.errors&quot;</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='puts identifier id'>puts</span> <span class='exception identifier id'>exception</span><span class='dot token'>.</span><span class='backtrace identifier id'>backtrace</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='l identifier id'>l</span><span class='bitor op'>|</span> <span class='string val'>&quot;\t&quot;</span> <span class='plus op'>+</span> <span class='l identifier id'>l</span> <span class='rbrace token'>}</span>
+  <span class='env identifier id'>env</span><span class='lbrack token'>[</span><span class='string val'>&quot;rack.errors&quot;</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='flush identifier id'>flush</span>
+
+  <span class='lbrack token'>[</span><span class='@template ivar id'>@template</span><span class='dot token'>.</span><span class='result identifier id'>result</span><span class='lparen token'>(</span><span class='binding identifier id'>binding</span><span class='rparen token'>)</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+</div>
+          </div>
+        </div>
+      </div>                    
+    </div>
+
+    <div id="footer">
+      <div class="site">
+        <div class="info">
+          <div class="links">
+            <a href="http://github.com/blog/148-github-shirts-now-available">Shirts</a> |
+            <a href="http://github.com/blog">Blog</a> |
+            <a href="http://support.github.com/">Support</a> |
+            <a href="http://github.com/training">Training</a> |
+            <a href="http://github.com/contact">Contact</a> |
+            <a href="http://groups.google.com/group/github/">Google Group</a> |
+            <a href="http://develop.github.com/">API</a> |
+            <a href="http://twitter.com/github">Status</a>
+          </div>
+          <div class="company">
+            <span id="_rrt" title="0.64509s from xc88-s00039">GitHub</span>
+            is <a href="http://logicalawesome.com/">Logical Awesome</a> ©2009 | <a href="http://github.com/site/terms">Terms of Service</a> | <a href="http://github.com/site/privacy">Privacy Policy</a>
+          </div>
+        </div>
+        <div class="sponsor">
+          <a href="http://engineyard.com/"><img src="http://github.com/images/modules/footer/engine_yard_logo.png" alt="Engine Yard"></a>
+          <div>
+            Hosting provided by our<br> partners at Engine Yard
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div id="coming_soon" style="display: none;">
+      This feature is coming soon.  Sit tight!
+    </div>
+
+    <div id="facebox" style="display: none;">       
+      <div class="popup">         
+        <table>           
+          <tbody>             
+            <tr>               
+              <td class="tl"></td>
+              <td class="b"></td>
+              <td class="tr"></td>             
+            </tr>             
+          <tr>               
+            <td class="b"></td>               
+            <td class="body">                 
+              <div class="content"></div>                 
+              <div class="footer">                   
+                <a href="#" class="close"><img src="http://github.com/facebox/closelabel.gif" title="close" class="close_image"></a>                 
+              </div>               
+            </td>               
+            <td class="b"></td>             
+          </tr>             
+          <tr>               
+            <td class="bl"></td>
+            <td class="b"></td>
+            <td class="br"></td>             
+          </tr>           
+        </tbody>         
+      </table>       
+    </div>     
+
+
+    <script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+    try {
+    var pageTracker = _gat._getTracker("UA-8689483-1");
+    pageTracker._trackPageview();
+    } catch(err) {}</script>
+
+  </body>
+</html>
