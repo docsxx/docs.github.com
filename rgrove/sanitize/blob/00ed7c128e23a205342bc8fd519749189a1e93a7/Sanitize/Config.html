@@ -1,11 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
-    <title>rgrove's sanitize - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/rgrove/sanitize/blob/00ed7c128e23a205342bc8fd519749189a1e93a7">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
+    <title>rgrove's sanitize - Module: Sanitize::Config - GitHub Documentation</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -16,7 +12,7 @@
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
 <script type="text/javascript" src="http://assets3.github.com/javascripts/bundle.js"></script>              
-<script src="app.js" type="text/javascript" charset="utf-8"></script>
+<script src="../app.js" type="text/javascript" charset="utf-8"></script>
 
 <script type="text/javascript" src="http://docs.github.com/javascripts/md5.js"></script>
 <script type="text/javascript" src="http://docs.github.com/javascripts/repos.js"></script>
@@ -46,12 +42,11 @@
   });
 </script>
 
-    <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
+    <link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
   </head>
   <body>    
+    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +80,7 @@
             <li class=""><a href="http://github.com/rgrove/sanitize/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/rgrove/sanitize">Wiki</a></li>
             <li class=""><a href="http://github.com/rgrove/sanitize/graphs">Graphs</a></li>                    
-            <li class="active"><a href="rgrove/sanitize">Documentation</a></li>
+            <li class="active"><a href="/rgrove/sanitize">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +106,107 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/rgrove/sanitize/blob/00ed7c128e23a205342bc8fd519749189a1e93a7">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="wikistyle">
+  <div class="section module Sanitize_Config">
+  <h1>Module: Sanitize::Config</h1>
+  <div class="section constants">
+  <div class="thisclass">
+  <h2>Constants</h2>
+  <dl>
+    
+      <dt id="BASIC-constant">BASIC</dt>
+      <dd>{
+  :elements =&gt; [
+    'a', 'b', 'blockquote', 'br', 'cite', 'code', 'dd', 'dl', 'dt', 'em',
+    'i', 'li', 'ol', 'p', 'pre', 'q', 'small', 'strike', 'strong', 'sub',
+    'sup', 'u', 'ul'],
 
+  :attributes =&gt; {
+    'a'          =&gt; ['href'],
+    'blockquote' =&gt; ['cite'],
+    'q'          =&gt; ['cite']
+  },
+
+  :add_attributes =&gt; {
+    'a' =&gt; {'rel' =&gt; 'nofollow'}
+  },
+
+  :protocols =&gt; {
+    'a'          =&gt; {'href' =&gt; ['ftp', 'http', 'https', 'mailto',
+                                :relative]},
+    'blockquote' =&gt; {'cite' =&gt; ['http', 'https', :relative]},
+    'q'          =&gt; {'cite' =&gt; ['http', 'https', :relative]}
+  }
+}</dd>
+    
+      <dt id="DEFAULT-constant">DEFAULT</dt>
+      <dd>{
+  # Whether or not to allow HTML comments. Allowing comments is strongly
+  # discouraged, since IE allows script execution within conditional
+  # comments.
+  :allow_comments =&gt; false,
+
+  # HTML elements to allow. By default, no elements are allowed (which means
+  # that all HTML will be stripped).
+  :elements =&gt; [],
+
+  # HTML attributes to allow in specific elements. By default, no attributes
+  # are allowed.
+  :attributes =&gt; {},
+
+  # HTML attributes to add to specific elements. By default, no attributes
+  # are added.
+  :add_attributes =&gt; {},
+
+  # URL handling protocols to allow in specific attributes. By default, no
+  # protocols are allowed. Use :relative in place of a protocol if you want
+  # to allow relative URLs sans protocol.
+  :protocols =&gt; {}
+}</dd>
+    
+      <dt id="RELAXED-constant">RELAXED</dt>
+      <dd>{
+  :elements =&gt; [
+    'a', 'b', 'blockquote', 'br', 'caption', 'cite', 'code', 'col',
+    'colgroup', 'dd', 'dl', 'dt', 'em', 'i', 'img', 'li', 'ol', 'p', 'pre',
+    'q', 'small', 'strike', 'strong', 'sub', 'sup', 'table', 'tbody', 'td',
+    'tfoot', 'th', 'thead', 'tr', 'u', 'ul'],
+
+  :attributes =&gt; {
+    'a'          =&gt; ['href', 'title'],
+    'blockquote' =&gt; ['cite'],
+    'col'        =&gt; ['span', 'width'],
+    'colgroup'   =&gt; ['span', 'width'],
+    'img'        =&gt; ['align', 'alt', 'height', 'src', 'title', 'width'],
+    'ol'         =&gt; ['start', 'type'],
+    'q'          =&gt; ['cite'],
+    'table'      =&gt; ['summary', 'width'],
+    'td'         =&gt; ['abbr', 'axis', 'colspan', 'rowspan', 'width'],
+    'th'         =&gt; ['abbr', 'axis', 'colspan', 'rowspan', 'scope',
+                     'width'],
+    'ul'         =&gt; ['type']
+  },
+
+  :protocols =&gt; {
+    'a'          =&gt; {'href' =&gt; ['ftp', 'http', 'https', 'mailto',
+                                :relative]},
+    'blockquote' =&gt; {'cite' =&gt; ['http', 'https', :relative]},
+    'img'        =&gt; {'src'  =&gt; ['http', 'https', :relative]},
+    'q'          =&gt; {'cite' =&gt; ['http', 'https', :relative]}
+  }
+}</dd>
+    
+      <dt id="RESTRICTED-constant">RESTRICTED</dt>
+      <dd>{
+  :elements =&gt; ['b', 'em', 'i', 'strong', 'u']
+}</dd>
+    
+  </dl>
+</div>
+
+</div>
+</div>
+</div>
           </div>
         </div>
       </div>                    
