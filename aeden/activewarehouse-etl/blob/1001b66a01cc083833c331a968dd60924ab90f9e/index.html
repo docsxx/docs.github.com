@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>aeden's activewarehouse-etl - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/aeden/activewarehouse-etl/blob/1001b66a01cc083833c331a968dd60924ab90f9e">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/aeden/activewarehouse-etl/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/aeden/activewarehouse-etl">Wiki</a></li>
             <li class=""><a href="http://github.com/aeden/activewarehouse-etl/graphs">Graphs</a></li>                    
-            <li class="active"><a href="aeden/activewarehouse-etl">Documentation</a></li>
+            <li class="active"><a href="/aeden/activewarehouse-etl">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,234 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/aeden/activewarehouse-etl/blob/1001b66a01cc083833c331a968dd60924ab90f9e">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <p>
+Ruby Extract-Transform-Load (ETL) tool.
+</p>
+<h2>Requirements</h2>
+<ul>
+<li>Ruby 1.8.5 or higher
 
+</li>
+<li>Rubygems
+
+</li>
+</ul>
+<h2>Online Documentation</h2>
+<p>
+Available at
+http://activewarehouse.rubyforge.org/docs/activewarehouse-etl.html
+</p>
+<h2>Features</h2>
+<p>
+Current supported features:
+</p>
+<ul>
+<li>ETL Domain Specific Language (DSL) - Control files are specified in a
+Ruby-based DSL
+
+</li>
+<li>Multiple source types. Current supported types:
+
+<ul>
+<li>Fixed-width and delimited text files
+
+</li>
+<li>XML files through SAX
+
+</li>
+<li>Apache combined log format
+
+</li>
+</ul>
+</li>
+<li>Multiple destination types - file and database destinations
+
+</li>
+<li>Support for extracting from multiple sources in a single job
+
+</li>
+<li>Support for writing to multiple destinations in a single job
+
+</li>
+<li>A variety of built-in transformations are included:
+
+<ul>
+<li>Date-to-string, string-to-date, string-to-datetime, string-to-timestamp
+
+</li>
+<li>Type transformation supporting strings, integers, floats and big decimals
+
+</li>
+<li>Trim
+
+</li>
+<li>SHA-1
+
+</li>
+<li>Decode from an external decode file
+
+</li>
+<li>Default replacement for empty values
+
+</li>
+<li>Ordinalize
+
+</li>
+<li>Hierarchy lookup
+
+</li>
+<li>Foreign key lookup
+
+</li>
+<li>Ruby blocks
+
+</li>
+<li>Any custom transformation class
+
+</li>
+</ul>
+</li>
+<li>A variety of build-in row-level processors
+
+<ul>
+<li>Check exists processor to determine if the record already exists in the
+destination database
+
+</li>
+<li>Check unique processor to determine whether a matching record was processed
+during this job execution
+
+</li>
+<li>Copy field
+
+</li>
+<li>Rename field
+
+</li>
+<li>Hierarchy exploder which takes a tree structure defined through a parent id
+and explodes it into a hierarchy bridge table
+
+</li>
+<li>Surrogate key generator including support for looking up the last surrogate
+key from the target table using a custom query
+
+</li>
+<li>Sequence generator including support for context-sensitive sequences where
+the context can be defined as a combination of fields from the source data
+
+</li>
+<li>New row-level processors can easily be defined and applied
+
+</li>
+</ul>
+</li>
+<li>Pre-processing
+
+<ul>
+<li>Truncate processor
+
+</li>
+</ul>
+</li>
+<li>Post-processing
+
+<ul>
+<li>Bulk import using native RDBMS bulk loader tools
+
+</li>
+</ul>
+</li>
+<li>Virtual fields - Add a field to the destination data which doesn&#8217;t
+exist in the source data
+
+</li>
+<li>Built in job and record meta data
+
+</li>
+<li>Support for type 1 and type 2 slowly changing dimensions
+
+<ul>
+<li>Automated effective date and end date time stamping for type 2
+
+</li>
+<li>CRC checking
+
+</li>
+</ul>
+</li>
+</ul>
+<h2>Dependencies</h2>
+<p>
+ActiveWarehouse ETL depends on the following gems:
+</p>
+<ul>
+<li>ActiveSupport Gem
+
+</li>
+<li>ActiveRecord Gem
+
+</li>
+<li>FasterCSV Gem
+
+</li>
+<li>AdapterExtensions Gem
+
+</li>
+</ul>
+<h2>Usage</h2>
+<p>
+Once the ActiveWarehouse ETL gem is installed jobs can be invoked using the
+included `etl` script. The etl script includes several command line options
+and can process multiple control files at a time.
+</p>
+<p>
+Command line options:
+</p>
+<ul>
+<li><tt>--help, -h</tt>: Display the usage message.
+
+</li>
+<li><tt>--config, -c</tt>: Specify a database.yml configuration file to
+use.
+
+</li>
+<li><tt>--limit, -l</tt>: Specify a limit to the number of rows to
+process. This option is currently only applicable to database sources.
+
+</li>
+<li><tt>--offset, -o</tt>: Specify the start offset for reading from the
+source. This option is currently only applicable to database sources.
+
+</li>
+<li><tt>--newlog, -n</tt>: Instruct the engine to create a new ETL log
+rather than append to the last ETL log.
+
+</li>
+<li><tt>--skip-bulk-import, -s</tt>: Skip any bulk imports.
+
+</li>
+<li><tt>--read-locally</tt>: Read from the local cache (skip source
+extraction)
+
+</li>
+</ul>
+<h2>Control File Examples</h2>
+<p>
+Control file examples can be found in the examples directory.
+</p>
+<h2>Running Tests</h2>
+<p>
+The tests require Shoulda 1.x.
+</p>
+<h2>Feedback</h2>
+<p>
+This is a work in progress. Comments should be made on the
+activewarehouse-discuss mailing list at the moment. Contributions are
+always welcome.
+</p>
+
+</div>
           </div>
         </div>
       </div>                    
