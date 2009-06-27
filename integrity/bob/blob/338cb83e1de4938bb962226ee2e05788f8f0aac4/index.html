@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>integrity's bob - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/integrity/bob/blob/338cb83e1de4938bb962226ee2e05788f8f0aac4">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/integrity/bob/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/integrity/bob">Wiki</a></li>
             <li class=""><a href="http://github.com/integrity/bob/graphs">Graphs</a></li>                    
-            <li class="active"><a href="integrity/bob">Documentation</a></li>
+            <li class="active"><a href="/integrity/bob">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,61 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/integrity/bob/blob/338cb83e1de4938bb962226ee2e05788f8f0aac4">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>Bob the Builder</h1>
+<p>
+Given a Buildable object with a determined API (described in it&#8217;s
+documentation), Bob will, when called like:
+</p>
+<pre class="code">
+    <span class='Bob constant id'>Bob</span><span class='dot token'>.</span><span class='build identifier id'>build</span><span class='lparen token'>(</span><span class='buildable identifier id'>buildable</span><span class='comma token'>,</span> <span class='commit_id identifier id'>commit_id</span><span class='rparen token'>)</span> <span class='comment val'># or Bob.build(buildable, [commit_id, commit_id, ...])</span>
+</pre>
+<p>
+or from your buildable (if you are using the Bob::Buildable mixin provided)
+as:
+</p>
+<pre class="code">
+    <span class='buildable identifier id'>buildable</span><span class='dot token'>.</span><span class='build identifier id'>build</span><span class='lparen token'>(</span><span class='commit_id identifier id'>commit_id</span><span class='rparen token'>)</span> <span class='comment val'># or buildable.build([commit_id, commit_id, ...])</span>
+</pre>
+<ol>
+<li>Checkout the buildable on the specified commit
 
+</li>
+<li>Call <tt>Buildable#start_building</tt>
+
+</li>
+<li>Run the script provided in <tt>Buildable#build_script</tt> in the
+buildable.
+
+</li>
+<li>When the build process finishes, it will call
+<tt>Buildable#finish_building</tt> with the commit_id, the build status
+(true if the script returns a status code of 0, false otherwise), and a
+string with the build output (both STDOUT and STDERR).
+
+</li>
+</ol>
+<p>
+If you pass an array of commits, the steps 1-4 will be repeated for each
+commit provided, in order.
+</p>
+<h2>Do I need this?</h2>
+<p>
+Probably not. Check out integrity[http://integrityapp.com] for a full
+fledged automated CI server, which is what most people need.
+</p>
+<h2>Credits</h2>
+<table>
+<tr><td valign="top">Authors:</td><td>Nicolas Sanguinetti (foca[http://github.com/foca]) and Simon Rozet
+(sr[http://github.com/sr])
+
+</td></tr>
+<tr><td valign="top">License:</td><td>MIT (Check LICENSE for details)
+
+</td></tr>
+</table>
+
+</div>
           </div>
         </div>
       </div>                    
