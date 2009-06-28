@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>binarylogic's addresslogic - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/binarylogic/addresslogic/blob/3195b47a490dfd1dc533f9910d8d751009c81a36">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/binarylogic/addresslogic/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/binarylogic/addresslogic">Wiki</a></li>
             <li class=""><a href="http://github.com/binarylogic/addresslogic/graphs">Graphs</a></li>                    
-            <li class="active"><a href="binarylogic/addresslogic">Documentation</a></li>
+            <li class="active"><a href="/binarylogic/addresslogic">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,90 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/binarylogic/addresslogic/blob/3195b47a490dfd1dc533f9910d8d751009c81a36">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>Address Logic</h1>
+<p>
+This is a simple library that takes away the annoyances of displaying
+addresses in a view. Since various parts of an address can sometimes be
+optional, such as &quot;street2&quot;, displaying addresses was not fun:
+</p>
+<pre class="code">
+  <span class='comment val'># some HAML view</span>
+  <span class='assign token'>=</span> <span class='address identifier id'>address</span><span class='dot token'>.</span><span class='street1 identifier id'>street1</span>
+  <span class='br identifier id'>br</span>
+  <span class='minus op'>-</span> <span class='if if kw'>if</span> <span class='notop op'>!</span><span class='address identifier id'>address</span><span class='dot token'>.</span><span class='street2 identifier id'>street2</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span>
+    <span class='assign token'>=</span> <span class='address identifier id'>address</span><span class='dot token'>.</span><span class='street2 identifier id'>street2</span>
+    <span class='br identifier id'>br</span>
+  <span class='eq op'>==</span> <span class='comment val'>#{address.city}, #{address.state} #{address.zip}</span>
+  <span class='br identifier id'>br</span>
+  <span class='assign token'>=</span> <span class='address identifier id'>address</span><span class='dot token'>.</span><span class='country identifier id'>country</span>
+</pre>
+<p>
+That&#8217;s just ugly. Instead, you can do this with Address Logic:
+</p>
+<pre class="code">
+  <span class='assign token'>=</span> <span class='address identifier id'>address</span><span class='dot token'>.</span><span class='address_parts identifier id'>address_parts</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='string val'>&quot;&lt;br /&gt;&quot;</span><span class='rparen token'>)</span>
+</pre>
+<p>
+Or, what about a single line address?
+</p>
+<pre class="code">
+  <span class='assign token'>=</span> <span class='address identifier id'>address</span><span class='dot token'>.</span><span class='address_parts identifier id'>address_parts</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='string val'>&quot;, &quot;</span><span class='rparen token'>)</span>
+</pre>
+<p>
+Maybe you only want city and state:
+</p>
+<pre class="code">
+  <span class='assign token'>=</span> <span class='address identifier id'>address</span><span class='dot token'>.</span><span class='address_parts identifier id'>address_parts</span><span class='lparen token'>(</span><span class='symbol val'>:only</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='symbol val'>:city</span><span class='comma token'>,</span> <span class='symbol val'>:state</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='string val'>&quot;, &quot;</span><span class='rparen token'>)</span>
+</pre>
+<p>
+Granted the above is probably easier without using AddressLogic, but it
+will purge any blank items in the address, so if city or state are optional
+then it would be cleaner to use AddressLogic.
+</p>
+<h2>Install and use</h2>
+<p>
+As a gem:
+</p>
+<pre class="code">
+  $ <span class='sudo identifier id'>sudo</span> <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='addresslogic identifier id'>addresslogic</span>
+</pre>
+<p>
+Or as a plugin
+</p>
+<pre class="code">
+  $ <span class='sudo identifier id'>sudo</span> <span class='script identifier id'>script</span><span class='div op'>/</span><span class='plugin identifier id'>plugin</span> <span class='install identifier id'>install</span> <span class='git identifier id'>git</span><span class='symbol val'>:/</span><span class='regexp val'>/github.com/</span><span class='binarylogic identifier id'>binarylogic</span><span class='div op'>/</span><span class='addresslogic identifier id'>addresslogic</span><span class='dot token'>.</span><span class='git identifier id'>git</span>
+</pre>
+<p>
+Then just include the AddressLogic module into any class of your choice.
+All that it assumes is that you have the street1, street2, city, state,
+zip, country (optional) methods.
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='Address constant id'>Address</span>
+    <span class='apply_addresslogic identifier id'>apply_addresslogic</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+You can specify the fields too:
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='Address constant id'>Address</span>
+    <span class='apply_addresslogic identifier id'>apply_addresslogic</span> <span class='symbol val'>:fields</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='symbol val'>:street1</span><span class='comma token'>,</span> <span class='symbol val'>:street2</span><span class='comma token'>,</span> <span class='symbol val'>:city</span><span class='comma token'>,</span> <span class='lbrack token'>[</span><span class='symbol val'>:state</span><span class='comma token'>,</span> <span class='symbol val'>:zip</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='symbol val'>:country</span><span class='rbrack token'>]</span>
+  <span class='end end kw'>end</span>
+</pre>
+<h2>Helpful links</h2>
+<ul>
+<li><b>Documentation:</b> http://addresslogic.rubyforge.org
 
+</li>
+</ul>
+<p>
+Copyright &#169; 2009 Ben Johnson of [Binary
+Logic](http://www.binarylogic.com), released under the MIT license
+</p>
+
+</div>
           </div>
         </div>
       </div>                    
