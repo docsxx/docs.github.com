@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>safis's log - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/safis/log/blob/3c71fd4bb3e39174033aa8daa65f00ec9927d0a5">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/safis/log/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/safis/log">Wiki</a></li>
             <li class=""><a href="http://github.com/safis/log/graphs">Graphs</a></li>                    
-            <li class="active"><a href="safis/log">Documentation</a></li>
+            <li class="active"><a href="/safis/log">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,67 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/safis/log/blob/3c71fd4bb3e39174033aa8daa65f00ec9927d0a5">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>Safis Log</h1>
 
+<p>When building distributed applications, the ability to audit their behavior is a necessity.  Often, the easiest way to get at this information is by logging it!</p>
+
+<p>The goal of the Safis logging subsystem is to provide the ability to log your application's behavior with minimal developer friction.</p>
+
+<h2>Getting Started</h2>
+
+<p>So, let's suppose you're developing an application for your evil overlord.  The aim, of course, is to take over the world; but you'd best start small.</p>
+
+<pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'safis/log'</span>
+
+<span class='log identifier id'>log</span><span class='dot token'>.</span><span class='warn identifier id'>warn</span> <span class='string val'>'The world shall be ours!  ...in due time.'</span>
+</pre>
+
+<p>Which outputs your nefarious intentions to STDOUT:</p>
+
+<p>``</p>
+
+<blockquote><p>WARN: [main 19:57:24] The world shall be ours!  ...in due time. [2009-07-01T19:57:24.818687]<br/>
+``</p></blockquote>
+
+<p>The time is duplicated you say?  Why haven't I been dropped into a shark tank for <em>daring to denormalize</em> your log output!?<br/>
+</p>
+
+<p>Well, we often forget that it will be a bleary-eyed developer who will be pouring over these logs.  As such, they should give them the information they care about first, and more granular information second.<br/>
+</p>
+
+<p>After all, you can't afford to execute all of your minions for easily avoidable failure; and you certainly don't want the overlord to do the same to you!</p>
+
+<h2>The Hierarchy</h2>
+
+<p>Much of the power of the Safis logger comes from gleaning the structure of your application.  You use, Modules and Classes, <em>right?</em></p>
+
+<pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'safis/log'</span>
+
+<span class='module module kw'>module</span> <span class='Villany constant id'>Villany</span>
+  <span class='class class kw'>class</span> <span class='SharkTankTrapDoor constant id'>SharkTankTrapDoor</span>
+    <span class='def def kw'>def</span> <span class='open! fid id'>open!</span>
+      <span class='begin begin kw'>begin</span>
+        <span class='dot3 op'>...</span>
+      <span class='rescue rescue kw'>rescue</span> <span class='TrapDoorFailure constant id'>TrapDoorFailure</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='err identifier id'>err</span>
+        <span class='log identifier id'>log</span><span class='dot token'>.</span><span class='fatal identifier id'>fatal</span> <span class='string val'>'The trap door failed to open.  Execute the nearest henchman immediately!'</span><span class='comma token'>,</span> <span class='err identifier id'>err</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+
+<p>Of course, the trap door will fail, embarrassing the overlord <em>for the last time</em>:</p>
+
+<p>``</p>
+
+<blockquote><p>FATAL: [Villany::SharkTankTrapDoor 20:24:38] The trap door failed to open.  Execute the nearest henchman immediately! [2009-07-01T20:24:38.747175]<br/>
+TrapDoorFailure: The magma vents are blocked.<br/>
+/villany/power_source/geothermal.rb:27:in <code>reroute_magma_flow'&lt;br/&gt;
+/villany/power_source/geothermal.rb:53:in</code>check_power_levels'<br/>
+...<br/>
+``</p></blockquote>
+</div>
           </div>
         </div>
       </div>                    
