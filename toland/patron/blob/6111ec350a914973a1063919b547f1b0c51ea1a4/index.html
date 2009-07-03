@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>toland's patron - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/toland/patron/blob/6111ec350a914973a1063919b547f1b0c51ea1a4">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/toland/patron/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/toland/patron">Wiki</a></li>
             <li class=""><a href="http://github.com/toland/patron/graphs">Graphs</a></li>                    
-            <li class="active"><a href="toland/patron">Documentation</a></li>
+            <li class="active"><a href="/toland/patron">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,73 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/toland/patron/blob/6111ec350a914973a1063919b547f1b0c51ea1a4">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>Ruby HTTP Client</h1>
+<h2>SYNOPSIS</h2>
+<p>
+Patron is a Ruby HTTP client library based on libcurl. It does not try to
+expose the full &quot;power&quot; (read complexity) of libcurl but instead
+tries to provide a sane API while taking advantage of libcurl under the
+hood.
+</p>
+<h2>USAGE</h2>
+<p>
+Usage is very simple. First, you instantiate a Session object. You can set
+a few default options on the Session instance that will be used by all
+subsequent requests:
+</p>
+<pre class="code">
+    <span class='sess identifier id'>sess</span> <span class='assign token'>=</span> <span class='Patron constant id'>Patron</span><span class='colon2 op'>::</span><span class='Session constant id'>Session</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+    <span class='sess identifier id'>sess</span><span class='dot token'>.</span><span class='timeout identifier id'>timeout</span> <span class='assign token'>=</span> <span class='integer val'>10</span>
+    <span class='sess identifier id'>sess</span><span class='dot token'>.</span><span class='base_url identifier id'>base_url</span> <span class='assign token'>=</span> <span class='string val'>&quot;http://myserver.com:9900&quot;</span>
+    <span class='sess identifier id'>sess</span><span class='dot token'>.</span><span class='headers identifier id'>headers</span><span class='lbrack token'>[</span><span class='string val'>'User-Agent'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='string val'>'myapp/1.0'</span>
+</pre>
+<p>
+The Session is used to make HTTP requests.
+</p>
+<pre class="code">
+    <span class='resp identifier id'>resp</span> <span class='assign token'>=</span> <span class='sess identifier id'>sess</span><span class='dot token'>.</span><span class='get identifier id'>get</span><span class='lparen token'>(</span><span class='string val'>&quot;/foo/bar&quot;</span><span class='rparen token'>)</span>
+</pre>
+<p>
+Requests return a Response object:
+</p>
+<pre class="code">
+    <span class='if if kw'>if</span> <span class='resp identifier id'>resp</span><span class='dot token'>.</span><span class='status identifier id'>status</span> <span class='lt op'>&lt;</span> <span class='integer val'>400</span>
+      <span class='puts identifier id'>puts</span> <span class='resp identifier id'>resp</span><span class='dot token'>.</span><span class='body identifier id'>body</span>
+    <span class='end end kw'>end</span>
+</pre>
+<p>
+The GET, HEAD, PUT, POST and DELETE operations are all supported.
+</p>
+<pre class="code">
+    <span class='sess identifier id'>sess</span><span class='dot token'>.</span><span class='put identifier id'>put</span><span class='lparen token'>(</span><span class='string val'>&quot;/foo/baz&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;some data&quot;</span><span class='rparen token'>)</span>
+    <span class='sess identifier id'>sess</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='string val'>&quot;/foo/baz&quot;</span><span class='rparen token'>)</span>
+</pre>
+<p>
+You can ship custom headers with a single request:
+</p>
+<pre class="code">
+    <span class='sess identifier id'>sess</span><span class='dot token'>.</span><span class='post identifier id'>post</span><span class='lparen token'>(</span><span class='string val'>&quot;/foo/stuff&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;some data&quot;</span><span class='comma token'>,</span> <span class='lbrace token'>{</span><span class='string val'>&quot;Content-Type&quot;</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;text/plain&quot;</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+</pre>
+<p>
+That is pretty much all there is to it.
+</p>
+<h2>REQUIREMENTS</h2>
+<p>
+You need a recent version of libcurl in order to install this gem. On MacOS
+X the provided libcurl is sufficient. You will have to install the libcurl
+development packages on Debian or Ubuntu. Other Linux systems are probably
+similar. Windows users are on your own. Good luck with that.
+</p>
+<h2>INSTALL</h2>
+<pre class="code">
+  <span class='sudo identifier id'>sudo</span> <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='patron identifier id'>patron</span>
+</pre>
+<p>
+Copyright &#169; 2008 The Hive
+</p>
 
+</div>
           </div>
         </div>
       </div>                    
