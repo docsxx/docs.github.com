@@ -1,11 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
-    <title>sdsykes's read_from_slave - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/sdsykes/read_from_slave/blob/bef5eef89a31dcc4f8839d02a15f8e13f3b627b3">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
+    <title>sdsykes's read_from_slave - Module: ReadFromSlave - GitHub Documentation</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,10 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +80,7 @@
             <li class=""><a href="http://github.com/sdsykes/read_from_slave/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/sdsykes/read_from_slave">Wiki</a></li>
             <li class=""><a href="http://github.com/sdsykes/read_from_slave/graphs">Graphs</a></li>                    
-            <li class="active"><a href="sdsykes/read_from_slave">Documentation</a></li>
+            <li class="active"><a href="/sdsykes/read_from_slave">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +106,161 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/sdsykes/read_from_slave/blob/bef5eef89a31dcc4f8839d02a15f8e13f3b627b3">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="wikistyle">
+  <div class="section module ReadFromSlave">
+  <h1>Module: ReadFromSlave</h1>
+  <div class="section docstring">
+  <p>
+Read_from_slave for Rails enables database reads from a slave database,
+while writes continue to go to the master To use read_from_slave you must
+install the gem, configure the gem in your environment file, and setup your
+database.yml file with an entry for your slave database.
+</p>
+<h3>Configuration</h3>
+<p>
+In config/environments/production.rb (for instance)
+</p>
+<pre class="code">
+  <span class='config identifier id'>config</span><span class='dot token'>.</span><span class='gem identifier id'>gem</span> <span class='string val'>&quot;sdsykes-read_from_slave&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:lib=</span><span class='gt op'>&gt;</span><span class='string val'>&quot;read_from_slave&quot;</span>
+</pre>
+<p>
+In config/database.yml
+</p>
+<pre class="code">
+  <span class='production identifier id'>production</span><span class='colon op'>:</span>
+    <span class='adapter identifier id'>adapter</span><span class='colon op'>:</span> <span class='mysql identifier id'>mysql</span>
+    <span class='database identifier id'>database</span><span class='colon op'>:</span> <span class='mydatabase identifier id'>mydatabase</span>
+    <span class='username identifier id'>username</span><span class='colon op'>:</span> <span class='myuser identifier id'>myuser</span>
+    <span class='password identifier id'>password</span><span class='colon op'>:</span> <span class='mypassword identifier id'>mypassword</span>
+    <span class='host identifier id'>host</span><span class='colon op'>:</span> <span class='my identifier id'>my</span><span class='dot token'>.</span><span class='main identifier id'>main</span><span class='dot token'>.</span><span class='database identifier id'>database</span><span class='dot token'>.</span><span class='server identifier id'>server</span><span class='dot token'>.</span><span class='com identifier id'>com</span>
+    <span class='port identifier id'>port</span><span class='colon op'>:</span> <span class='integer val'>3306</span>
 
+  <span class='slave_for_mydatabase identifier id'>slave_for_mydatabase</span><span class='colon op'>:</span>
+    <span class='adapter identifier id'>adapter</span><span class='colon op'>:</span> <span class='mysql identifier id'>mysql</span>
+    <span class='database identifier id'>database</span><span class='colon op'>:</span> <span class='mydatabase identifier id'>mydatabase</span>
+    <span class='username identifier id'>username</span><span class='colon op'>:</span> <span class='myuser identifier id'>myuser</span>
+    <span class='password identifier id'>password</span><span class='colon op'>:</span> <span class='mypassword identifier id'>mypassword</span>
+    <span class='socket identifier id'>socket</span><span class='colon op'>:</span> <span class='regexp val'>/var/</span><span class='lib identifier id'>lib</span><span class='div op'>/</span><span class='mysql identifier id'>mysql</span><span class='div op'>/</span><span class='mysql identifier id'>mysql</span><span class='dot token'>.</span><span class='sock identifier id'>sock</span>
+</pre>
+<p>
+Note that if you have multiple databases you can also configure multiple
+slaves - use the database name after slave_for_ in the configuration.
+</p>
+<h3>References</h3>
+<ul>
+<li>&quot;Masochism&quot;:http://github.com/technoweenie/masochism/tree/master
+
+</li>
+</ul>
+<p>
+** not thread safe ** won&#8217;t work with apps that talk to multiple
+(master) databases
+</p>
+<ul>
+<li>&quot;Acts as
+readonlyable&quot;:http://rubyforge.org/projects/acts-as-with-ro/
+
+</li>
+</ul>
+<p>
+** old, not suitable for Rails 2.x
+</p>
+
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup">
+      <div class="section methodsummary">
+    <h2>Public Class Method Summary</h2>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href="#install-21-class_method">install!</span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails">
+  <h2>Public Class Method Details</h2>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>install!</h3>
+</div><div id="install-21-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>install!</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/read_from_slave.rb', line 40</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/sdsykes/read_from_slave/blob/bef5eef89a31dcc4f8839d02a15f8e13f3b627b3/lib/read_from_slave.rb#L40">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">40
+41
+42
+43
+44
+45
+46
+47
+48</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='install! fid id'>install!</span>
+  <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='dot token'>.</span><span class='extend identifier id'>extend</span><span class='lparen token'>(</span><span class='SingletonMethods constant id'>SingletonMethods</span><span class='rparen token'>)</span>
+  <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='dot token'>.</span><span class='class_eval identifier id'>class_eval</span> <span class='do do kw'>do</span>
+    <span class='class class kw'>class</span> <span class='lshft op'>&lt;&lt;</span> <span class='self self kw'>self</span>
+      <span class='alias_method_chain identifier id'>alias_method_chain</span> <span class='symbol val'>:find_by_sql</span><span class='comma token'>,</span> <span class='symbol val'>:read_from_slave</span>
+      <span class='alias_method_chain identifier id'>alias_method_chain</span> <span class='symbol val'>:connection</span><span class='comma token'>,</span> <span class='symbol val'>:read_from_slave</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+</div>
           </div>
         </div>
       </div>                    
