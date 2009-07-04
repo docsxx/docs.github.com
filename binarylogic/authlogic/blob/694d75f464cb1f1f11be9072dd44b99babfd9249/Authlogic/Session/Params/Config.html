@@ -1,11 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
-    <title>binarylogic's authlogic - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/binarylogic/authlogic/blob/694d75f464cb1f1f11be9072dd44b99babfd9249">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
+    <title>binarylogic's authlogic - Module: Authlogic::Session::Params::Config - GitHub Documentation</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -16,7 +12,7 @@
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
 <script type="text/javascript" src="http://assets3.github.com/javascripts/bundle.js"></script>              
-<script src="app.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../app.js" type="text/javascript" charset="utf-8"></script>
 
 <script type="text/javascript" src="http://docs.github.com/javascripts/md5.js"></script>
 <script type="text/javascript" src="http://docs.github.com/javascripts/repos.js"></script>
@@ -46,12 +42,11 @@
   });
 </script>
 
-    <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
+    <link rel="stylesheet" href="../../../style.css" type="text/css" charset="utf-8" />
   </head>
   <body>    
+    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +80,7 @@
             <li class=""><a href="http://github.com/binarylogic/authlogic/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/binarylogic/authlogic">Wiki</a></li>
             <li class=""><a href="http://github.com/binarylogic/authlogic/graphs">Graphs</a></li>                    
-            <li class="active"><a href="binarylogic/authlogic">Documentation</a></li>
+            <li class="active"><a href="/binarylogic/authlogic">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +106,227 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/binarylogic/authlogic/blob/694d75f464cb1f1f11be9072dd44b99babfd9249">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="wikistyle">
+  <div class="section module Authlogic_Session_Params_Config">
+  <h1>Module: Authlogic::Session::Params::Config</h1>
+  <div class="section docstring">
+  <p>
+Configuration for the params / single access feature.
+</p>
 
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup">
+      <div class="section methodsummary">
+    <h2>Public Instance Method Summary</h2>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href="#params_key-instance_method">#params_key</span><span class='args'>(value = nil)</span>
+        <span class='block'></span>
+        
+          <span class='alias'>#params_key=</span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Works exactly like cookie_key, but for params.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href="#single_access_allowed_request_types-instance_method">#single_access_allowed_request_types</span><span class='args'>(value = nil)</span>
+        <span class='block'></span>
+        
+          <span class='alias'>#single_access_allowed_request_types=</span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Authentication is allowed via a single access token, but maybe this is
+something you don&#8217;t want for your application as a whole.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails">
+  <h2>Public Instance Method Details</h2>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>params_key</h3>
+</div><div id="params_key-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>params_key</span><span class='args'>(value = nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+<p class="aliases">
+  <span class="aka">Also known as:</span>
+  
+    <tt id="params_key=-instance_method">params_key=</tt>
+  
+</p>
+</div><div class="section docstring">
+  <p>
+Works exactly like cookie_key, but for params. So a user can login via
+params just like a cookie or a session. Your URL would look like:
+</p>
+<pre class="code">
+  <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/www.domain.com?user_credentials=my_single_access_key
+</span></pre>
+<p>
+You can change the &quot;user_credentials&quot; key above with this
+configuration option. Keep in mind, just like cookie_key, if you supply an
+id the id will be appended to the front. Check out cookie_key for more
+details. Also checkout the &quot;Single Access / Private Feeds Access&quot;
+section in the README.
+</p>
+<ul>
+<li><tt>Default:</tt> cookie_key
+
+</li>
+<li><tt>Accepts:</tt> String
+
+</li>
+</ul>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/authlogic/session/params.rb', line 45</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/binarylogic/authlogic/blob/694d75f464cb1f1f11be9072dd44b99babfd9249/lib/authlogic/session/params.rb#L45">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">45
+46
+47</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='params_key identifier id'>params_key</span><span class='lparen token'>(</span><span class='value identifier id'>value</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='rw_config identifier id'>rw_config</span><span class='lparen token'>(</span><span class='symbol val'>:params_key</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='comma token'>,</span> <span class='cookie_key identifier id'>cookie_key</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>single_access_allowed_request_types</h3>
+</div><div id="single_access_allowed_request_types-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>single_access_allowed_request_types</span><span class='args'>(value = nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+<p class="aliases">
+  <span class="aka">Also known as:</span>
+  
+    <tt id="single_access_allowed_request_types=-instance_method">single_access_allowed_request_types=</tt>
+  
+</p>
+</div><div class="section docstring">
+  <p>
+Authentication is allowed via a single access token, but maybe this is
+something you don&#8217;t want for your application as a whole. Maybe this
+is something you only want for specific request types. Specify a list of
+allowed request types and single access authentication will only be allowed
+for the ones you specify.
+</p>
+<ul>
+<li><tt>Default:</tt> [&quot;application/rss<tt>xml&quot;,
+&quot;application/atom</tt>xml&quot;]
+
+</li>
+<li><tt>Accepts:</tt> String of a request type, or :all or :any to allow single
+access authentication for any and all request types
+
+</li>
+</ul>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/authlogic/session/params.rb', line 55</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/binarylogic/authlogic/blob/694d75f464cb1f1f11be9072dd44b99babfd9249/lib/authlogic/session/params.rb#L55">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">55
+56
+57</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='single_access_allowed_request_types identifier id'>single_access_allowed_request_types</span><span class='lparen token'>(</span><span class='value identifier id'>value</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='rw_config identifier id'>rw_config</span><span class='lparen token'>(</span><span class='symbol val'>:single_access_allowed_request_types</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='comma token'>,</span> <span class='lbrack token'>[</span><span class='string val'>&quot;application/rss+xml&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;application/atom+xml&quot;</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+</div>
           </div>
         </div>
       </div>                    
