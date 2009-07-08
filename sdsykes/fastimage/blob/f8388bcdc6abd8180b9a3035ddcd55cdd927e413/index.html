@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>sdsykes's fastimage - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/sdsykes/fastimage/blob/f8388bcdc6abd8180b9a3035ddcd55cdd927e413">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/sdsykes/fastimage/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/sdsykes/fastimage">Wiki</a></li>
             <li class=""><a href="http://github.com/sdsykes/fastimage/graphs">Graphs</a></li>                    
-            <li class="active"><a href="sdsykes/fastimage">Documentation</a></li>
+            <li class="active"><a href="/sdsykes/fastimage">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,133 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/sdsykes/fastimage/blob/f8388bcdc6abd8180b9a3035ddcd55cdd927e413">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <p>
+FastImage
+</p>
+<p>
+FastImage finds the size or type of an image given its uri by fetching as
+little as needed
+</p>
+<p>
+The problem
+</p>
+<p>
+Your app needs to find the size or type of an image. This could be for
+adding width and height attributes to an image tag, for adjusting layouts
+or overlays to fit an image or any other of dozens of reasons.
+</p>
+<p>
+But the image is not locally stored - it&#8217;s on another asset server,
+or in the cloud - at Amazon S3 for example.
+</p>
+<p>
+You don&#8217;t want to download the entire image to your app server - it
+could be many tens of kilobytes, or even megabytes just to get this
+information. For most image types, the size of the image is simply stored
+at the start of the file. For JPEG files it&#8217;s a little bit more
+complex, but even so you do not need to fetch most of the image to find the
+size.
+</p>
+<p>
+FastImage does this minimal fetch for image types GIF, JPEG, PNG and BMP.
+And it doesn&#8217;t rely on installing external libraries such as RMagick
+(which relies on ImageMagick or GraphicsMagick) or ImageScience (which
+relies on FreeImage).
+</p>
+<p>
+You only need supply the uri, and FastImage will do the rest.
+</p>
+<p>
+Fastimage can also read local (and other) files, and uses the open-uri
+library to do so.
+</p>
+<p>
+Examples
+</p>
+<pre class="code">
+  <span class='require identifier id'>require</span> <span class='string val'>'fastimage'</span>
 
+  <span class='FastImage constant id'>FastImage</span><span class='dot token'>.</span><span class='size identifier id'>size</span><span class='lparen token'>(</span><span class='string val'>&quot;http://stephensykes.com/images/ss.com_x.gif&quot;</span><span class='rparen token'>)</span>
+  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='integer val'>266</span><span class='comma token'>,</span> <span class='integer val'>56</span><span class='rbrack token'>]</span>  <span class='comment val'># width, height</span>
+  <span class='FastImage constant id'>FastImage</span><span class='dot token'>.</span><span class='type identifier id'>type</span><span class='lparen token'>(</span><span class='string val'>&quot;http://stephensykes.com/images/pngimage&quot;</span><span class='rparen token'>)</span>
+  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:png</span>
+  <span class='FastImage constant id'>FastImage</span><span class='dot token'>.</span><span class='type identifier id'>type</span><span class='lparen token'>(</span><span class='string val'>&quot;/some/local/file.gif&quot;</span><span class='rparen token'>)</span>
+  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:gif</span>
+</pre>
+<p>
+Installation
+</p>
+<p>
+h4. Gem
+</p>
+<pre class="code">
+  <span class='sudo identifier id'>sudo</span> <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='sdsykes identifier id'>sdsykes</span><span class='minus op'>-</span><span class='fastimage identifier id'>fastimage</span> <span class='minus op'>-</span><span class='s identifier id'>s</span> <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/gems.github.com
+</span></pre>
+<p>
+h4. Rails
+</p>
+<p>
+Install the gem as above, and configure it in your environment.rb file as
+below:
+</p>
+<pre class="code">
+  <span class='dot3 op'>...</span>
+  <span class='Rails constant id'>Rails</span><span class='colon2 op'>::</span><span class='Initializer constant id'>Initializer</span><span class='dot token'>.</span><span class='run identifier id'>run</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='config identifier id'>config</span><span class='bitor op'>|</span>
+    <span class='dot3 op'>...</span>
+    <span class='config identifier id'>config</span><span class='dot token'>.</span><span class='gem identifier id'>gem</span> <span class='string val'>&quot;sdsykes-fastimage&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:lib=</span><span class='gt op'>&gt;</span><span class='string val'>&quot;fastimage&quot;</span>
+    <span class='dot3 op'>...</span>
+  <span class='end end kw'>end</span>
+  <span class='dot3 op'>...</span>
+</pre>
+<p>
+Then you&#8217;re off - just use FastImage.size() and FastImage.type() in
+your code as in the examples.
+</p>
+<p>
+Documentation
+</p>
+<p>
+&quot;http://rdoc.info/projects/sdsykes/fastimage&quot;:http://rdoc.info/projects/sdsykes/fastimage
+</p>
+<p>
+Tests
+</p>
+<p>
+You&#8217;ll need to &#8216;sudo gem install fakeweb&#8217; to be able to
+run the tests.
+</p>
+<pre class="code">
+  <span class='ruby identifier id'>ruby</span> <span class='test identifier id'>test</span><span class='div op'>/</span><span class='test identifier id'>test</span><span class='dot token'>.</span><span class='rb identifier id'>rb</span>
+  <span class='Loaded constant id'>Loaded</span> <span class='suite identifier id'>suite</span> <span class='test identifier id'>test</span><span class='div op'>/</span><span class='test identifier id'>test</span>
+  <span class='Started constant id'>Started</span>
+  <span class='dot3 op'>...</span><span class='dot3 op'>...</span><span class='dot3 op'>...</span><span class='dot3 op'>...</span><span class='dot3 op'>...</span>
+  <span class='Finished constant id'>Finished</span> <span class='in in kw'>in</span> <span class='integer val'>0</span><span class='integer val'>.059392</span> <span class='seconds identifier id'>seconds</span><span class='dot token'>.</span>
+
+  <span class='integer val'>15</span> <span class='tests identifier id'>tests</span><span class='comma token'>,</span> <span class='integer val'>27</span> <span class='assertions identifier id'>assertions</span><span class='comma token'>,</span> <span class='integer val'>0</span> <span class='failures identifier id'>failures</span><span class='comma token'>,</span> <span class='integer val'>0</span> <span class='errors identifier id'>errors</span>
+</pre>
+<p>
+References
+</p>
+<ul>
+<li>&quot;http://pennysmalls.com/2008/08/19/find-jpeg-dimensions-fast-in-ruby/&quot;:http://pennysmalls.com/2008/08/19/find-jpeg-dimensions-fast-in-ruby/
+
+</li>
+<li>&quot;http://snippets.dzone.com/posts/show/805&quot;:http://snippets.dzone.com/posts/show/805
+
+</li>
+<li>&quot;http://www.anttikupila.com/flash/getting-jpg-dimensions-with-as3-without-loading-the-entire-file/&quot;:http://www.anttikupila.com/flash/getting-jpg-dimensions-with-as3-without-loading-the-entire-file/
+
+</li>
+<li>&quot;http://imagesize.rubyforge.org/&quot;:http://imagesize.rubyforge.org/
+
+</li>
+</ul>
+<p>
+&#169; 2009 Stephen Sykes
+</p>
+
+</div>
           </div>
         </div>
       </div>                    
