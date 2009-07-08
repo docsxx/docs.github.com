@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>mongodb's mongo-activerecord-ruby - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/mongodb/mongo-activerecord-ruby/blob/ba15cc71eb09eb42ef0f003005cb12c9283a0a7e">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/mongodb/mongo-activerecord-ruby/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/mongodb/mongo-activerecord-ruby">Wiki</a></li>
             <li class=""><a href="http://github.com/mongodb/mongo-activerecord-ruby/graphs">Graphs</a></li>                    
-            <li class="active"><a href="mongodb/mongo-activerecord-ruby">Documentation</a></li>
+            <li class="active"><a href="/mongodb/mongo-activerecord-ruby">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,130 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/mongodb/mongo-activerecord-ruby/blob/ba15cc71eb09eb42ef0f003005cb12c9283a0a7e">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>Welcome to MongoRecord</h1>
+<p>
+MongoRecord is an ActiveRecord-like framework for the 10gen
+Mongo[http://www.mongodb.org/] database.
+</p>
+<p>
+This library is for use outside of Ruby on Rails. If you want to use Mongo
+with Ruby on Rails, please see the &#8216;activerecord-mongo-adapter&#8217;
+project at http://github.com/mongodb/activerecord-mongo-adapter.
+</p>
+<p>
+This document assumes you have read the Mongo documentation.
+</p>
+<p>
+A quick code sample:
+</p>
+<pre class="code">
+  <span class='require identifier id'>require</span> <span class='string val'>'rubygems'</span>
+  <span class='require identifier id'>require</span> <span class='string val'>'mongo'</span>
+  <span class='require identifier id'>require</span> <span class='string val'>'mongo_record'</span>
 
+  <span class='class class kw'>class</span> <span class='Track constant id'>Track</span> <span class='lt op'>&lt;</span> <span class='MongoRecord constant id'>MongoRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
+    <span class='collection_name identifier id'>collection_name</span> <span class='symbol val'>:tracks</span>
+    <span class='fields identifier id'>fields</span> <span class='symbol val'>:artist</span><span class='comma token'>,</span> <span class='symbol val'>:album</span><span class='comma token'>,</span> <span class='symbol val'>:song</span><span class='comma token'>,</span> <span class='symbol val'>:track</span>
+    <span class='index identifier id'>index</span> <span class='symbol val'>:artist</span>
+
+    <span class='def def kw'>def</span> <span class='to_s identifier id'>to_s</span>
+      <span class='dstring node'>&quot;artist: #{artist}, album: #{album}, song: #@song, track: #{@track ? @track.to_i : nil}&quot;</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+
+  <span class='MongoRecord constant id'>MongoRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='dot token'>.</span><span class='connection identifier id'>connection</span> <span class='assign token'>=</span>
+    <span class='XGen constant id'>XGen</span><span class='colon2 op'>::</span><span class='Mongo constant id'>Mongo</span><span class='colon2 op'>::</span><span class='Driver constant id'>Driver</span><span class='colon2 op'>::</span><span class='Mongo constant id'>Mongo</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='dot token'>.</span><span class='db identifier id'>db</span><span class='lparen token'>(</span><span class='string val'>'mongorecord-test'</span><span class='rparen token'>)</span>
+
+  <span class='t identifier id'>t</span> <span class='assign token'>=</span> <span class='Track constant id'>Track</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='symbol val'>:artist</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'Level 42'</span><span class='comma token'>,</span> <span class='symbol val'>:album</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'Standing In The Light'</span><span class='comma token'>,</span>
+                <span class='symbol val'>:song</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'Micro-Kid'</span><span class='comma token'>,</span> <span class='symbol val'>:track</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>1</span><span class='rparen token'>)</span>
+  <span class='t identifier id'>t</span><span class='dot token'>.</span><span class='save identifier id'>save</span>
+  <span class='puts identifier id'>puts</span> <span class='dstring node'>&quot;There are #{Track.count()} tracks.&quot;</span>
+  <span class='t identifier id'>t</span> <span class='assign token'>=</span> <span class='Track constant id'>Track</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='symbol val'>:first</span><span class='comma token'>,</span> <span class='symbol val'>:conditions</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='symbol val'>:song</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'Micro-Kid'</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='Track constant id'>Track</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='symbol val'>:all</span><span class='comma token'>,</span> <span class='symbol val'>:sort</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'song'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='t identifier id'>t</span><span class='bitor op'>|</span> <span class='puts identifier id'>puts</span> <span class='t identifier id'>t</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='rbrace token'>}</span>
+</pre>
+<h2>Installation</h2>
+<pre class="code">
+  $ <span class='gem identifier id'>gem</span> <span class='sources identifier id'>sources</span> <span class='minus op'>-</span><span class='a identifier id'>a</span> <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/gems.github.com
+  $ sudo gem install mongodb-mongo_record
+</span></pre>
+<p>
+MongoRecord depends on the Mongo Ruby Driver, version 0.5.4 or higher.
+Installing the MongoRecord gem will also install the Mongo Ruby Driver if
+you don&#8217;t have it already.
+</p>
+<p>
+The source code is available at
+http://github.com/mongodb/mongo-ruby-driver. You can either clone the git
+repository or download a tarball or zip file. Once you have the source, you
+can use it from wherever you downloaded it or you can install it as a gem
+from the source by typing
+</p>
+<pre class="code">
+  $ <span class='rake identifier id'>rake</span> <span class='gem identifier id'>gem</span><span class='symbol val'>:install</span>
+</pre>
+<p>
+Note: when you install the gem this way it is called
+&quot;mongo_record&quot;, not &quot;mongodb-mongo_record&quot;. In either
+case, you &quot;require &#8216;mongo_record&#8217;&quot; in your source
+code.
+</p>
+<h2>Getting Started</h2>
+<p>
+See the examples, read the MongoRecord::Base and MongoRecord::Cursor
+documentation, and look at tests/test_mongo.rb.
+</p>
+<h3>Persistence</h3>
+<p>
+You can use MongoRecord::Base or talk to the database (stored in the $db
+object) directly.
+</p>
+<p>
+See MongoRecord::Base and MongoRecord::Cursor.
+</p>
+<h3>Logger</h3>
+<p>
+See MongoRecord::LogDevice. When running outside of the cloud (for example,
+during development), all log messages are echoed to $stderr which is
+normally the console.
+</p>
+<h2>Credits</h2>
+<p>
+Jim Mulholland, jim at squeejee dot com
+</p>
+<ul>
+<li>Ability to save custom attributes not declared in the model
+
+</li>
+<li>Save and retrieve custom &quot;_id&quot; fields
+
+</li>
+<li>Find_each functionality
+
+</li>
+<li>Find_last based on the created_at field
+
+</li>
+<li>Assigning created_at and updated_at fields even if they are not declared
+
+</li>
+<li>Alias methods for &quot;first&quot;, &quot;last&quot; and &quot;all&quot;
+
+</li>
+<li>Fix for sum method
+
+</li>
+</ul>
+<p>
+Clinton R. Nixon, crnixon at gmail dot com
+</p>
+<ul>
+<li>Ability to define and query indexes from models
+
+</li>
+</ul>
+
+</div>
           </div>
         </div>
       </div>                    
