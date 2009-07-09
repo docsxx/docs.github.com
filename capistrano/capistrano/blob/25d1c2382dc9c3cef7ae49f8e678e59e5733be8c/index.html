@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>capistrano's capistrano - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/capistrano/capistrano/blob/25d1c2382dc9c3cef7ae49f8e678e59e5733be8c">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/capistrano/capistrano/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/capistrano/capistrano">Wiki</a></li>
             <li class=""><a href="http://github.com/capistrano/capistrano/graphs">Graphs</a></li>                    
-            <li class="active"><a href="capistrano/capistrano">Documentation</a></li>
+            <li class="active"><a href="/capistrano/capistrano">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,193 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/capistrano/capistrano/blob/25d1c2382dc9c3cef7ae49f8e678e59e5733be8c">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>Capistrano</h1>
+<p>
+Capistrano is a utility and framework for executing commands in parallel on
+multiple remote machines, via SSH. It uses a simple DSL (borrowed in part
+from Rake, http://rake.rubyforge.org/) that allows you to define
+<em>tasks</em>, which may be applied to machines in certain roles. It also
+supports tunneling connections via some gateway machine to allow operations
+to be performed behind VPN&#8217;s and firewalls.
+</p>
+<p>
+Capistrano was originally designed to simplify and automate deployment of
+web applications to distributed environments, and originally came bundled
+with a set of tasks designed for deploying Rails applications. The
+deployment tasks are now (as of Capistrano 2.0) opt-in and require clients
+to explicitly put &quot;load &#8216;deploy&#8217;&quot; in their recipes.
+</p>
+<h2>Documentation</h2>
+<p>
+We know that documentation is something that really lets us down,
+that&#8217;s why there is a repository for a handbook below, please open an
+issue on it if you would like something documented:
+</p>
+<ul>
+<li>http://github.com/leehambley/capistrano-handbook
 
+</li>
+</ul>
+<p>
+If you prefer the wiki style of documentation, then please see our wiki
+</p>
+<ul>
+<li>http://wiki.capify.org
+
+</li>
+</ul>
+<p>
+Due to a failure of MySQL with PHP, searches shorter than three characters
+are all but ignored, we&#8217;re going to rectify this, but in the
+meantime, please do what you can, tickets opened on the handbook for the
+wiki will be answered too, so please let us know if you don&#8217;t find
+something you needed.
+</p>
+<p>
+We take bug reports via lighthouse app, you can find that page here:
+</p>
+<ul>
+<li>http://capistrano.lighthouseapp.com
+
+</li>
+</ul>
+<p>
+More documentation is on the way, if in doubt try opening the recipes that
+ship with capistrano.
+</p>
+<h2>DEPENDENCIES</h2>
+<ul>
+<li>Net::SSH v2 (http://net-ssh.rubyforge.org)
+
+</li>
+<li>Net::SFTP v2 (http://net-ssh.rubyforge.org)
+
+</li>
+<li>Net::SCP v1 (http://net-ssh.rubyforge.org)
+
+</li>
+<li>Net::SSH::Gateway v1 (http://net-ssh.rubyforge.org)
+
+</li>
+<li>HighLine (http://highline.rubyforge.org)
+
+</li>
+</ul>
+<p>
+If you want to run the tests, you&#8217;ll also need to have the following
+dependencies installed:
+</p>
+<ul>
+<li>Echoe (for the Rakefile)
+
+</li>
+<li>Mocha (http://mocha.rubyforge.org)
+
+</li>
+</ul>
+<h2>ASSUMPTIONS</h2>
+<p>
+Capistrano is &quot;opinionated software&quot;, which means it has very
+firm ideas about how things ought to be done, and tries to force those
+ideas on you. Some of the assumptions behind these opinions are:
+</p>
+<ul>
+<li>You are using SSH to access the remote servers.
+
+</li>
+<li>You either have the same password to all target machines, or you have
+public keys in place to allow passwordless access to them.
+
+</li>
+</ul>
+<p>
+Do not expect these assumptions to change.
+</p>
+<h2>USAGE</h2>
+<p>
+In general, you&#8217;ll use Capistrano as follows:
+</p>
+<ul>
+<li>Create a recipe file (&quot;capfile&quot; or &quot;Capfile&quot;).
+
+</li>
+<li>Use the <tt>cap</tt> script to execute your recipe.
+
+</li>
+</ul>
+<p>
+Use the <tt>cap</tt> script as follows:
+</p>
+<pre class="code">
+    <span class='cap identifier id'>cap</span> <span class='sometask identifier id'>sometask</span>
+</pre>
+<p>
+By default, the script will look for a file called one of <tt>capfile</tt>
+or <tt>Capfile</tt>. The <tt>someaction</tt> text indicates which task to
+execute. You can do &quot;cap -h&quot; to see all the available options and
+&quot;cap -T&quot; to see all the available tasks.
+</p>
+<h2>Capistrano Edge</h2>
+<p>
+If you want to try Capistrano code that hasn&#8217;t been formerly released
+yet, this repository now includes a gemspec that should build what you
+need, here&#8217;s how to get a copy:
+</p>
+<pre class="code">
+    <span class='git identifier id'>git</span> <span class='clone identifier id'>clone</span> <span class='git identifier id'>git</span><span class='symbol val'>:/</span><span class='regexp val'>/github.com/</span><span class='capistrano identifier id'>capistrano</span><span class='div op'>/</span><span class='capistrano identifier id'>capistrano</span><span class='dot token'>.</span><span class='git identifier id'>git</span> <span class='capistrano identifier id'>capistrano</span><span class='minus op'>-</span><span class='capistrano identifier id'>capistrano</span>
+    <span class='cd identifier id'>cd</span> <span class='capistrano identifier id'>capistrano</span><span class='minus op'>-</span><span class='capsitrano identifier id'>capsitrano</span>
+    <span class='gem identifier id'>gem</span> <span class='build identifier id'>build</span> <span class='capistrano identifier id'>capistrano</span><span class='dot token'>.</span><span class='gemspec identifier id'>gemspec</span>
+    <span class='sudo identifier id'>sudo</span> <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='capistrano identifier id'>capistrano</span><span class='minus op'>-</span><span class='mult op'>*</span><span class='dot token'>.</span><span class='gem identifier id'>gem</span>
+</pre>
+<p>
+This will install the most recent version of capistrano and make it
+available for both cap, and capify.
+</p>
+<p>
+We recommend that you capify a new test application, as the resulting files
+are different to previous versions.
+</p>
+<p>
+If you have multiple versions of capistrano (or indeed any gem with a
+binary) installed, you can call `cap` like so to specify which version to
+use:
+</p>
+<pre class="code">
+    <span class='cap identifier id'>cap</span> <span class='_2 identifier id'>_2</span><span class='float val'>.5.5_</span> <span class='deploy identifier id'>deploy</span>
+    <span class='cap identifier id'>cap</span> <span class='_2 identifier id'>_2</span><span class='float val'>.5.6_</span> <span class='deploy identifier id'>deploy</span><span class='symbol val'>:setup</span>
+</pre>
+<h2>LICENSE:</h2>
+<p>
+(The MIT License)
+</p>
+<p>
+Copyright &#169; 2005-2008 Jamis Buck &lt;jamis@37signals.com&gt;
+</p>
+<p>
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the
+&#8216;Software&#8217;), to deal in the Software without restriction,
+including without limitation the rights to use, copy, modify, merge,
+publish, distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to the
+following conditions:
+</p>
+<p>
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+</p>
+<p>
+THE SOFTWARE IS PROVIDED &#8216;AS IS&#8217;, WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+USE OR OTHER DEALINGS IN THE SOFTWARE.
+</p>
+
+</div>
           </div>
         </div>
       </div>                    
