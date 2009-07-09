@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>sdsykes's read_from_slave - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/sdsykes/read_from_slave/blob/e16fc7389944a15fc31cf422ac52d90f77bf31a4">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/sdsykes/read_from_slave/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/sdsykes/read_from_slave">Wiki</a></li>
             <li class=""><a href="http://github.com/sdsykes/read_from_slave/graphs">Graphs</a></li>                    
-            <li class="active"><a href="sdsykes/read_from_slave">Documentation</a></li>
+            <li class="active"><a href="/sdsykes/read_from_slave">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,114 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/sdsykes/read_from_slave/blob/e16fc7389944a15fc31cf422ac52d90f77bf31a4">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <p>
+Read_from_slave
+</p>
+<p>
+Read_from_slave for Rails enables database reads from a slave database,
+while writes continue to go to the master
+</p>
+<p>
+Read_from_slave will work with Rails 2.2 and above.
+</p>
+<p>
+Installation
+</p>
+<p>
+sudo gem install sdsykes-read_from_slave
+</p>
+<p>
+Configuration
+</p>
+<p>
+In config/environments/production.rb (for instance)
+</p>
+<pre class="code">
+  <span class='config identifier id'>config</span><span class='dot token'>.</span><span class='gem identifier id'>gem</span> <span class='string val'>&quot;sdsykes-read_from_slave&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:lib=</span><span class='gt op'>&gt;</span><span class='string val'>&quot;read_from_slave&quot;</span>
+</pre>
+<p>
+In config/database.yml
+</p>
+<pre class="code">
+  <span class='production identifier id'>production</span><span class='colon op'>:</span>
+    <span class='adapter identifier id'>adapter</span><span class='colon op'>:</span> <span class='mysql identifier id'>mysql</span>
+    <span class='database identifier id'>database</span><span class='colon op'>:</span> <span class='mydatabase identifier id'>mydatabase</span>
+    <span class='username identifier id'>username</span><span class='colon op'>:</span> <span class='myuser identifier id'>myuser</span>
+    <span class='password identifier id'>password</span><span class='colon op'>:</span> <span class='mypassword identifier id'>mypassword</span>
+    <span class='host identifier id'>host</span><span class='colon op'>:</span> <span class='my identifier id'>my</span><span class='dot token'>.</span><span class='main identifier id'>main</span><span class='dot token'>.</span><span class='database identifier id'>database</span><span class='dot token'>.</span><span class='server identifier id'>server</span><span class='dot token'>.</span><span class='com identifier id'>com</span>
+    <span class='port identifier id'>port</span><span class='colon op'>:</span> <span class='integer val'>3306</span>
 
+  <span class='slave_for_mydatabase identifier id'>slave_for_mydatabase</span><span class='colon op'>:</span>
+    <span class='adapter identifier id'>adapter</span><span class='colon op'>:</span> <span class='mysql identifier id'>mysql</span>
+    <span class='database identifier id'>database</span><span class='colon op'>:</span> <span class='mydatabase identifier id'>mydatabase</span>
+    <span class='username identifier id'>username</span><span class='colon op'>:</span> <span class='myuser identifier id'>myuser</span>
+    <span class='password identifier id'>password</span><span class='colon op'>:</span> <span class='mypassword identifier id'>mypassword</span>
+    <span class='socket identifier id'>socket</span><span class='colon op'>:</span> <span class='regexp val'>/var/</span><span class='lib identifier id'>lib</span><span class='div op'>/</span><span class='mysql identifier id'>mysql</span><span class='div op'>/</span><span class='mysql identifier id'>mysql</span><span class='dot token'>.</span><span class='sock identifier id'>sock</span>
+</pre>
+<p>
+Just use the regular YAML format to specify your slave database, it could
+equally well be on another server as the local example given above.
+</p>
+<p>
+Phusion Passenger
+</p>
+<p>
+Note if you are using Passenger, you need to make sure that the slave
+database is reconnected if there is any chance that it was accessed before
+the spawner forks. In my case it is because I access the database during
+the construction of routes.
+</p>
+<p>
+The safest thing to do is to have something like this in your production.rb
+or environment.rb:
+</p>
+<pre class="code">
+  <span class='PhusionPassenger constant id'>PhusionPassenger</span><span class='dot token'>.</span><span class='on_event identifier id'>on_event</span><span class='lparen token'>(</span><span class='symbol val'>:starting_worker_process</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='forked identifier id'>forked</span><span class='bitor op'>|</span>
+    <span class='if if kw'>if</span> <span class='forked identifier id'>forked</span>
+      <span class='comment val'># We're in smart spawning mode.</span>
+      <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='dot token'>.</span><span class='establish_slave_connections identifier id'>establish_slave_connections</span>
+    <span class='else else kw'>else</span>
+      <span class='comment val'># We're in conservative spawning mode. We don't need to do anything.</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+Documentation
+</p>
+<p>
+http://rdoc.info/projects/sdsykes/read_from_slave
+</p>
+<p>
+Todo
+</p>
+<ul>
+<li>Support a pool of multiple slaves
+
+</li>
+</ul>
+<p>
+References
+</p>
+<p>
+&quot;Masochism&quot;:http://github.com/technoweenie/masochism/tree/master
+not thread safe won&#8217;t work with apps that talk to multiple (master)
+databases
+</p>
+<p>
+&quot;Acts as
+readonlyable&quot;:http://rubyforge.org/projects/acts-as-with-ro/ old, not
+suitable for Rails 2.x
+</p>
+<p>
+&quot;master_slave_adapter&quot;:http://github.com/mauricio/master_slave_adapter/tree/master
+similar to read_from_slave, but adapter based approach
+</p>
+<p>
+&#169; 2009 Stephen Sykes
+</p>
+
+</div>
           </div>
         </div>
       </div>                    
