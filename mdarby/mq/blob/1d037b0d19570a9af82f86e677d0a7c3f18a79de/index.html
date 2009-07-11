@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>mdarby's mq - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/mdarby/mq/blob/1d037b0d19570a9af82f86e677d0a7c3f18a79de">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/mdarby/mq/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/mdarby/mq">Wiki</a></li>
             <li class=""><a href="http://github.com/mdarby/mq/graphs">Graphs</a></li>                    
-            <li class="active"><a href="mdarby/mq">Documentation</a></li>
+            <li class="active"><a href="/mdarby/mq">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,46 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/mdarby/mq/blob/1d037b0d19570a9af82f86e677d0a7c3f18a79de">click here</a>.</p>
-    </div>
-  </div>
-</div>    
-
+            <div class="section docstring readme wikistyle">
+  <h2>mq</h2>
+<p>A Rails gem that generates an <span class="caps">MVC</span> stack that does email queuing</p>
+<h3>What it does</h3>
+<p>mq is a generator that generates an <span class="caps">MVC</span> stack for queuing emails. It has a UI too.<br />
+I got tired of dealing with crappy email queuing systems in Rails, so I wrote my own.</p>
+<h3>Requirements</h3>
+<p>None.</p>
+<h3>How to Install</h3>
+<pre class="code"><span class='sudo identifier id'>sudo</span> <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='mdarby identifier id'>mdarby</span><span class='minus op'>-</span><span class='mq identifier id'>mq</span> <span class='minus op'>-</span><span class='s identifier id'>s</span> <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/gems.github.com
+</span></pre>
+<h3>How to Use</h3>
+<p>Assuming you&#8217;d like to name your mq table <code>Email</code>, and your Mailer model is named <code>Notifier</code></p>
+<p>Generate the files necessary for your app:<br />
+<pre class="code"><span class='dot token'>.</span><span class='div op'>/</span><span class='script identifier id'>script</span><span class='div op'>/</span><span class='generate identifier id'>generate</span> <span class='mq identifier id'>mq</span> <span class='Email constant id'>Email</span> <span class='Notifier constant id'>Notifier</span>
+</pre></p>
+<p>mq requires your Mailer methods accept an email address as its first parameter, so a Mailer method should look like:<br />
+<pre class="code"><span class='Notifier constant id'>Notifier</span><span class='dot token'>.</span><span class='send_email_method identifier id'>send_email_method</span><span class='lparen token'>(</span><span class='email_address identifier id'>email_address</span><span class='rparen token'>)</span>
+</pre></p>
+<p>Of course, you can pass as many parameters as you&#8217;d like:<br />
+<pre class="code"><span class='Notifier constant id'>Notifier</span><span class='dot token'>.</span><span class='send_email_method identifier id'>send_email_method</span><span class='lparen token'>(</span><span class='email_address identifier id'>email_address</span><span class='comma token'>,</span> <span class='some_object identifier id'>some_object</span><span class='comma token'>,</span> <span class='some_other_object identifier id'>some_other_object</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='comment val'>#8230;)</span>
+</pre></p>
+<p>Queue an email by calling <code>Email.queue</code> with the name of your Notifier method as the first parameter, and the recipient email address as the second parameter, followed by anything else you&#8217;d like to pass.<br />
+<pre class="code"><span class='Email constant id'>Email</span><span class='dot token'>.</span><span class='queue identifier id'>queue</span><span class='lparen token'>(</span><span class='symbol val'>:send_email_method</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='comment val'>#8220;matt@matt-darby.com&amp;#8221;)</span>
+</pre></p>
+<p>You can pass multiple email addresses to the <code>Email.queue</code> method and mq will automatically generate individual emails for the recipients.<br />
+<pre class="code"><span class='Email constant id'>Email</span><span class='dot token'>.</span><span class='queue identifier id'>queue</span><span class='lparen token'>(</span><span class='symbol val'>:send_email_method</span><span class='comma token'>,</span> <span class='lbrack token'>[</span><span class='bitand op'>&amp;</span><span class='comment val'>#8220;matt@matt-darby.com&amp;#8221;, &amp;#8220;foo@bar.com&amp;#8221;], &amp;#8230;)</span>
+</pre></p>
+<h3>Delivery of queued email</h3>
+<p>You can create a cronjob (this on runs every five minutes)<br />
+<pre class="code"><span class='mult op'>*</span><span class='regexp val'>/5 * * * * cd /</span><span class='path identifier id'>path</span><span class='div op'>/</span><span class='to identifier id'>to</span><span class='div op'>/</span><span class='your identifier id'>your</span><span class='div op'>/</span><span class='app identifier id'>app</span> <span class='andop op'>&amp;&amp;</span> <span class='dot token'>.</span><span class='div op'>/</span><span class='script identifier id'>script</span><span class='div op'>/</span><span class='runner identifier id'>runner</span><span class='div op'>/</span><span class='Email constant id'>Email</span><span class='dot token'>.</span><span class='deliver_all identifier id'>deliver_all</span>
+</pre></p>
+<h3>How to Test</h3>
+<p>Complete Rspec specs are included automatically. Well, complete aside from view specs as you&#8217;ll just change the damned things anyway.</p>
+<h3>Help</h3>
+<p>Add a ticket to <a href="http://mdarby.lighthouseapp.com/projects/28699-mq/overview">MQ&#8217;s Lighthouse Account</a></p>
+<h3>About the Author</h3>
+<p>My name is Matt Darby. I&#8217;m the Lead Web Developer and IT Manager at <a href="http://dynamix-ltd.com">Dynamix Engineering</a> and hold a Master&#8217;s Degree in Computer Science from <a href="http://franklin.edu">Franklin University</a> in Columbus, OH.</p>
+<p>Feel free to check out my <a href="http://blog.matt-darby.com">blog</a> or to <a href="http://www.workingwithrails.com/recommendation/new/person/10908-matt-darby">recommend me</a></p>
+</div>
           </div>
         </div>
       </div>                    
