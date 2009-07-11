@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>cajun's smile - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/cajun/smile/blob/ac3ffa07be90a1be6b454ea2436013c2dd9ae797">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/cajun/smile/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/cajun/smile">Wiki</a></li>
             <li class=""><a href="http://github.com/cajun/smile/graphs">Graphs</a></li>                    
-            <li class="active"><a href="cajun/smile">Documentation</a></li>
+            <li class="active"><a href="/cajun/smile">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,64 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/cajun/smile/blob/ac3ffa07be90a1be6b454ea2436013c2dd9ae797">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>smile</h1>
+<p>
+Smile is a simple gem to talk to SmugMug.com. This gem wraps the 1.2.0
+interface.
+</p>
+<h2>New Features</h2>
+<h3>Search feeds</h3>
+<pre class="code">
+  <span class='Smile constant id'>Smile</span><span class='dot token'>.</span><span class='search identifier id'>search</span><span class='lparen token'>(</span> <span class='string val'>'blueberries'</span> <span class='rparen token'>)</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='Smile constant id'>Smile</span><span class='colon2 op'>::</span><span class='Photo constant id'>Photo</span><span class='rbrack token'>]</span>
+  <span class='Smile constant id'>Smile</span><span class='dot token'>.</span><span class='search_rss identifier id'>search_rss</span><span class='lparen token'>(</span> <span class='string val'>'bison'</span> <span class='rparen token'>)</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='RSS constant id'>RSS</span><span class='colon2 op'>::</span><span class='Parser constant id'>Parser</span> <span class='Feed constant id'>Feed</span>
+  <span class='Smile constant id'>Smile</span><span class='dot token'>.</span><span class='search_raw identifier id'>search_raw</span><span class='lparen token'>(</span> <span class='string val'>'grand'</span> <span class='rparen token'>)</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='Raw constant id'>Raw</span> <span class='response identifier id'>response</span> <span class='from identifier id'>from</span> <span class='the identifier id'>the</span> <span class='feed identifier id'>feed</span>
+</pre>
+<h3>New auth accessors</h3>
+<pre class="code">
+  <span class='smug identifier id'>smug</span> <span class='assign token'>=</span> <span class='Smile constant id'>Smile</span><span class='dot token'>.</span><span class='auth_anonymously identifier id'>auth_anonymously</span>
+  <span class='smug identifier id'>smug</span> <span class='assign token'>=</span> <span class='Smile constant id'>Smile</span><span class='dot token'>.</span><span class='auth identifier id'>auth</span><span class='lparen token'>(</span> <span class='string val'>'nick'</span><span class='comma token'>,</span> <span class='string val'>'pass'</span> <span class='rparen token'>)</span>
 
+  <span class='smug identifier id'>smug</span> <span class='assign token'>=</span> <span class='Smile constant id'>Smile</span><span class='colon2 op'>::</span><span class='Smug constant id'>Smug</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+  <span class='smug identifier id'>smug</span><span class='dot token'>.</span><span class='auth_anonymously identifier id'>auth_anonymously</span>
+  <span class='albums identifier id'>albums</span> <span class='assign token'>=</span> <span class='smug identifier id'>smug</span><span class='dot token'>.</span><span class='albums identifier id'>albums</span><span class='lparen token'>(</span> <span class='symbol val'>:NickName</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'kleinpeter'</span> <span class='rparen token'>)</span>
+
+  <span class='album identifier id'>album</span> <span class='assign token'>=</span> <span class='albums identifier id'>albums</span><span class='dot token'>.</span><span class='first identifier id'>first</span> <span class='comment val'># just test the first one</span>
+
+  <span class='album identifier id'>album</span><span class='dot token'>.</span><span class='photos identifier id'>photos</span> <span class='comment val'># and see the pretty pics</span>
+</pre>
+<h4>Old auth accessors ( NOTE: These are still supported )</h4>
+<pre class="code">
+  <span class='smug identifier id'>smug</span> <span class='assign token'>=</span> <span class='Smile constant id'>Smile</span><span class='colon2 op'>::</span><span class='Smug constant id'>Smug</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+  <span class='smug identifier id'>smug</span><span class='dot token'>.</span><span class='auth identifier id'>auth</span><span class='lparen token'>(</span> <span class='string val'>'my_nick'</span><span class='comma token'>,</span> <span class='string val'>'my_pass'</span> <span class='rparen token'>)</span>
+  <span class='albums identifier id'>albums</span> <span class='assign token'>=</span> <span class='smug identifier id'>smug</span><span class='dot token'>.</span><span class='albums identifier id'>albums</span> <span class='comment val'># theses are mine</span>
+
+  <span class='album identifier id'>album</span> <span class='assign token'>=</span> <span class='albums identifier id'>albums</span><span class='dot token'>.</span><span class='first identifier id'>first</span> <span class='comment val'># just test the first one</span>
+
+  <span class='album identifier id'>album</span><span class='dot token'>.</span><span class='photos identifier id'>photos</span> <span class='comment val'># and see the pretty pics</span>
+</pre>
+<h2>TODO</h2>
+<ul>
+<li>Clean up params so they are not case sensitive
+
+</li>
+<li>Create better exception handlers
+
+</li>
+<li>Update Documentation ( getting there. it&#8217;s being published on
+rdoc.info now )
+
+</li>
+<li>Plugin in Cucumber
+
+</li>
+</ul>
+<h2>Copyright</h2>
+<p>
+Copyright &#169; 2009 cajun. See LICENSE for details.
+</p>
+
+</div>
           </div>
         </div>
       </div>                    
