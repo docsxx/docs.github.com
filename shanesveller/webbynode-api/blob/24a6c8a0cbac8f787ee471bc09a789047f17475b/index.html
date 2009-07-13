@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>shanesveller's webbynode-api - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/shanesveller/webbynode-api/blob/24a6c8a0cbac8f787ee471bc09a789047f17475b">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/shanesveller/webbynode-api/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/shanesveller/webbynode-api">Wiki</a></li>
             <li class=""><a href="http://github.com/shanesveller/webbynode-api/graphs">Graphs</a></li>                    
-            <li class="active"><a href="shanesveller/webbynode-api">Documentation</a></li>
+            <li class="active"><a href="/shanesveller/webbynode-api">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,78 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/shanesveller/webbynode-api/blob/24a6c8a0cbac8f787ee471bc09a789047f17475b">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>webbynode-api</h1>
 
+<p>This gem wraps the API available for the VPS hosting company
+<a href="http://www.webbynode.com">WebbyNode</a>. Details and a preliminary
+design document for the API itself are available
+<a href="http://howto.webbynode.com/topic.php?id=25">here</a>. Functionality
+is currently based on the API guide version 2.</p>
+
+<h2>Currently Supported API functionality</h2>
+
+<ul>
+<li>Client information such as account status, contact/address info, credit</li>
+<li>Webby information (status) and simple actions (start, shutdown, reboot)</li>
+<li>List all webbies</li>
+<li>DNS zone information such as domain name, TTL, and status</li>
+<li>List of all individual records in a given DNS zone</li>
+<li>Creation/deletion of DNS zones</li>
+<li>Activation/deactivation of DNS zones</li>
+<li>DNS record creation and deletion</li>
+</ul>
+
+
+<h2>Planned Features</h2>
+
+<ul>
+<li>DNS record editing</li>
+<li>Whatever else WebbyNode gives us in the API :)</li>
+</ul>
+
+
+<h2>Usage and Examples</h2>
+
+<h3>Command-Line Utility</h3>
+
+<p>This gem now includes a basic commandline utility named <code>webby</code>.
+You can pass your email and token as commandline options, or place them
+in a YAML file in <code>~/.webbynode.yml</code>, like so:</p>
+
+<pre class="code"><span class='email identifier id'>email</span><span class='colon op'>:</span> <span class='example identifier id'>example</span><span class='@email ivar id'>@email</span><span class='dot token'>.</span><span class='com identifier id'>com</span>
+<span class='token identifier id'>token</span><span class='colon op'>:</span> <span class='integer val'>123456</span><span class='abcdef identifier id'>abcdef</span>
+</pre>
+
+<p>You can then use the commandline utility like so</p>
+
+<pre class="code"><span class='webby identifier id'>webby</span> <span class='minus op'>-</span><span class='a identifier id'>a</span> <span class='webby identifier id'>webby</span> <span class='status identifier id'>status</span> <span class='webby1 identifier id'>webby1</span>
+<span class='webby identifier id'>webby</span> <span class='minus op'>-</span><span class='a identifier id'>a</span> <span class='webby identifier id'>webby</span> <span class='restart identifier id'>restart</span> <span class='webby1 identifier id'>webby1</span>
+</pre>
+
+<p>If you do not create the YAML file, the above lines might look like:</p>
+
+<pre class="code"><span class='webby identifier id'>webby</span> <span class='minus op'>-</span><span class='email identifier id'>email</span> <span class='example identifier id'>example</span><span class='@email ivar id'>@email</span><span class='dot token'>.</span><span class='com identifier id'>com</span> <span class='minus op'>-</span><span class='token identifier id'>token</span> <span class='integer val'>123456</span><span class='abcdef identifier id'>abcdef</span> <span class='minus op'>-</span><span class='a identifier id'>a</span> <span class='webby identifier id'>webby</span> <span class='status identifier id'>status</span> <span class='webby1 identifier id'>webby1</span>
+<span class='webby identifier id'>webby</span> <span class='minus op'>-</span><span class='email identifier id'>email</span> <span class='example identifier id'>example</span><span class='@email ivar id'>@email</span><span class='dot token'>.</span><span class='com identifier id'>com</span> <span class='minus op'>-</span><span class='token identifier id'>token</span> <span class='integer val'>123456</span><span class='abcdef identifier id'>abcdef</span> <span class='minus op'>-</span><span class='a identifier id'>a</span> <span class='webby identifier id'>webby</span> <span class='restart identifier id'>restart</span> <span class='webby1 identifier id'>webby1</span>
+</pre>
+
+<h3>Gem Usage</h3>
+
+<p><strong>Please visit the
+<a href="http://rdoc.info/projects/shanesveller/webbynode-api">YARD documentation</a>
+hosted at <a href="http://rdoc.info">rdoc.info</a> for usage, documentation and examples.</strong></p>
+
+<p>Alternately, the YARD docs can be generated and viewed locally if you have the
+<code>yard</code> gem installed.</p>
+
+<pre class="code"><span class='rake identifier id'>rake</span> <span class='yardoc identifier id'>yardoc</span>
+<span class='open identifier id'>open</span> <span class='doc identifier id'>doc</span><span class='div op'>/</span><span class='index identifier id'>index</span><span class='dot token'>.</span><span class='html identifier id'>html</span>
+</pre>
+
+<h2>Copyright</h2>
+
+<p>Copyright (c) 2009 Shane Sveller. See LICENSE for details.</p>
+</div>
           </div>
         </div>
       </div>                    
