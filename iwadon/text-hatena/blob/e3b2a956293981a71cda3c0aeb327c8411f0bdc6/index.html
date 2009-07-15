@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>iwadon's text-hatena - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/iwadon/text-hatena/blob/e3b2a956293981a71cda3c0aeb327c8411f0bdc6">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/iwadon/text-hatena/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/iwadon/text-hatena">Wiki</a></li>
             <li class=""><a href="http://github.com/iwadon/text-hatena/graphs">Graphs</a></li>                    
-            <li class="active"><a href="iwadon/text-hatena">Documentation</a></li>
+            <li class="active"><a href="/iwadon/text-hatena">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,153 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/iwadon/text-hatena/blob/e3b2a956293981a71cda3c0aeb327c8411f0bdc6">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>Ruby 版 Text::Hatena</h1>
+<h2>説明</h2>
+<p>
+Text::Hatena とは、近藤淳也さんによって Perl で書かれたライブラリで、は
+てな記法で書かれたテキストを解釈し、HTML 形式に変換します。はてな記法と
+は、はてなダイアリーで使われている書式です。
+</p>
+<ul>
+<li>((&lt;&quot;Junya Kondo / Text-Hatena -
+search.cpan.org&quot;|URL:http://search.cpan.org/dist/Text-Hatena/&gt;))
 
+</li>
+<li>((&lt;はてなダイアリー -
+キーワードでつながる面白ブログ|URL:http://d.hatena.ne.jp/&gt;))
+
+</li>
+</ul>
+<p>
+その Text::Hatena を Ruby へそのまま移植したものがこの Ruby 版 Text::Hatena
+です。Perl で書かれたコードのロジックなどを可能な限り変更
+しないように移植したつもりですので、Perl 版 Text::Hatena と同様にお使い
+いただけるはずです。
+</p>
+<h2>入手方法</h2>
+<p>
+以下のウェブページにてアーカイブファイルを公開しています。
+</p>
+<ul>
+<li>((&lt;URL:http://moonrock.jp/~don/ruby/text-hatena/&gt;))
+
+</li>
+</ul>
+<p>
+また、Subversionのリポジトリもご利用いただけます。
+</p>
+<ul>
+<li>((&lt;URL:http://moonrock.jp/~don/svn/text-hatena/&gt;))
+
+</li>
+</ul>
+<h2>インストール</h2>
+<p>
+setup.rb を使います。
+</p>
+<pre class="code">
+  <span class='string val'>% ruby </span><span class='setup identifier id'>setup</span><span class='dot token'>.</span><span class='rb identifier id'>rb</span>
+</pre>
+<p>
+お使いの OS によっては sudo コマンドを使う必要があるかもしれません。
+</p>
+<pre class="code">
+  <span class='string val'>% sudo </span><span class='ruby identifier id'>ruby</span> <span class='setup identifier id'>setup</span><span class='dot token'>.</span><span class='rb identifier id'>rb</span>
+</pre>
+<h2>使い方</h2>
+<p>
+(1) text/hatena を require します。
+</p>
+<pre class="code">
+      <span class='require identifier id'>require</span> <span class='string val'>&quot;text/hatena&quot;</span>
+</pre>
+<p>
+(2) Text::Hatena オブジェクトを作ります。
+</p>
+<pre class="code">
+      <span class='parser identifier id'>parser</span> <span class='assign token'>=</span> <span class='Text constant id'>Text</span><span class='colon2 op'>::</span><span class='Hatena constant id'>Hatena</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+</pre>
+<p>
+(3) Text::Hatena#parse メソッドを使って変換します。
+</p>
+<pre class="code">
+      <span class='parser identifier id'>parser</span><span class='dot token'>.</span><span class='parse identifier id'>parse</span><span class='lparen token'>(</span><span class='text identifier id'>text</span><span class='rparen token'>)</span>
+</pre>
+<p>
+(4) Text::Hatena#html メソッドから変換結果を取り出します。
+</p>
+<pre class="code">
+      <span class='html identifier id'>html</span> <span class='assign token'>=</span> <span class='parser identifier id'>parser</span><span class='dot token'>.</span><span class='html identifier id'>html</span>
+</pre>
+<h2>Text::Hatena クラス</h2>
+<p>
+: Text::Hatena.new(args = {})
+</p>
+<pre class="code">
+  <span class='Text constant id'>Text</span><span class='colon2 op'>::</span><span class='Hatena constant id'>Hatena</span> </pre>
+<p>
+: Text::Hatena#parse(string)
+</p>
+<pre class="code">
+  </pre>
+<p>
+: Text::Hatena#html
+</p>
+<pre class="code">
+  <span class='HTML constant id'>HTML</span> </pre>
+<h2>ライセンス</h2>
+<p>
+Rubyと同じライセンスとします。詳しくは
+((&lt;URL:http://www.ruby-lang.org/ja/LICENSE.txt&gt;)) をご覧ください。
+</p>
+<h2>著者</h2>
+<p>
+岩月博之 ((&lt;URL:mailto:don@na.rim.or.jp&gt;)) が Perl 版 Text::Hatena
+0.01 を移植しました。
+</p>
+<ul>
+<li>((&lt;Text::Hatena|URL:http://moonrock.jp/~don/ruby/text-hatena/&gt;))
+
+</li>
+</ul>
+<p>
+Perl 版 Text::Hatena 0.06 への対応は drawnboy さんによるものです。
+</p>
+<ul>
+<li>((&lt;Nowhere Near - Text::Hatena
+0.06|URL:http://d.hatena.ne.jp/drawnboy/20060118/1137543907&gt;))
+
+</li>
+</ul>
+<h2>謝辞</h2>
+<p>
+drawnboy さんから Perl 版 Text::Hatena 0.06 への対応差分を頂きました。
+ありがとうございました。
+</p>
+<p>
+このライブラリに含まれる lib/text/hatena/utils/htmlsplit.rb は、 MoonWolf
+さん作成の htmlsplit.rb に堀川久さん作成のパッチを適用したもの
+です。有用なライブラリの公開に感謝いたします。
+</p>
+<ul>
+<li>((&lt;htmlsplit.rb|URL:http://www.moonwolf.com/ruby/htmlsplit.html&gt;))
+
+</li>
+<li>((&lt;&quot;htmlsplit /
+htmlrepair&quot;|URL:http://www.nslabs.jp/htmlsplit.rhtml&gt;))
+
+</li>
+</ul>
+<p>
+殊海夕音さんからは不具合の報告やテストコードを頂きました。ありがとうご
+ざいました。
+</p>
+<p>
+咳さんからは不具合の報告や修正案を頂きました。ありがとうございました。
+</p>
+
+</div>
           </div>
         </div>
       </div>                    
