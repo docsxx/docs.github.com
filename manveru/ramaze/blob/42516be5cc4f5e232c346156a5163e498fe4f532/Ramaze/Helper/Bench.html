@@ -1,11 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
-    <title>manveru's ramaze - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/manveru/ramaze/blob/42516be5cc4f5e232c346156a5163e498fe4f532">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
+    <title>manveru's ramaze - Module: Ramaze::Helper::Bench - GitHub Documentation</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -16,7 +12,7 @@
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
 <script type="text/javascript" src="http://assets3.github.com/javascripts/bundle.js"></script>              
-<script src="app.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../app.js" type="text/javascript" charset="utf-8"></script>
 
 <script type="text/javascript" src="http://docs.github.com/javascripts/md5.js"></script>
 <script type="text/javascript" src="http://docs.github.com/javascripts/repos.js"></script>
@@ -46,12 +42,11 @@
   });
 </script>
 
-    <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
+    <link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
   </head>
   <body>    
+    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +80,7 @@
             <li class=""><a href="http://github.com/manveru/ramaze/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/manveru/ramaze">Wiki</a></li>
             <li class=""><a href="http://github.com/manveru/ramaze/graphs">Graphs</a></li>                    
-            <li class="active"><a href="manveru/ramaze">Documentation</a></li>
+            <li class="active"><a href="/manveru/ramaze">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +106,147 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/manveru/ramaze/blob/42516be5cc4f5e232c346156a5163e498fe4f532">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="wikistyle">
+  <div class="section module Ramaze_Helper_Bench">
+  <h1>Module: Ramaze::Helper::Bench</h1>
+  <div class="section docstring">
+  <p>
+Little helper to give you a hand when benching parts of actions
+</p>
 
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup">
+      <div class="section methodsummary">
+    <h2>Public Instance Method Summary</h2>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href="#bench-instance_method">#bench</span><span class='args'>(iterations = 1)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Will first run an empty loop to determine the overhead it imposes, then
+goes on to yield your block <tt>iterations</tt> times.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails">
+  <h2>Public Instance Method Details</h2>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>bench</h3>
+</div><div id="bench-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>bench</span><span class='args'>(iterations = 1)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Will first run an empty loop to determine the overhead it imposes, then
+goes on to yield your block <tt>iterations</tt> times.
+</p>
+<p>
+The last yielded return value will be returned upon completion of the
+benchmark and the result of the benchmark itself will be sent to Log.info
+</p>
+<p>
+Example:
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='MainController constant id'>MainController</span> <span class='lt op'>&lt;</span> <span class='Ramaze constant id'>Ramaze</span><span class='colon2 op'>::</span><span class='Controller constant id'>Controller</span>
+    <span class='def def kw'>def</span> <span class='index identifier id'>index</span>
+      <span class='@users ivar id'>@users</span> <span class='assign token'>=</span> <span class='bench identifier id'>bench</span><span class='lbrace token'>{</span> <span class='User constant id'>User</span><span class='dot token'>.</span><span class='all identifier id'>all</span> <span class='rbrace token'>}</span>
+      <span class='@tags ivar id'>@tags</span> <span class='assign token'>=</span> <span class='bench identifier id'>bench</span><span class='lbrace token'>{</span> <span class='Article constant id'>Article</span><span class='dot token'>.</span><span class='tags identifier id'>tags</span> <span class='rbrace token'>}</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+This will show something like following in your log:
+</p>
+<dl>
+<dt>..</dt><dd>INFO Bench ./start.rb:3:in `index&#8217;: 0.121163845062256
+
+</dd>
+<dt>..</dt><dd>INFO Bench ./start.rb:4:in `index&#8217;: 2.234987235098341
+
+</dd>
+</dl>
+<p>
+So now we know that the Article.tags call takes the most time and should be
+improved.
+</p>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/ramaze/helper/bench.rb', line 31</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/manveru/ramaze/blob/42516be5cc4f5e232c346156a5163e498fe4f532/lib/ramaze/helper/bench.rb#L31">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">31
+32
+33
+34
+35
+36
+37
+38</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='bench identifier id'>bench</span><span class='lparen token'>(</span><span class='iterations identifier id'>iterations</span> <span class='assign token'>=</span> <span class='integer val'>1</span><span class='rparen token'>)</span>
+  <span class='result identifier id'>result</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+  <span class='from identifier id'>from</span> <span class='assign token'>=</span> <span class='caller identifier id'>caller</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span>
+  <span class='delta identifier id'>delta</span> <span class='assign token'>=</span> <span class='Benchmark constant id'>Benchmark</span><span class='dot token'>.</span><span class='realtime identifier id'>realtime</span><span class='lbrace token'>{</span> <span class='iterations identifier id'>iterations</span><span class='dot token'>.</span><span class='times identifier id'>times</span><span class='lbrace token'>{</span> <span class='nil nil kw'>nil</span> <span class='rbrace token'>}</span><span class='rbrace token'>}</span>
+  <span class='taken identifier id'>taken</span> <span class='assign token'>=</span> <span class='Benchmark constant id'>Benchmark</span><span class='dot token'>.</span><span class='realtime identifier id'>realtime</span><span class='lbrace token'>{</span> <span class='iterations identifier id'>iterations</span><span class='dot token'>.</span><span class='times identifier id'>times</span><span class='lbrace token'>{</span> <span class='result identifier id'>result</span> <span class='assign token'>=</span> <span class='yield yield kw'>yield</span> <span class='rbrace token'>}</span><span class='rbrace token'>}</span>
+  <span class='Log constant id'>Log</span><span class='dot token'>.</span><span class='info identifier id'>info</span> <span class='dstring node'>&quot;Bench #{from}: #{taken - delta}&quot;</span>
+  <span class='return return kw'>return</span> <span class='result identifier id'>result</span>
+<span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+</div>
           </div>
         </div>
       </div>                    
