@@ -1,11 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
-    <title>mattetti's couchrest - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/mattetti/couchrest/blob/51408990411411f3bf0826cdd0c042f9ccc0c7c7">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
+    <title>mattetti's couchrest - Class: Time - GitHub Documentation</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,10 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +80,7 @@
             <li class=""><a href="http://github.com/mattetti/couchrest/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/mattetti/couchrest">Wiki</a></li>
             <li class=""><a href="http://github.com/mattetti/couchrest/graphs">Graphs</a></li>                    
-            <li class="active"><a href="mattetti/couchrest">Documentation</a></li>
+            <li class="active"><a href="/mattetti/couchrest">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +106,220 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/mattetti/couchrest/blob/51408990411411f3bf0826cdd0c042f9ccc0c7c7">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="wikistyle">
+  <div class="section class Time">
+  <h1>Class: Time</h1>
+  <div class="section docstring">
+  <p>
+This file must be loaded after the JSON gem and any other library that
+beats up the Time class.
+</p>
 
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup">
+      <div class="section methodsummary">
+    <h2>Public Class Method Summary</h2>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href="#mktime_with_offset-class_method">mktime_with_offset</span><span class='args'>(string)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+returns a local time value much faster than Time.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+  <div class="section methodsummary">
+    <h2>Public Instance Method Summary</h2>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href="#to_json-instance_method">#to_json</span><span class='args'>(options = nil)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+This date format sorts lexicographically and is compatible with
+Javascript&#8217;s <tt>new Date(time_string)</tt> constructor.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails">
+  <h2>Public Class Method Details</h2>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>mktime_with_offset</h3>
+</div><div id="mktime_with_offset-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>mktime_with_offset</span><span class='args'>(string)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+returns a local time value much faster than Time.parse
+</p>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/couchrest/mixins/properties.rb', line 6</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/mattetti/couchrest/blob/51408990411411f3bf0826cdd0c042f9ccc0c7c7/lib/couchrest/mixins/properties.rb#L6">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='mktime_with_offset identifier id'>mktime_with_offset</span><span class='lparen token'>(</span><span class='string identifier id'>string</span><span class='rparen token'>)</span>
+  <span class='string identifier id'>string</span> <span class='match op'>=~</span> <span class='regexp val'>/(\d{4})\/(\d{2})\/(\d{2}) (\d{2}):(\d{2}):(\d{2}) ([\+\-])(\d{2})/</span>
+  <span class='comment val'># $1 = year</span>
+  <span class='comment val'># $2 = month</span>
+  <span class='comment val'># $3 = day</span>
+  <span class='comment val'># $4 = hours</span>
+  <span class='comment val'># $5 = minutes</span>
+  <span class='comment val'># $6 = seconds</span>
+  <span class='comment val'># $7 = time zone direction</span>
+  <span class='comment val'># $8 = tz difference</span>
+  <span class='comment val'># utc time with wrong TZ info: </span>
+  <span class='time identifier id'>time</span> <span class='assign token'>=</span> <span class='mktime identifier id'>mktime</span><span class='lparen token'>(</span><span class='$1 nth_ref id'>$1</span><span class='comma token'>,</span> <span class='RFC2822_MONTH_NAME constant id'>RFC2822_MONTH_NAME</span><span class='lbrack token'>[</span><span class='$2 nth_ref id'>$2</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span> <span class='minus op'>-</span> <span class='integer val'>1</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='$3 nth_ref id'>$3</span><span class='comma token'>,</span> <span class='$4 nth_ref id'>$4</span><span class='comma token'>,</span> <span class='$5 nth_ref id'>$5</span><span class='comma token'>,</span> <span class='$6 nth_ref id'>$6</span><span class='comma token'>,</span> <span class='$7 nth_ref id'>$7</span><span class='rparen token'>)</span>
+  <span class='tz_difference identifier id'>tz_difference</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='dstring node'>&quot;#{$7 == '-' ? '+' : '-'}#{$8}&quot;</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span> <span class='mult op'>*</span> <span class='integer val'>3600</span><span class='rparen token'>)</span>
+  <span class='time identifier id'>time</span> <span class='plus op'>+</span> <span class='tz_difference identifier id'>tz_difference</span> <span class='plus op'>+</span> <span class='zone_offset identifier id'>zone_offset</span><span class='lparen token'>(</span><span class='time identifier id'>time</span><span class='dot token'>.</span><span class='zone identifier id'>zone</span><span class='rparen token'>)</span> 
+<span class='end end kw'>end</span> 
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+    </div>
+  
+</div><div class="section methoddetails">
+  <h2>Public Instance Method Details</h2>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>to_json</h3>
+</div><div id="to_json-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>to_json</span><span class='args'>(options = nil)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+This date format sorts lexicographically and is compatible with
+Javascript&#8217;s <tt>new Date(time_string)</tt> constructor. Note this
+this format stores all dates in UTC so that collation order is preserved.
+(There&#8217;s no longer a need to set <tt>ENV[&#8216;TZ&#8217;] =
+&#8216;UTC&#8217;</tt> in your application.)
+</p>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/couchrest/monkeypatches.rb', line 13</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/mattetti/couchrest/blob/51408990411411f3bf0826cdd0c042f9ccc0c7c7/lib/couchrest/monkeypatches.rb#L13">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">13
+14
+15
+16</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='to_json identifier id'>to_json</span><span class='lparen token'>(</span><span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='u identifier id'>u</span> <span class='assign token'>=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='getutc identifier id'>getutc</span>
+  <span class='dstring node'>%(&quot;#{u.strftime(&quot;%Y/%m/%d %H:%M:%S +0000&quot;)}&quot;)</span>
+<span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+</div>
           </div>
         </div>
       </div>                    

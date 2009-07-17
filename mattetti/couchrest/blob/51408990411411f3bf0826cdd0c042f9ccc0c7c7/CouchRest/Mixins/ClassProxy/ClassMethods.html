@@ -1,11 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
-    <title>mattetti's couchrest - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/mattetti/couchrest/blob/51408990411411f3bf0826cdd0c042f9ccc0c7c7">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
+    <title>mattetti's couchrest - Module: CouchRest::Mixins::ClassProxy::ClassMethods - GitHub Documentation</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -16,7 +12,7 @@
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
 <script type="text/javascript" src="http://assets3.github.com/javascripts/bundle.js"></script>              
-<script src="app.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../app.js" type="text/javascript" charset="utf-8"></script>
 
 <script type="text/javascript" src="http://docs.github.com/javascripts/md5.js"></script>
 <script type="text/javascript" src="http://docs.github.com/javascripts/repos.js"></script>
@@ -46,12 +42,11 @@
   });
 </script>
 
-    <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
+    <link rel="stylesheet" href="../../../style.css" type="text/css" charset="utf-8" />
   </head>
   <body>    
+    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +80,7 @@
             <li class=""><a href="http://github.com/mattetti/couchrest/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/mattetti/couchrest">Wiki</a></li>
             <li class=""><a href="http://github.com/mattetti/couchrest/graphs">Graphs</a></li>                    
-            <li class="active"><a href="mattetti/couchrest">Documentation</a></li>
+            <li class="active"><a href="/mattetti/couchrest">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +106,116 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/mattetti/couchrest/blob/51408990411411f3bf0826cdd0c042f9ccc0c7c7">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="wikistyle">
+  <div class="section module CouchRest_Mixins_ClassProxy_ClassMethods">
+  <h1>Module: CouchRest::Mixins::ClassProxy::ClassMethods</h1>
+  <div class="section constants">
+  
+</div>  <div class="section visibilitygroup">
+      <div class="section methodsummary">
+    <h2>Public Instance Method Summary</h2>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href="#on-instance_method">#on</span><span class='args'>(database)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Return a proxy object which represents a model class on a chosen database
+instance.
+</p>
 
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails">
+  <h2>Public Instance Method Details</h2>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>on</h3>
+</div><div id="on-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>on</span><span class='args'>(database)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Return a proxy object which represents a model class on a chosen database
+instance. This allows you to DRY operations where a database is chosen
+dynamically.
+</p>
+<h4>Example:</h4>
+<pre class="code">
+  <span class='db identifier id'>db</span> <span class='assign token'>=</span> <span class='CouchRest constant id'>CouchRest</span><span class='colon2 op'>::</span><span class='Database constant id'>Database</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='dot3 op'>...</span><span class='rparen token'>)</span>
+  <span class='articles identifier id'>articles</span> <span class='assign token'>=</span> <span class='Article constant id'>Article</span><span class='dot token'>.</span><span class='on identifier id'>on</span><span class='lparen token'>(</span><span class='db identifier id'>db</span><span class='rparen token'>)</span>
+
+  <span class='articles identifier id'>articles</span><span class='dot token'>.</span><span class='all identifier id'>all</span> <span class='lbrace token'>{</span> <span class='dot3 op'>...</span> <span class='rbrace token'>}</span>
+  <span class='articles identifier id'>articles</span><span class='dot token'>.</span><span class='by_title identifier id'>by_title</span> <span class='lbrace token'>{</span> <span class='dot3 op'>...</span> <span class='rbrace token'>}</span>
+
+  <span class='u identifier id'>u</span> <span class='assign token'>=</span> <span class='articles identifier id'>articles</span><span class='dot token'>.</span><span class='get identifier id'>get</span><span class='lparen token'>(</span><span class='string val'>&quot;someid&quot;</span><span class='rparen token'>)</span>
+
+  <span class='u identifier id'>u</span> <span class='assign token'>=</span> <span class='articles identifier id'>articles</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='symbol val'>:title</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;I like plankton&quot;</span><span class='rparen token'>)</span>
+  <span class='u identifier id'>u</span><span class='dot token'>.</span><span class='save identifier id'>save</span>    <span class='comment val'># saved on the correct database</span>
+</pre>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/couchrest/mixins/class_proxy.rb', line 28</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/mattetti/couchrest/blob/51408990411411f3bf0826cdd0c042f9ccc0c7c7/lib/couchrest/mixins/class_proxy.rb#L28">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">28
+29
+30</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='on identifier id'>on</span><span class='lparen token'>(</span><span class='database identifier id'>database</span><span class='rparen token'>)</span>
+  <span class='Proxy constant id'>Proxy</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='database identifier id'>database</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+</div>
           </div>
         </div>
       </div>                    
