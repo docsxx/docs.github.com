@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>devver's germinate - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/devver/germinate/blob/a73ecedfc6bc3e3b373aaf75f53049cb34aa6175">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/devver/germinate/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/devver/germinate">Wiki</a></li>
             <li class=""><a href="http://github.com/devver/germinate/graphs">Graphs</a></li>                    
-            <li class="active"><a href="devver/germinate">Documentation</a></li>
+            <li class="active"><a href="/devver/germinate">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,189 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/devver/germinate/blob/a73ecedfc6bc3e3b373aaf75f53049cb34aa6175">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>germinate</h1>
+<p>
+by Avdi Grimm
+</p>
+<p>
+http://github.com/devver/germinate/
+</p>
+<h2>SYNOPSIS</h2>
+<pre class="code">
+  <span class='germ identifier id'>germ</span> <span class='generate identifier id'>generate</span> <span class='gt op'>&gt;</span> <span class='my_article identifier id'>my_article</span><span class='dot token'>.</span><span class='rb identifier id'>rb</span>
+  <span class='germ identifier id'>germ</span> <span class='format identifier id'>format</span> <span class='my_article identifier id'>my_article</span><span class='dot token'>.</span><span class='rb identifier id'>rb</span> <span class='gt op'>&gt;</span> <span class='my_article identifier id'>my_article</span><span class='dot token'>.</span><span class='txt identifier id'>txt</span>
+</pre>
+<h2>DESCRIPTION</h2>
+<p>
+Germinate is a tool for writing about code. With Germinate, the source code
+IS the article.
+</p>
+<p>
+For example, given the following source code:
+</p>
+<pre class="code">
+  <span class='comment val'># #!/usr/bin/env ruby</span>
+  <span class='comment val'># :BRACKET_CODE: &lt;pre&gt;, &lt;/pre&gt;</span>
+  <span class='comment val'># :PROCESS: ruby, &quot;ruby %f&quot;</span>
 
+  <span class='comment val'># :SAMPLE: hello</span>
+  <span class='def def kw'>def</span> <span class='hello identifier id'>hello</span><span class='lparen token'>(</span><span class='who identifier id'>who</span><span class='rparen token'>)</span>
+    <span class='puts identifier id'>puts</span> <span class='dstring node'>&quot;Hello, #{who}&quot;</span>
+  <span class='end end kw'>end</span>
+
+  <span class='hello identifier id'>hello</span><span class='lparen token'>(</span><span class='string val'>&quot;World&quot;</span><span class='rparen token'>)</span>
+
+  <span class='comment val'># :TEXT:</span>
+  <span class='comment val'># Check out my amazing program!  Here's the hello method:</span>
+  <span class='comment val'># :INSERT: @hello:/def/../end/</span>
+
+  <span class='comment val'># And here's the output:</span>
+  <span class='comment val'># :INSERT: @hello|ruby</span>
+</pre>
+<p>
+When we run the <tt>germ format</tt> command the following output is
+generated:
+</p>
+<pre class="code">
+  <span class='Check constant id'>Check</span> <span class='out identifier id'>out</span> <span class='my identifier id'>my</span> <span class='amazing identifier id'>amazing</span> <span class='program! fid id'>program!</span>  <span class='Here constant id'>Here</span><span class='string val'>'s the hello method:
+  &lt;pre&gt;
+  def hello(who)
+    puts &quot;Hello, #{who}&quot;
+  end
+  &lt;/pre&gt;
+  And here'</span><span class='s identifier id'>s</span> <span class='the identifier id'>the</span> <span class='output identifier id'>output</span><span class='colon op'>:</span>
+  <span class='lt op'>&lt;</span><span class='pre identifier id'>pre</span><span class='gt op'>&gt;</span>
+  <span class='Hello constant id'>Hello</span><span class='comma token'>,</span> <span class='World constant id'>World</span>
+  <span class='lt op'>&lt;</span><span class='regexp val'>/pre&gt;
+</span></pre>
+<p>
+To get a better idea of how this works, please take a look at
+link:examples/basic.rb, or run:
+</p>
+<pre class="code">
+  <span class='germ identifier id'>germ</span> <span class='generate identifier id'>generate</span> <span class='gt op'>&gt;</span> <span class='basic identifier id'>basic</span><span class='dot token'>.</span><span class='rb identifier id'>rb</span>
+</pre>
+<p>
+To generate an example article to play with.
+</p>
+<p>
+Germinate is particularly useful for writing articles, such as blog posts,
+which contain code excerpts. Instead of forcing you to keep a source code
+file and an article document in sync throughout the editing process, the
+Germinate motto is &quot;The source code IS the article&quot;. Specially
+marked comment sections in your code file become the article text. Wherever
+you need to reference the source code in the article, use insertion
+directives to tell Germinate what parts of the code to excerpt. An advanced
+selector syntax enables you to be very specific about which lines of code
+you want to insert.
+</p>
+<p>
+If you also want to show the output of your code, Germinate has you
+covered. Special &quot;process&quot; directives enable you to define
+arbitrary commands which can be run on your code. The output of the command
+then becomes the excerpt text. You can define an arbitrary number of
+processes and have different excerpts showing the same code as processed by
+different commands. You can even string processes together into pipelines.
+</p>
+<p>
+Development of Germinate is graciously sponsored by Devver, purveyor of
+fine cloud-based services to busy Ruby developers. If you like this tool
+please check them out at http://devver.net.
+</p>
+<h2>FEATURES</h2>
+<ul>
+<li>Language and markup agnostic
+
+</li>
+<li>Advanced selector syntax for excerpting code
+
+</li>
+<li>Define arbitrary command pipelines to preprocess excerpts
+
+</li>
+<li>Article text is reformatted to be more compatible with popular blogging
+engines, e.g. WordPress.
+
+</li>
+<li>Introspection commands make it easy to experiment
+
+</li>
+<li>Fully tested
+
+</li>
+</ul>
+<h2>KNOWN ISSUES</h2>
+<ul>
+<li>Directive syntax conflicts with RDoc. Doh!
+
+</li>
+</ul>
+<h2>FUTURE</h2>
+<ul>
+<li>Integration with blogging platforms, e.g. WordPress
+
+</li>
+<li>Integration with Github&#8217;s Gist
+
+</li>
+</ul>
+<h2>REQUIREMENTS</h2>
+<ul>
+<li>main
+
+</li>
+<li>fattr
+
+</li>
+<li>ick
+
+</li>
+<li>orderedhash
+
+</li>
+<li>arrayfields
+
+</li>
+<li>alter-ego
+
+</li>
+</ul>
+<h2>INSTALL:</h2>
+<pre class="code">
+  <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='source identifier id'>source</span> <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/gems.rubyforge.org devver-germinate
+</span></pre>
+<h2>LICENSE:</h2>
+<p>
+(The MIT License)
+</p>
+<p>
+Copyright &#169; 2008
+</p>
+<p>
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the
+&#8216;Software&#8217;), to deal in the Software without restriction,
+including without limitation the rights to use, copy, modify, merge,
+publish, distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to the
+following conditions:
+</p>
+<p>
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+</p>
+<p>
+THE SOFTWARE IS PROVIDED &#8216;AS IS&#8217;, WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+USE OR OTHER DEALINGS IN THE SOFTWARE.
+</p>
+
+</div>
           </div>
         </div>
       </div>                    
