@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>ychaker's ZeepIt - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/ychaker/ZeepIt/blob/61aad3407e32c3875393ed1a37a49eb0d0e45d08">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/ychaker/ZeepIt/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/ychaker/ZeepIt">Wiki</a></li>
             <li class=""><a href="http://github.com/ychaker/ZeepIt/graphs">Graphs</a></li>                    
-            <li class="active"><a href="ychaker/ZeepIt">Documentation</a></li>
+            <li class="active"><a href="/ychaker/ZeepIt">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,90 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/ychaker/ZeepIt/blob/61aad3407e32c3875393ed1a37a49eb0d0e45d08">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>ZeepIt</h1>
+<p>
+ZeepIt is a plugin that leverages the zeep-messaging gem to create the
+models/controllers/views required to get your app ready to use the Zeep
+Mobile SMS service.
+</p>
+<p>
+All you need to do is install the plugin, run the setup and sign up for an
+account at http://zeepmobile.com. Then make sure that your callback URL in
+your Zeep Mobile account point to
+http://www.yourdomain.com/zeep_sms/incoming and you add your api_key and
+you secret_key to config/zeep_it.yml and you&#8217;ll be good to go.
+</p>
+<h2>Prerequisites</h2>
+<p>
+A Zeep Mobile (http://zeepmobile.com) account and the respective API and
+SECRET keys.
+</p>
+<h2>Install</h2>
+<p>
+Install from gihub:
+</p>
+<pre class="code">
+        <span class='gem identifier id'>gem</span> <span class='sources identifier id'>sources</span> <span class='minus op'>-</span><span class='a identifier id'>a</span> <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/gems.github.com (you only have to do this once)
+        sudo gem install ychaker-zeep_it
+</span></pre>
+<h2>Setup</h2>
+<p>
+From your Rails App root directory run:
+</p>
+<pre class="code">
+        <span class='rake identifier id'>rake</span> <span class='zeep_it identifier id'>zeep_it</span><span class='symbol val'>:setup</span>
+</pre>
+<p>
+(make sure your db is already created!)
+</p>
+<p>
+Then edit config/zeep_it.yml with the correct API and SECRET keys.
+</p>
+<h2>Examples</h2>
+<p>
+Example of using the helper method for displaying the Zeep Mobile:
+</p>
+<pre class="code">
+        <span class='lt op'>&lt;</span><span class='string val'>%= zeep_form(user_id) %&gt;
+</span></pre>
+<p>
+Example of sending an SMSL
+</p>
+<pre class="code">
+        <span class='ZeepSms constant id'>ZeepSms</span><span class='colon2 op'>::</span><span class='send_sms identifier id'>send_sms</span><span class='lparen token'>(</span><span class='string val'>'user_id'</span><span class='comma token'>,</span> <span class='string val'>'body of SMS'</span><span class='rparen token'>)</span>
+</pre>
+<p>
+Example of creating a ZeepSms and sending it:
+</p>
+<pre class="code">
+        <span class='sms identifier id'>sms</span> <span class='assign token'>=</span> <span class='ZeepSms constant id'>ZeepSms</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='symbol val'>:login=</span><span class='gt op'>&gt;</span> <span class='string val'>'user_id'</span><span class='comma token'>,</span> <span class='symbol val'>:raw</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span><span class='string val'>'body of SMS'</span><span class='rparen token'>)</span>
+        <span class='sms identifier id'>sms</span><span class='dot token'>.</span><span class='send_text identifier id'>send_text</span>
+</pre>
+<p>
+Examples of parsing an SMS:
+</p>
+<pre class="code">
+        <span class='sms identifier id'>sms</span> <span class='assign token'>=</span> <span class='ZeepSms constant id'>ZeepSms</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='symbol val'>:login=</span><span class='gt op'>&gt;</span> <span class='string val'>'user_id'</span><span class='comma token'>,</span> <span class='symbol val'>:raw</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span><span class='string val'>'body of SMS'</span><span class='rparen token'>)</span>
+        <span class='sms identifier id'>sms</span><span class='dot token'>.</span><span class='parse_for identifier id'>parse_for</span><span class='lparen token'>(</span><span class='symbol val'>:keyword</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'user:'</span><span class='rparen token'>)</span>
+                <span class='comment val'>#=&gt; returns the text found after the keywork and before the next space</span>
+        <span class='sms identifier id'>sms</span><span class='dot token'>.</span><span class='parse_for identifier id'>parse_for</span><span class='lparen token'>(</span><span class='symbol val'>:pattern</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='regexp val'>/[0-9]/</span><span class='rparen token'>)</span>
+                <span class='comment val'>#=&gt; returns the text found after the first digit and before the next space</span>
+        <span class='sms identifier id'>sms</span><span class='dot token'>.</span><span class='parse_for identifier id'>parse_for</span><span class='lparen token'>(</span><span class='symbol val'>:common</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'twitter'</span><span class='rparen token'>)</span>
+                <span class='comment val'>#=&gt; returns the text found after the first '@' and before the next space</span>
+        <span class='sms identifier id'>sms</span><span class='dot token'>.</span><span class='parse_for identifier id'>parse_for</span><span class='lparen token'>(</span><span class='lbrace token'>{</span><span class='symbol val'>:common</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'bang'</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='true true kw'>true</span><span class='rparen token'>)</span>
+                <span class='comment val'>#=&gt; returns the text found between the previous space and the next space</span>
+                <span class='comment val'>#=&gt; removing the '!' in between</span>
+</pre>
+<p>
+Also returns the rest of the SMS omitting the 5-8 code in the beginning
+</p>
+<h2>Copyright</h2>
+<p>
+Copyright &#169; 2009 Youssef Chaker, released under the MIT license
+</p>
 
+</div>
           </div>
         </div>
       </div>                    
