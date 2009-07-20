@@ -1,11 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
-    <title>alexreisner's informant - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/alexreisner/informant/blob/71510a1abde294d19a9fd570b281021d8ff97969">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
+    <title>alexreisner's informant - Module: Informant - GitHub Documentation</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,10 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +80,7 @@
             <li class=""><a href="http://github.com/alexreisner/informant/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/alexreisner/informant">Wiki</a></li>
             <li class=""><a href="http://github.com/alexreisner/informant/graphs">Graphs</a></li>                    
-            <li class="active"><a href="alexreisner/informant">Documentation</a></li>
+            <li class="active"><a href="/alexreisner/informant">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +106,77 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/alexreisner/informant/blob/71510a1abde294d19a9fd570b281021d8ff97969">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="wikistyle">
+  <div class="section module Informant">
+  <h1>Module: Informant</h1>
+  <div class="section docstring">
+  <p>
+The goal of Informant is to simplify your form code by encapsulating all
+aspects of a field (label, description, etc) in a single method call. What
+used to be written as:
+</p>
+<pre class="code">
+  <span class='lt op'>&lt;</span><span class='div identifier id'>div</span> <span class='class class kw'>class</span><span class='assign token'>=</span><span class='string val'>&quot;field&quot;</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='string val'>%= f.label :name %&gt;&lt;br /&gt;
+    &lt;%=</span> <span class='f identifier id'>f</span><span class='dot token'>.</span><span class='text_field identifier id'>text_field</span> <span class='symbol val'>:name</span> <span class='mod op'>%</span><span class='gt op'>&gt;</span><span class='lt op'>&lt;</span><span class='br identifier id'>br</span> <span class='regexp val'>/&gt;
+    &lt;p&gt;Please use proper capitalization.&lt;/</span><span class='p identifier id'>p</span><span class='gt op'>&gt;</span>
+  <span class='lt op'>&lt;</span><span class='regexp val'>/div&gt;
+</span></pre>
+<p>
+can be written like this with Informant:
+</p>
+<pre class="code">
+  <span class='lt op'>&lt;</span><span class='string val'>%= f.text_field :name, :description =</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;Please use proper capitalization.&quot;</span> <span class='mod op'>%</span><span class='gt op'>&gt;</span>
+</pre>
+<p>
+The label is inferred from the field name or can be specified explicitly.
+The complete list of options:
+</p>
+<ul>
+<li><tt>:label</tt> - add a &lt;label&gt; tag for the field
 
+</li>
+<li><tt>:colon</tt> - if true, includes a colon at the end of the label
+
+</li>
+<li><tt>:description</tt> - explanatory text displayed underneath the field
+
+</li>
+<li><tt>:required</tt> - adds an asterisk if true
+
+</li>
+<li><tt>:decoration</tt> - arbitrary string which is appended to the field
+(often used for AJAX &quot;spinner&quot;)
+
+</li>
+</ul>
+<p>
+Informant contains several form builders, each with the same syntax but
+different display:
+</p>
+<ul>
+<li><tt>Informant::Standard</tt> - displays fields in a &lt;div&gt;
+
+</li>
+<li><tt>Informant::Table</tt> - displays fields in table rows
+
+</li>
+<li><tt>Informant::Simple</tt> - adds no containers at all
+
+</li>
+</ul>
+<p>
+Please see the documentation for each builder for details. It&#8217;s also
+easy to customize the display of any of the included builders. Just create
+a subclass and override the <tt>default_field_template</tt> and
+<tt>check_box_field_template</tt> methods.
+</p>
+
+</div><div class="section constants">
+  
+</div>
+</div>
+</div>
           </div>
         </div>
       </div>                    
