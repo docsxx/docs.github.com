@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>smacks's apricoteatsgorilla - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/smacks/apricoteatsgorilla/blob/464396bb5544a7697b4a947f373cc9e1c155f50e">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/smacks/apricoteatsgorilla/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/smacks/apricoteatsgorilla">Wiki</a></li>
             <li class=""><a href="http://github.com/smacks/apricoteatsgorilla/graphs">Graphs</a></li>                    
-            <li class="active"><a href="smacks/apricoteatsgorilla">Documentation</a></li>
+            <li class="active"><a href="/smacks/apricoteatsgorilla">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,118 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/smacks/apricoteatsgorilla/blob/464396bb5544a7697b4a947f373cc9e1c155f50e">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>Apricot eats Gorilla</h1>
+<p>
+Apricot eats Gorilla is a SOAP communication helper.
+</p>
+<p>
+It translates between SOAP messages (XML) and Ruby Hashes while offering
+some helpful methods for working with SOAP webservices. Apricot eats
+Gorilla was initially based on CobraVsMongoose but uses Hpricot instead of
+REXML.
+</p>
+<h2>Install</h2>
+<pre class="code">
+  $ <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='smacks identifier id'>smacks</span><span class='minus op'>-</span><span class='apricoteatsgorilla identifier id'>apricoteatsgorilla</span> <span class='minus op'>-</span><span class='s identifier id'>s</span> <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/gems.github.com
+</span></pre>
+<h2>Dependencies</h2>
+<pre class="code">
+  <span class='hpricot identifier id'>hpricot</span> <span class='integer val'>0</span><span class='float val'>.6.164</span> <span class='lparen token'>(</span><span class='also identifier id'>also</span> <span class='available identifier id'>available</span> <span class='for for kw'>for</span> <span class='JRuby constant id'>JRuby</span><span class='rparen token'>)</span>
+</pre>
+<h2>How to use</h2>
+<h3>xml_to_hash(xml, root_node = nil)</h3>
+<p>
+Converts a given XML String into a Ruby Hash. Starts parsing at root node
+by default. The optional root_node parameter can be used to specify a
+custom root node to start parsing at using an XPath expression (Hpricot
+search). The root node itself won&#8217;t be included in the Hash. Converts
+tag names from CamelCase/ lowerCamelCase to snake_case and into Symbols by
+default.
+</p>
+<pre class="code">
+  <span class='xml identifier id'>xml</span> <span class='assign token'>=</span> <span class='string val'>'&lt;soap:Envelope xmlns:soap=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;&gt;
+    &lt;soap:Body&gt;
+      &lt;ns2:authenticateResponse xmlns:ns2=&quot;http://v1_0.ws.example.com/&quot;&gt;
+        &lt;return&gt;
+          &lt;authValue&gt;
+            &lt;token&gt;secret&lt;/token&gt;
+            &lt;client&gt;example&lt;/client&gt;
+          &lt;/authValue&gt;
+        &lt;/return&gt;
+      &lt;/ns2:authenticateResponse&gt;
+    &lt;/soap:Body&gt;
+  &lt;/soap:Envelope&gt;'</span>
 
+  <span class='ApricotEatsGorilla constant id'>ApricotEatsGorilla</span><span class='lbrack token'>[</span><span class='xml identifier id'>xml</span><span class='comma token'>,</span> <span class='string val'>&quot;//return&quot;</span><span class='rbrack token'>]</span>
+  <span class='comment val'># =&gt; { :auth_value =&gt; { :token =&gt; &quot;secret&quot;, :client =&gt; &quot;example&quot; } }</span>
+</pre>
+<h3>hash_to_xml(hash)</h3>
+<p>
+Converts a given Ruby Hash into an XML String. Converts Hash keys from
+snake_case to lowerCamelCase by default.
+</p>
+<pre class="code">
+  <span class='hash identifier id'>hash</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span> <span class='symbol val'>:apricot</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span> <span class='symbol val'>:eats</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span> <span class='symbol val'>:lots_of</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;Gorillas&quot;</span> <span class='rbrace token'>}</span> <span class='rbrace token'>}</span> <span class='rbrace token'>}</span>
+
+  <span class='ApricotEatsGorilla constant id'>ApricotEatsGorilla</span><span class='lbrack token'>[</span><span class='hash identifier id'>hash</span><span class='rbrack token'>]</span>
+  <span class='comment val'># =&gt; &quot;&lt;apricot&gt;&lt;eats&gt;&lt;lotsOf&gt;Gorillas&lt;/lotsOf&gt;&lt;/eats&gt;&lt;/apricot&gt;&quot;</span>
+</pre>
+<h3>soap_envelope(namespaces = {})</h3>
+<p>
+Builds a SOAP request envelope and includes the content from a given block
+into the envelope body. Accepts a Hash (namespace =&gt; namespace_uri) of
+additional namespaces to set.
+</p>
+<pre class="code">
+  <span class='ApricotEatsGorilla constant id'>ApricotEatsGorilla</span><span class='dot token'>.</span><span class='soap_envelope identifier id'>soap_envelope</span> <span class='lbrace token'>{</span> <span class='string val'>&quot;&lt;authenticate&gt;me&lt;/authenticate&gt;&quot;</span> <span class='rbrace token'>}</span>
+
+  <span class='comment val'># =&gt; '&lt;env:Envelope xmlns:env=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;&gt;</span>
+  <span class='comment val'># =&gt;    &lt;env:Body&gt;</span>
+  <span class='comment val'># =&gt;      &lt;authenticate&gt;me&lt;/authenticate&gt;</span>
+  <span class='comment val'># =&gt;    &lt;/env:Body&gt;</span>
+  <span class='comment val'># =&gt;  &lt;/env:Envelope&gt;'</span>
+</pre>
+<h2>Changing defaults</h2>
+<p>
+There are several options for changing the default behavior. Options can be
+set using a setup block or by setting one option at a time.
+</p>
+<pre class="code">
+  <span class='ApricotEatsGorilla constant id'>ApricotEatsGorilla</span><span class='dot token'>.</span><span class='setup identifier id'>setup</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='s identifier id'>s</span><span class='bitor op'>|</span>
+    <span class='s identifier id'>s</span><span class='dot token'>.</span><span class='disable_tag_names_to_lower_camel_case identifier id'>disable_tag_names_to_lower_camel_case</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+    <span class='s identifier id'>s</span><span class='dot token'>.</span><span class='disable_hash_keys_to_snake_case identifier id'>disable_hash_keys_to_snake_case</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+    <span class='s identifier id'>s</span><span class='dot token'>.</span><span class='disable_hash_keys_to_symbol identifier id'>disable_hash_keys_to_symbol</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+  <span class='end end kw'>end</span>
+</pre>
+<h3>Disable conversion of tag names to lowerCamelCase</h3>
+<p>
+By default XML tags created by hash_to_xml are converted from snake_case to
+lowerCamelCase. Disable by setting disable_tag_names_to_lower_camel_case to
+true.
+</p>
+<pre class="code">
+  <span class='ApricotEatsGorilla constant id'>ApricotEatsGorilla</span><span class='dot token'>.</span><span class='disable_tag_names_to_lower_camel_case identifier id'>disable_tag_names_to_lower_camel_case</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+</pre>
+<h3>Disable conversion of Hash keys to snake_case</h3>
+<p>
+By default Hash keys created by xml_to_hash are converted from
+lowerCamelCase/ CamelCase to snake_case. Disable by setting
+disable_hash_keys_to_snake_case to true.
+</p>
+<pre class="code">
+  <span class='ApricotEatsGorilla constant id'>ApricotEatsGorilla</span><span class='dot token'>.</span><span class='disable_hash_keys_to_snake_case identifier id'>disable_hash_keys_to_snake_case</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+</pre>
+<h3>Disable conversion of Hash keys to Symbols</h3>
+<p>
+By default Hash keys created by xml_to_hash are converted to Symbols.
+Disable by setting disable_hash_keys_to_symbol to true.
+</p>
+<pre class="code">
+  <span class='ApricotEatsGorilla constant id'>ApricotEatsGorilla</span><span class='dot token'>.</span><span class='disable_hash_keys_to_symbol identifier id'>disable_hash_keys_to_symbol</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+</pre>
+
+</div>
           </div>
         </div>
       </div>                    
