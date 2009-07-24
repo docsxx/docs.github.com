@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>brynary's webrat - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/brynary/webrat/blob/273e8c541a82ddacf91f4f68ab6166c16ffdc9c5">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/brynary/webrat/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/brynary/webrat">Wiki</a></li>
             <li class=""><a href="http://github.com/brynary/webrat/graphs">Graphs</a></li>                    
-            <li class="active"><a href="brynary/webrat">Documentation</a></li>
+            <li class="active"><a href="/brynary/webrat">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,141 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/brynary/webrat/blob/273e8c541a82ddacf91f4f68ab6166c16ffdc9c5">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>Webrat - Ruby Acceptance Testing for Web applications</h1>
+<ul>
+<li>http://gitrdoc.com/brynary/webrat
 
+</li>
+<li>http://groups.google.com/group/webrat
+
+</li>
+<li>http://webrat.lighthouseapp.com/
+
+</li>
+<li>http://github.com/brynary/webrat
+
+</li>
+<li>#webrat on Freenode
+
+</li>
+</ul>
+<h2>Description</h2>
+<p>
+Webrat lets you quickly write expressive and robust acceptance tests for a
+Ruby web application.
+</p>
+<h2>Features</h2>
+<ul>
+<li>Browser Simulator for expressive, high level acceptance testing without the
+performance hit and browser dependency of Selenium or Watir (See
+Webrat::Session)
+
+</li>
+<li>Use the same API for Browser Simulator and real Selenium tests using
+Webrat::Selenium when necessary (eg. for testing AJAX interactions)
+
+</li>
+<li>Supports multiple Ruby web frameworks: Rails, Merb and Sinatra
+
+</li>
+<li>Supports popular test frameworks: RSpec, Cucumber, Test::Unit and Shoulda
+
+</li>
+<li>Webrat::Matchers API for verifying rendered HTML using CSS, XPath, etc.
+
+</li>
+</ul>
+<h2>Example</h2>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='SignupTest constant id'>SignupTest</span> <span class='lt op'>&lt;</span> <span class='ActionController constant id'>ActionController</span><span class='colon2 op'>::</span><span class='IntegrationTest constant id'>IntegrationTest</span>
+
+    <span class='def def kw'>def</span> <span class='test_trial_account_sign_up identifier id'>test_trial_account_sign_up</span>
+      <span class='visit identifier id'>visit</span> <span class='home_path identifier id'>home_path</span>
+      <span class='click_link identifier id'>click_link</span> <span class='string val'>&quot;Sign up&quot;</span>
+      <span class='fill_in identifier id'>fill_in</span> <span class='string val'>&quot;Email&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:with</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;good@example.com&quot;</span>
+      <span class='select identifier id'>select</span> <span class='string val'>&quot;Free account&quot;</span>
+      <span class='click_button identifier id'>click_button</span> <span class='string val'>&quot;Register&quot;</span>
+    <span class='end end kw'>end</span>
+
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+Behind the scenes, Webrat will ensure:
+</p>
+<ul>
+<li>If a link, form field or button is missing, the test will fail.
+
+</li>
+<li>If a URL is invalid, the test will fail.
+
+</li>
+<li>If a page load or form submission is unsuccessful, the test will fail.
+
+</li>
+</ul>
+<h2>Installing Nokogiri</h2>
+<p>
+Users of Debian Linux (e.g. Ubuntu) need to run:
+</p>
+<pre class="code">
+  <span class='sudo identifier id'>sudo</span> <span class='apt identifier id'>apt</span><span class='minus op'>-</span><span class='get identifier id'>get</span> <span class='install identifier id'>install</span> <span class='libxslt1 identifier id'>libxslt1</span><span class='minus op'>-</span><span class='dev identifier id'>dev</span> <span class='libxml2 identifier id'>libxml2</span><span class='minus op'>-</span><span class='dev identifier id'>dev</span><span class='dot token'>.</span>
+</pre>
+<p>
+Otherwise the Nokogiri gem, which Webrat depends on, won&#8217;t install
+properly.
+</p>
+<h2>Install for Rails</h2>
+<p>
+To install the latest release as a gem:
+</p>
+<pre class="code">
+  <span class='sudo identifier id'>sudo</span> <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='webrat identifier id'>webrat</span>
+</pre>
+<p>
+To install the latest code as a plugin: (_Note:_ This may be less stable
+than using a released version)
+</p>
+<pre class="code">
+  <span class='script identifier id'>script</span><span class='div op'>/</span><span class='plugin identifier id'>plugin</span> <span class='install identifier id'>install</span> <span class='git identifier id'>git</span><span class='symbol val'>:/</span><span class='regexp val'>/github.com/</span><span class='brynary identifier id'>brynary</span><span class='div op'>/</span><span class='webrat identifier id'>webrat</span><span class='dot token'>.</span><span class='git identifier id'>git</span>
+</pre>
+<p>
+In your test_helper.rb or env.rb (for Cucumber) add:
+</p>
+<pre class="code">
+  <span class='require identifier id'>require</span> <span class='string val'>&quot;webrat&quot;</span>
+
+  <span class='Webrat constant id'>Webrat</span><span class='dot token'>.</span><span class='configure identifier id'>configure</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='config identifier id'>config</span><span class='bitor op'>|</span>
+    <span class='config identifier id'>config</span><span class='dot token'>.</span><span class='mode identifier id'>mode</span> <span class='assign token'>=</span> <span class='symbol val'>:rails</span>
+  <span class='end end kw'>end</span>
+</pre>
+<h2>Install with Merb</h2>
+<p>
+Merb 1.0 has built-in, seamless Webrat support. Just start using methods
+from Webrat::Session in your specs.
+</p>
+<h2>Authors</h2>
+<ul>
+<li>Maintained by <tt>Helmkamp</tt>[mailto:bryan@brynary.com]
+
+</li>
+<li>Original code written by <tt>Fitzsimmons</tt>[mailto:seth@mojodna.net]
+
+</li>
+<li>Initial development was sponsored by EastMedia[http://www.eastmedia.com]
+
+</li>
+<li>Many other contributors. See attributions in History.txt
+
+</li>
+</ul>
+<h2>License</h2>
+<p>
+Copyright &#169; 2007-2008 Bryan Helmkamp, Seth Fitzsimmons. See
+MIT-LICENSE.txt in this directory.
+</p>
+
+</div>
           </div>
         </div>
       </div>                    
