@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>smacks's apricoteatsgorilla - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/smacks/apricoteatsgorilla/blob/8e6cad9b043103d7368eedd3861349fa519ef42c">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/smacks/apricoteatsgorilla/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/smacks/apricoteatsgorilla">Wiki</a></li>
             <li class=""><a href="http://github.com/smacks/apricoteatsgorilla/graphs">Graphs</a></li>                    
-            <li class="active"><a href="smacks/apricoteatsgorilla">Documentation</a></li>
+            <li class="active"><a href="/smacks/apricoteatsgorilla">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,79 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/smacks/apricoteatsgorilla/blob/8e6cad9b043103d7368eedd3861349fa519ef42c">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>Apricot eats Gorilla</h1>
+<p>
+Apricot eats Gorilla is a SOAP communication helper.
+</p>
+<p>
+It translates between SOAP messages (XML) and Ruby Hashes while offering
+some helpful methods for working with SOAP services. Apricot eats Gorilla
+was initially based on CobraVsMongoose but uses Hpricot instead of REXML.
+</p>
+<h2>Install</h2>
+<pre class="code">
+  $ <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='smacks identifier id'>smacks</span><span class='minus op'>-</span><span class='apricoteatsgorilla identifier id'>apricoteatsgorilla</span> <span class='minus op'>-</span><span class='s identifier id'>s</span> <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/gems.github.com
+</span></pre>
+<h2>Dependencies</h2>
+<pre class="code">
+  <span class='hpricot identifier id'>hpricot</span> <span class='integer val'>0</span><span class='float val'>.6.164</span> <span class='lparen token'>(</span><span class='also identifier id'>also</span> <span class='available identifier id'>available</span> <span class='for for kw'>for</span> <span class='JRuby constant id'>JRuby</span><span class='rparen token'>)</span>
+</pre>
+<h2>xml_to_hash</h2>
+<p>
+Converts a given XML String into a Ruby Hash. Starts parsing at root node
+by default. The optional root_node parameter can be used to specify a
+custom root node to start parsing at using an XPath expression (Hpricot
+search). The root node itself won&#8217;t be included in the Hash.
+</p>
+<pre class="code">
+  <span class='xml identifier id'>xml</span> <span class='assign token'>=</span> <span class='string val'>'&lt;soap:Envelope xmlns:soap=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;&gt;
+    &lt;soap:Body&gt;
+      &lt;ns2:authenticateResponse xmlns:ns2=&quot;http://v1_0.ws.example.com/&quot;&gt;
+        &lt;return&gt;
+          &lt;authValue&gt;
+            &lt;token&gt;secret&lt;/token&gt;
+            &lt;client&gt;example&lt;/client&gt;
+          &lt;/authValue&gt;
+        &lt;/return&gt;
+      &lt;/ns2:authenticateResponse&gt;
+    &lt;/soap:Body&gt;
+  &lt;/soap:Envelope&gt;'</span>
 
+  <span class='ApricotEatsGorilla constant id'>ApricotEatsGorilla</span><span class='lbrack token'>[</span><span class='xml identifier id'>xml</span><span class='comma token'>,</span> <span class='string val'>&quot;//return&quot;</span><span class='rbrack token'>]</span>
+  <span class='comment val'># =&gt; { :auth_value =&gt; { :token =&gt; &quot;secret&quot;, :client =&gt; &quot;example&quot; } }</span>
+</pre>
+<h2>hash_to_xml</h2>
+<p>
+Converts a given Ruby Hash into an XML String.
+</p>
+<pre class="code">
+  <span class='hash identifier id'>hash</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span> <span class='symbol val'>:apricot</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span> <span class='symbol val'>:eats</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span> <span class='symbol val'>:lots_of</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;Gorillas&quot;</span> <span class='rbrace token'>}</span> <span class='rbrace token'>}</span> <span class='rbrace token'>}</span>
+
+  <span class='ApricotEatsGorilla constant id'>ApricotEatsGorilla</span><span class='lbrack token'>[</span><span class='hash identifier id'>hash</span><span class='rbrack token'>]</span>
+  <span class='comment val'># =&gt; &quot;&lt;apricot&gt;&lt;eats&gt;&lt;lotsOf&gt;Gorillas&lt;/lotsOf&gt;&lt;/eats&gt;&lt;/apricot&gt;&quot;</span>
+</pre>
+<h2>soap_envelope</h2>
+<p>
+Builds a SOAP request envelope. Includes the content from a given block in
+the envelope body. Also accepts a Hash of additional namespaces to set.
+</p>
+<pre class="code">
+  <span class='ApricotEatsGorilla constant id'>ApricotEatsGorilla</span><span class='dot token'>.</span><span class='soap_envelope identifier id'>soap_envelope</span> <span class='lbrace token'>{</span> <span class='string val'>&quot;&lt;authenticate&gt;me&lt;/authenticate&gt;&quot;</span> <span class='rbrace token'>}</span>
+
+  <span class='comment val'># =&gt; '&lt;env:Envelope xmlns:env=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;&gt;</span>
+  <span class='comment val'># =&gt;    &lt;env:Body&gt;</span>
+  <span class='comment val'># =&gt;      &lt;authenticate&gt;me&lt;/authenticate&gt;</span>
+  <span class='comment val'># =&gt;    &lt;/env:Body&gt;</span>
+  <span class='comment val'># =&gt;  &lt;/env:Envelope&gt;'</span>
+</pre>
+<h2>Read more</h2>
+<p>
+For more detailed information, please take a look at the GitHub Wiki at
+http://wiki.github.com/smacks/apricoteatsgorilla
+</p>
+
+</div>
           </div>
         </div>
       </div>                    
