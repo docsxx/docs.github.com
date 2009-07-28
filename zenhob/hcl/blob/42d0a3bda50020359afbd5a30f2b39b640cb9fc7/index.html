@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>zenhob's hcl - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/zenhob/hcl/blob/42d0a3bda50020359afbd5a30f2b39b640cb9fc7">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/zenhob/hcl/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/zenhob/hcl">Wiki</a></li>
             <li class=""><a href="http://github.com/zenhob/hcl/graphs">Graphs</a></li>                    
-            <li class="active"><a href="zenhob/hcl">Documentation</a></li>
+            <li class="active"><a href="/zenhob/hcl">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,102 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/zenhob/hcl/blob/42d0a3bda50020359afbd5a30f2b39b640cb9fc7">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>hcl</h1>
 
+<p>HCl is a command-line tool for interacting with Harvest time sheets using the
+<a href="http://www.getharvest.com/api/time_tracking">Harvest time tracking API</a>.</p>
+
+<h2>Quick Start</h2>
+
+<pre class="code">$ <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='zenhob identifier id'>zenhob</span><span class='minus op'>-</span><span class='hcl identifier id'>hcl</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='source identifier id'>source</span><span class='assign token'>=</span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/gems.github.com
+$ hcl show [date]
+</span></pre>
+
+<h3>Prerequisites</h3>
+
+<ul>
+<li>Ruby (tested with 1.8.7)</li>
+<li>Ruby OpenSSL support (in debian/ubuntu: apt-get install libopenssl-ruby)</li>
+<li>Ruby extension building support (in debian/ubuntu: apt-get install ruby-dev)</li>
+<li>RubyGems</li>
+<li>Trollop option-parsing library (gem install trollop)</li>
+<li>Chronic date-parsing library (gem install chronic)</li>
+<li>HighLine console input library (gem install highline)</li>
+<li>Jeweler packaging tool (needed to build the gem)</li>
+</ul>
+
+
+<h2>Usage</h2>
+
+<pre class="code"><span class='hcl identifier id'>hcl</span> <span class='show identifier id'>show</span> <span class='lbrack token'>[</span><span class='date identifier id'>date</span><span class='rbrack token'>]</span>
+<span class='hcl identifier id'>hcl</span> <span class='tasks identifier id'>tasks</span>
+<span class='hcl identifier id'>hcl</span> <span class='set identifier id'>set</span> <span class='lt op'>&lt;</span><span class='key identifier id'>key</span><span class='gt op'>&gt;</span> <span class='lt op'>&lt;</span><span class='value identifier id'>value</span> <span class='dot3 op'>...</span><span class='gt op'>&gt;</span>
+<span class='hcl identifier id'>hcl</span> <span class='unset identifier id'>unset</span> <span class='lt op'>&lt;</span><span class='key identifier id'>key</span><span class='gt op'>&gt;</span>
+<span class='hcl identifier id'>hcl</span> <span class='start identifier id'>start</span> <span class='lparen token'>(</span><span class='lt op'>&lt;</span><span class='task_alias identifier id'>task_alias</span><span class='gt op'>&gt;</span> <span class='bitor op'>|</span> <span class='lt op'>&lt;</span><span class='project_id identifier id'>project_id</span><span class='gt op'>&gt;</span> <span class='lt op'>&lt;</span><span class='task_id identifier id'>task_id</span><span class='gt op'>&gt;</span><span class='rparen token'>)</span> <span class='lbrack token'>[</span><span class='msg identifier id'>msg</span> <span class='dot3 op'>...</span><span class='rbrack token'>]</span>
+<span class='hcl identifier id'>hcl</span> <span class='note identifier id'>note</span> <span class='lt op'>&lt;</span><span class='msg identifier id'>msg</span> <span class='dot3 op'>...</span><span class='gt op'>&gt;</span>
+<span class='hcl identifier id'>hcl</span> <span class='stop identifier id'>stop</span>
+</pre>
+
+<h3>Starting a Timer</h3>
+
+<p>To start a new timer you need to identify the project and task. After you've
+used the show command you can use the tasks command to view a cached list of
+available tasks. The first two numbers in each row are the project and task
+IDs. You need both values to start a timer:</p>
+
+<pre class="code">$ <span class='hcl identifier id'>hcl</span> <span class='show identifier id'>show</span>
+<span class='minus op'>-</span><span class='minus op'>-</span><span class='minus op'>-</span><span class='minus op'>-</span><span class='minus op'>-</span><span class='minus op'>-</span><span class='minus op'>-</span><span class='minus op'>-</span><span class='minus op'>-</span><span class='minus op'>-</span><span class='minus op'>-</span><span class='minus op'>-</span><span class='minus op'>-</span>
+<span class='integer val'>0</span><span class='symbol val'>:00</span>    <span class='total identifier id'>total</span>
+$ <span class='hcl identifier id'>hcl</span> <span class='tasks identifier id'>tasks</span>
+<span class='integer val'>1234</span> <span class='integer val'>5678</span>   <span class='ClientX constant id'>ClientX</span> <span class='Software constant id'>Software</span> <span class='Development constant id'>Development</span>
+<span class='integer val'>1234</span> <span class='integer val'>9876</span>   <span class='ClientX constant id'>ClientX</span> <span class='Admin constant id'>Admin</span>
+$ <span class='hcl identifier id'>hcl</span> <span class='start identifier id'>start</span> <span class='integer val'>1234</span> <span class='integer val'>5678</span> <span class='adding identifier id'>adding</span> <span class='a identifier id'>a</span> <span class='new identifier id'>new</span> <span class='feature identifier id'>feature</span>
+</pre>
+
+<h3>Task Aliases</h3>
+
+<p>Since it's not practical to enter two long numbers every time you want to
+identify a task, HCl supports task aliases:</p>
+
+<pre class="code">$ <span class='hcl identifier id'>hcl</span> <span class='set identifier id'>set</span> <span class='task identifier id'>task</span><span class='dot token'>.</span><span class='xdev identifier id'>xdev</span> <span class='integer val'>1234</span> <span class='integer val'>5678</span>
+$ <span class='hcl identifier id'>hcl</span> <span class='start identifier id'>start</span> <span class='xdev identifier id'>xdev</span> <span class='adding identifier id'>adding</span> <span class='a identifier id'>a</span> <span class='new identifier id'>new</span> <span class='feature identifier id'>feature</span>
+</pre>
+
+<h3>Adding Notes to a Running Task</h3>
+
+<p>While a task is running you can append strings to the note for that task:</p>
+
+<pre class="code">$ <span class='hcl identifier id'>hcl</span> <span class='note identifier id'>note</span> <span class='Found constant id'>Found</span> <span class='a identifier id'>a</span> <span class='good identifier id'>good</span> <span class='time identifier id'>time</span>
+$ <span class='hcl identifier id'>hcl</span> <span class='note identifier id'>note</span> <span class='or or kw'>or</span> <span class='not not kw'>not</span><span class='comma token'>,</span> <span class='whatever identifier id'>whatever</span><span class='dot3 op'>...</span>
+</pre>
+
+<h3>Stopping a Timer</h3>
+
+<p>The following command will stop a running timer (currently only one timer at
+a time is supported):</p>
+
+<pre class="code">$ <span class='hcl identifier id'>hcl</span> <span class='stop identifier id'>stop</span>
+</pre>
+
+<h3>Date Formats</h3>
+
+<p>Dates can be expressed in a variety of ways. See the <a href="http://chronic.rubyforge.org/">Chronic documentation</a>
+for more information about available date input formats. The following
+commands show the timesheet for the specified day:</p>
+
+<pre class="code">$ <span class='hcl identifier id'>hcl</span> <span class='show identifier id'>show</span> <span class='yesterday identifier id'>yesterday</span>
+$ <span class='hcl identifier id'>hcl</span> <span class='show identifier id'>show</span> <span class='last identifier id'>last</span> <span class='friday identifier id'>friday</span>
+$ <span class='hcl identifier id'>hcl</span> <span class='show identifier id'>show</span> <span class='integer val'>2</span> <span class='days identifier id'>days</span> <span class='ago identifier id'>ago</span>
+$ <span class='hcl identifier id'>hcl</span> <span class='show identifier id'>show</span> <span class='integer val'>1</span> <span class='week identifier id'>week</span> <span class='ago identifier id'>ago</span>
+</pre>
+
+<h2>Author</h2>
+
+<p><a href="mailto:zack@opensourcery.com">Zack Hobson</a>, <a href="http://www.opensourcery.com/">OpenSourcery LLC</a></p>
+
+<p>See LICENSE for copyright details.</p>
+</div>
           </div>
         </div>
       </div>                    
