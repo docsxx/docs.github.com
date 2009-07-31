@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>dkubb's yardstick - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/dkubb/yardstick/blob/e6314a5932c9947bd0db29aadccce4955004a6c8">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/dkubb/yardstick/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/dkubb/yardstick">Wiki</a></li>
             <li class=""><a href="http://github.com/dkubb/yardstick/graphs">Graphs</a></li>                    
-            <li class="active"><a href="dkubb/yardstick">Documentation</a></li>
+            <li class="active"><a href="/dkubb/yardstick">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,119 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/dkubb/yardstick/blob/e6314a5932c9947bd0db29aadccce4955004a6c8">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>Yardstick 0.1.0</h1>
 
+<ul>
+<li><a href="http://yardstick.rubyforge.org/">Homepage</a></li>
+<li><a href="http://github.com/dkubb/yardstick">Git</a></li>
+<li><a href="http://github.com/dkubb/yardstick/issues">Bug Tracker</a></li>
+<li><a href="http://groups.google.com/group/yardstick">Mailing List</a></li>
+<li><a href="irc://irc.freenode.net/yardstick">IRC</a></li>
+</ul>
+
+
+<h2>Synopsis</h2>
+
+<p>Yardstick is a tool that verifies YARD coverage of ruby code.</p>
+
+<p>It will measure the source and provide feedback on what is missing from
+the documentation and what can be improved.</p>
+
+<h2>Installation</h2>
+
+<p>With Rubygems:</p>
+
+<pre class="code">$ <span class='sudo identifier id'>sudo</span> <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='yardstick identifier id'>yardstick</span>
+$ <span class='irb identifier id'>irb</span> <span class='minus op'>-</span><span class='rubygems identifier id'>rubygems</span>
+<span class='rshft op'>&gt;&gt;</span> <span class='require identifier id'>require</span> <span class='string val'>'yardstick'</span>
+<span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span>
+</pre>
+
+<p>With the <a href="http://hellorip.com/">Rip package manager</a>:</p>
+
+<pre class="code">$ <span class='rip identifier id'>rip</span> <span class='install identifier id'>install</span> <span class='git identifier id'>git</span><span class='symbol val'>:/</span><span class='regexp val'>/github.com/</span><span class='dkubb identifier id'>dkubb</span><span class='div op'>/</span><span class='yardstick identifier id'>yardstick</span><span class='dot token'>.</span><span class='git identifier id'>git</span> <span class='integer val'>0</span><span class='float val'>.1.0</span>
+$ <span class='irb identifier id'>irb</span> <span class='minus op'>-</span><span class='rrip identifier id'>rrip</span>
+<span class='rshft op'>&gt;&gt;</span> <span class='require identifier id'>require</span> <span class='string val'>'yardstick'</span>
+<span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span>
+</pre>
+
+<p>With git and local working copy:</p>
+
+<pre class="code">$ <span class='git identifier id'>git</span> <span class='clone identifier id'>clone</span> <span class='git identifier id'>git</span><span class='symbol val'>:/</span><span class='regexp val'>/github.com/</span><span class='dkubb identifier id'>dkubb</span><span class='div op'>/</span><span class='yardstick identifier id'>yardstick</span><span class='dot token'>.</span><span class='git identifier id'>git</span>
+$ <span class='cd identifier id'>cd</span> <span class='yardstick identifier id'>yardstick</span>
+$ <span class='rake identifier id'>rake</span> <span class='build identifier id'>build</span> <span class='andop op'>&amp;&amp;</span> <span class='sudo identifier id'>sudo</span> <span class='rake identifier id'>rake</span> <span class='install identifier id'>install</span>
+$ <span class='irb identifier id'>irb</span> <span class='minus op'>-</span><span class='rubygems identifier id'>rubygems</span>
+<span class='rshft op'>&gt;&gt;</span> <span class='require identifier id'>require</span> <span class='string val'>'yardstick'</span>
+<span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span>
+</pre>
+
+<h2>Usage</h2>
+
+<p>Yardstick may be used three ways:</p>
+
+<p><strong>1. Command-line Tool</strong></p>
+
+<p>This is the simplest way to run yardstick.  Provide it a list of files
+and it will measure all of them and output suggestions for improvement,
+eg:</p>
+
+<pre class="code">$ <span class='yardstick identifier id'>yardstick</span> <span class='string val'>'lib/**/*.rb'</span> <span class='string val'>'app/**/*.rb'</span> <span class='dot3 op'>...</span><span class='etc identifier id'>etc</span><span class='dot3 op'>...</span>
+</pre>
+
+<p><strong>2. Rake task</strong></p>
+
+<p>Yardstick may be integrated with existing Rakefile and build processes,
+and is especially useful when used with a continuous integration system.
+You can set thresholds, as well as check that the threshold matches the
+actual coverage, forcing you to bump it up if the actual coverage has
+increased.  It uses a simple DSL to configure the task eg:</p>
+
+<pre class="code"><span class='comment val'># measure coverage</span>
+
+<span class='require identifier id'>require</span> <span class='string val'>'yardstick/rake/measurement'</span>
+
+<span class='Yardstick constant id'>Yardstick</span><span class='colon2 op'>::</span><span class='Rake constant id'>Rake</span><span class='colon2 op'>::</span><span class='Measurement constant id'>Measurement</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='symbol val'>:yardstick_measure</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='measurement identifier id'>measurement</span><span class='bitor op'>|</span>
+  <span class='measurement identifier id'>measurement</span><span class='dot token'>.</span><span class='output identifier id'>output</span> <span class='assign token'>=</span> <span class='string val'>'measurement/report.txt'</span>
+<span class='end end kw'>end</span>
+
+
+<span class='comment val'># verify coverage</span>
+
+<span class='require identifier id'>require</span> <span class='string val'>'yardstick/rake/verify'</span>
+
+<span class='Yardstick constant id'>Yardstick</span><span class='colon2 op'>::</span><span class='Rake constant id'>Rake</span><span class='colon2 op'>::</span><span class='Verify constant id'>Verify</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='verify identifier id'>verify</span><span class='bitor op'>|</span>
+  <span class='verify identifier id'>verify</span><span class='dot token'>.</span><span class='threshold identifier id'>threshold</span> <span class='assign token'>=</span> <span class='integer val'>100</span>
+<span class='end end kw'>end</span>
+</pre>
+
+<p><strong>3. Libraries</strong></p>
+
+<p>Yardstick comes with several libraries that will allow you to process
+lists of files, or String code fragments, eg:</p>
+
+<pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'yardstick'</span>
+
+<span class='comment val'># measure a list of file paths</span>
+<span class='measurements identifier id'>measurements</span> <span class='assign token'>=</span> <span class='Yardstick constant id'>Yardstick</span><span class='dot token'>.</span><span class='measure identifier id'>measure</span><span class='lparen token'>(</span><span class='paths identifier id'>paths</span><span class='rparen token'>)</span>
+
+<span class='comment val'># measure a code fragment</span>
+<span class='measurements identifier id'>measurements</span> <span class='assign token'>=</span> <span class='Yardstick constant id'>Yardstick</span><span class='dot token'>.</span><span class='measure_string identifier id'>measure_string</span> <span class='string val'>&quot;# Displays the message provided to stdout\n#\n# @param [#to_str] message\n#   the message to display\n#\n# @return [undefined]\n#\n# @api public\ndef display(message)\nputs message.to_str\nend\n&quot;</span>
+</pre>
+
+<h2>TODO</h2>
+
+<ul>
+<li>Add more measurements, especially for @param, @yield and type
+validation</li>
+<li>Update yardstick_measure task to use the Yardstick::CLI library
+underneath.</li>
+<li>Output results as HTML from command line tool and Rake task</li>
+</ul>
+
+
+<p>Copyright (c) 2009 Dan Kubb. See LICENSE for details.</p>
+</div>
           </div>
         </div>
       </div>                    
