@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>brownbeagle's skinny_blog_engine - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/brownbeagle/skinny_blog_engine/blob/858933b6caf874d2f01834c13bb50c5ab2f59af6">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/brownbeagle/skinny_blog_engine/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/brownbeagle/skinny_blog_engine">Wiki</a></li>
             <li class=""><a href="http://github.com/brownbeagle/skinny_blog_engine/graphs">Graphs</a></li>                    
-            <li class="active"><a href="brownbeagle/skinny_blog_engine">Documentation</a></li>
+            <li class="active"><a href="/brownbeagle/skinny_blog_engine">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,114 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/brownbeagle/skinny_blog_engine/blob/858933b6caf874d2f01834c13bb50c5ab2f59af6">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>Skinny Blog Engine</h1>
+<p>
+A minimalist blog engine for your Ruby on Rails site.
+</p>
+<h1>Usage</h1>
+<h3>Posting</h3>
+<p>
+To post content, create a file in app/views/posts with post_ as a prefix to
+the filename.
+</p>
+<h4>Example</h4>
+<p>
+If you want to make a post called Hello World, you would create a file
+called app/views/posts/post_hello_world.html.erb and fill the file with the
+content of your blog post.
+</p>
+<pre class="code">
+  <span class='comment val'># app/views/posts/post_hello_world.html.erb</span>
+  <span class='lt op'>&lt;</span><span class='h1 identifier id'>h1</span><span class='gt op'>&gt;</span><span class='Hello constant id'>Hello</span> <span class='World constant id'>World</span><span class='lt op'>&lt;</span><span class='regexp val'>/h1&gt;
 
+  &lt;p&gt;This is my first blog post using Blog Engine&lt;/</span><span class='p identifier id'>p</span><span class='gt op'>&gt;</span>
+</pre>
+<p>
+Any file in app/views/posts matching the pattern of post_* is considered a
+blog post.
+</p>
+<p>
+Note that you can use whatever rendering engine your Rails installation
+supports: Erb, Haml, etc.
+</p>
+<h3>Posts Index</h3>
+<p>
+A default posts index view is provided, but you&#8217;ll probably want to
+override this. To do this you create your own
+app/views/posts/index.html.erb &#8230;
+</p>
+<pre class="code">
+  <span class='comment val'># app/views/posts/index.html.erb</span>
+  <span class='lt op'>&lt;</span><span class='h1 identifier id'>h1</span><span class='gt op'>&gt;</span><span class='My constant id'>My</span> <span class='Awesome constant id'>Awesome</span> <span class='Blog constant id'>Blog</span><span class='lt op'>&lt;</span><span class='regexp val'>/h1&gt;
+
+  &lt;ul&gt;
+    &lt;% for post in @posts do %&gt;
+    &lt;li&gt;&lt;%= link_to post.title, post %&gt; &lt;%= post.updated_at %&gt;&lt;/</span><span class='li identifier id'>li</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='string val'>% end </span><span class='mod op'>%</span><span class='gt op'>&gt;</span>
+  <span class='lt op'>&lt;</span><span class='regexp val'>/ul&gt;
+</span></pre>
+<p>
+The Post class has the following public class methods: all, find(id). The
+all method will return an array of Post objects, ordered by most recent
+post first.
+</p>
+<p>
+Post objects have the following attributes:
+</p>
+<pre class="code">
+  <span class='path identifier id'>path</span> <span class='minus op'>-</span> <span class='The constant id'>The</span> <span class='path identifier id'>path</span> <span class='of identifier id'>of</span> <span class='the identifier id'>the</span> <span class='actual identifier id'>actual</span> <span class='post identifier id'>post</span> <span class='file identifier id'>file</span>
+  <span class='id identifier id'>id</span> <span class='minus op'>-</span> <span class='The constant id'>The</span> <span class='post identifier id'>post</span> <span class='name identifier id'>name</span> <span class='via identifier id'>via</span> <span class='the identifier id'>the</span> <span class='path identifier id'>path</span><span class='dot token'>.</span> <span class='E constant id'>E</span><span class='dot token'>.</span><span class='g identifier id'>g</span><span class='dot token'>.</span> <span class='post_hello_world identifier id'>post_hello_world</span><span class='dot token'>.</span><span class='html identifier id'>html</span><span class='dot token'>.</span><span class='erb identifier id'>erb</span> <span class='is identifier id'>is</span> <span class='hello_world identifier id'>hello_world</span>
+  <span class='title identifier id'>title</span> <span class='minus op'>-</span> <span class='A constant id'>A</span> <span class='humanized identifier id'>humanized</span> <span class='id identifier id'>id</span><span class='dot token'>.</span>
+  <span class='updated_at identifier id'>updated_at</span> <span class='minus op'>-</span> <span class='Time constant id'>Time</span> <span class='the identifier id'>the</span> <span class='file identifier id'>file</span> <span class='was identifier id'>was</span> <span class='last identifier id'>last</span> <span class='updated identifier id'>updated</span> <span class='according identifier id'>according</span> <span class='to identifier id'>to</span> <span class='File constant id'>File</span><span class='colon2 op'>::</span><span class='mtime identifier id'>mtime</span><span class='dot token'>.</span>
+</pre>
+<h4>ATOM Feed</h4>
+<p>
+An ATOM index is built for you automatically as part of the plugin. You can
+reference the ATOM feed using posts_url(:format=&gt;&#8217;atom&#8217;)
+&#8230;
+</p>
+<pre class="code">
+  <span class='lt op'>&lt;</span><span class='link identifier id'>link</span> <span class='rel identifier id'>rel</span><span class='assign token'>=</span><span class='string val'>&quot;alternate&quot;</span> <span class='type identifier id'>type</span><span class='assign token'>=</span><span class='string val'>&quot;application/atom&lt;tt&gt;xml&quot;</span> <span class='title identifier id'>title</span><span class='assign token'>=</span><span class='string val'>&quot;Brown Beagle Software&quot;</span> <span class='href identifier id'>href</span><span class='assign token'>=</span><span class='string val'>&quot;&lt;%= posts_url(:format=&gt;'atom') %&gt;&quot;</span> <span class='gt op'>&gt;</span>
+</pre>
+<h3>Show Post</h3>
+<p>
+There&#8217;s already a default posts/show action in the plugin that
+renders the post title, date, and content within your default layout. You
+can override this format easily by creating your own
+app/views/posts/show.html.erb
+</p>
+<p>
+Here&#8217;s what the default app/views/posts/show.html.erb looks like
+&#8230;
+</p>
+<pre class="code">
+  <span class='comment val'># app/views/posts/show.html.erb</span>
+  <span class='lt op'>&lt;</span><span class='h1 identifier id'>h1</span><span class='gt op'>&gt;</span><span class='lt op'>&lt;</span><span class='string val'>%= @post.title %&gt;&lt;/h1&gt;
+  &lt;h2&gt;&lt;%=</span> <span class='@post ivar id'>@post</span><span class='dot token'>.</span><span class='updated_at identifier id'>updated_at</span><span class='dot token'>.</span><span class='strftime identifier id'>strftime</span><span class='lparen token'>(</span><span class='string val'>'%d %B %Y'</span><span class='rparen token'>)</span> <span class='mod op'>%</span><span class='gt op'>&gt;</span><span class='lt op'>&lt;</span><span class='regexp val'>/h2&gt;
+  &lt;%= render :file =&gt; 'posts/</span><span class='post_ identifier id'>post_</span><span class='string val'>'&lt;/tt&gt;@post.id %&gt;
+</span></pre>
+<h1>TODO</h1>
+<p>
+There&#8217;s no support for comments, pingbacks, or trackbacks yet.
+</p>
+<p>
+There&#8217;s also some hard coded file paths and ATOM values in there that
+I would like to remove eventually.
+</p>
+<h1>Credits</h1>
+<p>
+Blog Engine is maintained by <tt>Pooley</tt>[mailto:alex@brownbeagle.com.au],
+and is funded by <tt>Beagle Software</tt>[http://www.brownbeagle.com.au].
+</p>
+<h1>License</h1>
+<p>
+Blog Engine is Copyright &#169; 2009 Alex Pooley, Brown Beagle Software. It
+is free software, and may be redistributed under the terms specified in the
+MIT-LICENSE file.
+</p>
+
+</div>
           </div>
         </div>
       </div>                    
