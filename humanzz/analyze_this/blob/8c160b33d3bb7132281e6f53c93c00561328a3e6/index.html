@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>humanzz's analyze_this - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/humanzz/analyze_this/blob/8c160b33d3bb7132281e6f53c93c00561328a3e6">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/humanzz/analyze_this/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/humanzz/analyze_this">Wiki</a></li>
             <li class=""><a href="http://github.com/humanzz/analyze_this/graphs">Graphs</a></li>                    
-            <li class="active"><a href="humanzz/analyze_this">Documentation</a></li>
+            <li class="active"><a href="/humanzz/analyze_this">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,57 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/humanzz/analyze_this/blob/8c160b33d3bb7132281e6f53c93c00561328a3e6">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>Analyze This</h1>
+<p>
+Analyze This is a solution to the problem of trying to preview a link from
+within a browser - like facebook&#8217;s &quot;share a link&quot; feature.
+</p>
+<p>
+oEmbed and oohEmbed try to solve the problem of a how a url should be
+represented on a page. For example, if it&#8217;s a flickr photo url, the
+thumbnail can be shown, if the url is a youtube video, a player should be
+embedded and so on. The problem with oEmbed and oohEmbed is that the list
+of supported websites is limited.
+</p>
+<p>
+Analyze This on the other hand tends to handle webpages in a generic way by
+providing data that is common on all web pages. That is: title,
+description, keywords, and images list.
+</p>
+<p>
+Given a webpage&#8217;s url, the application returns a JSON object
+representing the webpage&#8217;s info. The application uses JSONP so that
+the caller can provide a callback function.
+</p>
+<h2>Web UI</h2>
+<p>
+The web UI is more for fun and showing what the application can do
+</p>
+<h2>API</h2>
+<p>
+The API is accessible at http://analyzethis.espace-technologies.com/js and
+all you need to provide it with is url parameter and an optional callback
+if you need it. For example, a page requesting information about a URL
+provided in an input#url can use the following code snippet
+</p>
+<pre class="code">
+  $<span class='lparen token'>(</span><span class='document identifier id'>document</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='ready identifier id'>ready</span><span class='lparen token'>(</span><span class='function identifier id'>function</span><span class='lparen token'>(</span><span class='rparen token'>)</span><span class='lbrace token'>{</span>
+    $<span class='lparen token'>(</span><span class='string val'>'#button'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='click identifier id'>click</span><span class='lparen token'>(</span><span class='function identifier id'>function</span><span class='lparen token'>(</span><span class='rparen token'>)</span><span class='lbrace token'>{</span>
+    <span class='var identifier id'>var</span> <span class='url identifier id'>url</span> <span class='assign token'>=</span> <span class='encodeURIComponent identifier id'>encodeURIComponent</span><span class='lparen token'>(</span>$<span class='lparen token'>(</span><span class='string val'>'#url'</span><span class='rparen token'>)</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='value identifier id'>value</span><span class='rparen token'>)</span><span class='semicolon token'>;</span>
+    $<span class='lparen token'>(</span><span class='string val'>'&lt;script&gt;'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='attr identifier id'>attr</span><span class='lparen token'>(</span><span class='string val'>'type'</span><span class='comma token'>,</span><span class='string val'>'text/javascript'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='attr identifier id'>attr</span><span class='lparen token'>(</span><span class='string val'>'src'</span><span class='comma token'>,</span><span class='string val'>'http://analyzethis.espace-technologies.com/js?callback=analyze_this&amp;url='</span><span class='plus op'>+</span><span class='url identifier id'>url</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='appendTo identifier id'>appendTo</span><span class='lparen token'>(</span><span class='string val'>'body'</span><span class='rparen token'>)</span><span class='semicolon token'>;</span>
+    <span class='rbrace token'>}</span><span class='rparen token'>)</span><span class='semicolon token'>;</span>
+  <span class='rbrace token'>}</span><span class='rparen token'>)</span><span class='semicolon token'>;</span>
+</pre>
+<p>
+which would result in a call to the javascript function analyze_this({..})
+passing in a JSON object that has the page’s info.
+</p>
+<p>
+Analyze This is available at http://analyzethis.espace-technologies.com
+</p>
 
+</div>
           </div>
         </div>
       </div>                    
