@@ -1,11 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
-    <title>shawn42's gamebox - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/shawn42/gamebox/blob/2e9c3db24c232d596970fbe804b82440f24d768c">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
+    <title>shawn42's gamebox - Module: DIY - GitHub Documentation</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,10 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +80,7 @@
             <li class=""><a href="http://github.com/shawn42/gamebox/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/shawn42/gamebox">Wiki</a></li>
             <li class=""><a href="http://github.com/shawn42/gamebox/graphs">Graphs</a></li>                    
-            <li class="active"><a href="shawn42/gamebox">Documentation</a></li>
+            <li class="active"><a href="/shawn42/gamebox">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +106,170 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/shawn42/gamebox/blob/2e9c3db24c232d596970fbe804b82440f24d768c">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="wikistyle">
+  <div class="section module DIY">
+  <h1>Module: DIY</h1>
+  <div class="section docstring">
+  <p>
+DIY (Dependency Injection in Yaml) is a simple dependency injection library
+which focuses on declarative composition of objects through setter
+injection.
+</p>
+<h2>Examples</h2>
+<h3>A Simple Context</h3>
+<p>
+The context is a hash specified in in a yaml file. Each top-level key
+identifies an object. When the context is created and queried for an
+object, by default, the context will require a file with the same name:
+</p>
+<pre class="code">
+  <span class='require identifier id'>require</span> <span class='string val'>'foo'</span>
+</pre>
+<p>
+next, by default, it will call new on a class from the camel-cased name of
+the key:
+</p>
+<pre class="code">
+  <span class='Foo constant id'>Foo</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+</pre>
+<p>
+foo.rb:
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='Foo constant id'>Foo</span><span class='semicolon token'>;</span> <span class='end end kw'>end</span>
+</pre>
+<p>
+context.yml:
+</p>
+<pre class="code">
+  <span class='minus op'>-</span><span class='minus op'>-</span><span class='minus op'>-</span>
+  <span class='foo identifier id'>foo</span><span class='colon op'>:</span>
+  <span class='bar identifier id'>bar</span><span class='colon op'>:</span>
 
+  <span class='c identifier id'>c</span> <span class='assign token'>=</span> <span class='DIY constant id'>DIY</span><span class='colon2 op'>::</span><span class='Context constant id'>Context</span><span class='dot token'>.</span><span class='from_file identifier id'>from_file</span><span class='lparen token'>(</span><span class='string val'>'context.yml'</span><span class='rparen token'>)</span>
+  <span class='c identifier id'>c</span><span class='lbrack token'>[</span><span class='symbol val'>:foo</span><span class='rbrack token'>]</span>   <span class='comment val'>#=&gt; #&lt;Foo:0x81eb0&gt;</span>
+</pre>
+<h3>Specifying Class Name</h3>
+<p>
+If the class name isn&#8217;t the camel-cased key:
+</p>
+<p>
+foo.rb:
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='MyFoo constant id'>MyFoo</span><span class='semicolon token'>;</span> <span class='end end kw'>end</span>
+</pre>
+<p>
+context.yml:
+</p>
+<pre class="code">
+  <span class='minus op'>-</span><span class='minus op'>-</span><span class='minus op'>-</span>
+  <span class='foo identifier id'>foo</span><span class='colon op'>:</span>
+    <span class='class class kw'>class</span><span class='colon op'>:</span> <span class='MyFoo constant id'>MyFoo</span>
+  <span class='bar identifier id'>bar</span><span class='colon op'>:</span>
+</pre>
+<h3>Specifying Ruby File to Require</h3>
+<p>
+If the file the class resides in isn&#8217;t named after they key:
+</p>
+<p>
+fun_stuff.rb:
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='Foo constant id'>Foo</span><span class='semicolon token'>;</span> <span class='end end kw'>end</span>
+</pre>
+<p>
+context.yml:
+</p>
+<pre class="code">
+  <span class='minus op'>-</span><span class='minus op'>-</span><span class='minus op'>-</span>
+  <span class='foo identifier id'>foo</span><span class='colon op'>:</span>
+    <span class='lib identifier id'>lib</span><span class='colon op'>:</span> <span class='fun_stuff identifier id'>fun_stuff</span>
+  <span class='bar identifier id'>bar</span><span class='colon op'>:</span>
+</pre>
+<h3>Constructor Arguments</h3>
+<p>
+DIY allows specification of constructor arguments as hash key-value pairs
+using the <tt>compose</tt> directive.
+</p>
+<p>
+foo.rb:
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='Foo constant id'>Foo</span>
+    <span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+      <span class='@bar ivar id'>@bar</span> <span class='assign token'>=</span> <span class='args identifier id'>args</span><span class='lbrack token'>[</span><span class='symbol val'>:bar</span><span class='rbrack token'>]</span>
+      <span class='@other ivar id'>@other</span> <span class='assign token'>=</span> <span class='args identifier id'>args</span><span class='lbrack token'>[</span><span class='symbol val'>:other</span><span class='rbrack token'>]</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+context.yml:
+</p>
+<pre class="code">
+  <span class='minus op'>-</span><span class='minus op'>-</span><span class='minus op'>-</span>
+  <span class='foo identifier id'>foo</span><span class='colon op'>:</span>
+    <span class='compose identifier id'>compose</span><span class='colon op'>:</span> <span class='bar identifier id'>bar</span><span class='comma token'>,</span> <span class='other identifier id'>other</span>
+  <span class='bar identifier id'>bar</span><span class='colon op'>:</span>
+  <span class='other identifier id'>other</span><span class='colon op'>:</span>
+</pre>
+<p>
+To make constructor definition easier use constructor:
+</p>
+<p>
+foo.rb:
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='Foo constant id'>Foo</span>
+    <span class='constructor identifier id'>constructor</span> <span class='symbol val'>:bar</span><span class='comma token'>,</span> <span class='symbol val'>:other</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+If the constructor argument names don&#8217;t match up with the object keys
+in the context, they can be mapped explicitly.
+</p>
+<p>
+foo.rb:
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='Foo constant id'>Foo</span>
+    <span class='constructor identifier id'>constructor</span> <span class='symbol val'>:bar</span><span class='comma token'>,</span> <span class='symbol val'>:other</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+context.yml:
+</p>
+<pre class="code">
+  <span class='minus op'>-</span><span class='minus op'>-</span><span class='minus op'>-</span>
+  <span class='foo identifier id'>foo</span><span class='colon op'>:</span>
+    <span class='bar identifier id'>bar</span><span class='colon op'>:</span> <span class='my_bar identifier id'>my_bar</span>
+    <span class='other identifier id'>other</span><span class='colon op'>:</span> <span class='the_other_one identifier id'>the_other_one</span>
+  <span class='my_bar identifier id'>my_bar</span><span class='colon op'>:</span>
+  <span class='the_other_one identifier id'>the_other_one</span><span class='colon op'>:</span>
+</pre>
+<h3>Non-singleton objects</h3>
+<p>
+Non-singletons will be re-instantiated each time they are needed.
+</p>
+<p>
+context.yml:
+</p>
+<pre class="code">
+  <span class='minus op'>-</span><span class='minus op'>-</span><span class='minus op'>-</span>
+  <span class='foo identifier id'>foo</span><span class='colon op'>:</span>
+    <span class='singleton identifier id'>singleton</span><span class='colon op'>:</span> <span class='false false kw'>false</span>
+
+  <span class='bar identifier id'>bar</span><span class='colon op'>:</span>
+
+  <span class='engine identifier id'>engine</span><span class='colon op'>:</span>
+    <span class='compose identifier id'>compose</span><span class='colon op'>:</span> <span class='foo identifier id'>foo</span><span class='comma token'>,</span> <span class='bar identifier id'>bar</span>
+</pre>
+
+</div><div class="section constants">
+  
+</div>
+</div>
+</div>
           </div>
         </div>
       </div>                    
