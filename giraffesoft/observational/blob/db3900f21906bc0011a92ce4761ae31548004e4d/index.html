@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>giraffesoft's observational - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/giraffesoft/observational/blob/db3900f21906bc0011a92ce4761ae31548004e4d">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/giraffesoft/observational/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/giraffesoft/observational">Wiki</a></li>
             <li class=""><a href="http://github.com/giraffesoft/observational/graphs">Graphs</a></li>                    
-            <li class="active"><a href="giraffesoft/observational">Documentation</a></li>
+            <li class="active"><a href="/giraffesoft/observational">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,83 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/giraffesoft/observational/blob/db3900f21906bc0011a92ce4761ae31548004e4d">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>Observational</h1>
+<p>
+How many times have you seen this in a rails app?
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='User constant id'>User</span>
+    <span class='after_create identifier id'>after_create</span> <span class='symbol val'>:deliver_welcome_message</span>
 
+    <span class='protected identifier id'>protected</span>
+    <span class='def def kw'>def</span> <span class='deliver_welcome_message identifier id'>deliver_welcome_message</span>
+      <span class='Notifier constant id'>Notifier</span><span class='dot token'>.</span><span class='deliver_welcome_message identifier id'>deliver_welcome_message</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+Why is the user concerned with the delivery of his own welcome message? It
+seems like the Notifier should be responsible for that.
+</p>
+<p>
+Observational makes it possible to make it the Notifier&#8217;s
+responsibility, using the observer pattern.
+</p>
+<p>
+The equivalent of the above example is:
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='Notifier constant id'>Notifier</span> <span class='lt op'>&lt;</span> <span class='ActionMailer constant id'>ActionMailer</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
+    <span class='observes identifier id'>observes</span> <span class='symbol val'>:user</span><span class='comma token'>,</span> <span class='symbol val'>:invokes</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:deliver_welcome_message</span><span class='comma token'>,</span> <span class='symbol val'>:after</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:create</span>
+
+    <span class='def def kw'>def</span> <span class='welcome_message identifier id'>welcome_message</span><span class='lparen token'>(</span><span class='user identifier id'>user</span><span class='rparen token'>)</span>
+      <span class='comment val'># do mailer stuff here</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+After a user is created, Notifier.deliver_welcome_message(that_user) will
+be invoked.
+</p>
+<p>
+It&#8217;s also possible to specify that the observer method gets called
+with a specific attribute from the observed object.
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='Creditor constant id'>Creditor</span>
+    <span class='observes identifier id'>observes</span> <span class='symbol val'>:message</span><span class='comma token'>,</span> <span class='symbol val'>:invokes</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:use_credit</span><span class='comma token'>,</span> <span class='symbol val'>:with</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:creator</span><span class='comma token'>,</span> <span class='symbol val'>:after</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:create</span>
+
+    <span class='def def kw'>def</span> <span class='use_credit identifier id'>use_credit</span><span class='lparen token'>(</span><span class='user identifier id'>user</span><span class='rparen token'>)</span>
+      <span class='comment val'># do something</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+After a message is created, Creditor.use_credit(message.creator) will be
+called.
+</p>
+<p>
+Observational supports all of ActiveRecord&#8217;s callbacks.
+</p>
+<h2>YARDOC</h2>
+<p>
+Observational uses YARD, because it&#8217;s a million times better than
+RDoc. You can find the docs at
+<tt>docs.github.com/giraffesoft/observational</tt>[http://docs.github.com/giraffesoft/observational]
+</p>
+<h2>General Purpose Observers</h2>
+<p>
+Observational can also be used to add observers to ruby classes that
+aren&#8217;t related to active_record. But, that&#8217;s not documented yet
+:-).
+</p>
+<h2>Copyright</h2>
+<p>
+Copyright &#169; 2009 James Golick. See LICENSE for details.
+</p>
+
+</div>
           </div>
         </div>
       </div>                    
