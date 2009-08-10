@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>rtomayko's rdiscount - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/rtomayko/rdiscount/blob/5ba29c4fb546a10e8121430693adce45cb391372">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/rtomayko/rdiscount/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/rtomayko/rdiscount">Wiki</a></li>
             <li class=""><a href="http://github.com/rtomayko/rdiscount/graphs">Graphs</a></li>                    
-            <li class="active"><a href="rtomayko/rdiscount">Documentation</a></li>
+            <li class="active"><a href="/rtomayko/rdiscount">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,61 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/rtomayko/rdiscount/blob/5ba29c4fb546a10e8121430693adce45cb391372">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>Discount Markdown Processor for Ruby</h1>
 
+<p>Discount is an implementation of John Gruber's Markdown markup language in C. It
+implements all of the language described in <a href="http://daringfireball.net/projects/markdown/syntax">the markdown syntax document</a> and
+passes the <a href="http://daringfireball.net/projects/downloads/MarkdownTest_1.0.zip">Markdown 1.0 test suite</a>.</p>
+
+<p>Discount was developed by <a href="http://www.pell.portland.or.us/~orc">David Loren Parsons</a>. The Ruby extension was
+developed by <a href="http://tomayko.com/">Ryan Tomayko</a>.</p>
+
+<h2>Installation, Hacking</h2>
+
+<p>RDiscount Gem releases are published to RubyForge and can be installed as
+follows:</p>
+
+<pre class="code">$ <span class='lbrack token'>[</span><span class='sudo identifier id'>sudo</span><span class='rbrack token'>]</span> <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='rdiscount identifier id'>rdiscount</span>
+</pre>
+
+<p>The RDiscount sources are available via Git:</p>
+
+<pre class="code">$ <span class='git identifier id'>git</span> <span class='clone identifier id'>clone</span> <span class='git identifier id'>git</span><span class='symbol val'>:/</span><span class='regexp val'>/github.com/</span><span class='rtomayko identifier id'>rtomayko</span><span class='div op'>/</span><span class='rdiscount identifier id'>rdiscount</span><span class='dot token'>.</span><span class='git identifier id'>git</span>
+$ <span class='cd identifier id'>cd</span> <span class='rdiscount identifier id'>rdiscount</span>
+$ <span class='rake identifier id'>rake</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='tasks identifier id'>tasks</span>
+</pre>
+
+<p>For more information, see <a href="http://github.com/rtomayko/rdiscount">the project page</a>.</p>
+
+<h2>Usage</h2>
+
+<p>RDiscount implements the basic protocol popularized by RedCloth and adopted
+by BlueCloth:</p>
+
+<pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'rdiscount'</span>
+<span class='markdown identifier id'>markdown</span> <span class='assign token'>=</span> <span class='RDiscount constant id'>RDiscount</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;Hello World!&quot;</span><span class='rparen token'>)</span>
+<span class='puts identifier id'>puts</span> <span class='markdown identifier id'>markdown</span><span class='dot token'>.</span><span class='to_html identifier id'>to_html</span>
+</pre>
+
+<p>Inject RDiscount into your BlueCloth-using code by replacing your bluecloth
+require statements with the following:</p>
+
+<pre class="code"><span class='begin begin kw'>begin</span>
+  <span class='require identifier id'>require</span> <span class='string val'>'rdiscount'</span>
+  <span class='BlueCloth constant id'>BlueCloth</span> <span class='assign token'>=</span> <span class='RDiscount constant id'>RDiscount</span>
+<span class='rescue rescue kw'>rescue</span> <span class='LoadError constant id'>LoadError</span>
+  <span class='require identifier id'>require</span> <span class='string val'>'bluecloth'</span>
+<span class='end end kw'>end</span>
+</pre>
+
+<h2>COPYING</h2>
+
+<p>Discount is free software;  it is released under a BSD-style license
+that allows you to do as you wish with it as long as you don't attempt
+to claim it as your own work. RDiscount adopts Discount's license
+verbatim. See the file <code>COPYING</code> for more information.</p>
+</div>
           </div>
         </div>
       </div>                    
