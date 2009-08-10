@@ -1,11 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
-    <title>zenhob's laika - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/zenhob/laika/blob/3a9770c5bab886067fb16bf7642ef6f1a517823c">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
+    <title>zenhob's laika - Class: UserNotifier - GitHub Documentation</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,10 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +80,7 @@
             <li class=""><a href="http://github.com/zenhob/laika/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/zenhob/laika">Wiki</a></li>
             <li class=""><a href="http://github.com/zenhob/laika/graphs">Graphs</a></li>                    
-            <li class="active"><a href="zenhob/laika">Documentation</a></li>
+            <li class="active"><a href="/zenhob/laika">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +106,130 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/zenhob/laika/blob/3a9770c5bab886067fb16bf7642ef6f1a517823c">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="wikistyle">
+  <div class="section class UserNotifier">
+  <h1>Class: UserNotifier</h1>
+  <div class="section inheritance">
+  <ul>
+  <li>ActionMailer::Base</li><ul><li>UserNotifier</li>
+  </ul></ul>
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup">
+      <div class="section methodsummary">
+    <h2>Public Instance Method Summary</h2>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href="#forgot_password-instance_method">#forgot_password</span><span class='args'>(user)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+Send a password reset email to <tt>user</tt>.
+</p>
 
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails">
+  <h2>Public Instance Method Details</h2>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>forgot_password</h3>
+</div><div id="forgot_password-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>forgot_password</span><span class='args'>(user)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div><div class="section docstring">
+  <p>
+Send a password reset email to <tt>user</tt>.
+</p>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="param">
+  <h3>Parameters:</h3>
+  <dl>
+  
+    
+      <dt>
+        <span class='type'>[<tt><a href="User.html" title="User">User</a></tt>]</span>
+        <span class='name'>user</span>
+        
+      </dt>
+      <dd>
+        <span class='desc'><p>
+message recipient
+</p>
+</span>
+      </dd>
+    
+  
+  </dl>
+</div>
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'app/models/user_notifier.rb', line 6</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/zenhob/laika/blob/3a9770c5bab886067fb16bf7642ef6f1a517823c/app/models/user_notifier.rb#L6">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">6
+7
+8
+9
+10</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='forgot_password identifier id'>forgot_password</span><span class='lparen token'>(</span><span class='user identifier id'>user</span><span class='rparen token'>)</span>
+  <span class='setup_email identifier id'>setup_email</span><span class='lparen token'>(</span><span class='user identifier id'>user</span><span class='rparen token'>)</span>
+  <span class='subject identifier id'>subject</span> <span class='string val'>'Request to change your Laika password'</span>
+  <span class='body identifier id'>body</span> <span class='symbol val'>:recipient</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='user identifier id'>user</span><span class='dot token'>.</span><span class='first_name identifier id'>first_name</span><span class='comma token'>,</span> <span class='symbol val'>:url</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='dstring node'>&quot;#{ENV['HOST_URL']}/account/reset_password/#{user.password_reset_code}&quot;</span> 
+<span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+</div>
           </div>
         </div>
       </div>                    
