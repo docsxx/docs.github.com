@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>freelancing-god's thinking-sphinx - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/freelancing-god/thinking-sphinx/blob/4f6bbc56a4b61652be89c8dc45ebc7f291da947f">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/freelancing-god/thinking-sphinx/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/freelancing-god/thinking-sphinx">Wiki</a></li>
             <li class=""><a href="http://github.com/freelancing-god/thinking-sphinx/graphs">Graphs</a></li>                    
-            <li class="active"><a href="freelancing-god/thinking-sphinx">Documentation</a></li>
+            <li class="active"><a href="/freelancing-god/thinking-sphinx">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,143 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/freelancing-god/thinking-sphinx/blob/4f6bbc56a4b61652be89c8dc45ebc7f291da947f">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>Thinking Sphinx</h1>
+<h2>Usage</h2>
+<p>First, if you haven&#8217;t done so already, check out the main <a href="http://ts.freelancing-gods.com/usage.html">usage</a> page. Once you&#8217;ve done that, the next place to look for information is the specific method docs &#8211; ThinkingSphinx::Search and ThinkingSphinx::Index::Builder in particular.</p>
+<p>Keep in mind that while Thinking Sphinx works for ActiveRecord with Merb, it doesn&#8217;t yet support DataMapper (although that is planned).</p>
+<h2>Contributing</h2>
+<p>Fork on GitHub and after you&#8217;ve committed tested patches, send a pull request.</p>
+<p>To quickly see if your system is ready to run the thinking sphinx specs, run the contribute.rb script found in the project root directory. Use the following instructions to install any missing requirements.</p>
+<p>To get the spec suite running, you will need to install the not-a-mock gem if you don&#8217;t already have it:</p>
+git clone git://github.com/freelancing-god/not-a-mock.git
+cd not-a-mock
+rake gem
+gem install pkg/not_a_mock-1.1.0.gem
 
+<p>Then install the ginger gem. The steps are the same, except that you might need to sudo the gem install:</p>
+git clone git://github.com/freelancing-god/ginger.git
+cd ginger
+rake gem
+sudo gem install pkg/ginger-1.1.0.gem
+
+<p>Alternatively, install the ginger gem directly from the freelancing-god github repository</p>
+sudo gem sources -a http://gems.github.com
+sudo gem install freelancing-god-ginger
+
+<p>Then install the cucumber, yard, jeweler and rspec gems. Make sure you have a git install version 1.6.0.0 or higher, otherwise the jeweler gem won&#8217;t install.</p>
+sudo gem install cucumber yard jeweler rspec
+<p>Then set up your database:</p>
+cp spec/fixtures/database.yml.default spec/fixtures/database.yml
+mysqladmin -u root create thinking_sphinx
+
+<p>This last step can be done automatically by the contribute.rb script if all dependencies are met.</p>
+<p>Make sure you don&#8217;t have another Sphinx daemon (searchd) running. If you do, quit it with &#8220;rake ts:stop&#8221;<br />
+in the app root.</p>
+<p>You should now have a passing test suite from which to build your patch on.</p>
+rake spec
+<p>If you get the message &#8220;Failed to start searchd daemon&#8221;, run the spec with sudo:</p>
+sudo rake spec
+<p>If you quit the spec suite before it&#8217;s completed, you may be left with data in the test<br />
+database, causing the next run to have failures. Let that run complete and then try again.</p>
+<h2>Contributors</h2>
+<p>Since I first released this library, there&#8217;s been quite a few people who have submitted patches, to my immense gratitude. Others have suggested syntax changes and general improvements. So my thanks to the following people:</p>
+<ul>
+	<li>Joost Hietbrink</li>
+	<li>Jonathan Conway</li>
+	<li>Gregory Mirzayantz</li>
+	<li>Tung Nguyen</li>
+	<li>Sean Cribbs</li>
+	<li>Benoit Caccinolo</li>
+	<li>John Barton</li>
+	<li>Oliver Beddows</li>
+	<li>Arthur Zapparoli</li>
+	<li>Dusty Doris</li>
+	<li>Marcus Crafter</li>
+	<li>Patrick Lenz</li>
+	<li>Björn Andreasson</li>
+	<li>James Healy</li>
+	<li>Jae-Jun Hwang</li>
+	<li>Xavier Shay</li>
+	<li>Jason Rust</li>
+	<li>Gopal Patel</li>
+	<li>Chris Heald</li>
+	<li>Peter Vandenberk</li>
+	<li>Josh French</li>
+	<li>Andrew Bennett</li>
+	<li>Jordan Fowler</li>
+	<li>Seth Walker</li>
+	<li>Joe Noon</li>
+	<li>Wolfgang Postler</li>
+	<li>Rick Olson</li>
+	<li>Killian Murphy</li>
+	<li>Morten Primdahl</li>
+	<li>Ryan Bates</li>
+	<li>David Eisinger</li>
+	<li>Shay Arnett</li>
+	<li>Minh Tran</li>
+	<li>Jeremy Durham</li>
+	<li>Piotr Sarnacki</li>
+	<li>Matt Johnson</li>
+	<li>Nicolas Blanco</li>
+	<li>Max Lapshin</li>
+	<li>Josh Natanson</li>
+	<li>Philip Hallstrom</li>
+	<li>Christian Rishøj</li>
+	<li>Mike Flester</li>
+	<li>Jim Remsik</li>
+	<li>Kennon Ballou</li>
+	<li>Henrik Nyh</li>
+	<li>Emil Tin</li>
+	<li>Doug Cole</li>
+	<li>Ed Hickey</li>
+	<li>Evan Weaver</li>
+	<li>Thibaut Barrere</li>
+	<li>Kristopher Chambers</li>
+	<li>Dmitrij Smalko</li>
+	<li>Aleksey Yeschenko</li>
+	<li>Lachie Cox</li>
+	<li>Lourens Naude</li>
+	<li>Tom Davies</li>
+	<li>Dan Pickett</li>
+	<li>Alex Caudill</li>
+	<li>Jim Benton</li>
+	<li>John Aughey</li>
+	<li>Keith Pitty</li>
+	<li>Jeff Talbot</li>
+	<li>Dana Contreras</li>
+	<li>Menno van der Sman</li>
+	<li>Bill Harding</li>
+	<li>Isaac Feliu</li>
+	<li>Andrei Bocan</li>
+	<li>László Bácsi</li>
+	<li>Peter Wagenet</li>
+	<li>Max Lapshin</li>
+	<li>Martin Emde</li>
+	<li>David Wennergren</li>
+	<li>Mark Lane</li>
+	<li>Eric Lindvall</li>
+	<li>Lawrence Pit</li>
+	<li>Mike Bailey</li>
+	<li>Bill Leeper</li>
+	<li>Michael Reinsch</li>
+	<li>Anderson Dias</li>
+	<li>Jerome Riga</li>
+	<li>Tien Dung</li>
+	<li>Johannes Kaefer</li>
+	<li>Paul Campbell</li>
+	<li>Matthew Beale</li>
+	<li>Tom Simnett</li>
+	<li>Erik Ostrom</li>
+	<li>Ole Riesenberg</li>
+	<li>Josh Kalderimis</li>
+	<li>J.D. Hollis</li>
+	<li>Jeffrey Chupp</li>
+	<li>Rob Anderton</li>
+	<li>Zach Inglis</li>
+	<li>Ward Bekker</li>
+</ul>
+</div>
           </div>
         </div>
       </div>                    
