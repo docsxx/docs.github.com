@@ -1,11 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
-    <title>mojombo's grit - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/mojombo/grit/blob/b93ec95e50959c39e996f1642313e839bdf94039">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
+    <title>mojombo's grit - Module: Grit - GitHub Documentation</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,10 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +80,7 @@
             <li class=""><a href="http://github.com/mojombo/grit/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/mojombo/grit">Wiki</a></li>
             <li class=""><a href="http://github.com/mojombo/grit/graphs">Graphs</a></li>                    
-            <li class="active"><a href="mojombo/grit">Documentation</a></li>
+            <li class="active"><a href="/mojombo/grit">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +106,244 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/mojombo/grit/blob/b93ec95e50959c39e996f1642313e839bdf94039">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="wikistyle">
+  <div class="section module Grit">
+  <h1>Module: Grit</h1>
+  <div class="section docstring">
+  <p>
+this implements a file-based &#8216;file index&#8217;, an simple index of
+all of the reachable commits in a repo, along with the parents and which
+files were modified during each commit
+</p>
+<p>
+this class looks for a file named &#8217;[.git]/file-index&#8217;,
+generated via:
+</p>
+<p>
+git log --pretty=oneline --name-only --parents
+--reverse --all &gt; file-index
+</p>
+<p>
+for this to work properly, you&#8217;ll want to add the following as a
+post-receive hook to keep the index up to date
+</p>
+<p>
+git log --pretty=oneline --name-only --parents
+--reverse [old-rev]..[new-rev] &gt;&gt; file-index
+</p>
 
+</div><div class="section attributes">
+  
+    <div class="">
+      <h2>Class Attributes</h2>
+      <table>
+      
+        <tr>
+          <th class="name">debug</td>
+          <td class="readwrite">
+            [<span id='debug-class_method'>R</span><span id='debug=-class_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Set <tt>debug</tt> to true to log all git calls and responses.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">logger</td>
+          <td class="readwrite">
+            [<span id='logger-class_method'>R</span><span id='logger=-class_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+The standard <tt>logger</tt> for debugging git calls - this defaults to a
+plain STDOUT logger.
+</p>
+
+            
+          </td>
+        </tr>
+      
+        <tr>
+          <th class="name">use_git_ruby</td>
+          <td class="readwrite">
+            [<span id='use_git_ruby-class_method'>R</span><span id='use_git_ruby=-class_method'>W</span>] 
+          </td>
+          <td class="visibility">
+            public
+          </td>
+          <td class="docstring">
+            <p>
+Sets the attribute <tt>use_git_ruby</tt>.
+</p>
+
+            
+          </td>
+        </tr>
+      
+      </table>
+    </div>
+  
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup">
+      <div class="section methodsummary">
+    <h2>Public Class Method Summary</h2>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href="#log-class_method">log</span><span class='args'>(str)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href="#version-class_method">version</span><span class='args'></span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails">
+  <h2>Public Class Method Details</h2>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>log</h3>
+</div><div id="log-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>log</span><span class='args'>(str)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/grit.rb', line 55</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/mojombo/grit/blob/b93ec95e50959c39e996f1642313e839bdf94039/lib/grit.rb#L55">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">55
+56
+57</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='log identifier id'>log</span><span class='lparen token'>(</span><span class='str identifier id'>str</span><span class='rparen token'>)</span>
+  <span class='logger identifier id'>logger</span><span class='dot token'>.</span><span class='debug identifier id'>debug</span> <span class='lbrace token'>{</span> <span class='str identifier id'>str</span> <span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>version</h3>
+</div><div id="version-class_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>version</span><span class='args'></span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/grit.rb', line 64</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/mojombo/grit/blob/b93ec95e50959c39e996f1642313e839bdf94039/lib/grit.rb#L64">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">64
+65
+66
+67</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='version identifier id'>version</span>
+  <span class='yml identifier id'>yml</span> <span class='assign token'>=</span> <span class='YAML constant id'>YAML</span><span class='dot token'>.</span><span class='load identifier id'>load</span><span class='lparen token'>(</span><span class='File constant id'>File</span><span class='dot token'>.</span><span class='read identifier id'>read</span><span class='lparen token'>(</span><span class='File constant id'>File</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='File constant id'>File</span><span class='dot token'>.</span><span class='dirname identifier id'>dirname</span><span class='lparen token'>(</span><span class='__FILE__ __file__ kw'>__FILE__</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='dstring node'>%w[.. VERSION.yml]</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='dstring node'>&quot;#{yml[:major]}.#{yml[:minor]}.#{yml[:patch]}&quot;</span>
+<span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+</div>
           </div>
         </div>
       </div>                    

@@ -1,11 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
-    <title>mojombo's grit - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/mojombo/grit/blob/b93ec95e50959c39e996f1642313e839bdf94039">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
+    <title>mojombo's grit - Module: Lazy - GitHub Documentation</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,10 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +80,7 @@
             <li class=""><a href="http://github.com/mojombo/grit/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/mojombo/grit">Wiki</a></li>
             <li class=""><a href="http://github.com/mojombo/grit/graphs">Graphs</a></li>                    
-            <li class="active"><a href="mojombo/grit">Documentation</a></li>
+            <li class="active"><a href="/mojombo/grit">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +106,136 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/mojombo/grit/blob/b93ec95e50959c39e996f1642313e839bdf94039">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="wikistyle">
+  <div class="section module Lazy">
+  <h1>Module: Lazy</h1>
+  <div class="section docstring">
+  <p>
+Allows attributes to be declared as lazy, meaning that they won&#8217;t be
+computed until they are asked for.
+</p>
+<p>
+Works by delegating each lazy_reader to a cached lazy_source method.
+</p>
+<p>
+class Person
+</p>
+<pre class="code">
+  <span class='lazy_reader identifier id'>lazy_reader</span> <span class='symbol val'>:eyes</span>
 
+  <span class='def def kw'>def</span> <span class='lazy_source identifier id'>lazy_source</span>
+    <span class='OpenStruct constant id'>OpenStruct</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='symbol val'>:eyes</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>2</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+end
+</p>
+<p>
+&gt;&gt; Person.new.eyes
+</p>
+<h1>&gt; 2</h1>
+
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup">
+      <div class="section methodsummary">
+    <h2>Public Instance Method Summary</h2>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        <span class='name'><a href="#lazy_reader-instance_method">#lazy_reader</span><span class='args'>(*args)</span>
+        <span class='block'></span>
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+  </div>
+<div class="section methoddetails">
+  <h2>Public Instance Method Details</h2>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>lazy_reader</h3>
+</div><div id="lazy_reader-instance_method" class="section method">
+  <div class="details_title">
+  <div class='section methodsignature'>
+  <tt class='def'>
+    <span class='visibility'>public</span>
+    <span class='return_types'></span>
+    <span class='name'>lazy_reader</span><span class='args'>(*args)</span>
+    <span class='block'></span>
+  </tt>
+</div>
+
+</div></div>
+<div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="files" style="display:none">
+    <div class="file">
+      <div class="meta">
+        <div class="info">
+          <span>File 'lib/grit/lazy.rb', line 19</span>
+        </div>
+        <div class="actions">      
+          <a id="raw-url" href="http://github.com/mojombo/grit/blob/b93ec95e50959c39e996f1642313e839bdf94039/lib/grit/lazy.rb#L19">raw</a>      
+        </div>
+      </div>
+            
+      <div class="data syntax">    
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td>            
+                <pre class="line_numbers">19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30</pre>
+              </td>
+              <td width="100%">                    
+                <div class="highlight"><pre class="code"><span class='def def kw'>def</span> <span class='lazy_reader identifier id'>lazy_reader</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='arg identifier id'>arg</span><span class='bitor op'>|</span>
+    <span class='ivar identifier id'>ivar</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;@#{arg}&quot;</span>
+    <span class='define_method identifier id'>define_method</span><span class='lparen token'>(</span><span class='arg identifier id'>arg</span><span class='rparen token'>)</span> <span class='do do kw'>do</span>
+      <span class='if if kw'>if</span> <span class='instance_variable_defined? fid id'>instance_variable_defined?</span><span class='lparen token'>(</span><span class='ivar identifier id'>ivar</span><span class='rparen token'>)</span>
+        <span class='val identifier id'>val</span> <span class='assign token'>=</span> <span class='instance_variable_get identifier id'>instance_variable_get</span><span class='lparen token'>(</span><span class='ivar identifier id'>ivar</span><span class='rparen token'>)</span>
+        <span class='return return kw'>return</span> <span class='val identifier id'>val</span> <span class='if if_mod kw'>if</span> <span class='val identifier id'>val</span>
+      <span class='end end kw'>end</span>
+      <span class='instance_variable_set identifier id'>instance_variable_set</span><span class='lparen token'>(</span><span class='ivar identifier id'>ivar</span><span class='comma token'>,</span> <span class='lparen token'>(</span><span class='@lazy_source ivar id'>@lazy_source</span> <span class='opasgn op'>||=</span> <span class='lazy_source identifier id'>lazy_source</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='arg identifier id'>arg</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre></div>          
+              </td>
+            </tr>
+          </tbody>
+        </table>    
+      </div>
+    </div>  
+  </div>
+</div>
+<div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+</div>
           </div>
         </div>
       </div>                    
