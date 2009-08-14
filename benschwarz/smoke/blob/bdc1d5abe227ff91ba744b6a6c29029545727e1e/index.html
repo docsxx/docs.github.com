@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>benschwarz's smoke - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/benschwarz/smoke/blob/bdc1d5abe227ff91ba744b6a6c29029545727e1e">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/benschwarz/smoke/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/benschwarz/smoke">Wiki</a></li>
             <li class=""><a href="http://github.com/benschwarz/smoke/graphs">Graphs</a></li>                    
-            <li class="active"><a href="benschwarz/smoke">Documentation</a></li>
+            <li class="active"><a href="/benschwarz/smoke">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,132 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/benschwarz/smoke/blob/bdc1d5abe227ff91ba744b6a6c29029545727e1e">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>smoke</h1>
 
+<p>smoke is a Ruby based DSL that allows you to query web services such as YQL, RSS / Atom and JSON or XML in an elegant manner.</p>
+
+<p>These "services" can then be re-represented, sorted and filtered. Data can be collected from multiple sources, sorted via a common property, chopped up and refried.</p>
+
+<p>Then you can output as a plain ruby object (or JSON)</p>
+
+<h2>Examples of use</h2>
+
+<ul>
+<li>The <code>examples</code> directory has something to get you running straight away</li>
+<li>I powered <a href="http://www.germanforblack.com">my entire site</a> <a href="http://github.com/benschwarz/benschwarz-site/blob/44de70463c744d821d3ffd2cf940e6d3e415fbdd/lib/stream.rb">using smoke</a>, until further documentation exists, this is probably a good place to start.</li>
+<li>Read further details in the <a href="http://rdoc.info/projects/benschwarz/smoke">rdoc documentation</a> or <a href="http://wiki.github.com/benschwarz/smoke">the wiki</a></li>
+</ul>
+
+
+<h2>Media</h2>
+
+<ul>
+<li><a href="http://www.slideshare.net/benschwarz/smoke-1371124">Presentation from Melbourne #roro</a></li>
+<li>Early <a href="http://vimeo.com/4272804">screencast</a> to get developer / peer feedback</li>
+</ul>
+
+
+<h2>The concept</h2>
+
+<p>The concept comes from using <a href="http://pipes.yahoo.com">Yahoo Pipes</a> to make web based mash ups: Get a list of tv shows for my torrent client, compile a recipe book or make tools to give me a list of albums that artists in my music library are about to be released.</p>
+
+<h2>How or what to contribute</h2>
+
+<ul>
+<li>Test everything you do</li>
+<li>Add a way to output (XML, anyone?)</li>
+<li>Examples of queries you'd like to be able to do (email / github message them to me)</li>
+</ul>
+
+
+<h2>API Examples</h2>
+
+<h3>YQL</h3>
+
+<pre class="code"><span class='comment val'># This will use yahoo search to get an array of search results about Ruby</span>
+<span class='Smoke constant id'>Smoke</span><span class='dot token'>.</span><span class='yql identifier id'>yql</span><span class='lparen token'>(</span><span class='symbol val'>:ruby</span><span class='rparen token'>)</span> <span class='do do kw'>do</span>
+  <span class='select identifier id'>select</span>  <span class='symbol val'>:all</span>
+  <span class='from identifier id'>from</span>    <span class='string val'>&quot;search.web&quot;</span>
+  <span class='where identifier id'>where</span>   <span class='symbol val'>:query</span><span class='comma token'>,</span> <span class='string val'>&quot;ruby&quot;</span>
+
+  <span class='discard identifier id'>discard</span> <span class='symbol val'>:title</span><span class='comma token'>,</span> <span class='regexp val'>/tuesday/i</span>
+<span class='end end kw'>end</span>
+
+<span class='Smoke constant id'>Smoke</span><span class='dot token'>.</span><span class='yql identifier id'>yql</span><span class='lparen token'>(</span><span class='symbol val'>:python</span><span class='rparen token'>)</span> <span class='do do kw'>do</span>
+  <span class='select identifier id'>select</span>  <span class='symbol val'>:all</span>
+  <span class='from identifier id'>from</span>    <span class='string val'>&quot;search.web&quot;</span>
+  <span class='where identifier id'>where</span>   <span class='symbol val'>:query</span><span class='comma token'>,</span> <span class='string val'>&quot;python&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
+
+<h3>Join sources and use them together</h3>
+
+<pre class="code"><span class='Smoke constant id'>Smoke</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='symbol val'>:ruby</span><span class='comma token'>,</span> <span class='symbol val'>:python</span><span class='rparen token'>)</span>
+</pre>
+
+<p>or even</p>
+
+<pre class="code"><span class='Smoke constant id'>Smoke</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='symbol val'>:python</span><span class='comma token'>,</span> <span class='symbol val'>:ruby</span><span class='rparen token'>)</span> <span class='do do kw'>do</span>
+  <span class='emit identifier id'>emit</span> <span class='do do kw'>do</span>
+    <span class='sort identifier id'>sort</span> <span class='symbol val'>:title</span>
+    <span class='rename identifier id'>rename</span> <span class='symbol val'>:shit_name</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:title</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+
+<h3>Define a source allowing for variables to be injected later</h3>
+
+<p>Source definition:</p>
+
+<pre class="code"><span class='Smoke constant id'>Smoke</span><span class='dot token'>.</span><span class='feed identifier id'>feed</span> <span class='symbol val'>:delicious</span> <span class='do do kw'>do</span>
+  <span class='prepare identifier id'>prepare</span> <span class='do do kw'>do</span>
+    <span class='url identifier id'>url</span> <span class='dstring node'>&quot;http://feeds.delicious.com/v2/rss/#{username}?count=15&quot;</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+
+<p>Execution:</p>
+
+<pre class="code"><span class='Smoke constant id'>Smoke</span><span class='lbrack token'>[</span><span class='symbol val'>:delicious</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='username identifier id'>username</span><span class='lparen token'>(</span><span class='string val'>&quot;bschwarz&quot;</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='output identifier id'>output</span>
+</pre>
+
+<h3>CI</h3>
+
+<p>Integrity <a href="http://integrity.ffolio.net/smoke">is running for smoke</a></p>
+
+<h3>TODO (working on, just mental notes)</h3>
+
+<h4>Later / maybe</h4>
+
+<ul>
+<li>YQL w/oAuth</li>
+<li>YQL Subqueries?</li>
+<li>Implement basic auth for sources</li>
+</ul>
+
+
+<h4>For wiki pages (docs, later)</h4>
+
+<ul>
+<li>Document all sources with their irrespective differential methods</li>
+<li>How to use <code>path</code></li>
+<li>YQL Definitions</li>
+<li>Tranformations</li>
+<li>Insert</li>
+<li>Joining</li>
+<li>Variable injection</li>
+<li>Sort, Reverse</li>
+<li>Keep, Discard</li>
+<li>Truncate</li>
+<li>Manually setting the content type for a url</li>
+</ul>
+
+
+<h3>Copyright</h3>
+
+<p>Copyright (c) 2009 Ben Schwarz. See LICENSE for details.</p>
+</div>
           </div>
         </div>
       </div>                    
