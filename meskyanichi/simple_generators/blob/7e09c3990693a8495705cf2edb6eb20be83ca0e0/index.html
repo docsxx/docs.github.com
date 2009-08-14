@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>meskyanichi's simple_generators - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/meskyanichi/simple_generators/blob/7e09c3990693a8495705cf2edb6eb20be83ca0e0">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/meskyanichi/simple_generators/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/meskyanichi/simple_generators">Wiki</a></li>
             <li class=""><a href="http://github.com/meskyanichi/simple_generators/graphs">Graphs</a></li>                    
-            <li class="active"><a href="meskyanichi/simple_generators">Documentation</a></li>
+            <li class="active"><a href="/meskyanichi/simple_generators">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,113 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/meskyanichi/simple_generators/blob/7e09c3990693a8495705cf2edb6eb20be83ca0e0">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>Simple Generators</h1>
+<p>
+To get you up and running just a little bit faster!
+</p>
+<h2>Installation</h2>
+<pre class="code">
+  <span class='gem identifier id'>gem</span> <span class='sources identifier id'>sources</span> <span class='minus op'>-</span><span class='a identifier id'>a</span> <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/gems.github.com
+  sudo gem install meskyanichi-simple_generators
+</span></pre>
+<h2>Simple Capistrano Recipe</h2>
+<p>
+This generator will generate a simple capistrano template. You can supply
+some arguments to let the generate fill in the deployment recipe for you as
+well. This generator is currently made specifically for Ruby on Rails with
+Phusion Passenger and Git Repository. Of course, you can still generate the
+deployment recipe and alter the sections within it to get it to deploy to
+your liking!
+</p>
+<h4>To generate a dry Capistrano Deployment Recipe, run the following command:</h4>
+<pre class="code">
+  <span class='script identifier id'>script</span><span class='div op'>/</span><span class='generate identifier id'>generate</span> <span class='simple_capistrano_recipe identifier id'>simple_capistrano_recipe</span>
+</pre>
+<h4>You can also provide arguments to generate an already filled in recipe:</h4>
+<pre class="code">
+  <span class='script identifier id'>script</span><span class='div op'>/</span><span class='generate identifier id'>generate</span> <span class='simple_capistrano_recipe identifier id'>simple_capistrano_recipe</span> <span class='domain identifier id'>domain</span><span class='symbol val'>:example</span><span class='dot token'>.</span><span class='com identifier id'>com</span> <span class='user identifier id'>user</span><span class='symbol val'>:root</span> <span class='deploy_path identifier id'>deploy_path</span><span class='symbol val'>:/</span><span class='var identifier id'>var</span><span class='div op'>/</span><span class='rails identifier id'>rails</span><span class='div op'>/</span><span class='example identifier id'>example</span><span class='dot token'>.</span><span class='com identifier id'>com</span>
+  <span class='repository_type identifier id'>repository_type</span><span class='symbol val'>:git</span> <span class='repository_url identifier id'>repository_url</span><span class='symbol val'>:ssh</span><span class='symbol val'>:/</span><span class='regexp val'>/root@example.com/</span><span class='var identifier id'>var</span><span class='div op'>/</span><span class='git identifier id'>git</span><span class='div op'>/</span><span class='example identifier id'>example</span><span class='dot token'>.</span><span class='git identifier id'>git</span>
+</pre>
+<p>
+After generating the deployment recipe (RAILS_ROOT/config/deploy.rb), you
+might want to double check if everything is set up correctly before you
+actually try to deploy.
+</p>
+<h2>Simple Git Template</h2>
+<p>
+This is a very small generator that just generates a .gitignore file in the
+RAILS_ROOT with a couple of predefined ingore lines.
+</p>
+<h4>No arguments can be supplied here:</h4>
+<pre class="code">
+  <span class='script identifier id'>script</span><span class='div op'>/</span><span class='generate identifier id'>generate</span> <span class='simple_git_template identifier id'>simple_git_template</span>
+</pre>
+<h2>Simple Paperclip Model</h2>
+<p>
+Now, I always tend to forget all the settings I usually need for my
+Paperclip model, hence why I created the gem and added this generators as
+well.
+</p>
+<h4>To generate a Paperclip Model you are required to supply 2 of the 3 arguments:</h4>
+<pre class="code">
+  <span class='script identifier id'>script</span><span class='div op'>/</span><span class='generate identifier id'>generate</span> <span class='simple_paperclip_model identifier id'>simple_paperclip_model</span> <span class='model identifier id'>model</span><span class='symbol val'>:user</span> <span class='attachment identifier id'>attachment</span><span class='symbol val'>:avatar</span> <span class='lbrack token'>[</span><span class='optional identifier id'>optional</span><span class='colon op'>:</span> <span class='type identifier id'>type</span><span class='symbol val'>:image</span><span class='rbrack token'>]</span>
+</pre>
+<p>
+The optional type:image argument will generate example &quot;styles&quot;
+for Paperclip.
+</p>
+<h2>Simple Tasks</h2>
+<p>
+At the moment, there is only one Task Generator available.
+</p>
+<h3>Simple Repository Tasks</h3>
+<p>
+This generator will generate 3 rake tasks that can help with creating and
+destroying your applications remote repository using SSH on your own
+server.
+</p>
+<h4>To generates these Repository Rake Tasks, run the following command:</h4>
+<pre class="code">
+  <span class='script identifier id'>script</span><span class='div op'>/</span><span class='generate identifier id'>generate</span> <span class='simple_repository_tasks identifier id'>simple_repository_tasks</span>
+</pre>
+<p>
+If you do it this way, you will manually have to open the rake tasks,
+located in the lib/tasks/simple_tasks/repository.rake file, and add your
+server settings in there.
+</p>
+<h4>If you wish to, like I do, let the generator insert these settings in for you, execute the following command:</h4>
+<pre class="code">
+  <span class='script identifier id'>script</span><span class='div op'>/</span><span class='generate identifier id'>generate</span> <span class='simple_repository_tasks identifier id'>simple_repository_tasks</span> <span class='domain identifier id'>domain</span><span class='symbol val'>:example</span><span class='dot token'>.</span><span class='com identifier id'>com</span> <span class='path identifier id'>path</span><span class='symbol val'>:/</span><span class='var identifier id'>var</span><span class='div op'>/</span><span class='git identifier id'>git</span><span class='div op'>/</span><span class='example identifier id'>example</span><span class='dot token'>.</span><span class='git identifier id'>git</span>
+  <span class='user identifier id'>user</span><span class='symbol val'>:root</span> <span class='password identifier id'>password</span><span class='symbol val'>:mys3cr3tp4ssw0rd</span>
+</pre>
+<h4>Now, when you run the following command:</h4>
+<pre class="code">
+  <span class='rake identifier id'>rake</span> <span class='minus op'>-</span><span class='T constant id'>T</span>
+</pre>
+<p>
+You will see a list of all your available rake tasks, including the
+Repository Rake Tasks and their description.
+</p>
+<p>
+These rake tasks allow your to quickly, without manually SSH&#8217;ing to
+your server, create and destroy your git repository for a specific Ruby on
+Rails application. Additionally, if you haven&#8217;t already, you can run
+a simple command (rake simple_tasks:repository:add_to_git) to add your
+remote repository location (origin) to your local repository.
+</p>
+<h4>These are the commands that are currently available for the Simple Repository Tasks:</h4>
+<pre class="code">
+  <span class='rake identifier id'>rake</span> <span class='simple_tasks identifier id'>simple_tasks</span><span class='symbol val'>:repository</span><span class='symbol val'>:add_to_git</span>
+  <span class='rake identifier id'>rake</span> <span class='simple_tasks identifier id'>simple_tasks</span><span class='symbol val'>:repository</span><span class='symbol val'>:create</span>
+  <span class='rake identifier id'>rake</span> <span class='simple_tasks identifier id'>simple_tasks</span><span class='symbol val'>:repository</span><span class='symbol val'>:destroy</span>
+</pre>
+<h2>Copyright</h2>
+<p>
+Copyright &#169; 2009 Michael van Rooijen. See LICENSE for details.
+</p>
 
+</div>
           </div>
         </div>
       </div>                    
