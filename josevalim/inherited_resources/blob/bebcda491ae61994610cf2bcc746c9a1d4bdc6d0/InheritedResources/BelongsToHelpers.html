@@ -1,11 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
-    <title>josevalim's inherited_resources - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/josevalim/inherited_resources/blob/bebcda491ae61994610cf2bcc746c9a1d4bdc6d0">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
+    <title>josevalim's inherited_resources - Module: InheritedResources::BelongsToHelpers - GitHub Documentation</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -16,7 +12,7 @@
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
 <script type="text/javascript" src="http://assets3.github.com/javascripts/bundle.js"></script>              
-<script src="app.js" type="text/javascript" charset="utf-8"></script>
+<script src="../app.js" type="text/javascript" charset="utf-8"></script>
 
 <script type="text/javascript" src="http://docs.github.com/javascripts/md5.js"></script>
 <script type="text/javascript" src="http://docs.github.com/javascripts/repos.js"></script>
@@ -46,12 +42,11 @@
   });
 </script>
 
-    <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
+    <link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
   </head>
   <body>    
+    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +80,7 @@
             <li class=""><a href="http://github.com/josevalim/inherited_resources/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/josevalim/inherited_resources">Wiki</a></li>
             <li class=""><a href="http://github.com/josevalim/inherited_resources/graphs">Graphs</a></li>                    
-            <li class="active"><a href="josevalim/inherited_resources">Documentation</a></li>
+            <li class="active"><a href="/josevalim/inherited_resources">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +106,75 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/josevalim/inherited_resources/blob/bebcda491ae61994610cf2bcc746c9a1d4bdc6d0">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="wikistyle">
+  <div class="section module InheritedResources_BelongsToHelpers">
+  <h1>Module: InheritedResources::BelongsToHelpers</h1>
+  <div class="section docstring">
+  <h1>belongs_to</h1>
+<p>
+Let&#8217;s suppose that we have some tasks that belongs to projects. To
+specify this assoication in your controllers, just do:
+</p>
+<pre class="code">
+   <span class='class class kw'>class</span> <span class='TasksController constant id'>TasksController</span> <span class='lt op'>&lt;</span> <span class='InheritedResources constant id'>InheritedResources</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
+     <span class='belongs_to identifier id'>belongs_to</span> <span class='symbol val'>:project</span>
+   <span class='end end kw'>end</span>
+</pre>
+<p>
+belongs_to accepts several options to be able to configure the association.
+For example, if you want urls like /projects/:project_title/tasks, you can
+customize how InheritedResources find your projects:
+</p>
+<pre class="code">
+   <span class='class class kw'>class</span> <span class='TasksController constant id'>TasksController</span> <span class='lt op'>&lt;</span> <span class='InheritedResources constant id'>InheritedResources</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
+     <span class='belongs_to identifier id'>belongs_to</span> <span class='symbol val'>:project</span><span class='comma token'>,</span> <span class='symbol val'>:finder</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:find_by_title!</span><span class='comma token'>,</span> <span class='symbol val'>:param</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:project_title</span>
+   <span class='end end kw'>end</span>
+</pre>
+<p>
+It also accepts :route_name, :parent_class and :instance_name as options.
+Check the lib/inherited_resources/class_methods.rb for more.
+</p>
+<h1>nested_belongs_to</h1>
+<p>
+Now, our Tasks get some Comments and you need to nest even deeper. Good
+practices says that you should never nest more than two resources, but
+sometimes you have to for security reasons. So this is an example of how
+you can do it:
+</p>
+<pre class="code">
+   <span class='class class kw'>class</span> <span class='CommentsController constant id'>CommentsController</span> <span class='lt op'>&lt;</span> <span class='InheritedResources constant id'>InheritedResources</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
+     <span class='nested_belongs_to identifier id'>nested_belongs_to</span> <span class='symbol val'>:project</span><span class='comma token'>,</span> <span class='symbol val'>:task</span>
+   <span class='end end kw'>end</span>
+</pre>
+<p>
+If you need to configure any of these belongs to, you can nested them using
+blocks:
+</p>
+<pre class="code">
+   <span class='class class kw'>class</span> <span class='CommentsController constant id'>CommentsController</span> <span class='lt op'>&lt;</span> <span class='InheritedResources constant id'>InheritedResources</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
+     <span class='belongs_to identifier id'>belongs_to</span> <span class='symbol val'>:project</span><span class='comma token'>,</span> <span class='symbol val'>:finder</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:find_by_title!</span><span class='comma token'>,</span> <span class='symbol val'>:param</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:project_title</span> <span class='do do kw'>do</span>
+       <span class='belongs_to identifier id'>belongs_to</span> <span class='symbol val'>:task</span>
+     <span class='end end kw'>end</span>
+   <span class='end end kw'>end</span>
+</pre>
+<p>
+Warning: calling several belongs_to is the same as nesting them:
+</p>
+<pre class="code">
+   <span class='class class kw'>class</span> <span class='CommentsController constant id'>CommentsController</span> <span class='lt op'>&lt;</span> <span class='InheritedResources constant id'>InheritedResources</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
+     <span class='belongs_to identifier id'>belongs_to</span> <span class='symbol val'>:project</span>
+     <span class='belongs_to identifier id'>belongs_to</span> <span class='symbol val'>:task</span>
+   <span class='end end kw'>end</span>
+</pre>
+<p>
+In other words, the code above is the same as calling nested_belongs_to.
+</p>
 
+</div><div class="section constants">
+  
+</div>
+</div>
+</div>
           </div>
         </div>
       </div>                    
