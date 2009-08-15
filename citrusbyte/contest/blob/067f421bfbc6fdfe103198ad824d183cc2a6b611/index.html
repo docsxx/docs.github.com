@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>citrusbyte's contest - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/citrusbyte/contest/blob/067f421bfbc6fdfe103198ad824d183cc2a6b611">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/citrusbyte/contest/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/citrusbyte/contest">Wiki</a></li>
             <li class=""><a href="http://github.com/citrusbyte/contest/graphs">Graphs</a></li>                    
-            <li class="active"><a href="citrusbyte/contest">Documentation</a></li>
+            <li class="active"><a href="/citrusbyte/contest">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,126 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/citrusbyte/contest/blob/067f421bfbc6fdfe103198ad824d183cc2a6b611">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>Contest</h1>
 
+<p>Contexts for Test::Unit.</p>
+
+<h2>Description</h2>
+
+<p>Write declarative tests using nested contexts without performance penalties. Contest is less than 100 lines of code and gets the job done.</p>
+
+<h2>Usage</h2>
+
+<p>Declare your tests as you would in RSpec or Shoulda:</p>
+
+<pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'contest'</span>
+
+<span class='class class kw'>class</span> <span class='SomeTest constant id'>SomeTest</span> <span class='lt op'>&lt;</span> <span class='Test constant id'>Test</span><span class='colon2 op'>::</span><span class='Unit constant id'>Unit</span><span class='colon2 op'>::</span><span class='TestCase constant id'>TestCase</span>
+  <span class='setup identifier id'>setup</span> <span class='do do kw'>do</span>
+    <span class='@value ivar id'>@value</span> <span class='assign token'>=</span> <span class='integer val'>1</span>
+  <span class='end end kw'>end</span>
+
+  <span class='teardown identifier id'>teardown</span> <span class='do do kw'>do</span>
+    <span class='@value ivar id'>@value</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+  <span class='end end kw'>end</span>
+
+  <span class='test identifier id'>test</span> <span class='string val'>&quot;sample test&quot;</span> <span class='do do kw'>do</span>
+    <span class='assert_equal identifier id'>assert_equal</span> <span class='integer val'>1</span><span class='comma token'>,</span> <span class='@value ivar id'>@value</span>
+  <span class='end end kw'>end</span>
+
+  <span class='context identifier id'>context</span> <span class='string val'>&quot;a context&quot;</span> <span class='do do kw'>do</span>
+    <span class='setup identifier id'>setup</span> <span class='do do kw'>do</span>
+      <span class='@value ivar id'>@value</span> <span class='opasgn op'>+=</span> <span class='integer val'>1</span>
+    <span class='end end kw'>end</span>
+
+    <span class='test identifier id'>test</span> <span class='string val'>&quot;more tests&quot;</span> <span class='do do kw'>do</span>
+      <span class='assert_equal identifier id'>assert_equal</span> <span class='integer val'>2</span><span class='comma token'>,</span> <span class='@value ivar id'>@value</span>
+    <span class='end end kw'>end</span>
+
+    <span class='context identifier id'>context</span> <span class='string val'>&quot;a nested context&quot;</span> <span class='do do kw'>do</span>
+      <span class='setup identifier id'>setup</span> <span class='do do kw'>do</span>
+        <span class='@value ivar id'>@value</span> <span class='opasgn op'>+=</span> <span class='integer val'>1</span>
+      <span class='end end kw'>end</span>
+
+      <span class='test identifier id'>test</span> <span class='string val'>&quot;yet more tests&quot;</span> <span class='do do kw'>do</span>
+        <span class='assert_equal identifier id'>assert_equal</span> <span class='integer val'>3</span><span class='comma token'>,</span> <span class='@value ivar id'>@value</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+
+<p>For your convenience, <code>context</code> is aliased as <code>describe</code> and <code>test</code> is aliased as <code>should</code>, so this is valid:</p>
+
+<pre class="code"><span class='class class kw'>class</span> <span class='SomeTest constant id'>SomeTest</span> <span class='lt op'>&lt;</span> <span class='Test constant id'>Test</span><span class='colon2 op'>::</span><span class='Unit constant id'>Unit</span><span class='colon2 op'>::</span><span class='TestCase constant id'>TestCase</span>
+  <span class='setup identifier id'>setup</span> <span class='do do kw'>do</span>
+    <span class='@value ivar id'>@value</span> <span class='assign token'>=</span> <span class='integer val'>1</span>
+  <span class='end end kw'>end</span>
+
+  <span class='describe identifier id'>describe</span> <span class='string val'>&quot;something&quot;</span> <span class='do do kw'>do</span>
+    <span class='setup identifier id'>setup</span> <span class='do do kw'>do</span>
+      <span class='@value ivar id'>@value</span> <span class='opasgn op'>+=</span> <span class='integer val'>1</span>
+    <span class='end end kw'>end</span>
+
+    <span class='should identifier id'>should</span> <span class='string val'>&quot;equal 2&quot;</span> <span class='do do kw'>do</span>
+      <span class='assert_equal identifier id'>assert_equal</span> <span class='integer val'>2</span><span class='comma token'>,</span> <span class='@value ivar id'>@value</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+
+<p>You can run it normally, it's Test::Unit after all. If you want to run a particular test, say "yet more tests", try this:</p>
+
+<pre class="code">$ <span class='testrb identifier id'>testrb</span> <span class='my_test identifier id'>my_test</span><span class='dot token'>.</span><span class='rb identifier id'>rb</span> <span class='minus op'>-</span><span class='n identifier id'>n</span> <span class='test_yet_more_tests identifier id'>test_yet_more_tests</span>
+</pre>
+
+<p>Or with a regular expression:</p>
+
+<pre class="code">$ <span class='testrb identifier id'>testrb</span> <span class='my_test identifier id'>my_test</span><span class='dot token'>.</span><span class='rb identifier id'>rb</span> <span class='minus op'>-</span><span class='n identifier id'>n</span> <span class='regexp val'>/yet_more_tests/</span>
+</pre>
+
+<h2>Installation</h2>
+
+<pre class="code">$ <span class='sudo identifier id'>sudo</span> <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='contest identifier id'>contest</span>
+</pre>
+
+<p>If you want to use it with Rails, add this to config/environment.rb:</p>
+
+<pre class="code"><span class='config identifier id'>config</span><span class='dot token'>.</span><span class='gem identifier id'>gem</span> <span class='string val'>&quot;contest&quot;</span>
+</pre>
+
+<p>Then you can vendor the gem:</p>
+
+<pre class="code"><span class='rake identifier id'>rake</span> <span class='gems identifier id'>gems</span><span class='symbol val'>:install</span>
+<span class='rake identifier id'>rake</span> <span class='gems identifier id'>gems</span><span class='symbol val'>:unpack</span>
+</pre>
+
+<h2>License</h2>
+
+<p>Copyright (c) 2009 Damian Janowski and Michel Martens for Citrusbyte</p>
+
+<p>Permission is hereby granted, free of charge, to any person
+obtaining a copy of this software and associated documentation
+files (the "Software"), to deal in the Software without
+restriction, including without limitation the rights to use,
+copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following
+conditions:</p>
+
+<p>The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.</p>
+
+<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.</p>
+</div>
           </div>
         </div>
       </div>                    
