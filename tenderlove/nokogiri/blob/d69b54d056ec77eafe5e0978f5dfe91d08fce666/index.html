@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>tenderlove's nokogiri - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/tenderlove/nokogiri/blob/d69b54d056ec77eafe5e0978f5dfe91d08fce666">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/tenderlove/nokogiri/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/tenderlove/nokogiri">Wiki</a></li>
             <li class=""><a href="http://github.com/tenderlove/nokogiri/graphs">Graphs</a></li>                    
-            <li class="active"><a href="tenderlove/nokogiri">Documentation</a></li>
+            <li class="active"><a href="/tenderlove/nokogiri">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,164 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/tenderlove/nokogiri/blob/d69b54d056ec77eafe5e0978f5dfe91d08fce666">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>Nokogiri (鋸)</h1>
+<ul>
+<li>http://nokogiri.org/
 
+</li>
+<li>http://github.com/tenderlove/nokogiri/wikis
+
+</li>
+<li>http://github.com/tenderlove/nokogiri/tree/master
+
+</li>
+<li>http://groups.google.com/group/nokogiri-talk
+
+</li>
+<li>http://github.com/tenderlove/nokogiri/issues
+
+</li>
+</ul>
+<h2>DESCRIPTION:</h2>
+<p>
+Nokogiri
+はHTMLとXMLとSAXとXSLTとReaderのパーサーです。とりわけ重要な特徴は、
+ドキュメントをXPathやCSS3セレクター経由で探索する機能を持つことです。
+</p>
+<p>
+XMLは暴力に似ている -
+XMLが君の問題を解決しないとしたら、君はXMLを十分に
+使いこなしていない事になる。
+</p>
+<h2>FEATURES:</h2>
+<ul>
+<li>XPath による探索
+
+</li>
+<li>CSS3 のセレクターによる探索
+
+</li>
+<li>XML/HTMLのビルダー
+
+</li>
+</ul>
+<p>
+XML/HTMLの高速な解析と探索検索、ならびにCSS3セレクタとXPathをサポートしています。
+</p>
+<p>
+スピードテスト：
+</p>
+<pre class="code">
+  <span class='mult op'>*</span> <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/gist.github.com/</span><span class='integer val'>24605</span>
+</pre>
+<p>
+また、NokogiriはHpricot互換の特徴を持ち、CSSやXPathも簡単に取り扱うことが出来ます。
+</p>
+<h2>SUPPORT:</h2>
+<p>
+Nokogiriのメーリングリスト:
+</p>
+<pre class="code">
+  <span class='mult op'>*</span> <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/groups.google.com/</span><span class='group identifier id'>group</span><span class='div op'>/</span><span class='nokogiri identifier id'>nokogiri</span><span class='minus op'>-</span><span class='talk identifier id'>talk</span>
+</pre>
+<p>
+バグ報告:
+</p>
+<pre class="code">
+  <span class='mult op'>*</span> <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/github.com/</span><span class='tenderlove identifier id'>tenderlove</span><span class='div op'>/</span><span class='nokogiri identifier id'>nokogiri</span><span class='div op'>/</span><span class='issues identifier id'>issues</span>
+</pre>
+<p>
+IRCのチャンネルはfreenodeの #nokogiri です。
+</p>
+<h2>SYNOPSIS:</h2>
+<pre class="code">
+  <span class='require identifier id'>require</span> <span class='string val'>'nokogiri'</span>
+  <span class='require identifier id'>require</span> <span class='string val'>'open-uri'</span>
+
+  <span class='doc identifier id'>doc</span> <span class='assign token'>=</span> <span class='Nokogiri constant id'>Nokogiri</span><span class='colon2 op'>::</span><span class='HTML constant id'>HTML</span><span class='lparen token'>(</span><span class='open identifier id'>open</span><span class='lparen token'>(</span><span class='string val'>'http://www.google.com/search?q=tenderlove'</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+
+  <span class='comment val'>####</span>
+  <span class='comment val'># Search for nodes by css</span>
+  <span class='doc identifier id'>doc</span><span class='dot token'>.</span><span class='css identifier id'>css</span><span class='lparen token'>(</span><span class='string val'>'h3.r a.l'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='link identifier id'>link</span><span class='bitor op'>|</span>
+    <span class='puts identifier id'>puts</span> <span class='link identifier id'>link</span><span class='dot token'>.</span><span class='content identifier id'>content</span>
+  <span class='end end kw'>end</span>
+
+  <span class='comment val'>####</span>
+  <span class='comment val'># Search for nodes by xpath</span>
+  <span class='doc identifier id'>doc</span><span class='dot token'>.</span><span class='xpath identifier id'>xpath</span><span class='lparen token'>(</span><span class='string val'>'//h3/a[@class=&quot;l&quot;]'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='link identifier id'>link</span><span class='bitor op'>|</span>
+    <span class='puts identifier id'>puts</span> <span class='link identifier id'>link</span><span class='dot token'>.</span><span class='content identifier id'>content</span>
+  <span class='end end kw'>end</span>
+
+  <span class='comment val'>####</span>
+  <span class='comment val'># Or mix and match.</span>
+  <span class='doc identifier id'>doc</span><span class='dot token'>.</span><span class='search identifier id'>search</span><span class='lparen token'>(</span><span class='string val'>'h3.r a.l'</span><span class='comma token'>,</span> <span class='string val'>'//h3/a[@class=&quot;l&quot;]'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='link identifier id'>link</span><span class='bitor op'>|</span>
+    <span class='puts identifier id'>puts</span> <span class='link identifier id'>link</span><span class='dot token'>.</span><span class='content identifier id'>content</span>
+  <span class='end end kw'>end</span>
+</pre>
+<h2>REQUIREMENTS:</h2>
+<ul>
+<li>ruby 1.8 or 1.9
+
+</li>
+<li>libxml2
+
+</li>
+<li>libxml2-dev
+
+</li>
+<li>libxslt
+
+</li>
+<li>libxslt-dev
+
+</li>
+</ul>
+<h2>INSTALL:</h2>
+<ul>
+<li>sudo gem install nokogiri
+
+</li>
+</ul>
+<h2>LICENSE:</h2>
+<p>
+(The MIT License)
+</p>
+<p>
+Copyright &#169; 2008 - 2009:
+</p>
+<ul>
+<li><tt>Patterson</tt>[http://tenderlovemaking.com]
+
+</li>
+<li><tt>Dalessio</tt>[http://mike.daless.io]
+
+</li>
+</ul>
+<p>
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the
+&#8216;Software&#8217;), to deal in the Software without restriction,
+including without limitation the rights to use, copy, modify, merge,
+publish, distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to the
+following conditions:
+</p>
+<p>
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+</p>
+<p>
+THE SOFTWARE IS PROVIDED &#8216;AS IS&#8217;, WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+USE OR OTHER DEALINGS IN THE SOFTWARE.
+</p>
+
+</div>
           </div>
         </div>
       </div>                    
