@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>mmangino's facebooker - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/mmangino/facebooker/blob/0608decbf1a5c9b5f9604eba4bd73320546d4951">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/mmangino/facebooker/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/mmangino/facebooker">Wiki</a></li>
             <li class=""><a href="http://github.com/mmangino/facebooker/graphs">Graphs</a></li>                    
-            <li class="active"><a href="mmangino/facebooker">Documentation</a></li>
+            <li class="active"><a href="/mmangino/facebooker">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,184 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/mmangino/facebooker/blob/0608decbf1a5c9b5f9604eba4bd73320546d4951">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>Facebooker</h1>
+<ul>
+<li>http://facebooker.rubyforge.org
 
+</li>
+</ul>
+<h2>DESCRIPTION:</h2>
+<p>
+Facebooker is a Ruby wrapper over the Facebook[http://facebook.com] <tt>API</tt>[http://wiki.developers.facebook.com/index.php/API]. Its goals are:
+</p>
+<ul>
+<li>Idiomatic Ruby
+
+</li>
+<li>No dependencies outside of the Ruby standard library (This is true with
+Rails 2.1. Previous Rails versions require the JSON gem)
+
+</li>
+<li>Concrete classes and methods modeling the Facebook data, so it&#8217;s easy
+for a Rubyist to understand what&#8217;s available
+
+</li>
+<li>Well tested
+
+</li>
+</ul>
+<h2>FEATURES/PROBLEMS:</h2>
+<ul>
+<li>Idiomatic Ruby
+
+</li>
+<li>No dependencies outside of the Ruby standard library
+
+</li>
+<li>Concrete classes and methods modeling the Facebook data, so it&#8217;s easy
+for a Rubyist to understand what&#8217;s available
+
+</li>
+<li>Well tested
+
+</li>
+</ul>
+<h2>SYNOPSIS:</h2>
+<p>
+View David Clements&#8217; <tt>tutorial</tt>[http://apps.facebook.com/facebooker_tutorial] at
+<a href="http://apps.facebook.com/facebooker_tutorial/" title="http://apps.facebook.com/facebooker_tutorial/" target="_parent">http://apps.facebook.com/facebooker_tutorial/</a>[http://apps.facebook.com/facebooker_tutorial]
+or check out {Developing Facebook Platform Applications with
+Rails}[http://www.pragprog.com/titles/mmfacer]. {Join the Mailing
+List}:[groups.google.com/group/facebooker]
+</p>
+<h2>REQUIREMENTS:</h2>
+<p>
+None
+</p>
+<h2>INSTALL:</h2>
+<h3>Non Rails</h3>
+<p>
+The best way is:
+</p>
+<pre class="code">
+  <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='facebooker identifier id'>facebooker</span>
+</pre>
+<p>
+If, for some reason, you can&#8217;t/won&#8217;t use RubyGems, you can do:
+</p>
+<pre class="code">
+  <span class='lparen token'>(</span><span class='sudo identifier id'>sudo</span><span class='rparen token'>)</span> <span class='ruby identifier id'>ruby</span> <span class='setup identifier id'>setup</span><span class='dot token'>.</span><span class='rb identifier id'>rb</span>
+</pre>
+<h3>Rails</h3>
+<p>
+Facebooker can be installed as a Rails plugin by:
+</p>
+<pre class="code">
+  <span class='script identifier id'>script</span><span class='div op'>/</span><span class='plugin identifier id'>plugin</span> <span class='install identifier id'>install</span> <span class='git identifier id'>git</span><span class='symbol val'>:/</span><span class='regexp val'>/github.com/</span><span class='mmangino identifier id'>mmangino</span><span class='div op'>/</span><span class='facebooker identifier id'>facebooker</span><span class='dot token'>.</span><span class='git identifier id'>git</span>
+</pre>
+<p>
+If you don&#8217;t have git, the plugin can be downloaded from
+http://github.com/mmangino/facebooker/tarball/master
+</p>
+<p>
+Once the plugin is installed, you will need to configure your Facebook app
+in config/facebooker.yml.
+</p>
+<p>
+Your application users will need to have added the application in facebook
+to access all of facebooker&#8217;s features. You enforce this by adding
+</p>
+<pre class="code">
+  <span class='ensure_application_is_installed_by_facebook_user identifier id'>ensure_application_is_installed_by_facebook_user</span>
+</pre>
+<p>
+to your application controller.
+</p>
+<p>
+To prevent a violation of Facebook Terms of Service while reducing log
+bloat, you should also add
+</p>
+<pre class="code">
+  <span class='filter_parameter_logging identifier id'>filter_parameter_logging</span> <span class='symbol val'>:fb_sig_friends</span>
+</pre>
+<p>
+to your application controller.
+</p>
+<h2>using MemCache session</h2>
+<p>
+Facebook uses some non alphanum characters in the session identifier which
+interfere with memcache stored sessions. If you want to use MemCache for
+storing sessions, you can override the valid session id method on memcache
+by placing the following code in an initializer:
+</p>
+<p>
+# add - as an okay key class CGI
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='Session constant id'>Session</span>
+    <span class='class class kw'>class</span> <span class='MemCacheStore constant id'>MemCacheStore</span>
+      <span class='def def kw'>def</span> <span class='check_id identifier id'>check_id</span><span class='lparen token'>(</span><span class='id identifier id'>id</span><span class='rparen token'>)</span> <span class='comment val'>#:nodoc:#</span>
+        <span class='regexp val'>/[^0-9a-zA-Z\-\._]+/</span> <span class='match op'>=~</span> <span class='id identifier id'>id</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='integer val'>? </span><span class='false false kw'>false</span> <span class='colon op'>:</span> <span class='true true kw'>true</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+</pre>
+<p>
+end
+</p>
+<h2>Other versions</h2>
+<pre class="code">
+ <span class='A constant id'>A</span> <span class='facebooker identifier id'>facebooker</span> <span class='port identifier id'>port</span> <span class='for for kw'>for</span> <span class='Sinatra constant id'>Sinatra</span> <span class='is identifier id'>is</span> <span class='available identifier id'>available</span> <span class='at identifier id'>at</span> <span class='http identifier id'>http</span><span class='colon op'>:</span><span class='regexp val'>//</span><span class='github identifier id'>github</span><span class='dot token'>.</span><span class='com identifier id'>com</span><span class='div op'>/</span><span class='jsmestad identifier id'>jsmestad</span><span class='div op'>/</span><span class='frankie identifier id'>frankie</span><span class='div op'>/</span><span class='tree identifier id'>tree</span><span class='div op'>/</span><span class='master identifier id'>master</span>
+</pre>
+<h2>LICENSE:</h2>
+<p>
+(The MIT License)
+</p>
+<p>
+Copyright &#169; 2008-2009:
+</p>
+<ul>
+<li>Chad Fowler
+
+</li>
+<li>Patrick Ewing
+
+</li>
+<li>Mike Mangino
+
+</li>
+<li>Shane Vitarana
+
+</li>
+<li>Corey Innis
+
+</li>
+</ul>
+<p>
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the
+&#8216;Software&#8217;), to deal in the Software without restriction,
+including without limitation the rights to use, copy, modify, merge,
+publish, distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to the
+following conditions:
+</p>
+<p>
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+</p>
+<p>
+THE SOFTWARE IS PROVIDED &#8216;AS IS&#8217;, WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+USE OR OTHER DEALINGS IN THE SOFTWARE.
+</p>
+
+</div>
           </div>
         </div>
       </div>                    

@@ -1,11 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
-    <title>mmangino's facebooker - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/mmangino/facebooker/blob/0608decbf1a5c9b5f9604eba4bd73320546d4951">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
+    <title>mmangino's facebooker - Module: ActionView - GitHub Documentation</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,10 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +80,7 @@
             <li class=""><a href="http://github.com/mmangino/facebooker/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/mmangino/facebooker">Wiki</a></li>
             <li class=""><a href="http://github.com/mmangino/facebooker/graphs">Graphs</a></li>                    
-            <li class="active"><a href="mmangino/facebooker">Documentation</a></li>
+            <li class="active"><a href="/mmangino/facebooker">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +106,89 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/mmangino/facebooker/blob/0608decbf1a5c9b5f9604eba4bd73320546d4951">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="wikistyle">
+  <div class="section module ActionView">
+  <h1>Module: ActionView</h1>
+  <div class="section docstring">
+  <p>
+Extends the ActionView::Helpers::UrlHelper module. See it for details on
+the usual url helper methods: url_for, link_to, button_to, etc.
+</p>
+<p>
+Mostly, the changes sanitize javascript into facebook javascript. It
+sanitizes link_to solely by altering the private methods:
+convert_options_to_javascript!, confirm_javascript_function, and
+method_javascript_function. For button_to, it alters button_to itself, as
+well as confirm_javascript_function. No other methods need to be changed
+because of Facebook javascript.
+</p>
+<p>
+For button_to and link_to, adds alternate confirm options for facebook.
+</p>
+<h4>Options</h4>
+<ul>
+<li><tt>:confirm =&gt; &#8216;question?&#8217;</tt> - This will add a
+JavaScript confirm prompt with the question specified.
 
+<p>
+Example:
+</p>
+<pre class="code">
+  <span class='comment val'># Generates: &lt;a href=&quot;http://rubyforge.org/projects/facebooker&quot; onclick=&quot;</span>
+  <span class='comment val'>#     var dlg = new Dialog().showChoice('Please Confirm', 'Go to Facebooker?').setStyle();</span>
+  <span class='comment val'>#     var a=this;dlg.onconfirm = function() {</span>
+  <span class='comment val'>#             document.setLocation(a.getHref());</span>
+  <span class='comment val'>#     }; return false;&quot;&gt;Facebooker&lt;/a&gt;</span>
+  <span class='link_to identifier id'>link_to</span><span class='lparen token'>(</span><span class='string val'>&quot;Facebooker&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;http://rubyforge.org/projects/facebooker&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:confirm=</span><span class='gt op'>&gt;</span><span class='string val'>&quot;Go to Facebooker?&quot;</span><span class='rparen token'>)</span>
+</pre>
+<p>
+Alternatively, options[:confirm] may be specified. See the Facebook page
+http://wiki.developers.facebook.com/index.php/FBJS. These options are:
+</p>
+<table>
+<tr><td valign="top"><tt>:title</tt>:</td><td>Specifies the title of the Facebook dialog. Default is &quot;Please
+Confirm&quot;.
+
+</td></tr>
+<tr><td valign="top"><tt>:content</tt>:</td><td>Specifies the title of the Facebook dialog. Default is &quot;Are you
+sure?&quot;.
+
+</td></tr>
+</table>
+<p>
+Example:
+</p>
+<pre class="code">
+  <span class='comment val'># Generates: &lt;a href=&quot;http://rubyforge.org/projects/facebooker&quot; onclick=&quot;</span>
+  <span class='comment val'>#     var dlg = new Dialog().showChoice('the page says:', 'Go to Facebooker?').setStyle();</span>
+  <span class='comment val'>#     var a=this;dlg.onconfirm = function() {</span>
+  <span class='comment val'>#             document.setLocation(a.getHref());</span>
+  <span class='comment val'>#     }; return false;&quot;&gt;Facebooker&lt;/a&gt;</span>
+  <span class='link_to identifier id'>link_to</span><span class='lparen token'>(</span><span class='string val'>&quot;Facebooker&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;http://rubyforge.org/projects/facebooker&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:confirm=</span><span class='gt op'>&gt;</span><span class='lbrace token'>{</span><span class='symbol val'>:title=</span><span class='gt op'>&gt;</span><span class='string val'>&quot;the page says:&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:content=</span><span class='gt op'>&gt;</span><span class='string val'>&quot;Go to Facebooker?&quot;</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+</pre>
+<p>
+Any other options passed are assumed to be css styles. Again, see the
+Facebook page http://wiki.developers.facebook.com/index.php/FBJS.
+</p>
+<p>
+Example:
+</p>
+<pre class="code">
+  <span class='comment val'># Generates: &lt;a href=&quot;http://rubyforge.org/projects/facebooker&quot; onclick=&quot;</span>
+  <span class='comment val'>#     var dlg = new Dialog().showChoice('the page says:', 'Are you sure?').setStyle({color: 'pink', width: '200px'});</span>
+  <span class='comment val'>#     var a=this;dlg.onconfirm = function() {</span>
+  <span class='comment val'>#             document.setLocation(a.getHref());</span>
+  <span class='comment val'>#     }; return false;&quot;&gt;Facebooker&lt;/a&gt;</span>
+  <span class='link_to identifier id'>link_to</span><span class='lparen token'>(</span><span class='string val'>&quot;Facebooker&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;http://rubyforge.org/projects/facebooker&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:confirm=</span><span class='gt op'>&gt;</span><span class='lbrace token'>{</span><span class='symbol val'>:title=</span><span class='gt op'>&gt;</span><span class='string val'>&quot;the page says:, :color=&gt;&quot;</span><span class='pink identifier id'>pink</span><span class='string val'>&quot;, :width=&gt;&quot;</span><span class='integer val'>200</span><span class='px identifier id'>px</span><span class='string val'>&quot;})
+</span></pre>
+</li>
+</ul>
+
+</div><div class="section constants">
+  
+</div>
+</div>
+</div>
           </div>
         </div>
       </div>                    
