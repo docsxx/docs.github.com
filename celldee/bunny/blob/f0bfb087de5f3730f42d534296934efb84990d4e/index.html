@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>celldee's bunny - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/celldee/bunny/blob/f0bfb087de5f3730f42d534296934efb84990d4e">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/celldee/bunny/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/celldee/bunny">Wiki</a></li>
             <li class=""><a href="http://github.com/celldee/bunny/graphs">Graphs</a></li>                    
-            <li class="active"><a href="celldee/bunny">Documentation</a></li>
+            <li class="active"><a href="/celldee/bunny">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,88 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/celldee/bunny/blob/f0bfb087de5f3730f42d534296934efb84990d4e">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>Bunny: A synchronous Ruby AMQP client</h1>
+<p>
+<b>GitHub</b> <b>repo</b>: http://github.com/celldee/bunny
+<b>Rubyforge</b>: http://rubyforge.org/projects/bunny-amqp <b>Twitter</b>:
+http://twitter.com/bunny_amqp <b>Google</b> <b>Group</b>:
+http://groups.google.com/group/bunny-amqp
+</p>
+<h3>DESCRIPTION:</h3>
+<p>
+Bunny is an AMQP[http://www.amqp.org] (Advanced Message Queuing Protocol)
+client, written in Ruby, that is intended to allow you to interact with
+AMQP-compliant message brokers/servers such as
+RabbitMQ[http://www.rabbitmq.com] in a synchronous fashion.
+</p>
+<p>
+It is based on a great deal of useful code from
+amqp[http://github.com/tmm1/amqp] by Aman Gupta and
+Carrot[http://github.com/famoseagle/carrot] by Amos Elliston.
+</p>
+<p>
+You can use Bunny to -
+</p>
+<ul>
+<li>Create and delete exchanges
 
+</li>
+<li>Create and delete queues
+
+</li>
+<li>Publish and consume messages
+
+</li>
+</ul>
+<p>
+Bunny is known to work with RabbitMQ versions 1.5.4, 1.5.5, 1.6.0 and
+version 0-8 of the AMQP specification.
+</p>
+<h3>INSTALL:</h3>
+<p>
+<b>Rubyforge</b>: <tt>gem install bunny</tt>
+</p>
+<p>
+<b>GitHub</b>: <tt>gem install celldee-bunny</tt>
+</p>
+<h3>QUICK START:</h3>
+<pre class="code">
+   <span class='require identifier id'>require</span> <span class='string val'>'bunny'</span>
+
+   <span class='b identifier id'>b</span> <span class='assign token'>=</span> <span class='Bunny constant id'>Bunny</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='symbol val'>:logging</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span><span class='rparen token'>)</span>
+
+   <span class='comment val'># start a communication session with the amqp server</span>
+   <span class='b identifier id'>b</span><span class='dot token'>.</span><span class='start identifier id'>start</span>
+
+   <span class='comment val'># declare a queue</span>
+   <span class='q identifier id'>q</span> <span class='assign token'>=</span> <span class='b identifier id'>b</span><span class='dot token'>.</span><span class='queue identifier id'>queue</span><span class='lparen token'>(</span><span class='string val'>'test1'</span><span class='rparen token'>)</span>
+
+   <span class='comment val'># publish a message to the queue</span>
+   <span class='q identifier id'>q</span><span class='dot token'>.</span><span class='publish identifier id'>publish</span><span class='lparen token'>(</span><span class='string val'>'Hello everybody!'</span><span class='rparen token'>)</span>
+
+   <span class='comment val'># get message from the queue</span>
+   <span class='msg identifier id'>msg</span> <span class='assign token'>=</span> <span class='q identifier id'>q</span><span class='dot token'>.</span><span class='pop identifier id'>pop</span>
+
+   <span class='puts identifier id'>puts</span> <span class='string val'>'This is the message: '</span> <span class='plus op'>+</span> <span class='msg identifier id'>msg</span> <span class='plus op'>+</span> <span class='string val'>&quot;\n\n&quot;</span>
+
+   <span class='comment val'># close the connection</span>
+   <span class='b identifier id'>b</span><span class='dot token'>.</span><span class='stop identifier id'>stop</span>
+</pre>
+<h3>EVEN QUICKER START</h3>
+<pre class="code">
+   <span class='require identifier id'>require</span> <span class='string val'>'bunny'</span>
+
+   <span class='comment val'># Create a direct queue named 'my_testq'</span>
+   <span class='Bunny constant id'>Bunny</span><span class='dot token'>.</span><span class='run identifier id'>run</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span> <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='queue identifier id'>queue</span><span class='lparen token'>(</span><span class='string val'>'my_testq'</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+</pre>
+<h3>OTHER:</h3>
+<p>
+Please see the <em>examples</em> directory for additional usage
+information.
+</p>
+
+</div>
           </div>
         </div>
       </div>                    
