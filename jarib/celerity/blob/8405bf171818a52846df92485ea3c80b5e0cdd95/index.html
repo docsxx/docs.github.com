@@ -2,10 +2,6 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <title>jarib's celerity - GitHub Documentation</title>
-    <meta http-equiv="refresh" content="0;url=http://docs.github.com/jarib/celerity/blob/8405bf171818a52846df92485ea3c80b5e0cdd95">
-    <script type="text/javascript">
-      var skipHeaders = true;
-    </script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="description" content="">
 
@@ -47,11 +43,9 @@
 </script>
 
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
-    <style type="text/css">
-      #repo { display:none; }
-    </style>
   </head>
   <body>    
+    
     
         <div id="main" style="padding-bottom:8em;">
       <div id="header">
@@ -85,7 +79,7 @@
             <li class=""><a href="http://github.com/jarib/celerity/issues">Issues</a></li>
             <li class=""><a href="http://wiki.github.com/jarib/celerity">Wiki</a></li>
             <li class=""><a href="http://github.com/jarib/celerity/graphs">Graphs</a></li>                    
-            <li class="active"><a href="jarib/celerity">Documentation</a></li>
+            <li class="active"><a href="/jarib/celerity">Documentation</a></li>
           </ul>
         </div>
       </div>
@@ -111,16 +105,100 @@
           </div> 
           <br/>                                       
           <div id="content">
-            <div id="home">
-  <div id="site" style="height:430px;">                                                     
-    <div class="features" style="background:none;border:none;float:none;clear:both;margin-top:30px;">
-      <p style="width:700px;position:absolute;padding:0;margin:0;left:50%;margin-left:-350px;">
-      You should be redirected to the latest documentation automatically, if not please 
-      <a href="/jarib/celerity/blob/8405bf171818a52846df92485ea3c80b5e0cdd95">click here</a>.</p>
-    </div>
-  </div>
-</div>    
+            <div class="section docstring readme wikistyle">
+  <h1>Celerity</h1>
 
+<ul>
+<li><a href="http://celerity.rubyforge.org/">http://celerity.rubyforge.org/</a></li>
+</ul>
+
+
+<h2>Description</h2>
+
+<p>Celerity is a JRuby wrapper around HtmlUnit – a headless Java browser with
+JavaScript support. It provides a simple API for programmatic navigation through
+web applications. Celerity aims at being API compatible with Watir.</p>
+
+<h2>Features</h2>
+
+<ul>
+<li><em>Fast</em>: No time-consuming GUI rendering or unessential downloads</li>
+<li><em>Scalable</em>: Java threads lets you run tests in parallel</li>
+<li><em>Easy to use</em>: Simple API</li>
+<li><em>Portable</em>: Cross-platform thanks to the JVM</li>
+<li><em>Unintrusive</em>: No browser window interrupting your workflow (runs in background)</li>
+</ul>
+
+
+<h2>Requirements</h2>
+
+<ul>
+<li>JRuby 1.2.0 or higher</li>
+<li>Java 6</li>
+</ul>
+
+
+<h2>Install</h2>
+
+<pre class="code"><span class='xstring val'>`jruby -S gem install celerity`</span>
+</pre>
+
+<p>  or from GitHub (updated frequently)</p>
+
+<pre class="code"><span class='xstring val'>`jruby -S gem install jarib-celerity`</span>
+</pre>
+
+<h2>Example</h2>
+
+<pre class="code"><span class='require identifier id'>require</span> <span class='string val'>&quot;rubygems&quot;</span>
+<span class='require identifier id'>require</span> <span class='string val'>&quot;celerity&quot;</span> 
+
+<span class='browser identifier id'>browser</span> <span class='assign token'>=</span> <span class='Celerity constant id'>Celerity</span><span class='colon2 op'>::</span><span class='Browser constant id'>Browser</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+<span class='browser identifier id'>browser</span><span class='dot token'>.</span><span class='goto identifier id'>goto</span><span class='lparen token'>(</span><span class='string val'>'http://www.google.com'</span><span class='rparen token'>)</span>
+<span class='browser identifier id'>browser</span><span class='dot token'>.</span><span class='text_field identifier id'>text_field</span><span class='lparen token'>(</span><span class='symbol val'>:name</span><span class='comma token'>,</span> <span class='string val'>'q'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='value identifier id'>value</span> <span class='assign token'>=</span> <span class='string val'>'Celerity'</span>
+<span class='browser identifier id'>browser</span><span class='dot token'>.</span><span class='button identifier id'>button</span><span class='lparen token'>(</span><span class='symbol val'>:name</span><span class='comma token'>,</span> <span class='string val'>'btnG'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='click identifier id'>click</span>
+
+<span class='puts identifier id'>puts</span> <span class='string val'>&quot;yay&quot;</span> <span class='if if_mod kw'>if</span> <span class='browser identifier id'>browser</span><span class='dot token'>.</span><span class='text identifier id'>text</span><span class='dot token'>.</span><span class='include? fid id'>include?</span> <span class='string val'>'celerity.rubyforge.org'</span>
+</pre>
+
+<h2>Source</h2>
+
+<p>The source code is available on <a href="http://github.com/jarib/celerity/tree/master">GitHub</a>.</p>
+
+<h2>Wiki &amp; Bug Tracker</h2>
+
+<ul>
+<li><a href="http://github.com/jarib/celerity/wikis">Wiki</a></li>
+<li><a href="http://github.com/jarib/celerity/issues">Bug Tracker</a></li>
+</ul>
+
+
+<h2>Related projects</h2>
+
+<ul>
+<li><a href="http://github.com/jarib/watirspec/tree/master">WatirSpec</a></li>
+<li><a href="http://github.com/jarib/celerity-viewers">Celerity Viewers</a></li>
+</ul>
+
+
+<h2>License</h2>
+
+<p>Celerity - JRuby wrapper for HtmlUnit
+Copyright (c) 2008 FINN.no AS</p>
+
+<p>This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.</p>
+
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+
+<p>You should have received a copy of the GNU General Public License
+along with this program.  If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>
+</div>
           </div>
         </div>
       </div>                    
